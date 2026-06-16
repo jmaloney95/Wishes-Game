@@ -1,0 +1,296 @@
+// =============================================================================
+//  Pokémon Wishes of Tomorrow — Act 1 / Munen Village
+//  Poryscript DRAFT  (written 2026-05-25)
+// =============================================================================
+//  STATUS: ready-to-merge draft. This is real Poryscript, but it references
+//  flags/vars/trainers/maps that must exist in the pokefirered project before it
+//  compiles. Once your build environment is up, we:
+//    1) add the constants in §A below to include/constants/flags.h + vars.h
+//    2) drop these scripts into the matching data/maps/<Map>/scripts.pory files
+//    3) place the object events (ice blocks, NPCs) in Porymap and match localids
+//    4) define the rival trainers in src/data/trainers.{h,party}
+//
+//  Anything marked TODO is a wiring/art decision, not finished logic.
+// -----------------------------------------------------------------------------
+//
+//  §A. CONSTANTS THIS FILE EXPECTS  (define these in the project, shown here for reference)
+//      Flags:
+//        FLAG_RECEIVED_STARTER
+//        FLAG_SHRINE_ROPE_CUT_SEEN
+//        FLAG_RIVAL_BATTLE_1
+//        FLAG_INTRO_MOM_TALK
+//      Vars:
+//        VAR_INTRO_STATE      // 0 = play opening cutscene, 1 = done
+//        VAR_STARTER_CHOICE   // 0 none, 1 Tyrunt, 2 Amaura, 3 Anorith
+//      Trainers:
+//        TRAINER_RIVAL_MUNEN_TYRUNT   (Haru w/ Tyrunt Lv5)
+//        TRAINER_RIVAL_MUNEN_AMAURA   (Haru w/ Amaura Lv5)
+//      Object localids (placed in Porymap):
+//        LOCALID_MOM, LOCALID_HINOKI, LOCALID_RIVAL,
+//        LOCALID_ICE_TYRUNT, LOCALID_ICE_AMAURA, LOCALID_ICE_ANORITH
+// =============================================================================
+
+
+// =============================================================================
+//  PLAYER'S HOUSE 2F — Opening cutscene (runs once on New Game)
+//  Narration text is verbatim from GDD §8.
+//  Visuals: the demo runs the narration over a darkened screen + SE/BGM. The
+//  "shrine at night" / "ice chamber" shots (Scenes 2 & 4) are added later either
+//  as a dedicated cutscene map the camera holds on, or fullscreen art (polish).
+// =============================================================================
+mapscripts MunenPlayersHouse2F_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_INTRO_STATE, 0: MunenPlayersHouse2F_EventScript_OpeningCutscene
+    ]
+}
+
+script MunenPlayersHouse2F_EventScript_OpeningCutscene {
+    lockall
+    setvar(VAR_INTRO_STATE, 1)          // never replay
+    fadescreen(FADE_TO_BLACK)
+    delay(40)
+
+    // --- Scene 1: black ---
+    playse(SE_SHRINE_BELL)              // TODO: pick SE (FR has a bell-like cue)
+    delay(60)
+    msgbox("Mt. Munen. One thousand years ago.", MSGBOX_DEFAULT)
+    closemessage
+
+    // --- Scene 2: shrine at night (TODO visual) ---
+    playbgm(MUS_CUTSCENE_SHRINE, FALSE) // TODO: pick atmospheric track (see GDD music notes)
+    msgbox("They say a star fell upon this mountain.", MSGBOX_DEFAULT)
+    msgbox("They say it granted a wish.", MSGBOX_DEFAULT)
+    msgbox("They say it ended the world.", MSGBOX_DEFAULT)
+    closemessage
+
+    // --- Scene 3: white flash, reality breaks ---
+    fadescreen(FADE_TO_WHITE)
+    playse(SE_REALITY_BREAK)            // TODO: pick a harsh/dramatic SE
+    delay(20)
+    fadescreen(FADE_TO_BLACK)
+    fadedefaultbgm
+    delay(70)
+
+    // --- Scene 4: inner chamber, three ice blocks (TODO visual) ---
+    msgbox("The monks who survived sealed it away.", MSGBOX_DEFAULT)
+    msgbox("They sealed the star. They sealed what came with it.", MSGBOX_DEFAULT)
+    msgbox("They called it the Undying Wish. And they prayed", MSGBOX_DEFAULT)
+    msgbox("it would never wake again.", MSGBOX_DEFAULT)
+    closemessage
+
+    // --- Scene 5: black, long pause ---
+    delay(50)
+    msgbox("It has been sleeping for one thousand years.", MSGBOX_DEFAULT)
+    delay(40)
+    msgbox("Today, something disturbs the seal.", MSGBOX_DEFAULT)
+    closemessage
+
+    // --- Scene 6: into present day, player's room ---
+    delay(30)
+    fadescreen(FADE_FROM_BLACK)
+    playbgm(MUS_MUNEN_VILLAGE, TRUE)    // TODO: town theme
+    releaseall
+    end
+}
+
+
+// =============================================================================
+//  PLAYER'S HOUSE 1F — Mom
+// =============================================================================
+script MunenPlayersHouse1F_EventScript_Mom {
+    lock
+    faceplayer
+    if (!flag(FLAG_INTRO_MOM_TALK)) {
+        msgbox(format(
+            "MOM: Good morning, sleepyhead.\p"
+            "Professor Hinoki sent word — she wants you up at the shrine.\p"
+            "Something about the ice chamber… She sounded careful. Excited, but careful.\p"
+            "Go on. And mind the steps — the mountain's restless this morning."), MSGBOX_DEFAULT)
+        setflag(FLAG_INTRO_MOM_TALK)
+    } else {
+        msgbox(format(
+            "MOM: The Professor's waiting at the shrine, dear.\p"
+            "Wrap up warm. The mist's come down early."), MSGBOX_DEFAULT)
+    }
+    release
+    end
+}
+
+
+// =============================================================================
+//  MUNEN VILLAGE — exterior NPCs
+// =============================================================================
+
+// The severed sacred rope (shimenawa) — Team Wish's first, unseen appearance.
+script MunenVillage_EventScript_CutRope {
+    lock
+    faceplayer
+    msgbox(format(
+        "Who would dare cut the seal-rope?\p"
+        "That shimenawa has hung across the shrine gate untouched for a hundred years.\p"
+        "Cutting it… it's not vandalism. It's a message. I just don't know to whom."), MSGBOX_DEFAULT)
+    setflag(FLAG_SHRINE_ROPE_CUT_SEEN)
+    release
+    end
+}
+
+// Atmosphere NPC — a child chasing a wisp that vanishes.
+script MunenVillage_EventScript_WispChild {
+    lock
+    faceplayer
+    msgbox(format(
+        "Did you see it? The little light!\p"
+        "Grandma says they're wishes that never came true. They go up the mountain at night."), MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+// =============================================================================
+//  HINOKI'S LAB — Professor referral (before starter)
+// =============================================================================
+script HinokiLab_EventScript_Hinoki {
+    lock
+    faceplayer
+    if (!flag(FLAG_RECEIVED_STARTER)) {
+        msgbox(format(
+            "HINOKI: There you are.\p"
+            "I'm not an archaeologist. I study what this mountain remembers — its shrines, its stories.\p"
+            "While reading the sealed chamber, I found three of them. Sleeping in the ice. Older than any record I have.\p"
+            "I revived them. I shouldn't have. They're far too young, too unpredictable for me to keep safely.\p"
+            "Go up to the inner chamber. Choose one. Raise it. Let it choose you back."), MSGBOX_DEFAULT)
+    } else {
+        msgbox(format(
+            "HINOKI: It already trusts you. Good.\p"
+            "Whatever the monks were protecting up there… I think you're holding part of the answer."), MSGBOX_DEFAULT)
+    }
+    release
+    end
+}
+
+
+// =============================================================================
+//  SHRINE INNER CHAMBER — Starter selection (three ice blocks)
+// =============================================================================
+
+script ShrineChamber_EventScript_IceTyrunt {
+    lock
+    faceplayer
+    if (flag(FLAG_RECEIVED_STARTER)) {
+        msgbox("The remaining ice is silent now.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    msgbox(format(
+        "Inside the ice, something stirs.\p"
+        "It regards you as if it already rules here.\p"
+        "(The placard reads: TYRUNT — Rock/Dragon, sealed within the Jaw Fossil.)\p"
+        "Take this one?"), MSGBOX_YESNO)
+    if (var(VAR_RESULT) == NO) {
+        release
+        end
+    }
+    setvar(VAR_STARTER_CHOICE, 1)
+    givemon(SPECIES_TYRUNT, 5)
+    goto(ShrineChamber_EventScript_StarterChosen)
+}
+
+script ShrineChamber_EventScript_IceAmaura {
+    lock
+    faceplayer
+    if (flag(FLAG_RECEIVED_STARTER)) {
+        msgbox("The remaining ice is silent now.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    msgbox(format(
+        "Inside the ice, something stirs.\p"
+        "The cold of centuries still clings to it. It looks at you the way the grieving do.\p"
+        "(The placard reads: AMAURA — Rock/Ice, sealed within the Sail Fossil.)\p"
+        "Take this one?"), MSGBOX_YESNO)
+    if (var(VAR_RESULT) == NO) {
+        release
+        end
+    }
+    setvar(VAR_STARTER_CHOICE, 2)
+    givemon(SPECIES_AMAURA, 5)
+    goto(ShrineChamber_EventScript_StarterChosen)
+}
+
+script ShrineChamber_EventScript_IceAnorith {
+    lock
+    faceplayer
+    if (flag(FLAG_RECEIVED_STARTER)) {
+        msgbox("The remaining ice is silent now.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    msgbox(format(
+        "Inside the ice, something stirs.\p"
+        "It twitches, instantly alert — pure, scrappy survival instinct.\p"
+        "(The placard reads: ANORITH — Rock/Bug, sealed within the Claw Fossil.)\p"
+        "Take this one?"), MSGBOX_YESNO)
+    if (var(VAR_RESULT) == NO) {
+        release
+        end
+    }
+    setvar(VAR_STARTER_CHOICE, 3)
+    givemon(SPECIES_ANORITH, 5)
+    goto(ShrineChamber_EventScript_StarterChosen)
+}
+
+// Shared: confirm, fanfare, then hand off to the rival.
+script ShrineChamber_EventScript_StarterChosen {
+    setflag(FLAG_RECEIVED_STARTER)
+    playfanfare(MUS_OBTAIN_ITEM)
+    waitfanfare
+    msgbox(format(
+        "The ice cracks. It breathes for the first time in a thousand years —\p"
+        "and chooses to breathe beside you."), MSGBOX_DEFAULT)
+    closemessage
+    // Hinoki catches up and provides starting supplies.
+    msgbox(format(
+        "HINOKI: …It woke for you. Of course it did.\p"
+        "Here — you'll need these. Be careful out there."), MSGBOX_DEFAULT)
+    giveitem(ITEM_POKE_BALL, 5)
+    giveitem(ITEM_POTION, 2)
+    release
+    goto(MunenVillage_EventScript_RivalBattle1)
+}
+
+
+// =============================================================================
+//  RIVAL BATTLE #1 — Haru  (cheerful; family secret not yet revealed)
+//  Rule: Haru takes Tyrunt by default; if player took Tyrunt, Haru takes Amaura.
+// =============================================================================
+script MunenVillage_EventScript_RivalBattle1 {
+    lockall
+    applymovement(LOCALID_RIVAL, Common_Movement_WalkInPlaceFasterDown) // TODO: rival approach
+    waitmovement(0)
+    msgbox(format(
+        "HARU: So one woke up for you too!\p"
+        "Figures. The mountain's always had a soft spot for you.\p"
+        "Come on — let's see what these old things can do. Don't go easy on me!"), MSGBOX_DEFAULT)
+    closemessage
+
+    if (var(VAR_STARTER_CHOICE) == 1) {
+        // Player chose Tyrunt -> Haru uses Amaura
+        trainerbattle_single(TRAINER_RIVAL_MUNEN_AMAURA,
+            "HARU: Mine's gentler than yours. Doesn't mean it'll lose!",
+            "HARU: Ha! Okay, okay — you win this round.")
+    } else {
+        // Default -> Haru uses Tyrunt
+        trainerbattle_single(TRAINER_RIVAL_MUNEN_TYRUNT,
+            "HARU: Mine's got the look of a king. Let's go!",
+            "HARU: Ha! Okay, okay — you win this round.")
+    }
+
+    msgbox(format(
+        "HARU: That was great! I knew today was going to matter.\p"
+        "I'll see you down the mountain. Try to keep up!"), MSGBOX_DEFAULT)
+    setflag(FLAG_RIVAL_BATTLE_1)
+    applymovement(LOCALID_RIVAL, Common_Movement_WalkInPlaceFasterDown) // TODO: rival exit
+    waitmovement(0)
+    releaseall
+    end
+}
