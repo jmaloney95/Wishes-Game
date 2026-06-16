@@ -1,0 +1,9 @@
+This folder contains the C: Injections used for many of the BW Menus.
+
+Any resources not found in this folder can be found below:
+
+ROM Hacking Patches Pack
+https://www.pokecommunity.com/threads/540279/
+
+ROM Hacking Sprites Pack
+https://www.pokecommunity.com/threads/527581/

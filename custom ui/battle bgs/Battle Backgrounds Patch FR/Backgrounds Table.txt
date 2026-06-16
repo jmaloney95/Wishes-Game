@@ -1,0 +1,38 @@
+VANILLA		ID	PATCH
+-----------------------------------
+Grass		0	Grass
+Forest		1	Forest
+Sand		2	Beach
+Underwater	3	Underwater
+Sea		4	Sea
+Pond		5	Lake
+Craggy		6	Mountain
+Cave		7	Cave
+
+Indoor Trainer	8	Lab
+Outdoor Trainer	9	Route
+Trainer Tower	10	Indoors (Hardcoded to Trainer Tower)
+Gym Trainer	11	Neutral
+Gym Leader	12	Gym	(Hardcoded to Gym Leaders)
+
+Pokémon Tower	13	Town
+Giovanni	14	Snow
+Lorelei		15	Snow Cave
+Bruno		16	Snow Mountain
+Agatha		17	Desert
+Lance		18	Volcano
+Champion	19	Space	(Hardcoded to Champion)
+
+
+
+'FightType' Table:
+NAME IN HMA	NEW ID		NEW BG		USED BY
+--------------------------------------------------------------
+Gym		11 > 12		Gym		Gym Trainers
+Indoor 1	14 > 10		Indoors		Giovanni
+Indoor 2	13 > 10		Indoors		Pokémon Tower
+Elite 1		15 > 12		Gym		Lorelei
+Elite 2		16 > 12		Gym		Bruno
+Elite 3		17 > 12		Gym		Agatha
+Elite 4		18 > 12		Gym		Lance
+Big Poke Ball	10 > 10		Indoors		Trainer Tower

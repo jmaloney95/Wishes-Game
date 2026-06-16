@@ -1,0 +1,30 @@
+^graphics.continuebw.palette`ucp4`
+Offset Pointer: C0666C
+
+
+^graphics.continue.palette`ucp4`
+Offset Pointer: C06674
+
+
+^graphics.continue.palette`ucp4`
+Offset Pointer: C06784
+
+
+^graphics.continue.tileset`lzs4x4x4|graphics.continue.palette`
+Offset Pointer: C06688
+
+
+^graphics.continuebw.tileset`lzs4x8x8|graphics.continuebw.palette`
+Offset Pointer: C0668C
+
+
+^graphics.continuebw.tilemap`lzm4x32x20|graphics.continuebw.tileset`
+Offset Pointer: C06698
+
+
+^graphics.continue.tilemap2`lzm4x32x16|graphics.continue.tileset`
+Offset Pointer: C06C04
+
+
+^graphics.continue.tilemap`lzm4x32x16|graphics.continue.tileset`
+Offset Pointer: C06C28

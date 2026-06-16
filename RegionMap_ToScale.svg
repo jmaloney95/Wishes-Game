@@ -1,0 +1,198 @@
+<svg viewBox="0 0 1020 980" xmlns="http://www.w3.org/2000/svg" font-family="'Courier New',monospace">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10102e"/>
+      <stop offset="0.55" stop-color="#232050"/>
+      <stop offset="1" stop-color="#2e2a5e"/>
+    </linearGradient>
+    <linearGradient id="torii" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d98a4a"/>
+      <stop offset="0.45" stop-color="#b9a45e"/>
+      <stop offset="1" stop-color="#7da06b"/>
+    </linearGradient>
+    <linearGradient id="mmile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8b9cf"/>
+      <stop offset="1" stop-color="#dce8f2"/>
+    </linearGradient>
+    <radialGradient id="lava" cx="0.5" cy="0.45" r="0.6">
+      <stop offset="0" stop-color="#ffd24a"/>
+      <stop offset="0.4" stop-color="#ff7a2a"/>
+      <stop offset="1" stop-color="#8a2f1a"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff9a4a" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#ff9a4a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1020" height="980" fill="url(#sky)"/>
+  <!-- stars + moon -->
+  <g fill="#cdd6ff">
+    <circle cx="80" cy="60" r="1.6"/><circle cx="160" cy="120" r="1.2"/><circle cx="260" cy="50" r="1.4"/>
+    <circle cx="620" cy="40" r="1.3"/><circle cx="760" cy="90" r="1.6"/><circle cx="880" cy="50" r="1.2"/>
+    <circle cx="950" cy="140" r="1.5"/><circle cx="60" cy="300" r="1.2"/><circle cx="960" cy="300" r="1.2"/>
+    <circle cx="120" cy="560" r="1.2"/><circle cx="940" cy="600" r="1.3"/><circle cx="80" cy="760" r="1.3"/>
+    <circle cx="930" cy="820" r="1.4"/><circle cx="700" cy="180" r="1.1"/><circle cx="200" cy="220" r="1.1"/>
+  </g>
+  <circle cx="945" cy="80" r="26" fill="#f5edc8" opacity="0.9"/>
+  <circle cx="934" cy="72" r="22" fill="url(#sky)"/>
+
+  <text x="30" y="38" fill="#f0ead0" font-size="22" font-weight="bold">WISHES OF TOMORROW — REGION MAP</text>
+  <text x="30" y="58" fill="#8fa0d0" font-size="12">to scale · 1 tile = 4 px · stitched from map.json connections &amp; warps</text>
+
+  <!-- summit glow -->
+  <ellipse cx="464" cy="106" rx="170" ry="120" fill="url(#glow)"/>
+
+  <!-- ============ SENNEN LINE (rail spine) ============ -->
+  <line x1="180" y1="404" x2="484" y2="404" stroke="#8fa0d0" stroke-width="4" stroke-dasharray="10 6"/>
+  <line x1="624" y1="404" x2="820" y2="404" stroke="#8fa0d0" stroke-width="4" stroke-dasharray="10 6"/>
+  <text x="300" y="394" fill="#8fa0d0" font-size="11">SENNEN LINE ─ west</text>
+  <text x="660" y="394" fill="#8fa0d0" font-size="11">east ─ SENNEN LINE</text>
+
+  <!-- ============ ACT 2 GHOSTS ============ -->
+  <g stroke="#7a86c2" stroke-dasharray="6 5" stroke-width="2" fill="#3a3a6a" fill-opacity="0.45">
+    <rect x="40" y="372" width="140" height="80" rx="4"/>
+    <rect x="820" y="356" width="160" height="96" rx="4"/>
+  </g>
+  <text x="58" y="408" fill="#b8c2ee" font-size="13" font-weight="bold">TRADEWIND</text>
+  <text x="58" y="424" fill="#b8c2ee" font-size="13" font-weight="bold">TOWN</text>
+  <text x="58" y="440" fill="#7a86c2" font-size="10">Act 2 — planned</text>
+  <text x="846" y="396" fill="#b8c2ee" font-size="13" font-weight="bold">SHIN-TOKYO</text>
+  <text x="846" y="412" fill="#7a86c2" font-size="10">Mutrid HQ</text>
+  <text x="846" y="426" fill="#7a86c2" font-size="10">Act 2 — planned</text>
+
+  <!-- ============ ASHLANDS (-6..25, -170..-140) ============ -->
+  <rect x="256" y="140" width="128" height="124" rx="3" fill="#7d7672" stroke="#4a4440" stroke-width="2"/>
+  <g fill="#9a938e"><circle cx="280" cy="180" r="3"/><circle cx="320" cy="210" r="3"/><circle cx="350" cy="170" r="3"/><circle cx="296" cy="236" r="3"/></g>
+  <text x="268" y="162" fill="#2c2825" font-size="13" font-weight="bold">ASHLANDS</text>
+  <text x="268" y="176" fill="#3c3833" font-size="10">32×31 · west slope</text>
+  <text x="268" y="254" fill="#3c3833" font-size="9">warp 27,12 → Hot Spring</text>
+
+  <!-- dream warp: summit -> hot spring -> ashlands -->
+  <path d="M 430 130 C 390 150 380 160 368 178" fill="none" stroke="#c9b6ff" stroke-width="2" stroke-dasharray="3 5"/>
+  <text x="300" y="126" fill="#c9b6ff" font-size="10">Jirachi's dream (script warp,</text>
+  <text x="300" y="138" fill="#c9b6ff" font-size="10">via Hot Spring)</text>
+
+  <!-- ============ STAR SUMMIT (31..60, -193..-165) ============ -->
+  <rect x="404" y="48" width="120" height="116" rx="3" fill="#54484e" stroke="#2e2630" stroke-width="2"/>
+  <path d="M 404 164 L 444 76 L 464 96 L 484 70 L 524 164 Z" fill="#6a5a62"/>
+  <path d="M 444 76 L 464 96 L 484 70 L 492 88 L 464 112 L 438 90 Z" fill="#efe9ef" opacity="0.85"/>
+  <ellipse cx="464" cy="140" rx="34" ry="14" fill="url(#lava)"/>
+  <path d="M 464 22 l 4.5 9 10 1.5 -7 7 1.6 10 -9.1 -4.7 -9.1 4.7 1.6 -10 -7 -7 10 -1.5 Z" fill="#ffe27a" stroke="#ffb84a"/>
+  <text x="394" y="186" fill="#ffd9a0" font-size="14" font-weight="bold">★ STAR SUMMIT</text>
+  <text x="530" y="60" fill="#9aa8d8" font-size="10">30×29</text>
+  <text x="530" y="74" fill="#9aa8d8" font-size="9">exit S: 15-16,23</text>
+  <text x="530" y="86" fill="#9aa8d8" font-size="9">→ Torii 12-14,3</text>
+
+  <!-- Torii<->Summit connector -->
+  <line x1="470" y1="176" x2="470" y2="164" stroke="#ffe27a" stroke-width="6"/>
+
+  <!-- ============ TORII ROUTE (34..73, -164..-115) ============ -->
+  <rect x="416" y="164" width="160" height="200" rx="3" fill="url(#torii)" stroke="#4a4434" stroke-width="2"/>
+  <!-- torii gates -->
+  <g stroke="#c23b2e" stroke-width="3" fill="none">
+    <path d="M 446 220 v -14 m 14 14 v -14 m -18 2 h 22 m -24 -4 h 26"/>
+    <path d="M 496 268 v -14 m 14 14 v -14 m -18 2 h 22 m -24 -4 h 26"/>
+    <path d="M 526 322 v -14 m 14 14 v -14 m -18 2 h 22 m -24 -4 h 26"/>
+  </g>
+  <g fill="#3e5a36"><path d="M 432 330 l 7 -14 7 14 Z"/><path d="M 448 338 l 7 -14 7 14 Z"/><path d="M 552 348 l 7 -14 7 14 Z"/></g>
+  <text x="426" y="184" fill="#3a2c1c" font-size="13" font-weight="bold">TORII ROUTE</text>
+  <text x="426" y="198" fill="#4a3a24" font-size="10">Route 3 · 40×50</text>
+  <text x="584" y="180" fill="#9aa8d8" font-size="9">N exit: 12-14,3</text>
+  <text x="584" y="300" fill="#9aa8d8" font-size="9">SE exit: 31,35-36</text>
+  <text x="584" y="312" fill="#9aa8d8" font-size="9">→ Sennen 14-15,0</text>
+
+  <!-- Sennen<->Torii connector (door is interior at row 35-36) -->
+  <line x1="544" y1="364" x2="544" y2="308" stroke="#ffe27a" stroke-width="4" stroke-dasharray="6 4"/>
+
+  <!-- ============ SENNEN VILLAGE (51..85, -114..-95) ============ -->
+  <rect x="484" y="364" width="140" height="80" rx="3" fill="#c9b896" stroke="#6a5a3e" stroke-width="2"/>
+  <rect x="592" y="380" width="22" height="14" fill="#8a7a5a"/>
+  <rect x="588" y="394" width="30" height="6" fill="#5a4a32"/>
+  <text x="494" y="386" fill="#3a2e1c" font-size="13" font-weight="bold">SENNEN</text>
+  <text x="494" y="400" fill="#4a3c26" font-size="10">VILLAGE · 35×20</text>
+  <text x="494" y="434" fill="#5a4a30" font-size="9">station 32,6 · rail hub</text>
+
+  <!-- Sennen<->Route2 doors (x:5-7) -->
+  <rect x="504" y="440" width="12" height="8" fill="#ffe27a"/>
+  <text x="630" y="448" fill="#9aa8d8" font-size="9">doors 5-7,19 ↔ R2 5-7,0</text>
+
+  <!-- ============ ROUTE 2 (51..74, -94..-46) ============ -->
+  <rect x="484" y="444" width="96" height="196" rx="3" fill="#8fbb87" stroke="#46603e" stroke-width="2"/>
+  <g fill="#5d8b55"><path d="M 500 480 l 8 -16 8 16 Z"/><path d="M 540 520 l 8 -16 8 16 Z"/><path d="M 504 560 l 8 -16 8 16 Z"/><path d="M 544 600 l 8 -16 8 16 Z"/></g>
+  <text x="494" y="466" fill="#22381c" font-size="13" font-weight="bold">ROUTE 2</text>
+  <text x="494" y="630" fill="#2e4a26" font-size="10">24×49</text>
+  <text x="590" y="630" fill="#9aa8d8" font-size="9">S doors 13-15,45</text>
+  <text x="590" y="642" fill="#9aa8d8" font-size="9">↔ Frostwood 18-19,0</text>
+  <rect x="534" y="636" width="12" height="8" fill="#ffe27a"/>
+
+  <!-- ============ FROSTWOOD TOWN (46..95, -45..-16) ============ -->
+  <rect x="464" y="640" width="200" height="120" rx="3" fill="#e6d3a8" stroke="#7a6644" stroke-width="2"/>
+  <rect x="540" y="676" width="34" height="22" fill="#a8794a"/>
+  <path d="M 536 676 l 21 -12 21 12 Z" fill="#7a4e2c"/>
+  <g stroke="#cfd9e6" stroke-width="2" opacity="0.8">
+    <path d="M 560 668 q 4 -8 0 -16" fill="none"/><path d="M 552 668 q -4 -8 0 -14" fill="none"/>
+  </g>
+  <text x="476" y="664" fill="#3c2e16" font-size="13" font-weight="bold">FROSTWOOD TOWN</text>
+  <text x="476" y="678" fill="#4c3c20" font-size="10">50×30 · onsen · GYM</text>
+  <text x="610" y="700" fill="#4c3c20" font-size="9">gym 39,15</text>
+  <text x="476" y="750" fill="#5a4828" font-size="9">W doors 0,26-27</text>
+
+  <!-- MeltingMile<->Frostwood doors -->
+  <rect x="458" y="744" width="12" height="10" fill="#ffe27a"/>
+
+  <!-- Frostwood<->Lake path (FW 24-25,29 -> Lake 14-15,0) -->
+  <path d="M 564 760 L 564 766 L 536 766 L 536 768" fill="none" stroke="#ffe27a" stroke-width="4"/>
+  <text x="586" y="776" fill="#9aa8d8" font-size="9">24-25,29 ↔ Lake 14-15,0</text>
+
+  <!-- ============ MELTING MILE (16..45, -25..-1) ============ -->
+  <rect x="344" y="720" width="120" height="100" rx="3" fill="url(#mmile)" stroke="#7a5a6a" stroke-width="2"/>
+  <g fill="#e87aa8"><circle cx="366" cy="744" r="2.4"/><circle cx="384" cy="736" r="2"/><circle cx="402" cy="752" r="2.4"/><circle cx="376" cy="764" r="2"/><circle cx="418" cy="740" r="2"/></g>
+  <g fill="#ffffff" opacity="0.9"><circle cx="430" cy="796" r="2.4"/><circle cx="402" cy="804" r="2"/><circle cx="370" cy="792" r="2.2"/></g>
+  <text x="352" y="712" fill="#e8c9d8" font-size="13" font-weight="bold">MELTING MILE</text>
+  <text x="468" y="824" fill="#9aa8d8" font-size="10">Route 1 · 30×25</text>
+  <text x="252" y="744" fill="#9aa8d8" font-size="9" text-anchor="end">E doors 29,6-7→FW</text>
+  <text x="252" y="788" fill="#9aa8d8" font-size="9" text-anchor="end">E doors 29,16-17→Lake</text>
+
+  <!-- MeltingMile<->Lake connector (3-tile visual nudge) -->
+  <rect x="462" y="784" width="14" height="10" fill="#ffe27a"/>
+
+  <!-- ============ MUNEN LAKE (49..74, -13..8) ============ -->
+  <rect x="476" y="768" width="104" height="88" rx="3" fill="#5f93c4" stroke="#2e4e74" stroke-width="2"/>
+  <ellipse cx="528" cy="816" rx="38" ry="24" fill="#7fb6d9"/>
+  <ellipse cx="546" cy="806" rx="16" ry="9" fill="#dcebf5" opacity="0.9"/>
+  <text x="486" y="788" fill="#102a44" font-size="13" font-weight="bold">MUNEN LAKE</text>
+  <text x="486" y="848" fill="#16324e" font-size="10">26×22 · frozen far side</text>
+
+  <!-- ============ MUNEN VILLAGE (0..48, 0..28) ============ -->
+  <rect x="280" y="820" width="196" height="116" rx="3" fill="#cfe2f0" stroke="#5a7a96" stroke-width="2"/>
+  <g fill="#9ab8cf"><rect x="308" y="868" width="20" height="14"/><rect x="368" y="894" width="20" height="14"/><rect x="424" y="884" width="20" height="14"/></g>
+  <g fill="#6f8aa0"><path d="M 306 868 l 12 -8 12 8 Z"/><path d="M 366 894 l 12 -8 12 8 Z"/><path d="M 422 884 l 12 -8 12 8 Z"/></g>
+  <text x="292" y="844" fill="#1c3248" font-size="14" font-weight="bold">MUNEN VILLAGE</text>
+  <text x="292" y="860" fill="#2c4258" font-size="10">49×29 · START · single exit</text>
+  <text x="292" y="926" fill="#41637e" font-size="9">connection N (offset 16, seamless)</text>
+
+  <!-- Munen<->MeltingMile seamless connection notch (door zone x22-27) -->
+  <rect x="368" y="814" width="24" height="12" fill="#ffe27a"/>
+  <text x="486" y="942" fill="#9aa8d8" font-size="9">exit zone x:22-27 y:0-1</text>
+
+  <!-- ============ LEGEND / COMPASS / SCALE ============ -->
+  <g transform="translate(40,80)">
+    <circle r="22" fill="#1c1c40" stroke="#7a86c2"/>
+    <path d="M 0 -16 L 5 6 L 0 2 L -5 6 Z" fill="#e8d8a0"/>
+    <text y="-28" fill="#c8d0f0" font-size="11" text-anchor="middle">N</text>
+  </g>
+  <g transform="translate(40,880)">
+    <rect width="220" height="76" rx="4" fill="#16163a" stroke="#5a5a92"/>
+    <rect x="12" y="14" width="16" height="8" fill="#ffe27a"/><text x="36" y="22" fill="#c8d0f0" font-size="10">warp / door (tiles noted)</text>
+    <line x1="12" y1="34" x2="28" y2="34" stroke="#c9b6ff" stroke-width="2" stroke-dasharray="3 4"/><text x="36" y="38" fill="#c8d0f0" font-size="10">script warp (dream)</text>
+    <rect x="12" y="46" width="16" height="8" fill="none" stroke="#7a86c2" stroke-dasharray="4 3"/><text x="36" y="54" fill="#c8d0f0" font-size="10">Act 2 planned location</text>
+    <line x1="120" y1="68" x2="248" y2="68" stroke="#e8d8a0" stroke-width="3" visibility="hidden"/>
+  </g>
+  <g transform="translate(770,930)">
+    <line x1="0" y1="0" x2="128" y2="0" stroke="#e8d8a0" stroke-width="3"/>
+    <line x1="0" y1="-5" x2="0" y2="5" stroke="#e8d8a0" stroke-width="3"/>
+    <line x1="128" y1="-5" x2="128" y2="5" stroke="#e8d8a0" stroke-width="3"/>
+    <text x="64" y="18" fill="#e8d8a0" font-size="11" text-anchor="middle">32 tiles</text>
+  </g>
+</svg>

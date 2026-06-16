@@ -1,0 +1,37 @@
+#dynamic 0x800000
+#org @main
+faceplayer
+lockall
+special 0x61
+compare 0x8004 1
+if 0x1 goto @snippet1
+compare 0x8004 2
+if 0x1 goto @snippet2
+msgbox @string0 MSG_KEEPOPEN
+release
+end
+
+'---------------
+#org @snippet1
+msgbox @string1 MSG_KEEPOPEN
+giveitem 209 1 1
+releaseall
+end
+
+'---------------
+#org @snippet2
+msgbox @string2 MSG_KEEPOPEN
+releaseall
+end
+
+'---------------
+#org @string0
+= Así que no tienes un SQUIRTEL[.]\pVuelve cuando tengas uno\ny te daré un regalo.
+
+'---------------
+#org @string1
+= ¡Un SQUIRTEL! Toma,\nseguro te sirve más a tí.
+
+'---------------
+#org @string2
+= Era el último que me quedaba[.]

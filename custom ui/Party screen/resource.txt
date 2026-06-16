@@ -1,0 +1,107 @@
+If you want to use a transparent window like B/W selection screen, please apply the following change.
+
+For firered
+	insert 00 48 00 47 xx xx xx xx at 0x11EF14.
+	50 20 05 49 00 F0 06 F8 52 20 04 49 00 F0 02 F8 03 48 00 47 03 4B 18 47 41 02 00 00 17 08 00 00 1D EF 11 08 39 0A 00 08
+
+	insert 00 47 at 0x11F074.
+	put pointer at 0x11F0AC.
+	50 20 00 21 00 F0 08 F8 52 20 10 21 00 F0 04 F8 02 48 00 68 02 49 08 47 02 4B 18 47 9C B0 03 02 77 F0 11 08 39 0A 00 08
+
+For emerald
+	insert 00 48 00 47 xx xx xx xx at 0x1B0598.
+	50 20 05 49 00 F0 06 F8 52 20 04 49 00 F0 02 F8 03 48 00 47 03 4B 18 47 41 02 00 00 17 08 00 00 A1 05 1B 08 B5 10 00 08
+
+	insert 00 47 at 0x1B06F8.
+	put pointer at 0x1B0730.
+	50 20 00 21 00 F0 08 F8 52 20 10 21 00 F0 04 F8 02 48 00 68 02 49 08 47 02 4B 18 47 C4 CE 03 02 FB 06 1B 08 B5 10 00 08
+
+
+The coordinates of the object such as Pokemon's name and icon are determined by referring to the table.
+Can change the layout of the selection screen by changing the data specified in this table.
+
+For firered
+
+	Data is 2 bytes(x-coordinate, y-coordinate)
+	The sprite coordinates are determined for each Pokemon.
+
+	Text coordinates
+		0x459EE8 - Pokemon's name
+		0x459EEC - Pokemon's level
+		0x459EF0 - Pokemon's gender
+		0x459EF4 - Pokemon's current HP
+		0x459EF8 - Pokemon's max HP
+		0x459EFC - HP gauge
+		0x459F00 - Text for battle tower
+
+	Sprite coordinates(Single Battle)
+		0x459F04 - Pokemon icon
+		0x459F06 - Item icon
+		0x459F08 - Status ailment
+		0x459F0A - Mark of monster ball
+	A similar data structure is allocated up to 0x459F34
+
+	Sprite coordinates(Double Battle)
+		0x459F34 - Pokemon icon
+		0x459F36 - Item icon
+		0x459F38 - Status ailment
+		0x459F3A - Mark of monster ball
+	A similar data structure is allocated up to 0x459F64
+
+	Sprite coordinates(Multi Battle1)
+		0x459F64 - Pokemon icon
+		0x459F66 - Item icon
+		0x459F68 - Status ailment
+		0x459F6A - Mark of monster ball
+	A similar data structure is allocated up to 0x459F94
+
+	Sprite coordinates(Multi Battle2)
+		0x459F94 - Pokemon icon
+		0x459F96 - Item icon
+		0x459F98 - Status ailment
+		0x459F9A - Mark of monster ball
+	A similar data structure is allocated up to 0x459FC4
+
+
+For emerald
+
+	Data is 2 bytes(x-coordinate, y-coordinate)
+	The sprite coordinates are determined for each Pokemon.
+
+	Text coordinates
+		0x6156E8 - Pokemon's name
+		0x6156EC - Pokemon's level
+		0x6156F0 - Pokemon's gender
+		0x6156F4 - Pokemon's current HP
+		0x6156F8 - Pokemon's max HP
+		0x6156FC - HP gauge
+		0x615700 - Text for battle tower
+
+	Sprite coordinates(Single Battle)
+		0x615704 - Pokemon icon
+		0x615706 - Item icon
+		0x615708 - Status ailment
+		0x61570A - Mark of monster ball
+	A similar data structure is allocated up to 0x615734
+
+	Sprite coordinates(Double Battle)
+		0x615734 - Pokemon icon
+		0x615736 - Item icon
+		0x615738 - Status ailment
+		0x61573A - Mark of monster ball
+	A similar data structure is allocated up to 0x615764
+
+	Sprite coordinates(Multi Battle1)
+		0x615764 - Pokemon icon
+		0x615766 - Item icon
+		0x615768 - Status ailment
+		0x61576A - Mark of monster ball
+	A similar data structure is allocated up to 0x615794
+
+	Sprite coordinates(Multi Battle2)
+		0x615794 - Pokemon icon
+		0x615796 - Item icon
+		0x615798 - Status ailment
+		0x61579A - Mark of monster ball
+	A similar data structure is allocated up to 0x6157C4
+

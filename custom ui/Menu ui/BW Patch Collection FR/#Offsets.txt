@@ -1,0 +1,59 @@
+B66FB0 - CFFFFF = Free Space, doesn't clash with any other patches.
+"N/A" = Patch doesn't use any free space, only space that is already used by the vanilla ROM.
+
+The Combo Patch uses C1F360 - C3ECFF
+---------------------------------------------------------------------------------------------
+
+	1a. BW HP Bars Fixed FR
+	C1F360 - C221CF
+
+	1b. B2W2 HP Bars
+	C1F360 - C1F9BA
+
+2. BW Battle Text Box
+N/A
+
+3. BW Main Menu
+C221D0 - C23AE5
+
+4. BW Start Menu
+C23AF0 - C28FB7
+
+5. BW Pokédex
+N/A
+
+6. BW Party Screen
+N/A
+
+	7a. BW Summary Screen
+	N/A
+
+	7b. BW Summary Screen (New)
+	C28FC0 - C34AB3
+
+8. BW Bag
+C34AC0 - C373F9
+
+9. BW Options Menu
+C37400 - C38B19
+
+10. BW Mart
+C38B20 - C38E5F
+
+11. BW Pokémon PC
+N/A
+
+12. BW Item PC
+C38E60 - C3903A
+
+	13a. BW Naming Screen
+	C39040 - C39343
+
+	13b. B2W2 Naming Screen
+	C39040 - C3C6EF
+
+	14a. BW EV-IV Screen
+	C3C6F0 - C3ECFF
+
+	14b. BW EV-IV Screen (New)
+	C3C6F0 - C3EB27

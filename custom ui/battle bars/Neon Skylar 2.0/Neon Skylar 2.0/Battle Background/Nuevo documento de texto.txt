@@ -1,0 +1,92 @@
+Grass Background
+
+VV = 24844C
+WW = 2489A8
+XX = 248C68
+YY = 248F58
+ZZ = 248400
+
+Second Grass Background (There are two Grass Images in FR, I don't know the reason.)
+
+VV = 2490C4
+WW = 249620
+XX = 2498DC
+YY = 249E10
+ZZ = 249074
+
+Sand Background
+
+VV = 249FE4
+WW = 24A37C
+XX = 24A618
+YY = 24A844
+ZZ = 249F98
+
+DIVE Background
+
+VV = 24A990
+WW = 24ACD0
+XX = 24AF70
+YY = 24B0DC
+ZZ = 24A940
+
+Sea Background
+
+VV = 24B1EC
+WW = 24B608
+XX = 24B8A8
+YY = 24BBE0
+ZZ = 24B19C
+
+Pon Sea Background
+
+VV = 24BD38
+WW = 24C07C
+XX = 24C314
+YY = 24C520
+ZZ = 24BCE0
+
+Craggy Background (Don't know what this is supposed to be called)
+
+VV = 24C624
+WW = 24C9B8
+XX = 24CBF8
+YY = 24CEC8
+ZZ = 24C5D8
+
+Cave Background
+
+VV = 24CFEC
+WW = 24D418
+XX = 24D6B8
+YY = 24DC98
+ZZ = 24CF98
+
+Multi-type Backgrounds/Indoor Backgrounds (Usually appears in Trainer Battles)
+
+-There are 5 different ones in a row. They use the same setup, but different palettes.
+VV = 24DE34
+WW = 24E16C
+XX = 24E410
+YY = 24E490
+ZZ =
+1. 24DDF0
+2. 24E81C
+3. 24E528
+4. 24E56C
+5. 24E5B8
+
+Another set of Multi-type backgrounds/Indoor Backgrounds. This set has 7.
+
+VV = 24E858
+WW = 24EB90
+XX = 24E410
+YY = 24E490
+ZZ =
+1. 24E604
+2. 24E650
+3. 24E6A4
+4. 24E6F0
+5. 24E740
+6. 24E78C
+7. 24E7DC

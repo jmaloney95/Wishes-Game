@@ -1,0 +1,76 @@
+Combo Patch Credits:
+LibertyTwins, Verloren 5, Shiny Miner, Compumaxx, ansh860, Vent, Kiy, usigusom, (), 黒インク, mZake, Acimut, TerraNovaFR, Neon Skylar, CtrlFootPrint
+
+The Combo Patch is an all-in-one patch that applies all of the patches.
+Out of the A/B patches, it uses 1b, 7a, 13b and 14b, as these are the best versions of those screens to use with HUBOL.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	1a. BW HP Bars Fixed FR
+	https://www.pokecommunity.com/threads/465589/
+	Credits: LibertyTwins, PlatinumMaster, EternalCode
+
+	1b. B2W2 HP Bars
+	https://www.pokecommunity.com/threads/488444/
+	Credits: Verloren 5
+
+2. BW Battle Text Box
+Credits: LibertyTwins
+
+3. BW Main Menu
+https://github.com/Shiny-Miner/C-injections-FR/tree/Main-Menu-BW
+Credits: LibertyTwins, Shiny Miner, Compumaxx, ansh860
+
+4. BW Start Menu
+https://github.com/ansh746/start-menu
+Credits: LibertyTwins, ansh860
+
+5. BW Pokédex
+https://whackahack.com/foro/threads/65930/
+Credits: Vent
+
+6. BW Party Screen
+https://www.pokecommunity.com/threads/414022/
+Credits: Kiy, usigusom, (), 黒インク
+
+	7a. BW Summary Screen
+	https://www.pokecommunity.com/threads/399121/
+	Credits: Againsts
+
+	7b. BW Summary Screen (New)
+	https://github.com/Shiny-Miner/New-BW-summary-screen
+	Credits: LibertyTwins, Shiny Miner, mZake, Acimut, Compumaxx
+
+8. B2W2 Bag
+https://www.pokecommunity.com/threads/486329/
+Credits: Verloren 5
+
+9. BW Options Menu
+https://github.com/Shiny-Miner/FR-OptionMenu
+Credits: LibertyTwins, Shiny Miner, Compumaxx, ansh860
+
+10. BW Mart
+https://www.pokecommunity.com/threads/491299/
+Credits: Verloren 5
+
+11. BW Pokémon PC
+https://whackahack.com/foro/threads/63751/
+Credits: Vent
+
+12. BW Item PC
+Credits: Vent
+
+	13a. BW Naming Screen
+	https://www.pokecommunity.com/threads/407583/
+	Credits: Neon Skylar, Vent
+
+	13b. B2W2 Naming Screen
+	https://github.com/Shiny-Miner/Naming-screen-BW
+	Credits: LibertyTwins, Shiny Miner, Compumaxx, ansh860, TerraNovaFR, Acimut
+
+	14a. BW EV-IV Screen
+	https://github.com/Acimut/Custom-EV-IV-Display-Screen
+	Credits: LibertyTwins, CtrlFootPrint, mZake
+
+	14b. BW EV-IV Screen (New)
+	https://github.com/Shiny-Miner/Gender-based-EV-IV-Display
+	Credits: LibertyTwins, Shiny Miner, Acimut, Tio Terry
