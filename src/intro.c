@@ -19,6 +19,7 @@
 #include "intro_credits_graphics.h"
 #include "trig.h"
 #include "intro.h"
+#include "flatfoot_intro.h"
 #include "graphics.h"
 #include "sound.h"
 #include "util.h"
@@ -1105,13 +1106,9 @@ static u8 SetUpCopyrightScreen(void)
     case COPYRIGHT_START_INTRO:
         if (UpdatePaletteFade())
             break;
-#if EXPANSION_INTRO == TRUE
-        SetMainCallback2(CB2_ExpansionIntro);
-        CreateTask(Task_HandleExpansionIntro, 0);
-#else
-        CreateTask(Task_Scene1_Load, 0);
-        SetMainCallback2(MainCB2_Intro);
-#endif
+        // Pokemon Wishes of Tomorrow: skip the stock RHH/FRLG game intros and play the
+        // Flatfoot Games studio card instead (it hands off to the title screen afterward).
+        SetMainCallback2(CB2_FlatfootIntro);
         if (gMultibootProgramStruct.gcmb_field_2 != 0)
         {
             if (gMultibootProgramStruct.gcmb_field_2 == 2)

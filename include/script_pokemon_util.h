@@ -12,5 +12,8 @@ void Script_GetChosenMonOffensiveEVs(void);
 void Script_GetChosenMonDefensiveEVs(void);
 void Script_GetChosenMonOffensiveIVs(void);
 void Script_GetChosenMonDefensiveIVs(void);
+void SetSeafloorGyaradosShiny(void);
+u16 CheckPlayerHasRedGyarados(void);
+u16 TakeRedGyaradosFromPlayer(void);
 
 #endif // GUARD_SCRIPT_POKEMON_UTIL_H

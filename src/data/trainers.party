@@ -4789,38 +4789,34 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Crunch
 
 === TRAINER_ROXANNE_1 ===
-Name: ROXANNE
+Name: RedFatality
 Class: Leader
-Pic: Leader Roxanne
-Gender: Female
-Music: Female
-Items: Potion / Potion
+Pic: Leader Brawly
+Gender: Male
+Music: Male
+Items: Super Potion / Super Potion
 Double Battle: No
 AI: Basic Trainer
 
-Geodude
-Level: 12
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
-- Defense Curl
-- Rock Throw
-- Rock Tomb
-
-Geodude
-Level: 12
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
-- Defense Curl
-- Rock Throw
-- Rock Tomb
-
-Nosepass @ Oran Berry
+Snorunt
 Level: 15
+IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
+
+Sealeo
+Level: 16
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Froslass
+Level: 17
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
-- Block
-- Harden
-- Tackle
-- Rock Tomb
+
+Arcanine @ Sitrus Berry
+Level: 18
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+- Flame Wheel
+- Bite
+- Take Down
+- Leer
 
 === TRAINER_BRAWLY_1 ===
 Name: BRAWLY
@@ -5971,7 +5967,7 @@ Level: 7
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JOSH ===
-Name: JOSH
+Name: MikManc
 Class: Youngster
 Pic: Youngster
 Gender: Male
@@ -5979,13 +5975,17 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 10
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
-- Tackle
+Deerling
+Level: 13
+
+Swadloon
+Level: 14
+
+Leavanny
+Level: 16
 
 === TRAINER_TOMMY ===
-Name: TOMMY
+Name: Minister
 Class: Youngster
 Pic: Youngster
 Gender: Male
@@ -5993,13 +5993,14 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 8
-IVs: 13 HP / 13 Atk / 13 Def / 13 SpA / 13 SpD / 13 Spe
+Oddish
+Level: 14
 
-Geodude
-Level: 8
-IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
+Claydol
+Level: 15
+
+Noivern
+Level: 16
 
 === TRAINER_JOEY ===
 Name: JOEY
@@ -10552,7 +10553,7 @@ Level: 22
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MARC ===
-Name: MARC
+Name: Yiffer
 Class: Hiker
 Pic: Hiker
 Gender: Male
@@ -10560,13 +10561,11 @@ Music: Hiker
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 8
-IVs: 14 HP / 14 Atk / 14 Def / 14 SpA / 14 SpD / 14 Spe
+Snorunt
+Level: 11
 
-Geodude
-Level: 8
-IVs: 15 HP / 15 Atk / 15 Def / 15 SpA / 15 SpD / 15 Spe
+Spheal
+Level: 12
 
 === TRAINER_BRENDEN ===
 Name: BRENDEN
@@ -16873,3 +16872,303 @@ Double Battle: No
 Kyogre
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+/*
+Pokémon Wishes of Tomorrow — Rival Haru, first encounter in Munen Village.
+Sequential counter-pick on player's starter choice:
+  Player Tyrunt   -> Haru has Amaura   (TRAINER_HARU_HAS_AMAURA)
+  Player Amaura   -> Haru has Anorith  (TRAINER_HARU_HAS_ANORITH)
+  Player Anorith  -> Haru has Tyrunt   (TRAINER_HARU_HAS_TYRUNT)
+All three at level 5 (matches player's starter level).
+*/
+
+=== TRAINER_HARU_HAS_AMAURA ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Amaura
+Level: 5
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+=== TRAINER_HARU_HAS_ANORITH ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Anorith
+Level: 5
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+=== TRAINER_HARU_HAS_TYRUNT ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Tyrunt
+Level: 5
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+=== TRAINER_SHINKANSEN_GOON ===
+Name: ???
+Class: Team Magma
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move
+
+Poochyena
+Level: 13
+
+Numel
+Level: 14
+
+Koffing
+Level: 16
+
+=== TRAINER_ROUTE2_FISHERMAN ===
+Name: Wade
+Class: Fisherman
+Pic: Fisherman
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Magikarp
+Level: 12
+
+Goldeen
+Level: 14
+
+=== TRAINER_ROUTE2_HIKER ===
+Name: Clyde
+Class: Hiker
+Pic: Hiker
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Geodude
+Level: 13
+
+Machop
+Level: 15
+
+=== TRAINER_ROUTE2_CAMPER ===
+Name: Denny
+Class: Camper
+Pic: Camper
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Poochyena
+Level: 12
+
+Zigzagoon
+Level: 13
+
+Wingull
+Level: 15
+
+=== TRAINER_ROUTE2_SWIMMER_ALLISON ===
+Name: Allison
+Class: Swimmer F
+Pic: Swimmer Allison
+Gender: Female
+Music: Swimmer
+Double Battle: No
+AI: Check Bad Move
+
+Luvdisc
+Level: 12
+
+Marill
+Level: 13
+
+=== TRAINER_ROUTE2_SWIMMER_SKYE ===
+Name: Skye
+Class: Swimmer F
+Pic: Swimmer Skye
+Gender: Female
+Music: Swimmer
+Double Battle: No
+AI: Check Bad Move
+
+Wingull
+Level: 13
+
+Staryu
+Level: 14
+
+=== TRAINER_ROUTE2_SWIMMER_ROSA ===
+Name: Rosa
+Class: Swimmer F
+Pic: Swimmer Rosa
+Gender: Female
+Music: Swimmer
+Double Battle: No
+AI: Check Bad Move
+
+Luvdisc
+Level: 14
+
+Corsola
+Level: 15
+
+=== TRAINER_ROUTE2_SWIMMER_MARINA ===
+Name: Marina
+Class: Swimmer F
+Pic: Swimmer Marina
+Gender: Female
+Music: Swimmer
+Double Battle: No
+AI: Check Bad Move
+
+Goldeen
+Level: 15
+
+Wailmer
+Level: 16
+
+=== TRAINER_TORII_ORACLE ===
+Name: The Oracle
+Class: Hex Maniac
+Pic: Hex Maniac
+Gender: Female
+Music: Female
+Double Battle: Yes
+AI: Check Bad Move / Try To Faint
+
+Shuppet
+Level: 15
+
+Duskull
+Level: 16
+
+Sableye
+Level: 18
+
+Banette
+Level: 20
+
+=== TRAINER_TORII_HIKER ===
+Name: Bouldr
+Class: Hiker
+Pic: Hiker
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Gloom
+Level: 15
+
+Roselia
+Level: 16
+
+Weepinbell
+Level: 18
+
+=== TRAINER_TORII_BLACKBELT ===
+Name: Kenji
+Class: Black Belt
+Pic: Black Belt
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Machop
+Level: 16
+
+Meditite
+Level: 17
+
+Machoke
+Level: 19
+
+=== TRAINER_DRACO_TORII_AURORUS ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Aurorus
+Level: 21
+
+Golbat
+Level: 19
+
+Sneasel
+Level: 20
+
+=== TRAINER_DRACO_TORII_ARMALDO ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Armaldo
+Level: 21
+
+Golbat
+Level: 19
+
+Sneasel
+Level: 20
+
+=== TRAINER_DRACO_TORII_TYRANTRUM ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Tyrantrum
+Level: 21
+
+Golbat
+Level: 19
+
+Sneasel
+Level: 20
+
+=== TRAINER_STARSUMMIT_BOSS ===
+Name: ???
+Class: Leader
+Pic: Gold Oni
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Typhlosion
+Level: 50
+
+Feraligatr
+Level: 50

@@ -48,6 +48,7 @@
 #include "union_room_chat.h"
 #include "constants/map_groups.h"
 #include "constants/items.h"
+#include "constants/heal_locations.h"
 #include "difficulty.h"
 #include "follower_npc.h"
 
@@ -98,7 +99,7 @@ static void InitPlayerTrainerId(void)
 // L=A isnt set here for some reason.
 static void SetDefaultOptions(void)
 {
-    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_MID;
+    gSaveBlock2Ptr->optionsTextSpeed = OPTIONS_TEXT_SPEED_FAST;
     gSaveBlock2Ptr->optionsWindowFrameType = 0;
     gSaveBlock2Ptr->optionsSound = OPTIONS_SOUND_MONO;
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
@@ -137,7 +138,9 @@ static void WarpToTruck(void)
     if (IS_FRLG)
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
     else
-        SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
+        // Pokémon Wishes of Tomorrow: spawn on the doorstep of the player's house in Munen.
+        // (9,14) lines up with the door warp tile and the painted doorway after the border resize.
+        SetWarpDestination(MAP_GROUP(MAP_MUNEN_VILLAGE_2), MAP_NUM(MAP_MUNEN_VILLAGE_2), WARP_ID_NONE, 9, 14);
     WarpIntoMap();
 }
 
@@ -183,6 +186,11 @@ void NewGameInitData(void)
     PlayTimeCounter_Reset();
     ClearPokedexFlags();
     InitEventData();
+    FlagSet(FLAG_SYS_B_DASH); // Pokémon Wishes of Tomorrow: give Running Shoes from the start.
+    AddBagItem(ITEM_RARE_CANDY, 99); // TEST ONLY: stack of Rare Candies for playtesting -- remove before release.
+    // Pokémon Wishes of Tomorrow: white-out sends the player home (the player's house
+    // front door, which heals via Mom inside), not to some other town's Pokémon Center.
+    SetLastHealLocationWarp(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE);
     ClearTVShowData();
     ResetGabbyAndTy();
     ClearSecretBases();

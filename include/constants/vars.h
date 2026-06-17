@@ -338,4 +338,11 @@
 #define TESTING_VAR_UNUSED_7                (TESTING_VARS_START + 0x7)
 #endif // TESTING
 
+
+
+// === Pokémon Wishes of Tomorrow — Munen Village ===
+#define VAR_MUNEN_INTRO_STATE          VAR_UNUSED_0x404E
+#define VAR_FROSTWOOD_STATE            VAR_UNUSED_0x4083  // Frostwood ON_FRAME trigger (Clarkson Mt. Munen call after Ember Badge)
+#define VAR_STARTER_CHOICE             VAR_DEWFORD_TOWN_STATE  // repurposes 0x4052 (Unused Var in vanilla)
+
 #endif // GUARD_CONSTANTS_VARS_H

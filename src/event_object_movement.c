@@ -501,6 +501,18 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_PlayerUnderwater,      OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER},
     {gObjectEventPal_QuintyPlump,           OBJ_EVENT_PAL_TAG_QUINTY_PLUMP},
     {gObjectEventPal_QuintyPlumpReflection, OBJ_EVENT_PAL_TAG_QUINTY_PLUMP_REFLECTION},
+    {gObjectEventPal_Kimono,                OBJ_EVENT_PAL_TAG_KIMONO},
+    {gObjectEventPal_Eusine,                OBJ_EVENT_PAL_TAG_EUSINE},
+    {gObjectEventPal_Sage,                  OBJ_EVENT_PAL_TAG_SAGE},
+    {gObjectEventPal_Oni,                   OBJ_EVENT_PAL_TAG_ONI},
+    {gObjectEventPal_Gordie,                OBJ_EVENT_PAL_TAG_GORDIE},
+    {gObjectEventPal_Sophocles,             OBJ_EVENT_PAL_TAG_SOPHOCLES},
+    {gObjectEventPal_SwimmerAllison,        OBJ_EVENT_PAL_TAG_SWIMMER_ALLISON},
+    {gObjectEventPal_SwimmerBlue,           OBJ_EVENT_PAL_TAG_SWIMMER_BLUE},
+    {gObjectEventPal_SwimmerPink,           OBJ_EVENT_PAL_TAG_SWIMMER_PINK},
+    {gObjectEventPal_SwimmerSky,            OBJ_EVENT_PAL_TAG_SWIMMER_SKY},
+    {gObjectEventPal_GoldOni,               OBJ_EVENT_PAL_TAG_GOLD_ONI},
+    {gObjectEventPal_OniGoon,               OBJ_EVENT_PAL_TAG_ONI_GOON},
     {gObjectEventPal_Truck,                 OBJ_EVENT_PAL_TAG_TRUCK},
     {gObjectEventPal_Vigoroth,              OBJ_EVENT_PAL_TAG_VIGOROTH},
     {gObjectEventPal_EnemyZigzagoon,        OBJ_EVENT_PAL_TAG_ZIGZAGOON},
@@ -2366,7 +2378,7 @@ void UpdateFollowingPokemon(void)
      || FlagGet(B_FLAG_FOLLOWERS_DISABLED)
      || !GetFollowerInfo(&species, &shiny, &female)
      || SpeciesToGraphicsInfo(species, shiny, female) == NULL
-     || (gMapHeader.mapType == MAP_TYPE_INDOOR && SpeciesToGraphicsInfo(species, shiny, female)->oam->size > ST_OAM_SIZE_2)
+     || gMapHeader.mapType == MAP_TYPE_INDOOR // Wishes of Tomorrow: hide the Pokémon follower in all interiors
      || FlagGet(FLAG_TEMP_HIDE_FOLLOWER)
      || PlayerHasFollowerNPC()
      )

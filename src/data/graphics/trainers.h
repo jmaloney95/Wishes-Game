@@ -25,6 +25,17 @@ const u16 gTrainerPalette_AquaGruntF[] = INCGFX_U16("graphics/trainers/front_pic
 const u32 gTrainerFrontPic_SwimmerM[] = INCGFX_U32("graphics/trainers/front_pics/swimmer_m.png", ".4bpp.smol");
 const u16 gTrainerPalette_SwimmerM[] = INCGFX_U16("graphics/trainers/front_pics/swimmer_m.png", ".gbapal");
 
+const u32 gTrainerFrontPic_SwimmerAllison[] = INCGFX_U32("graphics/trainers/front_pics/swimmer_allison.png", ".4bpp.smol");
+const u16 gTrainerPalette_SwimmerAllison[] = INCGFX_U16("graphics/trainers/front_pics/swimmer_allison.png", ".gbapal");
+const u32 gTrainerFrontPic_SwimmerSkye[] = INCGFX_U32("graphics/trainers/front_pics/swimmer_skye.png", ".4bpp.smol");
+const u16 gTrainerPalette_SwimmerSkye[] = INCGFX_U16("graphics/trainers/front_pics/swimmer_skye.png", ".gbapal");
+const u32 gTrainerFrontPic_SwimmerRosa[] = INCGFX_U32("graphics/trainers/front_pics/swimmer_rosa.png", ".4bpp.smol");
+const u16 gTrainerPalette_SwimmerRosa[] = INCGFX_U16("graphics/trainers/front_pics/swimmer_rosa.png", ".gbapal");
+const u32 gTrainerFrontPic_SwimmerMarina[] = INCGFX_U32("graphics/trainers/front_pics/swimmer_marina.png", ".4bpp.smol");
+const u16 gTrainerPalette_SwimmerMarina[] = INCGFX_U16("graphics/trainers/front_pics/swimmer_marina.png", ".gbapal");
+const u32 gTrainerFrontPic_GoldOni[] = INCGFX_U32("graphics/trainers/front_pics/gold_oni.png", ".4bpp.smol");
+const u16 gTrainerPalette_GoldOni[] = INCGFX_U16("graphics/trainers/front_pics/gold_oni.png", ".gbapal");
+
 const u32 gTrainerFrontPic_MagmaGruntM[] = INCGFX_U32("graphics/trainers/front_pics/magma_grunt_m.png", ".4bpp.smol");
 const u16 gTrainerPalette_MagmaGruntM[] = INCGFX_U16("graphics/trainers/front_pics/magma_grunt_m.png", ".gbapal");
 
@@ -467,6 +478,8 @@ const u32 gTrainerFrontPic_PainterFrlg[] = INCGFX_U32("graphics/trainers/front_p
 const u16 gTrainerPalette_PainterFrlg[] = INCGFX_U16("graphics/trainers/palettes/painter_frlg.pal", ".gbapal");
 
 const u8 gTrainerBackPic_Brendan[] = INCGFX_U8("graphics/trainers/back_pics/brendan.png", ".4bpp");
+// Wishes of Tomorrow: the custom back sprite has its own palette (do not share the front pic's).
+const u16 gTrainerPalette_BrendanBack[] = INCGFX_U16("graphics/trainers/back_pics/brendan.png", ".gbapal");
 const u8 gTrainerBackPic_May[] = INCGFX_U8("graphics/trainers/back_pics/may.png", ".4bpp");
 const u8 gTrainerBackPic_Red[] = INCGFX_U8("graphics/trainers/back_pics/red.png", ".4bpp");
 const u8 gTrainerBackPic_Leaf[] = INCGFX_U8("graphics/trainers/back_pics/leaf.png", ".4bpp");
@@ -507,6 +520,12 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_AQUA_GRUNT_F, gTrainerFrontPic_AquaGruntF, gTrainerPalette_AquaGruntF),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_M, gTrainerFrontPic_SwimmerM, gTrainerPalette_SwimmerM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MAGMA_GRUNT_M, gTrainerFrontPic_MagmaGruntM, gTrainerPalette_MagmaGruntM),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_GOLD_ONI, gTrainerFrontPic_GoldOni, gTrainerPalette_GoldOni),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_ALLISON, gTrainerFrontPic_SwimmerAllison, gTrainerPalette_SwimmerAllison),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_SKYE, gTrainerFrontPic_SwimmerSkye, gTrainerPalette_SwimmerSkye),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_ROSA, gTrainerFrontPic_SwimmerRosa, gTrainerPalette_SwimmerRosa),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_MARINA, gTrainerFrontPic_SwimmerMarina, gTrainerPalette_SwimmerMarina),
+
     TRAINER_SPRITE(TRAINER_PIC_FRONT_EXPERT_M, gTrainerFrontPic_ExpertM, gTrainerPalette_ExpertM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_AQUA_ADMIN_M, gTrainerFrontPic_AquaAdminM, gTrainerPalette_AquaAdminM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_BLACK_BELT, gTrainerFrontPic_BlackBelt, gTrainerPalette_BlackBelt),
@@ -734,7 +753,7 @@ const union AnimCmd *const sBackAnims_OldManPokedude[] = {
 
 const struct TrainerBacksprite gTrainerBacksprites[] =
 {
-    TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_BRENDAN, 4, gTrainerBackPic_Brendan, gTrainerPalette_Brendan, sBackAnims_Hoenn),
+    TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_BRENDAN, 4, gTrainerBackPic_Brendan, gTrainerPalette_BrendanBack, sBackAnims_Hoenn),
     TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_MAY, 4, gTrainerBackPic_May, gTrainerPalette_May, sBackAnims_Hoenn),
     TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_RED, 5, gTrainerBackPic_Red, gTrainerBackPicPalette_Red, sBackAnims_Kanto),
     TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_LEAF, 5, gTrainerBackPic_Leaf, gTrainerBackPicPalette_Leaf, sBackAnims_Kanto),

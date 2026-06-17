@@ -719,6 +719,35 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
 
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
 
+    // Wishes of Tomorrow: Ashlands always battles on the volcanic field.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ASHLANDS)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ASHLANDS))
+        return BATTLE_ENVIRONMENT_VOLCANO;
+
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_STAR_SUMMIT)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_STAR_SUMMIT))
+        return BATTLE_ENVIRONMENT_VOLCANO;
+
+    // Wishes of Tomorrow: the frozen south (Munen, Melting Mile, Frostwood) battles on the
+    // snowy mountain field (time-of-day variants).
+    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MUNEN_VILLAGE_2)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MUNEN_VILLAGE_2))
+     || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MELTING_MILE)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MELTING_MILE))
+     || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FROSTWOOD_TOWN)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FROSTWOOD_TOWN)))
+        return BATTLE_ENVIRONMENT_MOUNTAIN;
+
+    // Wishes of Tomorrow: the Torii Route battles on the rocky ascent (time-of-day variants).
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_TORII)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_TORII))
+        return BATTLE_ENVIRONMENT_TORII;
+
+    // Wishes of Tomorrow: Route 2 shoreline -- beach on the upper half, lakeside below.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE_2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE_2))
+        return (y - MAP_OFFSET < 24) ? BATTLE_ENVIRONMENT_SAND : BATTLE_ENVIRONMENT_POND;
+
     if (MetatileBehavior_IsTallGrass(tileBehavior))
         return BATTLE_ENVIRONMENT_GRASS;
     if (MetatileBehavior_IsLongGrass(tileBehavior))

@@ -19,6 +19,7 @@
 #include "scanline_effect.h"
 #include "gpu_regs.h"
 #include "trig.h"
+#include "random.h"
 #include "graphics.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
@@ -64,6 +65,74 @@ static const u32 sTitleScreenRayquazaGfx[] = INCGFX_U32("graphics/title_screen/r
 static const u32 sTitleScreenRayquazaTilemap[] = INCBIN_U32("graphics/title_screen/rayquaza.bin.smolTM");
 static const u32 sTitleScreenLogoShineGfx[] = INCGFX_U32("graphics/title_screen/logo_shine.png", ".4bpp.smol");
 static const u32 sTitleScreenCloudsGfx[] = INCGFX_U32("graphics/title_screen/clouds.png", ".4bpp.smol");
+
+// Pokemon Wishes of Tomorrow: single full-screen 4bpp title (PRESS START baked in).
+// 5 BG palette banks; each tile's bank is in the tilemap entry's high nibble.
+static const u32 sTitleScreenWotGfx[] = INCGFX_U32("graphics/title_screen/wot_title.png", ".4bpp.smol", "-num_tiles 304 -Wnum_tiles");
+static const u32 sTitleScreenWotTilemap[] = INCBIN_U32("graphics/title_screen/wot_title.bin.smolTM");
+static const u16 sTitleScreenWotPal[] = INCGFX_U16("graphics/title_screen/wot_title.pal", ".gbapal");
+
+// Pokemon Wishes of Tomorrow: Jirachi as a bobbing OBJ sprite over the title BG.
+#define TAG_WOT_JIRACHI 2000
+static const u32 sJirachiGfx[] = INCGFX_U32("graphics/title_screen/jirachi.png", ".4bpp.smol");
+static const u16 sJirachiPal[] = INCGFX_U16("graphics/title_screen/jirachi.pal", ".gbapal");
+
+static const struct OamData sJirachiOamData =
+{
+    .y = 0,
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .mosaic = FALSE,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(64x64),
+    .x = 0,
+    .matrixNum = 0,
+    .size = SPRITE_SIZE(64x64),
+    .tileNum = 0,
+    .priority = 1,
+    .paletteNum = 0,
+    .affineParam = 0,
+};
+
+static const union AnimCmd sJirachiAnim[] =
+{
+    ANIMCMD_FRAME(0, 30),
+    ANIMCMD_END,
+};
+static const union AnimCmd *const sJirachiAnimTable[] = { sJirachiAnim };
+
+static void SpriteCB_Jirachi(struct Sprite *sprite);
+
+static const struct SpriteTemplate sJirachiSpriteTemplate =
+{
+    .tileTag = TAG_WOT_JIRACHI,
+    .paletteTag = TAG_WOT_JIRACHI,
+    .oam = &sJirachiOamData,
+    .anims = sJirachiAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_Jirachi,
+};
+
+static const struct CompressedSpriteSheet sJirachiSpriteSheet[] =
+{
+    { .data = sJirachiGfx, .size = 64 * 32, .tag = TAG_WOT_JIRACHI },
+    {},
+};
+static const struct SpritePalette sJirachiSpritePalette[] =
+{
+    { .data = sJirachiPal, .tag = TAG_WOT_JIRACHI },
+    {},
+};
+
+// Slow vertical bob: ~2px amplitude, ~3s period. Base y keeps Jirachi where it sat in the art.
+#define JIRACHI_BASE_X 120   // sprite center x (64-wide sprite, top-left 88)
+#define JIRACHI_BASE_Y 95    // sprite center y (top-left ~63)
+static void SpriteCB_Jirachi(struct Sprite *sprite)
+{
+    sprite->data[0] += 1;                       // phase (full bob ~256 frames, ~4s)
+    sprite->y2 = Sin(sprite->data[0] & 0xFF, 2);
+}
 
 
 
@@ -424,7 +493,9 @@ static void CreatePressStartBanner(s16 x, s16 y)
     {
         spriteId = CreateSprite(&sStartCopyrightBannerSpriteTemplate, x, y, 0);
         StartSpriteAnim(&gSprites[spriteId], i);
-        gSprites[spriteId].sAnimate = TRUE;
+        gSprites[spriteId].sAnimate = FALSE;             // Wishes of Tomorrow: no blink
+        gSprites[spriteId].callback = SpriteCallbackDummy; // ...and don't toggle visibility
+        gSprites[spriteId].invisible = TRUE;             // PRESS START is baked into the BG
     }
 }
 
@@ -438,6 +509,8 @@ static void CreateCopyrightBanner(s16 x, s16 y)
     {
         spriteId = CreateSprite(&sStartCopyrightBannerSpriteTemplate, x, y, 0);
         StartSpriteAnim(&gSprites[spriteId], i + NUM_PRESS_START_FRAMES);
+        gSprites[spriteId].callback = SpriteCallbackDummy;
+        gSprites[spriteId].invisible = TRUE;   // Wishes of Tomorrow: hide GF copyright
     }
 }
 
@@ -599,6 +672,11 @@ void CB2_InitTitleScreen(void)
         // bg3
         DecompressDataWithHeaderVram(sTitleScreenRayquazaGfx, (void *)(BG_CHAR_ADDR(2)));
         DecompressDataWithHeaderVram(sTitleScreenRayquazaTilemap, (void *)(BG_SCREEN_ADDR(26)));
+        // Pokemon Wishes of Tomorrow: overwrite BG0 (char base 2 / screen base 26) with the
+        // custom full-screen title and load its 5 palette banks into BG banks 0-4.
+        DecompressDataWithHeaderVram(sTitleScreenWotGfx, (void *)(BG_CHAR_ADDR(2)));
+        DecompressDataWithHeaderVram(sTitleScreenWotTilemap, (void *)(BG_SCREEN_ADDR(26)));
+        LoadPalette(sTitleScreenWotPal, BG_PLTT_ID(0), 3 * PLTT_SIZE_4BPP);
         // bg1
         DecompressDataWithHeaderVram(sTitleScreenCloudsGfx, (void *)(BG_CHAR_ADDR(3)));
         DecompressDataWithHeaderVram(gTitleScreenCloudsTilemap, (void *)(BG_SCREEN_ADDR(27)));
@@ -612,6 +690,10 @@ void CB2_InitTitleScreen(void)
         LoadCompressedSpriteSheet(&sPokemonLogoShineSpriteSheet[0]);
         LoadPalette(gTitleScreenEmeraldVersionPal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         LoadSpritePalette(&sSpritePalette_PressStart[0]);
+        // Pokemon Wishes of Tomorrow: load + create the bobbing Jirachi sprite.
+        LoadCompressedSpriteSheet(&sJirachiSpriteSheet[0]);
+        LoadSpritePalette(&sJirachiSpritePalette[0]);
+        CreateSprite(&sJirachiSpriteTemplate, JIRACHI_BASE_X, JIRACHI_BASE_Y, 0);
         gMain.state = 2;
         break;
     case 2:
@@ -649,12 +731,13 @@ void CB2_InitTitleScreen(void)
         SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(27) | BGCNT_16COLOR | BGCNT_TXT256x256);
         SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(9) | BGCNT_256COLOR | BGCNT_AFF256x256);
         EnableInterrupts(INTR_FLAG_VBLANK);
+        // Pokemon Wishes of Tomorrow: BG0 (custom title) + OBJ (bobbing Jirachi). Stock title
+        // sprites stay offscreen at y=DISPLAY_HEIGHT so only Jirachi is visible.
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1
                                     | DISPCNT_OBJ_1D_MAP
-                                    | DISPCNT_BG2_ON
-                                    | DISPCNT_OBJ_ON
-                                    | DISPCNT_WIN0_ON
-                                    | DISPCNT_OBJWIN_ON);
+                                    | DISPCNT_BG0_ON
+                                    | DISPCNT_OBJ_ON);
         m4aSongNumStart(MUS_TITLE);
         gMain.state = 5;
         break;
@@ -669,12 +752,71 @@ void CB2_InitTitleScreen(void)
     }
 }
 
+// Pokemon Wishes of Tomorrow: sparkle the sky stars. Stars are split across 4 channels
+// at BG palette indices 12-15 (in banks 0-6). Each channel flashes bright then decays,
+// with its own randomized wait before the next flash, so individual stars twinkle at
+// different times instead of all pulsing together. Only star palette slots are touched.
+#define NUM_STAR_CHANNELS 4
+#define STAR_BG_BANKS     3
+#define STAR_DIM          8     // resting brightness (0-31)
+#define STAR_BRIGHT       31    // flash brightness
+
+static void TwinkleStars(void)
+{
+    static bool8 sInit = FALSE;
+    static u8 sLevel[NUM_STAR_CHANNELS];   // current brightness per channel
+    static u8 sWait[NUM_STAR_CHANNELS];    // frames until next flash
+    u32 ch, bank;
+
+    if (!sInit)
+    {
+        for (ch = 0; ch < NUM_STAR_CHANNELS; ch++)
+        {
+            sLevel[ch] = STAR_DIM;
+            sWait[ch] = (Random() & 0x3F) + ch * 8;   // stagger initial flashes
+        }
+        sInit = TRUE;
+    }
+
+    for (ch = 0; ch < NUM_STAR_CHANNELS; ch++)
+    {
+        if (sWait[ch] != 0)
+        {
+            // Resting at dim brightness, counting down to the next flash.
+            sWait[ch]--;
+            if (sWait[ch] == 0)
+                sLevel[ch] = STAR_BRIGHT;   // one-shot flash when the timer expires
+        }
+        else
+        {
+            // Flashing: decay back toward dim, then schedule the next flash.
+            if (sLevel[ch] > STAR_DIM)
+                sLevel[ch] -= 2;
+            if (sLevel[ch] <= STAR_DIM)
+            {
+                sLevel[ch] = STAR_DIM;
+                sWait[ch] = (Random() & 0x7F) + 16;   // random gap before next sparkle
+            }
+        }
+    }
+
+    for (bank = 0; bank < STAR_BG_BANKS; bank++)
+    {
+        for (ch = 0; ch < NUM_STAR_CHANNELS; ch++)
+        {
+            u8 v = sLevel[ch];
+            gPlttBufferFaded[BG_PLTT_ID(bank) + 12 + ch] = RGB(v, v, v);
+        }
+    }
+}
+
 static void MainCB2(void)
 {
     RunTasks();
     AnimateSprites();
     BuildOamBuffer();
     UpdatePaletteFade();
+    TwinkleStars();
 }
 
 // Shine the Pokémon logo two more times, and fade in the version banner
@@ -701,7 +843,9 @@ static void Task_TitleScreenPhase1(u8 taskId)
     {
         u8 spriteId;
 
-        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG2_ON | DISPCNT_OBJ_ON);
+        // Pokemon Wishes of Tomorrow: BG0 + OBJ (Jirachi). Version-banner sprites below spawn at
+        // y=DISPLAY_HEIGHT (offscreen) and aren't moved on, so only Jirachi shows.
+        SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON);
         SetGpuReg(REG_OFFSET_WININ, 0);
         SetGpuReg(REG_OFFSET_WINOUT, 0);
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_OBJ | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL);
@@ -712,10 +856,12 @@ static void Task_TitleScreenPhase1(u8 taskId)
         spriteId = CreateSprite(&sVersionBannerLeftSpriteTemplate, VERSION_BANNER_LEFT_X, VERSION_BANNER_Y, 0);
         gSprites[spriteId].sAlphaBlendIdx = ARRAY_COUNT(gTitleScreenAlphaBlend);
         gSprites[spriteId].sParentTaskId = taskId;
+        gSprites[spriteId].invisible = TRUE;   // Wishes of Tomorrow: hide "EMERALD VERSION"
 
         // Create right side of version banner
         spriteId = CreateSprite(&sVersionBannerRightSpriteTemplate, VERSION_BANNER_RIGHT_X, VERSION_BANNER_Y, 0);
         gSprites[spriteId].sParentTaskId = taskId;
+        gSprites[spriteId].invisible = TRUE;   // Wishes of Tomorrow: hide "EMERALD VERSION"
 
         gTasks[taskId].tCounter = 144;
         gTasks[taskId].func = Task_TitleScreenPhase2;
@@ -744,17 +890,21 @@ static void Task_TitleScreenPhase2(u8 taskId)
     else
     {
         gTasks[taskId].tSkipToNext = TRUE;
-        SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG1 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_BD);
-        SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(6, 15));
+        SetGpuReg(REG_OFFSET_BLDCNT, 0);
+        SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 0);
+        // Pokemon Wishes of Tomorrow: BG0 + OBJ (Jirachi). Press-start/copyright banners created
+        // below sit offscreen (y 108/148 but PRESS START is baked into the BG, these stay hidden
+        // because their sprites are at x off the visible art); keep OBJ on for Jirachi.
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1
                                     | DISPCNT_OBJ_1D_MAP
                                     | DISPCNT_BG0_ON
-                                    | DISPCNT_BG1_ON
-                                    | DISPCNT_BG2_ON
                                     | DISPCNT_OBJ_ON);
-        CreatePressStartBanner(START_BANNER_X, 108);
-        CreateCopyrightBanner(START_BANNER_X, 148);
+        // Pokemon Wishes of Tomorrow: PRESS START + copyright are baked into the BG art, so spawn
+        // the stock banner sprites offscreen (y = DISPLAY_HEIGHT) to avoid doubling them while
+        // keeping these functions referenced. Only the bobbing Jirachi OBJ is visible.
+        CreatePressStartBanner(START_BANNER_X, DISPLAY_HEIGHT);
+        CreateCopyrightBanner(START_BANNER_X, DISPLAY_HEIGHT);
         gTasks[taskId].tBg1Y = 0;
         gTasks[taskId].func = Task_TitleScreenPhase3;
     }
@@ -821,7 +971,7 @@ static void Task_TitleScreenPhase3(u8 taskId)
 static void CB2_GoToMainMenu(void)
 {
     if (!UpdatePaletteFade())
-        SetMainCallback2(CB2_InitMainMenu);
+        SetMainCallback2(CB2_InitMainMenuBW);
 }
 
 static void CB2_GoToCopyrightScreen(void)

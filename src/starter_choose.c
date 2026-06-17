@@ -110,9 +110,11 @@ static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
     {8, 4},
 };
 
-#define GRASS_STARTER (IS_FRLG ? SPECIES_BULBASAUR  : SPECIES_TREECKO)
-#define FIRE_STARTER  (IS_FRLG ? SPECIES_CHARMANDER : SPECIES_TORCHIC)
-#define WATER_STARTER (IS_FRLG ? SPECIES_SQUIRTLE   : SPECIES_MUDKIP )
+// Wishes of Tomorrow — the revived fossil trio (sealed in the shrine ice).
+// Macro names kept as-is for engine compatibility; values are our starters.
+#define GRASS_STARTER SPECIES_TYRUNT   // Jaw Fossil  — proud / regal
+#define FIRE_STARTER  SPECIES_AMAURA   // Sail Fossil — gentle / melancholic
+#define WATER_STARTER SPECIES_ANORITH  // Claw Fossil — scrappy / instinctive
 
 static const u16 sStarterMon[STARTER_MON_COUNT] =
 {

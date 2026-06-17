@@ -221,6 +221,54 @@ static const struct SpriteFrameImage sPicTable_Beauty[] = {
     overworld_ascending_frames(gObjectEventPic_Beauty, 2, 4),
 };
 
+// --- HnS-extracted NPC overworld sprites (Johto flavor) ---
+static const struct SpriteFrameImage sPicTable_KimonoGirl[] = {
+    overworld_ascending_frames(gObjectEventPic_KimonoGirl, 2, 4),
+};
+static const struct SpriteFrameImage sPicTable_Eusine[] = {
+    overworld_ascending_frames(gObjectEventPic_Eusine, 2, 4),
+};
+static const struct SpriteFrameImage sPicTable_Sage[] = {
+    overworld_ascending_frames(gObjectEventPic_Sage, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_Oni[] = {
+    overworld_ascending_frames(gObjectEventPic_Oni, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_Gordie[] = {
+    overworld_ascending_frames(gObjectEventPic_Gordie, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_Sophocles[] = {
+    overworld_ascending_frames(gObjectEventPic_Sophocles, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_SwimmerAllison[] = {
+    overworld_ascending_frames(gObjectEventPic_SwimmerAllison, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_SwimmerBlue[] = {
+    overworld_ascending_frames(gObjectEventPic_SwimmerBlue, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_SwimmerPink[] = {
+    overworld_ascending_frames(gObjectEventPic_SwimmerPink, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_SwimmerSky[] = {
+    overworld_ascending_frames(gObjectEventPic_SwimmerSky, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_GoldOni[] = {
+    overworld_ascending_frames(gObjectEventPic_GoldOni, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_OniGoon[] = {
+    overworld_ascending_frames(gObjectEventPic_OniGoon, 2, 4),
+};
+
+
 static const struct SpriteFrameImage sPicTable_Scientist1[] = {
     overworld_ascending_frames(gObjectEventPic_Scientist1, 2, 4),
 };

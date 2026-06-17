@@ -14179,6 +14179,38 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_SSTicket,
     },
 
+    [ITEM_HOT_COCOA] =
+    {
+        .name = ITEM_NAME("Hot Cocoa"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A warm thermos of\n"
+            "cocoa. Two snowbound\n"
+            "girls' favorite."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_MoomooMilk,
+        .iconPalette = gItemIconPalette_MoomooMilk,
+    },
+
+    [ITEM_FENTANYL] =
+    {
+        .name = ITEM_NAME("Fentanyl"),
+        .price = 0,
+        .description = COMPOUND_STRING(
+            "A vial of strong\n"
+            "medicine. The dying\n"
+            "man in Ashlands needs it."),
+        .importance = 1,
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_FullHeal,
+        .iconPalette = gItemIconPalette_FullHeal,
+    },
+
     [ITEM_EON_TICKET] =
     {
         .name = ITEM_NAME("Eon Ticket"),

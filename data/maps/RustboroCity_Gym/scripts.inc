@@ -3,39 +3,36 @@ RustboroCity_Gym_MapScripts::
 
 RustboroCity_Gym_EventScript_Roxanne::
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
-	specialvar VAR_RESULT, ShouldTryRematchBattle
-	goto_if_eq VAR_RESULT, TRUE, RustboroCity_Gym_EventScript_RoxanneRematch
-	goto_if_unset FLAG_RECEIVED_TM_ROCK_TOMB, RustboroCity_Gym_EventScript_GiveRockTomb
+	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_PostBattleKnowsTrain
+	msgbox RustboroCity_Gym_Text_PostBattleNorth, MSGBOX_DEFAULT
+	release
+	end
+
+RustboroCity_Gym_EventScript_PostBattleKnowsTrain::
 	msgbox RustboroCity_Gym_Text_RoxannePostBattle, MSGBOX_DEFAULT
 	release
 	end
 
+@ Badge ceremony hook: if the player already boarded the SHINKANSEN and beat the
+@ goon (FLAG_HIDE_SHINKANSEN_GOON), RedFatality acknowledges the frozen train and
+@ vows to thaw it. Otherwise he just points the player north past the SHINKANSEN
+@ toward the mountain. (The track-clear itself is gated on FLAG_BADGE01_GET only.)
 RustboroCity_Gym_EventScript_RoxanneDefeated::
-	message RustboroCity_Gym_Text_ReceivedStoneBadge
+	message RustboroCity_Gym_Text_ReceivedEmberBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
-	msgbox RustboroCity_Gym_Text_StoneBadgeInfoTakeThis, MSGBOX_DEFAULT
+	msgbox RustboroCity_Gym_Text_EmberBadgeInfo, MSGBOX_DEFAULT
 	setflag FLAG_DEFEATED_RUSTBORO_GYM
 	setflag FLAG_BADGE01_GET
 	setvar VAR_RUSTBORO_CITY_STATE, 1
-	addvar VAR_PETALBURG_GYM_STATE, 1
-	setvar VAR_0x8008, 1
-	call Common_EventScript_SetGymTrainers
-	call_if_eq VAR_PETALBURG_GYM_STATE, 6, Common_EventScript_ReadyPetalburgGymForBattle
-	goto RustboroCity_Gym_EventScript_GiveRockTomb
-	end
-
-RustboroCity_Gym_EventScript_GiveRockTomb::
-	giveitem ITEM_TM_ROCK_TOMB
-	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
-	setflag FLAG_RECEIVED_TM_ROCK_TOMB
-	msgbox RustboroCity_Gym_Text_ExplainRockTomb, MSGBOX_DEFAULT
+	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_KnownTrainHook
+	msgbox RustboroCity_Gym_Text_HeadNorthHook, MSGBOX_DEFAULT
 	release
 	end
 
-RustboroCity_Gym_EventScript_RoxanneRematch::
-	trainerbattle_rematch_double TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxannePreRematch, RustboroCity_Gym_Text_RoxanneRematchDefeat, RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons
-	msgbox RustboroCity_Gym_Text_RoxannePostRematch, MSGBOX_AUTOCLOSE
+RustboroCity_Gym_EventScript_KnownTrainHook::
+	msgbox RustboroCity_Gym_Text_FrozenTrainHook, MSGBOX_DEFAULT
+	release
 	end
 
 RustboroCity_Gym_EventScript_Josh::
@@ -104,180 +101,154 @@ RustboroCity_Gym_EventScript_RegisterRoxanne::
 	end
 
 RustboroCity_Gym_Text_GymGuideAdvice:
-	.string "Yo, how's it going?\p"
-	.string "Listen, my friend!\n"
-	.string "Would you like to become the CHAMPION?\p"
-	.string "I'm no TRAINER, not me, but I can\n"
-	.string "sure give you winning advice.\p"
-	.string "That's settled, then! We'll aim for the\n"
-	.string "POKéMON CHAMPIONSHIP together!\p"
-	.string "It's your job as a TRAINER to collect\n"
-	.string "GYM BADGES, am I right?\p"
-	.string "But GYM LEADERS aren't pushovers!\p"
-	.string "And that's where I come in!\n"
-	.string "I'm here to provide expert advice!\p"
-	.string "ROXANNE, the GYM LEADER, is a user\n"
-	.string "of ROCK-type POKéMON.\p"
-	.string "The ROCK type is very durable, but\n"
-	.string "it can't stand WATER-type and\l"
-	.string "GRASS-type moves.\p"
-	.string "Come see me afterwards, if you beat\n"
-	.string "the GYM LEADER.\p"
-	.string "Well, go for it!$"
+	.string "Hey, challenger! Cold enough\n"
+	.string "for you in here?\p"
+	.string "Welcome to the FROSTWOOD GYM.\n"
+	.string "The LEADER, RedFatality, is an ICE-type\l"
+	.string "master through and through.\p"
+	.string "ICE POKéMON can't stand FIRE-,\n"
+	.string "FIGHTING-, ROCK-, or STEEL-type\l"
+	.string "moves, so come prepared!\p"
+	.string "One more thing… RedFatality has a soft\n"
+	.string "spot for rare POKéMON.\p"
+	.string "Don't go assuming you've got him\n"
+	.string "all figured out.\p"
+	.string "Now go earn that EMBER BADGE!$"
 
 RustboroCity_Gym_Text_GymGuidePostVictory:
-	.string "Whoa! What a breathtaking victory!\n"
-	.string "My cheering must've worked!\p"
-	.string "Great!\n"
-	.string "Check your TRAINER CARD.\p"
-	.string "The STONE BADGE you got should be\n"
-	.string "properly recorded on it.\p"
-	.string "In other words…\p"
-	.string "You've climbed the first step on\n"
-	.string "the stairs to the CHAMPIONSHIP!\p"
-	.string "That's got to feel awesome!$"
+	.string "Whoa! You actually toppled RedFatality --\n"
+	.string "ace and all!\p"
+	.string "That EMBER BADGE is the genuine\n"
+	.string "article.\p"
+	.string "You've taken your first big step\n"
+	.string "toward the top. Feels great, huh?$"
 
 RustboroCity_Gym_Text_JoshIntro:
-	.string "Don't take us GYM TRAINERS lightly!\n"
-	.string "I'll show you why we're better!$"
+	.string "Snow on the ground doesn't mean\n"
+	.string "everything's frozen solid!\p"
+	.string "My POKéMON grow strong even in\n"
+	.string "the bitter cold!$"
 
 RustboroCity_Gym_Text_JoshDefeat:
-	.string "You were too good for me…$"
+	.string "Guess my little garden needs\n"
+	.string "more sun…$"
 
 RustboroCity_Gym_Text_JoshPostBattle:
-	.string "You haven't seen anything of the ROCK\n"
-	.string "type's terrifying power!$"
+	.string "RedFatality scouts rare POKéMON from\n"
+	.string "all over the region.\p"
+	.string "You're about to find out what\n"
+	.string "I mean.$"
 
 RustboroCity_Gym_Text_TommyIntro:
-	.string "If you can't beat me, you won't stand\n"
-	.string "a chance against ROXANNE!$"
+	.string "The big thaw's been turning up\n"
+	.string "POKéMON nobody's seen 'round\l"
+	.string "FROSTWOOD in ages!$"
 
 RustboroCity_Gym_Text_TommyDefeat:
-	.string "Wow! You've got some potential!$"
+	.string "Damn! You're tough.$"
 
 RustboroCity_Gym_Text_TommyPostBattle:
-	.string "ROXANNE is stronger than me by\n"
-	.string "several times.\p"
-	.string "You'd better be on your guard!$"
+	.string "Strange types keep crawling out\n"
+	.string "since the ice started melting.\p"
+	.string "Wild times, huh?$"
 
 RustboroCity_Gym_Text_MarcIntro:
-	.string "We might be in the middle of town,\n"
-	.string "but so what?\p"
-	.string "My ROCK POKéMON need room to\n"
-	.string "rampage!$"
+	.string "Yiff yiff!$"
 
 RustboroCity_Gym_Text_MarcDefeat:
-	.string "Oh, man oh man!\n"
-	.string "Our challenger is one feisty customer!$"
+	.string "yiff…$"
 
 RustboroCity_Gym_Text_MarcPostBattle:
-	.string "I have to hand it to our LEADER.\p"
-	.string "It took smarts and sense for her to\n"
-	.string "pick the ROCK type at her young age.$"
+	.string "Yiff yiff...$"
 
 RustboroCity_Gym_Text_RoxanneIntro:
-	.string "Hello, I am ROXANNE, the RUSTBORO\n"
-	.string "POKéMON GYM LEADER.\p"
-	.string "I became a GYM LEADER so that I might\n"
-	.string "apply what I learned at the POKéMON\l"
-	.string "TRAINER'S SCHOOL in battle.\p"
-	.string "Would you kindly demonstrate how you\n"
-	.string "battle, and with which POKéMON?$"
+	.string "Welcome to the FROSTWOOD GYM.\p"
+	.string "That's right, I'm RedFatality.\n"
+	.string "And yeah, the rumors are true.\n"
+	.string "I was a Halo 3 MLG pro.\p"
+	.string "If you caught nothing but ICE types\n"
+	.string "like the others, you're in for a\p"
+	.string "rude awakening, buddy.\p"
+	.string "Show me what you've got!$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:
-	.string "So…\n"
-	.string "I lost…\p"
-	.string "It seems that I still have much more\n"
-	.string "to learn…\p"
-	.string "I understand.\p"
-	.string "The POKéMON LEAGUE's rules state\n"
-	.string "that TRAINERS are to be given this\l"
-	.string "if they defeat a GYM LEADER.\p"
-	.string "Please accept the official POKéMON\n"
-	.string "LEAGUE STONE BADGE.$"
+	.string "…Heh.\p"
+	.string "You fought all the way down to my\n"
+	.string "ace and still came out on top.\p"
+	.string "Not many TRAINERS can say that.\p"
+	.string "You've earned this.$"
 
-RustboroCity_Gym_Text_ReceivedStoneBadge:
-	.string "{PLAYER} received the STONE BADGE\n"
-	.string "from ROXANNE.$"
+RustboroCity_Gym_Text_ReceivedEmberBadge:
+	.string "{PLAYER} received the EMBER BADGE\n"
+	.string "from RedFatality.$"
 
-RustboroCity_Gym_Text_StoneBadgeInfoTakeThis:
-	.string "The STONE BADGE heightens the ATTACK\n"
+RustboroCity_Gym_Text_EmberBadgeInfo:
+	.string "The EMBER BADGE raises the ATTACK\n"
 	.string "power of your POKéMON.\p"
-	.string "It also enables them to use the HM move\n"
-	.string "CUT outside of battle.\p"
-	.string "Please take this with you, too.$"
+	.string "Wear it with pride.$"
 
-RustboroCity_Gym_Text_ExplainRockTomb:
-	.string "That TECHNICAL MACHINE, TM39,\n"
-	.string "contains ROCK TOMB.\p"
-	.string "It not only inflicts damage by dropping\n"
-	.string "rocks, it also lowers SPEED.\p"
-	.string "If you use a TM, it instantly teaches\n"
-	.string "the move to a POKéMON.\p"
-	.string "Remember, a TM can be used only once,\n"
-	.string "so think before you use it.$"
+RustboroCity_Gym_Text_FrozenTrainHook:
+	.string "One more thing before you go.\p"
+	.string "The SENNEN LINE off the north\n"
+	.string "edge of town?\p"
+	.string "The thaw stalled halfway and the\n"
+	.string "whole train's locked under solid\l"
+	.string "ice. Nobody's getting through.\p"
+	.string "Tell you what.\p"
+	.string "Arcanine and I will head up there\n"
+	.string "and burn it loose ourselves.\p"
+	.string "The tracks will be clear, \n"
+	.string "and your road forward with them.\p"
+	.string "Go on, challenger.\n"
+	.string "The region's waiting for you.$"
+
+RustboroCity_Gym_Text_HeadNorthHook:
+	.string "One more thing before you go.\p"
+	.string "Your road forward runs north, past\n"
+	.string "the SHINKANSEN -- the bullet\l"
+	.string "train parked on the SENNEN LINE.\p"
+	.string "Beyond those tracks rises the\n"
+	.string "mountain… and the challengers\l"
+	.string "waiting on it.\p"
+	.string "If anything's blocking the rails,\n"
+	.string "Arcanine and I will burn it loose.\p"
+	.string "Go on, challenger.\n"
+	.string "The region's waiting for you.$"
 
 RustboroCity_Gym_Text_RoxannePostBattle:
-	.string "Since you are so strong, you should\n"
-	.string "challenge other GYM LEADERS.\p"
-	.string "By battling many TRAINERS, you should\n"
-	.string "learn many things.$"
+	.string "The train's thawing as we speak.\p"
+	.string "Keep climbing -- and if you swing\n"
+	.string "by my folks' place, tell my mom\l"
+	.string "I'm eating just fine.$"
+
+RustboroCity_Gym_Text_PostBattleNorth:
+	.string "The rails north of SENNEN should\n"
+	.string "be clear for you now.\p"
+	.string "Keep climbing, and if you swing\n"
+	.string "by my folks' place, tell my mom\l"
+	.string "I'm eating just fine.$"
 
 RustboroCity_Gym_Text_GymStatue:
-	.string "RUSTBORO CITY POKéMON GYM$"
+	.string "FROSTWOOD POKéMON GYM$"
 
 RustboroCity_Gym_Text_GymStatueCertified:
-	.string "RUSTBORO CITY POKéMON GYM\p"
-	.string "ROXANNE'S CERTIFIED TRAINERS:\n"
+	.string "FROSTWOOD POKéMON GYM\p"
+	.string "RedFatality's CERTIFIED TRAINERS:\n"
 	.string "{PLAYER}$"
 
 RustboroCity_Gym_Text_RoxanneRegisterCall:
 	.string "… … … … … …\n"
 	.string "… … … … … Beep!\p"
-	.string "ROXANNE: Oh, hello, {PLAYER}?\n"
-	.string "This is ROXANNE of RUSTBORO CITY.\p"
-	.string "I heard from BRAWLY that you're\n"
-	.string "moving up through the ranks of\l"
-	.string "TRAINERS at an incredible clip.\p"
-	.string "Well, I'd rather not think that\n"
-	.string "I can't beat you.\p"
-	.string "I promise, I will shape up my GYM\n"
-	.string "so that you may challenge us again.\p"
-	.string "I hope you'll be looking forward to\n"
-	.string "that occasion as much as me!\p"
+	.string "RedFatality: Hey, {PLAYER}!\n"
+	.string "It's RedFatality, from FROSTWOOD.\p"
+	.string "Word is you're climbing the ranks\n"
+	.string "at a serious clip.\p"
+	.string "I'll keep my GYM sharp so you can\n"
+	.string "challenge me again sometime.\p"
+	.string "Looking forward to it!\p"
 	.string "… … … … … …\n"
 	.string "… … … … … Click!$"
 
 RustboroCity_Gym_Text_RegisteredRoxanne:
-	.string "Registered GYM LEADER ROXANNE\n"
+	.string "Registered GYM LEADER RedFatality\n"
 	.string "in the POKéNAV.$"
-
-RustboroCity_Gym_Text_RoxannePreRematch:
-	.string "ROXANNE: I'm so glad to see you again.\n"
-	.string "I'm ROXANNE, the GYM LEADER here.\p"
-	.string "I'm sure we've both experienced many\n"
-	.string "battles since we last met.\p"
-	.string "I would like to see how much better\n"
-	.string "we've become. Let us battle!$"
-
-RustboroCity_Gym_Text_RoxanneRematchDefeat:
-	.string "Grr…\n"
-	.string "Again, I have lost…$"
-
-RustboroCity_Gym_Text_RoxannePostRematch:
-	.string "ROXANNE: I still have much to learn\n"
-	.string "when it comes to battling POKéMON.\p"
-	.string "That awareness makes me love battling\n"
-	.string "all that much more!$"
-
-RustboroCity_Gym_Text_RoxanneRematchNeedTwoMons:
-	.string "ROXANNE: I'm so glad to see you again.\n"
-	.string "I'm ROXANNE, the GYM LEADER here.\p"
-	.string "I'm sure we've both experienced many\n"
-	.string "battles since we last met.\p"
-	.string "I would like to see how much better\n"
-	.string "we've become…\p"
-	.string "Oh, no…\n"
-	.string "You only have one POKéMON with you?\p"
-	.string "Please return with at least one more\n"
-	.string "POKéMON.$"

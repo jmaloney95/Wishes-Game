@@ -4,6 +4,11 @@
 #include "constants/global.h"
 #include "constants/map_event_ids.h"
 
+// Pokemon Wishes of Tomorrow: player avatar.
+// History: NINJA_BOY (id 5) read as a toddler. The flinkerflitzer Gen 3 Sprite
+// Pack kit turned out to be a layered sprite-maker that needs an external
+// compositor tool — so we're on BRENDAN_NORMAL until a finished custom sheet
+// is dropped into graphics/object_events/pics/people/.
 #define PLAYER_AVATAR_GFX_MALE_NORMAL     (IS_FRLG ? OBJ_EVENT_GFX_RED_NORMAL     : OBJ_EVENT_GFX_BRENDAN_NORMAL)
 #define PLAYER_AVATAR_GFX_MALE_MACH_BIKE  (IS_FRLG ? OBJ_EVENT_GFX_RED_BIKE       : OBJ_EVENT_GFX_BRENDAN_MACH_BIKE)
 #define PLAYER_AVATAR_GFX_MALE_ACRO_BIKE  (IS_FRLG ? OBJ_EVENT_GFX_RED_BIKE       : OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE)
@@ -412,6 +417,19 @@
 #define OBJ_EVENT_GFX_PUSHABLE_BOULDER_FRLG      385
 #define OBJ_EVENT_GFX_CUTTABLE_TREE_FRLG         386
 #define OBJ_EVENT_GFX_BREAKABLE_ROCK_FRLG        387
+// --- HnS-extracted NPC overworld sprites (Johto flavor) ---
+#define OBJ_EVENT_GFX_KIMONO_GIRL                388
+#define OBJ_EVENT_GFX_EUSINE                     389
+#define OBJ_EVENT_GFX_SAGE                       390
+#define OBJ_EVENT_GFX_ONI                        391
+#define OBJ_EVENT_GFX_GORDIE                                   392
+#define OBJ_EVENT_GFX_SOPHOCLES                                393
+#define OBJ_EVENT_GFX_SWIMMER_ALLISON                          394
+#define OBJ_EVENT_GFX_SWIMMER_BLUE                             395
+#define OBJ_EVENT_GFX_SWIMMER_PINK                             396
+#define OBJ_EVENT_GFX_SWIMMER_SKY                              397
+#define OBJ_EVENT_GFX_GOLD_ONI                                 398
+#define OBJ_EVENT_GFX_ONI_GOON                                 399
 
 // FRLG equivalents
 
@@ -423,7 +441,7 @@
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
 // is 65519, but even considering follower Pokémon, this should be more than enough :)
-#define NUM_OBJ_EVENT_GFX                        388
+#define NUM_OBJ_EVENT_GFX                        400
 
 
 // These are dynamic object gfx ids.
@@ -536,6 +554,18 @@
 #define OBJ_EVENT_PAL_TAG_MAY_REFLECTION          0x1111
 #define OBJ_EVENT_PAL_TAG_MOVING_BOX              0x1112
 #define OBJ_EVENT_PAL_TAG_CABLE_CAR               0x1113
+#define OBJ_EVENT_PAL_TAG_KIMONO                  0x1134
+#define OBJ_EVENT_PAL_TAG_EUSINE                  0x1135
+#define OBJ_EVENT_PAL_TAG_SAGE                    0x1136
+#define OBJ_EVENT_PAL_TAG_ONI                     0x1137
+#define OBJ_EVENT_PAL_TAG_GORDIE                                0x1138
+#define OBJ_EVENT_PAL_TAG_SOPHOCLES                             0x1139
+#define OBJ_EVENT_PAL_TAG_SWIMMER_ALLISON                       0x113A
+#define OBJ_EVENT_PAL_TAG_SWIMMER_BLUE                          0x113B
+#define OBJ_EVENT_PAL_TAG_SWIMMER_PINK                          0x113C
+#define OBJ_EVENT_PAL_TAG_SWIMMER_SKY                           0x113D
+#define OBJ_EVENT_PAL_TAG_GOLD_ONI                              0x113E
+#define OBJ_EVENT_PAL_TAG_ONI_GOON                              0x113F
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116

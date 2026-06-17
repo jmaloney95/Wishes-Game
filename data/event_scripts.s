@@ -1735,3 +1735,43 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/dexnav.inc"
 	.include "data/scripts/battle_frontier.inc"
 	.include "data/scripts/apricorn_tree.inc"
+
+	.include "data/maps/MunenVillage/scripts.inc"
+
+	.include "data/maps/Munen_village_2/scripts.inc"
+
+	.include "data/maps/Torii/scripts.inc"
+
+	.include "data/maps/MeltingMile/scripts.inc"
+
+	.include "data/maps/MunenLake/scripts.inc"
+
+	.include "data/maps/FrostwoodTown/scripts.inc"
+
+	.include "data/maps/test/scripts.inc"
+
+	.include "data/maps/StarSummit/scripts.inc"
+
+	.include "data/maps/SennenVillage/scripts.inc"
+
+	.include "data/maps/SennenVillage_2/scripts.inc"
+
+	.include "data/maps/Route2/scripts.inc"
+
+	.include "data/maps/Route_2/scripts.inc"
+
+	.include "data/maps/ShinkansenInterior/scripts.inc"
+
+	.include "data/maps/Ashlands/scripts.inc"
+
+	.include "data/maps/HotSpring/scripts.inc"
+
+	.include "data/maps/demo/scripts.inc"
+
+	.include "data/maps/WALNUT_WOODS/scripts.inc"
+
+	.include "data/maps/Dojo/scripts.inc"
+
+	.include "data/maps/Route_2_2/scripts.inc"
+
+	.include "data/maps/NewMap/scripts.inc"

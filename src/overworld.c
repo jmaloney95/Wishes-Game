@@ -802,6 +802,10 @@ void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y)
 {
     if (IsDummyWarp(&sFixedHoleWarp) == TRUE)
         sWarpDestination = gLastUsedWarp;
+    else if (sFixedHoleWarp.x != -1 && sFixedHoleWarp.y != -1)
+        // setholewarp was given explicit coords (e.g. HotSpring pool center):
+        // land on that fixed tile instead of falling straight down.
+        SetWarpDestination(sFixedHoleWarp.mapGroup, sFixedHoleWarp.mapNum, WARP_ID_NONE, sFixedHoleWarp.x, sFixedHoleWarp.y);
     else
         SetWarpDestination(sFixedHoleWarp.mapGroup, sFixedHoleWarp.mapNum, WARP_ID_NONE, x, y);
 }
@@ -1885,10 +1889,12 @@ void CB2_NewGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    if (IS_FRLG)
-        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
-    else
-        gFieldCallback = ExecuteTruckSequence;
+    // Pokemon Wishes of Tomorrow: use the standard warp fade-in (FieldCB_WarpExitFadeFromBlack)
+    // for both FRLG and Emerald base — this gives us a clean, well-tested entry into Munen.
+    // The intro cutscene uses its own fadescreen FADE_TO_BLACK to go dark for narration,
+    // and ends with a same-map warp so the standard warp-fade-in handles the final reveal.
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    (void)IS_FRLG;
     gFieldCallback2 = NULL;
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();

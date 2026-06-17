@@ -1,0 +1,39 @@
+{
+  "project": "Pokemon Wishes of Tomorrow",
+  "studio": "Flatfoot Games",
+  "base_game": "Pokemon Emerald (GBA)",
+  "screen": { "width": 240, "height": 160 },
+  "color_spec": "GBA 5-bit per channel (values divisible by 8); indexed PNGs; index 0 = transparent on sprites",
+  "boot_order": ["intro (Flatfoot Games presents)", "fade to black", "title screen", "PRESS START"],
+  "title_screen": {
+    "bg_scene.png":      { "size": [240,160], "colors": 11, "type": "opaque BG layer", "content": "space + stars + Mt Fuji" },
+    "pokemon_logo.png":  { "size": [120,42],  "colors": 5,  "type": "sprite/BG (transparent)", "place_top_left": [60,6] },
+    "jirachi_sprite.png":{ "size": [64,47],   "colors": 16, "type": "sprite (transparent)", "place_top_left": [88,63], "palette": "OWN slot (prioritized)", "anim": "optional sine float, amp 2px, period ~90f" },
+    "title_text.png":    { "size": [240,160], "colors": 7,  "type": "transparent layer", "content": "WISHES OF TOMORROW + PRESS START", "press_start_anim": "blink ~0.7s on / 0.3s off" }
+  },
+  "intro": {
+    "intro_bg_scene.png":   { "size": [240,160], "colors": 4, "type": "opaque BG layer" },
+    "flatfoot_logo.png":    { "size": [184,50],  "colors": 8, "type": "sprite/BG (transparent)" },
+    "flatfoot_emblem.png":  { "size": [34,50],   "colors": 6, "type": "sprite (transparent)", "use": "stamp-in animation via OBJ affine scale" },
+    "presents_text.png":    { "size": [56,9],    "colors": 4, "type": "sprite (transparent)" },
+    "timeline_seconds": {
+      "A_stamp_in": [0.0, 0.6],
+      "B_text_wipe": [0.6, 1.2],
+      "C_presents_fade": [1.2, 1.6],
+      "D_hold": [1.6, 2.5],
+      "E_fade_to_black": [2.5, 3.1]
+    }
+  },
+  "decomp_paths": {
+    "title_graphics_dir": "graphics/title_screen/",
+    "title_incbins": "src/graphics.c",
+    "title_logic": "src/title_screen.c",
+    "intro_logic": "src/intro.c"
+  },
+  "fade_method": "pokeemerald palette fades (BeginNormalPaletteFade). NOT per-pixel alpha.",
+  "known_pitfalls": [
+    "Emerald title applies a BLDCNT lighten effect on BG2 (the 'green/yellow flash'); adjust if unwanted on new logo.",
+    "Jirachi uses a full 16-color palette; do not share its slot.",
+    "Symbol names vary by fork; grep before editing."
+  ]
+}

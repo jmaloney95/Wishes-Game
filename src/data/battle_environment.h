@@ -252,8 +252,8 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .camouflageType = BUILDING_CAMOUFLAGE_TYPE,
         .camouflageBlend = BUILDING_CAMOUFLAGE_BLEND,
         .entry = ENVIRONMENT_ENTRY(Building),
-        .background = ENVIRONMENT_BACKGROUND(Building),
-        .palette = gBattleEnvironmentPalette_BuildingGym,
+        .background = ENVIRONMENT_BACKGROUND(Gym),
+        .palette = gBattleEnvironmentPalette_Gym,
         .battleIntroSlide = BUILDING_BATTLE_INTRO_SLIDE,
     },
 
@@ -265,8 +265,8 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .camouflageType = BUILDING_CAMOUFLAGE_TYPE,
         .camouflageBlend = BUILDING_CAMOUFLAGE_BLEND,
         .entry = ENVIRONMENT_ENTRY(Building),
-        .background = ENVIRONMENT_BACKGROUND(Building),
-        .palette = gBattleEnvironmentPalette_BuildingLeader,
+        .background = ENVIRONMENT_BACKGROUND(Gym),
+        .palette = gBattleEnvironmentPalette_Gym,
         .battleIntroSlide = BUILDING_BATTLE_INTRO_SLIDE,
     },
 
@@ -497,6 +497,26 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = MOVE_EFFECT_BURN,
         .camouflageType = TYPE_FIRE,
         .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        // Wishes of Tomorrow: painted molten-summit background (art: aveontrainer).
+        .entry = ENVIRONMENT_ENTRY(Rock),
+        .background = ENVIRONMENT_BACKGROUND(Volcano),
+        .palette = gBattleEnvironmentPalette_Volcano,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
+    [BATTLE_ENVIRONMENT_TORII] =
+    {
+        // Wishes of Tomorrow: rocky Torii Route ascent (day base; dusk/night swapped at load).
+        .name = _("Torii"),
+        .naturePower = MOVE_ROCK_SLIDE,
+        .secretPowerAnimation = gBattleAnimMove_RockThrow,
+        .secretPowerEffect = MOVE_EFFECT_FLINCH,
+        .camouflageType = TYPE_ROCK,
+        .camouflageBlend = RGB(22, 16, 10),
+        .entry = ENVIRONMENT_ENTRY(Rock),
+        .background = ENVIRONMENT_BACKGROUND(Torii),
+        .palette = gBattleEnvironmentPalette_Torii,
+        .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_DISTORTION_WORLD] =

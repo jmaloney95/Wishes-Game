@@ -1,0 +1,136 @@
+{
+  "id": "MAP_MELTING_MILE",
+  "name": "MeltingMile",
+  "layout": "LAYOUT_MELTING_MILE",
+  "music": "MUS_ROUTE101",
+  "region_map_section": "MAPSEC_ROUTE_ONE",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_MUNEN_VILLAGE_2",
+      "offset": -16,
+      "direction": "down"
+    }
+  ],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "x": 6,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MeltingMile_EventScript_Gentleman",
+      "flag": "0",
+      "Man": "\"We're cooked\""
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GIRL_3",
+      "x": 25,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MeltingMile_EventScript_SplashGirls",
+      "flag": "FLAG_MELTINGMILE_PATH_CLEARED"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GIRL_2",
+      "x": 22,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MeltingMile_EventScript_SplashGirls",
+      "flag": "FLAG_MELTINGMILE_PATH_CLEARED"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_AZURILL",
+      "x": 23,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MeltingMile_EventScript_SplashGirls",
+      "flag": "FLAG_MELTINGMILE_PATH_CLEARED"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_AZURILL",
+      "x": 24,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MeltingMile_EventScript_SplashGirls",
+      "flag": "FLAG_MELTINGMILE_PATH_CLEARED"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_PIKACHU",
+      "x": 5,
+      "y": 15,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_UP_AND_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MeltingMile_EventScript_Pikachu",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 29,
+      "y": 7,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 29,
+      "y": 16,
+      "elevation": 0,
+      "dest_map": "MAP_MUNEN_LAKE",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 29,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 29,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_MUNEN_LAKE",
+      "dest_warp_id": "1"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [],
+  "region": "REGION_HOENN"
+}

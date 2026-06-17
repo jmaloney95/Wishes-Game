@@ -3,7 +3,6 @@
   "name": "SkyPillar_Top",
   "layout": "LAYOUT_SKY_PILLAR_TOP",
   "music": "MUS_MT_CHIMNEY",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_SKY_PILLAR",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -63,5 +62,6 @@
       "script": "SkyPillar_Top_EventScript_AwakenRayquaza"
     }
   ],
-  "bg_events": []
+  "bg_events": [],
+  "region": "REGION_HOENN"
 }

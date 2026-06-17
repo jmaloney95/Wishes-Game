@@ -10,6 +10,16 @@ gText_FollowerDefault::
 gText_WantsToFly::
 	.string "{STR_VAR_1} looks up at the\nsky restlessly.\pWould you like to use FLY?$"
 
+@ Pokémon Wishes of Tomorrow: attach this to a map's MAP_SCRIPT_ON_TRANSITION to
+@ hide the Pokémon follower on that specific map, e.g. in a map's *_MapScripts::
+@     map_script MAP_SCRIPT_ON_TRANSITION, WoT_EventScript_HideFollower
+@ FLAG_TEMP_HIDE_FOLLOWER is a temp flag, so it auto-clears when the player leaves.
+@ (All interiors are already auto-hidden in UpdateFollowingPokemon; use this for
+@ specific outdoor maps where you don't want the follower to appear.)
+WoT_EventScript_HideFollower::
+	setflag FLAG_TEMP_HIDE_FOLLOWER
+	end
+
 EventScript_Follower::
 	lock
 	bufferlivemonnickname STR_VAR_1

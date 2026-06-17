@@ -291,6 +291,33 @@ const u32 gFieldEffectObjectPic_RockClimbDust[] = INCGFX_U32("graphics/field_eff
 const u32 gObjectEventPic_QuintyPlump[] = INCGFX_U32("graphics/object_events/pics/people/quinty_plump.png", ".4bpp", "-mwidth 4 -mheight 4");
 const u16 gObjectEventPal_QuintyPlump[] = INCGFX_U16("graphics/object_events/palettes/quinty_plump.pal", ".gbapal");
 const u16 gObjectEventPal_QuintyPlumpReflection[] = INCGFX_U16("graphics/object_events/palettes/quinty_plump_reflection.pal", ".gbapal");
+
+// --- HnS-extracted NPC overworld sprites (Johto flavor): kimono/eusine = 16-color, sage = 12-color; all 16x32 9-frame ---
+const u32 gObjectEventPic_KimonoGirl[] = INCGFX_U32("graphics/object_events/pics/people/kimono.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_Kimono[] = INCGFX_U16("graphics/object_events/palettes/kimono.pal", ".gbapal");
+const u32 gObjectEventPic_Eusine[] = INCGFX_U32("graphics/object_events/pics/people/eusine.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_Eusine[] = INCGFX_U16("graphics/object_events/palettes/eusine.pal", ".gbapal");
+const u32 gObjectEventPic_Sage[] = INCGFX_U32("graphics/object_events/pics/people/sage.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_Sage[] = INCGFX_U16("graphics/object_events/palettes/sage.pal", ".gbapal");
+const u32 gObjectEventPic_Oni[] = INCGFX_U32("graphics/object_events/pics/people/oni.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_Oni[] = INCGFX_U16("graphics/object_events/palettes/oni.pal", ".gbapal");
+const u32 gObjectEventPic_Gordie[] = INCGFX_U32("graphics/object_events/pics/people/gordie.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_Gordie[] = INCGFX_U16("graphics/object_events/palettes/gordie.pal", ".gbapal");
+const u32 gObjectEventPic_Sophocles[] = INCGFX_U32("graphics/object_events/pics/people/sophocles.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_Sophocles[] = INCGFX_U16("graphics/object_events/palettes/sophocles.pal", ".gbapal");
+const u32 gObjectEventPic_SwimmerAllison[] = INCGFX_U32("graphics/object_events/pics/people/swimmer_allison.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_SwimmerAllison[] = INCGFX_U16("graphics/object_events/palettes/swimmer_allison.pal", ".gbapal");
+const u32 gObjectEventPic_SwimmerBlue[] = INCGFX_U32("graphics/object_events/pics/people/swimmer_blue.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_SwimmerBlue[] = INCGFX_U16("graphics/object_events/palettes/swimmer_blue.pal", ".gbapal");
+const u32 gObjectEventPic_SwimmerPink[] = INCGFX_U32("graphics/object_events/pics/people/swimmer_pink.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_SwimmerPink[] = INCGFX_U16("graphics/object_events/palettes/swimmer_pink.pal", ".gbapal");
+const u32 gObjectEventPic_SwimmerSky[] = INCGFX_U32("graphics/object_events/pics/people/swimmer_sky.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_SwimmerSky[] = INCGFX_U16("graphics/object_events/palettes/swimmer_sky.pal", ".gbapal");
+const u32 gObjectEventPic_GoldOni[] = INCGFX_U32("graphics/object_events/pics/people/gold_oni.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_GoldOni[] = INCGFX_U16("graphics/object_events/palettes/gold_oni.pal", ".gbapal");
+const u32 gObjectEventPic_OniGoon[] = INCGFX_U32("graphics/object_events/pics/people/oni_goon.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_OniGoon[] = INCGFX_U16("graphics/object_events/palettes/oni_goon.pal", ".gbapal");
+
 const u32 gFieldEffectObjectPic_ShadowSmall[] = INCGFX_U32("graphics/field_effects/pics/shadow_small.png", ".4bpp");
 const u32 gFieldEffectObjectPic_ShadowMedium[] = INCGFX_U32("graphics/field_effects/pics/shadow_medium.png", ".4bpp");
 const u32 gFieldEffectObjectPic_ShadowLarge[] = INCGFX_U32("graphics/field_effects/pics/shadow_large.png", ".4bpp");

@@ -2449,4 +2449,51 @@
 #endif // TESTING
 
 
+
+
+// === Pokémon Wishes of Tomorrow — Munen Village ===
+// These reuse existing unused flag slots so we don't shift the flag table.
+#define FLAG_MUNEN_INTRO_PLAYED        FLAG_UNUSED_0x020
+#define FLAG_RECEIVED_STARTER          FLAG_UNUSED_0x021
+#define FLAG_MET_HINOKI                FLAG_UNUSED_0x022
+#define FLAG_TALKED_TO_MOM             FLAG_UNUSED_0x023
+#define FLAG_MET_RIVAL_HARU            FLAG_UNUSED_0x024
+#define FLAG_SHRINE_ROPE_SEEN          FLAG_UNUSED_0x025
+#define FLAG_OLD_LADY_SPOKE            FLAG_UNUSED_0x026
+#define FLAG_HIDE_RIVAL_HARU           FLAG_UNUSED_0x027
+#define FLAG_BATTLED_HARU              FLAG_UNUSED_0x028
+#define FLAG_HIDE_PROFESSOR            FLAG_UNUSED_0x029
+#define FLAG_PROFESSOR_GAVE_ITEMS      FLAG_UNUSED_0x02A
+#define FLAG_HIDDEN_ITEM_MUNEN_MASTER_BALL  FLAG_UNUSED_0x02B
+#define FLAG_MUNEN_LAKE_GOT_SUPER_ROD  FLAG_UNUSED_0x02C // also hides the lake fisherman after he leaves
+#define FLAG_MELTINGMILE_PATH_CLEARED  FLAG_UNUSED_0x02D // Azurill girls step aside once the player has the path item
+#define FLAG_GOT_HOT_COCOA             FLAG_UNUSED_0x02E // Frostwood dad gave the player the Hot Cocoa for the girls
+#define FLAG_GOT_CLARKSON_MTMUNEN_CALL FLAG_UNUSED_0x02F // Clarkson's post-Ember-Badge call fires once on gym exit -> meet at Mount Munen summit
+#define FLAG_HIDE_SHINKANSEN_GOON      FLAG_UNUSED_0x033 // hides the frozen-train goon in ShinkansenInterior after he's defeated (was 0x020 -- COLLIDED with FLAG_MUNEN_INTRO_PLAYED)
+#define FLAG_HIDE_TORII_RIVAL          FLAG_UNUSED_0x030 // hides Draco at the Torii summit after the rematch + gates the summit trigger
+#define FLAG_STARSUMMIT_INTRO_SEEN     FLAG_UNUSED_0x031 // StarSummit Jirachi-reveal / Clarkson-vs-goon cutscene plays once
+#define FLAG_GOT_DEV_MEWTWO            FLAG_UNUSED_0x032 // dev-test NPC in the bedroom hands out one high-level MEWTWO
+#define FLAG_JIRACHI_CAPTURED          FLAG_UNUSED_0x034 // set when the masked pair seize JIRACHI at the summit; gates the capture cutscene
+#define FLAG_HIDE_STARSUMMIT_PROF      FLAG_UNUSED_0x036 // Clarkson stays gone after he's shoved into the lava (no respawn)
+#define FLAG_HIDE_STARSUMMIT_JIRACHI   FLAG_UNUSED_0x037 // Jirachi stays gone after it vanishes (no blink-back)
+#define FLAG_HIDE_TORII_ORACLE         FLAG_UNUSED_0x038 // the Oracle vanishes after her double battle (and her man plays dumb)
+#define FLAG_HIDE_ASHLANDS_FENTANYL    FLAG_UNUSED_0x039 // hides the Ashlands FENTANYL pokeball once picked up
+#define FLAG_FENTANYL_GIVEN            FLAG_UNUSED_0x03A // Ashlands old man received the FENTANYL -> told the Team Mutrid lore
+#define FLAG_HIDE_SEAFLOOR_RED_GYARADOS   FLAG_UNUSED_0x03B // hides the Red Gyarados until the fisherman's ritual reveals it
+#define FLAG_SEAFLOOR_GYARADOS_GONE       FLAG_UNUSED_0x03C // set when the Red Gyarados is KO'd or caught -> gone forever
+#define FLAG_SEAFLOOR_FISHERMAN_GAVE_BALLS FLAG_UNUSED_0x03D // fisherman handed over his 5 Ultra Balls (one-time)
+#define FLAG_SEAFLOOR_RITUAL_SEEN         FLAG_UNUSED_0x03E // the Red Gyarados ritual cutscene has played (persistent)
+#define FLAG_HIDE_SEAFLOOR_FISHERMAN      FLAG_UNUSED_0x03F // cave fisherman leaves once the Gyarados is caught/KO'd
+#define FLAG_HIDE_MUNEN_FISHERMAN_DAD     FLAG_UNUSED_0x040 // father stays hidden in Munen Village until the Gyarados is resolved
+#define FLAG_SEAFLOOR_GYARADOS_CAUGHT     FLAG_UNUSED_0x041 // distinguishes caught (player has it) from KO'd
+#define FLAG_MUNEN_FISHERMAN_REWARDED     FLAG_UNUSED_0x042 // father's TM Earthquake reward / trade is done (one-time)
+#define FLAG_HIDE_WALNUT_CLARKSON         FLAG_UNUSED_0x043 // Prof Clarkson leaves Walnut Woods after his pep talk
+#define FLAG_ITEM_WALNUT_WOODS_TM_BLIZZARD FLAG_UNUSED_0x044 // Walnut Woods TM Blizzard item ball collected
+#define FLAG_ITEM_WALNUT_WOODS_TM_PROTECT  FLAG_UNUSED_0x045 // Walnut Woods TM Protect item ball collected
+#define FLAG_WALNUT_WOODS_CUT_BUSH_1      FLAG_UNUSED_0x046 // Walnut Woods cuttable bush (16,24) cut -> snow
+#define FLAG_WALNUT_WOODS_CUT_BUSH_2      FLAG_UNUSED_0x047 // Walnut Woods cuttable bush (40,26) cut -> snow
+// NOTE: FLAG_MET_HINOKI (0x022) is now the "met Clarkson" flag -- left
+// as MET_HINOKI for backward compatibility; new code should treat it as
+// FLAG_MET_CLARKSON.
+
 #endif // GUARD_CONSTANTS_FLAGS_H

@@ -299,3 +299,73 @@ PlayersHouse_2F_Text_ItsAGameCube:
 	.string "It's a Nintendo GameCube.\p"
 	.string "A Game Boy Advance is connected to\n"
 	.string "serve as the Controller.$"
+
+@==============================================================================
+@ DEV TEST NPC -- hands the player one high-level MEWTWO for blitzing the build.
+@==============================================================================
+PlayersBedroom_EventScript_DevNpc::
+	lock
+	faceplayer
+	goto_if_set FLAG_GOT_DEV_MEWTWO, PlayersBedroom_EventScript_DevAlready
+	msgbox PlayersBedroom_Text_DevAsk, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq PlayersBedroom_EventScript_DevNo
+	givemon SPECIES_MEWTWO, 80, , , NATURE_MODEST, , , , , , , , , 31, 31, 31, 31, 31, 31, MOVE_PSYSTRIKE, MOVE_AURA_SPHERE, MOVE_ICE_BEAM, MOVE_FLAMETHROWER, SHINY_MODE_ALWAYS
+	compare VAR_RESULT, MON_CANT_GIVE
+	goto_if_eq PlayersBedroom_EventScript_DevNoRoom
+	setflag FLAG_GOT_DEV_MEWTWO
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox PlayersBedroom_Text_DevGive, MSGBOX_DEFAULT
+	waitfanfare
+	compare VAR_RESULT, MON_GIVEN_TO_PC
+	goto_if_eq PlayersBedroom_EventScript_DevToPC
+	release
+	end
+
+PlayersBedroom_EventScript_DevToPC::
+	msgbox PlayersBedroom_Text_DevToPC, MSGBOX_DEFAULT
+	release
+	end
+
+PlayersBedroom_EventScript_DevNoRoom::
+	msgbox PlayersBedroom_Text_DevNoRoom, MSGBOX_DEFAULT
+	release
+	end
+
+PlayersBedroom_EventScript_DevNo::
+	msgbox PlayersBedroom_Text_DevNo, MSGBOX_DEFAULT
+	release
+	end
+
+PlayersBedroom_EventScript_DevAlready::
+	msgbox PlayersBedroom_Text_DevAlready, MSGBOX_DEFAULT
+	release
+	end
+
+PlayersBedroom_Text_DevAsk:
+	.string "Psst… before you head out.\p"
+	.string "Are you a DEVELOPER?$"
+
+PlayersBedroom_Text_DevGive:
+	.string "Knew it. Here -- take this to tear\n"
+	.string "through the build and test it all.\p"
+	.string "{PLAYER} received a high-level\n"
+	.string "SHINY MEWTWO!$"
+
+PlayersBedroom_Text_DevToPC:
+	.string "Your party was full, so it was\n"
+	.string "sent to a BOX in the PC.$"
+
+PlayersBedroom_Text_DevNoRoom:
+	.string "Whoa -- your party AND your PC\n"
+	.string "boxes are totally full!\p"
+	.string "Make some room and talk to me\n"
+	.string "again.$"
+
+PlayersBedroom_Text_DevNo:
+	.string "Ha! A purist, huh? Respect.\n"
+	.string "Go earn it the hard way, then.$"
+
+PlayersBedroom_Text_DevAlready:
+	.string "That MEWTWO breaking the game in\n"
+	.string "half for you yet?$"

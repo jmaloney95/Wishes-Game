@@ -3,7 +3,6 @@
   "name": "SeafloorCavern_Entrance",
   "layout": "LAYOUT_SEAFLOOR_CAVERN_ENTRANCE",
   "music": "MUS_MT_CHIMNEY",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_SEAFLOOR_CAVERN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -16,36 +15,44 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GRUNT",
-      "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
-      "x": 10,
-      "y": 2,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_ENTRANCE_FISHERMAN",
+      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "x": 7,
+      "y": 7,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SeafloorCavern_Entrance_EventScript_Grunt",
-      "flag": "FLAG_HIDE_SEAFLOOR_CAVERN_ENTRANCE_AQUA_GRUNT"
+      "script": "SeafloorCavern_Entrance_EventScript_Fisherman",
+      "flag": "FLAG_HIDE_SEAFLOOR_FISHERMAN"
+    },
+    {
+      "local_id": "LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GYARADOS",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES_SHINY(GYARADOS)",
+      "x": 10,
+      "y": 13,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SeafloorCavern_Entrance_EventScript_RedGyarados",
+      "flag": "FLAG_HIDE_SEAFLOOR_RED_GYARADOS"
     }
   ],
   "warp_events": [
     {
       "x": 10,
-      "y": 18,
-      "elevation": 3,
-      "dest_map": "MAP_UNDERWATER_ROUTE128",
-      "dest_warp_id": "0"
-    },
-    {
-      "x": 10,
       "y": 1,
       "elevation": 3,
-      "dest_map": "MAP_SEAFLOOR_CAVERN_ROOM1",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_MUNEN_LAKE",
+      "dest_warp_id": "4"
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [],
+  "region": "REGION_HOENN"
 }

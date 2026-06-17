@@ -860,12 +860,38 @@
 #define TRAINER_BRENDAN_PLACEHOLDER         853
 #define TRAINER_MAY_PLACEHOLDER             854
 
+// === Pokémon Wishes of Tomorrow ===
+// Three rival-Haru slots, one per player starter pick.
+// Mapping (sequential — see Munen_village_2/scripts.inc HaruIntro):
+//   Player picks Tyrunt   (VAR_STARTER_CHOICE=1) -> Haru fights with Amaura
+//   Player picks Amaura   (VAR_STARTER_CHOICE=2) -> Haru fights with Anorith
+//   Player picks Anorith  (VAR_STARTER_CHOICE=3) -> Haru fights with Tyrunt
+#define TRAINER_HARU_HAS_AMAURA             855
+#define TRAINER_HARU_HAS_ANORITH            856
+#define TRAINER_HARU_HAS_TYRUNT             857
+#define TRAINER_SHINKANSEN_GOON             858
+#define TRAINER_ROUTE2_FISHERMAN            859
+#define TRAINER_ROUTE2_HIKER                860
+#define TRAINER_ROUTE2_CAMPER               861
+#define TRAINER_TORII_ORACLE                862
+#define TRAINER_TORII_HIKER                 863
+#define TRAINER_TORII_BLACKBELT             864
+#define TRAINER_DRACO_TORII_AURORUS         865 // player chose Tyrunt
+#define TRAINER_DRACO_TORII_ARMALDO         866 // player chose Amaura
+#define TRAINER_DRACO_TORII_TYRANTRUM       867 // player chose Anorith
+#define TRAINER_STARSUMMIT_BOSS             868
+#define TRAINER_ROUTE2_SWIMMER_ALLISON      869
+#define TRAINER_ROUTE2_SWIMMER_SKYE         870
+#define TRAINER_ROUTE2_SWIMMER_ROSA         871
+#define TRAINER_ROUTE2_SWIMMER_MARINA       872 // masked goon -- the "impossible" Jirachi-summit battle (Typhlosion + Feraligatr Lv50)
+
 // NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
 //       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
+//       MAX raised to 880 (from 864) for headroom -- TRAINER_FLAGS_END + all SYSTEM_FLAGS shift up automatically (they are relative)
 
-#define TRAINERS_COUNT_EMERALD     855
-#define MAX_TRAINERS_COUNT_EMERALD 864
+#define TRAINERS_COUNT_EMERALD     873
+#define MAX_TRAINERS_COUNT_EMERALD 880
 
 #if IS_FRLG
 #define TRAINERS_COUNT                      TRAINERS_COUNT_FRLG

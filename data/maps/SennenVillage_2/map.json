@@ -1,0 +1,56 @@
+{
+  "id": "MAP_SENNEN_VILLAGE_2",
+  "name": "SennenVillage_2",
+  "layout": "LAYOUT_SENNEN_VILLAGE_2",
+  "music": "MUS_ROUTE113",
+  "region_map_section": "MAPSEC_SENNEN_LINE",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 15,
+      "y": 4,
+      "elevation": 0,
+      "dest_map": "MAP_TORII",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 14,
+      "y": 4,
+      "elevation": 0,
+      "dest_map": "MAP_TORII",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 6,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 7,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "4"
+    },
+    {
+      "x": 8,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "5"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

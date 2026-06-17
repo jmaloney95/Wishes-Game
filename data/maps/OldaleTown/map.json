@@ -3,7 +3,6 @@
   "name": "OldaleTown",
   "layout": "LAYOUT_OLDALE_TOWN",
   "music": "MUS_OLDALE",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_OLDALE_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
@@ -28,6 +27,11 @@
       "map": "MAP_ROUTE102",
       "offset": 0,
       "direction": "left"
+    },
+    {
+      "map": "MAP_TORII",
+      "offset": 0,
+      "direction": "down"
     }
   ],
   "object_events": [
@@ -196,5 +200,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "Common_EventScript_ShowPokemartSign"
     }
-  ]
+  ],
+  "region": "REGION_HOENN"
 }

@@ -400,6 +400,19 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Giddy;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedMauvilleOldMan1;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_UnusedMauvilleOldMan2;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ApricornTree;
+// --- HnS-extracted NPC overworld sprites (Johto flavor) ---
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_KimonoGirl;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Eusine;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Sage;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Oni;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Gordie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Sophocles;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerAllison;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerBlue;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerPink;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerSky;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GoldOni;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OniGoon;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -645,6 +658,19 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_OW_MON] =                   &gObjectEventGraphicsInfo_Follower,
     [OBJ_EVENT_GFX_LIGHT_SPRITE] =             &gObjectEventGraphicsInfo_BallLight,
     [OBJ_EVENT_GFX_APRICORN_TREE] =            &gObjectEventGraphicsInfo_ApricornTree,
+    // --- HnS-extracted NPC overworld sprites (Johto flavor); OUTSIDE the IS_FRLG block so they exist in this Hoenn build ---
+    [OBJ_EVENT_GFX_KIMONO_GIRL] =              &gObjectEventGraphicsInfo_KimonoGirl,
+    [OBJ_EVENT_GFX_EUSINE] =                   &gObjectEventGraphicsInfo_Eusine,
+    [OBJ_EVENT_GFX_SAGE] =                     &gObjectEventGraphicsInfo_Sage,
+    [OBJ_EVENT_GFX_ONI] =                      &gObjectEventGraphicsInfo_Oni,
+    [OBJ_EVENT_GFX_GORDIE] = &gObjectEventGraphicsInfo_Gordie,
+    [OBJ_EVENT_GFX_SOPHOCLES] = &gObjectEventGraphicsInfo_Sophocles,
+    [OBJ_EVENT_GFX_SWIMMER_ALLISON] = &gObjectEventGraphicsInfo_SwimmerAllison,
+    [OBJ_EVENT_GFX_SWIMMER_BLUE] = &gObjectEventGraphicsInfo_SwimmerBlue,
+    [OBJ_EVENT_GFX_SWIMMER_PINK] = &gObjectEventGraphicsInfo_SwimmerPink,
+    [OBJ_EVENT_GFX_SWIMMER_SKY] = &gObjectEventGraphicsInfo_SwimmerSky,
+    [OBJ_EVENT_GFX_GOLD_ONI] = &gObjectEventGraphicsInfo_GoldOni,
+    [OBJ_EVENT_GFX_ONI_GOON] = &gObjectEventGraphicsInfo_OniGoon,
 #if IS_FRLG
     [OBJ_EVENT_GFX_RED_NORMAL] =               &gObjectEventGraphicsInfo_RedNormal,
     [OBJ_EVENT_GFX_RED_BIKE] =                 &gObjectEventGraphicsInfo_RedBike,

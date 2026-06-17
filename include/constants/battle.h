@@ -648,6 +648,7 @@ enum BattleEnvironments
     BATTLE_ENVIRONMENT_DISTORTION_WORLD,
     BATTLE_ENVIRONMENT_SPACE,
     BATTLE_ENVIRONMENT_ULTRA_SPACE,
+    BATTLE_ENVIRONMENT_TORII, // Wishes of Tomorrow: rocky Torii Route (time-of-day variants)
     BATTLE_ENVIRONMENT_COUNT,
 };
 

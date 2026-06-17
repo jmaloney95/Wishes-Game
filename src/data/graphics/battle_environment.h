@@ -26,6 +26,28 @@ const u32 gBattleEnvironmentTiles_Rock[] = INCGFX_U32("graphics/battle_environme
 const u16 gBattleEnvironmentPalette_Rock[] = INCGFX_U16("graphics/battle_environment/rock/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_Rock[] = INCBIN_U32("graphics/battle_environment/rock/map.bin.smolTM");
 
+// Wishes of Tomorrow: time-of-day variants (snowy mountain dusk/night, Torii rocky day/dusk/night).
+const u32 gBattleEnvironmentTiles_RockDusk[] = INCGFX_U32("graphics/battle_environment/rock_dusk/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_RockDusk[] = INCGFX_U16("graphics/battle_environment/rock_dusk/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_RockDusk[] = INCBIN_U32("graphics/battle_environment/rock_dusk/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_RockNight[] = INCGFX_U32("graphics/battle_environment/rock_night/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_RockNight[] = INCGFX_U16("graphics/battle_environment/rock_night/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_RockNight[] = INCBIN_U32("graphics/battle_environment/rock_night/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_Torii[] = INCGFX_U32("graphics/battle_environment/torii/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_Torii[] = INCGFX_U16("graphics/battle_environment/torii/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_Torii[] = INCBIN_U32("graphics/battle_environment/torii/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_ToriiDusk[] = INCGFX_U32("graphics/battle_environment/torii_dusk/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_ToriiDusk[] = INCGFX_U16("graphics/battle_environment/torii_dusk/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_ToriiDusk[] = INCBIN_U32("graphics/battle_environment/torii_dusk/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_ToriiNight[] = INCGFX_U32("graphics/battle_environment/torii_night/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_ToriiNight[] = INCGFX_U16("graphics/battle_environment/torii_night/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_ToriiNight[] = INCBIN_U32("graphics/battle_environment/torii_night/map.bin.smolTM");
+
+// Volcano (Wishes of Tomorrow): painted molten-summit background (art: aveontrainer).
+const u32 gBattleEnvironmentTiles_Volcano[] = INCGFX_U32("graphics/battle_environment/volcano/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_Volcano[] = INCGFX_U16("graphics/battle_environment/volcano/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_Volcano[] = INCBIN_U32("graphics/battle_environment/volcano/map.bin.smolTM");
+
 const u32 gBattleEnvironmentTiles_Cave[] = INCGFX_U32("graphics/battle_environment/cave/tiles.png", ".4bpp.smol");
 const u16 gBattleEnvironmentPalette_Cave[] = INCGFX_U16("graphics/battle_environment/cave/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_Cave[] = INCBIN_U32("graphics/battle_environment/cave/map.bin.smolTM");
@@ -35,6 +57,11 @@ const u16 gBattleEnvironmentPalette_Building[] = INCGFX_U16("graphics/battle_env
 const u32 gBattleEnvironmentTilemap_Building[] = INCBIN_U32("graphics/battle_environment/building/map.bin.smolTM");
 
 const u16 gBattleEnvironmentPalette_BuildingGym[] = INCGFX_U16("graphics/battle_environment/building/gym.pal", ".gbapal");
+
+// Frostwood Gym (Wishes of Tomorrow): painted arena background (FR battle bg pack).
+const u32 gBattleEnvironmentTiles_Gym[] = INCGFX_U32("graphics/battle_environment/gym/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_Gym[] = INCGFX_U16("graphics/battle_environment/gym/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_Gym[] = INCBIN_U32("graphics/battle_environment/gym/map.bin.smolTM");
 const u16 gBattleEnvironmentPalette_BuildingLeader[] = INCGFX_U16("graphics/battle_environment/building/leader.pal", ".gbapal");
 const u16 gBattleEnvironmentPalette_Plain[] = INCGFX_U16("graphics/battle_environment/plain/palette.pal", ".gbapal");
 

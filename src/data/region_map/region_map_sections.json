@@ -130,7 +130,7 @@
     },
     {
       "id": "MAPSEC_ROUTE_101",
-      "name": "ROUTE 101",
+      "name": "ROUTE 3",
       "x": 4,
       "y": 10,
       "width": 1,
@@ -490,7 +490,7 @@
     },
     {
       "id": "MAPSEC_ABANDONED_SHIP",
-      "name": "ABANDONED SHIP",
+      "name": "ROUTE 2",
       "x": 6,
       "y": 14,
       "width": 1,
@@ -522,7 +522,7 @@
     },
     {
       "id": "MAPSEC_MT_PYRE",
-      "name": "MT. PYRE",
+      "name": "STAR SUMMIT",
       "x": 16,
       "y": 4,
       "width": 1,
@@ -782,7 +782,6 @@
     {
       "id": "MAPSEC_ROUTE_4_POKECENTER",
       "name": "ROUTE 4",
-      "name_clone": true,
       "x": 8,
       "y": 3,
       "width": 1,
@@ -791,7 +790,6 @@
     {
       "id": "MAPSEC_ROUTE_10_POKECENTER",
       "name": "ROUTE 10",
-      "name_clone": true,
       "x": 18,
       "y": 3,
       "width": 1,
@@ -808,17 +806,17 @@
     {
       "id": "MAPSEC_ROUTE_2",
       "name": "ROUTE 2",
-      "x": 4,
-      "y": 5,
+      "x": 13,
+      "y": 8,
       "width": 1,
-      "height": 3
+      "height": 1
     },
     {
       "id": "MAPSEC_ROUTE_3",
-      "name": "ROUTE 3",
-      "x": 5,
+      "name": "TORII ROUTE",
+      "x": 9,
       "y": 4,
-      "width": 4,
+      "width": 1,
       "height": 1
     },
     {
@@ -1032,7 +1030,6 @@
     {
       "id": "MAPSEC_UNDERGROUND_PATH_2",
       "name": "UNDERGROUND PATH",
-      "name_clone": true,
       "x": 12,
       "y": 6,
       "width": 1,
@@ -1200,7 +1197,7 @@
     },
     {
       "id": "MAPSEC_TREASURE_BEACH",
-      "name": "TREASURE BEACH",
+      "name": "ASHLANDS",
       "x": 1,
       "y": 9,
       "width": 1,
@@ -1393,7 +1390,6 @@
     {
       "id": "MAPSEC_TRAINER_TOWER_2",
       "name": "TRAINER TOWER",
-      "name_clone": true,
       "x": 5,
       "y": 6,
       "width": 1,
@@ -1521,7 +1517,7 @@
     },
     {
       "id": "MAPSEC_EMBER_SPA",
-      "name": "EMBER SPA"
+      "name": "ONSEN SPRINGS"
     },
     {
       "id": "MAPSEC_SPECIAL_AREA",
@@ -1630,6 +1626,98 @@
       "y": 4,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_MUNEN_VILLAGE",
+      "name": "MUNEN VILLAGE",
+      "x": 10,
+      "y": 14,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_LAKE_MUNEN",
+      "name": "MUNEN LAKE",
+      "x": 16,
+      "y": 11,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_ROUTE_ONE",
+      "name": "MELTING MILE",
+      "x": 14,
+      "y": 12,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_FROSTWOOD_TOWN",
+      "name": "FROSTWOOD TOWN",
+      "x": 14,
+      "y": 9,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_MT_FUJI",
+      "name": "MOUNT MUNEN",
+      "x": 10,
+      "y": 1,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_STAR_SUMMIT",
+      "name": "STAR SUMMIT",
+      "x": 11,
+      "y": 0,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_TRADEWIND_TOWN",
+      "name": "TRADEWIND TOWN",
+      "x": 6,
+      "y": 8,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_SHIN_TOKYO",
+      "name": "SHIN-TOKYO",
+      "x": 16,
+      "y": 4,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_SENNEN_LINE",
+      "name": "SENNEN STATION",
+      "x": 12,
+      "y": 7,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_ONSEN_SPRINGS",
+      "name": "ONSEN SPRINGS",
+      "x": 7,
+      "y": 0,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_ASHLANDS",
+      "name": "ASHLANDS",
+      "x": 6,
+      "y": 1,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_WALNUT_WOODS",
+      "name": "WALNUT WOODS"
     }
   ]
 }
