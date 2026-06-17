@@ -9394,7 +9394,7 @@
       "width": 41,
       "height": 41,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Route224",
+      "secondary_tileset": "gTileset_MtMoonVillageInterior",
       "border_filepath": "data/layouts/test/border.bin",
       "blockdata_filepath": "data/layouts/test/map.bin"
     },
@@ -9432,7 +9432,7 @@
       "id": "LAYOUT_ROUTE_2",
       "name": "Route_2_Layout",
       "width": 24,
-      "height": 49,
+      "height": 35,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_SootopolisGym",
       "border_filepath": "data/layouts/Route_2/border.bin",
@@ -9511,8 +9511,8 @@
     {
       "id": "LAYOUT_ROUTE_2_2",
       "name": "Route_2_2_Layout",
-      "width": 66,
-      "height": 68,
+      "width": 76,
+      "height": 97,
       "primary_tileset": "gTileset_Route224Primary",
       "secondary_tileset": "gTileset_Route224",
       "border_filepath": "data/layouts/Route_2_2/border.bin",

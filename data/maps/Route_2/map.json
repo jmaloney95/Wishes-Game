@@ -17,7 +17,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
       "x": 11,
-      "y": 26,
+      "y": 12,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -30,7 +30,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
       "x": 15,
-      "y": 28,
+      "y": 14,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -43,7 +43,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
       "x": 18,
-      "y": 7,
+      "y": -7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -56,7 +56,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ABOMASNOW)",
       "x": 6,
-      "y": 33,
+      "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -69,7 +69,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 8,
-      "y": 7,
+      "y": -7,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -82,7 +82,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PSYDUCK)",
       "x": 12,
-      "y": 23,
+      "y": 9,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -95,7 +95,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_ALLISON",
       "x": 5,
-      "y": 14,
+      "y": 0,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -108,7 +108,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_SKY",
       "x": 3,
-      "y": 15,
+      "y": 1,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -121,7 +121,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_PINK",
       "x": 17,
-      "y": 12,
+      "y": -2,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -134,7 +134,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_BLUE",
       "x": 4,
-      "y": 19,
+      "y": 5,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -148,42 +148,42 @@
   "warp_events": [
     {
       "x": 13,
-      "y": 45,
+      "y": 31,
       "elevation": 0,
       "dest_map": "MAP_FROSTWOOD_TOWN",
       "dest_warp_id": "9"
     },
     {
       "x": 14,
-      "y": 45,
+      "y": 31,
       "elevation": 0,
       "dest_map": "MAP_FROSTWOOD_TOWN",
       "dest_warp_id": "8"
     },
     {
       "x": 15,
-      "y": 45,
+      "y": 31,
       "elevation": 0,
       "dest_map": "MAP_FROSTWOOD_TOWN",
       "dest_warp_id": "8"
     },
     {
       "x": 5,
-      "y": 0,
+      "y": -14,
       "elevation": 0,
       "dest_map": "MAP_SENNEN_VILLAGE",
       "dest_warp_id": "1"
     },
     {
       "x": 6,
-      "y": 0,
+      "y": -14,
       "elevation": 0,
       "dest_map": "MAP_SENNEN_VILLAGE",
       "dest_warp_id": "2"
     },
     {
       "x": 7,
-      "y": 0,
+      "y": -14,
       "elevation": 0,
       "dest_map": "MAP_SENNEN_VILLAGE",
       "dest_warp_id": "3"

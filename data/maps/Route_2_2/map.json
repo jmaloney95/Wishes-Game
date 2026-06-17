@@ -16,10 +16,10 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_CAMPER",
-      "x": 47,
-      "y": 31,
+      "x": 37,
+      "y": 43,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -29,8 +29,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_HIKER",
-      "x": 51,
-      "y": 33,
+      "x": 29,
+      "y": 43,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -41,11 +41,11 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
-      "x": 54,
-      "y": 12,
+      "graphics_id": "OBJ_EVENT_GFX_FISHER",
+      "x": 53,
+      "y": 71,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -54,13 +54,13 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ABOMASNOW)",
-      "x": 42,
-      "y": 38,
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(GIBLE)",
+      "x": 53,
+      "y": 59,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 2,
-      "movement_range_y": 2,
+      "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_RIGHT_DOWN_UP_LEFT",
+      "movement_range_x": 4,
+      "movement_range_y": 7,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route_2_EventScript_WildZigzagoon",
@@ -69,7 +69,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WINGULL)",
       "x": 44,
-      "y": 12,
+      "y": 41,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -81,8 +81,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PSYDUCK)",
-      "x": 48,
-      "y": 28,
+      "x": 54,
+      "y": 50,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -94,8 +94,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_ALLISON",
-      "x": 41,
-      "y": 19,
+      "x": 46,
+      "y": 35,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -107,8 +107,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_SKY",
-      "x": 39,
-      "y": 20,
+      "x": 43,
+      "y": 34,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -120,8 +120,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_PINK",
-      "x": 53,
-      "y": 17,
+      "x": 50,
+      "y": 38,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -133,8 +133,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SWIMMER_BLUE",
-      "x": 40,
-      "y": 24,
+      "x": 30,
+      "y": 39,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -143,50 +143,68 @@
       "trainer_sight_or_berry_tree_id": "6",
       "script": "Route_2_EventScript_SwimmerMarina",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(QUILAVA)",
+      "x": 9,
+      "y": 41,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LUCY",
+      "x": 29,
+      "y": 66,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
+      "x": 36,
+      "y": 41,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
     }
   ],
   "warp_events": [
     {
-      "x": 49,
-      "y": 50,
+      "x": 57,
+      "y": 11,
       "elevation": 0,
-      "dest_map": "MAP_FROSTWOOD_TOWN",
-      "dest_warp_id": "9"
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "0"
     },
     {
-      "x": 50,
-      "y": 50,
+      "x": 58,
+      "y": 11,
       "elevation": 0,
-      "dest_map": "MAP_FROSTWOOD_TOWN",
-      "dest_warp_id": "8"
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "0"
     },
     {
-      "x": 51,
-      "y": 50,
+      "x": 27,
+      "y": 72,
       "elevation": 0,
-      "dest_map": "MAP_FROSTWOOD_TOWN",
-      "dest_warp_id": "8"
-    },
-    {
-      "x": 41,
-      "y": 5,
-      "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE",
-      "dest_warp_id": "1"
-    },
-    {
-      "x": 42,
-      "y": 5,
-      "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE",
-      "dest_warp_id": "2"
-    },
-    {
-      "x": 43,
-      "y": 5,
-      "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE",
-      "dest_warp_id": "3"
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [],

@@ -3335,22 +3335,12 @@ const u16 gTilesetPalettes_Droid779Snow[][16] =
 const u32 gTilesetTiles_MtMoonVillage[] = INCBIN_U32("data/tilesets/primary/mt_moon_village/tiles.4bpp.lz");
 const u16 gTilesetPalettes_MtMoonVillage[][16] =
 {
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/00.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/01.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/02.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/03.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/04.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/05.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/06.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/07.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/08.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/09.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/10.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/11.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/12.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/13.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/14.pal", ".gbapal"),
-    INCGFX_U16("data/tilesets/primary/mt_moon_village/palettes/15.pal", ".gbapal"),
+    INCBIN_U16("data/tilesets/primary/mt_moon_village/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/mt_moon_village/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/mt_moon_village/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/mt_moon_village/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/mt_moon_village/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/mt_moon_village/palettes/05.gbapal"),
 };
 
 const u32 gTilesetTiles_MtMoonVillageInterior[] = INCGFX_U32("data/tilesets/secondary/mt_moon_village_interior/tiles.png", ".4bpp.fastSmol", "-num_tiles 200 -Wnum_tiles");
@@ -3374,7 +3364,7 @@ const u16 gTilesetPalettes_MtMoonVillageInterior[][16] =
     INCGFX_U16("data/tilesets/secondary/mt_moon_village_interior/palettes/15.pal", ".gbapal"),
 };
 
-const u32 gTilesetTiles_Route224[] = INCGFX_U32("data/tilesets/secondary/route_224/tiles.png", ".4bpp.fastSmol", "-num_tiles 250 -Wnum_tiles");
+const u32 gTilesetTiles_Route224[] = INCGFX_U32("data/tilesets/secondary/route_224/tiles.png", ".4bpp.fastSmol", "-num_tiles 260 -Wnum_tiles");
 const u16 gTilesetPalettes_Route224[][16] =
 {
     INCGFX_U16("data/tilesets/secondary/route_224/palettes/00.pal", ".gbapal"),
