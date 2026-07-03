@@ -91,14 +91,14 @@
 #define FLAG_UNUSED_0x045    0x45 // Unused Flag
 #define FLAG_UNUSED_0x046    0x46 // Unused Flag
 #define FLAG_UNUSED_0x047    0x47 // Unused Flag
-#define FLAG_UNUSED_0x048    0x48 // Unused Flag
-#define FLAG_UNUSED_0x049    0x49 // Unused Flag
-#define FLAG_UNUSED_0x04A    0x4A // Unused Flag
-#define FLAG_UNUSED_0x04B    0x4B // Unused Flag
-#define FLAG_UNUSED_0x04C    0x4C // Unused Flag
-#define FLAG_UNUSED_0x04D    0x4D // Unused Flag
-#define FLAG_UNUSED_0x04E    0x4E // Unused Flag
-#define FLAG_UNUSED_0x04F    0x4F // Unused Flag
+#define FLAG_ITEM_NATIONAL_PARK_TM_EARTHQUAKE 0x48
+#define FLAG_NATIONAL_PARK_EEVEE_BREEDER 0x49
+#define FLAG_NATIONAL_PARK_TOUR_DONE 0x4A
+#define FLAG_NATIONAL_PARK_METAL_COAT_DONE 0x4B
+#define FLAG_NATIONAL_PARK_GRAVE_SECRET 0x4C
+#define FLAG_NATIONAL_PARK_CUT_GIVEN 0x4D
+#define FLAG_BADGE_LANTERN   0x4E // Tradewind gym cleared + Mega unlock (custom; all 8 numbered badge slots are taken)
+#define FLAG_HIDE_TRADEWIND_PAWNBROKER 0x4F // hides the Pawnbroker (Mega-stone) stall until the Lantern Badge is earned
 
 // Scripts
 #define FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL  0x50
@@ -1350,7 +1350,7 @@
 #define FLAG_SYS_POKEMON_GET                         (SYSTEM_FLAGS + 0x0) // FLAG_0x860
 #define FLAG_SYS_POKEDEX_GET                         (SYSTEM_FLAGS + 0x1)
 #define FLAG_SYS_POKENAV_GET                         (SYSTEM_FLAGS + 0x2)
-#define FLAG_UNUSED_0x863                            (SYSTEM_FLAGS + 0x3) // Unused Flag
+#define FLAG_SYS_QUEST_MENU_GET                      (SYSTEM_FLAGS + 0x3) // add QUESTS to start menu
 #define FLAG_SYS_GAME_CLEAR                          (SYSTEM_FLAGS + 0x4)
 #define FLAG_SYS_CHAT_USED                           (SYSTEM_FLAGS + 0x5)
 #define FLAG_UNLOCKED_TRENDY_SAYINGS                 (SYSTEM_FLAGS + 0x6)
@@ -2495,5 +2495,35 @@
 // NOTE: FLAG_MET_HINOKI (0x022) is now the "met Clarkson" flag -- left
 // as MET_HINOKI for backward compatibility; new code should treat it as
 // FLAG_MET_CLARKSON.
+
+// === NewMap gate town + Munen Tunnel side quest (2026-07-02) ===
+// 0x35, 0x54, 0x55 are the only free slots below 0x56; using the big free run at 0x264+.
+#define FLAG_NEWMAP_TUNNEL_RUMOR                FLAG_UNUSED_0x264 // Master Gen asked the player to search the tomb tunnel
+#define FLAG_NEWMAP_MASK_RETURNED               FLAG_UNUSED_0x265 // showed Itsuki's carved mask to Master Gen (quest done)
+#define FLAG_NEWMAP_APPRENTICE_DOOR_OPEN        FLAG_UNUSED_0x266 // hides the crates blocking Itsuki's house door
+#define FLAG_HIDE_MUNEN_TUNNEL_GRUNT            FLAG_UNUSED_0x267 // straggler grunt flees the tunnel after losing
+#define FLAG_ITEM_MUNEN_TUNNEL_NUGGET           FLAG_UNUSED_0x268 // tunnel item balls...
+#define FLAG_ITEM_MUNEN_TUNNEL_MAX_ETHER        FLAG_UNUSED_0x269
+#define FLAG_ITEM_MUNEN_TUNNEL_TM_SHADOW_BALL   FLAG_UNUSED_0x26A
+#define FLAG_ITEM_MUNEN_TUNNEL_CARVED_MASK      FLAG_UNUSED_0x26B // ...the mask itself (key item, deepest chamber)
+#define FLAG_ITEM_NEWMAP_APPRENTICE_RARE_CANDY  FLAG_UNUSED_0x26C // item ball inside Itsuki's house
+
+// === Act 2: boat to occupied National Park + Distortion World (2026-07-02) ===
+#define FLAG_ACT2_GRAVE_PORTAL_OPENED           FLAG_UNUSED_0x26D // first Catalpa Bow crossing seen (long cutscene once, short after)
+#define FLAG_ACT2_MET_CLARKSON_DISTORTION       FLAG_UNUSED_0x26E // Gengar-Clarkson scene done: Gengar joined, Distortion World collapsed, seam closed (also sets FLAG_NATIONAL_PARK_GRAVE_SECRET)
+#define FLAG_HIDE_ASHLANDS_OLD_MAN              FLAG_UNUSED_0x26F // Clarkson's father vanishes after the FENTANYL quest, unblocking his house door
+#define FLAG_ITEM_ASHLANDS_CATALPA_BOW          FLAG_UNUSED_0x270 // the Catalpa Bow item ball inside his house
+#define FLAG_ACT2_CROSSED_TO_MUNEN              FLAG_UNUSED_0x271 // Gengar ferried the player to occupied Munen (the point of no return)
+#define FLAG_ACT2_LAB_DRACO_FLED                FLAG_UNUSED_0x272 // Draco beaten/battled in the Munen lab; fled to Shin-Tokyo with the research in his head
+#define FLAG_ACT2_RESEARCH_RESOLVED             FLAG_UNUSED_0x273 // player chose the fate of the physical research (kept = has ITEM_SHADOW_DOSSIER; destroyed = no item)
+#define FLAG_ACT2_HOME_CUTSCENE_DONE            FLAG_UNUSED_0x274 // Mom fought off the goons and led the player to the safehouse (hides home objects)
+#define FLAG_HIDE_DOJO_REBELS                   FLAG_UNUSED_0x275 // SET at new game (new_game.inc); CLEARED when Mom brings the player to the Dojo safehouse
+#define FLAG_ACT2_SAFEHOUSE_INTRO_DONE          FLAG_UNUSED_0x276 // "Welcome to the Rebellion" pan-up cutscene has played
+#define FLAG_ACT2_REBEL_GIFT_REDFATALITY        FLAG_UNUSED_0x277 // RedFatality handed over TM13 Ice Beam (a fighter's parting gift)
+#define FLAG_ACT2_REBEL_GIFT_MOM                FLAG_UNUSED_0x278 // Mom gave the Soothe Bell from over the crib (+ Leftovers, because Mom)
+#define FLAG_ACT2_REBEL_GIFT_MIKMANC            FLAG_UNUSED_0x279 // MikManc handed over the Life Orb + a word of courage
+#define FLAG_ACT2_REBEL_GIFT_YIFFER             FLAG_UNUSED_0x27A // Yiffer handed over the Leftovers ("bite by bite")
+#define FLAG_HIDE_SHINKANSEN_ACT2_GOONS         FLAG_UNUSED_0x27B // SET at new game; CLEARED when the keycard door opens (act-2 passengers appear)
+#define FLAG_ACT3_STARTED                       FLAG_UNUSED_0x27C // took the seat; the Shinkansen departed -- ACT III: COOKED
 
 #endif // GUARD_CONSTANTS_FLAGS_H

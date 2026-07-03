@@ -59,6 +59,7 @@
 #include "trainer_see.h"
 #include "tv.h"
 #include "window.h"
+#include "quests.h"
 #include "list_menu.h"
 #include "malloc.h"
 #include "battle.h"
@@ -3351,5 +3352,118 @@ bool8 ScrCmd_getbraillestringwidth(struct ScriptContext * ctx)
         msg = (u8 *)ctx->data[0];
 
     gSpecialVar_0x8004 = GetStringWidth(FONT_BRAILLE, msg, -1);
+    return FALSE;
+}
+
+bool8 ScrCmd_questmenu(struct ScriptContext *ctx)
+{
+    u8 caseId = ScriptReadByte(ctx);
+    u8 questId = VarGet(ScriptReadByte(ctx));
+
+    switch (caseId)
+    {
+    case QUEST_MENU_OPEN:
+    default:
+        Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE | SCREFF_HARDWARE);
+        BeginNormalPaletteFade(PALETTES_ALL, 2, 16, 0, 0);
+        QuestMenu_Init(0, CB2_ReturnToFieldContinueScriptPlayMapMusic);
+        ScriptContext_Stop();
+        return TRUE;
+    case QUEST_MENU_UNLOCK_QUEST:
+        Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_UNLOCKED);
+        break;
+    case QUEST_MENU_SET_ACTIVE:
+        Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_UNLOCKED);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_ACTIVE);
+        break;
+    case QUEST_MENU_SET_REWARD:
+        Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_UNLOCKED);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_REWARD);
+        QuestMenu_GetSetQuestState(questId, FLAG_REMOVE_ACTIVE);
+        break;
+    case QUEST_MENU_COMPLETE_QUEST:
+        Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_UNLOCKED);
+        QuestMenu_GetSetQuestState(questId, FLAG_SET_COMPLETED);
+        QuestMenu_GetSetQuestState(questId, FLAG_REMOVE_ACTIVE);
+        QuestMenu_GetSetQuestState(questId, FLAG_REMOVE_REWARD);
+        break;
+    case QUEST_MENU_CHECK_UNLOCKED:
+        Script_RequestEffects(SCREFF_V1);
+        gSpecialVar_Result = QuestMenu_GetSetQuestState(questId, FLAG_GET_UNLOCKED) ? TRUE : FALSE;
+        break;
+    // Not in PSF's original switch: without this case, the goto_if_quest_inactive /
+    // call_if_quest_inactive macros (caseId 6) fell through to default and opened the menu.
+    case QUEST_MENU_CHECK_INACTIVE:
+        Script_RequestEffects(SCREFF_V1);
+        gSpecialVar_Result = QuestMenu_GetSetQuestState(questId, FLAG_GET_INACTIVE) ? TRUE : FALSE;
+        break;
+    case QUEST_MENU_CHECK_ACTIVE:
+        Script_RequestEffects(SCREFF_V1);
+        gSpecialVar_Result = QuestMenu_GetSetQuestState(questId, FLAG_GET_ACTIVE) ? TRUE : FALSE;
+        break;
+    case QUEST_MENU_CHECK_REWARD:
+        Script_RequestEffects(SCREFF_V1);
+        gSpecialVar_Result = QuestMenu_GetSetQuestState(questId, FLAG_GET_REWARD) ? TRUE : FALSE;
+        break;
+    case QUEST_MENU_CHECK_COMPLETE:
+        Script_RequestEffects(SCREFF_V1);
+        gSpecialVar_Result = QuestMenu_GetSetQuestState(questId, FLAG_GET_COMPLETED) ? TRUE : FALSE;
+        break;
+    case QUEST_MENU_BUFFER_QUEST_NAME:
+        Script_RequestEffects(SCREFF_V1);
+        QuestMenu_CopyQuestName(gStringVar1, questId);
+        break;
+    }
+
+    return FALSE;
+}
+
+bool8 ScrCmd_returnqueststate(struct ScriptContext *ctx)
+{
+    u8 questId = VarGet(ScriptReadByte(ctx));
+
+    Script_RequestEffects(SCREFF_V1);
+
+    if (QuestMenu_GetSetQuestState(questId, FLAG_GET_INACTIVE))
+        gSpecialVar_Result = FLAG_GET_INACTIVE;
+    else if (QuestMenu_GetSetQuestState(questId, FLAG_GET_ACTIVE))
+        gSpecialVar_Result = FLAG_GET_ACTIVE;
+    else if (QuestMenu_GetSetQuestState(questId, FLAG_GET_REWARD))
+        gSpecialVar_Result = FLAG_GET_REWARD;
+    else if (QuestMenu_GetSetQuestState(questId, FLAG_GET_COMPLETED))
+        gSpecialVar_Result = FLAG_GET_COMPLETED;
+
+    return FALSE;
+}
+
+bool8 ScrCmd_subquestmenu(struct ScriptContext *ctx)
+{
+    u8 caseId = ScriptReadByte(ctx);
+    u8 parentId = VarGet(ScriptReadHalfword(ctx));
+    u8 childId = VarGet(ScriptReadHalfword(ctx));
+
+    switch (caseId)
+    {
+    case QUEST_MENU_COMPLETE_QUEST:
+        Script_RequestEffects(SCREFF_V1 | SCREFF_SAVE);
+        QuestMenu_GetSetSubquestState(parentId, FLAG_SET_COMPLETED, childId);
+        break;
+    case QUEST_MENU_CHECK_COMPLETE:
+        Script_RequestEffects(SCREFF_V1);
+        gSpecialVar_Result = QuestMenu_GetSetSubquestState(parentId, FLAG_GET_COMPLETED, childId) ? TRUE : FALSE;
+        break;
+    case QUEST_MENU_BUFFER_QUEST_NAME:
+        Script_RequestEffects(SCREFF_V1);
+        QuestMenu_CopySubquestName(gStringVar1, parentId, childId);
+        break;
+    default:
+        Script_RequestEffects(SCREFF_V1);
+        break;
+    }
+
     return FALSE;
 }

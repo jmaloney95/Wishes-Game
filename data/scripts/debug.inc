@@ -200,15 +200,22 @@ Debug_EventScript_Text_OffensiveIVs:
 Debug_EventScript_Text_DefensiveIVs:
 	.string "HP IVs: {STR_VAR_1}, DEF IVs: {STR_VAR_2}, SPDEF IVs: {STR_VAR_3}$"
 
+@ Quest menu smoke test: unlock the QUESTS start-menu entry and start QUEST_1
 Debug_EventScript_Script_1::
+	setflag FLAG_SYS_QUEST_MENU_GET
+	startquest QUEST_1
 	release
 	end
 
+@ Quest menu smoke test: complete QUEST_1
 Debug_EventScript_Script_2::
+	completequest QUEST_1
 	release
 	end
 
+@ Quest menu smoke test: open the quest menu directly
 Debug_EventScript_Script_3::
+	openquestmenu
 	release
 	end
 
