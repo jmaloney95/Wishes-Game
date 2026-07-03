@@ -35,6 +35,12 @@
 #include "pokemon_icon.h"
 
 #include "random.h"
+#include "constants/flags.h"
+
+// The saveblock quest bitfields are sized from the STORAGE caps so the save
+// layout survives adding quests; make sure the roster still fits them.
+STATIC_ASSERT(QUEST_COUNT <= QUEST_STORAGE_COUNT, QuestCountExceedsSaveStorage);
+STATIC_ASSERT(SUB_QUEST_COUNT <= SUB_QUEST_STORAGE_COUNT, SubQuestCountExceedsSaveStorage);
 
 #define tPageItems      data[4]
 #define tItemPcParam    data[6]
@@ -249,313 +255,8 @@ static const u8 sText_AZ[] = _(" A-Z");
 
 //Declaration of subquest structures. Edits to subquests are made here.
 #define sub_quest(i, n, d, m, s, st, t) {.id = i, .name = n, .desc = d, .map = m, .sprite = s, .spritetype = st, .type = t}
-static const struct SubQuest sSubQuests1[QUEST_1_SUB_COUNT] =
-{
-	sub_quest(
-	      0,
-	      gText_SubQuest1_Name1,
-	      gText_SubQuest1_Desc1,
-	      gText_SideQuestMap1,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      1,
-	      gText_SubQuest1_Name2,
-	      gText_SubQuest1_Desc2,
-	      gText_SideQuestMap2,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      2,
-	      gText_SubQuest1_Name3,
-	      gText_SubQuest1_Desc3,
-	      gText_SideQuestMap3,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      3,
-	      gText_SubQuest1_Name4,
-	      gText_SubQuest1_Desc4,
-	      gText_SideQuestMap4,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      4,
-	      gText_SubQuest1_Name5,
-	      gText_SubQuest1_Desc5,
-	      gText_SideQuestMap5,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      5,
-	      gText_SubQuest1_Name6,
-	      gText_SubQuest1_Desc6,
-	      gText_SideQuestMap6,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      6,
-	      gText_SubQuest1_Name7,
-	      gText_SubQuest1_Desc7,
-	      gText_SideQuestMap7,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      7,
-	      gText_SubQuest1_Name8,
-	      gText_SubQuest1_Desc8,
-	      gText_SideQuestMap8,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      8,
-	      gText_SubQuest1_Name9,
-	      gText_SubQuest1_Desc9,
-	      gText_SideQuestMap9,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      9,
-	      gText_SubQuest1_Name10,
-	      gText_SubQuest1_Desc10,
-	      gText_SideQuestMap10,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-};
-
-static const struct SubQuest sSubQuests2[QUEST_2_SUB_COUNT] =
-{
-	sub_quest(
-	      10,
-	      gText_SubQuest2_Name1,
-	      gText_SubQuest2_Desc1,
-	      gText_SideQuestMap1,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      11,
-	      gText_SubQuest2_Name2,
-	      gText_SubQuest2_Desc2,
-	      gText_SideQuestMap2,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      12,
-	      gText_SubQuest2_Name3,
-	      gText_SubQuest2_Desc3,
-	      gText_SideQuestMap3,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      13,
-	      gText_SubQuest2_Name4,
-	      gText_SubQuest2_Desc4,
-	      gText_SideQuestMap4,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      14,
-	      gText_SubQuest2_Name5,
-	      gText_SubQuest2_Desc5,
-	      gText_SideQuestMap5,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      15,
-	      gText_SubQuest2_Name6,
-	      gText_SubQuest2_Desc6,
-	      gText_SideQuestMap6,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      16,
-	      gText_SubQuest2_Name7,
-	      gText_SubQuest2_Desc7,
-	      gText_SideQuestMap7,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      17,
-	      gText_SubQuest2_Name8,
-	      gText_SubQuest2_Desc8,
-	      gText_SideQuestMap8,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      18,
-	      gText_SubQuest2_Name9,
-	      gText_SubQuest2_Desc9,
-	      gText_SideQuestMap9,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      19,
-	      gText_SubQuest2_Name10,
-	      gText_SubQuest2_Desc10,
-	      gText_SideQuestMap10,
-	      SPECIES_HO_OH,
-	      PKMN,
-	      sText_Caught
-
-	),
-
-	sub_quest(
-	      20,
-	      gText_SubQuest2_Name11,
-	      gText_SubQuest2_Desc11,
-	      gText_SideQuestMap11,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      21,
-	      gText_SubQuest2_Name12,
-	      gText_SubQuest2_Desc12,
-	      gText_SideQuestMap12,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      22,
-	      gText_SubQuest2_Name13,
-	      gText_SubQuest2_Desc13,
-	      gText_SideQuestMap13,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      23,
-	      gText_SubQuest2_Name14,
-	      gText_SubQuest2_Desc14,
-	      gText_SideQuestMap14,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      24,
-	      gText_SubQuest2_Name15,
-	      gText_SubQuest2_Desc15,
-	      gText_SideQuestMap15,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      25,
-	      gText_SubQuest2_Name16,
-	      gText_SubQuest2_Desc16,
-	      gText_SideQuestMap16,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      26,
-	      gText_SubQuest2_Name17,
-	      gText_SubQuest2_Desc17,
-	      gText_SideQuestMap17,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      27,
-	      gText_SubQuest2_Name18,
-	      gText_SubQuest2_Desc18,
-	      gText_SideQuestMap18,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      28,
-	      gText_SubQuest2_Name19,
-	      gText_SubQuest2_Desc19,
-	      gText_SideQuestMap19,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-	sub_quest(
-	      29,
-	      gText_SubQuest2_Name20,
-	      gText_SubQuest2_Desc20,
-	      gText_SideQuestMap20,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sText_Found
-	),
-
-};
+// No subquests yet. The parked purification line (one subquest per shadow
+// legendary, completing at Celebi's shrine) will add its arrays here.
 
 ////////////////////////END SUBQUEST CUSTOMIZATION/////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -567,302 +268,82 @@ static const struct SubQuest sSubQuests2[QUEST_2_SUB_COUNT] =
 #define side_quest(n, d, dd, m, s, st, sq, ns) {.name = n, .desc = d, .donedesc = dd, .map = m, .sprite = s, .spritetype = st, .subquests = sq, .numSubquests = ns}
 static const struct SideQuest sSideQuests[QUEST_COUNT] =
 {
-	side_quest(
-	      gText_SideQuestName_1,
-	      gText_SideQuestDesc_1,
-	      gText_SideQuestDoneDesc_1,
-	      gText_SideQuestMap1,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[QUEST_WAKING_MOUNTAIN] = side_quest(
+	      gText_Quest_WakingMountain_Name,
+	      gText_Quest_WakingMountain_Desc1,
+	      gText_Quest_WakingMountain_DoneDesc,
+	      gText_QuestLoc_MtMunen,
+	      SPECIES_JIRACHI,
+	      PKMN,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_2,
-	      gText_SideQuestDesc_2,
-	      gText_SideQuestDoneDesc_2,
-	      gText_SideQuestMap2,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sSubQuests1,
-	      QUEST_1_SUB_COUNT
-	),
-	side_quest(
-	      gText_SideQuestName_3,
-	      gText_SideQuestDesc_3,
-	      gText_SideQuestDoneDesc_3,
-	      gText_SideQuestMap3,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      sSubQuests2,
-	      QUEST_2_SUB_COUNT
-	),
-	side_quest(
-	      gText_SideQuestName_4,
-	      gText_SideQuestDesc_4,
-	      gText_SideQuestDoneDesc_4,
-	      gText_SideQuestMap4,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[SIDE_QUEST_ONE_THAT_GOT_AWAY] = side_quest(
+	      gText_Quest_OneThatGotAway_Name,
+	      gText_Quest_OneThatGotAway_Desc1,
+	      gText_Quest_OneThatGotAway_DoneDesc,
+	      gText_QuestLoc_MunenVillage,
+	      SPECIES_GYARADOS,
+	      PKMN,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_5,
-	      gText_SideQuestDesc_5,
-	      gText_SideQuestDoneDesc_5,
-	      gText_SideQuestMap5,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[SIDE_QUEST_FROZEN_TRACKS] = side_quest(
+	      gText_Quest_FrozenTracks_Name,
+	      gText_Quest_FrozenTracks_Desc,
+	      gText_Quest_FrozenTracks_DoneDesc,
+	      gText_QuestLoc_SennenStation,
+	      ITEM_NEVER_MELT_ICE,
+	      ITEM,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_6,
-	      gText_SideQuestDesc_6,
-	      gText_SideQuestDoneDesc_6,
-	      gText_SideQuestMap6,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[SIDE_QUEST_EIGHT_WAYS] = side_quest(
+	      gText_Quest_EightWays_Name,
+	      gText_Quest_EightWays_Desc,
+	      gText_Quest_EightWays_DoneDesc,
+	      gText_QuestLoc_NationalPark,
+	      SPECIES_EEVEE,
+	      PKMN,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_7,
-	      gText_SideQuestDesc_7,
-	      gText_SideQuestDoneDesc_7,
-	      gText_SideQuestMap7,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[SIDE_QUEST_HEAVY_METAL] = side_quest(
+	      gText_Quest_HeavyMetal_Name,
+	      gText_Quest_HeavyMetal_Desc,
+	      gText_Quest_HeavyMetal_DoneDesc,
+	      gText_QuestLoc_NationalPark,
+	      SPECIES_SCYTHER,
+	      PKMN,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_8,
-	      gText_SideQuestDesc_8,
-	      gText_SideQuestDoneDesc_8,
-	      gText_SideQuestMap8,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[SIDE_QUEST_SAVE_FACE] = side_quest(
+	      gText_Quest_SaveFace_Name,
+	      gText_Quest_SaveFace_Desc1,
+	      gText_Quest_SaveFace_DoneDesc,
+	      gText_QuestLoc_Pompeii,
+	      ITEM_CARVED_MASK,
+	      ITEM,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_9,
-	      gText_SideQuestDesc_9,
-	      gText_SideQuestDoneDesc_9,
-	      gText_SideQuestMap9,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
+	[QUEST_GRANDFATHERS_WISH] = side_quest(
+	      gText_Quest_GrandfathersWish_Name,
+	      gText_Quest_GrandfathersWish_Desc,
+	      gText_Quest_GrandfathersWish_DoneDesc,
+	      gText_QuestLoc_NationalPark,
+	      ITEM_CATALPA_BOW,
+	      ITEM,
 	      NULL,
 	      0
 	),
-	side_quest(
-	      gText_SideQuestName_10,
-	      gText_SideQuestDesc_10,
-	      gText_SideQuestDoneDesc_10,
-	      gText_SideQuestMap10,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_11,
-	      gText_SideQuestDesc_11,
-	      gText_SideQuestDoneDesc_11,
-	      gText_SideQuestMap11,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_12,
-	      gText_SideQuestDesc_12,
-	      gText_SideQuestDoneDesc_12,
-	      gText_SideQuestMap12,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_13,
-	      gText_SideQuestDesc_13,
-	      gText_SideQuestDoneDesc_13,
-	      gText_SideQuestMap13,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_14,
-	      gText_SideQuestDesc_14,
-	      gText_SideQuestDoneDesc_14,
-	      gText_SideQuestMap14,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_15,
-	      gText_SideQuestDesc_15,
-	      gText_SideQuestDoneDesc_15,
-	      gText_SideQuestMap15,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_16,
-	      gText_SideQuestDesc_16,
-	      gText_SideQuestDoneDesc_16,
-	      gText_SideQuestMap16,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_17,
-	      gText_SideQuestDesc_17,
-	      gText_SideQuestDoneDesc_17,
-	      gText_SideQuestMap17,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_18,
-	      gText_SideQuestDesc_18,
-	      gText_SideQuestDoneDesc_18,
-	      gText_SideQuestMap18,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_19,
-	      gText_SideQuestDesc_19,
-	      gText_SideQuestDoneDesc_19,
-	      gText_SideQuestMap19,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_20,
-	      gText_SideQuestDesc_20,
-	      gText_SideQuestDoneDesc_20,
-	      gText_SideQuestMap20,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_21,
-	      gText_SideQuestDesc_21,
-	      gText_SideQuestDoneDesc_21,
-	      gText_SideQuestMap21,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_22,
-	      gText_SideQuestDesc_22,
-	      gText_SideQuestDoneDesc_22,
-	      gText_SideQuestMap22,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_23,
-	      gText_SideQuestDesc_23,
-	      gText_SideQuestDoneDesc_23,
-	      gText_SideQuestMap23,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_24,
-	      gText_SideQuestDesc_24,
-	      gText_SideQuestDoneDesc_24,
-	      gText_SideQuestMap24,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_25,
-	      gText_SideQuestDesc_25,
-	      gText_SideQuestDoneDesc_25,
-	      gText_SideQuestMap25,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_26,
-	      gText_SideQuestDesc_26,
-	      gText_SideQuestDoneDesc_26,
-	      gText_SideQuestMap26,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_27,
-	      gText_SideQuestDesc_27,
-	      gText_SideQuestDoneDesc_27,
-	      gText_SideQuestMap27,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_28,
-	      gText_SideQuestDesc_28,
-	      gText_SideQuestDoneDesc_28,
-	      gText_SideQuestMap28,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_29,
-	      gText_SideQuestDesc_29,
-	      gText_SideQuestDoneDesc_29,
-	      gText_SideQuestMap29,
-	      OBJ_EVENT_GFX_WALLY,
-	      OBJECT,
-	      NULL,
-	      0
-	),
-	side_quest(
-	      gText_SideQuestName_30,
-	      gText_SideQuestDesc_30,
-	      gText_SideQuestDoneDesc_30,
-	      gText_SideQuestMap30,
-	      OBJ_EVENT_GFX_WALLY,
+	[QUEST_LIFES_WORK] = side_quest(
+	      gText_Quest_LifesWork_Name,
+	      gText_Quest_LifesWork_Desc,
+	      gText_Quest_LifesWork_DoneDesc,
+	      gText_QuestLoc_MunenVillage,
+	      OBJ_EVENT_GFX_SCIENTIST_1,
 	      OBJECT,
 	      NULL,
 	      0
@@ -2067,7 +1548,27 @@ void GenerateQuestFlavorText(s32 questId)
 }
 void UpdateQuestFlavorText(s32 questId)
 {
-	StringCopy(gStringVar1, sSideQuests[questId].desc);
+	const u8 *desc = sSideQuests[questId].desc;
+
+	// Multi-stage quests swap their active objective once the story state
+	// they track has advanced (Quest_Plan_Handoff.md option 0.3b).
+	switch (questId)
+	{
+	case QUEST_WAKING_MOUNTAIN:
+		if (FlagGet(FLAG_BADGE01_GET)) // Clarkson calls after the Ember Badge
+			desc = gText_Quest_WakingMountain_Desc2;
+		break;
+	case SIDE_QUEST_ONE_THAT_GOT_AWAY:
+		if (FlagGet(FLAG_SEAFLOOR_GYARADOS_GONE)) // the father has been found
+			desc = gText_Quest_OneThatGotAway_Desc2;
+		break;
+	case SIDE_QUEST_SAVE_FACE:
+		if (CheckBagHasItem(ITEM_CARVED_MASK, 1)) // the mask has been recovered
+			desc = gText_Quest_SaveFace_Desc2;
+		break;
+	}
+
+	StringCopy(gStringVar1, desc);
 }
 void PrintQuestFlavorText(s32 questId)
 {

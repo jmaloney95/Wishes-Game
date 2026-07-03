@@ -345,4 +345,13 @@
 #define VAR_FROSTWOOD_STATE            VAR_UNUSED_0x4083  // Frostwood ON_FRAME trigger (Clarkson Mt. Munen call after Ember Badge)
 #define VAR_STARTER_CHOICE             VAR_DEWFORD_TOWN_STATE  // repurposes 0x4052 (Unused Var in vanilla)
 
+// === Pokemon Wishes of Tomorrow - Tradewind Town ===
+#define VAR_TRADEWIND_CURIO_STOCK      VAR_UNUSED_0x408B  // Curio Merchant stock (0-7)
+
+// === Pokemon Wishes of Tomorrow - QUEST SYSTEM ===
+// Convention: 0 = not started, 1..N = active stage, 100 = complete.
+// Notifications: bufferstring STR_VAR_1 + special ShowQuestPopup (+ fanfare).
+#define VAR_QUEST_FATHERS_WISH         VAR_UNUSED_0x4091  // A Father's Final Wish (Ashlands old prophet -> Catalpa Bow -> gravesite)
+#define VAR_HOT_SPRING_STATE           VAR_UNUSED_0x409B  // Act 2 opening ON_FRAME one-shot (starts QUEST_LIFES_WORK)
+
 #endif // GUARD_CONSTANTS_VARS_H

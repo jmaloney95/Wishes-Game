@@ -143,6 +143,7 @@ Munen_village_2_EventScript_StarterRefuse::
 Munen_village_2_EventScript_StarterReceived::
 	setflag FLAG_RECEIVED_STARTER
 	setflag FLAG_SYS_POKEMON_GET     @ unlocks the POKEMON option in the start menu
+	setflag FLAG_SYS_QUEST_MENU_GET  @ unlocks the QUESTS option in the start menu
 	playfanfare MUS_OBTAIN_ITEM
 	waitfanfare
 	msgbox MunenText_GotStarter, MSGBOX_DEFAULT
@@ -215,8 +216,14 @@ Munen_village_2_EventScript_Fisherman::
 	faceplayer
 	goto_if_set FLAG_SEAFLOOR_GYARADOS_GONE, Munen_village_2_EventScript_FishermanReunited
 	msgbox MunenText_Fisherman, MSGBOX_DEFAULT
+	questmenu QUEST_MENU_CHECK_UNLOCKED, SIDE_QUEST_ONE_THAT_GOT_AWAY
+	call_if_eq VAR_RESULT, FALSE, Munen_village_2_EventScript_StartGotAwayQuest
 	release
 	end
+
+Munen_village_2_EventScript_StartGotAwayQuest::
+	startquest SIDE_QUEST_ONE_THAT_GOT_AWAY
+	return
 
 Munen_village_2_EventScript_FishermanReunited::
 	msgbox Munen_village_2_Text_SonReunited, MSGBOX_DEFAULT
@@ -233,6 +240,7 @@ Munen_village_2_EventScript_FishermanDad::
 	faceplayer
 	goto_if_set FLAG_MUNEN_FISHERMAN_REWARDED, Munen_village_2_EventScript_FishermanDadAfter
 	msgbox Munen_village_2_Text_DadRecognize, MSGBOX_DEFAULT
+	call_if_quest_active SIDE_QUEST_ONE_THAT_GOT_AWAY, Munen_village_2_EventScript_CompleteGotAwayQuest
 	specialvar VAR_RESULT, CheckPlayerHasRedGyarados
 	goto_if_eq VAR_RESULT, FALSE, Munen_village_2_EventScript_FishermanDadGift
 	msgbox Munen_village_2_Text_DadAsk, MSGBOX_YESNO
@@ -245,6 +253,10 @@ Munen_village_2_EventScript_FishermanDad::
 	setflag FLAG_MUNEN_FISHERMAN_REWARDED
 	release
 	end
+
+Munen_village_2_EventScript_CompleteGotAwayQuest::
+	completequest SIDE_QUEST_ONE_THAT_GOT_AWAY
+	return
 
 @ Player declined the trade -- keep the Gyarados, can return later.
 Munen_village_2_EventScript_FishermanDadDeclined::
@@ -337,6 +349,7 @@ Munen_village_2_EventScript_ProfessorScene::
 	giveitem ITEM_POTION, 2
 	msgbox MunenText_ProfessorAfterItems, MSGBOX_DEFAULT
 	closemessage
+	startquest QUEST_WAKING_MOUNTAIN
 	@ Clarkson walks back north and exits the camera view.
 	applymovement 10, Munen_village_2_Movement_ProfessorLeave
 	waitmovement 0

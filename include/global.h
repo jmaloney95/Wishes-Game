@@ -625,8 +625,10 @@ struct SaveBlock2
     /*0x624*/ u16 contestLinkResults[CONTEST_CATEGORIES_COUNT][CONTESTANT_COUNT];
     /*0x64C*/ struct BattleFrontier frontier;
 
-#define QUEST_FLAGS_COUNT ROUND_BITS_TO_BYTES(QUEST_COUNT)
-#define SUB_FLAGS_COUNT ROUND_BITS_TO_BYTES(SUB_QUEST_COUNT)
+// Sized from the STORAGE caps, not QUEST_COUNT, so the save layout stays
+// stable while quests are added (see include/constants/quests.h).
+#define QUEST_FLAGS_COUNT ROUND_BITS_TO_BYTES(QUEST_STORAGE_COUNT)
+#define SUB_FLAGS_COUNT ROUND_BITS_TO_BYTES(SUB_QUEST_STORAGE_COUNT)
 #define QUEST_STATES 5 // Number of different quest states tracked in the saveblock
 
     /*0xF2C*/ u8 questData[QUEST_FLAGS_COUNT * QUEST_STATES]; // 20 bytes

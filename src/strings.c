@@ -1219,201 +1219,58 @@ const u8 gText_OakImportantToGetToKnowPokemonThroughly[] = _("OAK: It's importan
 const u8 gText_OakThisIsListOfPokemon[] = _("This is a list of your POKéMON,\n{PLAYER}.\pOpen this to check the skills\nand moves of your POKéMON.\pYou also choose POKéMON here if\nyou want to use an item on one.{PAUSE_UNTIL_PRESS}");
 
 
-//// side quest data
-//generic strings
+//// Wishes of Tomorrow quest text (see Quest_Plan_Handoff.md)
+//generic quest announcement strings
 const u8 gText_QuestAnnounce[] = _("The quest '{STR_VAR_1}'\nis now {STR_VAR_2}.");
 const u8 gText_QuestComplete[] =_("complete");
 const u8 gText_QuestActive[] =_("active");
 
-//names
-const u8 gText_SideQuestName_1[] = _("Side Quest 1");
-const u8 gText_SideQuestName_2[] = _("Side Quest 2");
-const u8 gText_SideQuestName_3[] = _("Side Quest 3");
-const u8 gText_SideQuestName_4[] = _("Side Quest 4");
-const u8 gText_SideQuestName_5[] = _("Side Quest 5");
-const u8 gText_SideQuestName_6[] = _("Side Quest 6");
-const u8 gText_SideQuestName_7[] = _("Side Quest 7");
-const u8 gText_SideQuestName_8[] = _("Side Quest 8");
-const u8 gText_SideQuestName_9[] = _("Side Quest 9");
-const u8 gText_SideQuestName_10[] = _("Side Quest 10");
-const u8 gText_SideQuestName_11[] = _("Side Quest 11");
-const u8 gText_SideQuestName_12[] = _("Side Quest 12");
-const u8 gText_SideQuestName_13[] = _("Side Quest 13");
-const u8 gText_SideQuestName_14[] = _("Side Quest 14");
-const u8 gText_SideQuestName_15[] = _("Side Quest 15");
-const u8 gText_SideQuestName_16[] = _("Side Quest 16");
-const u8 gText_SideQuestName_17[] = _("Side Quest 17");
-const u8 gText_SideQuestName_18[] = _("Side Quest 18");
-const u8 gText_SideQuestName_19[] = _("Side Quest 19");
-const u8 gText_SideQuestName_20[] = _("Side Quest 20");
-const u8 gText_SideQuestName_21[] = _("Side Quest 21");
-const u8 gText_SideQuestName_22[] = _("Side Quest 22");
-const u8 gText_SideQuestName_23[] = _("Side Quest 23");
-const u8 gText_SideQuestName_24[] = _("Side Quest 24");
-const u8 gText_SideQuestName_25[] = _("Side Quest 25");
-const u8 gText_SideQuestName_26[] = _("Side Quest 26");
-const u8 gText_SideQuestName_27[] = _("Side Quest 27");
-const u8 gText_SideQuestName_28[] = _("Side Quest 28");
-const u8 gText_SideQuestName_29[] = _("Side Quest 29");
-const u8 gText_SideQuestName_30[] = _("Side Quest 30");
+//quest menu location labels
+const u8 gText_QuestLoc_MtMunen[] = _("MT. MUNEN");
+const u8 gText_QuestLoc_MunenVillage[] = _("MUNEN VILLAGE");
+const u8 gText_QuestLoc_SennenStation[] = _("SENNEN STATION");
+const u8 gText_QuestLoc_NationalPark[] = _("NATIONAL PARK");
+const u8 gText_QuestLoc_Pompeii[] = _("POMPEII");
 
-//descriptions
-const u8 gText_SideQuestDesc_1[] = _("Description 1");
-const u8 gText_SideQuestDesc_2[] = _("Description 2");
-const u8 gText_SideQuestDesc_3[] = _("Description 3");
-const u8 gText_SideQuestDesc_4[] = _("Description 4");
-const u8 gText_SideQuestDesc_5[] = _("Description 5");
-const u8 gText_SideQuestDesc_6[] = _("Description 6");
-const u8 gText_SideQuestDesc_7[] = _("Description 7");
-const u8 gText_SideQuestDesc_8[] = _("Description 8");
-const u8 gText_SideQuestDesc_9[] = _("Description 9");
-const u8 gText_SideQuestDesc_10[] = _("Description 10");
-const u8 gText_SideQuestDesc_11[] = _("Description 11");
-const u8 gText_SideQuestDesc_12[] = _("Description 12");
-const u8 gText_SideQuestDesc_13[] = _("Description 13");
-const u8 gText_SideQuestDesc_14[] = _("Description 14");
-const u8 gText_SideQuestDesc_15[] = _("Description 15");
-const u8 gText_SideQuestDesc_16[] = _("Description 16");
-const u8 gText_SideQuestDesc_17[] = _("Description 17");
-const u8 gText_SideQuestDesc_18[] = _("Description 18");
-const u8 gText_SideQuestDesc_19[] = _("Description 19");
-const u8 gText_SideQuestDesc_20[] = _("Description 20");
-const u8 gText_SideQuestDesc_21[] = _("Description 21");
-const u8 gText_SideQuestDesc_22[] = _("Description 22");
-const u8 gText_SideQuestDesc_23[] = _("Description 23");
-const u8 gText_SideQuestDesc_24[] = _("Description 24");
-const u8 gText_SideQuestDesc_25[] = _("Description 25");
-const u8 gText_SideQuestDesc_26[] = _("Description 26");
-const u8 gText_SideQuestDesc_27[] = _("Description 27");
-const u8 gText_SideQuestDesc_28[] = _("Description 28");
-const u8 gText_SideQuestDesc_29[] = _("Description 29");
-const u8 gText_SideQuestDesc_30[] = _("Description 30");
+//QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
+const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");
+const u8 gText_Quest_WakingMountain_Desc1[] = _("The thousand-year ice is\nbreaking. Only Prof. Clarkson\nknows why. Seek him out.");
+const u8 gText_Quest_WakingMountain_Desc2[] = _("Clarkson has called from the\npeak. Climb Mt. Munen to where\nthe ice finally ends.");
+const u8 gText_Quest_WakingMountain_DoneDesc[] = _("The mountain has woken. What\ncomes next, no one can say.");
 
-//completed quest description
-const u8 gText_SideQuestDoneDesc_1[] = _("Completed Quest 1");
-const u8 gText_SideQuestDoneDesc_2[] = _("Completed Quest 2");
-const u8 gText_SideQuestDoneDesc_3[] = _("Completed Quest 3");
-const u8 gText_SideQuestDoneDesc_4[] = _("Completed Quest 4");
-const u8 gText_SideQuestDoneDesc_5[] = _("Completed Quest 5");
-const u8 gText_SideQuestDoneDesc_6[] = _("Completed Quest 6");
-const u8 gText_SideQuestDoneDesc_7[] = _("Completed Quest 7");
-const u8 gText_SideQuestDoneDesc_8[] = _("Completed Quest 8");
-const u8 gText_SideQuestDoneDesc_9[] = _("Completed Quest 9");
-const u8 gText_SideQuestDoneDesc_10[] = _("Completed Quest 10");
-const u8 gText_SideQuestDoneDesc_11[] = _("Completed Quest 11");
-const u8 gText_SideQuestDoneDesc_12[] = _("Completed Quest 12");
-const u8 gText_SideQuestDoneDesc_13[] = _("Completed Quest 13");
-const u8 gText_SideQuestDoneDesc_14[] = _("Completed Quest 14");
-const u8 gText_SideQuestDoneDesc_15[] = _("Completed Quest 15");
-const u8 gText_SideQuestDoneDesc_16[] = _("Completed Quest 16");
-const u8 gText_SideQuestDoneDesc_17[] = _("Completed Quest 17");
-const u8 gText_SideQuestDoneDesc_18[] = _("Completed Quest 18");
-const u8 gText_SideQuestDoneDesc_19[] = _("Completed Quest 19");
-const u8 gText_SideQuestDoneDesc_20[] = _("Completed Quest 20");
-const u8 gText_SideQuestDoneDesc_21[] = _("Completed Quest 21");
-const u8 gText_SideQuestDoneDesc_22[] = _("Completed Quest 22");
-const u8 gText_SideQuestDoneDesc_23[] = _("Completed Quest 23");
-const u8 gText_SideQuestDoneDesc_24[] = _("Completed Quest 24");
-const u8 gText_SideQuestDoneDesc_25[] = _("Completed Quest 25");
-const u8 gText_SideQuestDoneDesc_26[] = _("Completed Quest 26");
-const u8 gText_SideQuestDoneDesc_27[] = _("Completed Quest 27");
-const u8 gText_SideQuestDoneDesc_28[] = _("Completed Quest 28");
-const u8 gText_SideQuestDoneDesc_29[] = _("Completed Quest 29");
-const u8 gText_SideQuestDoneDesc_30[] = _("Completed Quest 30");
+//SIDE_QUEST_ONE_THAT_GOT_AWAY - stage 2 once FLAG_SEAFLOOR_GYARADOS_GONE is set
+const u8 gText_Quest_OneThatGotAway_Name[] = _("The One That Got Away");
+const u8 gText_Quest_OneThatGotAway_Desc1[] = _("A boy in Munen waits for a\nfather lost to the ice. Find\nout what became of him.");
+const u8 gText_Quest_OneThatGotAway_Desc2[] = _("His father is alive! Return\nto the village and end the\nboy's long wait.");
+const u8 gText_Quest_OneThatGotAway_DoneDesc[] = _("The long wait by the lake is\nover. Father and son are\ntogether again.");
 
-//map
-const u8 gText_SideQuestMap1[] = _("Map 1");
-const u8 gText_SideQuestMap2[] = _("Map 2");
-const u8 gText_SideQuestMap3[] = _("Map 3");
-const u8 gText_SideQuestMap4[] = _("Map 4");
-const u8 gText_SideQuestMap5[] = _("Map 5");
-const u8 gText_SideQuestMap6[] = _("Map 6");
-const u8 gText_SideQuestMap7[] = _("Map 7");
-const u8 gText_SideQuestMap8[] = _("Map 8");
-const u8 gText_SideQuestMap9[] = _("Map 9");
-const u8 gText_SideQuestMap10[] = _("Map 10");
-const u8 gText_SideQuestMap11[] = _("Map 11");
-const u8 gText_SideQuestMap12[] = _("Map 12");
-const u8 gText_SideQuestMap13[] = _("Map 13");
-const u8 gText_SideQuestMap14[] = _("Map 14");
-const u8 gText_SideQuestMap15[] = _("Map 15");
-const u8 gText_SideQuestMap16[] = _("Map 16");
-const u8 gText_SideQuestMap17[] = _("Map 17");
-const u8 gText_SideQuestMap18[] = _("Map 18");
-const u8 gText_SideQuestMap19[] = _("Map 19");
-const u8 gText_SideQuestMap20[] = _("Map 20");
-const u8 gText_SideQuestMap21[] = _("Map 21");
-const u8 gText_SideQuestMap22[] = _("Map 22");
-const u8 gText_SideQuestMap23[] = _("Map 23");
-const u8 gText_SideQuestMap24[] = _("Map 24");
-const u8 gText_SideQuestMap25[] = _("Map 25");
-const u8 gText_SideQuestMap26[] = _("Map 26");
-const u8 gText_SideQuestMap27[] = _("Map 27");
-const u8 gText_SideQuestMap28[] = _("Map 28");
-const u8 gText_SideQuestMap29[] = _("Map 29");
-const u8 gText_SideQuestMap30[] = _("Map 30");
+//SIDE_QUEST_FROZEN_TRACKS
+const u8 gText_Quest_FrozenTracks_Name[] = _("Frozen in Its Tracks");
+const u8 gText_Quest_FrozenTracks_Desc[] = _("A Mutrid goon froze the Sennen\nLine's gears solid. Find a way\nto thaw the train.");
+const u8 gText_Quest_FrozenTracks_DoneDesc[] = _("Arcanine's flame thawed the\nSennen Line. The trains run\nonce more.");
 
-//subquests
-const u8 gText_SubQuest1_Name1[] = _("Part 1");
-const u8 gText_SubQuest1_Name2[] = _("Part 2");
-const u8 gText_SubQuest1_Name3[] = _("Part 3");
-const u8 gText_SubQuest1_Name4[] = _("Part 4");
-const u8 gText_SubQuest1_Name5[] = _("Part 5");
-const u8 gText_SubQuest1_Name6[] = _("Part 6");
-const u8 gText_SubQuest1_Name7[] = _("Part 7");
-const u8 gText_SubQuest1_Name8[] = _("Part 8");
-const u8 gText_SubQuest1_Name9[] = _("Part 9");
-const u8 gText_SubQuest1_Name10[] = _("Part 10");
+//SIDE_QUEST_EIGHT_WAYS
+const u8 gText_Quest_EightWays_Name[] = _("Eight Ways to Grow");
+const u8 gText_Quest_EightWays_Desc[] = _("A breeder in the park raises\nEevee. Prove yourself, and\none may choose you.");
+const u8 gText_Quest_EightWays_DoneDesc[] = _("Eevee chose you. What it\ngrows into is up to you.");
 
-const u8 gText_SubQuest2_Name1[] = _("Part 1");
-const u8 gText_SubQuest2_Name2[] = _("Part 2");
-const u8 gText_SubQuest2_Name3[] = _("Part 3");
-const u8 gText_SubQuest2_Name4[] = _("Part 4");
-const u8 gText_SubQuest2_Name5[] = _("Part 5");
-const u8 gText_SubQuest2_Name6[] = _("Part 6");
-const u8 gText_SubQuest2_Name7[] = _("Part 7");
-const u8 gText_SubQuest2_Name8[] = _("Part 8");
-const u8 gText_SubQuest2_Name9[] = _("Part 9");
-const u8 gText_SubQuest2_Name10[] = _("Part 10");
-const u8 gText_SubQuest2_Name11[] = _("Part 11");
-const u8 gText_SubQuest2_Name12[] = _("Part 12");
-const u8 gText_SubQuest2_Name13[] = _("Part 13");
-const u8 gText_SubQuest2_Name14[] = _("Part 14");
-const u8 gText_SubQuest2_Name15[] = _("Part 15");
-const u8 gText_SubQuest2_Name16[] = _("Part 16");
-const u8 gText_SubQuest2_Name17[] = _("Part 17");
-const u8 gText_SubQuest2_Name18[] = _("Part 18");
-const u8 gText_SubQuest2_Name19[] = _("Part 19");
-const u8 gText_SubQuest2_Name20[] = _("Part 20");
+//SIDE_QUEST_HEAVY_METAL - direction matches the built NPC: he wants a Scyther
+const u8 gText_Quest_HeavyMetal_Name[] = _("Heavy Metal");
+const u8 gText_Quest_HeavyMetal_Desc[] = _("A collector in the park wants\na Scyther. He offers one of\nthree rare starters in trade.");
+const u8 gText_Quest_HeavyMetal_DoneDesc[] = _("The collector got his Scyther.\nTreasure the partner he gave\nyou in return.");
 
-const u8 gText_SubQuest1_Desc1[] = _("Description Sub 1");
-const u8 gText_SubQuest1_Desc2[] = _("Description Sub 2");
-const u8 gText_SubQuest1_Desc3[] = _("Description Sub 3");
-const u8 gText_SubQuest1_Desc4[] = _("Description Sub 4");
-const u8 gText_SubQuest1_Desc5[] = _("Description Sub 5");
-const u8 gText_SubQuest1_Desc6[] = _("Description Sub 6");
-const u8 gText_SubQuest1_Desc7[] = _("Description Sub 7");
-const u8 gText_SubQuest1_Desc8[] = _("Description Sub 8");
-const u8 gText_SubQuest1_Desc9[] = _("Description Sub 9");
-const u8 gText_SubQuest1_Desc10[] = _("Description Sub 10");
+//SIDE_QUEST_SAVE_FACE - stage 2 once ITEM_CARVED_MASK is in the bag
+const u8 gText_Quest_SaveFace_Name[] = _("Save Face");
+const u8 gText_Quest_SaveFace_Desc1[] = _("Master Gen's apprentice lost a\nfinished mask in the tunnel.\nRecover it for him.");
+const u8 gText_Quest_SaveFace_Desc2[] = _("You have the missing mask.\nBring it back to Master Gen\nin Pompeii.");
+const u8 gText_Quest_SaveFace_DoneDesc[] = _("The mask is home. Master Gen\nkept face, his apprentice\nkept their place.");
 
-const u8 gText_SubQuest2_Desc1[] = _("Description Sub 1");
-const u8 gText_SubQuest2_Desc2[] = _("Description Sub 2");
-const u8 gText_SubQuest2_Desc3[] = _("Description Sub 3");
-const u8 gText_SubQuest2_Desc4[] = _("Description Sub 4");
-const u8 gText_SubQuest2_Desc5[] = _("Description Sub 5");
-const u8 gText_SubQuest2_Desc6[] = _("Description Sub 6");
-const u8 gText_SubQuest2_Desc7[] = _("Description Sub 7");
-const u8 gText_SubQuest2_Desc8[] = _("Description Sub 8");
-const u8 gText_SubQuest2_Desc9[] = _("Description Sub 9");
-const u8 gText_SubQuest2_Desc10[] = _("Description Sub 10");
-const u8 gText_SubQuest2_Desc11[] = _("Description Sub 11");
-const u8 gText_SubQuest2_Desc12[] = _("Description Sub 12");
-const u8 gText_SubQuest2_Desc13[] = _("Description Sub 13");
-const u8 gText_SubQuest2_Desc14[] = _("Description Sub 14");
-const u8 gText_SubQuest2_Desc15[] = _("Description Sub 15");
-const u8 gText_SubQuest2_Desc16[] = _("Description Sub 16");
-const u8 gText_SubQuest2_Desc17[] = _("Description Sub 17");
-const u8 gText_SubQuest2_Desc18[] = _("Description Sub 18");
-const u8 gText_SubQuest2_Desc19[] = _("Description Sub 19");
-const u8 gText_SubQuest2_Desc20[] = _("Description Sub 20");
+//QUEST_GRANDFATHERS_WISH (MAIN)
+const u8 gText_Quest_GrandfathersWish_Name[] = _("Grandfather's Last Wish");
+const u8 gText_Quest_GrandfathersWish_Desc[] = _("Carry the Catalpa Bow across\nthe water. Play the mourning\nrite at his son's grave.");
+const u8 gText_Quest_GrandfathersWish_DoneDesc[] = _("The bow sang at the graveside.\nA last wish, carried all the\nway through.");
+
+//QUEST_LIFES_WORK (MAIN)
+const u8 gText_Quest_LifesWork_Name[] = _("His Life's Work");
+const u8 gText_Quest_LifesWork_Desc[] = _("Clarkson's last wish: destroy\nhis research. Reach his lab\nin Munen and end it.");
+const u8 gText_Quest_LifesWork_DoneDesc[] = _("The research will never fall\ninto the wrong hands. His\nwork ends as he asked.");

@@ -25,10 +25,15 @@ RustboroCity_Gym_EventScript_RoxanneDefeated::
 	setflag FLAG_DEFEATED_RUSTBORO_GYM
 	setflag FLAG_BADGE01_GET
 	setvar VAR_RUSTBORO_CITY_STATE, 1
+	call_if_quest_active SIDE_QUEST_FROZEN_TRACKS, RustboroCity_Gym_EventScript_CompleteFrozenTracks
 	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_KnownTrainHook
 	msgbox RustboroCity_Gym_Text_HeadNorthHook, MSGBOX_DEFAULT
 	release
 	end
+
+RustboroCity_Gym_EventScript_CompleteFrozenTracks::
+	completequest SIDE_QUEST_FROZEN_TRACKS
+	return
 
 RustboroCity_Gym_EventScript_KnownTrainHook::
 	msgbox RustboroCity_Gym_Text_FrozenTrainHook, MSGBOX_DEFAULT
@@ -116,12 +121,11 @@ RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Now go earn that EMBER BADGE!$"
 
 RustboroCity_Gym_Text_GymGuidePostVictory:
-	.string "Whoa! You actually toppled RedFatality --\n"
-	.string "ace and all!\p"
+	.string "Whoa! You actually toppled RedFatality\p"
 	.string "That EMBER BADGE is the genuine\n"
 	.string "article.\p"
 	.string "You've taken your first big step\n"
-	.string "toward the top. Feels great, huh?$"
+	.string "toward the top. Feels great, huh champ?$"
 
 RustboroCity_Gym_Text_JoshIntro:
 	.string "Snow on the ground doesn't mean\n"
@@ -163,12 +167,12 @@ RustboroCity_Gym_Text_MarcPostBattle:
 
 RustboroCity_Gym_Text_RoxanneIntro:
 	.string "Welcome to the FROSTWOOD GYM.\p"
-	.string "That's right, I'm RedFatality.\n"
+	.string "That's right, I'm RedFatality.\p"
 	.string "And yeah, the rumors are true.\n"
 	.string "I was a Halo 3 MLG pro.\p"
 	.string "If you caught nothing but ICE types\n"
 	.string "like the others, you're in for a\p"
-	.string "rude awakening, buddy.\p"
+	.string "rude awakening, slugger.\p"
 	.string "Show me what you've got!$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:
