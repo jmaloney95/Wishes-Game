@@ -5,6 +5,15 @@ enum SpeakerNames {
     SP_NAME_NONE = 0,
     SP_NAME_MOM,
     SP_NAME_PLAYER,
+    // Wishes of Tomorrow cast
+    SP_NAME_CLARKSON,
+    SP_NAME_HARU,
+    SP_NAME_MASTER_GEN,
+    SP_NAME_MADAM_TSUJI,
+    SP_NAME_MUTRID_LEADER,
+    SP_NAME_RED_FATALITY,
+    SP_NAME_DRACO,
+    SP_NAME_COBRA,
     SP_NAME_COUNT
 };
 
