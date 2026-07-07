@@ -219,22 +219,37 @@ Debug_EventScript_Script_3::
 	release
 	end
 
-@ Namebox smoke test: speaker plate + named message
+@ Namebox smoke test: one message per name-color tier
 Debug_EventScript_Script_4::
+	setspeaker SP_NAME_CLARKSON
+	msgbox Debug_Text_NameboxMain, MSGBOX_DEFAULT
 	setspeaker SP_NAME_MASTER_GEN
-	msgbox Debug_Text_NameboxTest, MSGBOX_DEFAULT
+	msgbox Debug_Text_NameboxQuest, MSGBOX_DEFAULT
+	setspeaker Debug_Text_NameboxLassName
+	msgbox Debug_Text_NameboxDefault, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
 
-Debug_Text_NameboxTest:
-	.string "The plate above should read\n"
-	.string "MASTER GEN.$"
+Debug_Text_NameboxMain:
+	.string "CLARKSON, main cast:\n"
+	.string "the name should be red.$"
 
-@ Portrait smoke test: right side, compose with namebox, swap left, hide
+Debug_Text_NameboxQuest:
+	.string "MASTER GEN, quest giver:\n"
+	.string "the name should be green.$"
+
+Debug_Text_NameboxLassName:
+	.string "LASS$"
+
+Debug_Text_NameboxDefault:
+	.string "LASS, a random NPC: default\n"
+	.string "near-white name.$"
+
+@ Portrait smoke test: Clarkson art right, compose with namebox, swap left, hide
 Debug_EventScript_Script_5::
-	showportrait PORTRAIT_PLACEHOLDER, PORTRAIT_RIGHT
-	setspeaker SP_NAME_MASTER_GEN
+	showportrait PORTRAIT_CLARKSON_GENGAR, PORTRAIT_RIGHT
+	setspeaker SP_NAME_CLARKSON
 	msgbox Debug_Text_PortraitRight, MSGBOX_DEFAULT
 	showportrait PORTRAIT_COBRA, PORTRAIT_LEFT
 	setspeaker SP_NAME_COBRA
@@ -245,12 +260,12 @@ Debug_EventScript_Script_5::
 	end
 
 Debug_Text_PortraitRight:
-	.string "Placeholder portrait on the\n"
-	.string "RIGHT, with a name plate.$"
+	.string "Clarkson's portrait on the\n"
+	.string "RIGHT, with a red name plate.$"
 
 Debug_Text_PortraitLeft:
-	.string "Second placeholder swapped in\n"
-	.string "on the LEFT.$"
+	.string "Placeholder swapped in on\n"
+	.string "the LEFT.$"
 
 Debug_EventScript_Script_6::
 	release

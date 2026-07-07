@@ -19,6 +19,7 @@
 
 static EWRAM_INIT u8 sNameboxWindowId = WINDOW_NONE;
 EWRAM_DATA const u8 *gSpeakerName = NULL;
+static EWRAM_DATA u8 sSpeakerTier = SPEAKER_TIER_DEFAULT;
 
 static const u32 sNameBoxDefaultGfx[] = INCGFX_U32("graphics/text_window/name_box.png", ".4bpp");
 static const u32 sNameBoxPokenavGfx[] = INCGFX_U32("graphics/pokenav/name_box.png", ".4bpp");
@@ -77,6 +78,17 @@ void PrepareNamebox(u32 tileNum)
 
     u8 colors[3] = {TEXT_COLOR_TRANSPARENT, OW_NAME_BOX_FOREGROUND_COLOR, OW_NAME_BOX_SHADOW_COLOR};
     int strX = GetStringCenterAlignXOffset(fontId, strbuf, (winWidth * 8));
+    switch (sSpeakerTier)
+    {
+    case SPEAKER_TIER_MAIN:
+        colors[1] = OW_NAME_BOX_MAIN_FG_COLOR;
+        colors[2] = OW_NAME_BOX_MAIN_SHADOW_COLOR;
+        break;
+    case SPEAKER_TIER_QUEST:
+        colors[1] = OW_NAME_BOX_QUEST_FG_COLOR;
+        colors[2] = OW_NAME_BOX_QUEST_SHADOW_COLOR;
+        break;
+    }
     if (matchCall)
     {
         colors[1] = 1;
@@ -98,6 +110,7 @@ void ResetNameboxData(void)
 {
     sNameboxWindowId = WINDOW_NONE;
     gSpeakerName = NULL;
+    sSpeakerTier = SPEAKER_TIER_DEFAULT;
 }
 
 static void DestroyNameboxFrame(void)
@@ -184,19 +197,27 @@ void SetSpeaker(struct ScriptContext *ctx)
 {
     u32 arg = ScriptReadWord(ctx);
     const u8 *speaker = NULL;
+    u8 tier = SPEAKER_TIER_DEFAULT;
 
     if (arg < SP_NAME_COUNT)
+    {
         speaker = gSpeakerNamesTable[arg];
+        tier = gSpeakerNameTiers[arg];
+    }
     else if (arg >= ROM_START && arg < ROM_END)
+    {
         speaker = (const u8 *)arg;
+    }
 
     gSpeakerName = speaker;
+    sSpeakerTier = tier;
 }
 
 // useful for other context e.g. match call
 void TrySpawnAndShowNamebox(const u8 *speaker, u32 tileNum)
 {
     gSpeakerName = speaker;
+    sSpeakerTier = SPEAKER_TIER_DEFAULT;
     if (sNameboxWindowId != WINDOW_NONE && gSpeakerName == NULL)
     {
         ClearNamebox(sNameboxWindowId, TRUE);
@@ -216,6 +237,7 @@ bool32 IsSpeakerBuffered(const u8 *str)
      && str[2] >= SP_NAME_NONE)
     {
         gSpeakerName = gSpeakerNamesTable[str[2]];
+        sSpeakerTier = (str[2] < SP_NAME_COUNT) ? gSpeakerNameTiers[str[2]] : SPEAKER_TIER_DEFAULT;
     }
 
     u32 res = FALSE;

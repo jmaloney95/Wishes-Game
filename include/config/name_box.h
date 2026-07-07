@@ -15,4 +15,12 @@
 #define OW_NAME_BOX_FOREGROUND_COLOR  2
 #define OW_NAME_BOX_SHADOW_COLOR      3
 
+// Per-tier name colors (message_box palette indexes). Which speaker gets
+// which tier is data: gSpeakerNameTiers in src/data/speaker_names.h.
+// Auto-named trainers and raw text-pointer speakers use the defaults above.
+#define OW_NAME_BOX_MAIN_FG_COLOR      4 // soft red/pink - main story cast
+#define OW_NAME_BOX_MAIN_SHADOW_COLOR  5
+#define OW_NAME_BOX_QUEST_FG_COLOR     6 // green - quest-giver characters
+#define OW_NAME_BOX_QUEST_SHADOW_COLOR 7
+
 #endif // GUARD_CONFIG_NAME_BOX_H
