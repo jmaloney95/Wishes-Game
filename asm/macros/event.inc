@@ -2076,6 +2076,19 @@
 	call_if_eq VAR_RESULT, FALSE, \dest
 	.endm
 
+	@ Shows a 64x64 character portrait beside the message box. It persists
+	@ across message boxes until hideportrait (or the script ends).
+	.macro showportrait portrait:req, side=PORTRAIT_RIGHT
+	.byte SCR_OP_SHOWPORTRAIT
+	.byte \portrait
+	.byte \side
+	.endm
+
+	@ Hides the character portrait shown by showportrait.
+	.macro hideportrait
+	.byte SCR_OP_HIDEPORTRAIT
+	.endm
+
 	.macro completesubquest quest:req, subquest:req
 	closemessage
 	subquestmenu QUEST_MENU_COMPLETE_QUEST, \quest, \subquest

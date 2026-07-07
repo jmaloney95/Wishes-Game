@@ -219,13 +219,38 @@ Debug_EventScript_Script_3::
 	release
 	end
 
+@ Namebox smoke test: speaker plate + named message
 Debug_EventScript_Script_4::
+	setspeaker SP_NAME_MASTER_GEN
+	msgbox Debug_Text_NameboxTest, MSGBOX_DEFAULT
+	closemessage
 	release
 	end
 
+Debug_Text_NameboxTest:
+	.string "The plate above should read\n"
+	.string "MASTER GEN.$"
+
+@ Portrait smoke test: right side, compose with namebox, swap left, hide
 Debug_EventScript_Script_5::
+	showportrait PORTRAIT_PLACEHOLDER, PORTRAIT_RIGHT
+	setspeaker SP_NAME_MASTER_GEN
+	msgbox Debug_Text_PortraitRight, MSGBOX_DEFAULT
+	showportrait PORTRAIT_COBRA, PORTRAIT_LEFT
+	setspeaker SP_NAME_COBRA
+	msgbox Debug_Text_PortraitLeft, MSGBOX_DEFAULT
+	hideportrait
+	closemessage
 	release
 	end
+
+Debug_Text_PortraitRight:
+	.string "Placeholder portrait on the\n"
+	.string "RIGHT, with a name plate.$"
+
+Debug_Text_PortraitLeft:
+	.string "Second placeholder swapped in\n"
+	.string "on the LEFT.$"
 
 Debug_EventScript_Script_6::
 	release

@@ -54,6 +54,7 @@
 #include "constants/pokedex.h"
 #include "constants/pokemon.h"
 #include "constants/pokemon_size_record.h"
+#include "constants/portraits.h"
 #include "constants/quests.h"
 #include "constants/rtc.h"
 #include "constants/roulette.h"
