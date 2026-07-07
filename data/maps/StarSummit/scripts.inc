@@ -35,6 +35,8 @@ StarSummit_EventScript_IntroCutscene::
 	applymovement LOCALID_CAMERA, StarSummit_Movement_CameraToProf
 	waitmovement 0
 	delay 20
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox StarSummit_Text_ClarksonLine1, MSGBOX_DEFAULT
 	closemessage
 	delay 10
@@ -43,10 +45,13 @@ StarSummit_EventScript_IntroCutscene::
 	applymovement LOCALID_STARSUMMIT_PROF, StarSummit_Movement_ProfPush
 	waitmovement 0
 	delay 20
+	setspeaker SP_NAME_CLARKSON
 	msgbox StarSummit_Text_ClarksonLine2, MSGBOX_DEFAULT
 	closemessage
 	delay 10
 	@ "Goodbye, Father" -> final shove into the lava
+	hideportrait
+	setspeaker SP_NAME_GOON
 	msgbox StarSummit_Text_GoonGoodbye, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_STARSUMMIT_GOON, StarSummit_Movement_GoonStepRight

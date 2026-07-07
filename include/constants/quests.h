@@ -24,7 +24,8 @@
 #define SIDE_QUEST_SAVE_FACE             5  // Side - MaskMaker (Pompeii)
 #define QUEST_GRANDFATHERS_WISH          6  // MAIN - Catalpa Bow rite
 #define QUEST_LIFES_WORK                 7  // MAIN - destroy Clarkson's research
-#define QUEST_COUNT                      8
+#define QUEST_TOASTY_TIME                8  // Side - fetch the gym leader's sisters (Frostwood)
+#define QUEST_COUNT                      9
 
 // No subquests yet; the parked purification line (one subquest per shadow
 // legendary) will use these when it is unparked.

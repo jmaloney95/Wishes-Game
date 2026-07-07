@@ -348,6 +348,16 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      NULL,
 	      0
 	),
+	[QUEST_TOASTY_TIME] = side_quest(
+	      gText_Quest_ToastyTime_Name,
+	      gText_Quest_ToastyTime_Desc,
+	      gText_Quest_ToastyTime_DoneDesc,
+	      gText_QuestLoc_FrostwoodTown,
+	      ITEM_HOT_COCOA,
+	      ITEM,
+	      NULL,
+	      0
+	),
 };
 ////////////////////////END QUEST CUSTOMIZATION////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

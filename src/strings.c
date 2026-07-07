@@ -1231,6 +1231,7 @@ const u8 gText_QuestLoc_MunenVillage[] = _("MUNEN VILLAGE");
 const u8 gText_QuestLoc_SennenStation[] = _("SENNEN STATION");
 const u8 gText_QuestLoc_NationalPark[] = _("NATIONAL PARK");
 const u8 gText_QuestLoc_Pompeii[] = _("POMPEII");
+const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
 
 //QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
 const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");
@@ -1274,3 +1275,8 @@ const u8 gText_Quest_GrandfathersWish_DoneDesc[] = _("The bow sang at the graves
 const u8 gText_Quest_LifesWork_Name[] = _("His Life's Work");
 const u8 gText_Quest_LifesWork_Desc[] = _("Clarkson's last wish: destroy\nhis research. Reach his lab\nin Munen and end it.");
 const u8 gText_Quest_LifesWork_DoneDesc[] = _("The research will never fall\ninto the wrong hands. His\nwork ends as he asked.");
+
+//QUEST_TOASTY_TIME (Side) - Frostwood gym leader's family
+const u8 gText_Quest_ToastyTime_Name[] = _("Toasty Time");
+const u8 gText_Quest_ToastyTime_Desc[] = _("The gym leader's father gave\nyou HOT COCOA. Coax his two\ndaughters home for dinner.");
+const u8 gText_Quest_ToastyTime_DoneDesc[] = _("The sisters warmed up and\nheaded home. Dinner is served.");

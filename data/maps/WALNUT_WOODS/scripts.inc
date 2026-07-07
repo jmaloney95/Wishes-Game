@@ -33,11 +33,15 @@ WALNUT_WOODS_EventScript_SetBush2Snow::
 WALNUT_WOODS_EventScript_Clarkson::
 	lock
 	faceplayer
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox WALNUT_WOODS_Text_Clarkson1, MSGBOX_DEFAULT
 	closemessage
 	delay 45
+	setspeaker SP_NAME_CLARKSON
 	msgbox WALNUT_WOODS_Text_Clarkson2, MSGBOX_DEFAULT
 	closemessage
+	hideportrait
 	applymovement VAR_LAST_TALKED, WALNUT_WOODS_Movement_ClarksonRunOff
 	waitmovement 0
 	setflag FLAG_HIDE_WALNUT_CLARKSON

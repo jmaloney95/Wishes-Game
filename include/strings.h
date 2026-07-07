@@ -2243,5 +2243,9 @@ extern const u8 gText_Quest_GrandfathersWish_DoneDesc[];
 extern const u8 gText_Quest_LifesWork_Name[];
 extern const u8 gText_Quest_LifesWork_Desc[];
 extern const u8 gText_Quest_LifesWork_DoneDesc[];
+extern const u8 gText_QuestLoc_FrostwoodTown[];
+extern const u8 gText_Quest_ToastyTime_Name[];
+extern const u8 gText_Quest_ToastyTime_Desc[];
+extern const u8 gText_Quest_ToastyTime_DoneDesc[];
 
 #endif // GUARD_STRINGS_H
