@@ -2078,7 +2078,7 @@
 
 	@ Shows a 64x64 character portrait beside the message box. It persists
 	@ across message boxes until hideportrait (or the script ends).
-	.macro showportrait portrait:req, side=PORTRAIT_RIGHT
+	.macro showportrait portrait:req, side=PORTRAIT_LEFT
 	.byte SCR_OP_SHOWPORTRAIT
 	.byte \portrait
 	.byte \side

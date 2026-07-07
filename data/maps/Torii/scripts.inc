@@ -24,6 +24,7 @@ Torii_EventScript_Oracle::
 @ After the battle the Oracle speaks her parting riddle and VANISHES (as she did
 @ at the start of the game). Hide flag set before removeobject so she stays gone.
 Torii_EventScript_OracleVanish::
+	setspeaker SP_NAME_ORACLE
 	msgbox Torii_Text_OraclePost, MSGBOX_DEFAULT
 	closemessage
 	delay 10
@@ -74,6 +75,7 @@ Torii_EventScript_BlackbeltHealOffer::
 	special HealPlayerParty
 	playfanfare MUS_HEAL
 	waitfanfare
+	setrespawn HEAL_LOCATION_TORII
 	msgbox Torii_Text_BlackbeltGoodLuck, MSGBOX_DEFAULT
 	release
 	end
@@ -93,6 +95,7 @@ Torii_EventScript_RivalTrigger::
 	goto_if_set FLAG_HIDE_TORII_RIVAL, Torii_EventScript_RivalTriggerDone
 	applymovement LOCALID_TORII_RIVAL, Torii_Movement_RivalConfront
 	waitmovement 0
+	setspeaker SP_NAME_DRACO
 	msgbox Torii_Text_RivalTaunt, MSGBOX_DEFAULT
 	closemessage
 	compare VAR_STARTER_CHOICE, 1
@@ -119,6 +122,7 @@ Torii_EventScript_RivalBattleTyrantrum::
 	goto Torii_EventScript_RivalAfter
 
 Torii_EventScript_RivalAfter::
+	setspeaker SP_NAME_DRACO
 	msgbox Torii_Text_RivalRunoff, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_TORII_RIVAL, Torii_Movement_RivalRunUp

@@ -221,51 +221,49 @@ Debug_EventScript_Script_3::
 
 @ Namebox smoke test: one message per name-color tier
 Debug_EventScript_Script_4::
-	setspeaker SP_NAME_CLARKSON
-	msgbox Debug_Text_NameboxMain, MSGBOX_DEFAULT
+	setspeaker SP_NAME_DRACO
+	msgbox Debug_Text_NameboxVillain, MSGBOX_DEFAULT
 	setspeaker SP_NAME_MASTER_GEN
 	msgbox Debug_Text_NameboxQuest, MSGBOX_DEFAULT
-	setspeaker Debug_Text_NameboxLassName
+	setspeaker SP_NAME_CLARKSON
 	msgbox Debug_Text_NameboxDefault, MSGBOX_DEFAULT
 	closemessage
 	release
 	end
 
-Debug_Text_NameboxMain:
-	.string "CLARKSON, main cast:\n"
+Debug_Text_NameboxVillain:
+	.string "DRACO, Team Mutrid:\n"
 	.string "the name should be red.$"
 
 Debug_Text_NameboxQuest:
 	.string "MASTER GEN, quest giver:\n"
 	.string "the name should be green.$"
 
-Debug_Text_NameboxLassName:
-	.string "LASS$"
-
 Debug_Text_NameboxDefault:
-	.string "LASS, a random NPC: default\n"
-	.string "near-white name.$"
+	.string "PROFESSOR CLARKSON: white,\n"
+	.string "on a wide plate.$"
 
-@ Portrait smoke test: Clarkson art right, compose with namebox, swap left, hide
+@ Portrait smoke test: Clarkson art (default = LEFT, flush on the plate),
+@ compose with namebox, swap to the right, hide
 Debug_EventScript_Script_5::
-	showportrait PORTRAIT_CLARKSON_GENGAR, PORTRAIT_RIGHT
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	setspeaker SP_NAME_CLARKSON
-	msgbox Debug_Text_PortraitRight, MSGBOX_DEFAULT
-	showportrait PORTRAIT_COBRA, PORTRAIT_LEFT
-	setspeaker SP_NAME_COBRA
 	msgbox Debug_Text_PortraitLeft, MSGBOX_DEFAULT
+	showportrait PORTRAIT_COBRA, PORTRAIT_RIGHT
+	setspeaker SP_NAME_COBRA
+	msgbox Debug_Text_PortraitRight, MSGBOX_DEFAULT
 	hideportrait
 	closemessage
 	release
 	end
 
-Debug_Text_PortraitRight:
-	.string "Clarkson's portrait on the\n"
-	.string "RIGHT, with a red name plate.$"
-
 Debug_Text_PortraitLeft:
-	.string "Placeholder swapped in on\n"
-	.string "the LEFT.$"
+	.string "Clarkson's portrait, default\n"
+	.string "LEFT, flush on the plate.$"
+
+Debug_Text_PortraitRight:
+	.string "Placeholder swapped to the\n"
+	.string "RIGHT.$"
 
 Debug_EventScript_Script_6::
 	release

@@ -18,6 +18,10 @@ enum SpeakerNames {
     SP_NAME_MINISTER,
     SP_NAME_YIFFER,
     SP_NAME_COLONEL_EDWARDS,
+    SP_NAME_GOON,
+    SP_NAME_ORACLE,
+    SP_NAME_OLD_WOMAN,
+    SP_NAME_ALLISON,
     SP_NAME_COUNT
 };
 
@@ -25,9 +29,9 @@ enum SpeakerNames {
 // src/data/speaker_names.h. Speakers set from a raw text pointer
 // (including auto-named trainers) always use SPEAKER_TIER_DEFAULT.
 enum SpeakerNameTier {
-    SPEAKER_TIER_DEFAULT = 0, // random NPCs and trainers (LASS, FISHERMAN, ...)
-    SPEAKER_TIER_MAIN,        // main story cast
-    SPEAKER_TIER_QUEST,       // quest-giver characters
+    SPEAKER_TIER_DEFAULT = 0, // near-white: everyone without a special tier
+    SPEAKER_TIER_VILLAIN,     // red: Team Mutrid (Draco, Leader ???, goons)
+    SPEAKER_TIER_QUEST,       // green: quest-giver characters
 };
 
 #endif // GUARD_CONSTANTS_SPEAKER_NAMES_H

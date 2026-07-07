@@ -80,9 +80,9 @@ void PrepareNamebox(u32 tileNum)
     int strX = GetStringCenterAlignXOffset(fontId, strbuf, (winWidth * 8));
     switch (sSpeakerTier)
     {
-    case SPEAKER_TIER_MAIN:
-        colors[1] = OW_NAME_BOX_MAIN_FG_COLOR;
-        colors[2] = OW_NAME_BOX_MAIN_SHADOW_COLOR;
+    case SPEAKER_TIER_VILLAIN:
+        colors[1] = OW_NAME_BOX_VILLAIN_FG_COLOR;
+        colors[2] = OW_NAME_BOX_VILLAIN_SHADOW_COLOR;
         break;
     case SPEAKER_TIER_QUEST:
         colors[1] = OW_NAME_BOX_QUEST_FG_COLOR;

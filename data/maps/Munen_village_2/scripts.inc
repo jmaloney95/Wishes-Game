@@ -69,6 +69,7 @@ Munen_village_2_EventScript_Intro::
 Munen_village_2_EventScript_Mom::
 	lock
 	faceplayer
+	setspeaker SP_NAME_MOM
 	goto_if_unset FLAG_TALKED_TO_MOM, Munen_village_2_EventScript_MomFirst
 	msgbox MunenText_MomAgain, MSGBOX_DEFAULT
 	release
@@ -202,6 +203,7 @@ Munen_village_2_EventScript_VillageKid::
 	end
 
 Munen_village_2_EventScript_OldLady::
+	setspeaker SP_NAME_OLD_WOMAN
 	lock
 	faceplayer
 	msgbox MunenText_OldLady, MSGBOX_DEFAULT

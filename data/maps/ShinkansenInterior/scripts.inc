@@ -22,8 +22,10 @@ ShinkansenInterior_EventScript_HideGoon::
 ShinkansenInterior_EventScript_Goon::
 	lock
 	faceplayer
+	setspeaker SP_NAME_GOON
 	msgbox ShinkansenInterior_Text_GoonIntro, MSGBOX_DEFAULT
 	trainerbattle_no_intro TRAINER_SHINKANSEN_GOON, ShinkansenInterior_Text_GoonDefeat
+	setspeaker SP_NAME_GOON
 	msgbox ShinkansenInterior_Text_GoonAfter, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_SHINKANSEN_GOON, ShinkansenInterior_Movement_GoonRunOff

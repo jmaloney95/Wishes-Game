@@ -188,6 +188,7 @@ Route_2_2_EventScript_TMEarthquake::
 @ ===========================================================================
 Route_2_2_EventScript_SwimmerAllison::
 	trainerbattle_single TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_Text_AllisonIntro, Route_2_2_Text_AllisonDefeat
+	setspeaker SP_NAME_ALLISON
 	msgbox Route_2_2_Text_AllisonPost, MSGBOX_AUTOCLOSE
 	end
 

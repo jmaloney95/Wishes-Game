@@ -15,7 +15,7 @@
 
 #define PORTRAIT_X_LEFT    40
 #define PORTRAIT_X_RIGHT   200
-#define PORTRAIT_Y         80  // sprite center; bottom edge meets the msgbox top
+#define PORTRAIT_Y         72  // sprite center; bottom edge sits flush on the namebox plate (y=104)
 
 struct NpcPortrait
 {
