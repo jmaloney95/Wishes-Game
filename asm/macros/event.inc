@@ -1979,6 +1979,14 @@
 	.byte \quest
 	.endm
 
+	@ Shows a floating "!" over the given NPC while the quest is still
+	@ unstarted. Call from a map's OnResume/OnLoad script.
+	.macro questindicator localId:req, quest:req
+	.byte SCR_OP_QUESTINDICATOR
+	.byte \localId
+	.byte \quest
+	.endm
+
 #if USE_QUEST_TOAST
 	@ Starts the specified quest with a non-blocking corner toast.
 	.macro startquest quest:req

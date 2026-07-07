@@ -1,5 +1,10 @@
 NewMapMaskMaker_MapScripts::
+	map_script MAP_SCRIPT_ON_RESUME, NewMapMaskMaker_OnResume
 	.byte 0
+
+NewMapMaskMaker_OnResume::
+	questindicator 1, SIDE_QUEST_SAVE_FACE  @ Master Gen, until Save Face is picked up
+	end
 
 @ ============================================================================
 @  MASTER GEN, THE MASK-MAKER -- quest giver for the Munen Tunnel.

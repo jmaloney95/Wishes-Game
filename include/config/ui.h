@@ -21,4 +21,8 @@
 // defined. 0 restores the old blocking announcement.
 #define USE_QUEST_TOAST 1
 
+// Floating "!" over quest-giver NPCs while their quest is still available
+// (src/quest_indicator.c). FALSE hides all indicators.
+#define USE_QUEST_GIVER_INDICATOR TRUE
+
 #endif // GUARD_CONFIG_UI_H

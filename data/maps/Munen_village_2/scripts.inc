@@ -5,8 +5,13 @@
 
 Munen_village_2_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Munen_village_2_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, Munen_village_2_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Munen_village_2_OnFrame
 	.byte 0
+
+Munen_village_2_OnResume::
+	questindicator 7, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
+	end
 
 @ Runs every time the map loads, before player can see anything.
 @ Default state: cutscene-only NPCs (Haru, Professor Clarkson) are hidden.
@@ -87,14 +92,18 @@ Munen_village_2_EventScript_MomFirst::
 Munen_village_2_EventScript_Clarkson::
 	lock
 	faceplayer
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	goto_if_set FLAG_RECEIVED_STARTER, Munen_village_2_EventScript_ClarksonAfterStarter
 	msgbox MunenText_Clarkson, MSGBOX_DEFAULT
 	setflag FLAG_MET_HINOKI
+	hideportrait
 	release
 	end
 
 Munen_village_2_EventScript_ClarksonAfterStarter::
 	msgbox MunenText_ClarksonAfter, MSGBOX_DEFAULT
+	hideportrait
 	release
 	end
 
