@@ -27,6 +27,8 @@ static const u8 sPortraitPlaceholderGfx[] = INCGFX_U8("graphics/portraits/placeh
 static const u16 sPortraitPlaceholderPal[] = INCGFX_U16("graphics/portraits/placeholder.png", ".gbapal");
 static const u8 sPortraitPlaceholder2Gfx[] = INCGFX_U8("graphics/portraits/placeholder2.png", ".4bpp");
 static const u16 sPortraitPlaceholder2Pal[] = INCGFX_U16("graphics/portraits/placeholder2.png", ".gbapal");
+static const u8 sPortraitClarksonGfx[] = INCGFX_U8("graphics/portraits/clarkson.png", ".4bpp");
+static const u16 sPortraitClarksonPal[] = INCGFX_U16("graphics/portraits/clarkson.png", ".gbapal");
 
 // Real art later = add the PNG, repoint that id's row. Nothing else changes.
 // PORTRAIT_COBRA intentionally points at the second placeholder to prove the
@@ -34,7 +36,7 @@ static const u16 sPortraitPlaceholder2Pal[] = INCGFX_U16("graphics/portraits/pla
 static const struct NpcPortrait sNpcPortraits[PORTRAIT_COUNT] =
 {
     [PORTRAIT_PLACEHOLDER]     = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
-    [PORTRAIT_CLARKSON_GENGAR] = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
+    [PORTRAIT_CLARKSON_GENGAR] = {sPortraitClarksonGfx,     sPortraitClarksonPal},
     [PORTRAIT_MADAM_TSUJI]     = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
     [PORTRAIT_MUTRID_LEADER]   = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
     [PORTRAIT_RED_FATALITY]    = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
@@ -55,12 +57,25 @@ static const struct OamData sOamData_Portrait =
     .priority = 0,
 };
 
+// A real frame command is required: image-based sprites only DMA their frame
+// when an ANIMCMD_FRAME executes (gDummySpriteAnimTable never loads one).
+static const union AnimCmd sAnim_Portrait[] =
+{
+    ANIMCMD_FRAME(0, 0),
+    ANIMCMD_END
+};
+
+static const union AnimCmd *const sAnims_Portrait[] =
+{
+    sAnim_Portrait,
+};
+
 static const struct SpriteTemplate sSpriteTemplate_Portrait =
 {
     .tileTag = TAG_NONE,
     .paletteTag = PORTRAIT_PAL_TAG,
     .oam = &sOamData_Portrait,
-    .anims = gDummySpriteAnimTable,
+    .anims = sAnims_Portrait,
     .images = &sPortraitImage,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy,
