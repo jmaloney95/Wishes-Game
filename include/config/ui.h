@@ -8,4 +8,10 @@
 // showportrait/hideportrait script commands (src/npc_portrait.c).
 #define USE_NPC_PORTRAITS TRUE
 
+// Horizontal icon-bar start menu (sprites along the bottom + a label window)
+// instead of the vanilla vertical text list. Presentation only: the action
+// list, conditional entries, and every callback are untouched. FALSE restores
+// the vanilla menu.
+#define USE_GRAPHICAL_START_MENU TRUE
+
 #endif // GUARD_CONFIG_UI_H

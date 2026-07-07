@@ -19,6 +19,7 @@
 #include "pokemon_icon.h"
 #include "region_map.h"
 #include "sound.h"
+#include "start_menu.h"
 #include "string_util.h"
 #include "strings.h"
 #include "script.h"
@@ -141,6 +142,7 @@ static const struct MenuInfoIcon sMenuInfoIcons[] =
 void InitStandardTextBoxWindows(void)
 {
     ResetNameboxData();
+    ResetStartMenuIconBar();
     InitWindows(sStandardTextBox_WindowTemplates);
     sStartMenuWindowId = WINDOW_NONE;
     sMapNamePopupWindowId = WINDOW_NONE;
