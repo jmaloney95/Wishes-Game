@@ -258,6 +258,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_RETURNQUESTSTATE              ScrCmd_returnqueststate,            requests_effects=1  @ 0xe9
 	script_cmd_table_entry SCR_OP_SHOWPORTRAIT                  ScrCmd_showportrait,                requests_effects=1  @ 0xea
 	script_cmd_table_entry SCR_OP_HIDEPORTRAIT                  ScrCmd_hideportrait,                requests_effects=1  @ 0xeb
+	script_cmd_table_entry SCR_OP_QUESTTOAST                    ScrCmd_questtoast,                  requests_effects=1  @ 0xec
 
 	.if ALLOCATE_SCRIPT_CMD_TABLE
 gScriptCmdTableEnd::

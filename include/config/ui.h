@@ -14,4 +14,11 @@
 // the vanilla menu.
 #define USE_GRAPHICAL_START_MENU TRUE
 
+// Non-blocking quest toast: startquest/completequest slide a corner popup in
+// and out (no A press, player keeps moving) instead of the blocking message
+// box. NUMERIC 1/0 (not TRUE/FALSE) because asm/macros/event.inc gates the
+// quest macros on this through the assembler's cpp pass, where TRUE is not
+// defined. 0 restores the old blocking announcement.
+#define USE_QUEST_TOAST 1
+
 #endif // GUARD_CONFIG_UI_H

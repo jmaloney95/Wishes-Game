@@ -265,7 +265,11 @@ Debug_Text_PortraitRight:
 	.string "Placeholder swapped to the\n"
 	.string "RIGHT.$"
 
+@ Quest toast queue test: complete + start back-to-back -> two toasts in
+@ order (SE_SUCCESS then SE_PIN), no blocking, player can walk during both.
 Debug_EventScript_Script_6::
+	completequest QUEST_WAKING_MOUNTAIN
+	startquest SIDE_QUEST_EIGHT_WAYS
 	release
 	end
 

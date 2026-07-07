@@ -60,6 +60,7 @@
 #include "tv.h"
 #include "window.h"
 #include "quests.h"
+#include "quest_toast.h"
 #include "npc_portrait.h"
 #include "list_menu.h"
 #include "malloc.h"
@@ -3483,5 +3484,15 @@ bool8 ScrCmd_hideportrait(struct ScriptContext *ctx)
 {
     Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
     HideNpcPortrait();
+    return FALSE;
+}
+
+bool8 ScrCmd_questtoast(struct ScriptContext *ctx)
+{
+    u8 eventType = ScriptReadByte(ctx);
+    u8 questId = ScriptReadByte(ctx);
+
+    Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
+    QuestToast_Enqueue(questId, eventType);
     return FALSE;
 }

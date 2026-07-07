@@ -518,6 +518,55 @@ static void UpdateSecondaryPopUpWindow(u8 secondaryPopUpWindowId)
     CopyWindowToVram(secondaryPopUpWindowId, COPYWIN_FULL);
 }
 
+// Quest notification popup (Pokémon Wishes of Tomorrow): reuses the map-name
+// popup window to show quest text instead of the current map name.
+// Call via `special ShowQuestPopup` with the text in STR_VAR_1 (gStringVar1);
+// the text is copied immediately, so the buffer may be reused right after.
+static u8 sQuestPopupText[36];
+static bool8 sQuestPopupPending = FALSE;
+static const u8 *sQuestPopupLabel = NULL; // optional first line (quest toast)
+
+// Quest toast entry point: like ShowQuestPopup, but with an event label
+// ("New Quest:" etc.) printed above the quest name (src/quest_toast.c).
+void ShowQuestToastPopup(const u8 *label)
+{
+    sQuestPopupLabel = label;
+    ShowQuestPopup();
+}
+
+bool32 MapNamePopupIsActive(void)
+{
+    return FuncIsActiveTask(Task_MapNamePopUpWindow);
+}
+
+void ShowQuestPopup(void)
+{
+    StringCopy(sQuestPopupText, gStringVar1);
+    sQuestPopupPending = TRUE;
+    if (!FuncIsActiveTask(Task_MapNamePopUpWindow))
+    {
+        if (OW_POPUP_GENERATION == GEN_5)
+        {
+            gPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 100);
+            if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
+                SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_TGT2_ALL | BLDCNT_EFFECT_BLEND);
+        }
+        else
+        {
+            gPopupTaskId = CreateTask(Task_MapNamePopUpWindow, 90);
+            SetGpuReg(REG_OFFSET_BG0VOFS, POPUP_OFFSCREEN_Y);
+        }
+        gTasks[gPopupTaskId].tState = STATE_PRINT;
+        gTasks[gPopupTaskId].tYOffset = POPUP_OFFSCREEN_Y;
+    }
+    else
+    {
+        if (gTasks[gPopupTaskId].tState != STATE_SLIDE_OUT)
+            gTasks[gPopupTaskId].tState = STATE_SLIDE_OUT;
+        gTasks[gPopupTaskId].tIncomingPopUp = TRUE;
+    }
+}
+
 static void ShowMapNamePopUpWindow(void)
 {
     u8 mapDisplayHeader[27];
@@ -525,6 +574,61 @@ static void ShowMapNamePopUpWindow(void)
     u8 x;
     const u8 *mapDisplayHeaderSource;
     u8 mapNamePopUpWindowId, secondaryPopUpWindowId;
+
+    if (sQuestPopupPending)
+    {
+        withoutPrefixPtr = &(mapDisplayHeader[6]);
+        StringCopy(withoutPrefixPtr, sQuestPopupText);
+        sQuestPopupPending = FALSE;
+
+        if (OW_POPUP_GENERATION == GEN_5)
+        {
+            if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
+                SetGpuRegBits(REG_OFFSET_WININ, WININ_WIN0_CLR);
+            mapNamePopUpWindowId = AddMapNamePopUpWindow();
+            secondaryPopUpWindowId = AddSecondaryPopUpWindow();
+        }
+        else
+        {
+            AddMapNamePopUpWindow();
+        }
+
+        LoadMapNamePopUpWindowBg();
+
+        mapDisplayHeader[0] = EXT_CTRL_CODE_BEGIN;
+        mapDisplayHeader[1] = EXT_CTRL_CODE_BACKGROUND;
+        mapDisplayHeader[2] = TEXT_COLOR_TRANSPARENT;
+        mapDisplayHeader[3] = EXT_CTRL_CODE_BEGIN;
+        mapDisplayHeader[4] = EXT_CTRL_CODE_ACCENT;
+        mapDisplayHeader[5] = TEXT_COLOR_TRANSPARENT;
+
+        if (OW_POPUP_GENERATION == GEN_5)
+        {
+            AddTextPrinterParameterized(mapNamePopUpWindowId, FONT_SHORT, mapDisplayHeader, 8, 2, TEXT_SKIP_DRAW, NULL);
+            CopyWindowToVram(mapNamePopUpWindowId, COPYWIN_FULL);
+            UpdateSecondaryPopUpWindow(secondaryPopUpWindowId);
+        }
+        else if (sQuestPopupLabel != NULL)
+        {
+            // Quest toast: event label on the first line, quest name below.
+            u8 labelBuffer[36];
+            memcpy(labelBuffer, mapDisplayHeader, 6); // reuse the color prefix
+            StringCopy(&labelBuffer[6], sQuestPopupLabel);
+            x = GetStringCenterAlignXOffset(FONT_SMALL, &labelBuffer[6], 80);
+            AddTextPrinterParameterized(GetMapNamePopUpWindowId(), FONT_SMALL, labelBuffer, x, 0, TEXT_SKIP_DRAW, NULL);
+            x = GetStringCenterAlignXOffset(FONT_SMALL, withoutPrefixPtr, 80);
+            AddTextPrinterParameterized(GetMapNamePopUpWindowId(), FONT_SMALL, mapDisplayHeader, x, 12, TEXT_SKIP_DRAW, NULL);
+            CopyWindowToVram(GetMapNamePopUpWindowId(), COPYWIN_FULL);
+            sQuestPopupLabel = NULL;
+        }
+        else
+        {
+            x = GetStringCenterAlignXOffset(FONT_NARROW, withoutPrefixPtr, 80);
+            AddTextPrinterParameterized(GetMapNamePopUpWindowId(), FONT_NARROW, mapDisplayHeader, x, 3, TEXT_SKIP_DRAW, NULL);
+            CopyWindowToVram(GetMapNamePopUpWindowId(), COPYWIN_FULL);
+        }
+        return;
+    }
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
     {

@@ -20,6 +20,7 @@
 #include "region_map.h"
 #include "sound.h"
 #include "start_menu.h"
+#include "quest_toast.h"
 #include "string_util.h"
 #include "strings.h"
 #include "script.h"
@@ -143,6 +144,7 @@ void InitStandardTextBoxWindows(void)
 {
     ResetNameboxData();
     ResetStartMenuIconBar();
+    QuestToast_Reset();
     InitWindows(sStandardTextBox_WindowTemplates);
     sStartMenuWindowId = WINDOW_NONE;
     sMapNamePopupWindowId = WINDOW_NONE;

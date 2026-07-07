@@ -1972,7 +1972,27 @@
 	questmenu QUEST_MENU_OPEN, 0
 	.endm
 
-	@ Starts the specified quest.
+	@ Fires a non-blocking quest toast (see src/quest_toast.c).
+	.macro questtoast event:req, quest:req
+	.byte SCR_OP_QUESTTOAST
+	.byte \event
+	.byte \quest
+	.endm
+
+#if USE_QUEST_TOAST
+	@ Starts the specified quest with a non-blocking corner toast.
+	.macro startquest quest:req
+	questmenu QUEST_MENU_SET_ACTIVE, \quest
+	questtoast QUEST_TOAST_START, \quest
+	.endm
+
+	@ Completes the specified quest with a non-blocking corner toast.
+	.macro completequest quest:req
+	questmenu QUEST_MENU_COMPLETE_QUEST, \quest
+	questtoast QUEST_TOAST_COMPLETE, \quest
+	.endm
+#else
+	@ Starts the specified quest (blocking announcement).
 	.macro startquest quest:req
 	closemessage
 	delay 30
@@ -1984,7 +2004,7 @@
 	waitfanfare
 	.endm
 
-	@ Completes the specified quest.
+	@ Completes the specified quest (blocking announcement).
 	.macro completequest quest:req
 	closemessage
 	delay 30
@@ -1995,6 +2015,7 @@
 	msgbox gText_QuestAnnounce, MSGBOX_SIGN
 	waitfanfare
 	.endm
+#endif
 
 	.macro goto_if_quest_inactive quest:req, dest:req
 	questmenu QUEST_MENU_CHECK_INACTIVE, \quest

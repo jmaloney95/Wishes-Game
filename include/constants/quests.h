@@ -32,6 +32,11 @@
 
 #define QUEST_ARRAY_COUNT (SUB_QUEST_COUNT > QUEST_COUNT ? SUB_QUEST_COUNT : QUEST_COUNT)
 
+// Quest toast event types (questtoast script command / src/quest_toast.c)
+#define QUEST_TOAST_START     0
+#define QUEST_TOAST_UPDATE    1
+#define QUEST_TOAST_COMPLETE  2
+
 // Saveblock storage caps. SaveBlock2's quest bitfields are sized from these
 // (not from QUEST_COUNT) so adding quests up to the caps does NOT change the
 // save layout and existing saves keep working. Raising a cap breaks saves.

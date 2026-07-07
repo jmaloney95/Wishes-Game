@@ -53,6 +53,7 @@
 #include "constants/pokeball.h"
 #include "constants/pokedex.h"
 #include "constants/pokemon.h"
+#include "config/ui.h"
 #include "constants/pokemon_size_record.h"
 #include "constants/portraits.h"
 #include "constants/quests.h"
