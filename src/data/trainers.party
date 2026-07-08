@@ -16922,8 +16922,8 @@ Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_SHINKANSEN_GOON ===
-Name: ???
-Class: Team Magma
+Name: Goon
+Class: Team Mutrid
 Pic: Magma Grunt M
 Gender: Male
 Music: Magma
@@ -16949,10 +16949,10 @@ Double Battle: No
 AI: Check Bad Move
 
 Magikarp
-Level: 12
+Level: 10
 
 Goldeen
-Level: 14
+Level: 10
 
 === TRAINER_ROUTE2_HIKER ===
 Name: Clyde
@@ -16963,11 +16963,11 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 13
+Snorunt
+Level: 10
 
-Machop
-Level: 15
+Swinub
+Level: 10
 
 === TRAINER_ROUTE2_CAMPER ===
 Name: Denny
@@ -16979,13 +16979,13 @@ Double Battle: No
 AI: Check Bad Move
 
 Poochyena
-Level: 12
+Level: 10
 
 Zigzagoon
-Level: 13
+Level: 10
 
 Wingull
-Level: 15
+Level: 10
 
 === TRAINER_ROUTE2_SWIMMER_ALLISON ===
 Name: Allison
@@ -16996,11 +16996,14 @@ Music: Swimmer
 Double Battle: No
 AI: Check Bad Move
 
-Luvdisc
-Level: 12
+Buneary
+Level: 10
 
-Marill
-Level: 13
+Lopunny
+Level: 10
+
+Scorbunny
+Level: 10
 
 === TRAINER_ROUTE2_SWIMMER_SKYE ===
 Name: Skye
@@ -17012,10 +17015,10 @@ Double Battle: No
 AI: Check Bad Move
 
 Wingull
-Level: 13
+Level: 10
 
 Staryu
-Level: 14
+Level: 10
 
 === TRAINER_ROUTE2_SWIMMER_ROSA ===
 Name: Rosa
@@ -17027,10 +17030,10 @@ Double Battle: No
 AI: Check Bad Move
 
 Luvdisc
-Level: 14
+Level: 10
 
 Corsola
-Level: 15
+Level: 10
 
 === TRAINER_ROUTE2_SWIMMER_MARINA ===
 Name: Marina
@@ -17042,10 +17045,10 @@ Double Battle: No
 AI: Check Bad Move
 
 Goldeen
-Level: 15
+Level: 10
 
 Wailmer
-Level: 16
+Level: 10
 
 === TRAINER_TORII_ORACLE ===
 Name: The Oracle
@@ -17172,3 +17175,240 @@ Level: 50
 
 Feraligatr
 Level: 50
+
+=== TRAINER_NATIONAL_PARK_TUBER_EDDIE ===
+Name: Eddie
+Class: Tuber M
+Pic: Tuber M
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Sandygast
+Level: 15
+
+Dwebble
+Level: 15
+
+=== TRAINER_NATIONAL_PARK_SWIMMER_FINN ===
+Name: Finn
+Class: Swimmer M
+Pic: Swimmer M
+Gender: Male
+Music: Swimmer
+Double Battle: No
+AI: Check Bad Move
+
+Mareanie
+Level: 16
+
+Dhelmise
+Level: 17
+
+=== TRAINER_TRADEWIND_GORO ===
+Name: GORO
+Class: Black Belt
+Pic: Black Belt
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Pangoro
+Level: 36
+
+Snorlax
+Level: 37
+
+=== TRAINER_TRADEWIND_LANTERN_BEARER ===
+Name: HOZUKI
+Class: Hex Maniac
+Pic: Hex Maniac
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Lampent
+Level: 36
+
+Ninetales
+Level: 37
+
+=== TRAINER_TSUJI_APPRENTICE ===
+Name: KOHANA
+Class: Lady
+Pic: Lady
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Misdreavus
+Level: 36
+
+Sableye
+Level: 37
+
+=== TRAINER_MADAM_TSUJI ===
+Name: TSUJI
+Class: Leader
+Pic: Elite Four Phoebe
+Gender: Female
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Drifblim
+Level: 40
+
+Cofagrigus
+Level: 41
+
+Mismagius
+Level: 41
+
+Chandelure
+Level: 42
+
+Sableye @ Sablenite
+Level: 44
+
+=== TRAINER_MUNEN_TUNNEL_GRUNT ===
+Name: ???
+Class: Team Magma
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Zubat
+Level: 14
+
+Shuppet
+Level: 15
+
+Duskull
+Level: 16
+
+=== TRAINER_ACT2_PARK_GOON_EAST ===
+Name: ???
+Class: Team Magma
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Golbat
+Level: 38
+
+Banette
+Level: 39
+
+=== TRAINER_ACT2_PARK_GOON_WEST ===
+Name: ???
+Class: Team Magma
+Pic: Magma Grunt F
+Gender: Female
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Mightyena
+Level: 38
+
+Dusclops
+Level: 39
+
+=== TRAINER_DRACO_LAB_AURORUS ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Skarmory
+Level: 38
+
+Sneasel
+Level: 38
+
+Aurorus
+Level: 40
+
+=== TRAINER_DRACO_LAB_ARMALDO ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Skarmory
+Level: 38
+
+Sneasel
+Level: 38
+
+Armaldo
+Level: 40
+
+=== TRAINER_DRACO_LAB_TYRANTRUM ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Skarmory
+Level: 38
+
+Sneasel
+Level: 38
+
+Tyrantrum
+Level: 40
+
+=== TRAINER_SENNEN_CAPTAIN_KANNON ===
+Name: KANNON
+Class: Team Magma
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Golbat
+Level: 40
+
+Camerupt
+Level: 41
+
+Banette
+Level: 41
+
+=== TRAINER_SENNEN_CAPTAIN_RYOKO ===
+Name: RYOKO
+Class: Team Magma
+Pic: Magma Grunt F
+Gender: Female
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Mightyena
+Level: 40
+
+Weezing
+Level: 41
+
+Dusclops
+Level: 41
