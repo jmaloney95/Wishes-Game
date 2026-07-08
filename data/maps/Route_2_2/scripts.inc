@@ -194,7 +194,6 @@ Route_2_2_EventScript_TMEarthquake::
 @ Trainers (reuse existing parties, park-themed dialogue)
 @ ===========================================================================
 Route_2_2_EventScript_SwimmerAllison::
-	setspeaker SP_NAME_ALLISON  @ named-cast exception: keep her plate with auto-naming off
 	trainerbattle_single TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_Text_AllisonIntro, Route_2_2_Text_AllisonDefeat
 	setspeaker SP_NAME_ALLISON
 	msgbox Route_2_2_Text_AllisonPost, MSGBOX_AUTOCLOSE

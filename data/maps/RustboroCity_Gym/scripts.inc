@@ -2,7 +2,6 @@ RustboroCity_Gym_MapScripts::
 	.byte 0
 
 RustboroCity_Gym_EventScript_Roxanne::
-	setspeaker SP_NAME_RED_FATALITY
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
 	setspeaker SP_NAME_RED_FATALITY
 	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_PostBattleKnowsTrain
@@ -45,21 +44,18 @@ RustboroCity_Gym_EventScript_KnownTrainHook::
 	end
 
 RustboroCity_Gym_EventScript_Josh::
-	setspeaker SP_NAME_MIKMANC
 	trainerbattle_single TRAINER_JOSH, RustboroCity_Gym_Text_JoshIntro, RustboroCity_Gym_Text_JoshDefeat
 	setspeaker SP_NAME_MIKMANC
 	msgbox RustboroCity_Gym_Text_JoshPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 RustboroCity_Gym_EventScript_Tommy::
-	setspeaker SP_NAME_MINISTER
 	trainerbattle_single TRAINER_TOMMY, RustboroCity_Gym_Text_TommyIntro, RustboroCity_Gym_Text_TommyDefeat
 	setspeaker SP_NAME_MINISTER
 	msgbox RustboroCity_Gym_Text_TommyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 RustboroCity_Gym_EventScript_Marc::
-	setspeaker SP_NAME_YIFFER
 	trainerbattle_single TRAINER_MARC, RustboroCity_Gym_Text_MarcIntro, RustboroCity_Gym_Text_MarcDefeat
 	setspeaker SP_NAME_YIFFER
 	msgbox RustboroCity_Gym_Text_MarcPostBattle, MSGBOX_AUTOCLOSE

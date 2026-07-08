@@ -14,6 +14,8 @@
 #include "event_data.h"
 #include "match_call.h"
 #include "malloc.h"
+#include "data.h"
+#include "constants/opponents.h"
 #include "constants/speaker_names.h"
 #include "data/speaker_names.h"
 
@@ -211,6 +213,59 @@ void SetSpeaker(struct ScriptContext *ctx)
 
     gSpeakerName = speaker;
     sSpeakerTier = tier;
+}
+
+// Named-cast trainers that should show a name plate on their battle-intro
+// speech, mapped to the SP_NAME_* the plate displays (which may differ from
+// the trainer's data name, e.g. TRAINER_JOSH shows "MikManc"). Random
+// trainers are absent and get no plate. Used by the approach code instead of
+// a `setspeaker` in the script, which is impossible before `trainerbattle`.
+static const struct { u16 trainerId; u8 speakerName; } sTrainerSpeakers[] =
+{
+    { TRAINER_JOSH,                    SP_NAME_MIKMANC },
+    { TRAINER_TOMMY,                   SP_NAME_MINISTER },
+    { TRAINER_MARC,                    SP_NAME_YIFFER },
+    { TRAINER_ROXANNE_1,               SP_NAME_RED_FATALITY },
+    { TRAINER_MADAM_TSUJI,             SP_NAME_MADAM_TSUJI },
+    { TRAINER_ROUTE2_SWIMMER_ALLISON,  SP_NAME_ALLISON },
+    { TRAINER_HARU_HAS_TYRUNT,         SP_NAME_DRACO },
+    { TRAINER_HARU_HAS_AMAURA,         SP_NAME_DRACO },
+    { TRAINER_HARU_HAS_ANORITH,        SP_NAME_DRACO },
+    { TRAINER_DRACO_TORII_AURORUS,     SP_NAME_DRACO },
+    { TRAINER_DRACO_TORII_ARMALDO,     SP_NAME_DRACO },
+    { TRAINER_DRACO_TORII_TYRANTRUM,   SP_NAME_DRACO },
+    { TRAINER_DRACO_LAB_AURORUS,       SP_NAME_DRACO },
+    { TRAINER_DRACO_LAB_ARMALDO,       SP_NAME_DRACO },
+    { TRAINER_DRACO_LAB_TYRANTRUM,     SP_NAME_DRACO },
+    { TRAINER_STARSUMMIT_BOSS,         SP_NAME_MUTRID_LEADER },
+};
+
+// Set the plate for an approaching trainer from the named-cast table (or clear
+// it for a random trainer). Honors OW_NAME_BOX_NPC_TRAINER: when that is TRUE,
+// every trainer instead shows their raw data name.
+void SetSpeakerFromTrainer(u16 trainerId)
+{
+    u32 i;
+
+    if (OW_NAME_BOX_NPC_TRAINER)
+    {
+        gSpeakerName = GetTrainerNameFromId(trainerId);
+        sSpeakerTier = SPEAKER_TIER_DEFAULT;
+        return;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(sTrainerSpeakers); i++)
+    {
+        if (sTrainerSpeakers[i].trainerId == trainerId)
+        {
+            gSpeakerName = gSpeakerNamesTable[sTrainerSpeakers[i].speakerName];
+            sSpeakerTier = gSpeakerNameTiers[sTrainerSpeakers[i].speakerName];
+            return;
+        }
+    }
+
+    gSpeakerName = NULL;
+    sSpeakerTier = SPEAKER_TIER_DEFAULT;
 }
 
 // useful for other context e.g. match call
