@@ -36,7 +36,6 @@ StarSummit_EventScript_IntroCutscene::
 	waitmovement 0
 	delay 20
 	setspeaker SP_NAME_CLARKSON
-	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox StarSummit_Text_ClarksonLine1, MSGBOX_DEFAULT
 	closemessage
 	delay 10
@@ -50,7 +49,6 @@ StarSummit_EventScript_IntroCutscene::
 	closemessage
 	delay 10
 	@ "Goodbye, Father" -> final shove into the lava
-	hideportrait
 	setspeaker SP_NAME_MUTRID_LEADER
 	msgbox StarSummit_Text_GoonGoodbye, MSGBOX_DEFAULT
 	closemessage
@@ -256,17 +254,17 @@ StarSummit_Text_JirachiCry:
 	.string "the summit!$"
 
 StarSummit_Text_ClarksonLine1:
-	.string "CLARKSON: {PLAYER}…\p"
+	.string "{PLAYER}…\p"
 	.string "I should never have told you to\n"
 	.string "come here.$"
 
 StarSummit_Text_ClarksonLine2:
-	.string "CLARKSON: {PLAYER}…\p"
+	.string "{PLAYER}…\p"
 	.string "You can't let JIRACHI's power\n"
 	.string "fall into enemy hands!$"
 
 StarSummit_Text_GoonGoodbye:
-	.string "???: …Goodbye, Father.$"
+	.string "???: …Goodbye, FATHER.$"
 
 StarSummit_Text_GoonChallenge:
 	.string "???: He begged you to stay away.\n"

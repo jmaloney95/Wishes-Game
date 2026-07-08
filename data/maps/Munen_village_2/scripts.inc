@@ -414,6 +414,8 @@ Munen_village_2_EventScript_HaruIntro::
 	setspeaker SP_NAME_DRACO
 	msgbox MunenText_HaruIntro, MSGBOX_DEFAULT
 	closemessage
+	@ Keep his plate red through the battle-start / defeat text too.
+	setspeaker SP_NAME_DRACO
 	@ Branch into the correct counter-pick battle based on player's starter.
 	compare VAR_STARTER_CHOICE, 1
 	goto_if_eq Munen_village_2_EventScript_HaruBattleVsTyrunt
@@ -571,7 +573,7 @@ MunenText_HaruFarewell:
 
 @ Professor Clarkson north-exit encounter
 MunenText_ProfessorHello:
-	.string "PROFESSOR CLARKSON: Hold up, {PLAYER}!\pYou can't go wandering off the mountain\nempty-handed.\pHere -- I came to give you these\nbefore you set out.$"
+	.string "Hold up, {PLAYER}!\pYou can't go wandering off the mountain\nempty-handed.\pHere -- I came to give you these\nbefore you set out.$"
 
 MunenText_ProfessorAfterItems:
 	.string "The Poke Balls are for catching\nwild Pokemon -- you'll find a few along\lthe northern trail.\pThe Potions are for when your partner\nneeds patching up.\pNow then. Be careful out there.\pAnd write to your mother.$"
