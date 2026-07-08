@@ -533,6 +533,9 @@ enum TrainerClassID
     TRAINER_CLASS_LADY_FRLG,
     TRAINER_CLASS_PAINTER_FRLG,
 
+    // Wishes of Tomorrow villain team (displays "TEAM ???")
+    TRAINER_CLASS_TEAM_MUTRID,
+
     TRAINER_CLASS_COUNT,
 };
 
