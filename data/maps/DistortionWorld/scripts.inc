@@ -45,6 +45,13 @@ DistortionWorld_EventScript_JoinedPC::
 
 DistortionWorld_EventScript_Collapse::
 	closemessage
+	@ Gengar offers to send the player home before he fades and the world
+	@ collapses (the warp back to National Park below IS that teleport).
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
+	msgbox DistortionWorld_Text_GengarTeleportHome, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
 	setflag FLAG_ACT2_MET_CLARKSON_DISTORTION
 	setflag FLAG_NATIONAL_PARK_GRAVE_SECRET
 	removeobject 1
@@ -177,6 +184,17 @@ DistortionWorld_Text_NoRoom::
 	.string "“Even a ghost needs a seat.\p"
 	.string "“Make room, then come back for\n"
 	.string "me. I have waited this long.”$"
+
+DistortionWorld_Text_GengarTeleportHome::
+	.string "“This place won't hold together\n"
+	.string "much longer -- and neither will I.\p"
+	.string "“But I have just enough left in me\n"
+	.string "for one last trick.\p"
+	.string "“Let me send you home, {PLAYER}.\n"
+	.string "Back to the living world, where you\l"
+	.string "belong.\p"
+	.string "“Close your eyes. This won't\n"
+	.string "hurt a bit.”$"
 
 DistortionWorld_Text_Collapse1::
 	.string "“Ah. There it is.\p"
