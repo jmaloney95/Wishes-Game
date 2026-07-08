@@ -2,7 +2,12 @@
 
 ShinkansenInterior_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ShinkansenInterior_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, ShinkansenInterior_OnLoad
 	.byte 0
+
+ShinkansenInterior_OnLoad::
+	questindicator LOCALID_SHINKANSEN_GOON, SIDE_QUEST_FROZEN_TRACKS
+	end
 
 @ After the EMBER BADGE the train is gone from SennenVillage entirely (the cleared
 @ track tile has no door behavior, so the door warp dies and this interior becomes

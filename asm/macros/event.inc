@@ -1980,11 +1980,19 @@
 	.endm
 
 	@ Shows a floating "!" over the given NPC while the quest is still
-	@ unstarted. Call from a map's OnResume/OnLoad script.
+	@ unstarted. Call from a map's OnLoad script.
 	.macro questindicator localId:req, quest:req
 	.byte SCR_OP_QUESTINDICATOR
 	.byte \localId
 	.byte \quest
+	.endm
+
+	@ Like questindicator, but shows the "!" while the given flag is clear
+	@ (for givers gated on a flag instead of a quest). Call from OnLoad.
+	.macro flagindicator localId:req, flag:req
+	.byte SCR_OP_FLAGINDICATOR
+	.byte \localId
+	.2byte \flag
 	.endm
 
 #if USE_QUEST_TOAST

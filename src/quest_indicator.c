@@ -3,23 +3,34 @@
 #include "quests.h"
 #include "sprite.h"
 #include "decompress.h"
+#include "event_data.h"
 #include "event_object_movement.h"
 
 // Persistent "!" indicator floating over quest-giver NPCs so the player can
 // spot who has something to offer. Each indicator is a small OBJ sprite that
 // tracks its NPC every frame (modeled on the shadow field effect,
-// src/field_effect_helpers.c) and destroys itself when the NPC despawns.
-// QuestIndicator_TryShow only spawns one while the quest is still unstarted;
-// once startquest fires, the next map reload's OnResume no longer shows it.
+// src/field_effect_helpers.c) and self-destroys once its quest is picked up
+// (or its flag is set) or the NPC leaves after having appeared.
+//
+// It is spawned from a map's OnLoad/OnResume script, which runs BEFORE object
+// events spawn (src/overworld.c ResumeMap). So the sprite is created up front
+// and simply waits (invisible) until its NPC exists, rather than checking for
+// the NPC at spawn time.
 
 #define QI_TAG        0x4B30
 #define QI_MAX        8
 #define QI_BOB_PERIOD 64
 
-#define sLocalId  data[0]
-#define sMapNum   data[1]
-#define sMapGroup data[2]
-#define sBobTimer data[3]
+#define QI_COND_QUEST 0
+#define QI_COND_FLAG  1
+
+#define sLocalId   data[0]
+#define sMapNum    data[1]
+#define sMapGroup  data[2]
+#define sBobTimer  data[3]
+#define sSeen      data[4]
+#define sCondType  data[5]
+#define sCondId    data[6]
 
 static const u32 sQuestIndicatorGfx[] = INCGFX_U32("graphics/interface/quest_indicator.png", ".4bpp.smol");
 static const u16 sQuestIndicatorPal[] = INCGFX_U16("graphics/interface/quest_indicator.png", ".gbapal");
@@ -70,20 +81,42 @@ static const struct SpriteTemplate sSpriteTemplate_QuestIndicator =
     .callback = SpriteCB_QuestIndicator,
 };
 
+// The condition is satisfied (indicator should keep showing) while the quest
+// is still unstarted, or the gating flag is still clear.
+static bool32 ConditionStillActive(struct Sprite *sprite)
+{
+    if (sprite->sCondType == QI_COND_FLAG)
+        return !FlagGet(sprite->sCondId);
+    return !QuestMenu_GetSetQuestState(sprite->sCondId, FLAG_GET_UNLOCKED);
+}
+
 static void SpriteCB_QuestIndicator(struct Sprite *sprite)
 {
     u8 objectEventId;
+    s16 bob;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId))
+    // Picked up the quest / earned the reward: retire the indicator.
+    if (!ConditionStillActive(sprite))
     {
         DestroySprite(sprite);
         return;
     }
-    else
+
+    if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId))
+    {
+        // NPC not present. If it was showing and then left (e.g. walked off),
+        // retire it; otherwise keep waiting invisibly for it to spawn.
+        if (sprite->sSeen)
+            DestroySprite(sprite);
+        else
+            sprite->invisible = TRUE;
+        return;
+    }
+
     {
         struct Sprite *npc = &gSprites[gObjectEvents[objectEventId].spriteId];
-        s16 bob;
 
+        sprite->sSeen = TRUE;
         sprite->sBobTimer = (sprite->sBobTimer + 1) % QI_BOB_PERIOD;
         bob = (sprite->sBobTimer < QI_BOB_PERIOD / 2) ? 0 : -2;
         sprite->x = npc->x;
@@ -94,19 +127,21 @@ static void SpriteCB_QuestIndicator(struct Sprite *sprite)
     }
 }
 
-void QuestIndicator_TryShow(u8 localId, u8 questId)
+static void SpawnIndicator(u8 localId, u8 condType, u16 condId)
 {
-    u8 objectEventId;
     u8 spriteId;
     u32 i;
 
     if (!USE_QUEST_GIVER_INDICATOR)
         return;
-    // Only advertise quests the player hasn't picked up yet.
-    if (QuestMenu_GetSetQuestState(questId, FLAG_GET_UNLOCKED))
-        return;
-    if (TryGetObjectEventIdByLocalIdAndMap(localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId))
-        return; // NPC not present on this map
+
+    for (i = 0; i < QI_MAX; i++)
+    {
+        // Already tracking this NPC on this map - don't stack a second one.
+        if (sIndicatorSpriteIds[i] != SPRITE_NONE
+            && gSprites[sIndicatorSpriteIds[i]].sLocalId == localId)
+            return;
+    }
 
     for (i = 0; i < QI_MAX; i++)
     {
@@ -124,10 +159,26 @@ void QuestIndicator_TryShow(u8 localId, u8 questId)
         gSprites[spriteId].sLocalId = localId;
         gSprites[spriteId].sMapNum = gSaveBlock1Ptr->location.mapNum;
         gSprites[spriteId].sMapGroup = gSaveBlock1Ptr->location.mapGroup;
+        gSprites[spriteId].sCondType = condType;
+        gSprites[spriteId].sCondId = condId;
+        gSprites[spriteId].sSeen = FALSE;
+        gSprites[spriteId].invisible = TRUE;
         gSprites[spriteId].coordOffsetEnabled = TRUE;
         sIndicatorSpriteIds[i] = spriteId;
         return;
     }
+}
+
+void QuestIndicator_TryShow(u8 localId, u8 questId)
+{
+    if (!QuestMenu_GetSetQuestState(questId, FLAG_GET_UNLOCKED))
+        SpawnIndicator(localId, QI_COND_QUEST, questId);
+}
+
+void QuestIndicator_TryShowFlag(u8 localId, u16 flag)
+{
+    if (!FlagGet(flag))
+        SpawnIndicator(localId, QI_COND_FLAG, flag);
 }
 
 void QuestIndicator_ClearAll(void)
@@ -147,7 +198,7 @@ void QuestIndicator_ClearAll(void)
 }
 
 // Field reload wipes every sprite; just drop the bookkeeping so the next
-// map's OnResume can re-add indicators cleanly.
+// map's OnLoad can re-add indicators cleanly.
 void QuestIndicator_Reset(void)
 {
     u32 i;

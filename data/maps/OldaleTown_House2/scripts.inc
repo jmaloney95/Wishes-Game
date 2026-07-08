@@ -1,8 +1,8 @@
 OldaleTown_House2_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, OldaleTown_House2_OnResume
+	map_script MAP_SCRIPT_ON_LOAD, OldaleTown_House2_OnLoad
 	.byte 0
 
-OldaleTown_House2_OnResume::
+OldaleTown_House2_OnLoad::
 	questindicator 2, QUEST_TOASTY_TIME  @ Dad, until the cocoa quest is picked up
 	end
 

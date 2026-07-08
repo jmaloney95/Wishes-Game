@@ -3507,3 +3507,13 @@ bool8 ScrCmd_questindicator(struct ScriptContext *ctx)
     QuestIndicator_TryShow(localId, questId);
     return FALSE;
 }
+
+bool8 ScrCmd_flagindicator(struct ScriptContext *ctx)
+{
+    u8 localId = ScriptReadByte(ctx);
+    u16 flag = ScriptReadHalfword(ctx);
+
+    Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
+    QuestIndicator_TryShowFlag(localId, flag);
+    return FALSE;
+}

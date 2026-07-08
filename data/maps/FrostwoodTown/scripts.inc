@@ -24,13 +24,11 @@ FrostwoodTown_EventScript_ClarksonCall::
 	lockall
 	delay 20
 	playse SE_PIN
-	showportrait PORTRAIT_CLARKSON_GENGAR
 	pokenavcall FrostwoodTown_Text_ClarksonCall
 	waitmessage
 	closemessage
 	setspeaker SP_NAME_CLARKSON
 	msgbox FrostwoodTown_Text_ClarksonReminder, MSGBOX_DEFAULT
-	hideportrait
 	setflag FLAG_GOT_CLARKSON_MTMUNEN_CALL
 	setvar VAR_FROSTWOOD_STATE, 0
 	releaseall

@@ -1,8 +1,8 @@
 NewMapMaskMaker_MapScripts::
-	map_script MAP_SCRIPT_ON_RESUME, NewMapMaskMaker_OnResume
+	map_script MAP_SCRIPT_ON_LOAD, NewMapMaskMaker_OnLoad
 	.byte 0
 
-NewMapMaskMaker_OnResume::
+NewMapMaskMaker_OnLoad::
 	questindicator 1, SIDE_QUEST_SAVE_FACE  @ Master Gen, until Save Face is picked up
 	end
 

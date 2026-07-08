@@ -6,6 +6,7 @@
 // Shows a floating "!" over a quest-giver NPC's head while their quest is
 // still available to pick up. Call from a map's OnResume/OnLoad script.
 void QuestIndicator_TryShow(u8 localId, u8 questId);
+void QuestIndicator_TryShowFlag(u8 localId, u16 flag);
 void QuestIndicator_ClearAll(void);
 void QuestIndicator_Reset(void);
 

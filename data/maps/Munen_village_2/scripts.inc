@@ -5,13 +5,8 @@
 
 Munen_village_2_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Munen_village_2_OnLoad
-	map_script MAP_SCRIPT_ON_RESUME, Munen_village_2_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Munen_village_2_OnFrame
 	.byte 0
-
-Munen_village_2_OnResume::
-	questindicator 7, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
-	end
 
 @ Runs every time the map loads, before player can see anything.
 @ Default state: cutscene-only NPCs (Haru, Professor Clarkson) are hidden.
@@ -29,6 +24,7 @@ Munen_village_2_OnLoad::
 	@ Reunited fisherman father: shown only after the Red Gyarados is resolved.
 	call_if_set FLAG_SEAFLOOR_GYARADOS_GONE, Munen_village_2_EventScript_ShowFishermanDad
 	call_if_unset FLAG_SEAFLOOR_GYARADOS_GONE, Munen_village_2_EventScript_HideFishermanDad
+	questindicator 7, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
 	return
 
 Munen_village_2_EventScript_ShowFishermanDad::
@@ -352,14 +348,19 @@ Munen_village_2_EventScript_ProfessorScene::
 	@ Clarkson walks down to meet the player.
 	applymovement 10, Munen_village_2_Movement_ProfessorApproach
 	waitmovement 0
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox MunenText_ProfessorHello, MSGBOX_DEFAULT
 	closemessage
 	@ Give the player their starting supplies. giveitem auto-shows the
 	@ "received N x ITEM" UI so no extra msgbox needed between them.
+	setspeaker SP_NAME_NONE
 	giveitem ITEM_POKE_BALL, 5
 	giveitem ITEM_POTION, 2
+	setspeaker SP_NAME_CLARKSON
 	msgbox MunenText_ProfessorAfterItems, MSGBOX_DEFAULT
 	closemessage
+	hideportrait
 	startquest QUEST_WAKING_MOUNTAIN
 	@ Clarkson walks back north and exits the camera view.
 	applymovement 10, Munen_village_2_Movement_ProfessorLeave

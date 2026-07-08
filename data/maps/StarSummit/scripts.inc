@@ -51,7 +51,7 @@ StarSummit_EventScript_IntroCutscene::
 	delay 10
 	@ "Goodbye, Father" -> final shove into the lava
 	hideportrait
-	setspeaker SP_NAME_GOON
+	setspeaker SP_NAME_MUTRID_LEADER
 	msgbox StarSummit_Text_GoonGoodbye, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_STARSUMMIT_GOON, StarSummit_Movement_GoonStepRight

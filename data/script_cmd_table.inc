@@ -260,6 +260,7 @@ gScriptCmdTable::
 	script_cmd_table_entry SCR_OP_HIDEPORTRAIT                  ScrCmd_hideportrait,                requests_effects=1  @ 0xeb
 	script_cmd_table_entry SCR_OP_QUESTTOAST                    ScrCmd_questtoast,                  requests_effects=1  @ 0xec
 	script_cmd_table_entry SCR_OP_QUESTINDICATOR                ScrCmd_questindicator,              requests_effects=1  @ 0xed
+	script_cmd_table_entry SCR_OP_FLAGINDICATOR                 ScrCmd_flagindicator,               requests_effects=1  @ 0xee
 
 	.if ALLOCATE_SCRIPT_CMD_TABLE
 gScriptCmdTableEnd::
