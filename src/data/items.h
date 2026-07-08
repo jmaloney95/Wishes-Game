@@ -14211,6 +14211,209 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_FullHeal,
     },
 
+    // Tradewind Town curios (reuse Strange Souvenir icon)
+    [ITEM_BOTTLED_WARMTH] =
+    {
+        .name = ITEM_NAME("Bottled Warmth"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A jar warm to the\n"
+            "touch. It never cools,\n"
+            "and never opens."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_BORROWED_YEARS] =
+    {
+        .name = ITEM_NAME("Borrowed Years"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "Time that belonged to\n"
+            "someone else. Heavier\n"
+            "than it looks."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_UNSPOKEN_LAST_WORDS] =
+    {
+        .name = ITEM_NAME("Unspoken Last Words"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A goodbye no one got\n"
+            "to say. It hums softly\n"
+            "when you hold it."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_A_STRANGERS_NAME] =
+    {
+        .name = ITEM_NAME("Stranger's Name"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A name with no face\n"
+            "left to wear it. You\n"
+            "almost remember it."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_FOLDED_GOODBYE] =
+    {
+        .name = ITEM_NAME("Folded Goodbye"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A letter folded so\n"
+            "many times it can\n"
+            "never be opened again."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_ONE_GOOD_DREAM] =
+    {
+        .name = ITEM_NAME("One Good Dream"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A single good dream,\n"
+            "kept safe so it is\n"
+            "never forgotten."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_THE_LONG_WAY_HOME] =
+    {
+        .name = ITEM_NAME("Long Way Home"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A path that always\n"
+            "leads home. No one\n"
+            "says how long it takes."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_CARVED_MASK] =
+    {
+        .name = ITEM_NAME("Carved Mask"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Itsuki's festival\n"
+            "mask. A warding face,\n"
+            "carved honest."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_OniMask,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_CATALPA_BOW] =
+    {
+        .name = ITEM_NAME("Catalpa Bow"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "An azusa spirit-bow.\n"
+            "Its unstrung song\n"
+            "opens thin places."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_CatalpaBow,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_SHADOW_DOSSIER] =
+    {
+        .name = ITEM_NAME("Shadow Dossier"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Clarkson's original\n"
+            "research. Heavy in\n"
+            "more ways than one."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_ShadowDossier,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_QUEST_LOG] =
+    {
+        .name = ITEM_NAME("Quest Log"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A journal tracking\n"
+            "every promise made\n"
+            "and kept."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_QuestLog,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_SNAG_MACHINE] =
+    {
+        .name = ITEM_NAME("Snag Machine"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Turns Poke Balls\n"
+            "into Snag Balls vs\n"
+            "Shadow Pokemon."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_SHINKANSEN_KEY] =
+    {
+        .name = ITEM_NAME("Shinkansen Key"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Keycard to the\n"
+            "Shinkansen driver's\n"
+            "cab. One way: east."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+
     [ITEM_EON_TICKET] =
     {
         .name = ITEM_NAME("Eon Ticket"),

@@ -47,6 +47,7 @@
 #include "constants/item_effects.h"
 #include "constants/items.h"
 #include "constants/songs.h"
+#include "constants/species.h"
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -66,6 +67,7 @@ static void ItemUseOnFieldCB_Itemfinder(u8);
 static void ItemUseOnFieldCB_Berry(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
 static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8);
+static void ItemUseOnFieldCB_OniMask(u8);
 static bool8 TryToWaterSudowoodo(void);
 static void BootUpSoundTMHM(u8);
 static void Task_ShowTMHMContainedMessage(u8);
@@ -827,6 +829,21 @@ void ItemUseOutOfBattle_WailmerPail(u8 taskId)
     }
 }
 
+// Carved Mask (Wishes of Tomorrow): toggle the oni disguise. Returns to the
+// field and runs a script that flips FLAG_ONI_MASK_WORN and reports it.
+void ItemUseOutOfBattle_OniMask(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_OniMask;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+static void ItemUseOnFieldCB_OniMask(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseOniMask);
+    DestroyTask(taskId);
+}
+
 static void ItemUseOnFieldCB_WailmerPailBerry(u8 taskId)
 {
     LockPlayerFieldControls();
@@ -1128,6 +1145,119 @@ void ItemUseOutOfBattle_EscapeRope(u8 taskId)
     if (CanUseDigOrEscapeRopeOnCurMap() == TRUE)
     {
         sItemUseOnFieldCB = ItemUseOnFieldCB_EscapeRope;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+}
+
+// Pokémon Wishes of Tomorrow: the CATALPA BOW.
+// Before the Distortion World scene: opens the gravesite seam in the Act 2
+// National Park (script coords 47-48,18), usable only in its vicinity.
+// After the scene (FLAG_ACT2_MET_CLARKSON_DISTORTION): with Gengar-Clarkson in
+// the party, using it anywhere lets him offer the ferry to occupied Munen
+// Village -- the Act 2 point of no return.
+extern const u8 NationalParkAct2_EventScript_CatalpaBowCrossing[];
+extern const u8 EventScript_CatalpaBowGengarFerry[];
+extern const u8 EventScript_CatalpaBowNoGengar[];
+
+static bool32 PlayerIsNearGravesiteSeam(void)
+{
+    s16 x, y;
+
+    if (gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(MAP_NATIONAL_PARK_ACT2)
+     || gSaveBlock1Ptr->location.mapNum != MAP_NUM(MAP_NATIONAL_PARK_ACT2))
+        return FALSE;
+
+    PlayerGetDestCoords(&x, &y);
+    // PlayerGetDestCoords includes the MAP_OFFSET (+7) border margin.
+    return x >= 44 + MAP_OFFSET && x <= 51 + MAP_OFFSET
+        && y >= 15 + MAP_OFFSET && y <= 21 + MAP_OFFSET;
+}
+
+static bool32 PlayerPartyHasGengar(void)
+{
+    u32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u32 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        if (species == SPECIES_NONE)
+            break;
+        if (species == SPECIES_GENGAR)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static void ItemUseOnFieldCB_CatalpaBow(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(NationalParkAct2_EventScript_CatalpaBowCrossing);
+    DestroyTask(taskId);
+}
+
+static void ItemUseOnFieldCB_CatalpaBowFerry(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_CatalpaBowGengarFerry);
+    DestroyTask(taskId);
+}
+
+static void ItemUseOnFieldCB_CatalpaBowNoGengar(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_CatalpaBowNoGengar);
+    DestroyTask(taskId);
+}
+
+// Quest Log -- opens the quest journal script (data/scripts/quests.inc).
+extern const u8 EventScript_QuestLog[];
+
+static void ItemUseOnFieldCB_QuestLog(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_QuestLog);
+    DestroyTask(taskId);
+}
+
+void ItemUseOutOfBattle_QuestLog(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_QuestLog;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+// Clarkson's kept research -- readable from the bag anywhere.
+extern const u8 MunenLabAct2_EventScript_ReadDossier[];
+
+static void ItemUseOnFieldCB_ShadowDossier(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(MunenLabAct2_EventScript_ReadDossier);
+    DestroyTask(taskId);
+}
+
+void ItemUseOutOfBattle_ShadowDossier(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_ShadowDossier;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+void ItemUseOutOfBattle_CatalpaBow(u8 taskId)
+{
+    if (FlagGet(FLAG_ACT2_MET_CLARKSON_DISTORTION))
+    {
+        if (PlayerPartyHasGengar())
+            sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowFerry;
+        else
+            sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowNoGengar;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else if (PlayerIsNearGravesiteSeam())
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBow;
         SetUpItemUseOnFieldCallback(taskId);
     }
     else
