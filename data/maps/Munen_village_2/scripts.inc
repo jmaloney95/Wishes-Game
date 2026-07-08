@@ -5,8 +5,15 @@
 
 Munen_village_2_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Munen_village_2_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, Munen_village_2_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Munen_village_2_OnFrame
 	.byte 0
+
+@ OnResume (not OnLoad): the "!" sprite must be created after ResumeMap's
+@ ResetSpriteData, which OnLoad runs before.
+Munen_village_2_OnResume::
+	questindicator 7, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
+	end
 
 @ Runs every time the map loads, before player can see anything.
 @ Default state: cutscene-only NPCs (Haru, Professor Clarkson) are hidden.
@@ -24,7 +31,6 @@ Munen_village_2_OnLoad::
 	@ Reunited fisherman father: shown only after the Red Gyarados is resolved.
 	call_if_set FLAG_SEAFLOOR_GYARADOS_GONE, Munen_village_2_EventScript_ShowFishermanDad
 	call_if_unset FLAG_SEAFLOOR_GYARADOS_GONE, Munen_village_2_EventScript_HideFishermanDad
-	questindicator 7, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
 	return
 
 Munen_village_2_EventScript_ShowFishermanDad::
@@ -352,12 +358,14 @@ Munen_village_2_EventScript_ProfessorScene::
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox MunenText_ProfessorHello, MSGBOX_DEFAULT
 	closemessage
-	@ Give the player their starting supplies. giveitem auto-shows the
-	@ "received N x ITEM" UI so no extra msgbox needed between them.
+	@ He stops speaking to hand over supplies: drop both plate and portrait,
+	@ then bring them back when he speaks again. giveitem shows its own UI.
+	hideportrait
 	setspeaker SP_NAME_NONE
 	giveitem ITEM_POKE_BALL, 5
 	giveitem ITEM_POTION, 2
 	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox MunenText_ProfessorAfterItems, MSGBOX_DEFAULT
 	closemessage
 	hideportrait
@@ -394,6 +402,7 @@ Munen_village_2_EventScript_HaruIntro::
 	setflag FLAG_BATTLED_HARU
 	delay 20
 	@ "Hey wait!" shout (still visible at spawn, sets the moment up)
+	setspeaker SP_NAME_DRACO
 	msgbox MunenText_HaruShout, MSGBOX_DEFAULT
 	closemessage
 	@ Haru runs up to the player (4 fast steps north from (25,9) to (25,5)).
@@ -402,6 +411,7 @@ Munen_village_2_EventScript_HaruIntro::
 	@ Player turns to face Haru (south).
 	applymovement OBJ_EVENT_ID_PLAYER, Munen_village_2_Movement_PlayerFaceDown
 	waitmovement 0
+	setspeaker SP_NAME_DRACO
 	msgbox MunenText_HaruIntro, MSGBOX_DEFAULT
 	closemessage
 	@ Branch into the correct counter-pick battle based on player's starter.
@@ -434,6 +444,7 @@ Munen_village_2_EventScript_HaruBattleVsAnorith::
 @ on player loss the game whites out before this script ever resumes).
 Munen_village_2_EventScript_HaruAfterBattle::
 	lockall
+	setspeaker SP_NAME_DRACO
 	msgbox MunenText_HaruFarewell, MSGBOX_DEFAULT
 	closemessage
 	@ Haru walks back the way he came, then off-stage.
@@ -510,16 +521,16 @@ MunenText_Intro4:
 	.string "It has been sleeping for one thousand\nyears.\pToday, something disturbs the seal.$"
 
 MunenText_MomFirst:
-	.string "MOM: Good morning, sleepyhead.\pProfessor Clarkson sent word. \nHe wants to see you at his lab.\pMind the cold. The mist's come down\nearly.$"
+	.string "Good morning, sleepyhead.\pProfessor Clarkson sent word. \nHe wants to see you at his lab.\pMind the cold. The mist's come down\nearly.$"
 
 MunenText_MomAgain:
-	.string "MOM: The Professor's waiting at his\nlab, dear. Wrap up warm.$"
+	.string "The Professor's waiting at his\nlab, dear. Wrap up warm.$"
 
 MunenText_Clarkson:
-	.string "CLARKSON: There you are.\pI study what this mountain remembers --\nits old ice, its stories.\pDeep in the frozen lake I found three\nof them. Sleeping in the ice.\pI revived them. I shouldn't have.\pGo on -- choose one.\nLet it choose you back.$"
+	.string "There you are.\pI study what this mountain remembers --\nits old ice, its stories.\pDeep in the frozen lake I found three\nof them. Sleeping in the ice.\pI revived them. I shouldn't have.\pGo on -- choose one.\nLet it choose you back.$"
 
 MunenText_ClarksonAfter:
-	.string "CLARKSON: It already trusts you. Good.\pYou're holding part of an answer\nthis mountain has kept for a long time.$"
+	.string "It already trusts you. Good.\pYou're holding part of an answer\nthis mountain has kept for a long time.$"
 
 MunenText_IceTyrunt:
 	.string "Inside the ice, something stirs.\pIt regards you as if it already\nrules here.\pTake this one?$"
@@ -537,10 +548,10 @@ MunenText_GotStarter:
 	.string "{PLAYER} received the {STR_VAR_1}!$"
 
 MunenText_OldLady:
-	.string "OLD WOMAN: The snow on the mountain\nis melting, child.\pThis snow should never melt. Never.\pDeath is coming to Munen.\pI can feel it in the wind.$"
+	.string "The snow on the mountain\nis melting, child.\pThis snow should never melt. Never.\pDeath is coming to Munen.\pI can feel it in the wind.$"
 
 MunenText_VillageKid:
-	.string "KID: Did you hear? Professor\nClarkson found something at the \ltop of the mountain!\pWhat could it be?\pI wanna know but my dad says to stay \nclose to home. No fair!$"
+	.string "Did you hear? Professor\nClarkson found something at the \ltop of the mountain!\pWhat could it be?\pI wanna know but my dad says to stay \nclose to home. No fair!$"
 
 MunenText_Fisherman:
 	.string "My dad went out to ice-fish\non Lake Munen days ago...\pHe still hasn't come home.\pThe ice is thin now and half the lake's\nopen water already. It isn't safe.\pI keep watching the far shore, but\nI can't reach it from here.\pIf you ever find a way across that\nwater... please. Look for him.$"
@@ -553,17 +564,17 @@ MunenText_HaruShout:
 	.string "???: HEY! Wait up!$"
 
 MunenText_HaruIntro:
-	.string "DRACO: So that's where they went.\pPROFESSOR CLARKSON said he'd left\nsomething for me too -- I'm not letting\lyou walk off with all of it.\pI'm taking what's left.\pConsider this a warning,\n{PLAYER}.$"
+	.string "So that's where they went.\pPROFESSOR CLARKSON said he'd left\nsomething for me too! I'm not letting\lyou walk off with all of it.\pI'm taking what's left.\pConsider this a warning,\n{PLAYER}.$"
 
 MunenText_HaruFarewell:
-	.string "DRACO: Next time we meet --\nwe're settling this.\pSee you on the road.$"
+	.string "Next time we meet --\nwe're settling this.\pSee you on the road.$"
 
 @ Professor Clarkson north-exit encounter
 MunenText_ProfessorHello:
 	.string "PROFESSOR CLARKSON: Hold up, {PLAYER}!\pYou can't go wandering off the mountain\nempty-handed.\pHere -- I came to give you these\nbefore you set out.$"
 
 MunenText_ProfessorAfterItems:
-	.string "CLARKSON: The Poke Balls are for catching\nwild Pokemon -- you'll find a few along\lthe northern trail.\pThe Potions are for when your partner\nneeds patching up.\pNow then. Be careful out there.\pAnd write to your mother.$"
+	.string "The Poke Balls are for catching\nwild Pokemon -- you'll find a few along\lthe northern trail.\pThe Potions are for when your partner\nneeds patching up.\pNow then. Be careful out there.\pAnd write to your mother.$"
 
 @ North-exit gate text (shown until starter + rival + professor are done)
 MunenText_NorthGate:
@@ -571,10 +582,10 @@ MunenText_NorthGate:
 
 @ Rival Haru in-battle text
 MunenText_HaruBattleStart:
-	.string "DRACO: Let's see what that thing\ncan do!$"
+	.string "Let's see what that thing\ncan do!$"
 
 MunenText_HaruDefeated:
-	.string "DRACO: ...Heh. Not bad.\pI'll be better next time.$"
+	.string "...Heh. Not bad.\pI'll be better next time.$"
 
 @==============================
 @ Sign text
@@ -583,7 +594,7 @@ MunenText_JoeHouseSign:
 	.string "{PLAYER}'S HOUSE$"
 
 MunenText_MaysHouseSign:
-	.string "MAY'S HOUSE$"
+	.string "DRACO'S HOUSE$"
 
 MunenText_LabSign:
 	.string "PROFESSOR CLARKSON'S LABORATORY\pIf you can read this from outside,\nhe's probably busy with research.$"
@@ -592,7 +603,7 @@ MunenText_ForeclosureSign:
 	.string "FORECLOSURE NOTICE\pThis property has been seized.\pThe family who lived here left suddenly.\pNo one in Munen will say where.$"
 
 MunenText_RivalHouseSign:
-	.string "DRACO'S HOUSE$"
+	.string "THE NUT DUNGEON$"
 
 @ --- Reunited fisherman (father + son) voice lines ---
 Munen_village_2_Text_SonReunited:

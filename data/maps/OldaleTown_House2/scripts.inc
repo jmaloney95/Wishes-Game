@@ -1,8 +1,10 @@
 OldaleTown_House2_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, OldaleTown_House2_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, OldaleTown_House2_OnResume
 	.byte 0
 
-OldaleTown_House2_OnLoad::
+@ OnResume (not OnLoad): OnLoad runs before ResumeMap's ResetSpriteData,
+@ which would wipe the indicator sprite before it renders.
+OldaleTown_House2_OnResume::
 	questindicator 2, QUEST_TOASTY_TIME  @ Dad, until the cocoa quest is picked up
 	end
 

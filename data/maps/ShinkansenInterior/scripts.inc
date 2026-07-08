@@ -2,10 +2,10 @@
 
 ShinkansenInterior_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ShinkansenInterior_OnTransition
-	map_script MAP_SCRIPT_ON_LOAD, ShinkansenInterior_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, ShinkansenInterior_OnResume
 	.byte 0
 
-ShinkansenInterior_OnLoad::
+ShinkansenInterior_OnResume::
 	questindicator LOCALID_SHINKANSEN_GOON, SIDE_QUEST_FROZEN_TRACKS
 	end
 

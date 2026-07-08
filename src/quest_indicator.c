@@ -139,6 +139,8 @@ static void SpawnIndicator(u8 localId, u8 condType, u16 condId)
     {
         // Already tracking this NPC on this map - don't stack a second one.
         if (sIndicatorSpriteIds[i] != SPRITE_NONE
+            && gSprites[sIndicatorSpriteIds[i]].inUse
+            && gSprites[sIndicatorSpriteIds[i]].callback == SpriteCB_QuestIndicator
             && gSprites[sIndicatorSpriteIds[i]].sLocalId == localId)
             return;
     }

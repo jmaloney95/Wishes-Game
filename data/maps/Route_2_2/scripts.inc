@@ -1,8 +1,8 @@
 Route_2_2_MapScripts::
-	map_script MAP_SCRIPT_ON_LOAD, Route_2_2_OnLoad
+	map_script MAP_SCRIPT_ON_RESUME, Route_2_2_OnResume
 	.byte 0
 
-Route_2_2_OnLoad::
+Route_2_2_OnResume::
 	questindicator 12, SIDE_QUEST_EIGHT_WAYS  @ Eevee breeder
 	questindicator 20, SIDE_QUEST_HEAVY_METAL @ Scyther collector
 	flagindicator 21, FLAG_NATIONAL_PARK_CUT_GIVEN @ Cut tutor
