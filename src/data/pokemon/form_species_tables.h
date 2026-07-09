@@ -621,6 +621,7 @@ static const u16 sMewtwoFormSpeciesIdTable[] = {
     SPECIES_MEWTWO_MEGA_X,
     SPECIES_MEWTWO_MEGA_Y,
 #endif
+    SPECIES_MEWTWO_ARMORED,
     FORM_SPECIES_END,
 };
 #endif //P_FAMILY_MEWTWO

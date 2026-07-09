@@ -310,7 +310,8 @@ PlayersBedroom_EventScript_DevNpc::
 	msgbox PlayersBedroom_Text_DevAsk, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq PlayersBedroom_EventScript_DevNo
-	givemon SPECIES_MEWTWO, 80, , , NATURE_MODEST, , , , , , , , , 31, 31, 31, 31, 31, 31, MOVE_PSYSTRIKE, MOVE_AURA_SPHERE, MOVE_ICE_BEAM, MOVE_FLAMETHROWER, SHINY_MODE_ALWAYS
+	@ Armored Mewtwo is the "special" quality on its own -- not shiny.
+	givemon SPECIES_MEWTWO_ARMORED, 80, , , NATURE_MODEST, , , , , , , , , 31, 31, 31, 31, 31, 31, MOVE_PSYSTRIKE, MOVE_AURA_SPHERE, MOVE_ICE_BEAM, MOVE_FLAMETHROWER
 	compare VAR_RESULT, MON_CANT_GIVE
 	goto_if_eq PlayersBedroom_EventScript_DevNoRoom
 	setflag FLAG_GOT_DEV_MEWTWO

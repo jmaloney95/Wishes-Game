@@ -20491,6 +20491,81 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .formChangeTable = sMewtwoFormChangeTable,
     },
 
+    // Wishes of Tomorrow: cosmetic form (same stats as Mewtwo) worn by the
+    // developer-gift Mewtwo. Custom art; no shiny variant, no mega evolution.
+    [SPECIES_MEWTWO_ARMORED] =
+    {
+        .baseHP        = 106,
+        .baseAttack    = 110,
+        .baseDefense   = 90,
+        .baseSpeed     = 130,
+        .baseSpAttack  = 154,
+        .baseSpDefense = P_UPDATED_STATS >= GEN_2 ? 90 : 154,
+        .types = MON_TYPES(TYPE_PSYCHIC),
+        .catchRate = 3,
+    #if P_UPDATED_EXP_YIELDS >= GEN_8
+        .expYield = 340,
+    #elif P_UPDATED_EXP_YIELDS >= GEN_5
+        .expYield = 306,
+    #else
+        .expYield = 220,
+    #endif
+        .evYield_SpAttack = 3,
+        .genderRatio = MON_GENDERLESS,
+        .eggCycles = 120,
+        .friendship = 0,
+        .growthRate = GROWTH_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_NO_EGGS_DISCOVERED),
+        .abilities = { ABILITY_PRESSURE, ABILITY_NONE, ABILITY_UNNERVE },
+        .bodyColor = BODY_COLOR_PURPLE,
+        .speciesName = _("Mewtwo"),
+        .cryId = CRY_MEWTWO,
+        .natDexNum = NATIONAL_DEX_MEWTWO,
+        .categoryName = _("Genetic"),
+        .height = 20,
+        .weight = 1270,
+        .description = COMPOUND_STRING(
+            "Restraining armor bolted over a body\n"
+            "made by science. The suit dampens its\n"
+            "psychic power -- and hides how little\n"
+            "of its heart was ever tamed."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 309,
+        .trainerOffset = 4,
+        .frontPic = gMonFrontPic_MewtwoArmored,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_GROW_VIBRATE,
+        .backPic = gMonBackPic_MewtwoArmored,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 1,
+        .backAnimId = BACK_ANIM_GROW_STUTTER,
+        .palette = gMonPalette_MewtwoArmored,
+        .shinyPalette = gMonShinyPalette_MewtwoArmored,
+        .iconSprite = gMonIcon_Mewtwo,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(6, 12, SHADOW_SIZE_XL_BATTLE_ONLY)
+        FOOTPRINT(Mewtwo)
+        OVERWORLD(
+            sPicTable_MewtwoArmored,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following,
+            gOverworldPalette_MewtwoArmored,
+            gShinyOverworldPalette_MewtwoArmored
+        )
+        .isRestrictedLegendary = TRUE,
+        .isFrontierBanned = TRUE,
+        .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
+        .levelUpLearnset = sMewtwoLevelUpLearnset,
+        .teachableLearnset = sMewtwoTeachableLearnset,
+        .formSpeciesIdTable = sMewtwoFormSpeciesIdTable,
+    },
+
 #if P_MEGA_EVOLUTIONS
     [SPECIES_MEWTWO_MEGA_X] =
     {

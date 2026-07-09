@@ -6476,6 +6476,20 @@ const u32 gObjectEventPic_Substitute[] = INCGFX_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS && OW_BATTLE_ONLY_FORMS
 #endif //P_MEGA_EVOLUTIONS
+
+    // Wishes of Tomorrow: Armored Mewtwo (cosmetic form; dev gift).
+    // Shiny palettes intentionally alias the normal ones (no shiny art exists).
+    const u32 gMonFrontPic_MewtwoArmored[] = INCGFX_U32("graphics/pokemon/mewtwo_armored/front.png", ".4bpp.smol");
+    const u16 gMonPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/normal.pal", ".gbapal");
+    const u32 gMonBackPic_MewtwoArmored[] = INCGFX_U32("graphics/pokemon/mewtwo_armored/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/normal.pal", ".gbapal");
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_MewtwoArmored[] = INCGFX_COMP("graphics/pokemon/mewtwo_armored/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    const u16 gOverworldPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/overworld_normal.pal", ".gbapal");
+    const u16 gShinyOverworldPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/overworld_shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+#endif //OW_POKEMON_OBJECT_EVENTS
 #endif //P_FAMILY_MEWTWO
 
 #if P_FAMILY_MEW

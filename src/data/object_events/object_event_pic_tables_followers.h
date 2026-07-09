@@ -1372,6 +1372,9 @@ static const struct SpriteFrameImage sPicTable_Dragonite[] = {
 static const struct SpriteFrameImage sPicTable_Mewtwo[] = {
     overworld_ascending_frames(gObjectEventPic_Mewtwo, 4, 4),
 };
+static const struct SpriteFrameImage sPicTable_MewtwoArmored[] = {
+    overworld_ascending_frames(gObjectEventPic_MewtwoArmored, 4, 4),
+};
 #if OW_BATTLE_ONLY_FORMS
 #if P_MEGA_EVOLUTIONS
 static const struct SpriteFrameImage sPicTable_MewtwoMegaX[] = {
