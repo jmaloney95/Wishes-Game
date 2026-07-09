@@ -66,6 +66,13 @@ MunenLabAct2_EventScript_DracoFlees::
 	setflag FLAG_ACT2_LAB_DRACO_FLED
 	fadedefaultbgm
 	msgbox MunenLabAct2_Text_AfterFlee, MSGBOX_DEFAULT
+	@ Gengar-Clarkson insists the research be dealt with before leaving.
+	@ While FLAG_ACT2_RESEARCH_RESOLVED is unset, the exit row (y=11) is gated.
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
+	msgbox MunenLabAct2_Text_GengarGate, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
 	releaseall
 	end
 
@@ -136,7 +143,66 @@ MunenLabAct2_EventScript_DeskEmptyKept::
 	releaseall
 	end
 
-@ Reading the kept dossier from the bag (dispatched from src/item_use.c).
+@ --------------------------------------------------------------------------
+@  Exit gate: after Draco flees, Gengar won't let the player leave until the
+@  research choice is made. Trigger row at y=11 (in front of the y=12 warps),
+@  fires on VAR_TEMP_2 == 0 every step; inert before the battle and after the
+@  desk choice, so it can never re-arm on later visits. No new flags needed.
+@ --------------------------------------------------------------------------
+MunenLabAct2_EventScript_ExitGate::
+	goto_if_unset FLAG_ACT2_LAB_DRACO_FLED, MunenLabAct2_EventScript_ExitGateInert
+	goto_if_set FLAG_ACT2_RESEARCH_RESOLVED, MunenLabAct2_EventScript_ExitGateInert
+	lockall
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
+	msgbox MunenLabAct2_Text_GengarGateNudge, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
+	applymovement OBJ_EVENT_ID_PLAYER, MunenLabAct2_Movement_GateStepBack
+	waitmovement 0
+	releaseall
+	end
+
+MunenLabAct2_EventScript_ExitGateInert::
+	end
+
+MunenLabAct2_Movement_GateStepBack:
+	walk_up
+	step_end
+
+@ Using the kept dossier from the bag (dispatched from src/item_use.c):
+@ Read (repeatable) / Destroy (confirmed, removes the item) / Cancel.
+@ Destroying leaves the canonical Act 3 state -- FLAG_ACT2_RESEARCH_RESOLVED
+@ set, ITEM_SHADOW_DOSSIER absent -- identical to destroying it at the desk.
+MunenLabAct2_EventScript_DossierBagMenu::
+	lockall
+	multichoice 20, 6, MULTI_READ_DESTROY_RESEARCH, FALSE
+	switch VAR_RESULT
+	case 0, MunenLabAct2_EventScript_ReadDossier
+	case 1, MunenLabAct2_EventScript_BagDestroyConfirm
+	releaseall
+	end
+
+MunenLabAct2_EventScript_BagDestroyConfirm::
+	msgbox MunenLabAct2_Text_BagDestroyConfirm, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_ne MunenLabAct2_EventScript_BagDestroyDeclined
+	closemessage
+	playse SE_M_FLAME_WHEEL
+	fadescreen FADE_TO_WHITE
+	delay 20
+	fadescreen FADE_FROM_WHITE
+	removeitem ITEM_SHADOW_DOSSIER
+	msgbox MunenLabAct2_Text_BagDestroyed, MSGBOX_DEFAULT
+	releaseall
+	end
+
+MunenLabAct2_EventScript_BagDestroyDeclined::
+	msgbox MunenLabAct2_Text_BagDestroyDeclined, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ Reading the kept dossier (from the bag menu above).
 MunenLabAct2_EventScript_ReadDossier::
 	lockall
 	msgbox MunenLabAct2_Text_Dossier1, MSGBOX_DEFAULT
@@ -241,6 +307,23 @@ MunenLabAct2_Text_AfterFlee::
 	.string "read, discarded, and suddenly\l"
 	.string "very heavy.$"
 
+@ PLACEHOLDER (Joe): Gengar's line right after Draco flees.
+MunenLabAct2_Text_GengarGate::
+	.string "“{PLAYER}. The research.\p"
+	.string "“He read it, but the PAGES are\n"
+	.string "still on that desk -- and pages\l"
+	.string "can be read again.\p"
+	.string "“We do not leave this room until\n"
+	.string "you've dealt with them.\l"
+	.string "One way or the other.”$"
+
+@ PLACEHOLDER (Joe): Gengar's nudge when the player tries to leave early.
+MunenLabAct2_Text_GengarGateNudge::
+	.string "“Kekeke. The door? No, {PLAYER}.\p"
+	.string "“The desk first.\n"
+	.string "I did not die to be FILED AWAY\l"
+	.string "as somebody's weapon.”$"
+
 MunenLabAct2_Text_DeskBlocked::
 	.string "The desk is buried in papers and\n"
 	.string "instruments.\p"
@@ -288,6 +371,24 @@ MunenLabAct2_Text_DeskEmptyKept::
 	.string "The desk is bare.\p"
 	.string "The research rides in your bag\n"
 	.string "now, heavy as a held breath.$"
+
+MunenLabAct2_Text_BagDestroyConfirm::
+	.string "Destroy Clarkson's research?\p"
+	.string "This cannot be undone.$"
+
+@ PLACEHOLDER (Joe): aftermath of destroying the research from the bag.
+MunenLabAct2_Text_BagDestroyed::
+	.string "{PLAYER} fed the pages to a small,\n"
+	.string "careful fire.\p"
+	.string "A life's work becomes light, then\n"
+	.string "warmth, then ash.\p"
+	.string "Somewhere close by, something\n"
+	.string "grins, and lets out a long-held\l"
+	.string "breath.$"
+
+MunenLabAct2_Text_BagDestroyDeclined::
+	.string "{PLAYER} tucked the research away\n"
+	.string "again.$"
 
 MunenLabAct2_Text_Dossier1::
 	.string "{PLAYER} opened the Shadow\n"
