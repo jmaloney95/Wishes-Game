@@ -1352,7 +1352,11 @@ void BattleSetup_StartTrainerBattle(void)
         }
     }
 
-    if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
+    // Exact match required: RIVAL_BATTLE_TUTORIAL includes the HEAL_AFTER bit, so a
+    // plain `&` also matched battles that passed only RIVAL_BATTLE_HEAL_AFTER and gave
+    // them the tutorial flee AI (opponent runs at low player HP, ending the battle).
+    if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL
+     && (GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL) == RIVAL_BATTLE_TUTORIAL)
         gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
