@@ -21,10 +21,35 @@ EventScript_CatalpaBowGengarFerry::
 	goto EventScript_CatalpaBowFerryGo
 
 EventScript_CatalpaBowFerryAgain::
-	msgbox Text_GengarFerryOfferAgain, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq EventScript_CatalpaBowFerryDecline
-	goto EventScript_CatalpaBowFerryGo
+	@ After the crossing the bow is repeatable fast travel: Clarkson's Lab
+	@ or back into the Distortion World.
+	msgbox Text_GengarTravelMenu, MSGBOX_DEFAULT
+	multichoice 0, 0, MULTI_CATALPA_DESTINATIONS, FALSE
+	switch VAR_RESULT
+	case 0, EventScript_CatalpaBowToLab
+	case 1, EventScript_CatalpaBowToDistortion
+	@ CANCEL / B button
+	goto EventScript_CatalpaBowFerryDecline
+
+EventScript_CatalpaBowToLab::
+	closemessage
+	playse SE_WARP_IN
+	fadescreen FADE_TO_BLACK
+	delay 20
+	warp MAP_MUNEN_LAB_ACT2, 6, 11
+	waitstate
+	releaseall
+	end
+
+EventScript_CatalpaBowToDistortion::
+	closemessage
+	playse SE_WARP_IN
+	fadescreen FADE_TO_WHITE
+	delay 20
+	warp MAP_DISTORTION_WORLD, 19, 22
+	waitstate
+	releaseall
+	end
 
 EventScript_CatalpaBowFerryGo::
 	closemessage
@@ -82,6 +107,12 @@ Text_GengarFerryOfferAgain::
 	.string "like smoke.\p"
 	.string "“The ghost-road to Munen is open,\n"
 	.string "{PLAYER}. Shall we?”$"
+
+Text_GengarTravelMenu::
+	.string "GENGAR pours out of its Poke Ball\n"
+	.string "like smoke.\p"
+	.string "“The ghost-roads are open,\n"
+	.string "{PLAYER}. Where to?”$"
 
 Text_GengarFerryDecline::
 	.string "“Kekeke. Wise. Sharpen everything\n"

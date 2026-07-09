@@ -168,6 +168,8 @@
 #define MULTI_EGGS_VICTORIES_QUIT                        157
 #define MULTI_HOF_EGGS_VICTORIES_QUIT                    158
 #define MULTI_KEEP_DESTROY_RESEARCH                      159 // Act 2 Munen lab: fate of Clarkson's research
+#define MULTI_CATALPA_DESTINATIONS                       160 // Catalpa Bow fast travel: Lab / Distortion World
+#define MULTI_READ_DESTROY_RESEARCH                      161 // Shadow Dossier bag menu: Read / Destroy
 
 #define MULTI_NONE 255
 

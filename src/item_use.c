@@ -1229,13 +1229,13 @@ void ItemUseOutOfBattle_QuestLog(u8 taskId)
     SetUpItemUseOnFieldCallback(taskId);
 }
 
-// Clarkson's kept research -- readable from the bag anywhere.
-extern const u8 MunenLabAct2_EventScript_ReadDossier[];
+// Clarkson's kept research -- Read / Destroy menu, usable from the bag anywhere.
+extern const u8 MunenLabAct2_EventScript_DossierBagMenu[];
 
 static void ItemUseOnFieldCB_ShadowDossier(u8 taskId)
 {
     LockPlayerFieldControls();
-    ScriptContext_SetupScript(MunenLabAct2_EventScript_ReadDossier);
+    ScriptContext_SetupScript(MunenLabAct2_EventScript_DossierBagMenu);
     DestroyTask(taskId);
 }
 
