@@ -1691,6 +1691,63 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_CuttableTree = {
     .images = sPicTable_CuttableTree,
 };
 
+// Ground-item overworld icons: 16x16 static objects sharing one palette
+// (OBJ_EVENT_PAL_TAG_GROUND_ITEMS), used in place of the Poke Ball for the
+// Carved Mask, Catalpa Bow, and Potion pickups.
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCarvedMask = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_GROUND_ITEMS,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 128,
+    .width = 16,
+    .height = 16,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_S,
+    .inanimate = TRUE,
+    .compressed = FALSE,
+    .tracks = TRACKS_NONE,
+    .oam = &gObjectEventBaseOam_16x16,
+    .subspriteTables = sOamTables_16x16,
+    .anims = sAnimTable_Inanimate,
+    .images = sPicTable_ItemCarvedMask,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCatalpaBow = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_GROUND_ITEMS,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 128,
+    .width = 16,
+    .height = 16,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_S,
+    .inanimate = TRUE,
+    .compressed = FALSE,
+    .tracks = TRACKS_NONE,
+    .oam = &gObjectEventBaseOam_16x16,
+    .subspriteTables = sOamTables_16x16,
+    .anims = sAnimTable_Inanimate,
+    .images = sPicTable_ItemCatalpaBow,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemPotion = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_GROUND_ITEMS,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 128,
+    .width = 16,
+    .height = 16,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_S,
+    .inanimate = TRUE,
+    .compressed = FALSE,
+    .tracks = TRACKS_NONE,
+    .oam = &gObjectEventBaseOam_16x16,
+    .subspriteTables = sOamTables_16x16,
+    .anims = sAnimTable_Inanimate,
+    .images = sPicTable_ItemPotion,
+};
+
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MartEmployee = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_NPC_1,

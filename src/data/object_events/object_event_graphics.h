@@ -317,6 +317,11 @@ const u32 gObjectEventPic_GoldOni[] = INCGFX_U32("graphics/object_events/pics/pe
 const u16 gObjectEventPal_GoldOni[] = INCGFX_U16("graphics/object_events/palettes/gold_oni.pal", ".gbapal");
 const u32 gObjectEventPic_OniGoon[] = INCGFX_U32("graphics/object_events/pics/people/oni_goon.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_OniGoon[] = INCGFX_U16("graphics/object_events/palettes/oni_goon.pal", ".gbapal");
+// Ground-item overworld icons (Carved Mask, Catalpa Bow, Potion) sharing one palette.
+const u32 gObjectEventPic_ItemCarvedMask[] = INCGFX_U32("graphics/object_events/pics/misc/item_carved_mask.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u32 gObjectEventPic_ItemCatalpaBow[] = INCGFX_U32("graphics/object_events/pics/misc/item_catalpa_bow.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u32 gObjectEventPic_ItemPotion[] = INCGFX_U32("graphics/object_events/pics/misc/item_potion.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u16 gObjectEventPal_GroundItems[] = INCGFX_U16("graphics/object_events/palettes/ground_items.pal", ".gbapal");
 
 const u32 gFieldEffectObjectPic_ShadowSmall[] = INCGFX_U32("graphics/field_effects/pics/shadow_small.png", ".4bpp");
 const u32 gFieldEffectObjectPic_ShadowMedium[] = INCGFX_U32("graphics/field_effects/pics/shadow_medium.png", ".4bpp");

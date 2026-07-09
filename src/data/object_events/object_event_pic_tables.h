@@ -386,6 +386,18 @@ static const struct SpriteFrameImage sPicTable_CuttableTree[] = {
     overworld_ascending_frames(gObjectEventPic_CuttableTree, 2, 2),
 };
 
+static const struct SpriteFrameImage sPicTable_ItemCarvedMask[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemCarvedMask, 2, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_ItemCatalpaBow[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemCatalpaBow, 2, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_ItemPotion[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemPotion, 2, 2),
+};
+
 static const struct SpriteFrameImage sPicTable_MartEmployee[] = {
     overworld_ascending_frames(gObjectEventPic_MartEmployee, 2, 4),
 };

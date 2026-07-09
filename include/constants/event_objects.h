@@ -430,6 +430,9 @@
 #define OBJ_EVENT_GFX_SWIMMER_SKY                              397
 #define OBJ_EVENT_GFX_GOLD_ONI                                 398
 #define OBJ_EVENT_GFX_ONI_GOON                                 399
+#define OBJ_EVENT_GFX_ITEM_CARVED_MASK                         400
+#define OBJ_EVENT_GFX_ITEM_CATALPA_BOW                         401
+#define OBJ_EVENT_GFX_ITEM_POTION                              402
 
 // FRLG equivalents
 
@@ -441,7 +444,7 @@
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
 // is 65519, but even considering follower Pokémon, this should be more than enough :)
-#define NUM_OBJ_EVENT_GFX                        400
+#define NUM_OBJ_EVENT_GFX                        403
 
 
 // These are dynamic object gfx ids.
@@ -566,6 +569,7 @@
 #define OBJ_EVENT_PAL_TAG_SWIMMER_SKY                           0x113D
 #define OBJ_EVENT_PAL_TAG_GOLD_ONI                              0x113E
 #define OBJ_EVENT_PAL_TAG_ONI_GOON                              0x113F
+#define OBJ_EVENT_PAL_TAG_GROUND_ITEMS                          0x1140
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116

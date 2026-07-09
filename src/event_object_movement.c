@@ -513,6 +513,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_SwimmerSky,            OBJ_EVENT_PAL_TAG_SWIMMER_SKY},
     {gObjectEventPal_GoldOni,               OBJ_EVENT_PAL_TAG_GOLD_ONI},
     {gObjectEventPal_OniGoon,               OBJ_EVENT_PAL_TAG_ONI_GOON},
+    {gObjectEventPal_GroundItems,           OBJ_EVENT_PAL_TAG_GROUND_ITEMS},
     {gObjectEventPal_Truck,                 OBJ_EVENT_PAL_TAG_TRUCK},
     {gObjectEventPal_Vigoroth,              OBJ_EVENT_PAL_TAG_VIGOROTH},
     {gObjectEventPal_EnemyZigzagoon,        OBJ_EVENT_PAL_TAG_ZIGZAGOON},
