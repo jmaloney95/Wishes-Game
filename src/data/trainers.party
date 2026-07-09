@@ -17276,8 +17276,8 @@ Sableye @ Sablenite
 Level: 44
 
 === TRAINER_MUNEN_TUNNEL_GRUNT ===
-Name: ???
-Class: Team Magma
+Name: Goon
+Class: Team Mutrid
 Pic: Magma Grunt M
 Gender: Male
 Music: Magma
@@ -17294,8 +17294,8 @@ Duskull
 Level: 16
 
 === TRAINER_ACT2_PARK_GOON_EAST ===
-Name: ???
-Class: Team Magma
+Name: Goon
+Class: Mutrid
 Pic: Magma Grunt M
 Gender: Male
 Music: Magma
@@ -17309,8 +17309,8 @@ Banette
 Level: 39
 
 === TRAINER_ACT2_PARK_GOON_WEST ===
-Name: ???
-Class: Team Magma
+Name: Goon
+Class: Mutrid
 Pic: Magma Grunt F
 Gender: Female
 Music: Magma

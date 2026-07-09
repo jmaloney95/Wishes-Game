@@ -22,5 +22,7 @@
 #define OW_NAME_BOX_VILLAIN_SHADOW_COLOR  5
 #define OW_NAME_BOX_QUEST_FG_COLOR        6 // green - quest-giver characters
 #define OW_NAME_BOX_QUEST_SHADOW_COLOR    7
+#define OW_NAME_BOX_GHOST_FG_COLOR        8 // purple - GENGAR (Clarkson's ghost)
+#define OW_NAME_BOX_GHOST_SHADOW_COLOR    9
 
 #endif // GUARD_CONFIG_NAME_BOX_H

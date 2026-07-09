@@ -90,6 +90,10 @@ void PrepareNamebox(u32 tileNum)
         colors[1] = OW_NAME_BOX_QUEST_FG_COLOR;
         colors[2] = OW_NAME_BOX_QUEST_SHADOW_COLOR;
         break;
+    case SPEAKER_TIER_GHOST:
+        colors[1] = OW_NAME_BOX_GHOST_FG_COLOR;
+        colors[2] = OW_NAME_BOX_GHOST_SHADOW_COLOR;
+        break;
     }
     if (matchCall)
     {

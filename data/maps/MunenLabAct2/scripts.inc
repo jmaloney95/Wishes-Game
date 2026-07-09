@@ -68,7 +68,7 @@ MunenLabAct2_EventScript_DracoFlees::
 	msgbox MunenLabAct2_Text_AfterFlee, MSGBOX_DEFAULT
 	@ Gengar-Clarkson insists the research be dealt with before leaving.
 	@ While FLAG_ACT2_RESEARCH_RESOLVED is unset, the exit row (y=11) is gated.
-	setspeaker SP_NAME_CLARKSON
+	setspeaker SP_NAME_GENGAR
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox MunenLabAct2_Text_GengarGate, MSGBOX_DEFAULT
 	closemessage
@@ -153,7 +153,7 @@ MunenLabAct2_EventScript_ExitGate::
 	goto_if_unset FLAG_ACT2_LAB_DRACO_FLED, MunenLabAct2_EventScript_ExitGateInert
 	goto_if_set FLAG_ACT2_RESEARCH_RESOLVED, MunenLabAct2_EventScript_ExitGateInert
 	lockall
-	setspeaker SP_NAME_CLARKSON
+	setspeaker SP_NAME_GENGAR
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox MunenLabAct2_Text_GengarGateNudge, MSGBOX_DEFAULT
 	closemessage
@@ -307,22 +307,13 @@ MunenLabAct2_Text_AfterFlee::
 	.string "read, discarded, and suddenly\l"
 	.string "very heavy.$"
 
-@ PLACEHOLDER (Joe): Gengar's line right after Draco flees.
 MunenLabAct2_Text_GengarGate::
-	.string "“{PLAYER}. The research.\p"
-	.string "“He read it, but the PAGES are\n"
-	.string "still on that desk -- and pages\l"
-	.string "can be read again.\p"
-	.string "“We do not leave this room until\n"
-	.string "you've dealt with them.\l"
-	.string "One way or the other.”$"
+	.string "Wait.. You must DESTROY the\n"
+	.string "Research$"
 
-@ PLACEHOLDER (Joe): Gengar's nudge when the player tries to leave early.
 MunenLabAct2_Text_GengarGateNudge::
-	.string "“Kekeke. The door? No, {PLAYER}.\p"
-	.string "“The desk first.\n"
-	.string "I did not die to be FILED AWAY\l"
-	.string "as somebody's weapon.”$"
+	.string "Wait.. You must DESTROY the\n"
+	.string "Research$"
 
 MunenLabAct2_Text_DeskBlocked::
 	.string "The desk is buried in papers and\n"

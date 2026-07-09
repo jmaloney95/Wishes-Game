@@ -5,7 +5,7 @@
   "music": "MUS_PL_DISTORTION_WORLD",
   "region_map_section": "MAPSEC_DISTORTION_WORLD",
   "requires_flash": false,
-  "weather": "WEATHER_FOG_HORIZONTAL",
+  "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_UNDERGROUND",
   "allow_cycling": false,
   "allow_escaping": false,
@@ -16,8 +16,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES_SHINY(GENGAR)",
-      "x": 14,
-      "y": 8,
+      "x": 10,
+      "y": 11,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -29,16 +29,16 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
-      "x": 27,
-      "y": 19,
+      "x": 23,
+      "y": 22,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
+      "trainer_sight_or_berry_tree_id": "ITEM_RARE_CANDY",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_DISTORTION_WORLD_RARE_CANDY"
     }
   ],
   "warp_events": [],
@@ -46,24 +46,24 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 17,
-      "y": 11,
+      "x": 13,
+      "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "DistortionWorld_EventScript_Rift"
     },
     {
       "type": "sign",
-      "x": 12,
-      "y": 8,
+      "x": 8,
+      "y": 11,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "DistortionWorld_EventScript_FloatingStones"
     },
     {
       "type": "sign",
-      "x": 16,
-      "y": 9,
+      "x": 12,
+      "y": 12,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "DistortionWorld_EventScript_KeptThings"

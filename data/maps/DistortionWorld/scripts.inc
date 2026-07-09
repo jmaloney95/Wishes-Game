@@ -22,7 +22,7 @@ DistortionWorld_EventScript_Clarkson::
 	waitse
 	playmoncry SPECIES_GENGAR, CRY_MODE_NORMAL
 	waitmoncry
-	setspeaker SP_NAME_CLARKSON
+	setspeaker SP_NAME_GENGAR
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox DistortionWorld_Text_GengarClarkson1, MSGBOX_DEFAULT
 	msgbox DistortionWorld_Text_GengarClarkson2, MSGBOX_DEFAULT
@@ -47,7 +47,7 @@ DistortionWorld_EventScript_Collapse::
 	closemessage
 	@ Gengar offers to send the player home before he fades and the world
 	@ collapses (the warp back to National Park below IS that teleport).
-	setspeaker SP_NAME_CLARKSON
+	setspeaker SP_NAME_GENGAR
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox DistortionWorld_Text_GengarTeleportHome, MSGBOX_DEFAULT
 	closemessage

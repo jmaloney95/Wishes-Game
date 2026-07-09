@@ -13,6 +13,7 @@ EventScript_CatalpaBowGengarFerry::
 	waitse
 	playmoncry SPECIES_GENGAR, CRY_MODE_NORMAL
 	waitmoncry
+	setspeaker SP_NAME_GENGAR
 	goto_if_set FLAG_ACT2_CROSSED_TO_MUNEN, EventScript_CatalpaBowFerryAgain
 	msgbox Text_GengarFerryOfferFirst, MSGBOX_YESNO
 	compare VAR_RESULT, NO
@@ -46,7 +47,7 @@ EventScript_CatalpaBowToDistortion::
 	playse SE_WARP_IN
 	fadescreen FADE_TO_WHITE
 	delay 20
-	warp MAP_DISTORTION_WORLD, 19, 22
+	warp MAP_DISTORTION_WORLD, 15, 24
 	waitstate
 	releaseall
 	end

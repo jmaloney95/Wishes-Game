@@ -14345,8 +14345,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_CatalpaBow,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_CatalpaBow,
+        .iconPalette = gItemIconPalette_CatalpaBow,
     },
 
     [ITEM_SHADOW_DOSSIER] =

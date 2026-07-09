@@ -22,6 +22,7 @@ enum SpeakerNames {
     SP_NAME_ORACLE,
     SP_NAME_OLD_WOMAN,
     SP_NAME_ALLISON,
+    SP_NAME_GENGAR,
     SP_NAME_COUNT
 };
 
@@ -32,6 +33,7 @@ enum SpeakerNameTier {
     SPEAKER_TIER_DEFAULT = 0, // near-white: everyone without a special tier
     SPEAKER_TIER_VILLAIN,     // red: Team Mutrid (Draco, Leader ???, goons)
     SPEAKER_TIER_QUEST,       // green: quest-giver characters
+    SPEAKER_TIER_GHOST,       // purple: GENGAR (Clarkson's ghost)
 };
 
 #endif // GUARD_CONSTANTS_SPEAKER_NAMES_H

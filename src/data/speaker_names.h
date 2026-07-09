@@ -20,6 +20,7 @@ const u8 *const gSpeakerNamesTable[SP_NAME_COUNT] =
     [SP_NAME_ORACLE]          = COMPOUND_STRING("THE ORACLE"),
     [SP_NAME_OLD_WOMAN]       = COMPOUND_STRING("OLD WOMAN"),
     [SP_NAME_ALLISON]         = COMPOUND_STRING("ALLISON"),
+    [SP_NAME_GENGAR]          = COMPOUND_STRING("GENGAR"),
 };
 
 // Name color tier per speaker (see enum SpeakerNameTier). Anyone not listed
@@ -31,4 +32,5 @@ const u8 gSpeakerNameTiers[SP_NAME_COUNT] =
     [SP_NAME_MUTRID_LEADER] = SPEAKER_TIER_VILLAIN,
     [SP_NAME_DRACO]         = SPEAKER_TIER_VILLAIN,
     [SP_NAME_GOON]          = SPEAKER_TIER_VILLAIN,
+    [SP_NAME_GENGAR]        = SPEAKER_TIER_GHOST,
 };

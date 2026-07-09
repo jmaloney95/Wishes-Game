@@ -533,8 +533,10 @@ enum TrainerClassID
     TRAINER_CLASS_LADY_FRLG,
     TRAINER_CLASS_PAINTER_FRLG,
 
-    // Wishes of Tomorrow villain team (displays "TEAM ???")
+    // Wishes of Tomorrow villain team. Pre-reveal goons use TEAM_MUTRID
+    // (displays "???"); Act 2 goons use MUTRID (displays "Mutrid").
     TRAINER_CLASS_TEAM_MUTRID,
+    TRAINER_CLASS_MUTRID,
 
     TRAINER_CLASS_COUNT,
 };
