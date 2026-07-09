@@ -26,6 +26,71 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinkansenInterior_EventScript_Goon",
       "flag": "FLAG_HIDE_SHINKANSEN_GOON"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "x": 3,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger1",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_F",
+      "x": 5,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger2",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "x": 7,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger3",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_F",
+      "x": 10,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger2",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "x": 12,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger1",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
     }
   ],
   "warp_events": [
@@ -37,7 +102,26 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 2,
+      "elevation": 0,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "ShinkansenInterior_EventScript_TakeSeat"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 3,
+      "elevation": 0,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "ShinkansenInterior_EventScript_TakeSeat"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

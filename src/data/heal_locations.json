@@ -366,6 +366,15 @@
       "y": 21
     },
     {
+      "id": "HEAL_LOCATION_NEW_MAP_INN",
+      "map": "MAP_NEW_MAP_INN",
+      "x": 1,
+      "y": 4,
+      "respawn_map": "MAP_NEW_MAP_INN",
+      "respawn_x": 4,
+      "respawn_y": 5
+    },
+    {
       "id": "HEAL_LOCATION_ROUTE115",
       "map": "MAP_ROUTE115",
       "x": 20,
@@ -375,7 +384,7 @@
       "id": "HEAL_LOCATION_SENNEN_VILLAGE",
       "map": "MAP_SENNEN_VILLAGE",
       "x": 7,
-      "y": 15
+      "y": 21
     },
     {
       "id": "HEAL_LOCATION_WALNUT_WOODS",

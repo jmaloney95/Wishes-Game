@@ -13,14 +13,36 @@ Ashlands_EventScript_OldMan::
 	compare VAR_RESULT, TRUE
 	goto_if_eq Ashlands_EventScript_OldManReceive
 	msgbox Ashlands_Text_OldManQuest, MSGBOX_DEFAULT
+	compare VAR_QUEST_FATHERS_WISH, 0
+	goto_if_ne Ashlands_EventScript_OldManQuestKnown
+	closemessage
+	setvar VAR_QUEST_FATHERS_WISH, 1
+	bufferstring STR_VAR_1, Quest_Text_FathersFinalWishTitle
+	call Quest_EventScript_NotifyStarted
+Ashlands_EventScript_OldManQuestKnown::
 	release
 	end
 
+@ Local ID 3 = the old man. After the lore he vanishes into ash
+@ (FLAG_HIDE_ASHLANDS_OLD_MAN), unblocking the door to his house,
+@ where the CATALPA BOW waits.
 Ashlands_EventScript_OldManReceive::
 	msgbox Ashlands_Text_OldManTakeItem, MSGBOX_DEFAULT
 	removeitem ITEM_FENTANYL
 	setflag FLAG_FENTANYL_GIVEN
 	msgbox Ashlands_Text_OldManLore, MSGBOX_DEFAULT
+	msgbox Ashlands_Text_OldManBequest, MSGBOX_DEFAULT
+	closemessage
+	playse SE_WARP_IN
+	fadescreen FADE_TO_BLACK
+	removeobject 3
+	setflag FLAG_HIDE_ASHLANDS_OLD_MAN
+	fadescreen FADE_FROM_BLACK
+	msgbox Ashlands_Text_OldManGone, MSGBOX_DEFAULT
+	closemessage
+	setvar VAR_QUEST_FATHERS_WISH, 2
+	bufferstring STR_VAR_1, Quest_Text_FathersFinalWishTitle
+	call Quest_EventScript_NotifyUpdated
 	release
 	end
 
@@ -56,27 +78,49 @@ Ashlands_Text_OldManTakeItem:
 	.string "…Ahh. The pain… it lets go.\n"
 	.string "Bless you, child.$"
 
-Ashlands_Text_OldManLore:
-	.string "Now listen, while I still can.\p"
-	.string "TEAM MUTRID. A doomsday cult, old\n"
-	.string "as the volcano they pray to.\p"
-	.string "They worship ruin -- believe the\n"
-	.string "world is rotten and begs to burn.\p"
-	.string "Their leader is a masked devil. The\n"
-	.string "old prophet's own blood, they say.\p"
-	.string "Days ago they climbed the mountain\n"
-	.string "and seized JIRACHI -- the Undying\l"
-	.string "Wish, that grants any desire.\p"
-	.string "And their desire… is the end of\n"
-	.string "everything. Look around you.\p"
-	.string "You were up on that summit, weren't\n"
-	.string "you? You saw their faces.\p"
-	.string "Then you may be the only soul alive\n"
-	.string "who can still stop them.$"
+Ashlands_Text_OldManLore::
+	.string "Listen, while I can.\p"
+	.string "TEAM MUTRID worships ruin.\n"
+	.string "Their leader: my GRANDSON.\p"
+	.string "I taught him this mountain's\n"
+	.string "rites. His father, the same.\p"
+	.string "My son, Professor CLARKSON,\n"
+	.string "climbed to STUDY JIRACHI.\p"
+	.string "His boy came to SEIZE it.\n"
+	.string "The Undying Wish.\p"
+	.string "His one desire: burn it all.\p"
+	.string "You saw him cast his own\n"
+	.string "father into the fire.\p"
+	.string "The hand that did it,\n"
+	.string "I taught its every rite.\p"
+	.string "This ash is his wish made real.\p"
+	.string "You may be the last soul\n"
+	.string "who can stop my family.$"
 
-Ashlands_Text_OldManAfter:
+Ashlands_Text_OldManAfter::
 	.string "Go on, child… before there's\n"
 	.string "nothing left to save.$"
+
+Ashlands_Text_OldManBequest::
+	.string "The medicine bought minutes,\n"
+	.string "not years. Let them count.\p"
+	.string "In my house hangs a CATALPA\n"
+	.string "bow, strung with prayer-cord.\p"
+	.string "A rite: play it at a grave,\n"
+	.string "so the dead aren't alone.\p"
+	.string "My son rests at the park\n"
+	.string "across the water.\p"
+	.string "Play the rite for him --\n"
+	.string "his own blood never will.\p"
+	.string "And tell his stone…\p"
+	.string "his father believes him now.$"
+Ashlands_Text_OldManGone:
+	.string "…\p"
+	.string "Where the old man lay there is\n"
+	.string "only a settling of fine ash,\l"
+	.string "already scattering on the wind.\p"
+	.string "The door of his house stands\n"
+	.string "unbarred.$"
 
 Ashlands_Text_Sage:
 	.string "It's fulfilled! The prophecy,\n"

@@ -1055,6 +1055,31 @@ enum __attribute__((packed)) Item
     ITEM_HOT_COCOA = 874,
     ITEM_FENTANYL = 875, // Act II Ashlands fetch quest -- the dying old man's medicine
 
+
+    // Tradewind Town curios (impossible goods; exchanged for Mega Stones at the Pawnbroker)
+    ITEM_BOTTLED_WARMTH = 876,
+    ITEM_BORROWED_YEARS = 877,
+    ITEM_UNSPOKEN_LAST_WORDS = 878,
+    ITEM_A_STRANGERS_NAME = 879,
+    ITEM_FOLDED_GOODBYE = 880,
+    ITEM_ONE_GOOD_DREAM = 881,
+    ITEM_THE_LONG_WAY_HOME = 882,
+
+    // Munen Tunnel side quest -- Itsuki's festival mask (key item; Act 2 disguise)
+    ITEM_CARVED_MASK = 883,
+
+    // Act 2 -- azusa spirit-bow; opens the gravesite crossing to the Distortion World
+    ITEM_CATALPA_BOW = 884,
+
+    // Act 2 -- Clarkson's original research (if the player chose to KEEP it; readable from the bag)
+    ITEM_SHADOW_DOSSIER = 885,
+
+    // Quest system -- the player's quest journal (given at new game; register to SELECT)
+    ITEM_QUEST_LOG = 886,
+
+    // Act 2 rebellion parting gifts
+    ITEM_SNAG_MACHINE = 887,   // turns Poke Balls into Snag Balls vs SHADOW POKEMON held by trainers
+    ITEM_SHINKANSEN_KEY = 888, // keycard to the Shinkansen driver's cab
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

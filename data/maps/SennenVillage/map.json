@@ -17,45 +17,45 @@
   "warp_events": [
     {
       "x": 32,
-      "y": 6,
+      "y": 12,
       "elevation": 0,
       "dest_map": "MAP_SHINKANSEN_INTERIOR",
       "dest_warp_id": "0"
     },
     {
       "x": 5,
-      "y": 19,
+      "y": 25,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2",
       "dest_warp_id": "3"
     },
     {
       "x": 6,
-      "y": 19,
+      "y": 25,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2",
       "dest_warp_id": "4"
     },
     {
       "x": 7,
-      "y": 19,
+      "y": 25,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2",
       "dest_warp_id": "5"
     },
     {
       "x": 14,
-      "y": 0,
+      "y": 4,
       "elevation": 0,
-      "dest_map": "MAP_TORII",
-      "dest_warp_id": "3"
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "2"
     },
     {
       "x": 15,
-      "y": 0,
+      "y": 4,
       "elevation": 0,
-      "dest_map": "MAP_TORII",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "3"
     }
   ],
   "coord_events": [],
@@ -63,7 +63,7 @@
     {
       "type": "sign",
       "x": 6,
-      "y": 15,
+      "y": 21,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "SennenVillage_EventScript_LineSign"

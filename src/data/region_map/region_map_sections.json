@@ -1717,7 +1717,43 @@
     },
     {
       "id": "MAPSEC_WALNUT_WOODS",
-      "name": "WALNUT WOODS"
+      "name": "WALNUT WOODS",
+      "x": 13,
+      "y": 9,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_NATIONAL_PARK",
+      "name": "NATIONAL PARK",
+      "x": 12,
+      "y": 8,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_POMPEII",
+      "name": "POMPEII",
+      "x": 11,
+      "y": 7,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_MUNEN_TUNNEL",
+      "name": "MUNEN TUNNEL",
+      "x": 11,
+      "y": 7,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_DISTORTION_WORLD",
+      "name": "DISTORTION WORLD",
+      "x": 12,
+      "y": 8,
+      "width": 1,
+      "height": 1
     }
   ]
 }

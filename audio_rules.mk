@@ -32,6 +32,16 @@ $(CRY_BIN_DIR)/uncomp_%.bin: $(CRY_SUBDIR)/uncomp_%.aif
 $(SOUND_BIN_DIR)/%.bin: sound/%.wav
 	$(WAV2AGB) -b $< $@
 
+# Compressed AIFF drum-loop samples (NDS BW/B2W2) — more specific, so make prefers these
+sound/direct_sound_samples/bw_drum_loop_%.bin: sound/direct_sound_samples/bw_drum_loop_%.aif
+	$(AIF) $< $@ --compress
+sound/direct_sound_samples/b2_drum_loop_%.bin: sound/direct_sound_samples/b2_drum_loop_%.aif
+	$(AIF) $< $@ --compress
+
+# Uncompressed sounds shipped as AIFF (imported NDS Music Expansion samples)
+$(SOUND_BIN_DIR)/%.bin: sound/%.aif
+	$(AIF) $< $@
+
 # For each line in midi.cfg, we do some trickery to convert it into a make rule for the `.mid` file described on the line
 # Data following the colon in said file corresponds to arguments passed into mid2agb
 MID_CFG_PATH := $(MID_SUBDIR)/midi.cfg

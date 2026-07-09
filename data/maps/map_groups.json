@@ -152,7 +152,20 @@
     "WALNUT_WOODS",
     "Dojo",
     "NewMap",
-    "Route_2_2"
+    "Route_2_2",
+    "TradewindTown",
+    "MunenTunnel",
+    "NewMapInn",
+    "NewMapShop",
+    "NewMapMaskMaker",
+    "NewMapApprenticeHouse",
+    "NationalParkAct2",
+    "DistortionWorld",
+    "AshlandsOldMansHouse",
+    "MunenVillageAct2",
+    "MunenLabAct2",
+    "MunenHomeAct2",
+    "SennenAct2"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

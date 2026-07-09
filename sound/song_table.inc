@@ -616,6 +616,34 @@ gSongTable::
 	song ph_nurse_blend, MUSIC_PLAYER_SE2, 2
 	song ph_nurse_held, MUSIC_PLAYER_SE2, 2
 	song ph_nurse_solo, MUSIC_PLAYER_SE2, 2
+	song mus_national_park, MUSIC_PLAYER_BGM, 0
+
+	@ ---- NDS Music Expansion (auto-added, indices 611-623) ----
+	song mus_dp_mt_coronet, MUSIC_PLAYER_BGM, 0
+	song mus_dp_old_chateau, MUSIC_PLAYER_BGM, 0
+	song mus_pl_distortion_world, MUSIC_PLAYER_BGM, 0
+	song mus_pl_vs_giratina, MUSIC_PLAYER_BGM, 0
+	song mus_hg_ecruteak, MUSIC_PLAYER_BGM, 0
+	song mus_hg_bell_tower, MUSIC_PLAYER_BGM, 0
+	song mus_bw_anville, MUSIC_PLAYER_BGM, 0
+	song mus_bw_castelia, MUSIC_PLAYER_BGM, 0
+	song mus_bw_black_city, MUSIC_PLAYER_BGM, 0
+	song mus_bw_n_castle, MUSIC_PLAYER_BGM, 0
+
+	@ added music set
+	song mus_dp_galactic_hq, MUSIC_PLAYER_BGM, 0
+	song mus_dp_vs_galactic, MUSIC_PLAYER_BGM, 0
+	song mus_dp_vs_galactic_boss, MUSIC_PLAYER_BGM, 0
+	song mus_dp_vs_champion, MUSIC_PLAYER_BGM, 0
+	song mus_hg_vs_rival, MUSIC_PLAYER_BGM, 0
+	song mus_dp_vs_gym_leader, MUSIC_PLAYER_BGM, 0
+	song mus_hg_vs_lugia, MUSIC_PLAYER_BGM, 0
+	song mus_dp_vs_dialga_palkia, MUSIC_PLAYER_BGM, 0
+	song mus_hg_vs_suicune, MUSIC_PLAYER_BGM, 0
+	song mus_dp_eterna_forest, MUSIC_PLAYER_BGM, 0
+	song mus_dp_snowpoint_day, MUSIC_PLAYER_BGM, 0
+	song mus_dp_hall_of_origin, MUSIC_PLAYER_BGM, 0
+	song mus_dp_sunyshore_day, MUSIC_PLAYER_BGM, 0
 
 	.align 2
 dummy_song_header:

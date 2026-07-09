@@ -604,6 +604,7 @@ gSpecials::
 	def_special DoSSAnneDepartureCutscene
 	def_special StartMarowakBattle
 	def_special DoesPlayerPartyContainSpecies
+	def_special TakeFirstMonOfSpecies
 	def_special GetMagikarpSizeRecordInfo
 	def_special CompareMagikarpSize
 	def_special GetHeracrossSizeRecordInfo
@@ -643,3 +644,4 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
+	def_special ShowQuestPopup

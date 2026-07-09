@@ -174,12 +174,12 @@ WALNUT_WOODS_Movement_ClarksonRunOff:
 @ Text
 @ ===========================================================================
 WALNUT_WOODS_Text_Clarkson1:
-	.string "PROF. CLARKSON: Glad to see you out\n"
+	.string "Glad to see you out\n"
 	.string "here training!\p"
 	.string "I used to battle with my son out here\n"
 	.string "in these very fields, back in the day…\p"
-	.string "before I moved on to bigger and\n"
-	.string "better things.\p"
+	.string "before he got involved with\n"
+	.string "the wrong group of friends.\p"
 	.string "You know… you remind me of him.$"
 
 WALNUT_WOODS_Text_Clarkson2:

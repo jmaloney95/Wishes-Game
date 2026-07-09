@@ -121,7 +121,7 @@ FrostwoodTown_Text_ClarksonCall:
 	.string "… … … … … Click!$"
 
 FrostwoodTown_Text_ClarksonReminder:
-	.string "PROFESSOR CLARKSON wants to meet at\n"
+	.string "The PROFESSOR wants to meet at\n"
 	.string "the summit of MOUNT MUNEN.\p"
 	.string "Check the REGION MAP to work out how\n"
 	.string "to climb up there.$"

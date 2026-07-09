@@ -113,6 +113,8 @@ EventScript_ResetAllBerries::
 	return
 
 EventScript_ResetAllMapFlags::
+	setflag FLAG_HIDE_DOJO_REBELS   @ safehouse rebels appear once Mom leads the player there (Act 2)
+	setflag FLAG_HIDE_SHINKANSEN_ACT2_GOONS @ act-2 train passengers appear once the keycard door opens
 	setflag FLAG_HIDE_CONTEST_POKE_BALL
 	setflag FLAG_HIDE_ROUTE_111_VICTORIA_WINSTRATE
 	setflag FLAG_HIDE_ROUTE_111_VIVI_WINSTRATE

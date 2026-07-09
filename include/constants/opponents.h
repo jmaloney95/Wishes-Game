@@ -884,14 +884,44 @@
 #define TRAINER_ROUTE2_SWIMMER_SKYE         870
 #define TRAINER_ROUTE2_SWIMMER_ROSA         871
 #define TRAINER_ROUTE2_SWIMMER_MARINA       872 // masked goon -- the "impossible" Jirachi-summit battle (Typhlosion + Feraligatr Lv50)
+#define TRAINER_NATIONAL_PARK_TUBER_EDDIE   873
+#define TRAINER_NATIONAL_PARK_SWIMMER_FINN  874
 
-// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
-//       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
-//       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
-//       MAX raised to 880 (from 864) for headroom -- TRAINER_FLAGS_END + all SYSTEM_FLAGS shift up automatically (they are relative)
+// Tradewind Town -- the Lantern Gym (Madam Tsuji, Mega Evolution intro)
+#define TRAINER_TRADEWIND_GORO              875
+#define TRAINER_TRADEWIND_LANTERN_BEARER    876
+#define TRAINER_TSUJI_APPRENTICE            877
+#define TRAINER_MADAM_TSUJI                 878
 
-#define TRAINERS_COUNT_EMERALD     873
-#define MAX_TRAINERS_COUNT_EMERALD 880
+// Munen Tunnel (NewMap side quest) -- straggler oni grunt guarding the tomb camp
+#define TRAINER_MUNEN_TUNNEL_GRUNT          879
+
+// Act 2 occupied National Park -- oni goons (skippable via Carved Mask disguise)
+#define TRAINER_ACT2_PARK_GOON_EAST         880
+#define TRAINER_ACT2_PARK_GOON_WEST         881
+
+// Act 2 Munen lab -- Draco has the research (variant by VAR_STARTER_CHOICE, like Torii)
+#define TRAINER_DRACO_LAB_AURORUS           882 // player chose Tyrunt
+#define TRAINER_DRACO_LAB_ARMALDO           883 // player chose Amaura
+#define TRAINER_DRACO_LAB_TYRANTRUM         884 // player chose Anorith
+
+// Act 2 Sennen station assault -- the two Mutrid captains guarding the Shinkansen
+#define TRAINER_SENNEN_CAPTAIN_KANNON       885
+#define TRAINER_SENNEN_CAPTAIN_RYOKO        886
+
+// NOTE: Each trainer auto-uses a defeat flag at TRAINER_FLAGS_START + id; SYSTEM_FLAGS and
+//       FLAGS_COUNT are all relative to MAX_TRAINERS_COUNT, so raising MAX shifts them up
+//       automatically. Cost: NUM_FLAG_BYTES grows in SaveBlock1 (STATIC_ASSERT in save.c
+//       catches overflow at build time). Raising MAX also BREAKS EXISTING SAVES (system
+//       flags shift position).
+//       MAX raised 864 -> 880 (earlier) -> 896 (2026-07-02, headroom for new trainers).
+//
+//       >>> ADDING A TRAINER? Take the next sequential ID below, bump TRAINERS_COUNT_EMERALD
+//       >>> to (highest id + 1), and do NOT raise MAX again until count reaches 896.
+//       >>> Next free ID: 887.
+
+#define TRAINERS_COUNT_EMERALD     887
+#define MAX_TRAINERS_COUNT_EMERALD 896
 
 #if IS_FRLG
 #define TRAINERS_COUNT                      TRAINERS_COUNT_FRLG

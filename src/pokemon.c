@@ -5785,6 +5785,10 @@ u16 GetBattleBGM(void)
     {
         enum TrainerClassID trainerClass;
 
+        // Star Summit boss: force the FRLG champion battle theme.
+        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+            return MUS_RG_VS_CHAMPION;
+
         if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
             trainerClass = GetFrontierOpponentClass(TRAINER_BATTLE_PARAM.opponentA);
         else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)

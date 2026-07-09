@@ -13,6 +13,12 @@
 	_voice_directsound \base_midi_key, \pan, \sample_data_pointer, \attack, \decay, \sustain, \release
 	.endm
 
+	@ compressed DirectSound sample (NDS Music Expansion); type byte 0x20 = compressed
+	.macro voice_directsound_comp base_midi_key:req, pan:req, sample_data_pointer:req, attack:req, decay:req, sustain:req, release:req
+	.byte 0x20
+	_voice_directsound \base_midi_key, \pan, \sample_data_pointer, \attack, \decay, \sustain, \release
+	.endm
+
 	.macro _voice_directsound base_midi_key:req, pan:req, sample_data_pointer:req, attack:req, decay:req, sustain:req, release:req
 	.byte \base_midi_key
 	.byte 0

@@ -464,6 +464,12 @@ static const struct MenuAction MultichoiceList_LinkServicesNoBerry[] =
     {gText_Exit},
 };
 
+static const struct MenuAction MultichoiceList_KeepDestroyResearch[] =
+{
+    {gText_KeepTheResearch},
+    {gText_DestroyTheResearch},
+};
+
 static const struct MenuAction MultichoiceList_YesNoInfo[] =
 {
     {gText_Yes},
@@ -1119,6 +1125,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_UNUSED_15]                  = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_VIEWED_PAINTINGS]           = MULTICHOICE(MultichoiceList_ViewedPaintings),
     [MULTI_YESNOINFO]                  = MULTICHOICE(MultichoiceList_YesNoInfo),
+    [MULTI_KEEP_DESTROY_RESEARCH]      = MULTICHOICE(MultichoiceList_KeepDestroyResearch),
     [MULTI_BATTLE_MODE]                = MULTICHOICE(MultichoiceList_BattleMode),
     [MULTI_UNUSED_19]                  = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_YESNOINFO_2]                = MULTICHOICE(MultichoiceList_YesNoInfo2),

@@ -9394,7 +9394,7 @@
       "width": 41,
       "height": 41,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_MtMoonVillageInterior",
+      "secondary_tileset": "gTileset_LavaMap",
       "border_filepath": "data/layouts/test/border.bin",
       "blockdata_filepath": "data/layouts/test/map.bin"
     },
@@ -9412,7 +9412,7 @@
       "id": "LAYOUT_SENNEN_VILLAGE",
       "name": "SennenVillage_Layout",
       "width": 35,
-      "height": 20,
+      "height": 26,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenVillage/border.bin",
@@ -9501,8 +9501,8 @@
     {
       "id": "LAYOUT_NEW_MAP",
       "name": "NewMap_Layout",
-      "width": 20,
-      "height": 20,
+      "width": 52,
+      "height": 44,
       "primary_tileset": "gTileset_MtMoonVillage",
       "secondary_tileset": "gTileset_MtMoonVillageInterior",
       "border_filepath": "data/layouts/NewMap/border.bin",
@@ -9517,6 +9517,136 @@
       "secondary_tileset": "gTileset_Route224",
       "border_filepath": "data/layouts/Route_2_2/border.bin",
       "blockdata_filepath": "data/layouts/Route_2_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_TRADEWIND_TOWN",
+      "name": "TradewindTown_Layout",
+      "width": 36,
+      "height": 31,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/TradewindTown/border.bin",
+      "blockdata_filepath": "data/layouts/TradewindTown/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_TUNNEL",
+      "name": "MunenTunnel_Layout",
+      "width": 32,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/MunenTunnel/border.bin",
+      "blockdata_filepath": "data/layouts/MunenTunnel/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_INN",
+      "name": "NewMapInn_Layout",
+      "width": 10,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/NewMapInn/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapInn/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_SHOP",
+      "name": "NewMapShop_Layout",
+      "width": 11,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/NewMapShop/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapShop/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_MASK_MAKER",
+      "name": "NewMapMaskMaker_Layout",
+      "width": 11,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/NewMapMaskMaker/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapMaskMaker/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_APPRENTICE_HOUSE",
+      "name": "NewMapApprenticeHouse_Layout",
+      "width": 10,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/NewMapApprenticeHouse/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapApprenticeHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_NATIONAL_PARK_ACT2",
+      "name": "NationalParkAct2_Layout",
+      "width": 76,
+      "height": 97,
+      "primary_tileset": "gTileset_Route224Primary",
+      "secondary_tileset": "gTileset_Route224",
+      "border_filepath": "data/layouts/NationalParkAct2/border.bin",
+      "blockdata_filepath": "data/layouts/NationalParkAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD",
+      "name": "DistortionWorld_Layout",
+      "width": 33,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld/map.bin"
+    },
+    {
+      "id": "LAYOUT_ASHLANDS_OLD_MANS_HOUSE",
+      "name": "AshlandsOldMansHouse_Layout",
+      "width": 10,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/AshlandsOldMansHouse/border.bin",
+      "blockdata_filepath": "data/layouts/AshlandsOldMansHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_VILLAGE_ACT2",
+      "name": "MunenVillageAct2_Layout",
+      "width": 49,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_SnowAndStone",
+      "border_filepath": "data/layouts/MunenVillageAct2/border.bin",
+      "blockdata_filepath": "data/layouts/MunenVillageAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_LAB_ACT2",
+      "name": "MunenLabAct2_Layout",
+      "width": 13,
+      "height": 13,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/MunenLabAct2/border.bin",
+      "blockdata_filepath": "data/layouts/MunenLabAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_HOME_ACT2",
+      "name": "MunenHomeAct2_Layout",
+      "width": 11,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "border_filepath": "data/layouts/MunenHomeAct2/border.bin",
+      "blockdata_filepath": "data/layouts/MunenHomeAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SENNEN_ACT2",
+      "name": "SennenAct2_Layout",
+      "width": 35,
+      "height": 26,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_MagnetTrain",
+      "border_filepath": "data/layouts/SennenAct2/border.bin",
+      "blockdata_filepath": "data/layouts/SennenAct2/map.bin"
     }
   ]
 }

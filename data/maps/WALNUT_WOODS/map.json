@@ -82,6 +82,20 @@
       "elevation": 0,
       "dest_map": "MAP_FROSTWOOD_TOWN",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 54,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 54,
+      "y": 19,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "5"
     }
   ],
   "coord_events": [],

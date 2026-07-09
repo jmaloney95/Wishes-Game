@@ -264,23 +264,23 @@ StarSummit_Text_ClarksonLine2:
 	.string "fall into enemy hands!$"
 
 StarSummit_Text_GoonGoodbye:
-	.string "???: …Goodbye, FATHER.$"
+	.string "…Goodbye, FATHER.$"
 
 StarSummit_Text_GoonChallenge:
-	.string "???: He begged you to stay away.\n"
+	.string "He begged you to stay away.\n"
 	.string "You should have listened.\p"
 	.string "Now you'll watch me take it all.$"
 
 StarSummit_Text_GoonDefeat:
-	.string "???: …Tch. You're strong.\n"
+	.string "…Tch. You're strong.\n"
 	.string "But it changes nothing.$"
 
 StarSummit_Text_GoonAfterWin:
-	.string "???: Strong. But the WISH was\n"
+	.string "Strong. But the WISH was\n"
 	.string "never yours to protect.$"
 
 StarSummit_Text_GoonAfterLoss:
-	.string "???: Pathetic. Stay down.\n"
+	.string "Pathetic. Stay down.\n"
 	.string "The WISH is ours now.$"
 
 @ TODO: replace with the line Joe wants here (placeholder = a silent beat).

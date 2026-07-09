@@ -4948,6 +4948,27 @@ bool8 DoesPlayerPartyContainSpecies(void)
     return FALSE;
 }
 
+// Removes the first non-egg party Pokemon whose species == gSpecialVar_0x8004.
+// Sets gSpecialVar_Result to TRUE if one was removed, FALSE if none matched.
+void TakeFirstMonOfSpecies(void)
+{
+    u8 partyCount = CalculatePlayerPartyCount();
+    u8 i;
+    for (i = 0; i < partyCount; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) == gSpecialVar_0x8004
+            && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG, NULL))
+        {
+            ZeroMonData(&gPlayerParty[i]);
+            CompactPartySlots();
+            CalculatePlayerPartyCount();
+            gSpecialVar_Result = TRUE;
+            return;
+        }
+    }
+    gSpecialVar_Result = FALSE;
+}
+
 static const u8 sSlotMachineIndices[] = {
     0,
     0,
