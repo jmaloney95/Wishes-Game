@@ -1247,7 +1247,13 @@ void ItemUseOutOfBattle_ShadowDossier(u8 taskId)
 
 void ItemUseOutOfBattle_CatalpaBow(u8 taskId)
 {
-    if (FlagGet(FLAG_ACT2_MET_CLARKSON_DISTORTION))
+    // While Gengar is gating the Munen lab exit (research choice pending),
+    // the bow refuses too -- otherwise its travel menu would bypass the gate.
+    if (FlagGet(FLAG_ACT2_LAB_DRACO_FLED) && !FlagGet(FLAG_ACT2_RESEARCH_RESOLVED))
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+    else if (FlagGet(FLAG_ACT2_MET_CLARKSON_DISTORTION))
     {
         if (PlayerPartyHasGengar())
             sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowFerry;
