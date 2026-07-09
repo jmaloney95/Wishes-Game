@@ -29,7 +29,7 @@ DistortionWorld_EventScript_Clarkson::
 	msgbox DistortionWorld_Text_GengarClarkson3, MSGBOX_DEFAULT
 	closemessage
 	hideportrait
-	givemon SPECIES_GENGAR, 40
+	givemon SPECIES_GENGAR, 40, shinyMode=SHINY_MODE_ALWAYS
 	compare VAR_RESULT, MON_CANT_GIVE
 	goto_if_eq DistortionWorld_EventScript_NoRoom
 	playfanfare MUS_OBTAIN_ITEM
