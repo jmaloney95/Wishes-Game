@@ -145,6 +145,7 @@
 #define FLDEFF_PAL_TAG_CAVE_DUST          0x1012
 #define FLDEFF_PAL_TAG_DUST_CLOUD         0x1013
 #define FLDEFF_PAL_TAG_ORAS_DOWSE         0x1014
+#define FLDEFF_PAL_TAG_DISTORTION_GRASS   0x1015
 #define FLDEFF_PAL_TAG_FIELD_MOVE_MON     0x8400
 
 // tile tags, for field effects that may have many copies on screen at once

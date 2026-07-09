@@ -466,3 +466,9 @@ const u16 gMetatileAttributes_Route224[] = INCBIN_U16("data/tilesets/secondary/r
 
 const u16 gMetatiles_Route224Primary[] = INCBIN_U16("data/tilesets/primary/route_224/metatiles.bin");
 const u16 gMetatileAttributes_Route224Primary[] = INCBIN_U16("data/tilesets/primary/route_224/metatile_attributes.bin");
+
+const u16 gMetatiles_LavaMap[] = INCBIN_U16("data/tilesets/secondary/lava_map/metatiles.bin");
+const u16 gMetatileAttributes_LavaMap[] = INCBIN_U16("data/tilesets/secondary/lava_map/metatile_attributes.bin");
+
+const u16 gMetatiles_DistortionWorld[] = INCBIN_U16("data/tilesets/secondary/distortion_world/metatiles.bin");
+const u16 gMetatileAttributes_DistortionWorld[] = INCBIN_U16("data/tilesets/secondary/distortion_world/metatile_attributes.bin");

@@ -73,6 +73,11 @@ static void QueueAnimTiles_MauvilleGym_ElectricGates(u16);
 static void QueueAnimTiles_SootopolisGym_Waterfalls(u16);
 static void QueueAnimTiles_EliteFour_GroundLights(u16);
 static void QueueAnimTiles_EliteFour_WallLights(u16);
+static void TilesetAnim_MtMoonVillageInterior(u16);
+static void QueueAnimTiles_MtMoonVillageInterior_Waterfall(u16);
+static void TilesetAnim_DistortionWorld(u16);
+static void QueueAnimTiles_DistortionWorld_Clouds(u16);
+static void QueueAnimTiles_DistortionWorld_Waterfall(u16);
 
 const u16 gTilesetAnims_General_Flower_Frame1[] = INCGFX_U16("data/tilesets/primary/general/anim/flower/1.png", ".4bpp");
 const u16 gTilesetAnims_General_Flower_Frame0[] = INCGFX_U16("data/tilesets/primary/general/anim/flower/0.png", ".4bpp");
@@ -135,6 +140,55 @@ const u16 *const gTilesetAnims_General_Waterfall[] = {
     gTilesetAnims_General_Waterfall_Frame1,
     gTilesetAnims_General_Waterfall_Frame2,
     gTilesetAnims_General_Waterfall_Frame3
+};
+
+const u16 gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame0[] = INCGFX_U16("data/tilesets/secondary/mt_moon_village_interior/anim/waterfall/0.png", ".4bpp");
+const u16 gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame1[] = INCGFX_U16("data/tilesets/secondary/mt_moon_village_interior/anim/waterfall/1.png", ".4bpp");
+const u16 gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame2[] = INCGFX_U16("data/tilesets/secondary/mt_moon_village_interior/anim/waterfall/2.png", ".4bpp");
+const u16 gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame3[] = INCGFX_U16("data/tilesets/secondary/mt_moon_village_interior/anim/waterfall/3.png", ".4bpp");
+
+const u16 *const gTilesetAnims_MtMoonVillageInterior_Waterfall[] = {
+    gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame0,
+    gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame1,
+    gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame2,
+    gTilesetAnims_MtMoonVillageInterior_Waterfall_Frame3
+};
+
+// Distortion World: slow diagonal drift of a blue nebula field. 8 frames of
+// 8 tiles (a 32x16 seamless super-tile) DMA'd over secondary tiles 0-7.
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame0[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/00.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame1[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/01.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame2[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/02.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame3[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/03.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame4[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/04.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame5[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/05.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame6[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/06.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Clouds_Frame7[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/clouds/07.png", ".4bpp");
+
+const u16 *const gTilesetAnims_DistortionWorld_Clouds[] = {
+    gTilesetAnims_DistortionWorld_Clouds_Frame0,
+    gTilesetAnims_DistortionWorld_Clouds_Frame1,
+    gTilesetAnims_DistortionWorld_Clouds_Frame2,
+    gTilesetAnims_DistortionWorld_Clouds_Frame3,
+    gTilesetAnims_DistortionWorld_Clouds_Frame4,
+    gTilesetAnims_DistortionWorld_Clouds_Frame5,
+    gTilesetAnims_DistortionWorld_Clouds_Frame6,
+    gTilesetAnims_DistortionWorld_Clouds_Frame7
+};
+
+// Distortion World waterfall: white cascade flowing down, DMA'd over secondary
+// tiles 502-509 (top layer of metatiles 904/905/906). Hand-authored frames,
+// added without recompiling the tileset.
+const u16 gTilesetAnims_DistortionWorld_Waterfall_Frame0[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/waterfall/00.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Waterfall_Frame1[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/waterfall/01.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Waterfall_Frame2[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/waterfall/02.png", ".4bpp");
+const u16 gTilesetAnims_DistortionWorld_Waterfall_Frame3[] = INCGFX_U16("data/tilesets/secondary/distortion_world/anim/waterfall/03.png", ".4bpp");
+
+const u16 *const gTilesetAnims_DistortionWorld_Waterfall[] = {
+    gTilesetAnims_DistortionWorld_Waterfall_Frame0,
+    gTilesetAnims_DistortionWorld_Waterfall_Frame1,
+    gTilesetAnims_DistortionWorld_Waterfall_Frame2,
+    gTilesetAnims_DistortionWorld_Waterfall_Frame3
 };
 
 const u16 gTilesetAnims_General_LandWaterEdge_Frame0[] = INCGFX_U16("data/tilesets/primary/general/anim/land_water_edge/0.png", ".4bpp");
@@ -671,6 +725,54 @@ static void QueueAnimTiles_General_Waterfall(u16 timer)
 {
     u16 i = timer % ARRAY_COUNT(gTilesetAnims_General_Waterfall);
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Waterfall[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(496)), 6 * TILE_SIZE_4BPP);
+}
+
+void InitTilesetAnim_MtMoonVillageInterior(void)
+{
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 256;
+    sSecondaryTilesetAnimCallback = TilesetAnim_MtMoonVillageInterior;
+}
+
+static void TilesetAnim_MtMoonVillageInterior(u16 timer)
+{
+    if (timer % 16 == 3)
+        QueueAnimTiles_MtMoonVillageInterior_Waterfall(timer / 16);
+}
+
+static void QueueAnimTiles_MtMoonVillageInterior_Waterfall(u16 timer)
+{
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_MtMoonVillageInterior_Waterfall);
+    AppendTilesetAnimToBuffer(gTilesetAnims_MtMoonVillageInterior_Waterfall[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 279)), 6 * TILE_SIZE_4BPP);
+}
+
+void InitTilesetAnim_DistortionWorld(void)
+{
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 96;   // 8 frames * 12-frame interval
+    sSecondaryTilesetAnimCallback = TilesetAnim_DistortionWorld;
+}
+
+static void TilesetAnim_DistortionWorld(u16 timer)
+{
+    if (timer % 12 == 5)
+        QueueAnimTiles_DistortionWorld_Clouds(timer / 12);
+    if (timer % 8 == 1)
+        QueueAnimTiles_DistortionWorld_Waterfall(timer / 8);
+}
+
+static void QueueAnimTiles_DistortionWorld_Clouds(u16 timer)
+{
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_DistortionWorld_Clouds);
+    // clouds occupy secondary tiles 0-7 -> VRAM base NUM_TILES_IN_PRIMARY + 0
+    AppendTilesetAnimToBuffer(gTilesetAnims_DistortionWorld_Clouds[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 0)), 8 * TILE_SIZE_4BPP);
+}
+
+static void QueueAnimTiles_DistortionWorld_Waterfall(u16 timer)
+{
+    u16 i = timer % ARRAY_COUNT(gTilesetAnims_DistortionWorld_Waterfall);
+    // waterfall cascade occupies secondary tiles 502-509
+    AppendTilesetAnimToBuffer(gTilesetAnims_DistortionWorld_Waterfall[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 502)), 8 * TILE_SIZE_4BPP);
 }
 
 void InitTilesetAnim_Petalburg(void)

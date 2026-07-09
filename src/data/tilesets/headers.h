@@ -1740,7 +1740,7 @@ const struct Tileset gTileset_MtMoonVillageInterior =
     .palettes = gTilesetPalettes_MtMoonVillageInterior,
     .metatiles = gMetatiles_MtMoonVillageInterior,
     .metatileAttributes = gMetatileAttributes_MtMoonVillageInterior,
-    .callback = NULL,
+    .callback = InitTilesetAnim_MtMoonVillageInterior,
 };
 
 const struct Tileset gTileset_Route224 =
@@ -1763,4 +1763,26 @@ const struct Tileset gTileset_Route224Primary =
     .metatiles = gMetatiles_Route224Primary,
     .metatileAttributes = gMetatileAttributes_Route224Primary,
     .callback = NULL,
+};
+
+const struct Tileset gTileset_LavaMap =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_LavaMap,
+    .palettes = gTilesetPalettes_LavaMap,
+    .metatiles = gMetatiles_LavaMap,
+    .metatileAttributes = gMetatileAttributes_LavaMap,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DistortionWorld =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DistortionWorld,
+    .palettes = gTilesetPalettes_DistortionWorld,
+    .metatiles = gMetatiles_DistortionWorld,
+    .metatileAttributes = gMetatileAttributes_DistortionWorld,
+    .callback = InitTilesetAnim_DistortionWorld,
 };
