@@ -1,10 +1,11 @@
 @ ============================================================================
-@  CATALPA BOW -- GENGAR FERRY (Act 2)
+@  CATALPA BOW -- GENGAR GHOST-ROADS (Act 2)
 @  After the Distortion World scene, using the Catalpa Bow anywhere in the
-@  field lets Gengar-Clarkson offer passage home to Munen Village -- now
-@  overrun by Team Mutrid. This is the ACT 2 POINT OF NO RETURN: the player
-@  is warned, can decline freely (train, finish the Tradewind gym), and can
-@  use the bow again later when ready.
+@  field opens Gengar-Clarkson's travel menu from the very first use:
+@  Clarkson's Lab or the Distortion World. There is deliberately NO direct
+@  ride to Munen Village -- occupied Munen is only reached by walking out of
+@  the lab, and the lab's exit gate holds until Draco is beaten and the
+@  research choice is made.
 @  Entry points are dispatched from ItemUseOutOfBattle_CatalpaBow
 @  (src/item_use.c): Ferry when Gengar is in the party, NoGengar otherwise.
 @ ============================================================================
@@ -14,16 +15,6 @@ EventScript_CatalpaBowGengarFerry::
 	playmoncry SPECIES_GENGAR, CRY_MODE_NORMAL
 	waitmoncry
 	setspeaker SP_NAME_GENGAR
-	goto_if_set FLAG_ACT2_CROSSED_TO_MUNEN, EventScript_CatalpaBowFerryAgain
-	msgbox Text_GengarFerryOfferFirst, MSGBOX_YESNO
-	compare VAR_RESULT, NO
-	goto_if_eq EventScript_CatalpaBowFerryDecline
-	setflag FLAG_ACT2_CROSSED_TO_MUNEN
-	goto EventScript_CatalpaBowFerryGo
-
-EventScript_CatalpaBowFerryAgain::
-	@ After the crossing the bow is repeatable fast travel: Clarkson's Lab
-	@ or back into the Distortion World.
 	msgbox Text_GengarTravelMenu, MSGBOX_DEFAULT
 	multichoice 0, 0, MULTI_CATALPA_DESTINATIONS, FALSE
 	switch VAR_RESULT
@@ -33,11 +24,15 @@ EventScript_CatalpaBowFerryAgain::
 	goto EventScript_CatalpaBowFerryDecline
 
 EventScript_CatalpaBowToLab::
+	setflag FLAG_ACT2_CROSSED_TO_MUNEN
 	closemessage
 	playse SE_WARP_IN
 	fadescreen FADE_TO_BLACK
 	delay 20
-	warp MAP_MUNEN_LAB_ACT2, 6, 11
+	@ Land one tile ABOVE the exit-gate trigger row (y=11): coord triggers only
+	@ fire on stepping onto a tile, so arriving on the row itself would let the
+	@ player slip out the door without the gate ever firing.
+	warp MAP_MUNEN_LAB_ACT2, 6, 10
 	waitstate
 	releaseall
 	end
@@ -48,22 +43,6 @@ EventScript_CatalpaBowToDistortion::
 	fadescreen FADE_TO_WHITE
 	delay 20
 	warp MAP_DISTORTION_WORLD, 15, 24
-	waitstate
-	releaseall
-	end
-
-EventScript_CatalpaBowFerryGo::
-	closemessage
-	playse SE_WARP_IN
-	fadescreen FADE_TO_BLACK
-	delay 20
-	setvar VAR_0x8004, 1  @ vertical pan
-	setvar VAR_0x8005, 1  @ horizontal pan
-	setvar VAR_0x8006, 6  @ num shakes
-	setvar VAR_0x8007, 4  @ shake delay
-	special ShakeCamera
-	waitstate
-	warp MAP_MUNEN_VILLAGE_ACT2, 9, 15
 	waitstate
 	releaseall
 	end
@@ -83,32 +62,6 @@ EventScript_CatalpaBowNoGengar::
 @ ============================================================================
 @  Text
 @ ============================================================================
-Text_GengarFerryOfferFirst::
-	.string "The bow hums -- and GENGAR pours\n"
-	.string "out of its Poke Ball like smoke.\p"
-	.string "“Thinking of home, {PLAYER}?\p"
-	.string "“The roads to Munen are cut. But\n"
-	.string "the dead were walking between\l"
-	.string "these mountains long before there\l"
-	.string "were roads.\p"
-	.string "“I can carry you there, the way\n"
-	.string "ghosts travel.\p"
-	.string "“But hear me first: Munen has\n"
-	.string "FALLEN. My son's people hold your\l"
-	.string "village.\p"
-	.string "“Once we cross, the way back is\n"
-	.string "THEIRS, not ours. Finish whatever\l"
-	.string "business you have out here --\l"
-	.string "training, that lantern gym --\l"
-	.string "BEFORE you say yes.\p"
-	.string "“Well? Shall we go home?”$"
-
-Text_GengarFerryOfferAgain::
-	.string "GENGAR pours out of its Poke Ball\n"
-	.string "like smoke.\p"
-	.string "“The ghost-road to Munen is open,\n"
-	.string "{PLAYER}. Shall we?”$"
-
 Text_GengarTravelMenu::
 	.string "GENGAR pours out of its Poke Ball\n"
 	.string "like smoke.\p"

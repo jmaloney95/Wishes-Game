@@ -144,13 +144,13 @@ MunenLabAct2_EventScript_DeskEmptyKept::
 	end
 
 @ --------------------------------------------------------------------------
-@  Exit gate: after Draco flees, Gengar won't let the player leave until the
-@  research choice is made. Trigger row at y=11 (in front of the y=12 warps),
-@  fires on VAR_TEMP_2 == 0 every step; inert before the battle and after the
-@  desk choice, so it can never re-arm on later visits. No new flags needed.
+@  Exit gate: Gengar won't let the player walk out into occupied Munen until
+@  the research choice is made -- and the desk is blocked until Draco is
+@  beaten, so the battle is mandatory before the village opens up. Trigger
+@  row at y=11 (in front of the y=12 warps), fires on VAR_TEMP_2 == 0 every
+@  step; inert once the research is resolved, so it never re-arms.
 @ --------------------------------------------------------------------------
 MunenLabAct2_EventScript_ExitGate::
-	goto_if_unset FLAG_ACT2_LAB_DRACO_FLED, MunenLabAct2_EventScript_ExitGateInert
 	goto_if_set FLAG_ACT2_RESEARCH_RESOLVED, MunenLabAct2_EventScript_ExitGateInert
 	lockall
 	setspeaker SP_NAME_GENGAR
