@@ -3,28 +3,87 @@ TradewindTown_MapScripts::
 
 @ ============================================================================
 @  B1 - Curio Merchant "Curios of the Crossing"
-@  Standard mart-style buy/sell menu. Curios cost 1000 apiece.
+@  One impossible thing at a time: the stall offers curio #N of 7
+@  (VAR_TRADEWIND_CURIO_STOCK) at 1,000 each. Buying one unlocks the next;
+@  each can only ever be bought once. At 7, the stall is sold out for good.
 @ ============================================================================
 Tradewind_EventScript_CurioMerchant::
 	lock
 	faceplayer
-	message Tradewind_Text_CurioGreeting
-	waitmessage
-	pokemart Tradewind_CurioMart
+	goto_if_eq VAR_TRADEWIND_CURIO_STOCK, 7, Tradewind_EventScript_CurioSoldOut
+	msgbox Tradewind_Text_CurioGreeting, MSGBOX_DEFAULT
+	switch VAR_TRADEWIND_CURIO_STOCK
+	case 0, Tradewind_EventScript_CurioOffer0
+	case 1, Tradewind_EventScript_CurioOffer1
+	case 2, Tradewind_EventScript_CurioOffer2
+	case 3, Tradewind_EventScript_CurioOffer3
+	case 4, Tradewind_EventScript_CurioOffer4
+	case 5, Tradewind_EventScript_CurioOffer5
+	case 6, Tradewind_EventScript_CurioOffer6
+	release
+	end
+
+Tradewind_EventScript_CurioOffer0::
+	setorcopyvar VAR_0x8008, ITEM_BOTTLED_WARMTH
+	goto Tradewind_EventScript_CurioOffer
+Tradewind_EventScript_CurioOffer1::
+	setorcopyvar VAR_0x8008, ITEM_BORROWED_YEARS
+	goto Tradewind_EventScript_CurioOffer
+Tradewind_EventScript_CurioOffer2::
+	setorcopyvar VAR_0x8008, ITEM_UNSPOKEN_LAST_WORDS
+	goto Tradewind_EventScript_CurioOffer
+Tradewind_EventScript_CurioOffer3::
+	setorcopyvar VAR_0x8008, ITEM_A_STRANGERS_NAME
+	goto Tradewind_EventScript_CurioOffer
+Tradewind_EventScript_CurioOffer4::
+	setorcopyvar VAR_0x8008, ITEM_FOLDED_GOODBYE
+	goto Tradewind_EventScript_CurioOffer
+Tradewind_EventScript_CurioOffer5::
+	setorcopyvar VAR_0x8008, ITEM_ONE_GOOD_DREAM
+	goto Tradewind_EventScript_CurioOffer
+Tradewind_EventScript_CurioOffer6::
+	setorcopyvar VAR_0x8008, ITEM_THE_LONG_WAY_HOME
+	goto Tradewind_EventScript_CurioOffer
+
+Tradewind_EventScript_CurioOffer::
+	bufferitemname STR_VAR_1, VAR_0x8008
+	showmoneybox 0, 0
+	msgbox Tradewind_Text_CurioOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Tradewind_EventScript_CurioDecline
+	checkmoney 1000
+	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioNoMoney
+	giveitem VAR_0x8008
+	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioNoRoom
+	removemoney 1000
+	updatemoneybox
+	addvar VAR_TRADEWIND_CURIO_STOCK, 1
+	msgbox Tradewind_Text_CurioBought, MSGBOX_DEFAULT
+	hidemoneybox
+	release
+	end
+
+Tradewind_EventScript_CurioDecline::
+	hidemoneybox
 	msgbox Tradewind_Text_CurioFarewell, MSGBOX_DEFAULT
 	release
 	end
 
-	.align 2
-Tradewind_CurioMart:
-	.2byte ITEM_BOTTLED_WARMTH
-	.2byte ITEM_BORROWED_YEARS
-	.2byte ITEM_UNSPOKEN_LAST_WORDS
-	.2byte ITEM_A_STRANGERS_NAME
-	.2byte ITEM_FOLDED_GOODBYE
-	.2byte ITEM_ONE_GOOD_DREAM
-	.2byte ITEM_THE_LONG_WAY_HOME
-	pokemartlistend
+Tradewind_EventScript_CurioNoMoney::
+	hidemoneybox
+	msgbox Tradewind_Text_CurioNoMoney, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_CurioNoRoom::
+	hidemoneybox
+	msgbox Tradewind_Text_CurioNoRoom, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_CurioSoldOut::
+	msgbox Tradewind_Text_CurioSoldOut, MSGBOX_DEFAULT
+	release
+	end
 
 @ ============================================================================
 @  B2 - The Pawnbroker of Bonds (Mega-stone exchange)
@@ -229,10 +288,40 @@ Tradewind_EventScript_MaskedMerchant::
 @  Text
 @ ============================================================================
 Tradewind_Text_CurioGreeting::
-	.string "Curios of the Crossing.\n"
-	.string "A thousand coin apiece.\p"
-	.string "Look over the cloth, take\n"
-	.string "what calls to you.$"
+	.string "Curios of the Crossing.\p"
+	.string "The cloth holds one impossible\n"
+	.string "thing at a time. Each finds only\l"
+	.string "one keeper. Ever.$"
+
+Tradewind_Text_CurioOffer::
+	.string "Today the cloth offers...\n"
+	.string "{STR_VAR_1}.\p"
+	.string "A thousand coin. One only.\n"
+	.string "Will you keep it?$"
+
+Tradewind_Text_CurioBought::
+	.string "It is yours to keep now.\p"
+	.string "Come back tomorrow-minded.\n"
+	.string "The cloth will hold something\l"
+	.string "new.$"
+
+Tradewind_Text_CurioNoMoney::
+	.string "The cloth does not haggle.\n"
+	.string "A thousand coin, or it waits.$"
+
+Tradewind_Text_CurioNoRoom::
+	.string "Your bag is full.\p"
+	.string "Impossible things still take up\n"
+	.string "room. Make some, then return.$"
+
+@ PLACEHOLDER (Joe): sold-out line once all seven curios are gone.
+Tradewind_Text_CurioSoldOut::
+	.string "The cloth lies bare.\p"
+	.string "Seven impossible things, seven\n"
+	.string "keepers. The crossing has nothing\l"
+	.string "left to sell you...\p"
+	.string "...except the advice to hold\n"
+	.string "tight to what you carry.$"
 
 Tradewind_Text_CurioFarewell::
 	.string "The crossing keeps its\n"
