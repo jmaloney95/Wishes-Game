@@ -95,7 +95,7 @@ NationalParkAct2_EventScript_BowDoCross::
 	delay 8
 	fadescreen FADE_TO_WHITE
 	delay 16
-	warp MAP_DISTORTION_WORLD, 4, 4
+	warp MAP_DISTORTION_WORLD, 15, 24
 	waitstate
 	releaseall
 	end
