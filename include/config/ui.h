@@ -12,7 +12,9 @@
 // instead of the vanilla vertical text list. Presentation only: the action
 // list, conditional entries, and every callback are untouched. FALSE restores
 // the vanilla menu.
-#define USE_GRAPHICAL_START_MENU TRUE
+// Disabled: the icon bar's 272-tile OBJ sheet load can starve the dynamic
+// overworld sprite allocator, garbling the player sprite (rapid facing flicker).
+#define USE_GRAPHICAL_START_MENU FALSE
 
 // Non-blocking quest toast: startquest/completequest slide a corner popup in
 // and out (no A press, player keeps moving) instead of the blocking message
