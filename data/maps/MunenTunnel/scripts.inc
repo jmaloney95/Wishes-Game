@@ -23,8 +23,43 @@ MunenTunnel_EventScript_ItemTMShadowBall::
 	finditem ITEM_TM30
 	end
 
+@ The mask stays out of reach while General Edwards holds the chamber.
 MunenTunnel_EventScript_ItemCarvedMask::
+	goto_if_unset FLAG_POMPEII_GENERAL_RETREATED, MunenTunnel_EventScript_MaskGuarded
 	finditem ITEM_CARVED_MASK
+	end
+
+MunenTunnel_EventScript_MaskGuarded::
+	msgbox MunenTunnel_Text_MaskGuarded, MSGBOX_SIGN
+	end
+
+@ --------------------------------------------------------------------------
+@  The tunnel gauntlet -- Master Gen's quest. Two goons hold the halls and
+@  GENERAL EDWARDS holds the mask chamber. Basic teams, Lv16-20.
+@ --------------------------------------------------------------------------
+MunenTunnel_EventScript_GoonA::
+	trainerbattle_single TRAINER_TUNNEL_GOON_A, MunenTunnel_Text_GoonAIntro, MunenTunnel_Text_GoonADefeat
+	msgbox MunenTunnel_Text_GoonAPost, MSGBOX_AUTOCLOSE
+	end
+
+MunenTunnel_EventScript_GoonB::
+	trainerbattle_single TRAINER_TUNNEL_GOON_B, MunenTunnel_Text_GoonBIntro, MunenTunnel_Text_GoonBDefeat
+	msgbox MunenTunnel_Text_GoonBPost, MSGBOX_AUTOCLOSE
+	end
+
+MunenTunnel_EventScript_General::
+	trainerbattle_single TRAINER_GENERAL_EDWARDS, MunenTunnel_Text_GeneralIntro, MunenTunnel_Text_GeneralDefeat, MunenTunnel_EventScript_GeneralRetreat
+	end
+
+MunenTunnel_EventScript_GeneralRetreat::
+	lockall
+	setspeaker SP_NAME_COLONEL_EDWARDS
+	msgbox MunenTunnel_Text_GeneralRetreat, MSGBOX_DEFAULT
+	closemessage
+	playse SE_EXIT
+	removeobject VAR_LAST_TALKED
+	setflag FLAG_POMPEII_GENERAL_RETREATED
+	releaseall
 	end
 
 @ --------------------------------------------------------------------------
@@ -102,6 +137,57 @@ MunenTunnel_Text_Dusclops::
 	.string "then drifts back into the dark.\p"
 	.string "It seems to be keeping watch over\n"
 	.string "something. Or someone.$"
+
+MunenTunnel_Text_MaskGuarded::
+	.string "A carved mask lies in the dust --\p"
+	.string "but the GENERAL's boot is planted\n"
+	.string "an inch from it, and his eyes are\l"
+	.string "planted on you.$"
+
+MunenTunnel_Text_GoonAIntro::
+	.string "Oi! The tomb's closed for the\n"
+	.string "rite. Turn around.\p"
+	.string "...You're not turning around.$"
+
+MunenTunnel_Text_GoonADefeat::
+	.string "The GENERAL's gonna have my mask\n"
+	.string "for this...$"
+
+MunenTunnel_Text_GoonAPost::
+	.string "Go on then. The deeper halls are\n"
+	.string "the GENERAL's problem, not mine.$"
+
+MunenTunnel_Text_GoonBIntro::
+	.string "You beat the gate guard? Ha.\p"
+	.string "He was the WEAK one.$"
+
+MunenTunnel_Text_GoonBDefeat::
+	.string "Fine, fine! So was I!$"
+
+MunenTunnel_Text_GoonBPost::
+	.string "The GENERAL doesn't lose. He'll\n"
+	.string "plant you with the rest of the\l"
+	.string "tomb's residents.$"
+
+MunenTunnel_Text_GeneralIntro::
+	.string "Hold.\p"
+	.string "GENERAL EDWARDS. I hold this tomb\n"
+	.string "until the rite above is done.\p"
+	.string "Two of mine, beaten by a child\n"
+	.string "playing archaeologist.\p"
+	.string "The apprentice's little mask?\n"
+	.string "It stays in the dirt where he\l"
+	.string "threw it -- and so will you.$"
+
+MunenTunnel_Text_GeneralDefeat::
+	.string "...Company -- withdraw.$"
+
+MunenTunnel_Text_GeneralRetreat::
+	.string "A tomb is a poor hill to die on.\p"
+	.string "Take the dead man's toy, then.\n"
+	.string "The mountain above is already\l"
+	.string "ours -- and the mountain does not\l"
+	.string "withdraw.$"
 
 MunenTunnel_Text_GruntIntro::
 	.string "Hm? A villager?\p"

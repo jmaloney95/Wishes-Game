@@ -2527,5 +2527,7 @@
 #define FLAG_ACT3_STARTED                       FLAG_UNUSED_0x27C // took the seat; the Shinkansen departed -- ACT III: COOKED
 #define FLAG_ITEM_DISTORTION_WORLD_RARE_CANDY   FLAG_UNUSED_0x27E // item ball among the kept things (23,22)
 #define FLAG_MELTING_MILE_PIKACHU_JOINED        FLAG_UNUSED_0x27F // the trail Pikachu joined the party (secret starter, Lv8)
+#define FLAG_POMPEII_TUNNEL_ROCK_CLEARED        FLAG_UNUSED_0x280 // Master Gen had the tunnel-mouth slab cleared (quest start)
+#define FLAG_POMPEII_GENERAL_RETREATED          FLAG_UNUSED_0x281 // General Edwards beaten; he abandons the mask chamber
 
 #endif // GUARD_CONSTANTS_FLAGS_H

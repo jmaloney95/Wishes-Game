@@ -538,6 +538,7 @@ enum TrainerClassID
     // (displays "???"); Act 2 goons use MUTRID (displays "Mutrid").
     TRAINER_CLASS_TEAM_MUTRID,
     TRAINER_CLASS_MUTRID,
+    TRAINER_CLASS_GENERAL,
 
     TRAINER_CLASS_COUNT,
 };

@@ -263,6 +263,20 @@ NewMap_EventScript_MarketSign::
 	msgbox NewMap_Text_MarketSign, MSGBOX_SIGN
 	end
 
+@ The slab over the Munen Tunnel mouth. Master Gen has it rolled aside when
+@ he gives the Save Face quest (FLAG_POMPEII_TUNNEL_ROCK_CLEARED hides it).
+NewMap_EventScript_TunnelRock::
+	msgbox NewMap_Text_TunnelRock, MSGBOX_SIGN
+	end
+
+NewMap_Text_TunnelRock::
+	.string "A great stone slab seals the old\n"
+	.string "tunnel mouth. It would take half\l"
+	.string "the village to move it.\p"
+	.string "Fresh chisel marks ring its edge --\n"
+	.string "the MASK-MAKER's work, by the look\l"
+	.string "of the cuts.$"
+
 NewMap_Text_LanternLighter::
 	.string "Every lantern lit before full dark,\n"
 	.string "that's the rule. Every single one.\p"

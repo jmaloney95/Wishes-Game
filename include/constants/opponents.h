@@ -909,6 +909,11 @@
 #define TRAINER_SENNEN_CAPTAIN_KANNON       885
 #define TRAINER_SENNEN_CAPTAIN_RYOKO        886
 
+// Pompeii / Munen Tunnel gauntlet -- Master Gen's quest (Flint Badge)
+#define TRAINER_TUNNEL_GOON_A               887
+#define TRAINER_TUNNEL_GOON_B               888
+#define TRAINER_GENERAL_EDWARDS             889
+
 // NOTE: Each trainer auto-uses a defeat flag at TRAINER_FLAGS_START + id; SYSTEM_FLAGS and
 //       FLAGS_COUNT are all relative to MAX_TRAINERS_COUNT, so raising MAX shifts them up
 //       automatically. Cost: NUM_FLAG_BYTES grows in SaveBlock1 (STATIC_ASSERT in save.c
@@ -918,9 +923,9 @@
 //
 //       >>> ADDING A TRAINER? Take the next sequential ID below, bump TRAINERS_COUNT_EMERALD
 //       >>> to (highest id + 1), and do NOT raise MAX again until count reaches 896.
-//       >>> Next free ID: 887.
+//       >>> Next free ID: 890.
 
-#define TRAINERS_COUNT_EMERALD     887
+#define TRAINERS_COUNT_EMERALD     890
 #define MAX_TRAINERS_COUNT_EMERALD 896
 
 #if IS_FRLG

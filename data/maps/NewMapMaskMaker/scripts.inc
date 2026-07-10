@@ -31,6 +31,9 @@ NewMapMaskMaker_EventScript_Gen::
 	goto_if_set FLAG_NEWMAP_TUNNEL_RUMOR, NewMapMaskMaker_EventScript_GenReminder
 	msgbox NewMapMaskMaker_Text_GenIntro, MSGBOX_DEFAULT
 	setflag FLAG_NEWMAP_TUNNEL_RUMOR
+	@ Gen has the slab hauled off the tunnel mouth (the rock object in town
+	@ hides once this is set).
+	setflag FLAG_POMPEII_TUNNEL_ROCK_CLEARED
 	startquest SIDE_QUEST_SAVE_FACE
 	release
 	end
@@ -42,7 +45,12 @@ NewMapMaskMaker_EventScript_GenReminder::
 
 NewMapMaskMaker_EventScript_GenMaskFound::
 	msgbox NewMapMaskMaker_Text_GenMaskFound, MSGBOX_DEFAULT
-	giveitem ITEM_DUSK_BALL, 5
+	playfanfare MUS_OBTAIN_BADGE
+	message NewMapMaskMaker_Text_ReceivedFlintBadge
+	waitmessage
+	waitfanfare
+	setflag FLAG_BADGE03_GET
+	msgbox NewMapMaskMaker_Text_GenBadgeWords, MSGBOX_DEFAULT
 	msgbox NewMapMaskMaker_Text_GenKeepIt, MSGBOX_DEFAULT
 	setflag FLAG_NEWMAP_MASK_RETURNED
 	setflag FLAG_NEWMAP_APPRENTICE_DOOR_OPEN
@@ -91,7 +99,13 @@ NewMapMaskMaker_Text_GenIntro::
 	.string "climbed. The sealed one.\p"
 	.string "I'm too old for tombs. If anything\n"
 	.string "of my boy is still down there...\l"
-	.string "would you bring it to me?$"
+	.string "would you bring it to me?\p"
+	.string "The village keeps a slab over the\n"
+	.string "tunnel mouth so nothing wanders\l"
+	.string "out. Or in.\p"
+	.string "I'll have it rolled aside before\n"
+	.string "you reach it. Go carefully --\l"
+	.string "THEY left more than footprints.$"
 
 NewMapMaskMaker_Text_GenReminder::
 	.string "The old tomb tunnel, west side of\n"
@@ -112,8 +126,26 @@ NewMapMaskMaker_Text_GenMaskFound::
 	.string "and climbed in one of THEIRS.\p"
 	.string "...Then he means to pass the Summit\n"
 	.string "Gate as one of the dead.\p"
-	.string "Take these. I've no use for them,\n"
-	.string "and you're clearly going up.$"
+	.string "You fought your way past that\n"
+	.string "self-styled GENERAL for this.\p"
+	.string "Then you've earned what I've kept\n"
+	.string "in the workbench drawer forty\l"
+	.string "years.$"
+
+NewMapMaskMaker_Text_ReceivedFlintBadge::
+	.string "{PLAYER} received the FLINT BADGE\n"
+	.string "from MASTER GEN!$"
+
+NewMapMaskMaker_Text_GenBadgeWords::
+	.string "The FLINT BADGE. From my league\n"
+	.string "days, before these hands turned\l"
+	.string "to carving.\p"
+	.string "It carries the league's writ:\n"
+	.string "POKEMON that know ROCK SMASH may\l"
+	.string "use it in the field.\p"
+	.string "The path up the mountain is\n"
+	.string "choked with rubble. You'll need\l"
+	.string "it.$"
 
 NewMapMaskMaker_Text_GenKeepIt::
 	.string "And keep the mask. I mean it.\p"
