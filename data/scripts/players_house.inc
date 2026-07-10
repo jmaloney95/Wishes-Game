@@ -1,3 +1,11 @@
+@ Wishes of Tomorrow: the moving-in cutscene NPCs (the 2F Mom and 1F Dad)
+@ were removed from the Littleroot house maps, so their generated LOCALIDs
+@ no longer exist. These stubs keep the vanilla intro paths below compiling;
+@ the out-of-range ids make any leftover applymovement a harmless no-op
+@ instead of animating whichever NPC inherited the old slot number.
+	.equ LOCALID_PLAYERS_HOUSE_2F_MOM, 0xEE
+	.equ LOCALID_PLAYERS_HOUSE_1F_DAD, 0xEF
+
 PlayersHouse_2F_EventScript_BlockStairsUntilClockIsSet::
 	setvar VAR_LITTLEROOT_INTRO_STATE, 5
 	return
