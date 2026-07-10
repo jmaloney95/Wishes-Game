@@ -13,6 +13,12 @@ Route_2_2_OnResume::
 @ ===========================================================================
 Route_2_2_EventScript_ParkGuide::
 	lockall
+	@ Keep the follower Pokemon out of the camera choreography: without this,
+	@ every applymovement on the camera also force-hides the follower and every
+	@ `waitmovement 0` waits on the follower's enter-ball movement too -- which
+	@ can hang the script (permanent black screen / stuck controls) at the end
+	@ of the tour. Same guard the engine's std sign scripts use.
+	setflag FLAG_SAFE_FOLLOWER_MOVEMENT
 	faceplayer
 	goto_if_set FLAG_NATIONAL_PARK_TOUR_DONE, Route_2_2_EventScript_ParkGuideAgain
 	msgbox Route_2_2_Text_GuideWelcome, MSGBOX_DEFAULT
@@ -52,12 +58,14 @@ Route_2_2_EventScript_ParkGuide::
 	special RemoveCameraObject
 	fadescreen FADE_FROM_BLACK
 	setflag FLAG_NATIONAL_PARK_TOUR_DONE
+	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
 	releaseall
 	end
 
 @ After the first tour she just gives a short greeting (no camera demo).
 Route_2_2_EventScript_ParkGuideAgain::
 	msgbox Route_2_2_Text_GuideAgain, MSGBOX_DEFAULT
+	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
 	releaseall
 	end
 
@@ -82,7 +90,13 @@ Route_2_2_Movement_CamToShot1:        @ 29,66 -> 25,54  (west 4, north 12)
 	walk_faster_up
 	step_end
 
-Route_2_2_Movement_PanEast:           @ 25,54 -> 35,54  (east 10)
+Route_2_2_Movement_PanEast:           @ 25,54 -> 41,54  (east 16)
+	walk_slow_right
+	walk_slow_right
+	walk_slow_right
+	walk_slow_right
+	walk_slow_right
+	walk_slow_right
 	walk_slow_right
 	walk_slow_right
 	walk_slow_right
@@ -95,13 +109,7 @@ Route_2_2_Movement_PanEast:           @ 25,54 -> 35,54  (east 10)
 	walk_slow_right
 	step_end
 
-Route_2_2_Movement_CamToShot2:        @ 35,54 -> 51,51  (east 16, north 3)
-	walk_faster_right
-	walk_faster_right
-	walk_faster_right
-	walk_faster_right
-	walk_faster_right
-	walk_faster_right
+Route_2_2_Movement_CamToShot2:        @ 41,54 -> 51,51  (east 10, north 3)
 	walk_faster_right
 	walk_faster_right
 	walk_faster_right
@@ -117,7 +125,15 @@ Route_2_2_Movement_CamToShot2:        @ 35,54 -> 51,51  (east 16, north 3)
 	walk_faster_up
 	step_end
 
-Route_2_2_Movement_PanSouth:          @ 51,51 -> 51,61  (south 10)
+Route_2_2_Movement_PanSouth:          @ 51,51 -> 51,69  (south 18)
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
 	walk_slow_down
 	walk_slow_down
 	walk_slow_down
@@ -130,11 +146,19 @@ Route_2_2_Movement_PanSouth:          @ 51,51 -> 51,61  (south 10)
 	walk_slow_down
 	step_end
 
-Route_2_2_Movement_CamToShot3:        @ 51,61 -> 47,19  (west 4, north 42)
+Route_2_2_Movement_CamToShot3:        @ 51,69 -> 47,19  (west 4, north 50)
 	walk_faster_left
 	walk_faster_left
 	walk_faster_left
 	walk_faster_left
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
 	walk_faster_up
 	walk_faster_up
 	walk_faster_up
@@ -356,9 +380,10 @@ Route_2_2_EventScript_Wingull::
 	end
 
 Route_2_2_EventScript_Psyduck::
+Route_2_2_EventScript_Sandile::
 	lock
 	faceplayer
-	msgbox Route_2_2_Text_Psyduck, MSGBOX_DEFAULT
+	msgbox Route_2_2_Text_Sandile, MSGBOX_DEFAULT
 	release
 	end
 
@@ -510,9 +535,9 @@ Route_2_2_Text_Wingull:
 	.string "A WINGULL wheels overhead, riding\n"
 	.string "the sea breeze.$"
 
-Route_2_2_Text_Psyduck:
-	.string "A PSYDUCK stares blankly at the\n"
-	.string "waves, holding its head.$"
+Route_2_2_Text_Sandile:
+	.string "A SANDILE lazes in the warm sand,\n"
+	.string "eyes just above the surface.$"
 
 @ ===========================================================================
 @ Added beachgoer trainers (Eddie, Finn) + Metal Coat trade NPC
@@ -527,19 +552,17 @@ Route_2_2_EventScript_SwimmerFinn::
 	msgbox Route_2_2_Text_FinnPost, MSGBOX_AUTOCLOSE
 	end
 
+@ Repeatable: he takes any Scyther brought to him, every time. The starter is
+@ given BEFORE the Scyther is taken so a full party+boxes can never eat the
+@ player's Scyther without a reward.
 Route_2_2_EventScript_MetalCoatGuy::
 	lock
 	faceplayer
-	goto_if_set FLAG_NATIONAL_PARK_METAL_COAT_DONE, Route_2_2_EventScript_MetalCoatDone
 	msgbox Route_2_2_Text_MetalCoatIntro, MSGBOX_YESNO
 	compare VAR_RESULT, NO
 	goto_if_eq Route_2_2_EventScript_MetalCoatDecline
 	setvar VAR_0x8004, SPECIES_SCYTHER
 	specialvar VAR_RESULT, DoesPlayerPartyContainSpecies
-	compare VAR_RESULT, FALSE
-	goto_if_eq Route_2_2_EventScript_MetalCoatNoScyther
-	setvar VAR_0x8004, SPECIES_SCYTHER
-	special TakeFirstMonOfSpecies
 	compare VAR_RESULT, FALSE
 	goto_if_eq Route_2_2_EventScript_MetalCoatNoScyther
 	random 3
@@ -551,23 +574,40 @@ Route_2_2_EventScript_MetalCoatGuy::
 
 Route_2_2_EventScript_MetalCoatBulbasaur::
 	givemon SPECIES_BULBASAUR, 5
+	compare VAR_RESULT, MON_CANT_GIVE
+	goto_if_eq Route_2_2_EventScript_MetalCoatNoRoom
 	bufferspeciesname STR_VAR_1, SPECIES_BULBASAUR
 	goto Route_2_2_EventScript_MetalCoatGrant
 
 Route_2_2_EventScript_MetalCoatCharmander::
 	givemon SPECIES_CHARMANDER, 5
+	compare VAR_RESULT, MON_CANT_GIVE
+	goto_if_eq Route_2_2_EventScript_MetalCoatNoRoom
 	bufferspeciesname STR_VAR_1, SPECIES_CHARMANDER
 	goto Route_2_2_EventScript_MetalCoatGrant
 
 Route_2_2_EventScript_MetalCoatSquirtle::
 	givemon SPECIES_SQUIRTLE, 5
+	compare VAR_RESULT, MON_CANT_GIVE
+	goto_if_eq Route_2_2_EventScript_MetalCoatNoRoom
 	bufferspeciesname STR_VAR_1, SPECIES_SQUIRTLE
 	goto Route_2_2_EventScript_MetalCoatGrant
 
 Route_2_2_EventScript_MetalCoatGrant::
-	setflag FLAG_NATIONAL_PARK_METAL_COAT_DONE
+	setvar VAR_0x8004, SPECIES_SCYTHER
+	special TakeFirstMonOfSpecies
 	msgbox Route_2_2_Text_MetalCoatThanks, MSGBOX_DEFAULT
+	questmenu QUEST_MENU_CHECK_COMPLETE, SIDE_QUEST_HEAVY_METAL
+	call_if_eq VAR_RESULT, FALSE, Route_2_2_EventScript_CompleteHeavyMetalQuest
+	release
+	end
+
+Route_2_2_EventScript_CompleteHeavyMetalQuest::
 	completequest SIDE_QUEST_HEAVY_METAL
+	return
+
+Route_2_2_EventScript_MetalCoatNoRoom::
+	msgbox Route_2_2_Text_MetalCoatNoRoom, MSGBOX_DEFAULT
 	release
 	end
 
@@ -638,6 +678,12 @@ Route_2_2_Text_MetalCoatThanks:
 	.string "thanks - it's a surprise who!\p"
 	.string "You received a {STR_VAR_1}!$"
 
+Route_2_2_Text_MetalCoatNoRoom:
+	.string "Whoa, whoa - your party and boxes\n"
+	.string "are stuffed full!\p"
+	.string "Make room for my thank-you gift,\n"
+	.string "then come find me again.$"
+
 Route_2_2_Text_MetalCoatAfter:
 	.string "That SCYTHER and my METAL COAT\n"
 	.string "are gonna be great pals. Thanks!$"
@@ -682,6 +728,26 @@ Route_2_2_Text_CutTutorShortcut:
 Route_2_2_Text_CutTutorAfter:
 	.string "Cut that tree down for a quick\n"
 	.string "shortcut to WALNUT WOODS.$"
+
+@ ===========================================================================
+@ Trail signs - the north path out of the park climbs to Mount Munen
+@ ===========================================================================
+Route_2_2_EventScript_MountMunenSign1::
+	msgbox Route_2_2_Text_MountMunenSign1, MSGBOX_SIGN
+	end
+
+Route_2_2_EventScript_MountMunenSign2::
+	msgbox Route_2_2_Text_MountMunenSign2, MSGBOX_SIGN
+	end
+
+Route_2_2_Text_MountMunenSign1:
+	.string "NATIONAL PARK TRAILHEAD\p"
+	.string "{UP_ARROW} NORTH: MOUNT MUNEN\n"
+	.string "Steep path. Dress warm.$"
+
+Route_2_2_Text_MountMunenSign2:
+	.string "{UP_ARROW} NORTH: MOUNT MUNEN\n"
+	.string "MUNEN VILLAGE via the mountain trail$"
 
 @ ===========================================================================
 @ Gravesite - foreshadows the summit now; hidden Prof. Clarkson note after flag

@@ -29,14 +29,14 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
-      "x": 36,
+      "x": 39,
       "y": 41,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_TM_EARTHQUAKE",
+      "trainer_sight_or_berry_tree_id": "ITEM_TM_HYPER_BEAM",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_ITEM_NATIONAL_PARK_TM_EARTHQUAKE"
     },
@@ -223,7 +223,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PSYDUCK)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SANDILE)",
       "x": 50,
       "y": 54,
       "elevation": 3,
@@ -262,7 +262,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MISTY",
+      "graphics_id": "OBJ_EVENT_GFX_SCOTT",
       "x": 34,
       "y": 84,
       "elevation": 3,
@@ -285,6 +285,32 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "Route_2_2_EventScript_CutTutor",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PORYGON)",
+      "x": 47,
+      "y": 55,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Porygon",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BLISSEY)",
+      "x": 47,
+      "y": 56,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Blissey",
       "flag": "0"
     }
   ],
@@ -370,6 +396,22 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Route_2_2_EventScript_Gravesite"
+    },
+    {
+      "type": "sign",
+      "x": 36,
+      "y": 37,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Route_2_2_EventScript_MountMunenSign1"
+    },
+    {
+      "type": "sign",
+      "x": 54,
+      "y": 28,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Route_2_2_EventScript_MountMunenSign2"
     }
   ]
 }
