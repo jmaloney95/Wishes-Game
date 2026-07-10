@@ -1824,10 +1824,22 @@ u16 LoadSheetGraphicsInfo(const struct ObjectEventGraphicsInfo *info, u16 uuid, 
 
         if (sprite)
         {
-            sprite->sheetTileStart = tileStart;
             sprite->sheetSpan = sheetSpan;
             sprite->usingSheet = TRUE;
-            sprite->invisible = oldInvisible;
+            if (tileStart == 0)
+            {
+                // Both load attempts failed (OBJ VRAM pressure). Keep the
+                // sprite hidden until a later refresh succeeds -- assigning
+                // tileStart 0 would draw it with the PLAYER's tiles (start of
+                // OBJ VRAM) for a frame, which reads as a flickering clone.
+                sprite->sheetTileStart = 0;
+                sprite->invisible = TRUE;
+            }
+            else
+            {
+                sprite->sheetTileStart = tileStart;
+                sprite->invisible = oldInvisible;
+            }
         }
     // Going from sheet -> !sheet, reset tile number
     // (sheet stays loaded)
