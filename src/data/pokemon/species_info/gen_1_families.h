@@ -11405,6 +11405,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .isSkyBattleBanned = B_SKY_BATTLE_STRICT_ELIGIBILITY,
         .levelUpLearnset = sDodrioLevelUpLearnset,
         .teachableLearnset = sDodrioTeachableLearnset,
+        .formSpeciesIdTable = sDodrioFormSpeciesIdTable,
     },
 #endif //P_FAMILY_DODUO
 

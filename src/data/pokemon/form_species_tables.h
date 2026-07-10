@@ -2569,3 +2569,20 @@ static const u16 sTerapagosFormSpeciesIdTable[] = {
     FORM_SPECIES_END,
 };
 #endif //P_FAMILY_TERAPAGOS
+
+// Wishes of Tomorrow custom forms
+#if P_FAMILY_DODUO
+static const u16 sDodrioFormSpeciesIdTable[] = {
+    SPECIES_DODRIO,
+    SPECIES_DODRIO_DELTA,
+    FORM_SPECIES_END,
+};
+#endif //P_FAMILY_DODUO
+
+#if P_FAMILY_JIRACHI
+static const u16 sJirachiFormSpeciesIdTable[] = {
+    SPECIES_JIRACHI,
+    SPECIES_JIRACHI_SHADOW,
+    FORM_SPECIES_END,
+};
+#endif //P_FAMILY_JIRACHI

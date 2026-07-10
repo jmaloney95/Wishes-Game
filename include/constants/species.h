@@ -1688,10 +1688,17 @@
 #define SPECIES_TATSUGIRI_STRETCHY_MEGA                 1571
 #define SPECIES_GLIMMORA_MEGA                           1572
 
-// Wishes of Tomorrow custom forms
+// Wishes of Tomorrow custom forms and species
 #define SPECIES_MEWTWO_ARMORED                          1573
+#define SPECIES_BROWT                                   1574
+#define SPECIES_GECQUA                                  1575
+#define SPECIES_POMBON                                  1576
+#define SPECIES_HELLRAISER                              1577
+#define SPECIES_WOT_GHOST                               1578
+#define SPECIES_DODRIO_DELTA                            1579
+#define SPECIES_JIRACHI_SHADOW                          1580
 
-#define SPECIES_EGG                                     (SPECIES_MEWTWO_ARMORED + 1)
+#define SPECIES_EGG                                     (SPECIES_JIRACHI_SHADOW + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 
