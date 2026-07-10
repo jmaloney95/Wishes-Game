@@ -117,7 +117,7 @@ Munen_village_2_EventScript_IceTyrunt::
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 1
 	setvar VAR_STARTER_MON, 0
-	givemon SPECIES_PAWNIARD, 5
+	givemon SPECIES_PAWNIARD, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_METAL_CLAW, move4=MOVE_BITE
 	bufferspeciesname STR_VAR_1, SPECIES_PAWNIARD
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -129,7 +129,7 @@ Munen_village_2_EventScript_IceAmaura::
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 2
 	setvar VAR_STARTER_MON, 1
-	givemon SPECIES_IMPIDIMP, 5
+	givemon SPECIES_IMPIDIMP, 5, move1=MOVE_FAKE_OUT, move2=MOVE_LEER, move3=MOVE_FAIRY_WIND, move4=MOVE_BITE
 	bufferspeciesname STR_VAR_1, SPECIES_IMPIDIMP
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -141,7 +141,7 @@ Munen_village_2_EventScript_IceAnorith::
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 3
 	setvar VAR_STARTER_MON, 2
-	givemon SPECIES_DEINO, 5
+	givemon SPECIES_DEINO, 5, move1=MOVE_TACKLE, move2=MOVE_FOCUS_ENERGY, move3=MOVE_DRAGON_BREATH, move4=MOVE_BITE
 	bufferspeciesname STR_VAR_1, SPECIES_DEINO
 	goto Munen_village_2_EventScript_StarterReceived
 
