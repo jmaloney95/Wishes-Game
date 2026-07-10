@@ -113,6 +113,38 @@ DistortionWorld_EventScript_KeptThings::
 	msgbox DistortionWorld_Text_KeptThings, MSGBOX_SIGN
 	end
 
+@ ----------------------------------------------------------------------------
+@  Floating-rock crossing at x25: lower island (y13) <-> rock (y10) <-> cave
+@  island (y7). The gaps are 2 tiles, beyond a vanilla ledge hop, so facing
+@  the gap and pressing A skips the player across in two quick arcs
+@  (bg_events at (25,8/9/11/12) gate on facing direction).
+@ ----------------------------------------------------------------------------
+DistortionWorld_EventScript_HopNorth::
+	lockall
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionWorld_Movement_HopNorth
+	waitmovement 0
+	releaseall
+	end
+
+DistortionWorld_EventScript_HopSouth::
+	lockall
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionWorld_Movement_HopSouth
+	waitmovement 0
+	releaseall
+	end
+
+DistortionWorld_Movement_HopNorth:
+	jump_2_up
+	jump_up
+	step_end
+
+DistortionWorld_Movement_HopSouth:
+	jump_2_down
+	jump_down
+	step_end
+
 @ ============================================================================
 @  Text
 @ ============================================================================
