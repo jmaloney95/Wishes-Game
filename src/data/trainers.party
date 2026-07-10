@@ -16891,7 +16891,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Amaura
+Deino
 Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
@@ -16904,7 +16904,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Anorith
+Pawniard
 Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
@@ -16917,7 +16917,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Tyrunt
+Impidimp
 Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
@@ -17116,7 +17116,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Aurorus
+Zweilous
 Level: 21
 
 Golbat
@@ -17134,7 +17134,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Armaldo
+Bisharp
 Level: 21
 
 Golbat
@@ -17152,7 +17152,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Tyrantrum
+Morgrem
 Level: 21
 
 Golbat
@@ -17338,7 +17338,7 @@ Level: 38
 Sneasel
 Level: 38
 
-Aurorus
+Hydreigon
 Level: 40
 
 === TRAINER_DRACO_LAB_ARMALDO ===
@@ -17356,7 +17356,7 @@ Level: 38
 Sneasel
 Level: 38
 
-Armaldo
+Kingambit
 Level: 40
 
 === TRAINER_DRACO_LAB_TYRANTRUM ===
@@ -17374,7 +17374,7 @@ Level: 38
 Sneasel
 Level: 38
 
-Tyrantrum
+Grimmsnarl
 Level: 40
 
 === TRAINER_SENNEN_CAPTAIN_KANNON ===

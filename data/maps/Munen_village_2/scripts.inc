@@ -116,8 +116,9 @@ Munen_village_2_EventScript_IceTyrunt::
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 1
-	givemon SPECIES_TYRUNT, 5
-	bufferspeciesname STR_VAR_1, SPECIES_TYRUNT
+	setvar VAR_STARTER_MON, 0
+	givemon SPECIES_PAWNIARD, 5
+	bufferspeciesname STR_VAR_1, SPECIES_PAWNIARD
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_IceAmaura::
@@ -127,8 +128,9 @@ Munen_village_2_EventScript_IceAmaura::
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 2
-	givemon SPECIES_AMAURA, 5
-	bufferspeciesname STR_VAR_1, SPECIES_AMAURA
+	setvar VAR_STARTER_MON, 1
+	givemon SPECIES_IMPIDIMP, 5
+	bufferspeciesname STR_VAR_1, SPECIES_IMPIDIMP
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_IceAnorith::
@@ -138,8 +140,9 @@ Munen_village_2_EventScript_IceAnorith::
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 3
-	givemon SPECIES_ANORITH, 5
-	bufferspeciesname STR_VAR_1, SPECIES_ANORITH
+	setvar VAR_STARTER_MON, 2
+	givemon SPECIES_DEINO, 5
+	bufferspeciesname STR_VAR_1, SPECIES_DEINO
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_StarterRefuse::
@@ -426,17 +429,17 @@ Munen_village_2_EventScript_HaruIntro::
 	@ Fallback (shouldn't be reachable) -- skip battle, go to farewell.
 	goto Munen_village_2_EventScript_HaruAfterBattle
 
-@ Player chose Tyrunt -> Haru fights with Amaura.
+@ Player chose Pawniard -> Haru fights with Deino.
 Munen_village_2_EventScript_HaruBattleVsTyrunt::
 	trainerbattle_single TRAINER_HARU_HAS_AMAURA, MunenText_HaruBattleStart, MunenText_HaruDefeated, Munen_village_2_EventScript_HaruAfterBattle
 	end
 
-@ Player chose Amaura -> Haru fights with Anorith.
+@ Player chose Impidimp -> Haru fights with Pawniard.
 Munen_village_2_EventScript_HaruBattleVsAmaura::
 	trainerbattle_single TRAINER_HARU_HAS_ANORITH, MunenText_HaruBattleStart, MunenText_HaruDefeated, Munen_village_2_EventScript_HaruAfterBattle
 	end
 
-@ Player chose Anorith -> Haru fights with Tyrunt.
+@ Player chose Deino -> Haru fights with Impidimp.
 Munen_village_2_EventScript_HaruBattleVsAnorith::
 	trainerbattle_single TRAINER_HARU_HAS_TYRUNT, MunenText_HaruBattleStart, MunenText_HaruDefeated, Munen_village_2_EventScript_HaruAfterBattle
 	end
@@ -538,10 +541,10 @@ MunenText_IceTyrunt:
 	.string "Inside the ice, something stirs.\pIt regards you as if it already\nrules here.\pTake this one?$"
 
 MunenText_IceAmaura:
-	.string "Inside the ice, something stirs.\pThe cold of centuries still clings\nto it.\pTake this one?$"
+	.string "Inside the ice, something stirs.\pIt grins at you through the frost,\ndelighted you noticed.\pTake this one?$"
 
 MunenText_IceAnorith:
-	.string "Inside the ice, something stirs.\pIt twitches, alert, pure\nsurvival instinct.\pTake this one?$"
+	.string "Inside the ice, something stirs.\pIt cannot see you -- but its jaws\nare already testing the ice.\pTake this one?$"
 
 MunenText_StarterChosen:
 	.string "The ice cracks.\pIt breathes for the first time in a\nthousand years and chooses to\lbreathe beside you.$"

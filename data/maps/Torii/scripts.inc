@@ -106,17 +106,17 @@ Torii_EventScript_RivalTrigger::
 	goto_if_eq Torii_EventScript_RivalBattleTyrantrum
 	goto Torii_EventScript_RivalAfter
 
-@ Player chose Tyrunt -> Draco's AMAURA has evolved into AURORUS.
+@ Player chose Pawniard -> Draco's DEINO has evolved into ZWEILOUS.
 Torii_EventScript_RivalBattleAurorus::
 	trainerbattle_no_intro TRAINER_DRACO_TORII_AURORUS, Torii_Text_RivalDefeat
 	goto Torii_EventScript_RivalAfter
 
-@ Player chose Amaura -> Draco's ANORITH has evolved into ARMALDO.
+@ Player chose Impidimp -> Draco's PAWNIARD has evolved into BISHARP.
 Torii_EventScript_RivalBattleArmaldo::
 	trainerbattle_no_intro TRAINER_DRACO_TORII_ARMALDO, Torii_Text_RivalDefeat
 	goto Torii_EventScript_RivalAfter
 
-@ Player chose Anorith -> Draco's TYRUNT has evolved into TYRANTRUM.
+@ Player chose Deino -> Draco's IMPIDIMP has evolved into MORGREM.
 Torii_EventScript_RivalBattleTyrantrum::
 	trainerbattle_no_intro TRAINER_DRACO_TORII_TYRANTRUM, Torii_Text_RivalDefeat
 	goto Torii_EventScript_RivalAfter

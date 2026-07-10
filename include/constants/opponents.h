@@ -876,9 +876,9 @@
 #define TRAINER_TORII_ORACLE                862
 #define TRAINER_TORII_HIKER                 863
 #define TRAINER_TORII_BLACKBELT             864
-#define TRAINER_DRACO_TORII_AURORUS         865 // player chose Tyrunt
-#define TRAINER_DRACO_TORII_ARMALDO         866 // player chose Amaura
-#define TRAINER_DRACO_TORII_TYRANTRUM       867 // player chose Anorith
+#define TRAINER_DRACO_TORII_AURORUS         865 // player chose Pawniard (ace is now Zweilous)
+#define TRAINER_DRACO_TORII_ARMALDO         866 // player chose Impidimp (ace is now Bisharp)
+#define TRAINER_DRACO_TORII_TYRANTRUM       867 // player chose Deino (ace is now Morgrem)
 #define TRAINER_STARSUMMIT_BOSS             868
 #define TRAINER_ROUTE2_SWIMMER_ALLISON      869
 #define TRAINER_ROUTE2_SWIMMER_SKYE         870
@@ -901,9 +901,9 @@
 #define TRAINER_ACT2_PARK_GOON_WEST         881
 
 // Act 2 Munen lab -- Draco has the research (variant by VAR_STARTER_CHOICE, like Torii)
-#define TRAINER_DRACO_LAB_AURORUS           882 // player chose Tyrunt
-#define TRAINER_DRACO_LAB_ARMALDO           883 // player chose Amaura
-#define TRAINER_DRACO_LAB_TYRANTRUM         884 // player chose Anorith
+#define TRAINER_DRACO_LAB_AURORUS           882 // player chose Pawniard (ace is now Hydreigon)
+#define TRAINER_DRACO_LAB_ARMALDO           883 // player chose Impidimp (ace is now Kingambit)
+#define TRAINER_DRACO_LAB_TYRANTRUM         884 // player chose Deino (ace is now Grimmsnarl)
 
 // Act 2 Sennen station assault -- the two Mutrid captains guarding the Shinkansen
 #define TRAINER_SENNEN_CAPTAIN_KANNON       885
