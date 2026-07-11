@@ -1,5 +1,17 @@
+.equ LOCALID_DW5_LEADER, 2
+
 DistortionWorld_5_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, DistortionWorld_5_OnTransition
 	.byte 0
+
+@ Once beaten, VESPER stands one tile north (25,2) so the player can reach
+@ the Rift Heart ball behind him. setobjectxyperm keeps that position on
+@ every later visit.
+DistortionWorld_5_OnTransition::
+	goto_if_unset FLAG_BADGE05_GET, DistortionWorld_5_OnTransition_End
+	setobjectxyperm LOCALID_DW5_LEADER, 25, 2
+DistortionWorld_5_OnTransition_End::
+	end
 
 @ Rift Heart ball (placeholder spot 26,19 -- move it when the layer is
 @ painted). VAR_DISTORTION_RIFT_DEPTH -> 4: all layers cleared (the cave
@@ -33,8 +45,18 @@ DistortionWorld_5_EventScript_Leader::
 	waitfanfare
 	setflag FLAG_BADGE05_GET
 	msgbox DistortionWorld_5_Text_LeaderFarewell, MSGBOX_DEFAULT
+	closemessage
+	@ Step aside so the Rift Heart ball is reachable; xyperm matches the
+	@ ON_TRANSITION position for every later visit.
+	applymovement LOCALID_DW5_LEADER, DistortionWorld_5_Movement_LeaderStepAside
+	waitmovement 0
+	setobjectxyperm LOCALID_DW5_LEADER, 25, 2
 	release
 	end
+
+DistortionWorld_5_Movement_LeaderStepAside:
+	walk_up
+	step_end
 
 DistortionWorld_5_EventScript_LeaderAfter::
 	msgbox DistortionWorld_5_Text_LeaderAfter, MSGBOX_DEFAULT

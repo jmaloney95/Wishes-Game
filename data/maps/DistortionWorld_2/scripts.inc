@@ -58,6 +58,56 @@ DistortionRift_Movement_HopWest2:
 	jump_left
 	step_end
 
+DistortionRift_EventScript_HopNorth1::
+	lockall
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionRift_Movement_HopNorth1
+	waitmovement 0
+	releaseall
+	end
+
+DistortionRift_EventScript_HopNorth2::
+	lockall
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionRift_Movement_HopNorth2
+	waitmovement 0
+	releaseall
+	end
+
+DistortionRift_EventScript_HopSouth1::
+	lockall
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionRift_Movement_HopSouth1
+	waitmovement 0
+	releaseall
+	end
+
+DistortionRift_EventScript_HopSouth2::
+	lockall
+	playse SE_LEDGE
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionRift_Movement_HopSouth2
+	waitmovement 0
+	releaseall
+	end
+
+DistortionRift_Movement_HopNorth1:
+	jump_2_up
+	step_end
+
+DistortionRift_Movement_HopNorth2:
+	jump_2_up
+	jump_up
+	step_end
+
+DistortionRift_Movement_HopSouth1:
+	jump_2_down
+	step_end
+
+DistortionRift_Movement_HopSouth2:
+	jump_2_down
+	jump_down
+	step_end
+
 @ ============================================================================
 @  DISTORTION WORLD -- RIFT LAYERS (Act 2, post-collapse returns)
 @  Every Catalpa Bow ferry trip after the Gengar-Clarkson scene lands HERE

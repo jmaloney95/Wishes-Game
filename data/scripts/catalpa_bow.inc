@@ -2,7 +2,9 @@
 @  CATALPA BOW -- GENGAR GHOST-ROADS (Act 2)
 @  After the Distortion World scene, using the Catalpa Bow anywhere in the
 @  field opens Gengar-Clarkson's travel menu from the very first use:
-@  Clarkson's Lab or the Distortion World. There is deliberately NO direct
+@  the Distortion World or Clarkson's Lab. The Lab road stays shut until the
+@  player holds all four badges (EMBER/FLINT/LANTERN/DISTORTION).
+@  There is deliberately NO direct
 @  ride to Munen Village -- occupied Munen is only reached by walking out of
 @  the lab, and the lab's exit gate holds until Draco is beaten and the
 @  research choice is made.
@@ -18,10 +20,24 @@ EventScript_CatalpaBowGengarFerry::
 	msgbox Text_GengarTravelMenu, MSGBOX_DEFAULT
 	multichoice 0, 0, MULTI_CATALPA_DESTINATIONS, FALSE
 	switch VAR_RESULT
-	case 0, EventScript_CatalpaBowToLab
-	case 1, EventScript_CatalpaBowToDistortion
+	case 0, EventScript_CatalpaBowToDistortion
+	case 1, EventScript_CatalpaBowLabCheck
 	@ CANCEL / B button
 	goto EventScript_CatalpaBowFerryDecline
+
+@ The lab road only opens once the player holds all four badges:
+@ EMBER (01), FLINT (03), LANTERN, DISTORTION (05).
+EventScript_CatalpaBowLabCheck::
+	goto_if_unset FLAG_BADGE01_GET, EventScript_CatalpaBowLabLocked
+	goto_if_unset FLAG_BADGE03_GET, EventScript_CatalpaBowLabLocked
+	goto_if_unset FLAG_BADGE_LANTERN, EventScript_CatalpaBowLabLocked
+	goto_if_unset FLAG_BADGE05_GET, EventScript_CatalpaBowLabLocked
+	goto EventScript_CatalpaBowToLab
+
+EventScript_CatalpaBowLabLocked::
+	msgbox Text_GengarLabLocked, MSGBOX_DEFAULT
+	releaseall
+	end
 
 EventScript_CatalpaBowToLab::
 	setflag FLAG_ACT2_CROSSED_TO_MUNEN
@@ -78,6 +94,16 @@ Text_GengarTravelMenu::
 	.string "like smoke.\p"
 	.string "“The ghost-roads are open,\n"
 	.string "{PLAYER}. Where to?”$"
+
+Text_GengarLabLocked::
+	.string "“Not yet, {PLAYER}.\p"
+	.string "“The road to my lab runs through\n"
+	.string "everything this region asks of\l"
+	.string "you first.\p"
+	.string "“EMBER. FLINT. LANTERN.\n"
+	.string "DISTORTION.\p"
+	.string "“Bring me all four badges, and\n"
+	.string "the ghost-road will carry you.”$"
 
 Text_GengarFerryDecline::
 	.string "“Kekeke. Wise. Sharpen everything\n"

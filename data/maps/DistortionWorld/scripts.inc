@@ -73,13 +73,8 @@ DistortionWorld_EventScript_Collapse::
 	waitstate
 	msgbox DistortionWorld_Text_Collapse2, MSGBOX_DEFAULT
 	closemessage
-	@ Reality warps as the rift gives way (see field_specials.c).
-	playse SE_M_SUPERSONIC
-	special StartRiftDistortion
-	delay 48
 	playse SE_WARP_IN
 	fadescreen FADE_TO_WHITE
-	special EndRiftDistortion
 	delay 40
 	warp MAP_NATIONAL_PARK_ACT2, 47, 19
 	waitstate
@@ -97,13 +92,8 @@ DistortionWorld_EventScript_Rift::
 	compare VAR_RESULT, NO
 	goto_if_eq DistortionWorld_EventScript_RiftStay
 	closemessage
-	@ Reality warps as the player slips back through the seam.
-	playse SE_M_SUPERSONIC
-	special StartRiftDistortion
-	delay 48
 	playse SE_WARP_IN
 	fadescreen FADE_TO_BLACK
-	special EndRiftDistortion
 	delay 30
 	warp MAP_NATIONAL_PARK_ACT2, 47, 19
 	waitstate
@@ -162,52 +152,33 @@ DistortionWorld_Text_GengarClarkson1::
 	.string "Kekeke... don't reach for a Poke\n"
 	.string "Ball just yet, {PLAYER}.\p"
 	.string "It's me. Or what remains of me.\n"
-	.string "You always did find your way to\l"
-	.string "the strangest field sites.\p"
-	.string "Let me say it plainly, the way\n"
-	.string "I'd write it in a ledger:\p"
+	.string "Let me say it plainly,\n"
 	.string "Professor Clarkson died on Star\n"
 	.string "Summit.\p"
-	.string "What fell into that fire wasn't a\n"
-	.string "trick, or a trap door, or a\l"
-	.string "miracle. It was me. All of me.$"
+	.string "What fell into the lava was me.\n"
+	.string "All of me.$"
 
 DistortionWorld_Text_GengarClarkson2::
-	.string "But this mountain KEEPS what\n"
-	.string "cannot be let go...\p"
-	.string "...and it seems I could not let\n"
-	.string "go of my work.\p"
-	.string "A wild GENGAR found my spirit\n"
+	.string "GENGAR found my spirit\n"
 	.string "drifting loose in the seams.\p"
-	.string "Ghosts collect ghosts, {PLAYER}.\n"
-	.string "It made room. We manage.\l"
-	.string "The grin takes getting used to.\p"
-	.string "And you hear my words at all only\n"
+	.string "The grin took some getting used to.\n"
+	.string "And you hear my words only\n"
 	.string "because of that bow you carry.\p"
-	.string "Catalpa wood, prayer-strung. The\n"
+	.string "Catalpa wood. The\n"
 	.string "one string that sounds on BOTH\l"
 	.string "sides of the veil.$"
 
 DistortionWorld_Text_GengarClarkson3::
-	.string "Now listen. The bow won't hold\n"
-	.string "this seam open forever.\p"
+	.string "Listen. I can't hold\n"
+	.string "the rift open forever.\p"
 	.string "My research still sits in my\n"
-	.string "laboratory. The proof that the\l"
-	.string "mountain is a MECHANISM. My notes\l"
-	.string "on the Summit Gate itself.\p"
-	.string "{PLAYER}... the masked man who\n"
-	.string "leads Team Mutrid is my son.\p"
-	.string "If he takes those notes, he won't\n"
-	.string "need to pray the Gate open.\l"
-	.string "He will ENGINEER it.\p"
-	.string "You must destroy my research.\n"
-	.string "Burn every page. Promise me.\p"
-	.string "...And there is one more thing\n"
-	.string "this old ghost wants.\p"
-	.string "This body is restless. It wants\n"
-	.string "to travel. And I want to see this\l"
-	.string "through -- all the way to the\l"
-	.string "summit.\p"
+	.string "lab. My notes on JIRACHI\l"
+	.string "and SHADOW pokemon.\p"
+	.string "{PLAYER}... you can't let\n"
+	.string "Team Mutrid find it.\p"
+	.string "You must DESTROY my research.\n"
+	.string "Burn every page.\p"
+	.string "We must see this through together.\p"
 	.string "Take us with you, {PLAYER}.$"
 
 DistortionWorld_Text_GengarJoined::
@@ -217,38 +188,33 @@ DistortionWorld_Text_GengarJoined::
 DistortionWorld_Text_GengarJoinedPC::
 	.string "GENGAR -- and everything riding\n"
 	.string "within it -- was sent to the PC.\p"
-	.string "“Box logistics. Even death has\n"
-	.string "paperwork, kekeke.”$"
+	.string "Box logistics. Even death has\n"
+	.string "paperwork, kekeke.$"
 
 DistortionWorld_Text_NoRoom::
-	.string "“...Your party and your boxes are\n"
+	.string "...Your party and your boxes are\n"
 	.string "FULL, {PLAYER}.\p"
 	.string "“Even a ghost needs a seat.\p"
-	.string "“Make room, then come back for\n"
-	.string "me. I have waited this long.”$"
+	.string "Make room, then come back for\n"
+	.string "me. I have waited this long.$"
 
 DistortionWorld_Text_GengarTeleportHome::
-	.string "“This place won't hold together\n"
+	.string "This place won't hold together\n"
 	.string "much longer -- and neither will I.\p"
-	.string "“But I have just enough left in me\n"
+	.string "But I have just enough left in me\n"
 	.string "for one last trick.\p"
-	.string "“Let me send you home, {PLAYER}.\n"
+	.string "Let me send you home, {PLAYER}.\n"
 	.string "Back to the living world, where you\l"
-	.string "belong.\p"
-	.string "“Close your eyes. This won't\n"
-	.string "hurt a bit.”$"
+	.string "belong.$"
 
 DistortionWorld_Text_Collapse1::
-	.string "“Ah. There it is.\p"
-	.string "“It seems I was the nail holding\n"
+	.string "Ah. There it is.\p"
+	.string "It seems I was the nail holding\n"
 	.string "this room shut, {PLAYER}.\p"
-	.string "“Now the mountain wants its\n"
-	.string "breath back. Hold on to me!”$"
+	.string "Hold on to me!$"
 
 DistortionWorld_Text_Collapse2::
-	.string "The kept things tremble.\p"
-	.string "The floating stones crack apart,\n"
-	.string "names flaking away like ash.\p"
+	.string "The floating stones crack apart\p"
 	.string "The Distortion World folds\n"
 	.string "inward--$"
 

@@ -472,8 +472,8 @@ static const struct MenuAction MultichoiceList_KeepDestroyResearch[] =
 
 static const struct MenuAction MultichoiceList_CatalpaDestinations[] =
 {
-    {gText_CatalpaLab},
     {gText_CatalpaDistortion},
+    {gText_CatalpaLab},
     {gText_Cancel},
 };
 

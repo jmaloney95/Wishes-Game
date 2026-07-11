@@ -73,80 +73,112 @@
       "x": 13,
       "y": 3,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "DistortionRift_EventScript_HopEast1"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth1"
     },
     {
       "type": "sign",
       "x": 13,
       "y": 3,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "DistortionRift_EventScript_HopWest1"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth1"
+    },
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth1"
+    },
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth1"
+    },
+    {
+      "type": "sign",
+      "x": 9,
+      "y": 14,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth1"
+    },
+    {
+      "type": "sign",
+      "x": 9,
+      "y": 14,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth1"
     },
     {
       "type": "sign",
       "x": 10,
-      "y": 4,
+      "y": 17,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "DistortionRift_EventScript_HopEast2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth2"
+    },
+    {
+      "type": "sign",
+      "x": 10,
+      "y": 18,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth2"
     },
     {
       "type": "sign",
       "x": 11,
-      "y": 4,
+      "y": 17,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "DistortionRift_EventScript_HopWest2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth2"
     },
     {
       "type": "sign",
-      "x": 19,
-      "y": 11,
+      "x": 11,
+      "y": 18,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "DistortionRift_EventScript_HopEast2"
-    },
-    {
-      "type": "sign",
-      "x": 20,
-      "y": 11,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "DistortionRift_EventScript_HopWest2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth2"
     },
     {
       "type": "sign",
       "x": 12,
-      "y": 15,
+      "y": 17,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "DistortionRift_EventScript_HopEast2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth2"
     },
     {
       "type": "sign",
-      "x": 13,
-      "y": 15,
+      "x": 12,
+      "y": 18,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "DistortionRift_EventScript_HopWest2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth2"
     },
     {
       "type": "sign",
-      "x": 15,
-      "y": 16,
+      "x": 14,
+      "y": 17,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_EAST",
-      "script": "DistortionRift_EventScript_HopEast2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_SOUTH",
+      "script": "DistortionRift_EventScript_HopSouth2"
     },
     {
       "type": "sign",
-      "x": 16,
-      "y": 16,
+      "x": 14,
+      "y": 18,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_WEST",
-      "script": "DistortionRift_EventScript_HopWest2"
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "DistortionRift_EventScript_HopNorth2"
     }
   ]
 }
