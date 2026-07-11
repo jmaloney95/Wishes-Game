@@ -165,7 +165,11 @@
     "MunenVillageAct2",
     "MunenLabAct2",
     "MunenHomeAct2",
-    "SennenAct2"
+    "SennenAct2",
+    "DistortionWorld_2",
+    "DistortionWorld_3",
+    "DistortionWorld_4",
+    "DistortionWorld_5"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

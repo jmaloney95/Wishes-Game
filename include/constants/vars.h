@@ -354,4 +354,10 @@
 #define VAR_QUEST_FATHERS_WISH         VAR_UNUSED_0x4091  // A Father's Final Wish (Ashlands old prophet -> Catalpa Bow -> gravesite)
 #define VAR_HOT_SPRING_STATE           VAR_UNUSED_0x409B  // Act 2 opening ON_FRAME one-shot (starts QUEST_LIFES_WORK)
 
+// === Pokemon Wishes of Tomorrow - Distortion World rift layers (2026-07-10) ===
+// 0 = DistortionWorld_2 never entered; 1 = island reveal seen (cave -> layer 3);
+// 2 = Rift Shard taken (cave -> layer 4); 3 = Rift Core taken (cave -> layer 5);
+// 4 = Rift Heart taken (all layers cleared; cave keeps leading to layer 5).
+#define VAR_DISTORTION_RIFT_DEPTH      VAR_UNUSED_0x40F7
+
 #endif // GUARD_CONSTANTS_VARS_H

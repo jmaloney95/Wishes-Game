@@ -1807,3 +1807,11 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/MunenHomeAct2/scripts.inc"
 
 	.include "data/maps/SennenAct2/scripts.inc"
+
+	.include "data/maps/DistortionWorld_2/scripts.inc"
+
+	.include "data/maps/DistortionWorld_3/scripts.inc"
+
+	.include "data/maps/DistortionWorld_5/scripts.inc"
+
+	.include "data/maps/DistortionWorld_4/scripts.inc"

@@ -14413,6 +14413,54 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_StrangeSouvenir,
     },
 
+    // Distortion World rift-layer relics. Names/descriptions PLACEHOLDER (Joe).
+    [ITEM_RIFT_SHARD] =
+    {
+        .name = ITEM_NAME("Rift Shard"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A splinter of the\n"
+            "rift. It hums with\n"
+            "kept-back time."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_RIFT_CORE] =
+    {
+        .name = ITEM_NAME("Rift Core"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A dense knot of\n"
+            "the rift. Cold on\n"
+            "one side only."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_RIFT_HEART] =
+    {
+        .name = ITEM_NAME("Rift Heart"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "The deepest kept\n"
+            "thing. It beats,\n"
+            "very slowly."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
 
     [ITEM_EON_TICKET] =
     {

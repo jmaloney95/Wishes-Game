@@ -39,10 +39,21 @@ EventScript_CatalpaBowToLab::
 
 EventScript_CatalpaBowToDistortion::
 	closemessage
+	@ Reality warps: mosaic pulse + camera wobble (field_specials.c) ramps in,
+	@ the white fade dissolves the distorted world, and cleanup happens while
+	@ the screen is blank.
+	playse SE_M_SUPERSONIC
+	special StartRiftDistortion
+	delay 48
 	playse SE_WARP_IN
 	fadescreen FADE_TO_WHITE
+	special EndRiftDistortion
 	delay 20
-	warp MAP_DISTORTION_WORLD, 15, 24
+	@ Ferry-era trips land in DistortionWorld_2 -- the reformed room where the
+	@ island has risen across the x25 void (first arrival plays the reveal;
+	@ see DistortionWorld_2/scripts.inc). The original MAP_DISTORTION_WORLD is
+	@ only ever seen once, during the Gengar-Clarkson scene.
+	warp MAP_DISTORTION_WORLD_2, 15, 24
 	waitstate
 	releaseall
 	end

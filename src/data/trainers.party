@@ -17468,3 +17468,66 @@ Mightyena
 Level: 20
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
+/*
+Distortion World layer 4 -- the Oni guarding the Rift Core.
+Name/level PLACEHOLDER (Joe).
+*/
+=== TRAINER_DISTORTION_ONI ===
+Name: KIYO
+Class: Oni
+Pic: Gold Oni
+Gender: Male
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+SPECIES_HELLRAISER
+Level: 38
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_RIFT_WARDEN ===
+Name: SILAS
+Class: Expert
+Pic: Expert M
+Gender: Male
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Bronzong
+Level: 37
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Dusclops
+Level: 38
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_DISTORTION_LEADER ===
+Name: VESPER
+Class: Leader
+Pic: Steven
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Mismagius
+Level: 37
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Spiritomb
+Level: 38
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Dusknoir
+Level: 38
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Drifblim
+Level: 39
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Giratina @ Sitrus Berry
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+

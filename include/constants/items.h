@@ -1080,6 +1080,13 @@ enum __attribute__((packed)) Item
     // Act 2 rebellion parting gifts
     ITEM_SNAG_MACHINE = 887,   // turns Poke Balls into Snag Balls vs SHADOW POKEMON held by trainers
     ITEM_SHINKANSEN_KEY = 888, // keycard to the Shinkansen driver's cab
+
+    // Distortion World rift layers -- one relic per layer; each pickup re-aims the
+    // DistortionWorld_2 cave at the next layer (VAR_DISTORTION_RIFT_DEPTH).
+    // Names/descriptions PLACEHOLDER (Joe).
+    ITEM_RIFT_SHARD = 889,     // layer 3 relic
+    ITEM_RIFT_CORE = 890,      // layer 4 relic
+    ITEM_RIFT_HEART = 891,     // layer 5 relic
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

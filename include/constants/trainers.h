@@ -539,6 +539,8 @@ enum TrainerClassID
     TRAINER_CLASS_TEAM_MUTRID,
     TRAINER_CLASS_MUTRID,
     TRAINER_CLASS_GENERAL,
+    // Distortion World rift layers -- kept things that fight back
+    TRAINER_CLASS_ONI,
 
     TRAINER_CLASS_COUNT,
 };

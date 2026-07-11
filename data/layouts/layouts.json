@@ -621,7 +621,7 @@
       "id": "LAYOUT_LITTLEROOT_TOWN_MAYS_HOUSE_2F",
       "name": "LittlerootTown_MaysHouse_2F_Layout",
       "width": 9,
-      "height": 8,
+      "height": 5,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_BrendansMaysHouse",
       "border_filepath": "data/layouts/LittlerootTown_MaysHouse_2F/border.bin",
@@ -9481,7 +9481,7 @@
     {
       "id": "LAYOUT_WALNUT_WOODS",
       "name": "WALNUT_WOODS_Layout",
-      "width": 55,
+      "width": 59,
       "height": 34,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Droid779Snow",
@@ -9647,6 +9647,46 @@
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenAct2/border.bin",
       "blockdata_filepath": "data/layouts/SennenAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_2",
+      "name": "DistortionWorld_2_Layout",
+      "width": 35,
+      "height": 31,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_2/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_3",
+      "name": "DistortionWorld_3_Layout",
+      "width": 31,
+      "height": 35,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_3/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_3/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_5",
+      "name": "DistortionWorld_5_Layout",
+      "width": 35,
+      "height": 36,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_5/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_5/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_4",
+      "name": "DistortionWorld_4_Layout",
+      "width": 35,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_4/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_4/map.bin"
     }
   ]
 }

@@ -2529,5 +2529,13 @@
 #define FLAG_MELTING_MILE_PIKACHU_JOINED        FLAG_UNUSED_0x27F // the trail Pikachu joined the party (secret starter, Lv8)
 #define FLAG_POMPEII_TUNNEL_ROCK_CLEARED        FLAG_UNUSED_0x280 // Master Gen had the tunnel-mouth slab cleared (quest start)
 #define FLAG_POMPEII_GENERAL_RETREATED          FLAG_UNUSED_0x281 // General Edwards beaten; he abandons the mask chamber
+#define FLAG_ITEM_DISTORTION_WORLD_3_MAX_REVIVE FLAG_UNUSED_0x285
+#define FLAG_ITEM_DISTORTION_WORLD_5_FULL_RESTORE FLAG_UNUSED_0x286
+#define FLAG_ITEM_DISTORTION_WORLD_5_PP_UP      FLAG_UNUSED_0x287
+
+// === Distortion World rift layers (2026-07-10) ===
+#define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)
+#define FLAG_ITEM_DISTORTION_WORLD_4_RIFT_CORE  FLAG_UNUSED_0x283 // relic ball in layer 4 (placeholder spot 23,18)
+#define FLAG_ITEM_DISTORTION_WORLD_5_RIFT_HEART FLAG_UNUSED_0x284 // relic ball in layer 5 (placeholder spot 26,19)
 
 #endif // GUARD_CONSTANTS_FLAGS_H

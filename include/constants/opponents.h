@@ -914,6 +914,11 @@
 #define TRAINER_TUNNEL_GOON_B               888
 #define TRAINER_GENERAL_EDWARDS             889
 
+// Distortion World rift layers -- the Oni guarding the Rift Core (layer 4)
+#define TRAINER_DISTORTION_ONI              890
+#define TRAINER_RIFT_WARDEN                 891
+#define TRAINER_DISTORTION_LEADER           892
+
 // NOTE: Each trainer auto-uses a defeat flag at TRAINER_FLAGS_START + id; SYSTEM_FLAGS and
 //       FLAGS_COUNT are all relative to MAX_TRAINERS_COUNT, so raising MAX shifts them up
 //       automatically. Cost: NUM_FLAG_BYTES grows in SaveBlock1 (STATIC_ASSERT in save.c
@@ -923,9 +928,9 @@
 //
 //       >>> ADDING A TRAINER? Take the next sequential ID below, bump TRAINERS_COUNT_EMERALD
 //       >>> to (highest id + 1), and do NOT raise MAX again until count reaches 896.
-//       >>> Next free ID: 890.
+//       >>> Next free ID: 893.
 
-#define TRAINERS_COUNT_EMERALD     890
+#define TRAINERS_COUNT_EMERALD     893
 #define MAX_TRAINERS_COUNT_EMERALD 896
 
 #if IS_FRLG
