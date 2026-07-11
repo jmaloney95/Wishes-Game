@@ -18,6 +18,7 @@
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_weather.h"
+#include "gpu_regs.h"
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item.h"
@@ -53,6 +54,7 @@
 #include "text.h"
 #include "text_window.h"
 #include "tilesets.h"
+#include "trig.h"
 #include "tv.h"
 #include "wallclock.h"
 #include "window.h"
@@ -1607,6 +1609,59 @@ static void StopCameraShake(u8 taskId)
 #undef tNumShakes
 #undef tDelay
 #undef tVerticalPan
+
+// -- Rift distortion (Distortion World enter/exit transition) ----------------
+// StartRiftDistortion begins a mosaic-pulse + sinusoidal camera wobble that
+// runs until EndRiftDistortion. The overworld map BGs (1-3) already have their
+// BGxCNT mosaic bit set (InitOverworldBgs) and BG0 (the textbox) does not, so
+// writing REG_MOSAIC distorts the world while text stays crisp. Object-event
+// sprites don't mosaic (no OAM mosaic bit), which reads as "the world warps
+// around the people in it". Neither special uses waitstate; the intended
+// script shape is:
+//   special StartRiftDistortion   @ effect ramps in while the script goes on
+//   fadescreen FADE_TO_...        @ the world dissolves while distorted
+//   special EndRiftDistortion     @ cleanup while the screen is blank
+#define tTimer data[0]
+
+static void Task_RiftDistortion(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u16 mosaic, panAmp;
+
+    tTimer++;
+    mosaic = tTimer / 8;
+    if (mosaic > 4)
+        mosaic = 4;
+    mosaic += (tTimer >> 2) & 1; // crawling-block pulse on top of the ramp
+    SetGpuReg(REG_OFFSET_MOSAIC, (mosaic << 4) | mosaic);
+    panAmp = tTimer / 12;
+    if (panAmp > 3)
+        panAmp = 3;
+    SetCameraPanning(Sin((tTimer * 24) & 0xFF, panAmp + 1),
+                     Sin(((tTimer * 24) + 64) & 0xFF, panAmp));
+}
+
+void StartRiftDistortion(void)
+{
+    if (FindTaskIdByFunc(Task_RiftDistortion) == TASK_NONE)
+    {
+        SetCameraPanningCallback(NULL);
+        CreateTask(Task_RiftDistortion, 80);
+    }
+}
+
+void EndRiftDistortion(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_RiftDistortion);
+
+    if (taskId != TASK_NONE)
+        DestroyTask(taskId);
+    SetGpuReg(REG_OFFSET_MOSAIC, 0);
+    SetCameraPanning(0, 0);
+    InstallCameraPanAheadCallback();
+}
+
+#undef tTimer
 
 bool8 FoundBlackGlasses(void)
 {

@@ -73,8 +73,13 @@ DistortionWorld_EventScript_Collapse::
 	waitstate
 	msgbox DistortionWorld_Text_Collapse2, MSGBOX_DEFAULT
 	closemessage
+	@ Reality warps as the rift gives way (see field_specials.c).
+	playse SE_M_SUPERSONIC
+	special StartRiftDistortion
+	delay 48
 	playse SE_WARP_IN
 	fadescreen FADE_TO_WHITE
+	special EndRiftDistortion
 	delay 40
 	warp MAP_NATIONAL_PARK_ACT2, 47, 19
 	waitstate
@@ -92,8 +97,13 @@ DistortionWorld_EventScript_Rift::
 	compare VAR_RESULT, NO
 	goto_if_eq DistortionWorld_EventScript_RiftStay
 	closemessage
+	@ Reality warps as the player slips back through the seam.
+	playse SE_M_SUPERSONIC
+	special StartRiftDistortion
+	delay 48
 	playse SE_WARP_IN
 	fadescreen FADE_TO_BLACK
+	special EndRiftDistortion
 	delay 30
 	warp MAP_NATIONAL_PARK_ACT2, 47, 19
 	waitstate

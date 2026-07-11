@@ -48,27 +48,11 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 2,
-      "y": 2,
+      "x": 3,
+      "y": 4,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "NewMapApprenticeHouse_EventScript_Diary"
-    },
-    {
-      "type": "sign",
-      "x": 6,
-      "y": 2,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMapApprenticeHouse_EventScript_Worktable"
-    },
-    {
-      "type": "sign",
-      "x": 4,
-      "y": 5,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "NewMapApprenticeHouse_EventScript_Hearth"
     }
   ]
 }

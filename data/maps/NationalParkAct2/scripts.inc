@@ -88,6 +88,11 @@ NationalParkAct2_EventScript_BowDoCross::
 	setvar VAR_0x8007, 4  @ shake delay
 	special ShakeCamera
 	waitstate
+	@ Reality warps: the double flash shows the world mid-distortion before it
+	@ dissolves for good (see field_specials.c).
+	playse SE_M_SUPERSONIC
+	special StartRiftDistortion
+	delay 48
 	playse SE_WARP_IN
 	fadescreen FADE_TO_WHITE
 	delay 16
@@ -95,6 +100,7 @@ NationalParkAct2_EventScript_BowDoCross::
 	delay 8
 	fadescreen FADE_TO_WHITE
 	delay 16
+	special EndRiftDistortion
 	warp MAP_DISTORTION_WORLD, 15, 24
 	waitstate
 	releaseall

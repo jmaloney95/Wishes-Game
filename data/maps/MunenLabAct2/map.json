@@ -47,6 +47,15 @@
   "coord_events": [
     {
       "type": "trigger",
+      "x": 4,
+      "y": 8,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "MunenLabAct2_EventScript_DracoTrigger"
+    },
+    {
+      "type": "trigger",
       "x": 5,
       "y": 8,
       "elevation": 0,
@@ -74,15 +83,6 @@
     },
     {
       "type": "trigger",
-      "x": 8,
-      "y": 8,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "MunenLabAct2_EventScript_DracoTrigger"
-    },
-    {
-      "type": "trigger",
       "x": 6,
       "y": 11,
       "elevation": 0,
@@ -98,6 +98,42 @@
       "var": "VAR_TEMP_2",
       "var_value": "0",
       "script": "MunenLabAct2_EventScript_ExitGate"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 12,
+      "elevation": 0,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "MunenLabAct2_EventScript_ExitGate"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 12,
+      "elevation": 0,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "MunenLabAct2_EventScript_ExitGate"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 8,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "MunenLabAct2_EventScript_DracoTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 8,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "MunenLabAct2_EventScript_DracoTrigger"
     }
   ],
   "bg_events": [

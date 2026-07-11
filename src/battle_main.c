@@ -423,6 +423,7 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_TEAM_MUTRID] =          { _("???"), 5 },
     [TRAINER_CLASS_MUTRID] =               { _("Mutrid"), 5 },
     [TRAINER_CLASS_GENERAL] =              { _("General"), 12 },
+    [TRAINER_CLASS_ONI] =                  { _("Oni"), 8 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =

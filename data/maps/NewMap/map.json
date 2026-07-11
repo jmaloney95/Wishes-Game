@@ -2,7 +2,7 @@
   "id": "MAP_NEW_MAP",
   "name": "NewMap",
   "layout": "LAYOUT_NEW_MAP",
-  "music": "MUS_DUMMY",
+  "music": "MUS_DP_ETERNA_FOREST",
   "region_map_section": "MAPSEC_POMPEII",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -221,6 +221,32 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
       "flag": "FLAG_TEMP_14"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 8,
+      "y": 9,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_14"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 8,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_14"
     }
   ],
   "warp_events": [
@@ -306,6 +332,13 @@
       "y": 14,
       "elevation": 0,
       "dest_map": "MAP_NEW_MAP_INN",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "elevation": 0,
+      "dest_map": "MAP_TORII",
       "dest_warp_id": "0"
     }
   ],

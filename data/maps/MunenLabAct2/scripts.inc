@@ -273,9 +273,6 @@ MunenLabAct2_Text_DracoIntro2::
 	.string "The Dark Lord in Shin-Tokyo pays\n"
 	.string "for knowledge like this. Pays in\l"
 	.string "ways you can't imagine.\p"
-	.string "The masked fools pray to their\n"
-	.string "volcano. I don't pray, {PLAYER}.\l"
-	.string "I INVEST.\p"
 	.string "You want the professor's papers?\n"
 	.string "Then take them from me.$"
 
@@ -284,28 +281,19 @@ MunenLabAct2_Text_DracoDefeat::
 
 MunenLabAct2_Text_DracoVictory::
 	.string "Still soft, {PLAYER}.\n"
-	.string "The mountain will eat you alive.$"
+	.string "The Dark Lord will eat you alive.$"
 
 MunenLabAct2_Text_DracoFlee::
 	.string "It doesn't matter, you know.\p"
-	.string "Papers are for people who need\n"
-	.string "PROOF. I've already read every\l"
-	.string "page. It's all up here now.\p"
-	.string "Keep the originals. Burn them.\n"
-	.string "Frame them. The words are already\l"
+	.string "I've already read every\l"
+	.string "page. The words are already\l"
 	.string "mine... and soon they'll be HIS.\p"
 	.string "Shin-Tokyo's lights are calling,\n"
-	.string "{PLAYER}. Try to keep up...\p"
-	.string "...if the mountain lets you\n"
-	.string "leave.$"
+	.string "{PLAYER}. Try to keep up...$"
 
 MunenLabAct2_Text_AfterFlee::
-	.string "Draco's footsteps fade into the\n"
-	.string "snow outside.\p"
 	.string "On the desk, Clarkson's original\n"
-	.string "research lies where he left it --\l"
-	.string "read, discarded, and suddenly\l"
-	.string "very heavy.$"
+	.string "research lies where he left it.$"
 
 MunenLabAct2_Text_GengarGate::
 	.string "Wait.. You must DESTROY the\n"
@@ -331,8 +319,7 @@ MunenLabAct2_Text_DeskChoice::
 MunenLabAct2_Text_KeptResearch::
 	.string "{PLAYER} tucked the research away.\p"
 	.string "It can be read from the KEY ITEMS\n"
-	.string "pocket... though some pages feel\l"
-	.string "like they read YOU back.$"
+	.string "pocket...$"
 
 MunenLabAct2_Text_DestroyResearch1::
 	.string "{PLAYER} gathered every page into\n"
@@ -344,9 +331,8 @@ MunenLabAct2_Text_DestroyResearch2::
 	.string "A life's work becomes light, then\n"
 	.string "warmth, then ash.\p"
 	.string "Somewhere -- maybe in your bag,\n"
-	.string "maybe further away -- you could\l"
-	.string "swear something grins, and lets\l"
-	.string "out a long-held breath.$"
+	.string "you could swear something grins,\l"
+	.string "and lets out a long-held breath.$"
 
 MunenLabAct2_Text_DeskDeferred::
 	.string "The research waits on the desk.\p"
