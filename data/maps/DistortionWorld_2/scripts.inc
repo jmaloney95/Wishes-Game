@@ -108,6 +108,23 @@ DistortionRift_Movement_HopSouth2:
 	jump_down
 	step_end
 
+@ ----------------------------------------------------------------------------
+@  1-wide VERTICAL gaps (the DW_3 x10 chain, the DW_4 x4 gap): a single gap
+@  tile is the "in front" tile for BOTH a north- and a south-facing player, and
+@  two facing-gated signs can't share a tile. So each gap gets ONE facing-ANY
+@  event pointing here; we read the player's facing and hop the 2 tiles that
+@  land centered on the far stone. (Wider gaps still use the per-direction
+@  Hop*1/Hop*2 events with their own gap tiles, e.g. DW_2's x25 crossing.)
+@ ----------------------------------------------------------------------------
+DistortionRift_EventScript_HopVertical::
+	lockall
+	specialvar VAR_RESULT, GetPlayerFacingDirection
+	switch VAR_RESULT
+	case DIR_NORTH, DistortionRift_EventScript_HopNorth1
+	case DIR_SOUTH, DistortionRift_EventScript_HopSouth1
+	releaseall
+	end
+
 @ ============================================================================
 @  DISTORTION WORLD -- RIFT LAYERS (Act 2, post-collapse returns)
 @  Every Catalpa Bow ferry trip after the Gengar-Clarkson scene lands HERE

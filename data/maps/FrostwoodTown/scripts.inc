@@ -7,6 +7,9 @@ FrostwoodTown_MapScripts::
 @ BADGE for the first time. Map-level (not tile-level) so it fires no matter
 @ which tile the gym exit drops the player onto.
 FrostwoodTown_OnTransition::
+	@ Whiteout respawn: being in town makes Frostwood the last heal location, so
+	@ fainting near here no longer throws the player back to an Act 1 spawn.
+	setrespawn HEAL_LOCATION_FROSTWOOD_TOWN
 	@ Clarkson's post-Ember-Badge call. (Route 2 now sits between Frostwood and Sennen,
 	@ so Frostwood's north exit is a plain warp to Route_2 -- the old dynamic Sennen warp
 	@ is gone; the train swap is handled at Sennen instead.)

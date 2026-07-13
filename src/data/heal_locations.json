@@ -391,6 +391,18 @@
       "map": "MAP_WALNUT_WOODS",
       "x": 21,
       "y": 3
+    },
+    {
+      "id": "HEAL_LOCATION_FROSTWOOD_TOWN",
+      "map": "MAP_FROSTWOOD_TOWN",
+      "x": 16,
+      "y": 26
+    },
+    {
+      "id": "HEAL_LOCATION_TRADEWIND_TOWN",
+      "map": "MAP_TRADEWIND_TOWN",
+      "x": 11,
+      "y": 6
     }
   ]
 }

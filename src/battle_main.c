@@ -1955,6 +1955,44 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
         u32 monIndices[monsCount];
         DoTrainerPartyPool(trainer, monIndices, monsCount, battleTypeFlags);
 
+        // Gym level cap: for the four badge fights, cap the leader's TOP mon at
+        // the player's highest party level and slide the whole team down by the
+        // same amount, preserving the team's internal spread. Only scales DOWN
+        // (an over-leveled player still faces the designed team). Keyed on the
+        // trainer id from TRAINER_BATTLE_PARAM so it is difficulty-row agnostic.
+        u32 gymLevelShift = 0;
+        {
+            static const u16 sScaledGymLeaders[] = {
+                TRAINER_ROXANNE_1,         // Ember      (Frostwood Gym)
+                TRAINER_GENERAL_EDWARDS,   // Flint      (Munen Tunnel boss)
+                TRAINER_MADAM_TSUJI,       // Lantern    (Tradewind Gym)
+                TRAINER_DISTORTION_LEADER, // Distortion (Vesper, rift gym)
+            };
+            u16 trainerId = (firstTrainer == TRUE) ? TRAINER_BATTLE_PARAM.opponentA : TRAINER_BATTLE_PARAM.opponentB;
+            u32 k;
+
+            for (k = 0; k < ARRAY_COUNT(sScaledGymLeaders); k++)
+            {
+                if (sScaledGymLeaders[k] == trainerId)
+                {
+                    u32 teamTop = 0;
+                    s32 playerTop;
+                    s32 j;
+
+                    for (j = 0; j < monsCount; j++)
+                    {
+                        u32 lvl = trainer->party[monIndices[j]].lvl;
+                        if (lvl > teamTop)
+                            teamTop = lvl;
+                    }
+                    playerTop = GetHighestLevelInPlayerParty();
+                    if (playerTop > 0 && teamTop > (u32)playerTop)
+                        gymLevelShift = teamTop - (u32)playerTop;
+                    break;
+                }
+            }
+        }
+
         for (i = 0; i < monsCount; i++)
         {
             u32 monIndex = monIndices[i];
@@ -1984,7 +2022,10 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 otId.method = OT_ID_PRESET;
                 otId.value = HIHALF(personalityValue) ^ LOHALF(personalityValue);
             }
-            CreateMon(&party[i], partyData[monIndex].species, partyData[monIndex].lvl, personalityValue, otId);
+            u32 monLevel = partyData[monIndex].lvl;
+            if (gymLevelShift != 0)
+                monLevel = (monLevel > gymLevelShift) ? (monLevel - gymLevelShift) : 1;
+            CreateMon(&party[i], partyData[monIndex].species, monLevel, personalityValue, otId);
             SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
 
             CustomTrainerPartyAssignMoves(&party[i], &partyData[monIndex]);

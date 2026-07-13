@@ -1,5 +1,13 @@
 TradewindTown_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, TradewindTown_OnTransition
 	.byte 0
+
+@ Whiteout respawn: Tradewind has no Pokemon Center, so without this a faint
+@ here sent the player all the way back to a pre-Star-Summit Act 1 spawn. Making
+@ the town its own heal location keeps the playthrough local.
+TradewindTown_OnTransition::
+	setrespawn HEAL_LOCATION_TRADEWIND_TOWN
+	end
 
 @ ============================================================================
 @  B1 - Curio Merchant "Curios of the Crossing"

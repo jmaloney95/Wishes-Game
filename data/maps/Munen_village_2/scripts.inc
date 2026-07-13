@@ -6,8 +6,16 @@
 Munen_village_2_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, Munen_village_2_OnLoad
 	map_script MAP_SCRIPT_ON_RESUME, Munen_village_2_OnResume
+	map_script MAP_SCRIPT_ON_TRANSITION, Munen_village_2_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Munen_village_2_OnFrame
 	.byte 0
+
+@ Whiteout respawn: the home village becomes the earliest heal location, so a
+@ faint before any other town still lands the player here instead of the engine
+@ default (Littleroot). setrespawn only writes save data -- safe in ON_TRANSITION.
+Munen_village_2_OnTransition::
+	setrespawn HEAL_LOCATION_MUNEN_VILLAGE
+	end
 
 @ OnResume (not OnLoad): the "!" sprite must be created after ResumeMap's
 @ ResetSpriteData, which OnLoad runs before.

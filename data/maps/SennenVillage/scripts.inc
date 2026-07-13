@@ -1,6 +1,13 @@
 SennenVillage_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, SennenVillage_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, SennenVillage_OnTransition
 	.byte 0
+
+@ Whiteout respawn: make the train-hub village its own heal location (setrespawn
+@ only writes save data, so it is safe in ON_TRANSITION -- no warp involved).
+SennenVillage_OnTransition::
+	setrespawn HEAL_LOCATION_SENNEN_VILLAGE
+	end
 
 @ Single-map design: SennenVillage is the train-present base map. Once the EMBER
 @ BADGE (FLAG_BADGE01_GET) is earned, ON_LOAD repaints the cleared-track tiles
