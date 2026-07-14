@@ -1686,6 +1686,20 @@ const struct Tileset gTileset_AshlandTrees =
     .callback = NULL,
 };
 
+// Pokemon Wishes of Tomorrow: NIGHT MARKET PRIMARY (odisea stalls + lanterns +
+// shikari dark town). Select it as the primary for a Tradewind/Ashlands night
+// market and keep gTileset_AshlandTrees as the secondary.
+const struct Tileset gTileset_NightMarket =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_NightMarket,
+    .palettes = gTilesetPalettes_NightMarket,
+    .metatiles = gMetatiles_NightMarket,
+    .metatileAttributes = gMetatileAttributes_NightMarket,
+    .callback = NULL,
+};
+
 // Pokemon Wishes of Tomorrow: Gold/Silver Japanese buildings SECONDARY (Ecruteak houses,
 // gold + red pagodas, grand temples). Pairs with gTileset_General; grass from primary.
 const struct Tileset gTileset_GsJapan =

@@ -3271,6 +3271,31 @@ const u16 gTilesetPalettes_AshlandTrees[][16] =
 };
 const u32 gTilesetTiles_AshlandTrees[] = INCBIN_U32("data/tilesets/secondary/ashland_trees/tiles.4bpp.lz");
 
+// Pokemon Wishes of Tomorrow: NIGHT MARKET PRIMARY -- odisea market stalls +
+// hanging lanterns fused with shikari's dark-town walls, cobble, and gate.
+// Pairs with the gTileset_AshlandTrees secondary (slots 6-9); this primary
+// uses palette slots 0-3.
+const u16 gTilesetPalettes_NightMarket[][16] =
+{
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/12.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/13.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/14.gbapal"),
+    INCBIN_U16("data/tilesets/primary/night_market/palettes/15.gbapal"),
+};
+const u32 gTilesetTiles_NightMarket[] = INCBIN_U32("data/tilesets/primary/night_market/tiles.4bpp.lz");
+
 const u16 gTilesetPalettes_GsJapan[][16] =
 {
     INCBIN_U16("data/tilesets/secondary/gs_japan/palettes/00.gbapal"),

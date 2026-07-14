@@ -490,7 +490,7 @@
 #define MUS_RG_TRAINER_TOWER        556 // MUS_RG_T_TOWER
 #define MUS_RG_SLOW_PALLET          557 // MUS_RG_SLOWMASARA
 #define MUS_RG_TEACHY_TV_MENU       558 // MUS_RG_TVNOIZE
-#define END_MUS                     MUS_DP_SUNYSHORE_DAY
+#define END_MUS                     MUS_DP_VS_UXIE_MESPRIT_AZELF
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
@@ -574,6 +574,7 @@
 #define MUS_DP_SNOWPOINT_DAY        631
 #define MUS_DP_HALL_OF_ORIGIN       632
 #define MUS_DP_SUNYSHORE_DAY        633
+#define MUS_DP_VS_UXIE_MESPRIT_AZELF 634
 
 #define MUS_ROUTE118                0x7FFF  // Map is split into 2 music sections. controlled by GetCurrLocationDefaultMusic().
 

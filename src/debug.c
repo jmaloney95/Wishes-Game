@@ -4307,7 +4307,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(MUS_DP_ETERNA_FOREST)              \
     X(MUS_DP_SNOWPOINT_DAY)              \
     X(MUS_DP_HALL_OF_ORIGIN)              \
-    X(MUS_DP_SUNYSHORE_DAY)
+    X(MUS_DP_SUNYSHORE_DAY)              \
+    X(MUS_DP_VS_UXIE_MESPRIT_AZELF)
 
 #define SOUND_LIST_SE               \
     X(SE_USE_ITEM)                  \

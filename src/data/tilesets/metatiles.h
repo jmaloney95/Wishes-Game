@@ -445,6 +445,8 @@ const u16 gMetatileAttributes_VioletCity[] = INCBIN_U16("data/tilesets/secondary
 // --- Ashland trees + path (144 metatiles reconstruct the source 1:1; tweak in Porymap) ---
 const u16 gMetatiles_AshlandTrees[] = INCBIN_U16("data/tilesets/secondary/ashland_trees/metatiles.bin");
 const u16 gMetatileAttributes_AshlandTrees[] = INCBIN_U16("data/tilesets/secondary/ashland_trees/metatile_attributes.bin");
+const u16 gMetatiles_NightMarket[] = INCBIN_U16("data/tilesets/primary/night_market/metatiles.bin");
+const u16 gMetatileAttributes_NightMarket[] = INCBIN_U16("data/tilesets/primary/night_market/metatile_attributes.bin");
 
 const u16 gMetatiles_GsJapan[] = INCBIN_U16("data/tilesets/secondary/gs_japan/metatiles.bin");
 const u16 gMetatileAttributes_GsJapan[] = INCBIN_U16("data/tilesets/secondary/gs_japan/metatile_attributes.bin");

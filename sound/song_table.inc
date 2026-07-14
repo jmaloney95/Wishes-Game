@@ -644,6 +644,7 @@ gSongTable::
 	song mus_dp_snowpoint_day, MUSIC_PLAYER_BGM, 0
 	song mus_dp_hall_of_origin, MUSIC_PLAYER_BGM, 0
 	song mus_dp_sunyshore_day, MUSIC_PLAYER_BGM, 0
+	song mus_dp_vs_uxie_mesprit_azelf, MUSIC_PLAYER_BGM, 0
 
 	.align 2
 dummy_song_header:
