@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 # !!! WARNING: REGENERATES gTileset_NightMarket from source art -- OVERWRITES
 # !!! tiles.png / metatiles.bin / metatile_attributes.bin and WIPES any Porymap
-# !!! edits (custom metatile layers, collision, behaviours). Once you start
-# !!! painting the night market in Porymap, do NOT re-run this.
+# !!! edits (custom metatile layers, collision, behaviours). Once you paint the
+# !!! night market in Porymap, do NOT re-run this.
 #
 # Builds the gTileset_NightMarket PRIMARY by fusing odisea's market stalls +
-# hanging lanterns with shikari's dark-town walls/cobble/gate, quantized to fit
-# the GBA primary budget (<=512 tiles, palette slots 0-5). Pairs with the
-# gTileset_AshlandTrees secondary (slots 6-9).
+# hanging lanterns with shikari's dark town (walls, cobble, Poke Center, PC Mart).
 #   sources: ../tilesets_raw/{shikari_tileset_supplement...,odisea_outdoors...}.png
+#            -- both are 2X art (each 8x8 GBA tile drawn 16x16), so SS=2 downscales
+#               them to native resolution; without this the tiles render DOUBLE size.
 #   output : data/tilesets/primary/night_market/{tiles.png,palettes/NN.pal,
 #            metatiles.bin,metatile_attributes.bin}
 #   run    : python tools/build_night_market.py --emit    then  make
 #
-# v2: per-GROUP color quantization (<=15 colors/group, <=6 groups) guarantees the
-# 6-palette primary budget and boosts tile dedup. Focused "night market kit":
-# cobble ground, walls, market stalls, hanging lanterns, purple gate. (Full PC/
-# Mart buildings dropped -- ~720 tiles alone, a whole tileset's worth.)
+# Fits the GBA primary budget (500/512 tiles, 5/6 pals, slots 0-4; the
+# gTileset_AshlandTrees secondary uses 6-9). Per-GROUP median-cut quantization
+# (<=15 colors/group) forces <=6 palettes; a red-X "unused cell" filter drops the
+# sheets' placeholder tiles; exterior near-black flood-fill -> transparent index 0.
 import sys, os, struct
 from collections import deque, Counter
 from PIL import Image
@@ -28,18 +28,21 @@ DST  = r"J:\ROM Hack Project\pokeemerald-expansion\data\tilesets\primary\night_m
 PREVIEW = os.path.join(DST, "_preview.png")  # true-color proof render (not built into the ROM)
 TRANS = (255, 0, 255)
 MAXTILES, MAXPALS = 512, 6
+SS = 2   # sources are 2x art (each 8x8 GBA tile drawn 16x16) -> downscale by 2
 
-# (name, src, c0, r0, c1, r1, group)
+# (name, src, c0, r0, c1, r1, group) -- coords in the 2x SOURCE's 8px units;
+# spans must be multiples of 4 so the downscaled region is whole metatiles.
 REGIONS = [
-    ("cobble",     SHIK,  0, 120,  8, 128, 0),   # G0 stone: ground (small patch)
-    ("brickwall",  SHIK,  0, 32, 16, 46, 0),     # G0 stone: walls
-    ("stall_shop", ODI,   0, 180, 24, 208, 1),   # G1 stalls
-    ("stall_tent", ODI,   0, 208, 24, 224, 1),   # G1 stalls
-    ("lanterns",   ODI,   0, 344, 12, 358, 2),   # G2 lamps
-    ("lamp_string",ODI,   0, 332,  8, 344, 2),   # G2 lamps (trimmed to 8 cols)
-    ("gate",       SHIK, 14, 128, 24, 138, 3),   # G3 accents: gate
+    ("cobble",     SHIK,  0, 112, 20, 128, 0),   # G0 stone: ground + ledge
+    ("brickwall",  SHIK,  0, 32, 16, 48, 0),     # G0 stone: walls
+    ("stall_shop", ODI,   0, 180, 24, 208, 1),   # G1 stalls: shopfronts + awnings
+    ("stall_tent", ODI,   0, 208, 24, 224, 1),   # G1 stalls: A-frame tents
+    ("lanterns",   ODI,   0, 344, 12, 360, 2),   # G2 lamps
+    ("lamp_string",ODI,   0, 332,  8, 344, 2),   # G2 lamps: hanging strings
+    ("pc_center",  SHIK,  0, 140, 32, 172, 3),   # G3 Poke Center building
+    ("pc_mart",    SHIK,  0, 172, 28, 208, 4),   # G4 PC Mart storefront
 ]
-NGROUPS = 4
+NGROUPS = 5
 
 def near_black(c): return max(c) <= 16
 
@@ -54,7 +57,9 @@ def is_xmarker(t):
 
 def load_region(src, c0, r0, c1, r1):
     im = Image.open(src).convert("RGB")
-    crop = im.crop((c0*8, r0*8, c1*8, r1*8)); W, H = crop.size; p = crop.load()
+    crop = im.crop((c0*8, r0*8, c1*8, r1*8))
+    crop = crop.resize((crop.size[0]//SS, crop.size[1]//SS), Image.NEAREST)  # 2x -> 1x
+    W, H = crop.size; p = crop.load()
     tr = [[False]*W for _ in range(H)]; dq = deque()
     for x in range(W):
         for y in (0, H-1):
@@ -84,7 +89,7 @@ def load_region(src, c0, r0, c1, r1):
 group_pixels = [[] for _ in range(NGROUPS)]
 metas = []   # (group, [4 tiles(list of 64 colors)], name)
 for (name, src, c0, r0, c1, r1, g) in REGIONS:
-    assert (c1-c0)%2==0 and (r1-r0)%2==0, name
+    assert (c1-c0)%4==0 and (r1-r0)%4==0, name
     tiles, mw, mh = load_region(src, c0, r0, c1, r1)
     for m in range(mw*mh):
         quad = tiles[m*4:m*4+4]
