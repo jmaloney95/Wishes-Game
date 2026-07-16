@@ -9642,7 +9642,7 @@
       "id": "LAYOUT_SENNEN_ACT2",
       "name": "SennenAct2_Layout",
       "width": 35,
-      "height": 26,
+      "height": 33,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenAct2/border.bin",
