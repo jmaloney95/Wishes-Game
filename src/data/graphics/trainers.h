@@ -43,6 +43,8 @@ const u32 gTrainerFrontPic_MutridGruntWhite[] = INCGFX_U32("graphics/trainers/fr
 const u16 gTrainerPalette_MutridGruntWhite[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt_white.png", ".gbapal");
 const u32 gTrainerFrontPic_MutridGruntF[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_grunt_f.png", ".4bpp.smol");
 const u16 gTrainerPalette_MutridGruntF[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt_f.png", ".gbapal");
+const u32 gTrainerFrontPic_MutridGoon[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_goon.png", ".4bpp.smol");
+const u16 gTrainerPalette_MutridGoon[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_goon.png", ".gbapal");
 
 const u32 gTrainerFrontPic_MagmaGruntM[] = INCGFX_U32("graphics/trainers/front_pics/magma_grunt_m.png", ".4bpp.smol");
 const u16 gTrainerPalette_MagmaGruntM[] = INCGFX_U16("graphics/trainers/front_pics/magma_grunt_m.png", ".gbapal");
@@ -537,6 +539,7 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT, gTrainerFrontPic_MutridGrunt, gTrainerPalette_MutridGrunt),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT_WHITE, gTrainerFrontPic_MutridGruntWhite, gTrainerPalette_MutridGruntWhite),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT_F, gTrainerFrontPic_MutridGruntF, gTrainerPalette_MutridGruntF),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GOON, gTrainerFrontPic_MutridGoon, gTrainerPalette_MutridGoon),
 
     TRAINER_SPRITE(TRAINER_PIC_FRONT_EXPERT_M, gTrainerFrontPic_ExpertM, gTrainerPalette_ExpertM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_AQUA_ADMIN_M, gTrainerFrontPic_AquaAdminM, gTrainerPalette_AquaAdminM),

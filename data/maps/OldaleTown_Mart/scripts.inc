@@ -35,6 +35,7 @@ OldaleTown_Mart_Pokemart_Expanded:
 	.2byte ITEM_SUPER_POTION
 	.2byte ITEM_ANTIDOTE
 	.2byte ITEM_REPEL
+	.2byte ITEM_HM06
 	pokemartlistend
 
 OldaleTown_Mart_EventScript_Woman::

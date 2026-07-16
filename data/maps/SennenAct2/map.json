@@ -15,11 +15,11 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
-      "x": 28,
-      "y": 12,
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GRUNT_WHITE",
+      "x": 32,
+      "y": 14,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -28,11 +28,11 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
-      "x": 30,
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GRUNT_WHITE",
+      "x": 33,
       "y": 14,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -42,8 +42,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 8,
-      "y": 18,
+      "x": 12,
+      "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -55,8 +55,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MACHAMP)",
-      "x": 9,
-      "y": 18,
+      "x": 13,
+      "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -68,8 +68,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(HOUNDOOM)",
-      "x": 10,
-      "y": 18,
+      "x": 14,
+      "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -81,8 +81,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
-      "x": 11,
-      "y": 18,
+      "x": 15,
+      "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -94,10 +94,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
-      "x": 16,
-      "y": 8,
+      "x": 7,
+      "y": 21,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -107,8 +107,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CHANDELURE)",
-      "x": 17,
-      "y": 8,
+      "x": 7,
+      "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
@@ -120,8 +120,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(GOLBAT)",
-      "x": 18,
-      "y": 8,
+      "x": 7,
+      "y": 23,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -133,10 +133,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
-      "x": 19,
-      "y": 8,
+      "x": 7,
+      "y": 24,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -146,7 +146,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAN_3",
-      "x": 20,
+      "x": 18,
       "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -159,7 +159,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RAICHU)",
-      "x": 21,
+      "x": 19,
       "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -172,7 +172,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(WEEZING)",
-      "x": 22,
+      "x": 20,
       "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -184,8 +184,8 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
-      "x": 23,
+      "graphics_id": "OBJ_EVENT_GFX_ONI",
+      "x": 21,
       "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -202,8 +202,8 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 32,
-      "y": 12,
+      "x": 28,
+      "y": 18,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "SennenAct2_EventScript_TrainDoor"

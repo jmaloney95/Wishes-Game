@@ -16924,7 +16924,7 @@ IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 === TRAINER_SHINKANSEN_GOON ===
 Name: Goon
 Class: Team Mutrid
-Pic: Mutrid Grunt White
+Pic: Mutrid Goon
 Gender: Male
 Music: Magma
 Double Battle: No
@@ -17278,7 +17278,7 @@ Level: 44
 === TRAINER_MUNEN_TUNNEL_GRUNT ===
 Name: Goon
 Class: Team Mutrid
-Pic: Mutrid Grunt White
+Pic: Mutrid Goon
 Gender: Male
 Music: Magma
 Double Battle: No
@@ -17296,7 +17296,7 @@ Level: 16
 === TRAINER_ACT2_PARK_GOON_EAST ===
 Name: Goon
 Class: Mutrid
-Pic: Mutrid Grunt
+Pic: Mutrid Goon
 Gender: Male
 Music: Magma
 Double Battle: No
@@ -17398,7 +17398,7 @@ Level: 41
 === TRAINER_SENNEN_CAPTAIN_RYOKO ===
 Name: RYOKO
 Class: Team Magma
-Pic: Mutrid Grunt F
+Pic: Mutrid Grunt White
 Gender: Female
 Music: Magma
 Double Battle: No
@@ -17416,7 +17416,7 @@ Level: 41
 === TRAINER_TUNNEL_GOON_A ===
 Name: Goon
 Class: Team Mutrid
-Pic: Mutrid Grunt White
+Pic: Mutrid Goon
 Gender: Male
 Music: Magma
 Double Battle: No
