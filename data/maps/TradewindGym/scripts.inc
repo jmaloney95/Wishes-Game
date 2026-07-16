@@ -1,6 +1,8 @@
-@ Tradewind Gym hall -- the indoor shrine of the Lantern Gym. The trial itself
-@ is held OUTSIDE under the lanterns (Madam Tsuji and her procession stand by
-@ the door); this hall is where the flames are tended.
+@ Tradewind Gym -- the Lantern Gym hall (Dewford gym layout). Madam Tsuji and
+@ her procession hold the trial inside: Goro, the Lantern Bearer, and the
+@ Apprentice stand along the winding path, Tsuji waits at the far shrine.
+@ Their battle scripts live in TradewindTown/scripts.inc (labels are global);
+@ Tsuji requires all three defeated before she will fight.
 TradewindGym_MapScripts::
 	.byte 0
 
@@ -19,18 +21,20 @@ TradewindGym_EventScript_Meditant::
 	end
 
 TradewindGym_Text_Acolyte::
-	.string "Looking for the LANTERN GYM's\n"
-	.string "trial? Then turn around.\p"
-	.string "MADAM TSUJI holds her trial out\n"
-	.string "under the open lanterns, where\l"
-	.string "the spirits can watch.\p"
-	.string "In here, we only keep the flames\n"
-	.string "fed. All one hundred and eight\l"
-	.string "of them.$"
+	.string "Welcome to the LANTERN GYM,\n"
+	.string "challenger.\p"
+	.string "Three keepers tend the flames\n"
+	.string "along the path: the fist, the\l"
+	.string "lantern, and the apprentice.\p"
+	.string "Douse all three, and MADAM TSUJI\n"
+	.string "will grant you her trial at the\l"
+	.string "far shrine.\p"
+	.string "Mind the dark between the lamps.\n"
+	.string "It minds you back.$"
 
 TradewindGym_Text_Meditant::
-	.string "…Each lantern outside holds a\n"
-	.string "name. When one gutters, we\l"
+	.string "…Each lantern in this hall holds\n"
+	.string "a name. When one gutters, we\l"
 	.string "relight it within the hour.\p"
 	.string "We missed one, once.\p"
 	.string "We do not talk about the\n"

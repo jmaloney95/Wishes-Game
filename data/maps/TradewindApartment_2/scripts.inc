@@ -18,3 +18,20 @@ TradewindApartment_2_Text_Presence::
 	.string "than the rest.\p"
 	.string "“You can have this one. I never\n"
 	.string "liked the view.”$"
+
+@ Hidden floor hatch (coord_event at 1,2; VAR_TEMP_0 gate). Arriving from the
+@ lab lands ON this tile without firing it -- coord triggers only fire when
+@ STEPPING onto the tile.
+TradewindApartment_2_EventScript_Hatch::
+	lockall
+	playse SE_DOOR
+	msgbox TradewindApartment_2_Text_Hatch, MSGBOX_DEFAULT
+	closemessage
+	warp MAP_TRADEWIND_LAB, 16, 2
+	waitstate
+	releaseall
+	end
+
+TradewindApartment_2_Text_Hatch::
+	.string "The floorboard gives way…\n"
+	.string "A hatch! Stairs lead down.$"

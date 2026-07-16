@@ -614,14 +614,7 @@ Tradewind_EventScript_BoatmanStay::
 	end
 
 Tradewind_Text_BoatmanOffer::
-	.string "The boatman does not greet you.\p"
-	.string "He looks at you the way deep water\n"
-	.string "looks at a dropped coin, and tips\l"
-	.string "his lantern toward the fog bank\l"
-	.string "across the strait.\p"
-	.string "Beneath it, faintly: the shape of\n"
-	.string "the National Park ferry pier.\p"
-	.string "Board the boat?$"
+	.string "Cross the Veil?$"
 
 Tradewind_Text_BoatmanStay::
 	.string "The boatman returns his gaze to\n"

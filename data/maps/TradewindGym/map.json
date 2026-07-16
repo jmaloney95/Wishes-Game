@@ -1,8 +1,8 @@
 {
   "id": "MAP_TRADEWIND_GYM",
   "name": "TradewindGym",
-  "layout": "LAYOUT_DOJO",
-  "music": "MUS_DUMMY",
+  "layout": "LAYOUT_DEWFORD_TOWN_GYM",
+  "music": "MUS_GYM",
   "region_map_section": "MAPSEC_TRADEWIND_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -16,8 +16,8 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
-      "x": 21,
-      "y": 30,
+      "x": 4,
+      "y": 25,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -28,9 +28,61 @@
       "flag": "0"
     },
     {
+      "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
+      "x": 6,
+      "y": 22,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GymGoro",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
+      "x": 9,
+      "y": 14,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GymLanternBearer",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "x": 2,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GymApprentice",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
+      "x": 4,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_MadamTsuji",
+      "flag": "0"
+    },
+    {
       "graphics_id": "OBJ_EVENT_GFX_CHANNELER",
-      "x": 18,
-      "y": 18,
+      "x": 15,
+      "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -43,22 +95,15 @@
   ],
   "warp_events": [
     {
-      "x": 21,
-      "y": 36,
+      "x": 5,
+      "y": 27,
       "elevation": 0,
       "dest_map": "MAP_TRADEWIND_TOWN",
       "dest_warp_id": "0"
     },
     {
-      "x": 20,
-      "y": 36,
-      "elevation": 0,
-      "dest_map": "MAP_TRADEWIND_TOWN",
-      "dest_warp_id": "0"
-    },
-    {
-      "x": 22,
-      "y": 36,
+      "x": 6,
+      "y": 27,
       "elevation": 0,
       "dest_map": "MAP_TRADEWIND_TOWN",
       "dest_warp_id": "0"

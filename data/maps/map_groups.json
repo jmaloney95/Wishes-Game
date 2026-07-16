@@ -175,7 +175,8 @@
     "TradewindGym",
     "TradewindApartment",
     "TradewindApartment_2",
-    "TradewindHouse"
+    "TradewindHouse",
+    "TradewindLab"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

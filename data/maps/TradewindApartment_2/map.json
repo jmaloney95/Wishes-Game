@@ -42,8 +42,32 @@
       "elevation": 0,
       "dest_map": "MAP_TRADEWIND_TOWN",
       "dest_warp_id": "3"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_APARTMENT_2",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_APARTMENT_2",
+      "dest_warp_id": "2"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 1,
+      "y": 2,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "TradewindApartment_2_EventScript_Hatch"
+    }
+  ],
   "bg_events": []
 }

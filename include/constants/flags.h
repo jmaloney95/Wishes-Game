@@ -2532,6 +2532,11 @@
 #define FLAG_ITEM_DISTORTION_WORLD_3_MAX_REVIVE FLAG_UNUSED_0x285
 #define FLAG_ITEM_DISTORTION_WORLD_5_FULL_RESTORE FLAG_UNUSED_0x286
 #define FLAG_ITEM_DISTORTION_WORLD_5_PP_UP      FLAG_UNUSED_0x287
+// Tradewind Town street item balls (2026-07-15)
+#define FLAG_ITEM_TRADEWIND_TM30                FLAG_UNUSED_0x288 // Shadow Ball
+#define FLAG_ITEM_TRADEWIND_TM24                FLAG_UNUSED_0x289 // Thunderbolt
+#define FLAG_ITEM_TRADEWIND_TM29                FLAG_UNUSED_0x28A // Psychic
+#define FLAG_ITEM_TRADEWIND_MAX_POTION          FLAG_UNUSED_0x28B
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)
