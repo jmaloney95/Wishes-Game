@@ -95,13 +95,6 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 8,
-      "y": 5,
-      "elevation": 0,
-      "dest_map": "MAP_TRADEWIND_TOWN",
-      "dest_warp_id": "0"
-    },
-    {
       "x": 16,
       "y": 19,
       "elevation": 0,

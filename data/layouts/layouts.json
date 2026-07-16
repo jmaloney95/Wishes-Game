@@ -9697,6 +9697,17 @@
       "secondary_tileset": "gTileset_AshlandTrees",
       "border_filepath": "data/layouts/Ashlands_2/border.bin",
       "blockdata_filepath": "data/layouts/Ashlands_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_TRADEWIND_PC",
+      "name": "Tradewind_PC_Layout",
+      "width": 14,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonCenter",
+      "border_filepath": "data/layouts/Tradewind_PC/border.bin",
+      "blockdata_filepath": "data/layouts/Tradewind_PC/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

@@ -372,7 +372,7 @@
         .backAnimId = BACK_ANIM_NONE,
         .palette = gMonPalette_JirachiShadow,
         .shinyPalette = gMonShinyPalette_JirachiShadow,
-        .iconSprite = gMonIcon_Jirachi,
+        .iconSprite = gMonIcon_JirachiShadow,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         FOOTPRINT(Jirachi)

@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 1,
       "y": 2,
       "elevation": 0,
@@ -28,7 +28,7 @@
       "flag": "FLAG_HIDE_SHINKANSEN_GOON"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 3,
       "y": 2,
       "elevation": 0,
@@ -41,7 +41,7 @@
       "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 5,
       "y": 1,
       "elevation": 0,
@@ -54,7 +54,7 @@
       "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 7,
       "y": 1,
       "elevation": 0,
@@ -67,7 +67,7 @@
       "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 10,
       "y": 2,
       "elevation": 0,
@@ -80,7 +80,7 @@
       "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 12,
       "y": 1,
       "elevation": 0,

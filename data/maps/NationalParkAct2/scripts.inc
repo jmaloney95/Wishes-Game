@@ -26,7 +26,7 @@ NationalParkAct2_EventScript_Boatman::
 	fadescreen FADE_TO_BLACK
 	playse SE_SHIP
 	delay 30
-	warp MAP_TRADEWIND_TOWN, 18, 27
+	warp MAP_TRADEWIND_TOWN, 67, 27
 	waitstate
 	release
 	end

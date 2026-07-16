@@ -6483,6 +6483,7 @@ const u32 gObjectEventPic_Substitute[] = INCGFX_COMP("graphics/pokemon/question_
     const u16 gMonPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/normal.pal", ".gbapal");
     const u32 gMonBackPic_MewtwoArmored[] = INCGFX_U32("graphics/pokemon/mewtwo_armored/back.png", ".4bpp.smol");
     const u16 gMonShinyPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/normal.pal", ".gbapal");
+    const u8 gMonIcon_MewtwoArmored[] = INCGFX_U8("graphics/pokemon/mewtwo_armored/icon.png", ".4bpp");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_MewtwoArmored[] = INCGFX_COMP("graphics/pokemon/mewtwo_armored/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
@@ -6521,6 +6522,7 @@ const u32 gObjectEventPic_Substitute[] = INCGFX_COMP("graphics/pokemon/question_
     const u16 gMonPalette_JirachiShadow[] = INCGFX_U16("graphics/pokemon/jirachi_shadow/normal.pal", ".gbapal");
     const u32 gMonBackPic_JirachiShadow[] = INCGFX_U32("graphics/pokemon/jirachi_shadow/back.png", ".4bpp.smol");
     const u16 gMonShinyPalette_JirachiShadow[] = INCGFX_U16("graphics/pokemon/jirachi_shadow/shiny.pal", ".gbapal");
+    const u8 gMonIcon_JirachiShadow[] = INCGFX_U8("graphics/pokemon/jirachi_shadow/icon.png", ".4bpp");
 #if OW_POKEMON_OBJECT_EVENTS
     const u32 gObjectEventPic_JirachiShadow[] = INCGFX_COMP("graphics/pokemon/jirachi_shadow/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
 #if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE

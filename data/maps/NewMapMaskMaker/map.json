@@ -30,14 +30,14 @@
   ],
   "warp_events": [
     {
-      "x": 3,
+      "x": 4,
       "y": 7,
       "elevation": 0,
       "dest_map": "MAP_NEW_MAP",
       "dest_warp_id": "7"
     },
     {
-      "x": 4,
+      "x": 5,
       "y": 7,
       "elevation": 0,
       "dest_map": "MAP_NEW_MAP",

@@ -1,9 +1,9 @@
 {
-  "id": "MAP_LILYCOVE_CITY_HOUSE2",
-  "name": "LilycoveCity_House2",
-  "layout": "LAYOUT_LILYCOVE_CITY_HOUSE2",
-  "music": "MUS_LILYCOVE",
-  "region_map_section": "MAPSEC_LILYCOVE_CITY",
+  "id": "MAP_TRADEWIND_PC",
+  "name": "Tradewind_PC",
+  "layout": "LAYOUT_TRADEWIND_PC",
+  "music": "MUS_POKE_CENTER",
+  "region_map_section": "MAPSEC_TRADEWIND_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_INDOOR",
@@ -15,35 +15,21 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
-      "x": 0,
-      "y": 4,
+      "local_id": "LOCALID_OLDALE_NURSE",
+      "graphics_id": "OBJ_EVENT_GFX_NURSE",
+      "x": 7,
+      "y": 2,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "LilycoveCity_House2_EventScript_FatMan",
+      "script": "OldaleTown_PokemonCenter_1F_EventScript_Nurse",
       "flag": "0"
     }
   ],
-  "warp_events": [
-    {
-      "x": 2,
-      "y": 7,
-      "elevation": 0,
-      "dest_map": "MAP_LILYCOVE_CITY",
-      "dest_warp_id": "9"
-    },
-    {
-      "x": 3,
-      "y": 7,
-      "elevation": 0,
-      "dest_map": "MAP_LILYCOVE_CITY",
-      "dest_warp_id": "9"
-    }
-  ],
+  "warp_events": [],
   "coord_events": [],
   "bg_events": [],
   "region": "REGION_HOENN"

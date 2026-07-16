@@ -20546,8 +20546,8 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .backAnimId = BACK_ANIM_GROW_STUTTER,
         .palette = gMonPalette_MewtwoArmored,
         .shinyPalette = gMonShinyPalette_MewtwoArmored,
-        .iconSprite = gMonIcon_Mewtwo,
-        .iconPalIndex = 2,
+        .iconSprite = gMonIcon_MewtwoArmored,
+        .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         SHADOW(6, 12, SHADOW_SIZE_XL_BATTLE_ONLY)
         FOOTPRINT(Mewtwo)

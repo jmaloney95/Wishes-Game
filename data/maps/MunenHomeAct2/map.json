@@ -28,7 +28,7 @@
       "flag": "FLAG_ACT2_HOME_CUTSCENE_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_M",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 4,
       "y": 4,
       "elevation": 0,
@@ -41,7 +41,7 @@
       "flag": "FLAG_ACT2_HOME_CUTSCENE_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAGMA_MEMBER_F",
+      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
       "x": 6,
       "y": 4,
       "elevation": 0,
