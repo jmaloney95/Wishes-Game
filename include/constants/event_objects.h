@@ -429,11 +429,15 @@
 #define OBJ_EVENT_GFX_SWIMMER_PINK                             396
 #define OBJ_EVENT_GFX_SWIMMER_SKY                              397
 #define OBJ_EVENT_GFX_GOLD_ONI                                 398
-#define OBJ_EVENT_GFX_ONI_GOON                                 399
+// Team Mutrid overworld ranks (pair with the matching battle Pic: in trainers.party):
+//   MUTRID_GOON_RED      = rank-and-file walk cycle -> battle pics "Mutrid Goon" (blackwhite) or "Mutrid Grunt F" (cat mask)
+//   MUTRID_OFFICER_WHITE = officer walk cycle       -> battle pics "Mutrid Grunt" (red) or "Mutrid Grunt White"
+//   GOLD_ONI             = the Mutrid leader (StarSummit)
+#define OBJ_EVENT_GFX_MUTRID_GOON_RED                          399
 #define OBJ_EVENT_GFX_ITEM_CARVED_MASK                         400
 #define OBJ_EVENT_GFX_ITEM_CATALPA_BOW                         401
 #define OBJ_EVENT_GFX_ITEM_POTION                              402
-#define OBJ_EVENT_GFX_MUTRID_GRUNT_WHITE                       403
+#define OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE                     403
 
 // FRLG equivalents
 

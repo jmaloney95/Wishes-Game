@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GRUNT_WHITE",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE",
       "x": 32,
       "y": 14,
       "elevation": 3,
@@ -28,7 +28,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GRUNT_WHITE",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE",
       "x": 33,
       "y": 14,
       "elevation": 3,
@@ -80,7 +80,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 15,
       "y": 22,
       "elevation": 3,
@@ -132,7 +132,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 7,
       "y": 24,
       "elevation": 3,

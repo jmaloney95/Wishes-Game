@@ -28,7 +28,7 @@
       "flag": "FLAG_ACT2_HOME_CUTSCENE_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 4,
       "y": 4,
       "elevation": 0,
@@ -41,7 +41,7 @@
       "flag": "FLAG_ACT2_HOME_CUTSCENE_DONE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 6,
       "y": 4,
       "elevation": 0,

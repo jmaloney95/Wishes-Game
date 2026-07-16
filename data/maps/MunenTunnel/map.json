@@ -67,7 +67,7 @@
       "flag": "FLAG_ITEM_MUNEN_TUNNEL_TM_SHADOW_BALL"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 13,
       "y": 6,
       "elevation": 3,
@@ -93,7 +93,7 @@
       "flag": "FLAG_ITEM_MUNEN_TUNNEL_CARVED_MASK"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 18,
       "y": 16,
       "elevation": 3,
@@ -106,7 +106,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ONI_GOON",
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
       "x": 18,
       "y": 9,
       "elevation": 3,
@@ -178,7 +178,7 @@
     {
       "type": "sign",
       "x": 7,
-      "y": 4,
+      "y": 2,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "MunenTunnel_EventScript_UnsentLetter"

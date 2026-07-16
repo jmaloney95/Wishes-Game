@@ -2537,6 +2537,7 @@
 #define FLAG_ITEM_TRADEWIND_TM24                FLAG_UNUSED_0x289 // Thunderbolt
 #define FLAG_ITEM_TRADEWIND_TM29                FLAG_UNUSED_0x28A // Psychic
 #define FLAG_ITEM_TRADEWIND_MAX_POTION          FLAG_UNUSED_0x28B
+#define FLAG_ITEM_WALNUT_WOODS_HM06             FLAG_UNUSED_0x28C // Rock Smash
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)
