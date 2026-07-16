@@ -292,6 +292,118 @@ Tradewind_EventScript_MaskedMerchant::
 	release
 	end
 
+@ Locked doors (bg_event signs on the shut storefronts)
+Tradewind_EventScript_LockedDoor::
+	msgbox Tradewind_Text_LockedDoor, MSGBOX_SIGN
+	end
+
+@ Foreshadows Tsuji's Mega Ring + Gengarite reward
+Tradewind_EventScript_MegaHint::
+	lock
+	faceplayer
+	msgbox Tradewind_Text_MegaHint, MSGBOX_DEFAULT
+	release
+	end
+
+@ ============================================================================
+@  Ghosts of the night market -- wild spirits drifting the stalls and the
+@  black mirror-water on the town's east edge, plus two human(?) residents.
+@ ============================================================================
+Tradewind_EventScript_GhostDrifloon::
+	lock
+	faceplayer
+	playmoncry SPECIES_DRIFLOON, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostDrifloon, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostLampent::
+	lock
+	faceplayer
+	playmoncry SPECIES_LAMPENT, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostLampent, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostGastly::
+	lock
+	faceplayer
+	playmoncry SPECIES_GASTLY, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostGastly, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostDuskull::
+	lock
+	faceplayer
+	playmoncry SPECIES_DUSKULL, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostDuskull, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostLitwick::
+	lock
+	faceplayer
+	playmoncry SPECIES_LITWICK, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostLitwick, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostShuppet::
+	lock
+	faceplayer
+	playmoncry SPECIES_SHUPPET, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostShuppet, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostMisdreavus::
+	lock
+	faceplayer
+	playmoncry SPECIES_MISDREAVUS, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox Tradewind_Text_GhostMisdreavus, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostChanneler::
+	lock
+	faceplayer
+	msgbox Tradewind_Text_GhostChanneler, MSGBOX_DEFAULT
+	release
+	end
+
+Tradewind_EventScript_GhostDancer::
+	lock
+	faceplayer
+	msgbox Tradewind_Text_GhostDancer, MSGBOX_DEFAULT
+	release
+	end
+
+@ ============================================================================
+@  Street trainers (eerie night-market, <=Lv20)
+@ ============================================================================
+Tradewind_EventScript_TrainerSable::
+	trainerbattle_single TRAINER_TRADEWIND_SABLE, Tradewind_Text_SableIntro, Tradewind_Text_SableDefeat
+	msgbox Tradewind_Text_SablePostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Tradewind_EventScript_TrainerRoshan::
+	trainerbattle_single TRAINER_TRADEWIND_ROSHAN, Tradewind_Text_RoshanIntro, Tradewind_Text_RoshanDefeat
+	msgbox Tradewind_Text_RoshanPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+Tradewind_EventScript_TrainerPiper::
+	trainerbattle_single TRAINER_TRADEWIND_PIPER, Tradewind_Text_PiperIntro, Tradewind_Text_PiperDefeat
+	msgbox Tradewind_Text_PiperPostBattle, MSGBOX_AUTOCLOSE
+	end
+
 @ ============================================================================
 @  Text
 @ ============================================================================
@@ -516,3 +628,107 @@ Tradewind_Text_BoatmanStay::
 	.string "the water.\p"
 	.string "The lantern stays lit.\n"
 	.string "The offer stays open.$"
+
+Tradewind_Text_LockedDoor::
+	.string "It's locked…$"
+
+Tradewind_Text_GhostDrifloon::
+	.string "DRIFLOON drifts against the wind,\n"
+	.string "string dangling like an offer.\p"
+	.string "Don't take its hand.$"
+
+Tradewind_Text_GhostLampent::
+	.string "LAMPENT hangs perfectly still\n"
+	.string "over the black water.\p"
+	.string "Its flame reflects where there\n"
+	.string "is nothing to reflect.$"
+
+Tradewind_Text_GhostGastly::
+	.string "GASTLY grins at your reflection\n"
+	.string "instead of at you.$"
+
+Tradewind_Text_GhostDuskull::
+	.string "DUSKULL's one eye slides from\n"
+	.string "socket to socket…\p"
+	.string "It is counting the shoppers.\n"
+	.string "It counts one too many.$"
+
+Tradewind_Text_GhostLitwick::
+	.string "LITWICK's flame bends toward\n"
+	.string "you like a beckoning finger.\p"
+	.string "The market lanterns bend with it.$"
+
+Tradewind_Text_GhostShuppet::
+	.string "SHUPPET nestles among the masks\n"
+	.string "on the stall.\p"
+	.string "One of the masks is breathing.$"
+
+Tradewind_Text_GhostMisdreavus::
+	.string "MISDREAVUS hums a lullaby.\p"
+	.string "You've heard it before. You\n"
+	.string "can't remember where. It smiles.$"
+
+Tradewind_Text_GhostChanneler::
+	.string "The dead barter here, same as\n"
+	.string "the living. Look at the vendors'\l"
+	.string "feet, if you doubt me.\p"
+	.string "The ones that touch the ground\n"
+	.string "are the customers.$"
+
+Tradewind_Text_GhostDancer::
+	.string "I danced at this market's first\n"
+	.string "lantern-lighting.\p"
+	.string "That was… oh, a hundred and\n"
+	.string "forty years ago.\p"
+	.string "…Why are you looking at me\n"
+	.string "like that?$"
+
+Tradewind_Text_MegaHint::
+	.string "You've seen MADAM TSUJI's ring?\n"
+	.string "The stone set in it isn't a jewel.\p"
+	.string "They say when her lantern burns\n"
+	.string "low, she touches it, and her\l"
+	.string "partner becomes something ELSE.\p"
+	.string "Mega Evolution, the old-timers\n"
+	.string "call it. She'd never show it to\l"
+	.string "a stranger.\p"
+	.string "Earn her badge, though… and who\n"
+	.string "knows what she'll pass on.$"
+
+Tradewind_Text_SableIntro::
+	.string "The lanterns whisper to my\n"
+	.string "darlings. Right now they're\l"
+	.string "whispering about YOU.$"
+
+Tradewind_Text_SableDefeat::
+	.string "Shh… they've gone quiet.$"
+
+Tradewind_Text_SablePostBattle::
+	.string "My darlings only play with the\n"
+	.string "living they LIKE. Feel honored.$"
+
+Tradewind_Text_RoshanIntro::
+	.string "Half the shoppers in this market\n"
+	.string "cast no shadow. Care to guess\l"
+	.string "which half you're in?$"
+
+Tradewind_Text_RoshanDefeat::
+	.string "Ah. The half that hits back.$"
+
+Tradewind_Text_RoshanPostBattle::
+	.string "Don't buy anything the cold\n"
+	.string "vendors sell. Their change is\l"
+	.string "always a little TOO old.$"
+
+Tradewind_Text_PiperIntro::
+	.string "Grandma says never whistle in\n"
+	.string "the market after dark.\p"
+	.string "I whistle ALL the time!$"
+
+Tradewind_Text_PiperDefeat::
+	.string "Eep! Something whistled BACK!$"
+
+Tradewind_Text_PiperPostBattle::
+	.string "SABLEYE followed me home from\n"
+	.string "the gem stall. Or maybe I\l"
+	.string "followed IT home. It's fuzzy.$"

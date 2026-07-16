@@ -17531,3 +17531,48 @@ Giratina @ Sitrus Berry
 Level: 40
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
+
+=== TRAINER_TRADEWIND_SABLE ===
+Name: SABLE
+Class: Hex Maniac
+Pic: Hex Maniac
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Shuppet
+Level: 18
+
+Duskull
+Level: 19
+
+=== TRAINER_TRADEWIND_ROSHAN ===
+Name: ROSHAN
+Class: Psychic
+Pic: Psychic M
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Gastly
+Level: 17
+
+Haunter
+Level: 19
+
+=== TRAINER_TRADEWIND_PIPER ===
+Name: PIPER
+Class: Lass
+Pic: Lass
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Zubat
+Level: 17
+
+Sableye
+Level: 19

@@ -9451,8 +9451,8 @@
     {
       "id": "LAYOUT_ASHLANDS",
       "name": "Ashlands_Layout",
-      "width": 32,
-      "height": 31,
+      "width": 27,
+      "height": 32,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_AshlandTrees",
       "border_filepath": "data/layouts/Ashlands/border.bin",
@@ -9521,9 +9521,9 @@
     {
       "id": "LAYOUT_TRADEWIND_TOWN",
       "name": "TradewindTown_Layout",
-      "width": 36,
-      "height": 31,
-      "primary_tileset": "gTileset_General",
+      "width": 80,
+      "height": 53,
+      "primary_tileset": "gTileset_NightMarket",
       "secondary_tileset": "gTileset_AshlandTrees",
       "border_filepath": "data/layouts/TradewindTown/border.bin",
       "blockdata_filepath": "data/layouts/TradewindTown/map.bin"
@@ -9687,6 +9687,16 @@
       "secondary_tileset": "gTileset_DistortionWorld",
       "border_filepath": "data/layouts/DistortionWorld_4/border.bin",
       "blockdata_filepath": "data/layouts/DistortionWorld_4/map.bin"
+    },
+    {
+      "id": "LAYOUT_ASHLANDS_2",
+      "name": "Ashlands_2_Layout",
+      "width": 25,
+      "height": 32,
+      "primary_tileset": "gTileset_NightMarket",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/Ashlands_2/border.bin",
+      "blockdata_filepath": "data/layouts/Ashlands_2/map.bin"
     }
   ]
 }

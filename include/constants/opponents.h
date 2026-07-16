@@ -928,9 +928,15 @@
 //
 //       >>> ADDING A TRAINER? Take the next sequential ID below, bump TRAINERS_COUNT_EMERALD
 //       >>> to (highest id + 1), and do NOT raise MAX again until count reaches 896.
-//       >>> Next free ID: 893.
+//       >>> Next free ID: NONE -- count is at MAX (896). Adding more trainers
+//       >>> requires raising MAX_TRAINERS_COUNT_EMERALD, which BREAKS SAVES.
 
-#define TRAINERS_COUNT_EMERALD     893
+// Tradewind Town street trainers (eerie night-market, <=Lv20)
+#define TRAINER_TRADEWIND_SABLE             893
+#define TRAINER_TRADEWIND_ROSHAN            894
+#define TRAINER_TRADEWIND_PIPER             895
+
+#define TRAINERS_COUNT_EMERALD     896
 #define MAX_TRAINERS_COUNT_EMERALD 896
 
 #if IS_FRLG

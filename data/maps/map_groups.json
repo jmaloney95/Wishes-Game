@@ -169,7 +169,13 @@
     "DistortionWorld_2",
     "DistortionWorld_3",
     "DistortionWorld_4",
-    "DistortionWorld_5"
+    "DistortionWorld_5",
+    "Ashlands_2",
+    "TradewindPokecenter",
+    "TradewindGym",
+    "TradewindApartment",
+    "TradewindApartment_2",
+    "TradewindHouse"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

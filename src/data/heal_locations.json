@@ -401,8 +401,8 @@
     {
       "id": "HEAL_LOCATION_TRADEWIND_TOWN",
       "map": "MAP_TRADEWIND_TOWN",
-      "x": 11,
-      "y": 6
+      "x": 24,
+      "y": 43
     }
   ]
 }

@@ -1815,3 +1815,11 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/DistortionWorld_5/scripts.inc"
 
 	.include "data/maps/DistortionWorld_4/scripts.inc"
+
+	.include "data/maps/Ashlands_2/scripts.inc"
+
+	.include "data/maps/TradewindPokecenter/scripts.inc"
+	.include "data/maps/TradewindGym/scripts.inc"
+	.include "data/maps/TradewindApartment/scripts.inc"
+	.include "data/maps/TradewindApartment_2/scripts.inc"
+	.include "data/maps/TradewindHouse/scripts.inc"
