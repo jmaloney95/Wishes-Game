@@ -104,12 +104,13 @@ static void SpriteCB_QuestIndicator(struct Sprite *sprite)
 
     if (TryGetObjectEventIdByLocalIdAndMap(sprite->sLocalId, sprite->sMapNum, sprite->sMapGroup, &objectEventId))
     {
-        // NPC not present. If it was showing and then left (e.g. walked off),
-        // retire it; otherwise keep waiting invisibly for it to spawn.
-        if (sprite->sSeen)
-            DestroySprite(sprite);
-        else
-            sprite->invisible = TRUE;
+        // NPC not currently spawned. This is USUALLY just the camera window --
+        // RemoveObjectEventsOutsideView despawns off-screen NPCs -- so never
+        // destroy here (that permanently killed the "!" the moment the quest
+        // giver scrolled off-screen); wait invisibly and re-attach on respawn.
+        // Genuine retirement is handled by ConditionStillActive above and by
+        // QuestIndicator_Reset on map load.
+        sprite->invisible = TRUE;
         return;
     }
 

@@ -241,19 +241,14 @@ MunenLabAct2_Movement_Exclaim:
 	delay_16
 	step_end
 
+@ Draco bolts NORTH out the top of the lab (he starts at 6,2; three fast
+@ steps put him past the map edge before removeobject).
 MunenLabAct2_Movement_DracoFlee:
-	face_down
+	face_up
 	delay_8
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
 	step_end
 
 @ ============================================================================

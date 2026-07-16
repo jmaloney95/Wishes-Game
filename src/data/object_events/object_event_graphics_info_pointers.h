@@ -413,6 +413,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerPink
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerSky;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GoldOni;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OniGoon;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MutridGruntWhite;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCarvedMask;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCatalpaBow;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemPotion;
@@ -674,6 +675,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_SWIMMER_SKY] = &gObjectEventGraphicsInfo_SwimmerSky,
     [OBJ_EVENT_GFX_GOLD_ONI] = &gObjectEventGraphicsInfo_GoldOni,
     [OBJ_EVENT_GFX_ONI_GOON] = &gObjectEventGraphicsInfo_OniGoon,
+    [OBJ_EVENT_GFX_MUTRID_GRUNT_WHITE] = &gObjectEventGraphicsInfo_MutridGruntWhite,
     [OBJ_EVENT_GFX_ITEM_CARVED_MASK] = &gObjectEventGraphicsInfo_ItemCarvedMask,
     [OBJ_EVENT_GFX_ITEM_CATALPA_BOW] = &gObjectEventGraphicsInfo_ItemCatalpaBow,
     [OBJ_EVENT_GFX_ITEM_POTION] = &gObjectEventGraphicsInfo_ItemPotion,
