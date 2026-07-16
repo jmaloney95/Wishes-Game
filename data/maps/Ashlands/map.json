@@ -12,13 +12,7 @@
   "allow_running": false,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_ASHLANDS_2",
-      "offset": 0,
-      "direction": "left"
-    }
-  ],
+  "connections": null,
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SAGE",
@@ -102,6 +96,43 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 5,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_EventScript_SeamWest5"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 6,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_EventScript_SeamWest6"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 7,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_EventScript_SeamWest7"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 8,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_EventScript_SeamWest8"
+    }
+  ],
   "bg_events": []
 }

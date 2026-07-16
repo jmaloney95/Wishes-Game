@@ -14,11 +14,6 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_ASHLANDS",
-      "offset": 0,
-      "direction": "right"
-    },
-    {
       "map": "MAP_TRADEWIND_TOWN",
       "offset": -11,
       "direction": "down"
@@ -40,6 +35,43 @@
     }
   ],
   "warp_events": [],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 5,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_2_EventScript_SeamEast5"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 6,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_2_EventScript_SeamEast6"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 7,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_2_EventScript_SeamEast7"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 8,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Ashlands_2_EventScript_SeamEast8"
+    }
+  ],
   "bg_events": []
 }

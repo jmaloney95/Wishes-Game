@@ -133,3 +133,31 @@ Ashlands_Text_Sage:
 	.string "I can never tell anymore.\p"
 	.string "The ash tastes like snow on my\n"
 	.string "tongue. Isn't it beautiful?$"
+
+@ ----------------------------------------------------------------------------
+@  West seam -> Ashlands_2. This boundary CANNOT be a map connection: Ashlands
+@  uses the General primary tileset and Ashlands_2 uses NightMarket, and
+@  connection crossings never reload the primary tileset or its animation
+@  callback (only the secondary), so General's tiles + animations bleed into
+@  every NightMarket map in the chain ("skewed textures"). A warp does a full
+@  load, which swaps the primary cleanly.
+@ ----------------------------------------------------------------------------
+Ashlands_EventScript_SeamWest5::
+	warp MAP_ASHLANDS_2, 24, 5
+	waitstate
+	end
+
+Ashlands_EventScript_SeamWest6::
+	warp MAP_ASHLANDS_2, 24, 6
+	waitstate
+	end
+
+Ashlands_EventScript_SeamWest7::
+	warp MAP_ASHLANDS_2, 24, 7
+	waitstate
+	end
+
+Ashlands_EventScript_SeamWest8::
+	warp MAP_ASHLANDS_2, 24, 8
+	waitstate
+	end
