@@ -2395,6 +2395,7 @@ void UpdateFollowingPokemon(void)
      || !GetFollowerInfo(&species, &shiny, &female)
      || SpeciesToGraphicsInfo(species, shiny, female) == NULL
      || gMapHeader.mapType == MAP_TYPE_INDOOR // Wishes of Tomorrow: hide the Pokémon follower in all interiors
+     || gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD // Wishes of Tomorrow: no followers anywhere in the Distortion World
      || FlagGet(FLAG_TEMP_HIDE_FOLLOWER)
      || PlayerHasFollowerNPC()
      )
@@ -6925,6 +6926,26 @@ void UpdateObjectEventCurrentMovement(struct ObjectEvent *objectEvent, struct Sp
     DoGroundEffects_OnBeginStep(objectEvent, sprite);
     DoGroundEffects_OnFinishStep(objectEvent, sprite);
     UpdateObjectEventSpriteAnimPause(objectEvent, sprite);
+
+    // Wishes of Tomorrow: inverted gravity in the Distortion World. While
+    // FLAG_DW_INVERTED is set (ceiling-walkway triggers), render the player
+    // sprite vertically flipped. sprite->vFlip is XORed into the OAM flip bit
+    // by the anim system (SetSpriteOamFlipBits), but a paused/ended anim never
+    // rewrites OAM, so also toggle the OAM bit directly on state change; on a
+    // frame with an active anim the recomputed absolute value overwrites our
+    // XOR with the identical result. Scoping to the DW mapsec makes a stale
+    // flag harmless outside the rift.
+    {
+        bool8 inverted = objectEvent->isPlayer
+                      && gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD
+                      && FlagGet(FLAG_DW_INVERTED);
+        if (sprite->vFlip != inverted)
+        {
+            sprite->vFlip = inverted;
+            sprite->oam.matrixNum ^= ST_OAM_VFLIP;
+        }
+    }
+
     UpdateObjectEventVisibility(objectEvent, sprite);
     ObjectEventUpdateSubpriority(objectEvent, sprite);
 }

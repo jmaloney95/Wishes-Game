@@ -1,0 +1,143 @@
+{
+  "id": "MAP_SHINKANSEN_INTERIOR_ACT2",
+  "name": "ShinkansenInterior_Act2",
+  "layout": "LAYOUT_SHINKANSEN_INTERIOR_ACT2",
+  "music": "MUS_SEALED_CHAMBER",
+  "region_map_section": "MAPSEC_ABANDONED_SHIP",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_FRONTIER",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 1,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Goon",
+      "flag": "FLAG_HIDE_SHINKANSEN_GOON"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 3,
+      "y": 3,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger1",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 5,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger2",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 7,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger3",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 6,
+      "y": 3,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger2",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 12,
+      "y": 1,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinkansenInterior_EventScript_Passenger1",
+      "flag": "FLAG_HIDE_SHINKANSEN_ACT2_GOONS"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 8,
+      "y": 4,
+      "elevation": 0,
+      "dest_map": "MAP_SENNEN_ACT2",
+      "dest_warp_id": "1"
+    }
+  ],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 2,
+      "elevation": 0,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "ShinkansenInterior_EventScript_TakeSeat"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 3,
+      "elevation": 0,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "ShinkansenInterior_EventScript_TakeSeat"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 0,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "ShinkansenInterior_EventScript_Computer"
+    },
+    {
+      "type": "sign",
+      "x": 0,
+      "y": 0,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
+      "script": "ShinkansenInterior_EventScript_Computer"
+    }
+  ]
+}

@@ -1,5 +1,37 @@
 DistortionWorld_3_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, DistortionWorld_3_OnTransition
 	.byte 0
+
+@ Inverted-gravity state: FLAG_DW_INVERT_PENDING carries the upside-down state
+@ through intra-map warps (a warp reloads the map, which would otherwise clear
+@ it here). Fresh entries from anywhere else always land right-side-up.
+DistortionWorld_3_OnTransition::
+	goto_if_set FLAG_DW_INVERT_PENDING, DistortionWorld_3_OnTransition_StayInverted
+	clearflag FLAG_DW_INVERTED
+	end
+DistortionWorld_3_OnTransition_StayInverted::
+	clearflag FLAG_DW_INVERT_PENDING
+	setflag FLAG_DW_INVERTED
+	end
+
+@ Right-edge portal: lower corridor (30,20) <-> ceiling corridor (30,12).
+@ Going UP flips the player (arrive inverted); coming back DOWN restores.
+DistortionWorld_3_EventScript_PortalUp::
+	lockall
+	playse SE_WARP_IN
+	setflag FLAG_DW_INVERT_PENDING
+	warp MAP_DISTORTION_WORLD_3, 30, 12
+	waitstate
+	releaseall
+	end
+
+DistortionWorld_3_EventScript_PortalDown::
+	lockall
+	playse SE_WARP_IN
+	warp MAP_DISTORTION_WORLD_3, 30, 20
+	waitstate
+	releaseall
+	end
 
 @ Rift Shard ball (placeholder spot 29,15 -- move it when the layer is
 @ painted). Taking it deepens the rift: VAR_DISTORTION_RIFT_DEPTH -> 2, so

@@ -9643,7 +9643,7 @@
       "name": "SennenAct2_Layout",
       "width": 35,
       "height": 33,
-      "primary_tileset": "gTileset_General",
+      "primary_tileset": "gTileset_NightMarket",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenAct2/border.bin",
       "blockdata_filepath": "data/layouts/SennenAct2/map.bin"
@@ -9708,6 +9708,16 @@
       "border_filepath": "data/layouts/Tradewind_PC/border.bin",
       "blockdata_filepath": "data/layouts/Tradewind_PC/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_SHINKANSEN_INTERIOR_ACT2",
+      "name": "ShinkansenInterior_Act2_Layout",
+      "width": 14,
+      "height": 5,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFactory",
+      "border_filepath": "data/layouts/ShinkansenInterior_Act2/border.bin",
+      "blockdata_filepath": "data/layouts/ShinkansenInterior_Act2/map.bin"
     }
   ]
 }

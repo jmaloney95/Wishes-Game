@@ -125,6 +125,25 @@ DistortionRift_EventScript_HopVertical::
 	releaseall
 	end
 
+@ ----------------------------------------------------------------------------
+@  Inverted gravity (shared by DW_3/DW_4): coord triggers on the FIRST ceiling
+@  tile set FLAG_DW_INVERTED (the C hook v-flips the player sprite while it is
+@  set inside MAPSEC_DISTORTION_WORLD); triggers on the LAST normal tile clear
+@  it. Walking either direction crosses both triggers in the right order.
+@ ----------------------------------------------------------------------------
+DistortionRift_EventScript_InvertOn::
+	goto_if_set FLAG_DW_INVERTED, DistortionRift_EventScript_InvertDone
+	playse SE_M_TELEPORT
+	setflag FLAG_DW_INVERTED
+DistortionRift_EventScript_InvertDone::
+	end
+
+DistortionRift_EventScript_InvertOff::
+	goto_if_unset FLAG_DW_INVERTED, DistortionRift_EventScript_InvertDone
+	playse SE_M_TELEPORT
+	clearflag FLAG_DW_INVERTED
+	end
+
 @ ============================================================================
 @  DISTORTION WORLD -- RIFT LAYERS (Act 2, post-collapse returns)
 @  Every Catalpa Bow ferry trip after the Gengar-Clarkson scene lands HERE
@@ -145,6 +164,8 @@ DistortionRift_EventScript_HopVertical::
 @ arrival point tracks each layer's entrance warp wherever it is moved in
 @ Porymap -- no coordinates to keep in sync.
 DistortionWorld_2_OnTransition::
+	clearflag FLAG_DW_INVERTED
+	clearflag FLAG_DW_INVERT_PENDING
 	goto_if_eq VAR_DISTORTION_RIFT_DEPTH, 2, DistortionWorld_2_OnTransition_CaveToLayer4
 	goto_if_ge VAR_DISTORTION_RIFT_DEPTH, 3, DistortionWorld_2_OnTransition_CaveToLayer5
 	setdynamicwarp MAP_DISTORTION_WORLD_3, 0

@@ -1826,3 +1826,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/TradewindLab/scripts.inc"
 
 	.include "data/maps/Tradewind_PC/scripts.inc"
+
+	.include "data/maps/ShinkansenInterior_Act2/scripts.inc"
