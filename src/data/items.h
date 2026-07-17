@@ -14462,6 +14462,24 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_StrangeSouvenir,
     },
 
+    // Tradewind department-store scam item: Master Ball's icon and description
+    // verbatim, 5,000 on the shelf -- but it goes to the ITEMS pocket and can't
+    // be used for anything at all. The shelf tag really does say "Waster Ball".
+    [ITEM_WASTER_BALL] =
+    {
+        .name = ITEM_NAME("Waster Ball"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "The best Ball that\n"
+            "catches a Pokémon\n"
+            "without fail."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_MasterBall,
+        .iconPalette = gItemIconPalette_MasterBall,
+    },
+
     [ITEM_EON_TICKET] =
     {
         .name = ITEM_NAME("Eon Ticket"),

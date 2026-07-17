@@ -1087,6 +1087,7 @@ enum __attribute__((packed)) Item
     ITEM_RIFT_SHARD = 889,     // layer 3 relic
     ITEM_RIFT_CORE = 890,      // layer 4 relic
     ITEM_RIFT_HEART = 891,     // layer 5 relic
+    ITEM_WASTER_BALL = 892,    // Tradewind dept-store scam: Master Ball icon/description, does nothing
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };
