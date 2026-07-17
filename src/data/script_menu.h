@@ -477,6 +477,20 @@ static const struct MenuAction MultichoiceList_CatalpaDestinations[] =
     {gText_Cancel},
 };
 
+// Wishes of Tomorrow: Tradewind curio shop -- order MUST match the switch cases
+// in Tradewind_EventScript_CurioMenu.
+static const struct MenuAction MultichoiceList_TradewindCurios[] =
+{
+    {COMPOUND_STRING("Lucarionite Z")},
+    {COMPOUND_STRING("Tyranitarite")},
+    {COMPOUND_STRING("Gyaradosite")},
+    {COMPOUND_STRING("Raichunite Y")},
+    {COMPOUND_STRING("Tatsugirinite")},
+    {COMPOUND_STRING("Houndoominite")},
+    {COMPOUND_STRING("Banettite")},
+    {COMPOUND_STRING("Garchompite")},
+};
+
 static const struct MenuAction MultichoiceList_ReadDestroyResearch[] =
 {
     {gText_ReadTheResearch},
@@ -1142,6 +1156,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_KEEP_DESTROY_RESEARCH]      = MULTICHOICE(MultichoiceList_KeepDestroyResearch),
     [MULTI_CATALPA_DESTINATIONS]       = MULTICHOICE(MultichoiceList_CatalpaDestinations),
     [MULTI_READ_DESTROY_RESEARCH]      = MULTICHOICE(MultichoiceList_ReadDestroyResearch),
+    [MULTI_TRADEWIND_CURIOS]           = MULTICHOICE(MultichoiceList_TradewindCurios),
     [MULTI_BATTLE_MODE]                = MULTICHOICE(MultichoiceList_BattleMode),
     [MULTI_UNUSED_19]                  = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_YESNOINFO_2]                = MULTICHOICE(MultichoiceList_YesNoInfo2),
