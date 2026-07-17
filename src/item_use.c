@@ -890,6 +890,19 @@ void ItemUseOutOfBattle_AbilityPatch(u8 taskId)
     SetUpItemUseCallback(taskId);
 }
 
+// Wishes of Tomorrow
+void ItemUseOutOfBattle_AbilityMachine(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_AbilityMachine;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_Paw(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_Paw;
+    SetUpItemUseCallback(taskId);
+}
+
 void ItemUseOutOfBattle_Mint(u8 taskId)
 {
     gItemUseCB = ItemUseCB_Mint;

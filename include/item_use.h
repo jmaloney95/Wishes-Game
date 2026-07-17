@@ -15,6 +15,8 @@ void ItemUseOutOfBattle_OniMask(u8 taskId);
 void ItemUseOutOfBattle_Medicine(u8 taskId);
 void ItemUseOutOfBattle_AbilityCapsule(u8 taskId);
 void ItemUseOutOfBattle_AbilityPatch(u8 taskId);
+void ItemUseOutOfBattle_AbilityMachine(u8 taskId); // Wishes of Tomorrow
+void ItemUseOutOfBattle_Paw(u8 taskId);            // Wishes of Tomorrow
 void ItemUseOutOfBattle_Mint(u8 taskId);
 void ItemUseOutOfBattle_ResetEVs(u8 taskId);
 void ItemUseOutOfBattle_ReduceEV(u8 taskId);

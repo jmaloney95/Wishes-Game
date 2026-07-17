@@ -256,6 +256,459 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_MasterBall,
     },
 
+    // ===== Wishes of Tomorrow: Ability Machines =====
+    [ITEM_AM_INTIMIDATE] =
+    {
+        .name = ITEM_NAME("AM Intimidate"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Intimidate."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_INTIMIDATE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_GUTS] =
+    {
+        .name = ITEM_NAME("AM Guts"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Guts."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_GUTS,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_TECHNICIAN] =
+    {
+        .name = ITEM_NAME("AM Technician"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Technician."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_TECHNICIAN,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_MOXIE] =
+    {
+        .name = ITEM_NAME("AM Moxie"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Moxie."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MOXIE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_ADAPTABILITY] =
+    {
+        .name = ITEM_NAME("AM Adaptability"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Adaptability."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_ADAPTABILITY,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_SHEER_FORCE] =
+    {
+        .name = ITEM_NAME("AM Sheer Force"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Sheer Force."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SHEER_FORCE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_TOUGH_CLAWS] =
+    {
+        .name = ITEM_NAME("AM Tough Claws"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Tough Claws."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_TOUGH_CLAWS,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_IRON_FIST] =
+    {
+        .name = ITEM_NAME("AM Iron Fist"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Iron Fist."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_IRON_FIST,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_TINTED_LENS] =
+    {
+        .name = ITEM_NAME("AM Tinted Lens"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Tinted Lens."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_TINTED_LENS,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_SKILL_LINK] =
+    {
+        .name = ITEM_NAME("AM Skill Link"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Skill Link."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SKILL_LINK,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_THICK_FAT] =
+    {
+        .name = ITEM_NAME("AM Thick Fat"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Thick Fat."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_THICK_FAT,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_STURDY] =
+    {
+        .name = ITEM_NAME("AM Sturdy"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Sturdy."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_STURDY,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_LEVITATE] =
+    {
+        .name = ITEM_NAME("AM Levitate"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Levitate."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_LEVITATE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_UNAWARE] =
+    {
+        .name = ITEM_NAME("AM Unaware"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Unaware."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_UNAWARE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_SERENE_GRACE] =
+    {
+        .name = ITEM_NAME("AM Serene Grace"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Serene Grace."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SERENE_GRACE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_PRANKSTER] =
+    {
+        .name = ITEM_NAME("AM Prankster"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Prankster."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_PRANKSTER,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_POISON_HEAL] =
+    {
+        .name = ITEM_NAME("AM Poison Heal"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Poison Heal."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_POISON_HEAL,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_MULTISCALE] =
+    {
+        .name = ITEM_NAME("AM Multiscale"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Multiscale."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MULTISCALE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_MAGIC_GUARD] =
+    {
+        .name = ITEM_NAME("AM Magic Guard"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Magic Guard."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MAGIC_GUARD,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_REGENERATOR] =
+    {
+        .name = ITEM_NAME("AM Regenerator"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Regenerator."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_REGENERATOR,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_SPEED_BOOST] =
+    {
+        .name = ITEM_NAME("AM Speed Boost"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Speed Boost."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SPEED_BOOST,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_MAGIC_BOUNCE] =
+    {
+        .name = ITEM_NAME("AM Magic Bounce"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "A strange disc that
+"
+            "rewrites an Ability:
+"
+            "Magic Bounce."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MAGIC_BOUNCE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    // ===== Wishes of Tomorrow: the Paws =====
+    [ITEM_MANKEYS_PAW] =
+    {
+        .name = ITEM_NAME("Mankey's Paw"),
+        .price = 3000,
+        .description = COMPOUND_STRING(
+            "A withered paw.
+"
+            "Grants a wish for
+"
+            "power, at a price."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Paw,
+        .secondaryId = 1,
+        .iconPic = gItemIcon_QuickClaw,
+        .iconPalette = gItemIconPalette_QuickClaw,
+    },
+
+    [ITEM_PRIMEAPES_PAW] =
+    {
+        .name = ITEM_NAME("Primeape's Paw"),
+        .price = 6000,
+        .description = COMPOUND_STRING(
+            "A withered paw.
+"
+            "Grants a wish for
+"
+            "power, at a price."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Paw,
+        .secondaryId = 2,
+        .iconPic = gItemIcon_QuickClaw,
+        .iconPalette = gItemIconPalette_QuickClaw,
+    },
+
+    [ITEM_ANNIHILAPES_PAW] =
+    {
+        .name = ITEM_NAME("Annihilape Paw"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "A withered paw.
+"
+            "Grants a wish for
+"
+            "power, at a price."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Paw,
+        .secondaryId = 3,
+        .iconPic = gItemIcon_QuickClaw,
+        .iconPalette = gItemIconPalette_QuickClaw,
+    },
+
+
     [ITEM_PREMIER_BALL] =
     {
         .name = ITEM_NAME("Premier Ball"),

@@ -5296,6 +5296,12 @@ static void Cmd_switchindataupdate(void)
     gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
     gBattleMons[battler].types[2] = TYPE_MYSTERY;
     gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
+    {
+        // Wishes of Tomorrow: apply the Ability Machine override on switch-in.
+        u16 amOverride = GetMonData(&GetBattlerParty(battler)[gBattlerPartyIndexes[battler]], MON_DATA_CUSTOM_ABILITY);
+        if (amOverride != ABILITY_NONE && amOverride < ABILITIES_COUNT)
+            gBattleMons[battler].ability = amOverride;
+    }
     #if TESTING
     if (gTestRunnerEnabled)
     {

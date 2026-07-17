@@ -1836,6 +1836,10 @@ void CalculateMonStats(struct Pokemon *mon)
         n = ModifyStatByNature(nature, n, i);
         if (B_FRIENDSHIP_BOOST == TRUE)
             n = n + ((n * 10 * friendship) / (MAX_FRIENDSHIP * 100));
+        // Wishes of Tomorrow: permanent Paw modifiers (signed flat, floor at 1).
+        n += (s32)GetMonData(mon, MON_DATA_PAW_ATK + (i - STAT_ATK));
+        if (n < 1)
+            n = 1;
         SetMonData(mon, MON_DATA_MAX_HP + i, &n);
     }
 
@@ -2641,24 +2645,41 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_SPDEF_EV:
             retVal = GetSubstruct2(boxMon)->spDefenseEV;
             break;
+        // Wishes of Tomorrow: contest conditions are stubbed -- their substruct
+        // bytes now hold the Ability Machine override and Paw stat mods.
         case MON_DATA_COOL:
-            retVal = GetSubstruct2(boxMon)->cool;
-            break;
         case MON_DATA_BEAUTY:
-            retVal = GetSubstruct2(boxMon)->beauty;
-            break;
         case MON_DATA_CUTE:
-            retVal = GetSubstruct2(boxMon)->cute;
-            break;
         case MON_DATA_SMART:
-            retVal = GetSubstruct2(boxMon)->smart;
-            break;
         case MON_DATA_TOUGH:
-            retVal = GetSubstruct2(boxMon)->tough;
-            break;
         case MON_DATA_SHEEN:
-            retVal = GetSubstruct2(boxMon)->sheen;
+            retVal = 0;
             break;
+        case MON_DATA_CUSTOM_ABILITY:
+            retVal = GetSubstruct2(boxMon)->customAbility;
+            break;
+        case MON_DATA_PAW_ATK:
+        case MON_DATA_PAW_DEF:
+        case MON_DATA_PAW_SPEED:
+        case MON_DATA_PAW_SPATK:
+        case MON_DATA_PAW_SPDEF:
+        {
+            // 5-bit two's complement, sign-extended to a full s32 in the u32.
+            struct PokemonSubstruct2 *sub2 = GetSubstruct2(boxMon);
+            s32 raw;
+            switch (field)
+            {
+            case MON_DATA_PAW_ATK:   raw = sub2->pawAtk;   break;
+            case MON_DATA_PAW_DEF:   raw = sub2->pawDef;   break;
+            case MON_DATA_PAW_SPEED: raw = sub2->pawSpeed; break;
+            case MON_DATA_PAW_SPATK: raw = sub2->pawSpAtk; break;
+            default:                 raw = sub2->pawSpDef; break;
+            }
+            if (raw >= 16)
+                raw -= 32;
+            retVal = (u32)raw;
+            break;
+        }
         case MON_DATA_POKERUS:
             retVal = GetSubstruct3(boxMon)->pokerus;
             break;
@@ -3156,23 +3177,32 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_SPDEF_EV:
             SET8(GetSubstruct2(boxMon)->spDefenseEV);
             break;
+        // Wishes of Tomorrow: contest conditions are stubbed (writes ignored) --
+        // their substruct bytes now hold the AM override and Paw stat mods.
         case MON_DATA_COOL:
-            SET8(GetSubstruct2(boxMon)->cool);
-            break;
         case MON_DATA_BEAUTY:
-            SET8(GetSubstruct2(boxMon)->beauty);
-            break;
         case MON_DATA_CUTE:
-            SET8(GetSubstruct2(boxMon)->cute);
-            break;
         case MON_DATA_SMART:
-            SET8(GetSubstruct2(boxMon)->smart);
-            break;
         case MON_DATA_TOUGH:
-            SET8(GetSubstruct2(boxMon)->tough);
-            break;
         case MON_DATA_SHEEN:
-            SET8(GetSubstruct2(boxMon)->sheen);
+            break;
+        case MON_DATA_CUSTOM_ABILITY:
+            SET16(GetSubstruct2(boxMon)->customAbility);
+            break;
+        case MON_DATA_PAW_ATK:
+            GetSubstruct2(boxMon)->pawAtk = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_DEF:
+            GetSubstruct2(boxMon)->pawDef = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_SPEED:
+            GetSubstruct2(boxMon)->pawSpeed = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_SPATK:
+            GetSubstruct2(boxMon)->pawSpAtk = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_SPDEF:
+            GetSubstruct2(boxMon)->pawSpDef = data[0] & 0x1F;
             break;
         case MON_DATA_POKERUS:
             SET8(GetSubstruct3(boxMon)->pokerus);
@@ -3584,7 +3614,27 @@ enum Ability GetMonAbility(struct Pokemon *mon)
 {
     u16 species = GetMonData(mon, MON_DATA_SPECIES);
     u8 abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
+    // Wishes of Tomorrow: an Ability Machine override wins over the species
+    // slots. gLastUsedAbility must still be set (Trace/battle messages read it).
+    u16 override = GetMonData(mon, MON_DATA_CUSTOM_ABILITY);
+    if (override != ABILITY_NONE && override < ABILITIES_COUNT)
+    {
+        gLastUsedAbility = override;
+        return override;
+    }
     return GetAbilityBySpecies(species, abilityNum);
+}
+
+enum Ability GetBoxMonAbility(struct BoxPokemon *boxMon)
+{
+    u16 override = GetBoxMonData(boxMon, MON_DATA_CUSTOM_ABILITY);
+    if (override != ABILITY_NONE && override < ABILITIES_COUNT)
+    {
+        gLastUsedAbility = override;
+        return override;
+    }
+    return GetAbilityBySpecies(GetBoxMonData(boxMon, MON_DATA_SPECIES),
+                               GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM));
 }
 
 void CreateSecretBaseEnemyParty(struct SecretBase *secretBaseRecord)
@@ -3857,7 +3907,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
     dst->types[1] = GetSpeciesType(dst->species, 1);
     dst->types[2] = TYPE_MYSTERY;
     dst->isShiny = IsMonShiny(src);
-    dst->ability = GetAbilityBySpecies(dst->species, dst->abilityNum);
+    dst->ability = GetMonAbility(src); // Wishes of Tomorrow: honors the AM override
     GetMonData(src, MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(dst->nickname, nickname);
     GetMonData(src, MON_DATA_OT_NAME, dst->otName);
@@ -6598,7 +6648,7 @@ u32 GetFormChangeTargetSpeciesBoxMon(struct BoxPokemon *boxMon, enum FormChanges
         .method = method,
         .currentSpecies = species,
         .heldItem = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM),
-        .ability = GetAbilityBySpecies(species, GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM)),
+        .ability = GetBoxMonAbility(boxMon), // Wishes of Tomorrow: honors the AM override
         .partyItemUsed = gSpecialVar_ItemId,
         .multichoiceSelection = gSpecialVar_Result,
         .status = GetBoxMonData(boxMon, MON_DATA_STATUS),

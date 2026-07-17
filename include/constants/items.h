@@ -1088,6 +1088,33 @@ enum __attribute__((packed)) Item
     ITEM_RIFT_CORE = 890,      // layer 4 relic
     ITEM_RIFT_HEART = 891,     // layer 5 relic
     ITEM_WASTER_BALL = 892,    // Tradewind dept-store scam: Master Ball icon/description, does nothing
+    // Wishes of Tomorrow: Ability Machines (secondaryId = granted ability)
+    ITEM_AM_INTIMIDATE = 893,
+    ITEM_AM_GUTS = 894,
+    ITEM_AM_TECHNICIAN = 895,
+    ITEM_AM_MOXIE = 896,
+    ITEM_AM_ADAPTABILITY = 897,
+    ITEM_AM_SHEER_FORCE = 898,
+    ITEM_AM_TOUGH_CLAWS = 899,
+    ITEM_AM_IRON_FIST = 900,
+    ITEM_AM_TINTED_LENS = 901,
+    ITEM_AM_SKILL_LINK = 902,
+    ITEM_AM_THICK_FAT = 903,
+    ITEM_AM_STURDY = 904,
+    ITEM_AM_LEVITATE = 905,
+    ITEM_AM_UNAWARE = 906,
+    ITEM_AM_SERENE_GRACE = 907,
+    ITEM_AM_PRANKSTER = 908,
+    ITEM_AM_POISON_HEAL = 909,
+    ITEM_AM_MULTISCALE = 910,
+    ITEM_AM_MAGIC_GUARD = 911,
+    ITEM_AM_REGENERATOR = 912,
+    ITEM_AM_SPEED_BOOST = 913,
+    ITEM_AM_MAGIC_BOUNCE = 914,
+    // Wishes of Tomorrow: the Paws (secondaryId = magnitude N)
+    ITEM_MANKEYS_PAW = 915,
+    ITEM_PRIMEAPES_PAW = 916,
+    ITEM_ANNIHILAPES_PAW = 917,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

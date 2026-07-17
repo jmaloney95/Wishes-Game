@@ -124,6 +124,13 @@ enum MonData {
     MON_DATA_GIGANTAMAX_FACTOR,
     MON_DATA_TERA_TYPE,
     MON_DATA_EVOLUTION_TRACKER,
+    // Wishes of Tomorrow (stored in the repurposed Substruct2 contest bytes)
+    MON_DATA_CUSTOM_ABILITY, // Ability Machine override (0 = none)
+    MON_DATA_PAW_ATK,        // Paw mods, contiguous in enum Stat order so
+    MON_DATA_PAW_DEF,        //  MON_DATA_PAW_ATK + (statId - STAT_ATK) works
+    MON_DATA_PAW_SPEED,
+    MON_DATA_PAW_SPATK,
+    MON_DATA_PAW_SPDEF,
 };
 
 struct PokemonSubstruct0
@@ -172,12 +179,18 @@ struct PokemonSubstruct2
     u8 speedEV;
     u8 spAttackEV;
     u8 spDefenseEV;
-    u8 cool;
-    u8 beauty;
-    u8 cute;
-    u8 smart;
-    u8 tough;
-    u8 sheen;
+    // Wishes of Tomorrow: the six contest-condition bytes (cool/beauty/cute/
+    // smart/tough/sheen) are repurposed -- contests/Pokeblocks are unreachable
+    // in this hack, and every existing save has these bytes zeroed, so this is
+    // save-compatible without growing the struct. The MON_DATA_COOL..SHEEN
+    // accessors are stubbed (read 0 / ignore writes) as a guard.
+    u16 customAbility;   // Ability Machine override; ABILITY_NONE = no override
+    u32 pawAtk:5;        // Paw stat mods: 5-bit two's complement (-16..+15),
+    u32 pawDef:5;        //  order matches enum Stat (ATK,DEF,SPEED,SPATK,SPDEF)
+    u32 pawSpeed:5;
+    u32 pawSpAtk:5;
+    u32 pawSpDef:5;
+    u32 pawUnused:7;
 };
 
 struct PokemonSubstruct3
@@ -798,6 +811,7 @@ u8 GetMonsStateToDoubles(void);
 u8 GetMonsStateToDoubles_2(void);
 enum Ability GetAbilityBySpecies(u16 species, u8 abilityNum);
 enum Ability GetMonAbility(struct Pokemon *mon);
+enum Ability GetBoxMonAbility(struct BoxPokemon *boxMon);
 void CreateSecretBaseEnemyParty(struct SecretBase *secretBaseRecord);
 enum TrainerPicID GetSecretBaseTrainerPicIndex(void);
 enum TrainerClassID GetSecretBaseTrainerClass(void);

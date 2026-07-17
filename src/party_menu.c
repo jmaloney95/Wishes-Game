@@ -115,6 +115,12 @@ enum {
     MENU_CATALOG_MOWER,
     MENU_CHANGE_FORM,
     MENU_CHANGE_ABILITY,
+    // Wishes of Tomorrow: Paw stat-choice entries (before MENU_FIELD_MOVES!)
+    MENU_PAW_ATK,
+    MENU_PAW_DEF,
+    MENU_PAW_SPATK,
+    MENU_PAW_SPDEF,
+    MENU_PAW_SPEED,
     MENU_FIELD_MOVES
 };
 
@@ -137,6 +143,7 @@ enum {
     ACTIONS_TAKEITEM_TOSS,
     ACTIONS_ROTOM_CATALOG,
     ACTIONS_ZYGARDE_CUBE,
+    ACTIONS_PAWS, // Wishes of Tomorrow
 };
 
 enum {
@@ -485,6 +492,11 @@ static void CursorCb_ChangeTMMoves(u8);
 static void CursorCb_ChangeTutorMoves(u8);
 static void CursorCb_LearnMovesSubMenu(u8);
 static void CursorCb_CatalogBulb(u8);
+static void CursorCb_PawAtk(u8);
+static void CursorCb_PawDef(u8);
+static void CursorCb_PawSpAtk(u8);
+static void CursorCb_PawSpDef(u8);
+static void CursorCb_PawSpeed(u8);
 static void CursorCb_CatalogOven(u8);
 static void CursorCb_CatalogWashing(u8);
 static void CursorCb_CatalogFridge(u8);
@@ -5041,6 +5053,121 @@ void ItemUseCB_AbilityPatch(u8 taskId, TaskFunc task)
     gTasks[taskId].func = Task_AbilityPatch;
 }
 
+// ============================================================================
+// Wishes of Tomorrow: Ability Machines. The item's secondaryId is the ability
+// it grants; applying writes MON_DATA_CUSTOM_ABILITY (honored by GetMonAbility).
+// tAbilityNum holds the granted ability id for this task (fits: max 310).
+// ============================================================================
+static const u16 sAMBlacklist[] =
+{
+    ABILITY_MULTITYPE, ABILITY_RKS_SYSTEM, ABILITY_STANCE_CHANGE,
+    ABILITY_BATTLE_BOND, ABILITY_POWER_CONSTRUCT, ABILITY_SCHOOLING,
+    ABILITY_SHIELDS_DOWN, ABILITY_DISGUISE, ABILITY_GULP_MISSILE,
+    ABILITY_ICE_FACE, ABILITY_HUNGER_SWITCH, ABILITY_ZEN_MODE,
+    ABILITY_FORECAST, ABILITY_FLOWER_GIFT, ABILITY_ZERO_TO_HERO,
+    ABILITY_COMMANDER, ABILITY_AS_ONE_ICE_RIDER, ABILITY_AS_ONE_SHADOW_RIDER,
+    ABILITY_ILLUSION, ABILITY_IMPOSTER, ABILITY_COMATOSE,
+};
+
+static bool32 IsAbilityAMBlacklisted(u16 ability)
+{
+    u32 i;
+    for (i = 0; i < ARRAY_COUNT(sAMBlacklist); i++)
+    {
+        if (sAMBlacklist[i] == ability)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+void Task_AbilityMachine(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    switch (tState)
+    {
+    case 0:
+        if (!tSpecies
+            || tAbilityNum == ABILITY_NONE
+            || (u16)tAbilityNum >= ABILITIES_COUNT
+            || IsAbilityAMBlacklisted(tAbilityNum)
+            || GetMonAbility(&gPlayerParty[tMonId]) == (u16)tAbilityNum)
+        {
+            gPartyMenuUseExitCallback = FALSE;
+            PlaySE(SE_SELECT);
+            DisplayPartyMenuMessage(gText_WontHaveEffect, 1);
+            ScheduleBgCopyTilemapToVram(2);
+            gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+            return;
+        }
+        gPartyMenuUseExitCallback = TRUE;
+        GetMonNickname(&gPlayerParty[tMonId], gStringVar1);
+        StringCopy(gStringVar2, gAbilitiesInfo[tAbilityNum].name);
+        StringExpandPlaceholders(gStringVar4, sText_askText);
+        PlaySE(SE_SELECT);
+        DisplayPartyMenuMessage(gStringVar4, 1);
+        ScheduleBgCopyTilemapToVram(2);
+        tState++;
+        break;
+    case 1:
+        if (!IsPartyMenuTextPrinterActive())
+        {
+            PartyMenuDisplayYesNoMenu();
+            tState++;
+        }
+        break;
+    case 2:
+        switch (Menu_ProcessInputNoWrapClearOnChoose())
+        {
+        case 0:
+            tState++;
+            break;
+        case 1:
+        case MENU_B_PRESSED:
+            gPartyMenuUseExitCallback = FALSE;
+            PlaySE(SE_SELECT);
+            ScheduleBgCopyTilemapToVram(2);
+            ClearStdWindowAndFrameToTransparent(6, 0);
+            ClearWindowTilemap(6);
+            DisplayPartyMenuStdMessage(5);
+            gTasks[taskId].func = (void *)GetWordTaskArg(taskId, tOldFunc);
+            return;
+        }
+        break;
+    case 3:
+        PlaySE(SE_USE_ITEM);
+        StringExpandPlaceholders(gStringVar4, sText_doneText);
+        DisplayPartyMenuMessage(gStringVar4, 1);
+        ScheduleBgCopyTilemapToVram(2);
+        tState++;
+        break;
+    case 4:
+        if (!IsPartyMenuTextPrinterActive())
+            tState++;
+        break;
+    case 5:
+    {
+        u16 newAbility = tAbilityNum;
+        SetMonData(&gPlayerParty[tMonId], MON_DATA_CUSTOM_ABILITY, &newAbility);
+        RemoveBagItem(gSpecialVar_ItemId, 1);
+        gTasks[taskId].func = Task_ClosePartyMenu;
+        break;
+    }
+    }
+}
+
+void ItemUseCB_AbilityMachine(u8 taskId, TaskFunc task)
+{
+    s16 *data = gTasks[taskId].data;
+
+    tState = 0;
+    tMonId = gPartyMenu.slotId;
+    tSpecies = GetMonData(&gPlayerParty[tMonId], MON_DATA_SPECIES);
+    tAbilityNum = GetItemSecondaryId(gSpecialVar_ItemId);
+    SetWordTaskArg(taskId, tOldFunc, (uintptr_t)(gTasks[taskId].func));
+    gTasks[taskId].func = Task_AbilityMachine;
+}
+
 #undef tState
 #undef tSpecies
 #undef tAbilityNum
@@ -6769,6 +6896,72 @@ void ItemUseCB_RotomCatalog(u8 taskId, TaskFunc task)
     gTasks[taskId].data[0] = 0xFF;
     gTasks[taskId].func = Task_HandleSelectionMenuInput;
 }
+
+// ============================================================================
+// Wishes of Tomorrow: the Paws. Item secondaryId = magnitude N. The player
+// picks a stat to raise by N; a DIFFERENT random stat falls by N. Mods are
+// permanent (MON_DATA_PAW_*), clamped to +/-PAW_MOD_CAP, floored at 1 in
+// CalculateMonStats.
+// ============================================================================
+static const u8 sText_PawWish[] = _("You make a wish upon the\nwithered paw…\p{STR_VAR_1}'s {STR_VAR_2} rose!\pBut its {STR_VAR_3} fell…{PAUSE_UNTIL_PRESS}");
+
+void ItemUseCB_Paw(u8 taskId, TaskFunc task)
+{
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_PAWS);
+    DisplaySelectionWindow(SELECTWINDOW_ACTIONS);
+    DisplayPartyMenuStdMessage(PARTY_MSG_DO_WHAT_WITH_MON);
+    gTasks[taskId].data[0] = 0xFF;
+    gTasks[taskId].func = Task_HandleSelectionMenuInput;
+}
+
+static void PawApplyStat(u8 taskId, u32 upStat)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    s32 n = GetItemSecondaryId(gSpecialVar_ItemId);
+    s32 mod;
+    u32 downStat;
+
+    PlaySE(SE_USE_ITEM);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+
+    // Raise the chosen stat (clamped).
+    mod = (s32)GetMonData(mon, MON_DATA_PAW_ATK + (upStat - STAT_ATK));
+    mod += n;
+    if (mod > PAW_MOD_CAP)
+        mod = PAW_MOD_CAP;
+    SetMonData(mon, MON_DATA_PAW_ATK + (upStat - STAT_ATK), &mod);
+
+    // A DIFFERENT random stat takes the curse.
+    downStat = STAT_ATK + (Random() % (NUM_NATURE_STATS - 1));
+    if (downStat >= upStat)
+        downStat++;
+    mod = (s32)GetMonData(mon, MON_DATA_PAW_ATK + (downStat - STAT_ATK));
+    mod -= n;
+    if (mod < -PAW_MOD_CAP)
+        mod = -PAW_MOD_CAP;
+    SetMonData(mon, MON_DATA_PAW_ATK + (downStat - STAT_ATK), &mod);
+
+    CalculateMonStats(mon);
+    RemoveBagItem(gSpecialVar_ItemId, 1);
+    gPartyMenuUseExitCallback = TRUE;
+
+    GetMonNickname(mon, gStringVar1);
+    StringCopy(gStringVar2, gStatNamesTable[upStat]);
+    StringCopy(gStringVar3, gStatNamesTable[downStat]);
+    StringExpandPlaceholders(gStringVar4, sText_PawWish);
+    DisplayPartyMenuMessage(gStringVar4, TRUE);
+    ScheduleBgCopyTilemapToVram(2);
+    gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+}
+
+static void CursorCb_PawAtk(u8 taskId)   { PawApplyStat(taskId, STAT_ATK); }
+static void CursorCb_PawDef(u8 taskId)   { PawApplyStat(taskId, STAT_DEF); }
+static void CursorCb_PawSpAtk(u8 taskId) { PawApplyStat(taskId, STAT_SPATK); }
+static void CursorCb_PawSpDef(u8 taskId) { PawApplyStat(taskId, STAT_SPDEF); }
+static void CursorCb_PawSpeed(u8 taskId) { PawApplyStat(taskId, STAT_SPEED); }
 
 bool32 TryMultichoiceFormChange(u8 taskId)
 {
