@@ -641,8 +641,8 @@ Tradewind_Text_LockedDoor::
 	.string "It's locked…$"
 
 Tradewind_Text_DevWall::
-	.string "[Dev only area.\n"
-	.string "Elevated permissions required.]$"
+	.string "(Dev only area.\n"
+	.string "Elevated permissions required.)$"
 
 Tradewind_Text_GhostDrifloon::
 	.string "DRIFLOON drifts against the wind,\n"
