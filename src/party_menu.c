@@ -6923,12 +6923,26 @@ static void PawApplyStat(u8 taskId, u32 upStat)
     s32 mod;
     u32 downStat;
 
+    // Refuse (and keep the item) if the chosen stat is already at the cap --
+    // the wish would whiff but the curse would still land.
+    mod = (s32)GetMonData(mon, MON_DATA_PAW_ATK + (upStat - STAT_ATK));
+    if (mod >= PAW_MOD_CAP)
+    {
+        gPartyMenuUseExitCallback = FALSE;
+        PlaySE(SE_SELECT);
+        PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+        PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+        ScheduleBgCopyTilemapToVram(2);
+        gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+        return;
+    }
+
     PlaySE(SE_USE_ITEM);
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
 
     // Raise the chosen stat (clamped).
-    mod = (s32)GetMonData(mon, MON_DATA_PAW_ATK + (upStat - STAT_ATK));
     mod += n;
     if (mod > PAW_MOD_CAP)
         mod = PAW_MOD_CAP;
