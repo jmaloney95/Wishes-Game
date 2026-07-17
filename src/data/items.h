@@ -262,9 +262,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Intimidate"),
         .price = 5000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Lowers the foe's\n"
+            "ATTACK as this\n"
+            "POKéMON appears."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -278,9 +278,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Guts"),
         .price = 5000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Boosts ATTACK if\n"
+            "hit by a status\n"
+            "condition."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -294,9 +294,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Technician"),
         .price = 5000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Powers up its\n"
+            "weaker moves\n"
+            "(60 BP or less)."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -310,9 +310,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Moxie"),
         .price = 5000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Raises ATTACK\n"
+            "after it knocks\n"
+            "out a foe."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -326,9 +326,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Adaptability"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Powers up its\n"
+            "same-type moves\n"
+            "even further."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -342,9 +342,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Sheer Force"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Powers up moves\n"
+            "that carry an\n"
+            "added effect."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -358,9 +358,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Tough Claws"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Powers up moves\n"
+            "that make\n"
+            "contact."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -374,9 +374,8 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Iron Fist"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Powers up\n"
+            "punching moves."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -390,9 +389,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Tinted Lens"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Doubles power of\n"
+            "its 'not very\n"
+            "effective' hits."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -406,9 +405,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Skill Link"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Multi-hit moves\n"
+            "always strike the\n"
+            "maximum times."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -422,9 +421,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Thick Fat"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Halves damage\n"
+            "taken from FIRE\n"
+            "and ICE moves."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -438,9 +437,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Sturdy"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Can't be downed\n"
+            "in one hit while\n"
+            "at full HP."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -454,9 +453,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Levitate"),
         .price = 8000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Grants immunity\n"
+            "to GROUND-type\n"
+            "moves."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -470,9 +469,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Unaware"),
         .price = 12000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Ignores the\n"
+            "foe's stat\n"
+            "changes."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -486,9 +485,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Serene Grace"),
         .price = 12000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Doubles the odds\n"
+            "of a move's\n"
+            "added effect."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -502,9 +501,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Prankster"),
         .price = 12000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Gives priority\n"
+            "to its status\n"
+            "moves."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -518,9 +517,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Poison Heal"),
         .price = 12000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Restores HP\n"
+            "instead of losing\n"
+            "it to poison."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -534,9 +533,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Multiscale"),
         .price = 20000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Halves damage\n"
+            "taken while at\n"
+            "full HP."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -550,9 +549,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Magic Guard"),
         .price = 20000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Takes damage\n"
+            "only from direct\n"
+            "attacks."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -566,9 +565,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Regenerator"),
         .price = 20000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Restores some HP\n"
+            "when it is\n"
+            "switched out."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -582,9 +581,8 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Speed Boost"),
         .price = 20000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Its SPEED rises\n"
+            "every turn."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -598,9 +596,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("AM Magic Bounce"),
         .price = 20000,
         .description = COMPOUND_STRING(
-            "A strange disc.\n"
-            "Rewrites a Pokémon's\n"
-            "Ability for good."),
+            "Reflects status\n"
+            "moves back at\n"
+            "the attacker."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
@@ -615,9 +613,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("Mankey's Paw"),
         .price = 2000,
         .description = COMPOUND_STRING(
-            "A withered paw.\n"
-            "Grants a wish for\n"
-            "power, at a price."),
+            "A wish: +1 to one\n"
+            "stat. A curse: -1\n"
+            "to another."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_Paw,
@@ -631,9 +629,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("Primeape's Paw"),
         .price = 4000,
         .description = COMPOUND_STRING(
-            "A withered paw.\n"
-            "Grants a wish for\n"
-            "power, at a price."),
+            "A wish: +2 to one\n"
+            "stat. A curse: -2\n"
+            "to another."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_Paw,
@@ -647,9 +645,9 @@ const struct ItemInfo gItemsInfo[] =
         .name = ITEM_NAME("Annihilape Paw"),
         .price = 6000,
         .description = COMPOUND_STRING(
-            "A withered paw.\n"
-            "Grants a wish for\n"
-            "power, at a price."),
+            "A wish: +3 to one\n"
+            "stat. A curse: -3\n"
+            "to another."),
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_PARTY_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_Paw,

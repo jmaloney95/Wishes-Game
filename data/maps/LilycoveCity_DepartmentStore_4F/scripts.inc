@@ -16,7 +16,6 @@ LilycoveCity_DepartmentStore_4F_EventScript_Youngster::
 LilycoveCity_DepartmentStore_4F_EventScript_ClerkLeft::
 	lock
 	faceplayer
-	msgbox LilycoveCity_DepartmentStore_4F_Text_AMExplainer, MSGBOX_DEFAULT
 	message gText_HowMayIServeYou
 	waitmessage
 	pokemart LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs
@@ -46,7 +45,6 @@ LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs:
 LilycoveCity_DepartmentStore_4F_EventScript_ClerkRight::
 	lock
 	faceplayer
-	msgbox LilycoveCity_DepartmentStore_4F_Text_AMExplainer2, MSGBOX_DEFAULT
 	message gText_HowMayIServeYou
 	waitmessage
 	pokemart LilycoveCity_DepartmentStore_4F_Pokemart_DefenseTMs
@@ -90,14 +88,22 @@ LilycoveCity_DepartmentStore_4F_Text_PokemonOnlyHaveFourMoves:
 	.string "I'd like to get all the different TMs,\n"
 	.string "but a POKéMON learns only four moves.$"
 
-@ Wishes of Tomorrow: the AM saleswomen explain the new discs.
-LilycoveCity_DepartmentStore_4F_Text_AMExplainer:
-	.string "Those AM discs are ABILITY\n"
-	.string "MACHINES--one use rewrites a\l"
-	.string "POKéMON's Ability for good!$"
+@ Wishes of Tomorrow: a shopper explains the new ABILITY MACHINE discs.
+LilycoveCity_DepartmentStore_4F_EventScript_AMExplainer::
+	lock
+	faceplayer
+	msgbox LilycoveCity_DepartmentStore_4F_Text_AMExplainer, MSGBOX_DEFAULT
+	release
+	end
 
-LilycoveCity_DepartmentStore_4F_Text_AMExplainer2:
-	.string "An ABILITY MACHINE replaces a\n"
-	.string "POKéMON's Ability with the one\l"
-	.string "on the disc. No take-backs!$"
+LilycoveCity_DepartmentStore_4F_Text_AMExplainer:
+	.string "See those AM discs? ABILITY\n"
+	.string "MACHINES, the clerks call them.\p"
+	.string "Use one on a POKéMON and its\n"
+	.string "Ability is rewritten to whatever\l"
+	.string "the disc holds.\p"
+	.string "For keeps, mind you. No swapping\n"
+	.string "back to what it was born with.\p"
+	.string "Choose the mon to match, and\n"
+	.string "it's like a whole new POKéMON.$"
 
