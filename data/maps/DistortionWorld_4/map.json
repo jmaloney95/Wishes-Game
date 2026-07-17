@@ -67,7 +67,7 @@
     {
       "type": "trigger",
       "x": 25,
-      "y": 5,
+      "y": 3,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "0",
@@ -75,35 +75,17 @@
     },
     {
       "type": "trigger",
-      "x": 25,
-      "y": 6,
-      "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "DistortionRift_EventScript_InvertOff"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 6,
+      "x": 26,
+      "y": 3,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "0",
       "script": "DistortionRift_EventScript_InvertOn"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 7,
-      "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "DistortionRift_EventScript_InvertOff"
     },
     {
       "type": "trigger",
       "x": 42,
-      "y": 9,
+      "y": 10,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "0",
@@ -112,7 +94,7 @@
     {
       "type": "trigger",
       "x": 42,
-      "y": 10,
+      "y": 11,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "0",
@@ -135,6 +117,42 @@
       "var": "VAR_TEMP_0",
       "var_value": "0",
       "script": "DistortionWorld_4_EventScript_PortalEastUp2"
+    },
+    {
+      "type": "trigger",
+      "x": 26,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "DistortionRift_EventScript_InvertOff"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "DistortionRift_EventScript_InvertOff"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "DistortionRift_EventScript_InvertOn"
+    },
+    {
+      "type": "trigger",
+      "x": 26,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "DistortionRift_EventScript_InvertOn"
     }
   ],
   "bg_events": [

@@ -840,10 +840,24 @@ static void SetDataFromTrainerCard(void)
     if (sData->trainerCard.battleTowerWins || sData->trainerCard.battleTowerStraightWins)
         sData->hasBattleTowerWins++;
 
-    for (i = 0, badgeFlag = FLAG_BADGE01_GET; badgeFlag < FLAG_BADGE01_GET + NUM_BADGES; badgeFlag++, i++)
+    // Wishes of Tomorrow: the card's first four badge slots are the hack's
+    // real badges -- Ember (Frostwood), Flint (Master Gen), Lantern (Madam
+    // Tsuji, custom flag outside the numbered block), Distortion (Vesper).
+    // Slots 5-8 stay empty until more badges exist.
     {
-        if (FlagGet(badgeFlag))
-            sData->badgeCount[i]++;
+        static const u16 sWotBadgeFlags[] =
+        {
+            FLAG_BADGE01_GET,   // Ember
+            FLAG_BADGE03_GET,   // Flint
+            FLAG_BADGE_LANTERN, // Lantern
+            FLAG_BADGE05_GET,   // Distortion
+        };
+        for (i = 0; i < ARRAY_COUNT(sWotBadgeFlags); i++)
+        {
+            if (FlagGet(sWotBadgeFlags[i]))
+                sData->badgeCount[i]++;
+        }
+        (void)badgeFlag;
     }
 }
 

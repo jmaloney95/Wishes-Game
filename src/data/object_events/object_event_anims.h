@@ -1243,6 +1243,34 @@ static const union AnimCmd *const sAnimTable_Standard[] = {
     [ANIM_STD_GO_FASTEST_EAST] = sAnim_GoFastestEast,
 };
 
+// Wishes of Tomorrow: sAnimTable_Standard with every SOUTH/NORTH pair swapped.
+// While the player walks the Distortion World ceiling the sprite is v-flipped,
+// which turns the front view into a back view -- swapping the N/S anims at the
+// TABLE level keeps facing logic/anim numbers untouched (no per-frame anim
+// restarts) while the correct art shows. East/west mirror correctly on their own.
+static const union AnimCmd *const sAnimTable_StandardInvertedNS[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_FaceNorth,
+    [ANIM_STD_FACE_NORTH] = sAnim_FaceSouth,
+    [ANIM_STD_FACE_WEST] = sAnim_FaceWest,
+    [ANIM_STD_FACE_EAST] = sAnim_FaceEast,
+    [ANIM_STD_GO_SOUTH] = sAnim_GoNorth,
+    [ANIM_STD_GO_NORTH] = sAnim_GoSouth,
+    [ANIM_STD_GO_WEST] = sAnim_GoWest,
+    [ANIM_STD_GO_EAST] = sAnim_GoEast,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_GoFastNorth,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_GoFastSouth,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_GoFastWest,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_GoFastEast,
+    [ANIM_STD_GO_FASTER_SOUTH] = sAnim_GoFasterNorth,
+    [ANIM_STD_GO_FASTER_NORTH] = sAnim_GoFasterSouth,
+    [ANIM_STD_GO_FASTER_WEST] = sAnim_GoFasterWest,
+    [ANIM_STD_GO_FASTER_EAST] = sAnim_GoFasterEast,
+    [ANIM_STD_GO_FASTEST_SOUTH] = sAnim_GoFastestNorth,
+    [ANIM_STD_GO_FASTEST_NORTH] = sAnim_GoFastestSouth,
+    [ANIM_STD_GO_FASTEST_WEST] = sAnim_GoFastestWest,
+    [ANIM_STD_GO_FASTEST_EAST] = sAnim_GoFastestEast,
+};
+
 const union AnimCmd *const sAnimTable_Following[] = {
     [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
     [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth2F,

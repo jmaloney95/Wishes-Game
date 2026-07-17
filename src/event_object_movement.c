@@ -6944,6 +6944,12 @@ void UpdateObjectEventCurrentMovement(struct ObjectEvent *objectEvent, struct Sp
             sprite->vFlip = inverted;
             sprite->oam.matrixNum ^= ST_OAM_VFLIP;
         }
+        // A v-flipped front view reads as a back view, so while inverted the
+        // player's N/S anims come from a table with those pairs pre-swapped.
+        if (inverted && sprite->anims == sAnimTable_Standard)
+            sprite->anims = sAnimTable_StandardInvertedNS;
+        else if (!inverted && sprite->anims == sAnimTable_StandardInvertedNS)
+            sprite->anims = sAnimTable_Standard;
     }
 
     UpdateObjectEventVisibility(objectEvent, sprite);
