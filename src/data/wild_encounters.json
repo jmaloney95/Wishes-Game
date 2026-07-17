@@ -36730,12 +36730,12 @@
               {
                 "min_level": 5,
                 "max_level": 7,
-                "species": "SPECIES_SEWADDLE"
+                "species": "SPECIES_SENTRET"
               },
               {
                 "min_level": 5,
                 "max_level": 6,
-                "species": "SPECIES_HOPPIP"
+                "species": "SPECIES_IGGLYBUFF"
               },
               {
                 "min_level": 4,
@@ -36743,9 +36743,9 @@
                 "species": "SPECIES_RALTS"
               },
               {
-                "min_level": 10,
-                "max_level": 12,
-                "species": "SPECIES_PIKACHU"
+                "min_level": 9,
+                "max_level": 9,
+                "species": "SPECIES_PIKACHU_LIBRE"
               },
               {
                 "min_level": 4,
@@ -36754,22 +36754,22 @@
               },
               {
                 "min_level": 10,
-                "max_level": 15,
+                "max_level": 10,
                 "species": "SPECIES_RIOLU"
               },
               {
                 "min_level": 9,
-                "max_level": 13,
-                "species": "SPECIES_PIKACHU"
+                "max_level": 10,
+                "species": "SPECIES_PIKACHU_ALOLA"
               },
               {
                 "min_level": 8,
-                "max_level": 12,
+                "max_level": 10,
                 "species": "SPECIES_RIOLU"
               },
               {
-                "min_level": 12,
-                "max_level": 13,
+                "min_level": 10,
+                "max_level": 10,
                 "species": "SPECIES_RIOLU"
               }
             ]
@@ -37092,7 +37092,7 @@
               {
                 "min_level": 18,
                 "max_level": 22,
-                "species": "SPECIES_NONE"
+                "species": "SPECIES_GARBODOR"
               },
               {
                 "min_level": 19,
@@ -37126,7 +37126,7 @@
               },
               {
                 "min_level": 23,
-                "max_level": 26,
+                "max_level": 23,
                 "species": "SPECIES_LARVITAR"
               },
               {
@@ -37525,6 +37525,144 @@
                 "min_level": 20,
                 "max_level": 25,
                 "species": "SPECIES_HELLRAISER"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_ASHLANDS_2",
+          "base_label": "gAshlands_2",
+          "land_mons": {
+            "encounter_rate": 7,
+            "mons": [
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_CARKOL"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_SLUGMA"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_TORKOAL"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_YAMASK_GALAR"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_MAROWAK_ALOLA"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_SKARMORY"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_RHYHORN"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_PHANTUMP"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_TRAPINCH"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_SIGILYPH"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_ORTHWORM"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_CHI_YU"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_TRADEWIND_TOWN",
+          "base_label": "gTradewindTown",
+          "land_mons": {
+            "encounter_rate": 7,
+            "mons": [
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_SIZZLIPEDE"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_SALANDIT"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_HEATMOR"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_MURKROW"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_PHANTUMP"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_DRAPION"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_LUNATONE"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_ELGYEM"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_MEDITITE"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_LAMPENT"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_HELIOPTILE"
+              },
+              {
+                "min_level": 18,
+                "max_level": 24,
+                "species": "SPECIES_HELIOLISK"
               }
             ]
           }

@@ -297,6 +297,21 @@ Tradewind_EventScript_LockedDoor::
 	msgbox Tradewind_Text_LockedDoor, MSGBOX_SIGN
 	end
 
+@ Dev-only wall on the far-west edge (coord triggers x=3, y=17-22): shows the
+@ note and pushes the player back east.
+Tradewind_EventScript_DevWall::
+	lockall
+	msgbox Tradewind_Text_DevWall, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Tradewind_Movement_DevWallBack
+	waitmovement 0
+	releaseall
+	end
+
+Tradewind_Movement_DevWallBack:
+	walk_right
+	step_end
+
 @ Foreshadows Tsuji's Mega Ring + Gengarite reward
 Tradewind_EventScript_MegaHint::
 	lock
@@ -624,6 +639,10 @@ Tradewind_Text_BoatmanStay::
 
 Tradewind_Text_LockedDoor::
 	.string "It's locked…$"
+
+Tradewind_Text_DevWall::
+	.string "[Dev only area.\n"
+	.string "Elevated permissions required.]$"
 
 Tradewind_Text_GhostDrifloon::
 	.string "DRIFLOON drifts against the wind,\n"

@@ -2549,6 +2549,7 @@
 #define FLAG_ITEM_DISTORTION_WORLD_4_TM25       FLAG_UNUSED_0x293 // Thunder (lower walkway)
 #define FLAG_DW_INVERTED                        FLAG_UNUSED_0x294 // player walks the ceiling (sprite v-flip)
 #define FLAG_DW_INVERT_PENDING                  FLAG_UNUSED_0x295 // carry inversion through an intra-DW warp
+#define FLAG_GOT_TRADEWIND_MEGA_STONES          FLAG_UNUSED_0x296 // shady lab dealer's one-time Kanto-starter stones
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)
