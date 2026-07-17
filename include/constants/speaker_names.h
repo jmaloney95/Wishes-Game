@@ -23,6 +23,7 @@ enum SpeakerNames {
     SP_NAME_OLD_WOMAN,
     SP_NAME_ALLISON,
     SP_NAME_GENGAR,
+    SP_NAME_RYOKO,
     SP_NAME_COUNT
 };
 

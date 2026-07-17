@@ -29,7 +29,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE",
-      "x": 21,
+      "x": 22,
       "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -42,7 +42,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 12,
+      "x": 11,
       "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -51,7 +51,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_RebelFighter1",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_B2_FALLEN"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MACHAMP)",
@@ -64,10 +64,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_RebelMon1",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_B2_FALLEN"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HOUNDOOM)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ALAKAZAM)",
       "x": 14,
       "y": 22,
       "elevation": 3,
@@ -77,11 +77,11 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonMon1",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
-      "x": 15,
+      "x": 16,
       "y": 22,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
@@ -90,10 +90,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonFighter1",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
       "x": 7,
       "y": 21,
       "elevation": 3,
@@ -108,9 +108,9 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CHANDELURE)",
       "x": 7,
-      "y": 22,
+      "y": 23,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -119,20 +119,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(GOLBAT)",
-      "x": 7,
-      "y": 23,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_GoonMon2",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HONCHKROW)",
       "x": 7,
       "y": 24,
       "elevation": 3,
@@ -141,12 +128,25 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_GoonFighter2",
-      "flag": "0"
+      "script": "SennenAct2_EventScript_GoonMon2",
+      "flag": "FLAG_SENNEN_ACT2_B1_FALLEN"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_3",
-      "x": 18,
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 7,
+      "y": 26,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "SennenAct2_EventScript_GoonFighter2",
+      "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GORDIE",
+      "x": 17,
       "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
@@ -155,7 +155,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_RebelFighter3",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_B3_FALLEN"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RAICHU)",
@@ -168,10 +168,10 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_RebelMon3",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_B3_FALLEN"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(WEEZING)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HYDREIGON)",
       "x": 20,
       "y": 20,
       "elevation": 3,
@@ -181,12 +181,12 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonMon3",
-      "flag": "0"
+      "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
-      "x": 33,
-      "y": 17,
+      "x": 28,
+      "y": 20,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -197,16 +197,15 @@
       "flag": "0"
     }
   ],
-  "warp_events": [],
-  "coord_events": [],
-  "bg_events": [
+  "warp_events": [
     {
-      "type": "sign",
-      "x": 28,
-      "y": 18,
+      "x": 17,
+      "y": 29,
       "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "SennenAct2_EventScript_TrainDoor"
+      "dest_map": "MAP_SENNEN_ACT2",
+      "dest_warp_id": "0"
     }
-  ]
+  ],
+  "coord_events": [],
+  "bg_events": []
 }

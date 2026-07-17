@@ -2538,6 +2538,12 @@
 #define FLAG_ITEM_TRADEWIND_TM29                FLAG_UNUSED_0x28A // Psychic
 #define FLAG_ITEM_TRADEWIND_MAX_POTION          FLAG_UNUSED_0x28B
 #define FLAG_ITEM_WALNUT_WOODS_HM06             FLAG_UNUSED_0x28C // Rock Smash
+// Sennen station assault cutscene (SennenAct2)
+#define FLAG_SENNEN_ACT2_INTRO_SEEN             FLAG_UNUSED_0x28D
+#define FLAG_SENNEN_ACT2_B1_FALLEN              FLAG_UNUSED_0x28E // Honchkrow KO'd
+#define FLAG_SENNEN_ACT2_B2_FALLEN              FLAG_UNUSED_0x28F // Machamp KO'd + Yiffer gone
+#define FLAG_SENNEN_ACT2_B3_FALLEN              FLAG_UNUSED_0x290 // Raichu KO'd + RedFatality gone
+#define FLAG_SENNEN_ACT2_GOONS_CLEARED          FLAG_UNUSED_0x291 // Alakazam/goons/Hydreigon
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)

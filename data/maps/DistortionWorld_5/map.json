@@ -2,7 +2,7 @@
   "id": "MAP_DISTORTION_WORLD_5",
   "name": "DistortionWorld_5",
   "layout": "LAYOUT_DISTORTION_WORLD_5",
-  "music": "MUS_PL_DISTORTION_WORLD",
+  "music": "MUS_DP_HALL_OF_ORIGIN",
   "region_map_section": "MAPSEC_DISTORTION_WORLD",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
