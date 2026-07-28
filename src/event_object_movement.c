@@ -6295,6 +6295,11 @@ u8 GetFishingBiteDirectionAnimNum(enum Direction direction)
 
 u8 GetRunningDirectionAnimNum(enum Direction direction)
 {
+    // Carved Mask disguise: the Gold Oni NPC sheet has only the 20 standard
+    // anims -- ANIM_RUN_* would index past its anim table. Fastest walk reads
+    // fine on any standard sheet, so a masked runner "hustles" instead.
+    if (FlagGet(FLAG_ONI_MASK_WORN))
+        return GetMoveDirectionFastestAnimNum(direction);
     return sRunningDirectionAnimNums[direction];
 }
 

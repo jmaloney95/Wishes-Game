@@ -40,6 +40,11 @@ EventScript_CatalpaBowLabLocked::
 	end
 
 EventScript_CatalpaBowToLab::
+	@ Crossing to occupied Munen commits the story (the road only runs one
+	@ way), so warn before setting FLAG_ACT2_CROSSED_TO_MUNEN. Declining
+	@ reuses the standard ferry-decline farewell.
+	msgbox Text_GengarLabPointOfNoReturn, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_CatalpaBowFerryDecline
 	setflag FLAG_ACT2_CROSSED_TO_MUNEN
 	closemessage
 	playse SE_WARP_IN
@@ -79,6 +84,37 @@ EventScript_CatalpaBowFerryDecline::
 	releaseall
 	end
 
+@ Using the bow anywhere INSIDE the Distortion World (dispatched from
+@ ItemUseOutOfBattle_CatalpaBow when the map section is
+@ MAPSEC_DISTORTION_WORLD): the ghost-roads only lead OUT. Quick eject to
+@ the gravesite -- no collapse cutscene, rift depth untouched, so the next
+@ ferry trip resumes exactly where the player left off.
+EventScript_CatalpaBowLeaveRift::
+	lockall
+	waitse
+	playmoncry SPECIES_GENGAR, CRY_MODE_NORMAL
+	waitmoncry
+	setspeaker SP_NAME_GENGAR
+	msgbox Text_GengarLeaveRift, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_CatalpaBowStayInRift
+	closemessage
+	playse SE_M_SUPERSONIC
+	special StartRiftDistortion
+	delay 48
+	playse SE_WARP_IN
+	fadescreen FADE_TO_WHITE
+	special EndRiftDistortion
+	delay 20
+	warp MAP_NATIONAL_PARK_ACT2, 47, 19
+	waitstate
+	releaseall
+	end
+
+EventScript_CatalpaBowStayInRift::
+	msgbox Text_GengarStayInRift, MSGBOX_DEFAULT
+	releaseall
+	end
+
 @ Scene done, but Gengar-Clarkson was left in the PC.
 EventScript_CatalpaBowNoGengar::
 	lockall
@@ -95,6 +131,14 @@ Text_GengarTravelMenu::
 	.string "“The ghost-roads are open,\n"
 	.string "{PLAYER}. Where to?”$"
 
+Text_GengarLabPointOfNoReturn::
+	.string "“One thing, {PLAYER}.\p"
+	.string "“This ghost-road runs one way.\n"
+	.string "Once we cross into occupied\l"
+	.string "Munen, there is no coming back.\p"
+	.string "“This is the point of no return.\n"
+	.string "Continue?”$"
+
 Text_GengarLabLocked::
 	.string "“Not yet, {PLAYER}.\p"
 	.string "“The road to my lab runs through\n"
@@ -104,6 +148,17 @@ Text_GengarLabLocked::
 	.string "DISTORTION.\p"
 	.string "“Bring me all four badges, and\n"
 	.string "the ghost-road will carry you.”$"
+
+Text_GengarLeaveRift::
+	.string "“The roads twist strangely in\n"
+	.string "here, {PLAYER}.\p"
+	.string "“From inside the rift, they only\n"
+	.string "lead OUT.\p"
+	.string "“Shall I carry you back to the\n"
+	.string "living world?”$"
+
+Text_GengarStayInRift::
+	.string "“Kekeke. Then mind the drop.”$"
 
 Text_GengarFerryDecline::
 	.string "“Kekeke. Wise. Sharpen everything\n"

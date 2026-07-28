@@ -81,6 +81,16 @@ u32 GetHealNpcLocalId(u32 healLocationId)
     if (healLocationId == HEAL_LOCATION_NONE || healLocationId >= NUM_HEAL_LOCATIONS)
         return LOCALID_NONE;
 
+    // The custom WoT heal locations (town spawn points, Blissey posts) come
+    // after the vanilla ones in heal_locations.json and have NO rows in the
+    // generated whiteout-cutscene tables -- indexing past the designated
+    // initializers read garbage rodata and warped whiteouts onto random
+    // vanilla maps. Out-of-table ids fall back to the plain
+    // lastHealLocation respawn (no nurse cutscene), which is what those
+    // locations want anyway.
+    if (healLocationId - 1 >= ARRAY_COUNT(sWhiteoutRespawnHealerNpcIds))
+        return LOCALID_NONE;
+
     return sWhiteoutRespawnHealerNpcIds[healLocationId - 1];
 }
 
@@ -89,7 +99,7 @@ void SetWhiteoutRespawnWarpAndHealerNPC(struct WarpData *warp)
     u32 healLocationId = GetHealLocationIndexByWarpData(&gSaveBlock1Ptr->lastHealLocation);
     u32 healNpcLocalId = GetHealNpcLocalId(healLocationId);
 
-    if (!healNpcLocalId)
+    if (!healNpcLocalId || healLocationId - 1 >= ARRAY_COUNT(sWhiteoutRespawnHealCenterMapIdxs))
     {
         *(warp) = gSaveBlock1Ptr->lastHealLocation;
         return;

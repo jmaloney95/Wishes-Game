@@ -909,10 +909,13 @@
 #define TRAINER_SENNEN_CAPTAIN_KANNON       885
 #define TRAINER_SENNEN_CAPTAIN_RYOKO        886
 
-// Pompeii / Munen Tunnel gauntlet -- Master Gen's quest (Flint Badge)
+// Pompeii / Munen Tunnel gauntlet -- Master Gen's quest (Flint Badge).
+// The tunnel boss is CAPTAIN KURODA (was "General Edwards"; same id 889, so
+// the defeat flag is unchanged -- "General Edwards" is reserved for the
+// Act 2 Dojo character).
 #define TRAINER_TUNNEL_GOON_A               887
 #define TRAINER_TUNNEL_GOON_B               888
-#define TRAINER_GENERAL_EDWARDS             889
+#define TRAINER_TUNNEL_CAPTAIN              889
 
 // Distortion World rift layers -- the Oni guarding the Rift Core (layer 4)
 #define TRAINER_DISTORTION_ONI              890

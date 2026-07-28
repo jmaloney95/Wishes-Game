@@ -1663,6 +1663,61 @@ void EndRiftDistortion(void)
 
 #undef tTimer
 
+// -- WoT Shadow system, phase 1 (WoT_Act3_Canon.md §2.2) ---------------------
+// Script API over the per-mon shadow bits. VAR_0x8004 = party slot for the
+// single-mon calls (pair with `special ChoosePartyMon`).
+
+// gSpecialVar_Result: 0 = not a Shadow, 1 = Shadow (has not battled yet),
+// 2 = Shadow, opened -- ready for the shrine.
+void GetMonShadowState(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+
+    if (gSpecialVar_0x8004 >= PARTY_SIZE || !GetMonData(mon, MON_DATA_IS_SHADOW))
+        gSpecialVar_Result = 0;
+    else if (!GetMonData(mon, MON_DATA_SHADOW_OPENED))
+        gSpecialVar_Result = 1;
+    else
+        gSpecialVar_Result = 2;
+}
+
+// Instant purification (canon: no heart gauge -- the shrine mends it in one
+// motion). Clears both shadow bits and pins the Colosseum keepsake: the
+// NATIONAL RIBBON, "given to purified Shadow Pokemon".
+void PurifyPartyMon(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+    u32 zero = FALSE, one = TRUE;
+
+    if (gSpecialVar_0x8004 >= PARTY_SIZE)
+        return;
+    SetMonData(mon, MON_DATA_IS_SHADOW, &zero);
+    SetMonData(mon, MON_DATA_SHADOW_OPENED, &zero);
+    SetMonData(mon, MON_DATA_NATIONAL_RIBBON, &one);
+    CalculateMonStats(mon);
+}
+
+// gSpecialVar_Result = number of Shadow mons in the party;
+// gSpecialVar_0x8005 = slot of the first one (PARTY_SIZE if none).
+void CountShadowPartyMons(void)
+{
+    u32 i, count = 0;
+
+    gSpecialVar_0x8005 = PARTY_SIZE;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+            break;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_IS_SHADOW))
+        {
+            if (count == 0)
+                gSpecialVar_0x8005 = i;
+            count++;
+        }
+    }
+    gSpecialVar_Result = count;
+}
+
 bool8 FoundBlackGlasses(void)
 {
     return FlagGet(FLAG_HIDDEN_ITEM_ROUTE_116_BLACK_GLASSES);

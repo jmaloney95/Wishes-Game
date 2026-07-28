@@ -424,6 +424,7 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_MUTRID] =               { _("Mutrid"), 5 },
     [TRAINER_CLASS_GENERAL] =              { _("General"), 12 },
     [TRAINER_CLASS_ONI] =                  { _("Oni"), 8 },
+    [TRAINER_CLASS_CAPTAIN] =              { _("Captain"), 10 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =
@@ -1964,7 +1965,7 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
         {
             static const u16 sScaledGymLeaders[] = {
                 TRAINER_ROXANNE_1,         // Ember      (Frostwood Gym)
-                TRAINER_GENERAL_EDWARDS,   // Flint      (Munen Tunnel boss)
+                TRAINER_TUNNEL_CAPTAIN,    // Flint      (Munen Tunnel boss)
                 TRAINER_MADAM_TSUJI,       // Lantern    (Tradewind Gym)
                 TRAINER_DISTORTION_LEADER, // Distortion (Vesper, rift gym)
             };
@@ -2086,6 +2087,13 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             {
                 u32 data = partyData[monIndex].gigantamaxFactor;
                 SetMonData(&party[i], MON_DATA_GIGANTAMAX_FACTOR, &data);
+            }
+            // WoT Shadow system: mark trainer-owned Shadow Pokemon
+            // ("Shadow: Yes" per-mon field in trainers.party).
+            if (partyData[monIndex].isShadow)
+            {
+                u32 data = TRUE;
+                SetMonData(&party[i], MON_DATA_IS_SHADOW, &data);
             }
             if (partyData[monIndex].teraType > 0)
             {

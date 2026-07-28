@@ -372,3 +372,21 @@ DistortionWorld_2_Movement_CamReturn:
 	walk_faster_left
 	walk_faster_left
 	step_end
+
+@ The old rift-seam exit prompt at (13,14) was removed: leaving the rift is
+@ now done through the Catalpa Bow anywhere inside the Distortion World (see
+@ EventScript_CatalpaBowLeaveRift in data/scripts/catalpa_bow.inc). The seam
+@ graphic is still painted there, so a flavor sign teaches the new exit.
+DistortionWorld_2_EventScript_SeamHint::
+	lockall
+	msgbox DistortionWorld_2_Text_SeamHint, MSGBOX_DEFAULT
+	releaseall
+	end
+
+DistortionWorld_2_Text_SeamHint::
+	.string "The seam hangs in the air,\n"
+	.string "sealed tight.\p"
+	.string "GENGAR taps the CATALPA BOW at\n"
+	.string "your hip.\p"
+	.string "“When you want out, call the\n"
+	.string "ghost-road. Kekeke.”$"

@@ -16,17 +16,31 @@
 @ ============================================================================
 
 @ Use the Carved Mask key item -> toggle the disguise on/off.
+@ From red alert on (Act 3 Step 5) the mask is PERMANENTLY useless -- they
+@ know the player's face. The arrest scene strips it on-screen; this gate
+@ keeps it dead afterward.
 EventScript_UseOniMask::
 	lockall
+	goto_if_set FLAG_ACT3_RED_ALERT, EventScript_OniMaskUseless
 	goto_if_set FLAG_ONI_MASK_WORN, EventScript_TakeOffOniMask
 	setflag FLAG_ONI_MASK_WORN
+	@ Swap the on-foot player sprite to the Gold Oni (the leader's skin, a
+	@ full walking sheet) right away -- the same hook also applies on every
+	@ map load / dismount; see field_player_avatar.c.
+	special RefreshPlayerAvatarGraphicsIfOnFoot
 	msgbox OniMask_Text_PutOn, MSGBOX_DEFAULT
 	releaseall
 	end
 
 EventScript_TakeOffOniMask::
 	clearflag FLAG_ONI_MASK_WORN
+	special RefreshPlayerAvatarGraphicsIfOnFoot
 	msgbox OniMask_Text_TakeOff, MSGBOX_DEFAULT
+	releaseall
+	end
+
+EventScript_OniMaskUseless::
+	msgbox OniMask_Text_Useless, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -74,6 +88,12 @@ OniMask_Text_TakeOff::
 	.string "{PLAYER} took off the Carved Mask.\p"
 	.string "The cold air bites at your bare\n"
 	.string "face again.$"
+
+OniMask_Text_Useless::
+	.string "{PLAYER} turned the Carved Mask\n"
+	.string "over in the neon light.\p"
+	.string "They know your face now.\n"
+	.string "It's just wood.$"
 
 OniMask_Text_GoonMasked::
 	.string "The masked figure snaps upright the\n"

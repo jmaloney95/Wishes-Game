@@ -4112,31 +4112,57 @@ Level: 15
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Hidden Power
 
+/*
+REPURPOSED from the unreachable vanilla Mossdeep gym -- Act 3 jailbreak
+escort-phase squads (partner doubles vs Mikmanc + player; the "Shadow"
+Pokemon are dark-typed stand-ins until a real Shadow system exists).
+Levels/teams PLACEHOLDER (Joe).
+*/
 === TRAINER_PRESTON ===
-Name: PRESTON
-Class: Psychic
-Pic: Psychic M
+Name: JUZO
+Class: Mutrid
+Pic: Magma Grunt M
 Gender: Male
-Music: Intense
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Kirlia
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Krookodile
+Level: 41
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Drapion
+Level: 41
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Bronzong
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_VIRGIL ===
-Name: VIRGIL
-Class: Psychic
-Pic: Psychic M
-Gender: Male
-Music: Intense
+Name: SAYA
+Class: Mutrid
+Pic: Magma Grunt F
+Gender: Female
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Ralts
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Honchkrow
+Level: 41
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Weavile
+Level: 42
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Magnezone
+Level: 41
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_BLAKE ===
 Name: BLAKE
@@ -10501,22 +10527,26 @@ Golbat
 Level: 35
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
+/*
+REPURPOSED dead vanilla id (was unused filler) -- Act 3 Shin-Tokyo jail
+patrol guard A (WoT_Act3_Canon.md Step 4). Levels/teams PLACEHOLDER (Joe).
+*/
 === TRAINER_GRUNT_UNUSED ===
-Name: GRUNT
-Class: Team Magma
-Pic: Aqua Grunt F
-Gender: Female
-Music: Aqua
+Name: HOSHI
+Class: Mutrid
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Wailmer
-Level: 31
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Bisharp
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
-Zubat
-Level: 31
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Golbat
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_GRUNT_MT_PYRE_4 ===
 Name: GRUNT
@@ -16849,29 +16879,43 @@ Bulbasaur
 Level: 5
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
+/*
+REPURPOSED dead vanilla placeholder ids -- Act 3 Shin-Tokyo jail patrol
+guards B and C (WoT_Act3_Canon.md Step 4). Levels/teams PLACEHOLDER (Joe).
+*/
 === TRAINER_BRENDAN_PLACEHOLDER ===
-Name: BRENDAN
-Class: RS Protag
-Pic: RS Brendan
-Gender: Male
-Music: Male
+Name: RIN
+Class: Mutrid
+Pic: Magma Grunt F
+Gender: Female
+Music: Magma
 Double Battle: No
+AI: Check Bad Move / Try To Faint
 
-Groudon
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Mightyena
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Skarmory
+Level: 41
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_MAY_PLACEHOLDER ===
-Name: MAY
-Class: RS Protag
-Pic: RS May
-Gender: Female
-Music: Male
+Name: TETSU
+Class: Mutrid
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
 Double Battle: No
+AI: Check Bad Move / Try To Faint
 
-Kyogre
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Houndoom
+Level: 41
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Muk
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 /*
 Pokémon Wishes of Tomorrow — Rival Haru, first encounter in Munen Village.
@@ -16987,6 +17031,10 @@ Level: 10
 Wingull
 Level: 10
 
+/*
+Allison is a surf-era optional fight (Surf unlocks with the Distortion Badge),
+so her team is tuned to the late-Act-2 curve. Levels PLACEHOLDER (Joe).
+*/
 === TRAINER_ROUTE2_SWIMMER_ALLISON ===
 Name: Allison
 Class: Swimmer F
@@ -16994,16 +17042,15 @@ Pic: Swimmer Allison
 Gender: Female
 Music: Swimmer
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Buneary
-Level: 10
+Cinderace
+Level: 40
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 
-Lopunny
-Level: 10
-
-Scorbunny
-Level: 10
+Lopunny @ Lopunnite
+Level: 42
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 
 === TRAINER_ROUTE2_SWIMMER_SKYE ===
 Name: Skye
@@ -17216,10 +17263,10 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint
 
 Pangoro
-Level: 36
+Level: 29
 
 Snorlax
-Level: 37
+Level: 30
 
 === TRAINER_TRADEWIND_LANTERN_BEARER ===
 Name: HOZUKI
@@ -17447,9 +17494,13 @@ Machop
 Level: 18
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
-=== TRAINER_GENERAL_EDWARDS ===
-Name: EDWARDS
-Class: General
+/*
+The Munen Tunnel boss (was "General Edwards" -- that identity now belongs to
+the Act 2 Dojo general). Name PLACEHOLDER (Joe).
+*/
+=== TRAINER_TUNNEL_CAPTAIN ===
+Name: KURODA
+Class: Captain
 Pic: Magma Leader Maxie
 Gender: Male
 Music: Magma
@@ -17495,11 +17546,11 @@ Double Battle: No
 AI: Check Bad Move / Try To Faint
 
 Bronzong
-Level: 37
+Level: 35
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Dusclops
-Level: 38
+Level: 36
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_DISTORTION_LEADER ===
@@ -17523,9 +17574,13 @@ Dusknoir
 Level: 38
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 
-Drifblim
+Golurk
 Level: 39
 IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Shadow Punch
+- Earthquake
+- Hammer Arm
+- Phantom Force
 
 Giratina @ Sitrus Berry
 Level: 40

@@ -1,0 +1,37 @@
+{
+  "id": "MAP_SHIN_TOKYO_STATION",
+  "name": "ShinTokyoStation",
+  "layout": "LAYOUT_SHIN_TOKYO_STATION",
+  "music": "MUS_NONE",
+  "region_map_section": "MAPSEC_SHIN_TOKYO",
+  "requires_flash": false,
+  "weather": "WEATHER_RAIN",
+  "map_type": "MAP_TYPE_CITY",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 9,
+      "y": 11,
+      "elevation": 0,
+      "dest_map": "MAP_SHIN_TOKYO",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 4,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "ShinTokyoStation_EventScript_DepartureBoard"
+    }
+  ]
+}

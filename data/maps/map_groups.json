@@ -178,7 +178,11 @@
     "TradewindHouse",
     "TradewindLab",
     "Tradewind_PC",
-    "ShinkansenInterior_Act2"
+    "ShinkansenInterior_Act2",
+    "ShinTokyoStation",
+    "ShinTokyo",
+    "ShinTokyoJail",
+    "RebelHideout"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

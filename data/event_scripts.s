@@ -1828,3 +1828,8 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/Tradewind_PC/scripts.inc"
 
 	.include "data/maps/ShinkansenInterior_Act2/scripts.inc"
+
+	.include "data/maps/ShinTokyoStation/scripts.inc"
+	.include "data/maps/ShinTokyo/scripts.inc"
+	.include "data/maps/ShinTokyoJail/scripts.inc"
+	.include "data/maps/RebelHideout/scripts.inc"

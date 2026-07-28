@@ -3077,6 +3077,17 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
     {
     case ABILITYEFFECT_ON_SWITCHIN:
         gBattleScripting.battler = battler;
+        // WoT Shadow system: sending a snagged Shadow into battle "opens" it
+        // (canon: battle with it at least once) -- gates shrine purification.
+        if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+        {
+            struct Pokemon *mon = &gPlayerParty[gBattlerPartyIndexes[battler]];
+            if (GetMonData(mon, MON_DATA_IS_SHADOW) && !GetMonData(mon, MON_DATA_SHADOW_OPENED))
+            {
+                u32 opened = TRUE;
+                SetMonData(mon, MON_DATA_SHADOW_OPENED, &opened);
+            }
+        }
         switch (gLastUsedAbility)
         {
         case ABILITY_TRACE:

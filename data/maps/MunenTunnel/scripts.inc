@@ -23,7 +23,7 @@ MunenTunnel_EventScript_ItemTMShadowBall::
 	finditem ITEM_TM30
 	end
 
-@ The mask stays out of reach while General Edwards holds the chamber.
+@ The mask stays out of reach while Captain Kuroda holds the chamber.
 MunenTunnel_EventScript_ItemCarvedMask::
 	goto_if_unset FLAG_POMPEII_GENERAL_RETREATED, MunenTunnel_EventScript_MaskGuarded
 	finditem ITEM_CARVED_MASK
@@ -35,7 +35,7 @@ MunenTunnel_EventScript_MaskGuarded::
 
 @ --------------------------------------------------------------------------
 @  The tunnel gauntlet -- Master Gen's quest. Two goons hold the halls and
-@  GENERAL EDWARDS holds the mask chamber. Basic teams, Lv16-20.
+@  CAPTAIN KURODA holds the mask chamber. Basic teams, Lv16-20.
 @ --------------------------------------------------------------------------
 MunenTunnel_EventScript_GoonA::
 	trainerbattle_single TRAINER_TUNNEL_GOON_A, MunenTunnel_Text_GoonAIntro, MunenTunnel_Text_GoonADefeat
@@ -48,12 +48,12 @@ MunenTunnel_EventScript_GoonB::
 	end
 
 MunenTunnel_EventScript_General::
-	trainerbattle_single TRAINER_GENERAL_EDWARDS, MunenTunnel_Text_GeneralIntro, MunenTunnel_Text_GeneralDefeat, MunenTunnel_EventScript_GeneralRetreat
+	trainerbattle_single TRAINER_TUNNEL_CAPTAIN, MunenTunnel_Text_GeneralIntro, MunenTunnel_Text_GeneralDefeat, MunenTunnel_EventScript_GeneralRetreat
 	end
 
 MunenTunnel_EventScript_GeneralRetreat::
 	lockall
-	setspeaker SP_NAME_COLONEL_EDWARDS
+	setspeaker SP_NAME_TUNNEL_CAPTAIN
 	msgbox MunenTunnel_Text_GeneralRetreat, MSGBOX_DEFAULT
 	closemessage
 	playse SE_EXIT
@@ -140,7 +140,7 @@ MunenTunnel_Text_Dusclops::
 
 MunenTunnel_Text_MaskGuarded::
 	.string "A carved mask lies in the dust --\p"
-	.string "but the GENERAL's boot is planted\n"
+	.string "but the CAPTAIN's boot is planted\n"
 	.string "an inch from it, and his eyes are\l"
 	.string "planted on you.$"
 
@@ -150,12 +150,12 @@ MunenTunnel_Text_GoonAIntro::
 	.string "...You're not turning around.$"
 
 MunenTunnel_Text_GoonADefeat::
-	.string "The GENERAL's gonna have my mask\n"
+	.string "The CAPTAIN's gonna have my mask\n"
 	.string "for this...$"
 
 MunenTunnel_Text_GoonAPost::
 	.string "Go on then. The deeper halls are\n"
-	.string "the GENERAL's problem, not mine.$"
+	.string "the CAPTAIN's problem, not mine.$"
 
 MunenTunnel_Text_GoonBIntro::
 	.string "You beat the gate guard? Ha.\p"
@@ -165,13 +165,13 @@ MunenTunnel_Text_GoonBDefeat::
 	.string "Fine, fine! So was I!$"
 
 MunenTunnel_Text_GoonBPost::
-	.string "The GENERAL doesn't lose. He'll\n"
+	.string "The CAPTAIN doesn't lose. He'll\n"
 	.string "plant you with the rest of the\l"
 	.string "tomb's residents.$"
 
 MunenTunnel_Text_GeneralIntro::
 	.string "Hold.\p"
-	.string "GENERAL EDWARDS. I hold this tomb\n"
+	.string "CAPTAIN KURODA. I hold this tomb\n"
 	.string "until the rite above is done.\p"
 	.string "Two of mine, beaten by a child\n"
 	.string "playing archaeologist.\p"

@@ -37,26 +37,7 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 2,
-      "elevation": 0,
-      "var": "VAR_TEMP_2",
-      "var_value": "0",
-      "script": "ShinkansenInterior_EventScript_TakeSeat"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 3,
-      "elevation": 0,
-      "var": "VAR_TEMP_2",
-      "var_value": "0",
-      "script": "ShinkansenInterior_EventScript_TakeSeat"
-    }
-  ],
+  "coord_events": [],
   "bg_events": [
     {
       "type": "sign",

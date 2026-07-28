@@ -10606,6 +10606,19 @@ static void FinalizeCapture(void)
         u32 friendship = (B_FRIEND_BALL_MODIFIER >= GEN_8 ? 150 : 200);
         SetMonData(caughtMon, MON_DATA_FRIENDSHIP, &friendship);
     }
+
+    // WoT Shadow system: in a trainer battle a successful throw is a SNAG.
+    // The mon leaves the field through the normal faint machinery (so the
+    // opponent switches in as usual) and is delivered at the END of the
+    // battle by BS_WotCollectSnaggedMons -- it can never be lost mid-fight.
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        u32 zero = 0;
+        gBattleStruct->wotSnaggedMons |= 1u << gBattlerPartyIndexes[gBattlerTarget];
+        gBattleMons[gBattlerTarget].hp = 0;
+        SetMonData(caughtMon, MON_DATA_HP, &zero);
+        gBattlescriptCurrInstr = BattleScript_WotSuccessSnag;
+    }
 }
 
 struct BallData
@@ -10922,6 +10935,15 @@ static u32 ComputeBallShakeOdds(u32 odds)
     return odds;
 }
 
+// WoT Shadow system (WoT_Act3_Canon.md §2.2): any thrown ball becomes a SNAG
+// BALL against a trainer's Shadow Pokemon -- the trainer-block rule is waived
+// for Shadow targets and the normal capture odds run instead.
+static bool32 WotIsSnaggableTarget(void)
+{
+    return !IsOnPlayerSide(gBattlerTarget)
+        && GetMonData(GetBattlerMon(gBattlerTarget), MON_DATA_IS_SHADOW);
+}
+
 static void Cmd_handleballthrow(void)
 {
     CMD_ARGS();
@@ -10937,7 +10959,7 @@ static void Cmd_handleballthrow(void)
         MarkBattlerForControllerExec(gBattlerAttacker);
         gBattlescriptCurrInstr = BattleScript_GhostBallDodge;
     }
-    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !WotIsSnaggableTarget())
     {
         BtlController_EmitBallThrowAnim(gBattlerAttacker, B_COMM_TO_CONTROLLER, BALL_TRAINER_BLOCK);
         MarkBattlerForControllerExec(gBattlerAttacker);
@@ -11626,6 +11648,54 @@ void SaveBattlerAttacker(enum BattlerId battler)
     }
 
     gBattleStruct->savedBattlerAttacker[gBattleStruct->savedAttackerCount++] = battler;
+}
+
+// WoT Shadow system: deliver the mons snagged this battle, one per call --
+// the script loops back until we jump to doneInstr. Called from the victory
+// scripts (both the local and frontier/multi paths); clearing each bit as it
+// is delivered makes double invocation harmless. Snagged mons arrive healed,
+// dex-flagged, and are handed to the party or PC like a wild catch, with the
+// nickname buffered and the party/PC message chosen for printfromtable.
+void BS_WotCollectSnaggedMons(void)
+{
+    NATIVE_ARGS(const u8 *doneInstr);
+    u32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (gBattleStruct->wotSnaggedMons & (1u << i))
+        {
+            u32 hp = GetMonData(&gEnemyParty[i], MON_DATA_MAX_HP);
+            enum NationalDexOrder natDexNo = SpeciesToNationalPokedexNum(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES));
+
+            gBattleStruct->wotSnaggedMons &= ~(1u << i);
+            SetMonData(&gEnemyParty[i], MON_DATA_HP, &hp);
+            GetSetPokedexFlag(natDexNo, FLAG_SET_SEEN);
+            GetSetPokedexFlag(natDexNo, FLAG_SET_CAUGHT);
+            PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT), i);
+            if (GiveCapturedMonToPlayer(&gEnemyParty[i]) == MON_GIVEN_TO_PARTY)
+                gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+            else
+                gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+            gBattlescriptCurrInstr = cmd->nextInstr;
+            return;
+        }
+    }
+    gBattlescriptCurrInstr = cmd->doneInstr;
+}
+
+// WoT Shadow system: TRUE for an enemy battler that was snagged this battle.
+// Used by the faint script to swap the faint presentation for a silent exit
+// (the snag message already announced the departure).
+void BS_WotJumpIfSnaggedFaint(void)
+{
+    NATIVE_ARGS(const u8 *jumpInstr);
+
+    if (!IsOnPlayerSide(gBattlerFainted)
+     && (gBattleStruct->wotSnaggedMons & (1u << gBattlerPartyIndexes[gBattlerFainted])))
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+    else
+        gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
 void BS_SaveTarget(void)

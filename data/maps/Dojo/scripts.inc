@@ -11,8 +11,8 @@ Dojo_OnFrame:
 @  Rebel objects are hidden by FLAG_HIDE_DOJO_REBELS (set at new game,
 @  cleared by Mom in the MunenHomeAct2 cutscene).
 @  ROSTER (the Frostwood Gym crew + Mom):
-@    GEN. EDWARDS (EUSINE gfx)  -> the SNAG MACHINE: new military tech,
-@                                  briefed like a general before a mission
+@    (Gen. Edwards removed 2026-07-28 -- the SNAG MACHINE now comes from
+@     Mikmanc during the Act 3 jailbreak; Edwards is saved for later.)
 @    REDFATALITY (GORDIE gfx)   -> TM13 ICE BEAM, a fighter's parting gift
 @    MINISTER (SCOTT gfx)       -> IT expert: the SHINKANSEN KEY + he will
 @                                  handle the NETWORK BREACH on assault day
@@ -97,21 +97,9 @@ Dojo_EventScript_RebelMomAfter::
 	release
 	end
 
-Dojo_EventScript_RebelEdwards::
-	lock
-	faceplayer
-	checkitem ITEM_SNAG_MACHINE
-	goto_if_eq VAR_RESULT, TRUE, Dojo_EventScript_RebelEdwardsAfter
-	msgbox Dojo_Text_EdwardsGift1, MSGBOX_DEFAULT
-	giveitem ITEM_SNAG_MACHINE
-	msgbox Dojo_Text_EdwardsGift2, MSGBOX_DEFAULT
-	release
-	end
-
-Dojo_EventScript_RebelEdwardsAfter::
-	msgbox Dojo_Text_EdwardsAfter, MSGBOX_DEFAULT
-	release
-	end
+@ (Gen. Edwards was removed from the safehouse roster 2026-07-28: the SNAG
+@ MACHINE is now delivered solely by Mikmanc in the Act 3 jailbreak, per
+@ WoT_Act3_Canon.md Step 4. Edwards is being saved for a later appearance.)
 
 Dojo_EventScript_RebelRedFatality::
 	lock
@@ -266,48 +254,6 @@ Dojo_Text_MomAfter::
 	.string "and no heroics before breakfast.\p"
 	.string "...I know, I know. Go on.\n"
 	.string "Let me look at you one more time.$"
-
-Dojo_Text_EdwardsGift1::
-	.string "GEN. EDWARDS: Trainer. Front and\n"
-	.string "center.\p"
-	.string "We've met before. Different\n"
-	.string "uniform, same war. I don't waste\l"
-	.string "words then and I won't now.\p"
-	.string "This is the SNAG MACHINE.\n"
-	.string "Prototype military hardware --\l"
-	.string "R and D bled for it, and as of\l"
-	.string "this moment it is issued to YOU.\p"
-	.string "Hold out your arm. That's an\n"
-	.string "order.$"
-
-Dojo_Text_EdwardsGift2::
-	.string "GEN. EDWARDS: Mission briefing.\n"
-	.string "Listen once, remember forever.\p"
-	.string "ONE. The enemy fields SHADOW\n"
-	.string "POKEMON -- assets with the heart\l"
-	.string "shut down. They feel nothing.\l"
-	.string "They stop for nothing.\p"
-	.string "TWO. Standard rules say you\n"
-	.string "cannot capture from an enemy\l"
-	.string "trainer's hands. That machine\l"
-	.string "REWRITES the rules. Any Poke\l"
-	.string "Ball you throw becomes a SNAG\l"
-	.string "BALL against a Shadow Pokemon.\p"
-	.string "THREE. Every asset you snag is\n"
-	.string "an asset they cannot fire back\l"
-	.string "at us. You are not stealing,\l"
-	.string "trainer. You are LIBERATING\l"
-	.string "ordnance.\p"
-	.string "Use it on every Shadow Pokemon\n"
-	.string "you see. That is not a request.\p"
-	.string "Dismissed.$"
-
-Dojo_Text_EdwardsAfter::
-	.string "GEN. EDWARDS: Machine sits on\n"
-	.string "the wrist. War sits on the\l"
-	.string "shoulders.\p"
-	.string "Keep both arms strong, trainer.\n"
-	.string "Dismissed.$"
 
 Dojo_Text_RedFatalityGift1::
 	.string "REDFATALITY: Hey, {PLAYER}.\n"

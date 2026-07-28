@@ -545,6 +545,8 @@ enum TrainerClassID
     TRAINER_CLASS_GENERAL,
     // Distortion World rift layers -- kept things that fight back
     TRAINER_CLASS_ONI,
+    // Mutrid field officers (the Munen Tunnel boss)
+    TRAINER_CLASS_CAPTAIN,
 
     TRAINER_CLASS_COUNT,
 };

@@ -114,16 +114,24 @@ NationalParkAct2_EventScript_BowQuiet::
 @ --------------------------------------------------------------------------
 @  Goons
 @ --------------------------------------------------------------------------
+@ These two are talk-initiated battles (TRAINER_TYPE_NONE in map.json), NOT
+@ sight trainers: a sight trainer's script must START with trainerbattle
+@ (oni_mask_disguise.inc header rule), which can't be mask-gated. The old
+@ sight setup virtually re-ran the mask branch every step and re-approached
+@ forever -- the playtest "infinite loop". Gating is on the mask being WORN,
+@ not merely owned.
 NationalParkAct2_EventScript_GoonEast::
-	checkitem ITEM_CARVED_MASK
-	goto_if_eq VAR_RESULT, TRUE, OniMask_EventScript_GoonFooled
+	lock
+	faceplayer
+	goto_if_set FLAG_ONI_MASK_WORN, OniMask_EventScript_GoonMasked
 	trainerbattle_single TRAINER_ACT2_PARK_GOON_EAST, NationalParkAct2_Text_GoonEastIntro, NationalParkAct2_Text_GoonEastDefeat
 	msgbox NationalParkAct2_Text_GoonEastPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 NationalParkAct2_EventScript_GoonWest::
-	checkitem ITEM_CARVED_MASK
-	goto_if_eq VAR_RESULT, TRUE, OniMask_EventScript_GoonFooled
+	lock
+	faceplayer
+	goto_if_set FLAG_ONI_MASK_WORN, OniMask_EventScript_GoonMasked
 	trainerbattle_single TRAINER_ACT2_PARK_GOON_WEST, NationalParkAct2_Text_GoonWestIntro, NationalParkAct2_Text_GoonWestDefeat
 	msgbox NationalParkAct2_Text_GoonWestPostBattle, MSGBOX_AUTOCLOSE
 	end

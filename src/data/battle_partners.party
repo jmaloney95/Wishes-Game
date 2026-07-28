@@ -56,3 +56,44 @@ Party Size: 0
 
 Wynaut
 
+/*
+Wishes of Tomorrow -- Mikmanc as the jailbreak escort partner (Act 3 Step 4
+doubles). Back pic borrows Wally's (only stock back sprites exist).
+Team PLACEHOLDER (Joe).
+*/
+=== PARTNER_MIKMANC ===
+Name: MIKMANC
+Class: Youngster
+Pic: Youngster
+Gender: Male
+Music: Male
+Back Pic: Wally
+AI: Basic Trainer
+
+Machamp
+Adamant Nature
+Level: 41
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Cross Chop
+- Rock Slide
+- Bulk Up
+- Protect
+
+Manectric
+Timid Nature
+Level: 41
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Thunderbolt
+- Volt Switch
+- Flamethrower
+- Protect
+
+Snorlax
+Careful Nature
+Level: 42
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Body Slam
+- Crunch
+- Rest
+- Protect
+

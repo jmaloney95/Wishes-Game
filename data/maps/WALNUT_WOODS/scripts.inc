@@ -10,21 +10,24 @@ WALNUT_WOODS_OnLoad::
 	call_if_set FLAG_WALNUT_WOODS_CUT_BUSH_2, WALNUT_WOODS_EventScript_SetBush2Snow
 	end
 
-@ setmetatile helpers (snow ground that matches each spot's surroundings)
+@ setmetatile helpers (snow ground that matches each spot's surroundings).
+@ NOTE: the map was widened 4 columns on the west after these were first
+@ written -- every x here was stale by -4, so cutting a bush or grabbing a
+@ tile-item cleared the WRONG tile (the Rock Smash pocket stayed sealed).
 WALNUT_WOODS_EventScript_SetBlizzardSnow::
-	setmetatile 23, 21, 94, FALSE
+	setmetatile 27, 21, 94, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetProtectSnow::
-	setmetatile 14, 13, 537, FALSE
+	setmetatile 18, 13, 537, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetBush1Snow::
-	setmetatile 16, 24, 94, FALSE
+	setmetatile 20, 24, 94, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetBush2Snow::
-	setmetatile 40, 26, 94, FALSE
+	setmetatile 44, 26, 94, FALSE
 	return
 
 @ ===========================================================================

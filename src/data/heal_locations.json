@@ -403,6 +403,24 @@
       "map": "MAP_TRADEWIND_TOWN",
       "x": 24,
       "y": 43
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_JAIL_ENTRY",
+      "map": "MAP_SHIN_TOKYO_JAIL",
+      "x": 12,
+      "y": 16
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_JAIL_CELL",
+      "map": "MAP_SHIN_TOKYO_JAIL",
+      "x": 15,
+      "y": 4
+    },
+    {
+      "id": "HEAL_LOCATION_REBEL_HIDEOUT",
+      "map": "MAP_REBEL_HIDEOUT",
+      "x": 7,
+      "y": 6
     }
   ]
 }

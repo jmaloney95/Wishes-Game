@@ -2254,3 +2254,18 @@
 	.byte \battler
 	.byte \switchedItems
 	.endm
+
+	@ WoT Shadow system: jump if the fainting battler is an enemy mon that was
+	@ snagged this battle (skips the faint cry + "fainted!" message).
+	.macro wotjumpifsnaggedfaint jumpInstr:req
+	callnative BS_WotJumpIfSnaggedFaint
+	.4byte \jumpInstr
+	.endm
+
+	@ WoT Shadow system: deliver the next snagged mon (heals, dex-flags, gives
+	@ to party/PC, buffers its nickname + party/PC chooser). Jumps to doneInstr
+	@ once every snagged mon has been delivered.
+	.macro wotcollectsnagged doneInstr:req
+	callnative BS_WotCollectSnaggedMons
+	.4byte \doneInstr
+	.endm

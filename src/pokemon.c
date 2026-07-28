@@ -2885,6 +2885,9 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_IS_SHADOW:
             retVal = GetSubstruct3(boxMon)->isShadow;
             break;
+        case MON_DATA_SHADOW_OPENED:
+            retVal = GetSubstruct3(boxMon)->shadowOpened;
+            break;
         case MON_DATA_DYNAMAX_LEVEL:
             retVal = GetSubstruct3(boxMon)->dynamaxLevel;
             break;
@@ -3340,6 +3343,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             break;
         case MON_DATA_IS_SHADOW:
             SET8(GetSubstruct3(boxMon)->isShadow);
+            break;
+        case MON_DATA_SHADOW_OPENED:
+            SET8(GetSubstruct3(boxMon)->shadowOpened);
             break;
         case MON_DATA_DYNAMAX_LEVEL:
             SET8(GetSubstruct3(boxMon)->dynamaxLevel);
@@ -5838,6 +5844,10 @@ u16 GetBattleBGM(void)
         // Star Summit boss: force the FRLG champion battle theme.
         if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
             return MUS_RG_VS_CHAMPION;
+
+        // Vesper keeps the rift's heart -- his battle plays Giratina's theme.
+        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_DISTORTION_LEADER)
+            return MUS_PL_VS_GIRATINA;
 
         if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
             trainerClass = GetFrontierOpponentClass(TRAINER_BATTLE_PARAM.opponentA);

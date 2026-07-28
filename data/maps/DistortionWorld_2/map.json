@@ -52,7 +52,7 @@
       "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "DistortionWorld_EventScript_Rift"
+      "script": "DistortionWorld_2_EventScript_SeamHint"
     },
     {
       "type": "sign",

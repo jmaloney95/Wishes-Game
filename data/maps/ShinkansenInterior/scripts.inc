@@ -153,8 +153,13 @@ ShinkansenInterior_EventScript_TakeSeat::
 	msgbox ShinkansenInterior_Text_ActThree, MSGBOX_DEFAULT
 	closemessage
 	delay 40
-	fadescreen FADE_FROM_BLACK
-	msgbox ShinkansenInterior_Text_TrainHum, MSGBOX_DEFAULT
+	@ The ride is skipped: the title card holds on black while the train runs,
+	@ then Act 3 opens on the rainy Shin-Tokyo platform (the arrival cutscene
+	@ lives in ShinTokyoStation/scripts.inc).
+	playse SE_TRUCK_MOVE
+	delay 60
+	warp MAP_SHIN_TOKYO_STATION, 9, 3
+	waitstate
 	releaseall
 	end
 
@@ -210,7 +215,7 @@ ShinkansenInterior_Text_Departing2::
 
 ShinkansenInterior_Text_ActThree::
 	.string "ACT III\p"
-	.string "“COOKED”$"
+	.string "“THE INFILTRATION”$"
 
 ShinkansenInterior_Text_TrainHum::
 	.string "The train hums through the dark,\n"

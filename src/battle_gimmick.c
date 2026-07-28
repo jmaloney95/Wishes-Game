@@ -285,6 +285,14 @@ static inline u32 GetIndicatorSpriteId(u32 healthboxId)
     return gBattleStruct->gimmick.indicatorSpriteId[gSprites[healthboxId].hMain_Battler];
 }
 
+// WoT Shadow system: any on-field Shadow mon (an enemy snag target, or a
+// snagged-but-unpurified mon of the player's) shows a purple flame by its
+// level. An active gimmick's indicator takes precedence.
+static bool32 WotBattlerShowsShadowIndicator(enum BattlerId battler)
+{
+    return GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW);
+}
+
 const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
 {
     u32 gimmick = GetActiveGimmick(battler);
@@ -304,6 +312,10 @@ const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
     {
         return (u32 *)gGimmicksInfo[gimmick].indicatorData;
     }
+    else if (WotBattlerShowsShadowIndicator(battler))
+    {
+        return (u32 *)&sWotShadowIndicatorGfx;
+    }
     else
     {
         return NULL;
@@ -317,6 +329,8 @@ u32 GetIndicatorPalTag(enum BattlerId battler)
         return TAG_MISC_INDICATOR_PAL;
     else if (gGimmicksInfo[gimmick].indicatorPalTag != 0)
         return gGimmicksInfo[gimmick].indicatorPalTag;
+    else if (WotBattlerShowsShadowIndicator(battler))
+        return TAG_MISC_INDICATOR_PAL;
     else
         return TAG_NONE;
 }

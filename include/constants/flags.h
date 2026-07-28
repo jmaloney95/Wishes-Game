@@ -97,7 +97,12 @@
 #define FLAG_NATIONAL_PARK_METAL_COAT_DONE 0x4B
 #define FLAG_NATIONAL_PARK_GRAVE_SECRET 0x4C
 #define FLAG_NATIONAL_PARK_CUT_GIVEN 0x4D
-#define FLAG_BADGE_LANTERN   0x4E // Tradewind gym cleared + Mega unlock (custom; all 8 numbered badge slots are taken)
+// Lantern Badge (Tradewind gym + Mega unlock) lives INSIDE the numbered badge
+// block (slot 04, unused by WoT content) so every vanilla badge counter --
+// save dialog, continue screen, catch malus, TV -- sees it. It originally
+// lived at raw flag 0x4E; CB2_ContinueSavedGame migrates old saves once.
+#define FLAG_BADGE_LANTERN          FLAG_BADGE04_GET
+#define FLAG_BADGE_LANTERN_LEGACY   0x4E // pre-move Lantern flag; migrated + cleared on continue
 #define FLAG_HIDE_TRADEWIND_PAWNBROKER 0x4F // hides the Pawnbroker (Mega-stone) stall until the Lantern Badge is earned
 
 // Scripts
@@ -2559,6 +2564,20 @@
 #define FLAG_CURIO_HOUNDOOMINITE                FLAG_UNUSED_0x29C
 #define FLAG_CURIO_BANETTITE                    FLAG_UNUSED_0x29D
 #define FLAG_CURIO_GARCHOMPITE                  FLAG_UNUSED_0x29E
+
+// === Act 3: Shin-Tokyo (2026-07-27) ===
+#define FLAG_ACT3_ARRIVED_SHIN_TOKYO            FLAG_UNUSED_0x29F // the rainy platform arrival scene has played (Step 1 opening)
+#define FLAG_ACT3_RESEARCH_STOLEN               FLAG_UNUSED_0x2A0 // kept path only: the Mutrid Captain took the Shadow Dossier at street level (Step 2)
+#define FLAG_ACT3_INSPECTION_DONE               FLAG_UNUSED_0x2A1 // the street inspection scene played (either path)
+#define FLAG_ACT3_MINISTER_CALLED               FLAG_UNUSED_0x2A2 // Minister's PokeNav call: Mikmanc compromised, jail door opened (Step 3)
+#define FLAG_ACT3_MIKMANC_FREED                 FLAG_UNUSED_0x2A3 // cell checkpoint reached; also hides the cell Mikmanc object (Step 4)
+#define FLAG_ACT3_RED_ALERT                     FLAG_UNUSED_0x2A4 // permanent city hostility after the jailbreak; mask useless (Step 5)
+#define FLAG_ACT3_ARREST_DONE                   FLAG_UNUSED_0x2A5 // the Zoroark operative arrest + hideout escort played (Step 6)
+#define FLAG_HIDE_ACT3_CAPTAIN                  FLAG_UNUSED_0x2A6 // scene-only NPC: set every ShinTokyo transition, addobject during Step 2
+#define FLAG_HIDE_ACT3_ARREST_NPCS              FLAG_UNUSED_0x2A7 // scene-only NPCs (officer + operative): set every transition, addobject during Step 6
+#define FLAG_ACT3_JAIL_REVEAL_SEEN              FLAG_UNUSED_0x2A8 // the one-time "lights die" reveal on first jail entry
+#define FLAG_HIDE_ACT3_JAIL_GUARDS              FLAG_UNUSED_0x2A9 // the two sentries at the jail door; set (guards scatter) by the Minister's call
+#define FLAG_WOT_SB3_FNPC_INIT                  FLAG_UNUSED_0x2AA // one-time SaveBlock3 follower-NPC data wipe for saves made before FNPC_ENABLE_NPC_FOLLOWERS
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)

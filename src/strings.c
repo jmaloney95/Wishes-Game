@@ -1240,7 +1240,7 @@ const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
 //QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
 const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");
 const u8 gText_Quest_WakingMountain_Desc1[] = _("The thousand-year ice is\nbreaking. Only Prof. Clarkson\nknows why. Seek him out.");
-const u8 gText_Quest_WakingMountain_Desc2[] = _("Clarkson has called from the\npeak. Climb Mt. Munen to where\nthe ice finally ends.");
+const u8 gText_Quest_WakingMountain_Desc2[] = _("Clarkson has called from the\npeak. Climb to STAR SUMMIT,\nwhere the ice finally ends.");
 const u8 gText_Quest_WakingMountain_DoneDesc[] = _("The mountain has woken. What\ncomes next, no one can say.");
 
 //SIDE_QUEST_ONE_THAT_GOT_AWAY - stage 2 once FLAG_SEAFLOOR_GYARADOS_GONE is set

@@ -5,7 +5,28 @@
 	.set LOCALID_STARSUMMIT_GOON_TOP2, 5
 
 StarSummit_MapScripts::
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, StarSummit_OnFrame
 	.byte 0
+
+@ Setting foot on the summit at all completes the Act 1 main quest -- fires
+@ once per map entry (VAR_TEMP_1) and only while the quest is still active,
+@ so it is idempotent AND backfills older saves that passed the summit before
+@ this hook existed.
+StarSummit_OnFrame:
+	map_script_2 VAR_TEMP_1, 0, StarSummit_EventScript_ReachedSummit
+	.2byte 0
+
+StarSummit_EventScript_ReachedSummit::
+	lockall
+	setvar VAR_TEMP_1, 1
+	goto_if_quest_active QUEST_WAKING_MOUNTAIN, StarSummit_EventScript_CompleteWakingMountain
+	releaseall
+	end
+
+StarSummit_EventScript_CompleteWakingMountain::
+	completequest QUEST_WAKING_MOUNTAIN
+	releaseall
+	end
 
 @==============================================================================
 @ ARRIVAL CUTSCENE -- fires at the top of the stairs (triggers @15-16,y18).

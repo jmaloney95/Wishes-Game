@@ -647,3 +647,8 @@ gSpecials::
 	def_special ShowQuestPopup
 	def_special StartRiftDistortion
 	def_special EndRiftDistortion
+	def_special RefreshPlayerAvatarGraphicsIfOnFoot
+	def_special GetMonShadowState
+	def_special PurifyPartyMon
+	def_special CountShadowPartyMons
+	def_special WotInitFlashScanlineEffect

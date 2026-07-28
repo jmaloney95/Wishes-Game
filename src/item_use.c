@@ -46,6 +46,7 @@
 #include "constants/event_objects.h"
 #include "constants/item_effects.h"
 #include "constants/items.h"
+#include "constants/region_map_sections.h"
 #include "constants/songs.h"
 #include "constants/species.h"
 
@@ -1175,6 +1176,7 @@ void ItemUseOutOfBattle_EscapeRope(u8 taskId)
 extern const u8 NationalParkAct2_EventScript_CatalpaBowCrossing[];
 extern const u8 EventScript_CatalpaBowGengarFerry[];
 extern const u8 EventScript_CatalpaBowNoGengar[];
+extern const u8 EventScript_CatalpaBowLeaveRift[];
 
 static bool32 PlayerIsNearGravesiteSeam(void)
 {
@@ -1226,6 +1228,13 @@ static void ItemUseOnFieldCB_CatalpaBowNoGengar(u8 taskId)
     DestroyTask(taskId);
 }
 
+static void ItemUseOnFieldCB_CatalpaBowLeaveRift(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_CatalpaBowLeaveRift);
+    DestroyTask(taskId);
+}
+
 // Quest Log -- opens the quest journal script (data/scripts/quests.inc).
 extern const u8 EventScript_QuestLog[];
 
@@ -1269,9 +1278,19 @@ void ItemUseOutOfBattle_CatalpaBow(u8 taskId)
     else if (FlagGet(FLAG_ACT2_MET_CLARKSON_DISTORTION))
     {
         if (PlayerPartyHasGengar())
-            sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowFerry;
+        {
+            // Inside the rift the ghost-roads only lead OUT: the bow offers a
+            // quick exit to the gravesite instead of the travel menu. This is
+            // the intended way to leave the Distortion World.
+            if (gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD)
+                sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowLeaveRift;
+            else
+                sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowFerry;
+        }
         else
+        {
             sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowNoGengar;
+        }
         SetUpItemUseOnFieldCallback(taskId);
     }
     else if (PlayerIsNearGravesiteSeam())

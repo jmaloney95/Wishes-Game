@@ -337,32 +337,9 @@ SennenAct2_EventScript_CaptainRyoko::
 	msgbox SennenAct2_Text_RyokoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
-@ --------------------------------------------------------------------------
-@  The train door (bg event at 32,12)
-@ --------------------------------------------------------------------------
-SennenAct2_EventScript_TrainDoor::
-	lockall
-	checkitem ITEM_SHINKANSEN_KEY
-	goto_if_eq VAR_RESULT, FALSE, SennenAct2_EventScript_DoorLocked
-	msgbox SennenAct2_Text_DoorSwipe, MSGBOX_DEFAULT
-	closemessage
-	playse SE_PC_ON
-	delay 20
-	playse SE_DOOR
-	msgbox SennenAct2_Text_DoorOpens, MSGBOX_DEFAULT
-	closemessage
-	clearflag FLAG_HIDE_SHINKANSEN_ACT2_GOONS
-	fadescreen FADE_TO_BLACK
-	delay 20
-	warp MAP_SHINKANSEN_INTERIOR, 8, 3
-	waitstate
-	releaseall
-	end
-
-SennenAct2_EventScript_DoorLocked::
-	msgbox SennenAct2_Text_DoorLocked, MSGBOX_DEFAULT
-	releaseall
-	end
+@ (The old scripted train door was retired: boarding is now a plain map warp
+@  at (19,15), and the keycard gate lives in the Act-2 car itself --
+@  ShinkansenInterior_Act2_EventScript_NoKeyEject.)
 
 @ --------------------------------------------------------------------------
 @  The battlefield -- rebels holding the line (ambient)
@@ -493,28 +470,6 @@ SennenAct2_Text_RyokoPostBattle::
 	.string "Go, then. Board.\p"
 	.string "Shin-Tokyo doesn't spit anyone\n"
 	.string "back out.$"
-
-SennenAct2_Text_DoorLocked::
-	.string "The Shinkansen's door is sealed.\n"
-	.string "A card reader blinks red, red,\l"
-	.string "red.\p"
-	.string "It wants a key that Mutrid\n"
-	.string "doesn't have.$"
-
-SennenAct2_Text_DoorSwipe::
-	.string "{PLAYER} swiped the SHINKANSEN\n"
-	.string "KEY.\p"
-	.string "Somewhere in Sennen, a vending\n"
-	.string "machine begins looping camera\l"
-	.string "footage.\p"
-	.string "The reader blinks green.$"
-
-SennenAct2_Text_DoorOpens::
-	.string "The door hisses open.\p"
-	.string "Behind you: thunder, smoke, and\n"
-	.string "every voice you love, shouting.\p"
-	.string "You don't look back.\n"
-	.string "You look FORWARD.$"
 
 SennenAct2_Text_RebelFighter1::
 	.string "REBEL: Two more! Come ON, big\n"
