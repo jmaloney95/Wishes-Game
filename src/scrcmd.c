@@ -2335,6 +2335,19 @@ bool8 ScrCmd_checkfieldmove(struct ScriptContext *ctx)
         }
     }
 
+    // WoT: HMs are the TRAINER's abilities, not moves. Once the badge unlocks
+    // a classic field move it is usable with no party mon needing to know it
+    // (the start menu's HMs entry lists what's unlocked). Only the HM range
+    // gets the waiver -- Dig/Teleport/etc. still require the actual move.
+    if (gSpecialVar_Result == PARTY_SIZE
+     && fieldMove <= FIELD_MOVE_WATERFALL
+     && IsFieldMoveUnlocked(fieldMove)
+     && GetMonData(&gPlayerParty[0], MON_DATA_SPECIES) != SPECIES_NONE)
+    {
+        gSpecialVar_Result = 0;
+        gSpecialVar_0x8004 = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES);
+    }
+
     return FALSE;
 }
 

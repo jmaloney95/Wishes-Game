@@ -1236,6 +1236,19 @@ const u8 gText_QuestLoc_SennenStation[] = _("SENNEN STATION");
 const u8 gText_QuestLoc_NationalPark[] = _("NATIONAL PARK");
 const u8 gText_QuestLoc_Pompeii[] = _("POMPEII");
 const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
+const u8 gText_QuestLoc_ShinTokyo[] = _("SHIN-TOKYO");
+
+const u8 gText_Quest_StopTheMachine_Name[] = _("Stop the Machine");
+const u8 gText_Quest_StopTheMachine_Desc1[] = _("The tides run low tonight.\nSurf south. Purify shadows,\nthen climb Mutrid's tower.");
+const u8 gText_Quest_StopTheMachine_DoneDesc[] = _("The Shadow Generator is silent.\nThe wish is mended.");
+
+const u8 gText_Quest_HarnessDarkness_Name[] = _("Harness Darkness");
+const u8 gText_Quest_HarnessDarkness_Desc1[] = _("Turn the SNAG MACHINE on them.\nCatch a Shadow Pokémon--\nthen five in all.");
+const u8 gText_Quest_HarnessDarkness_DoneDesc[] = _("Their darkness answers to\nyou now.");
+
+const u8 gText_Quest_MinistersFavor_Name[] = _("Jailbreaker");
+const u8 gText_Quest_MinistersFavor_Desc1[] = _("The Minister remoted into the\njail security. Bust Mikmanc\nout of prison.");
+const u8 gText_Quest_MinistersFavor_DoneDesc[] = _("Mikmanc walks free. The\nMinister paid what he owed.");
 
 //QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
 const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");

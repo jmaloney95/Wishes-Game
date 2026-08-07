@@ -1995,8 +1995,12 @@
 	.2byte \flag
 	.endm
 
-#if USE_QUEST_TOAST
 	@ Starts the specified quest with a non-blocking corner toast.
+	@ (Single definition on purpose: the test build's inline overworld
+	@ scripts feed this file to gas RAW, where cpp #if lines are comments --
+	@ a cpp-guarded alternate definition would define the macro twice. The
+	@ legacy blocking-announcement variant lived behind USE_QUEST_TOAST=0
+	@ and was removed with it.)
 	.macro startquest quest:req
 	questmenu QUEST_MENU_SET_ACTIVE, \quest
 	questtoast QUEST_TOAST_START, \quest
@@ -2007,31 +2011,6 @@
 	questmenu QUEST_MENU_COMPLETE_QUEST, \quest
 	questtoast QUEST_TOAST_COMPLETE, \quest
 	.endm
-#else
-	@ Starts the specified quest (blocking announcement).
-	.macro startquest quest:req
-	closemessage
-	delay 30
-	questmenu QUEST_MENU_SET_ACTIVE, \quest
-	questmenu QUEST_MENU_BUFFER_QUEST_NAME, \quest
-	bufferstring 1, gText_QuestActive
-	playfanfare MUS_LEVEL_UP
-	msgbox gText_QuestAnnounce, MSGBOX_SIGN
-	waitfanfare
-	.endm
-
-	@ Completes the specified quest (blocking announcement).
-	.macro completequest quest:req
-	closemessage
-	delay 30
-	questmenu QUEST_MENU_COMPLETE_QUEST, \quest
-	questmenu QUEST_MENU_BUFFER_QUEST_NAME, \quest
-	bufferstring 1, gText_QuestComplete
-	playfanfare MUS_LEVEL_UP
-	msgbox gText_QuestAnnounce, MSGBOX_SIGN
-	waitfanfare
-	.endm
-#endif
 
 	.macro goto_if_quest_inactive quest:req, dest:req
 	questmenu QUEST_MENU_CHECK_INACTIVE, \quest
@@ -2119,6 +2098,15 @@
 	.byte SCR_OP_SHOWPORTRAIT
 	.byte \portrait
 	.byte \side
+	.endm
+
+	@ Boss intro card: tint + banner/name slam + portrait, then resumes the
+	@ script (the waitstate is embedded -- do not add another). Call between
+	@ closemessage and the battle. id = BOSS_INTRO_* (constants/boss_intro.h).
+	.macro bossintro id:req
+	callnative BossIntro_StartFromScript
+	.4byte \id
+	waitstate
 	.endm
 
 	@ Hides the character portrait shown by showportrait.

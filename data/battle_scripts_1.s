@@ -4182,14 +4182,24 @@ BattleScript_PayDayMoneyAndPickUpItems::
 	pickup
 	end2
 
-@ WoT Shadow system: hand over every mon snagged this battle, one message
-@ per mon ("added to your party" / "transferred to the PC").
+@ WoT Shadow system: hand over every mon snagged this battle -- per mon a
+@ give plus a message ("added to your party" / "transferred to the PC").
+@ NO nickname prompt: the vanilla caught-mon naming flow expects the wild
+@ CAUGHT battle-end path and black-screened here, and snagged mons can be
+@ renamed at any time from the party menu anyway.
 BattleScript_WotDeliverSnagged::
 	wotcollectsnagged BattleScript_WotDeliverSnaggedEnd
+	wotgivesnagged
 	printfromtable gWotSnagDeliveryStringIds
 	waitmessage B_WAIT_TIME_LONG
 	goto BattleScript_WotDeliverSnagged
 BattleScript_WotDeliverSnaggedEnd::
+	return
+
+@ WoT Shadow system: the switch-in aura announce (either side).
+BattleScript_WotShadowAuraRet::
+	printstring STRINGID_WOTSHADOWAURA
+	waitmessage B_WAIT_TIME_LONG
 	return
 
 BattleScript_RivalBattleLost::

@@ -259,6 +259,7 @@ extern const u8 BattleScript_AttackerAbilityStatRaiseEnd2[];
 extern const u8 BattleScript_PoisonHealActivates[];
 extern const u8 BattleScript_BadDreamsActivates[];
 extern const u8 BattleScript_SwitchInAbilityMsg[];
+extern const u8 BattleScript_WotShadowAuraRet[];
 extern const u8 BattleScript_ToxicSpikesPoisoned[];
 extern const u8 BattleScript_ToxicSpikesBadlyPoisoned[];
 extern const u8 BattleScript_ToxicSpikesAbsorbed[];

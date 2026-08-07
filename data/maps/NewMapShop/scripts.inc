@@ -40,10 +40,9 @@ NewMapShop_EventScript_Shopper::
 @  Text
 @ ============================================================================
 NewMapShop_Text_Greeting::
-	.string "Welcome! Outfitter to pilgrims and\n"
-	.string "fools alike, at your service.\p"
+	.string "Welcome!\p"
 	.string "Heading up? Then buy double.\n"
-	.string "The mountain doesn't do refunds.$"
+	.string "STAR SUMMIT doesn't do refunds.$"
 
 NewMapShop_Text_Farewell::
 	.string "Mind the cold past the torii.\n"

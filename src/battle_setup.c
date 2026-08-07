@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "load_save.h"
 #include "battle_setup.h"
+#include "boss_intro.h"
 #include "battle_tower.h"
 #include "battle_transition.h"
 #include "main.h"
@@ -270,7 +271,10 @@ static void CreateBattleStartTask(enum BattleTransition transition, u16 song)
     u8 taskId = CreateTask(Task_BattleStart, 1);
 
     gTasks[taskId].tTransition = transition;
-    PlayMapChosenOrBattleBGM(song);
+    if (gWotBossIntroPrimed)
+        gWotBossIntroPrimed = FALSE; // the boss card's theme carries into the battle
+    else
+        PlayMapChosenOrBattleBGM(song);
 }
 
 static void Task_BattleStart_Debug(u8 taskId)
@@ -897,6 +901,11 @@ enum BattleTransition GetTrainerBattleTransition(void)
     // Star Summit boss: force the red Groudon lava-crack transition (overrides the map's blue water transition).
     if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
         return B_TRANSITION_GROUDON;
+
+    // Boss intro card battles: the card was the spectacle -- cut in fast with
+    // the white bars instead of the long class transition.
+    if (gWotBossIntroPrimed)
+        return B_TRANSITION_WHITE_BARS_FADE;
 
     if (DoesTrainerHaveMugshot(trainerId))
         return B_TRANSITION_MUGSHOT;
@@ -1628,6 +1637,11 @@ void PlayTrainerEncounterMusic(void)
 {
     u16 trainerId;
     u16 music;
+
+    // Boss intro card battles: the boss theme is already playing (started at
+    // the card's slam) -- the encounter jingle must not relaunch over it.
+    if (gWotBossIntroPrimed)
+        return;
 
     if (gApproachingTrainerId == 0)
         trainerId = TRAINER_BATTLE_PARAM.opponentA;

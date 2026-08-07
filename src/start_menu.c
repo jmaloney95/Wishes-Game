@@ -72,6 +72,7 @@ enum
     MENU_ACTION_DEBUG,
     MENU_ACTION_DEXNAV,
     MENU_ACTION_QUEST_MENU,
+    MENU_ACTION_WOT_HMS,
 };
 
 // Save status
@@ -193,6 +194,11 @@ static const struct WindowTemplate sWindowTemplate_PyramidPeak = {
 
 static const u8 sText_MenuDebug[] = _("DEBUG");
 static const u8 sText_QuestMenu[] = _("QUESTS");
+static const u8 sText_WotHMs[] = _("HMS");
+
+// WoT: HMs are badge-unlocked trainer abilities; this lists what's usable.
+extern const u8 WotHMs_EventScript_List[];
+static bool8 WotHMsCallback(void);
 
 static const struct MenuAction sStartMenuItems[] =
 {
@@ -212,6 +218,7 @@ static const struct MenuAction sStartMenuItems[] =
     [MENU_ACTION_DEBUG]           = {sText_MenuDebug,   {.u8_void = StartMenuDebugCallback}},
     [MENU_ACTION_DEXNAV]          = {gText_MenuDexNav,  {.u8_void = StartMenuDexNavCallback}},
     [MENU_ACTION_QUEST_MENU]      = {sText_QuestMenu,   {.u8_void = QuestMenuCallback}},
+    [MENU_ACTION_WOT_HMS]         = {sText_WotHMs,      {.u8_void = WotHMsCallback}},
 };
 
 static const struct BgTemplate sBgTemplates_LinkBattleSave[] =
@@ -535,6 +542,10 @@ static void BuildNormalStartMenu(void)
 
     if (FlagGet(FLAG_SYS_QUEST_MENU_GET))
         AddStartMenuAction(MENU_ACTION_QUEST_MENU);
+
+    // WoT: show the HMs list once the first badge has unlocked anything.
+    if (FlagGet(FLAG_BADGE01_GET))
+        AddStartMenuAction(MENU_ACTION_WOT_HMS);
 
     AddStartMenuAction(MENU_ACTION_SAVE);
     AddStartMenuAction(MENU_ACTION_OPTION);
@@ -891,11 +902,16 @@ static bool8 HandleStartMenuInput(void)
 
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void;
 
+        // These callbacks stay on the field (they run a script or a prompt in
+        // place) instead of opening a replacement screen, so the field must
+        // NOT be faded out from under them -- doing so leaves the map black
+        // with only the menu drawn over it. WoT's HMs submenu belongs here.
         if (gMenuCallback != StartMenuSaveCallback
             && gMenuCallback != StartMenuExitCallback
             && gMenuCallback != StartMenuDebugCallback
             && gMenuCallback != StartMenuSafariZoneRetireCallback
-            && gMenuCallback != StartMenuBattlePyramidRetireCallback)
+            && gMenuCallback != StartMenuBattlePyramidRetireCallback
+            && gMenuCallback != WotHMsCallback)
         {
            FadeScreen(FADE_TO_BLACK, 0);
         }
@@ -1774,6 +1790,18 @@ static bool8 StartMenuDexNavCallback(void)
 static bool8 QuestMenuCallback(void)
 {
     CreateTask(Task_QuestMenu_OpenFromStartMenu, 0);
+    return TRUE;
+}
+
+static bool8 WotHMsCallback(void)
+{
+    // Runs the HMs submenu script over the live field -- same shape as the
+    // Safari retire prompt. Requires the no-fade exemption in
+    // HandleStartMenuInput; the script does its own lockall/releaseall.
+    RemoveExtraStartMenuWindows();
+    HideStartMenu();
+    ScriptContext_SetupScript(WotHMs_EventScript_List);
+
     return TRUE;
 }
 

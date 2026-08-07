@@ -389,7 +389,7 @@
     {
       "id": "HEAL_LOCATION_WALNUT_WOODS",
       "map": "MAP_WALNUT_WOODS",
-      "x": 21,
+      "x": 23,
       "y": 3
     },
     {
@@ -419,8 +419,8 @@
     {
       "id": "HEAL_LOCATION_REBEL_HIDEOUT",
       "map": "MAP_REBEL_HIDEOUT",
-      "x": 7,
-      "y": 6
+      "x": 11,
+      "y": 4
     }
   ]
 }

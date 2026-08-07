@@ -37889,6 +37889,213 @@
               }
             ]
           }
+        },
+        {
+          "map": "MAP_CELEBI_ISLAND",
+          "base_label": "gCelebiIsland",
+          "land_mons": {
+            "encounter_rate": 20,
+            "mons": [
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_WIGGLYTUFF"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_CLEFABLE"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_WIGGLYTUFF"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_CLEFABLE"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_WIGGLYTUFF"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_CLEFABLE"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_TEDDIURSA"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_WIGGLYTUFF"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_ABSOL"
+              },
+              {
+                "min_level": 38,
+                "max_level": 44,
+                "species": "SPECIES_UMBREON"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_NORTHWIND_CAVERN",
+          "base_label": "gNorthwindCavern",
+          "land_mons": {
+            "encounter_rate": 10,
+            "mons": [
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_CUBCHOO"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_NOIBAT"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_VANILLITE"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_SMOOCHUM"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_CUBCHOO"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_NOIBAT"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_VANILLITE"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_SMOOCHUM"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_CUBCHOO"
+              },
+              {
+                "min_level": 12,
+                "max_level": 16,
+                "species": "SPECIES_NOIBAT"
+              },
+              {
+                "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_CRYOGONAL"
+              },
+              {
+                "min_level": 17,
+                "max_level": 18,
+                "species": "SPECIES_CRYOGONAL"
+              }
+            ]
+          }
+        },
+        {
+          "map": "MAP_ASHLANDS_DESERT",
+          "base_label": "gAshlands_Desert",
+          "land_mons": {
+            "encounter_rate": 7,
+            "mons": [
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_CARKOL"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_SLUGMA"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_TORKOAL"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_YAMASK_GALAR"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_MAROWAK_ALOLA"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_SKARMORY"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_RHYHORN"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_PHANTUMP"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_TRAPINCH"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_SIGILYPH"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_ORTHWORM"
+              },
+              {
+                "min_level": 15,
+                "max_level": 20,
+                "species": "SPECIES_CHI_YU"
+              }
+            ]
+          }
         }
       ]
     },

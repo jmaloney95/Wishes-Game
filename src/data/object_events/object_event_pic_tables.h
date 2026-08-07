@@ -264,6 +264,46 @@ static const struct SpriteFrameImage sPicTable_GoldOni[] = {
     overworld_ascending_frames(gObjectEventPic_GoldOni, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_WotDraco[] = {
+    overworld_ascending_frames(gObjectEventPic_WotDraco, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotMikmanc[] = {
+    overworld_ascending_frames(gObjectEventPic_WotMikmanc, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotNessa[] = {
+    overworld_ascending_frames(gObjectEventPic_WotNessa, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotEdwards[] = {
+    overworld_ascending_frames(gObjectEventPic_WotEdwards, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotShadowJirachi[] = {
+    overworld_frame(gObjectEventPic_WotShadowJirachi, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotAllisonLand[] = {
+    overworld_ascending_frames(gObjectEventPic_WotAllisonLand, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotSkyeLand[] = {
+    overworld_ascending_frames(gObjectEventPic_WotSkyeLand, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotRosaLand[] = {
+    overworld_ascending_frames(gObjectEventPic_WotRosaLand, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotMarinaLand[] = {
+    overworld_ascending_frames(gObjectEventPic_WotMarinaLand, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBeachBeauty[] = {
+    overworld_ascending_frames(gObjectEventPic_WotBeachBeauty, 2, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_OniGoon[] = {
     overworld_ascending_frames(gObjectEventPic_OniGoon, 2, 4),
 };
@@ -3093,3 +3133,17 @@ static const struct SpriteFrameImage sPicTable_MomFrlg[] = {
 };
 
 #endif // IS_FRLG
+
+static const struct SpriteFrameImage sPicTable_WotLeaderScreen[] = {
+    overworld_frame(gObjectEventPic_WotLeaderScreen, 8, 8, 0),
+    overworld_frame(gObjectEventPic_WotLeaderScreen, 8, 8, 1),
+};
+
+static const struct SpriteFrameImage sPicTable_WotWantedPoster[] = {
+    overworld_frame(gObjectEventPic_WotWantedPoster, 8, 8, 0),
+    overworld_frame(gObjectEventPic_WotWantedPoster, 8, 8, 1),
+};
+
+static const struct SpriteFrameImage sPicTable_WotWantedSmall[] = {
+    obj_frame_tiles(gObjectEventPic_WotWantedSmall),
+};

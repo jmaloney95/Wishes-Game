@@ -2269,3 +2269,10 @@
 	callnative BS_WotCollectSnaggedMons
 	.4byte \doneInstr
 	.endm
+
+	@ WoT Shadow system: give the snagged mon selected by wotcollectsnagged to
+	@ the player (party, or PC in partner multis / when full) and set the
+	@ party/PC message chooser for gWotSnagDeliveryStringIds.
+	.macro wotgivesnagged
+	callnative BS_WotGiveSnaggedMon
+	.endm

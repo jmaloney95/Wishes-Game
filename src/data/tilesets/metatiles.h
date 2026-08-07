@@ -474,3 +474,24 @@ const u16 gMetatileAttributes_LavaMap[] = INCBIN_U16("data/tilesets/secondary/la
 
 const u16 gMetatiles_DistortionWorld[] = INCBIN_U16("data/tilesets/secondary/distortion_world/metatiles.bin");
 const u16 gMetatileAttributes_DistortionWorld[] = INCBIN_U16("data/tilesets/secondary/distortion_world/metatile_attributes.bin");
+
+const u16 gMetatiles_FearTown[] = INCBIN_U16("data/tilesets/secondary/fear_town/metatiles.bin");
+const u16 gMetatileAttributes_FearTown[] = INCBIN_U16("data/tilesets/secondary/fear_town/metatile_attributes.bin");
+
+const u16 gMetatiles_FairyTown[] = INCBIN_U16("data/tilesets/secondary/fairy_town/metatiles.bin");
+const u16 gMetatileAttributes_FairyTown[] = INCBIN_U16("data/tilesets/secondary/fairy_town/metatile_attributes.bin");
+
+const u16 gMetatiles_SumpRats[] = INCBIN_U16("data/tilesets/secondary/sump_rats/metatiles.bin");
+const u16 gMetatileAttributes_SumpRats[] = INCBIN_U16("data/tilesets/secondary/sump_rats/metatile_attributes.bin");
+
+const u16 gMetatiles_DragonKeepers[] = INCBIN_U16("data/tilesets/secondary/dragon_keepers/metatiles.bin");
+const u16 gMetatileAttributes_DragonKeepers[] = INCBIN_U16("data/tilesets/secondary/dragon_keepers/metatile_attributes.bin");
+
+const u16 gMetatiles_CityBlocks[] = INCBIN_U16("data/tilesets/secondary/city_blocks/metatiles.bin");
+const u16 gMetatileAttributes_CityBlocks[] = INCBIN_U16("data/tilesets/secondary/city_blocks/metatile_attributes.bin");
+
+const u16 gMetatiles_MiddleDistrict[] = INCBIN_U16("data/tilesets/secondary/middle_district/metatiles.bin");
+const u16 gMetatileAttributes_MiddleDistrict[] = INCBIN_U16("data/tilesets/secondary/middle_district/metatile_attributes.bin");
+
+const u16 gMetatiles_MiddleDistrictGround[] = INCBIN_U16("data/tilesets/primary/middle_district/metatiles.bin");
+const u16 gMetatileAttributes_MiddleDistrictGround[] = INCBIN_U16("data/tilesets/primary/middle_district/metatile_attributes.bin");

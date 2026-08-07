@@ -14,6 +14,7 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "field_message_box.h"
+#include "field_move.h"
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
 #include "field_specials.h"
@@ -1695,6 +1696,83 @@ void PurifyPartyMon(void)
     SetMonData(mon, MON_DATA_SHADOW_OPENED, &zero);
     SetMonData(mon, MON_DATA_NATIONAL_RIBBON, &one);
     CalculateMonStats(mon);
+}
+
+// -- WoT: the HMs start-menu submenu ----------------------------------------
+// HMs are trainer abilities here: unlocked by badges, never taught. The menu
+// itself is scripted (wot_hms.inc); these are its two helpers.
+
+// gSpecialVar_0x8004 = a FIELD_MOVE_* id; gSpecialVar_Result = is it unlocked.
+// Keeps the badge mapping in ONE place (field_move.c) instead of duplicating
+// it into script flag checks.
+void WotIsHMUnlocked(void)
+{
+    gSpecialVar_Result = IsFieldMoveUnlocked(gSpecialVar_0x8004);
+}
+
+// Fly has no overworld tile to interact with, so it is used FROM the HM menu:
+// hand the screen to the region map (the same entry point the debug menu's
+// Fly utility uses). Call it as the script's last act.
+void WotOpenFlyMap(void)
+{
+    SetMainCallback2(CB2_OpenFlyMap);
+}
+
+// -- WoT: red-alert klaxon (jail escape, Act 3 Step 4) ----------------------
+// Pulses the whole screen red with an alarm beep. Blocking: pair with
+// `waitstate`. Uses the normal palette-fade machinery (not a raw BlendPalettes)
+// so the field's own palette updates don't fight it.
+#define tState  data[0]
+#define tCycles data[1]
+
+static void Task_WotRedAlertFlash(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (gPaletteFade.active)
+        return;
+
+    switch (tState)
+    {
+    case 0:
+        PlaySE(SE_LOW_HEALTH);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 10, RGB_RED);
+        tState = 1;
+        break;
+    case 1:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 10, 0, RGB_RED);
+        if (++tCycles >= 4)
+            tState = 2;
+        else
+            tState = 0;
+        break;
+    case 2:
+        DestroyTask(taskId);
+        ScriptContext_Enable();
+        break;
+    }
+}
+
+void WotRedAlertFlash(void)
+{
+    u8 taskId = CreateTask(Task_WotRedAlertFlash, 80);
+
+    gTasks[taskId].tState = 0;
+    gTasks[taskId].tCycles = 0;
+}
+
+#undef tState
+#undef tCycles
+
+// Marks the scripted wild mon (gEnemyParty[0], created by setwildbattle) as
+// a Shadow -- used for static Shadow encounters like the Prototype Lab
+// DEOXYS. Run it between setwildbattle and the battle special so the
+// healthbox indicator applies from turn one.
+void WotMakeEventMonShadow(void)
+{
+    u32 one = TRUE;
+
+    SetMonData(&gEnemyParty[0], MON_DATA_IS_SHADOW, &one);
 }
 
 // gSpecialVar_Result = number of Shadow mons in the party;

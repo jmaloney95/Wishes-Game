@@ -358,6 +358,36 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      NULL,
 	      0
 	),
+	[QUEST_STOP_THE_MACHINE] = side_quest(
+	      gText_Quest_StopTheMachine_Name,
+	      gText_Quest_StopTheMachine_Desc1,
+	      gText_Quest_StopTheMachine_DoneDesc,
+	      gText_QuestLoc_ShinTokyo,
+	      SPECIES_CELEBI,
+	      PKMN,
+	      NULL,
+	      0
+	),
+	[SIDE_QUEST_MINISTERS_FAVOR] = side_quest(
+	      gText_Quest_MinistersFavor_Name,
+	      gText_Quest_MinistersFavor_Desc1,
+	      gText_Quest_MinistersFavor_DoneDesc,
+	      gText_QuestLoc_ShinTokyo,
+	      SPECIES_PERSIAN,
+	      PKMN,
+	      NULL,
+	      0
+	),
+	[SIDE_QUEST_HARNESS_DARKNESS] = side_quest(
+	      gText_Quest_HarnessDarkness_Name,
+	      gText_Quest_HarnessDarkness_Desc1,
+	      gText_Quest_HarnessDarkness_DoneDesc,
+	      gText_QuestLoc_ShinTokyo,
+	      ITEM_SNAG_MACHINE,
+	      ITEM,
+	      NULL,
+	      0
+	),
 };
 ////////////////////////END QUEST CUSTOMIZATION////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

@@ -267,19 +267,60 @@ Debug_Text_PortraitRight:
 
 @ Quest toast queue test: complete + start back-to-back -> two toasts in
 @ order (SE_SUCCESS then SE_PIN), no blocking, player can walk during both.
+@ Boss intro card smoke test (was a stale Act-1 quest poke). Run 5x in a row
+@ to check for VRAM/palette leaks -- mGBA's sprite viewer should look
+@ identical after every run, and the tint must fully lift each time.
 Debug_EventScript_Script_6::
-	completequest QUEST_WAKING_MOUNTAIN
-	startquest SIDE_QUEST_EIGHT_WAYS
-	release
+	lockall
+	bossintro BOSS_INTRO_EDWARDS
+	releaseall
 	end
 
+@ ===========================================================================
+@  WoT Shadow system test harness (debug menu -> Scripts -> 7 / 8)
+@  7 = SINGLE vs a Shadow patroller. Tests: violet tint, healthbox flame,
+@      switch-in aura line, snag (trainer-block waiver), delivery + nickname
+@      prompt, heart gauge on the snagged mon, Shadow Boost, EXP lock.
+@  8 = the jail's PARTNER DOUBLE (Mikmanc, 2v1). Tests: half-party select,
+@      the manual ball-target selector, snagging the RIGHT-slot Shadow, and
+@      partner-battle snags landing in the PC.
+@  Both hand out balls and the Snag Machine and clear the trainer flag, so
+@  they can be re-run as often as you like.
+@ ===========================================================================
 Debug_EventScript_Script_7::
+	call Debug_EventScript_ShadowTestKit
+	cleartrainerflag TRAINER_NATE
+	trainerbattle_no_intro TRAINER_NATE, Debug_Text_ShadowTestDefeat
 	release
 	end
 
 Debug_EventScript_Script_8::
+	call Debug_EventScript_ShadowTestKit
+	cleartrainerflag TRAINER_PRESTON
+Debug_EventScript_Script_8_Choose::
+	special SavePlayerParty
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_ne VAR_RESULT, 0, Debug_EventScript_Script_8_Battle
+	special LoadPlayerParty
 	release
 	end
+
+Debug_EventScript_Script_8_Battle::
+	multi_2_vs_1 TRAINER_PRESTON, Debug_Text_ShadowTestDefeat, PARTNER_MIKMANC
+	release
+	end
+
+Debug_EventScript_ShadowTestKit::
+	additem ITEM_ULTRA_BALL, 20
+	checkitem ITEM_SNAG_MACHINE
+	goto_if_eq VAR_RESULT, TRUE, Debug_EventScript_ShadowTestKitDone
+	additem ITEM_SNAG_MACHINE, 1
+Debug_EventScript_ShadowTestKitDone::
+	return
+
+Debug_Text_ShadowTestDefeat:
+	.string "(debug) Shadow test battle over.$"
 
 Debug_CheckSaveBlock::
 	callnative CheckSaveBlock1Size

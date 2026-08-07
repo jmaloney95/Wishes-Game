@@ -136,7 +136,7 @@ struct Trainer
 
 struct TrainerClass
 {
-    u8 name[13];
+    u8 name[14];    // widened from 13 for "Dragon Warden" (13 chars + EOS)
     u8 money;
     u16 ball;
 };

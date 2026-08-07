@@ -206,34 +206,6 @@
       "elevation": 0,
       "dest_map": "MAP_SENNEN_VILLAGE",
       "dest_warp_id": "5"
-    },
-    {
-      "x": 0,
-      "y": 39,
-      "elevation": 0,
-      "dest_map": "MAP_WALNUT_WOODS",
-      "dest_warp_id": "5"
-    },
-    {
-      "x": 0,
-      "y": 40,
-      "elevation": 0,
-      "dest_map": "MAP_WALNUT_WOODS",
-      "dest_warp_id": "5"
-    },
-    {
-      "x": 0,
-      "y": 41,
-      "elevation": 0,
-      "dest_map": "MAP_WALNUT_WOODS",
-      "dest_warp_id": "4"
-    },
-    {
-      "x": 0,
-      "y": 42,
-      "elevation": 0,
-      "dest_map": "MAP_WALNUT_WOODS",
-      "dest_warp_id": "4"
     }
   ],
   "coord_events": [],

@@ -147,9 +147,14 @@ ShinkansenInterior_EventScript_TakeSeat::
 	waitstate
 	msgbox ShinkansenInterior_Text_Departing2, MSGBOX_DEFAULT
 	closemessage
-	fadescreen FADE_TO_BLACK
-	delay 60
+	@ Act break staged to MIRROR the Act II card (StarSummit): a slow fade to
+	@ blank, a long heavy hold, a silent beat, then the title.
+	fadescreenspeed FADE_TO_BLACK, 12
+	delay 150
 	setflag FLAG_ACT3_STARTED
+	msgbox ShinkansenInterior_Text_PreTitle, MSGBOX_DEFAULT
+	closemessage
+	delay 40
 	msgbox ShinkansenInterior_Text_ActThree, MSGBOX_DEFAULT
 	closemessage
 	delay 40
@@ -213,9 +218,11 @@ ShinkansenInterior_Text_Departing2::
 	.string "No one on this train looks out\n"
 	.string "the window. Except you.$"
 
+ShinkansenInterior_Text_PreTitle::
+	.string "…$"
+
 ShinkansenInterior_Text_ActThree::
-	.string "ACT III\p"
-	.string "“THE INFILTRATION”$"
+	.string "Act III: The Infiltration$"
 
 ShinkansenInterior_Text_TrainHum::
 	.string "The train hums through the dark,\n"

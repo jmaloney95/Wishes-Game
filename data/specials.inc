@@ -652,3 +652,7 @@ gSpecials::
 	def_special PurifyPartyMon
 	def_special CountShadowPartyMons
 	def_special WotInitFlashScanlineEffect
+	def_special WotMakeEventMonShadow
+	def_special WotRedAlertFlash
+	def_special WotIsHMUnlocked
+	def_special WotOpenFlyMap

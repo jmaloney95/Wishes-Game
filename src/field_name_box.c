@@ -11,6 +11,7 @@
 #include "graphics.h"
 #include "script.h"
 #include "field_name_box.h"
+#include "npc_portrait.h"
 #include "event_data.h"
 #include "match_call.h"
 #include "malloc.h"
@@ -117,6 +118,7 @@ void ResetNameboxData(void)
     sNameboxWindowId = WINDOW_NONE;
     gSpeakerName = NULL;
     sSpeakerTier = SPEAKER_TIER_DEFAULT;
+    WotHideAutoPortrait();
 }
 
 static void DestroyNameboxFrame(void)
@@ -217,6 +219,12 @@ void SetSpeaker(struct ScriptContext *ctx)
 
     gSpeakerName = speaker;
     sSpeakerTier = tier;
+
+    // Speaker-linked portrait: named cast members bring their face with them.
+    if (arg < SP_NAME_COUNT)
+        WotShowSpeakerPortrait(arg);
+    else
+        WotHideAutoPortrait();
 }
 
 // Named-cast trainers that should show a name plate on their battle-intro
@@ -242,6 +250,7 @@ static const struct { u16 trainerId; u8 speakerName; } sTrainerSpeakers[] =
     { TRAINER_DRACO_LAB_ARMALDO,       SP_NAME_DRACO },
     { TRAINER_DRACO_LAB_TYRANTRUM,     SP_NAME_DRACO },
     { TRAINER_STARSUMMIT_BOSS,         SP_NAME_MUTRID_LEADER },
+    { TRAINER_SENNEN_CAPTAIN_KANNON,   SP_NAME_EDWARDS },
 };
 
 // Set the plate for an approaching trainer from the named-cast table (or clear
@@ -264,6 +273,7 @@ void SetSpeakerFromTrainer(u16 trainerId)
         {
             gSpeakerName = gSpeakerNamesTable[sTrainerSpeakers[i].speakerName];
             sSpeakerTier = gSpeakerNameTiers[sTrainerSpeakers[i].speakerName];
+            WotShowSpeakerPortrait(sTrainerSpeakers[i].speakerName);
             return;
         }
     }

@@ -2,7 +2,7 @@
   "id": "MAP_TRADEWIND_HOUSE",
   "name": "TradewindHouse",
   "layout": "LAYOUT_HOUSE_WITH_BED",
-  "music": "MUS_DUMMY",
+  "music": "MUS_DP_MT_CORONET",
   "region_map_section": "MAPSEC_TRADEWIND_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

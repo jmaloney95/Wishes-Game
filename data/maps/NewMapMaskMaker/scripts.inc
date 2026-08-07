@@ -80,14 +80,14 @@ NewMapMaskMaker_EventScript_Workbench::
 @  Text
 @ ============================================================================
 NewMapMaskMaker_Text_GenIntro::
-	.string "...The oni mask is a WARDING face.\n"
+	.string "...The oni mask is a warding face.\n"
 	.string "You wear it so the dead mistake\l"
 	.string "you for their own, and let you\l"
 	.string "pass in peace.\p"
 	.string "Those climbers wearing my designs\n"
 	.string "have twisted them into something\l"
 	.string "else. Something hungry.\p"
-	.string "And my apprentice went with them.\p"
+	.string "And my apprentice, RYOKO went with them.\p"
 	.string "He took the mask he'd carved for\n"
 	.string "this year's festival.\p"
 	.string "I saw them enter the OLD TOMB at\n"
@@ -100,16 +100,16 @@ NewMapMaskMaker_Text_GenReminder::
 	.string "The old tomb tunnel, north side of\n"
 	.string "the village, past the warning sign.\p"
 	.string "The door's seal is already open.\p"
-	.string "Whatever my apprentice left down\n"
-	.string "there... I'd know it by the\l"
-	.string "knife-work. I taught him.$"
+	.string "Whatever RYOKO left down\n"
+	.string "there... I'd know it.\l"
+	.string "I taught him.$"
 
 NewMapMaskMaker_Text_GenMaskFound::
 	.string "That mask... give it here. Let me\n"
 	.string "see it in the light.\p"
 	.string "...Yes. This is his carving.\n"
-	.string "You fought your way past that\l"
-	.string "army for this.\p"
+	.string "You fought your way past their\l"
+	.string "goons for this.\p"
 	.string "Then you've earned what I've kept\n"
 	.string "in the workbench drawer forty\l"
 	.string "years.$"
@@ -130,13 +130,11 @@ NewMapMaskMaker_Text_GenBadgeWords::
 
 NewMapMaskMaker_Text_GenKeepIt::
 	.string "And keep the mask. I mean it.\p"
-	.string "A warding face, carved honest, is\n"
-	.string "a passport among the masked.\p"
 	.string "Put it on before they lay eyes on\n"
-	.string "you, and the oni will take you for\l"
+	.string "you, and the ONI will take you for\l"
 	.string "one of their own.\p"
 	.string "Oh -- and I've cleared the crates\n"
-	.string "off his door. His house is yours\l"
+	.string "off RYOKO'S door. His house is yours\l"
 	.string "to look through. Perhaps you'll\l"
 	.string "understand him better than I did.$"
 

@@ -2,7 +2,7 @@
   "id": "MAP_TRADEWIND_LAB",
   "name": "TradewindLab",
   "layout": "LAYOUT_ROUTE119_WEATHER_INSTITUTE_2F",
-  "music": "MUS_DUMMY",
+  "music": "MUS_DP_MT_CORONET",
   "region_map_section": "MAPSEC_TRADEWIND_TOWN",
   "requires_flash": false,
   "weather": "WEATHER_NONE",

@@ -1312,10 +1312,12 @@ void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
 
 static u32 GetBallThrowableState(void)
 {
-    if (IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
-     && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
-        return BALL_THROW_UNABLE_TWO_MONS;
-    else if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
+    // WoT Shadow system: vanilla refuses the throw whenever two foes are out
+    // because it cannot tell which one you meant. We now ask -- the player
+    // picks a target after the bag closes (WotHandleInputChooseBallTarget in
+    // battle_controller_player.c) -- so the block is gone. Snagging a Shadow
+    // out of a double battle depends on this.
+    if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
         return BALL_THROW_UNABLE_NO_ROOM;
     else if (GetConfig(B_SEMI_INVULNERABLE_CATCH) >= GEN_4 &&  IsSemiInvulnerable(GetCatchingBattler(), CHECK_ALL))
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;

@@ -2510,6 +2510,11 @@
 #define FLAG_ITEM_MUNEN_TUNNEL_NUGGET           FLAG_UNUSED_0x268 // tunnel item balls...
 #define FLAG_ITEM_MUNEN_TUNNEL_MAX_ETHER        FLAG_UNUSED_0x269
 #define FLAG_ITEM_MUNEN_TUNNEL_TM_SHADOW_BALL   FLAG_UNUSED_0x26A
+#define FLAG_ITEM_MUNEN_TUNNEL_TM_THUNDERBOLT   FLAG_UNUSED_0x055 // (0x26B+ were already taken by later systems)
+#define FLAG_WOT_SUICUNE_CAUGHT                 FLAG_UNUSED_0x068 // Northwind Cavern: Suicune leaves only when caught
+#define FLAG_HIDE_ASHLANDS_MIRAGE               FLAG_UNUSED_0x0E9 // desert mirage actor (hidden except mid-scene)
+#define FLAG_WOT_MIRAGE_SEEN                    FLAG_UNUSED_0x1AA // Shadow Jirachi mirage played once
+#define FLAG_ROUTE2_GOT_SOFT_SAND               FLAG_UNUSED_0x1AB // lifeguard shack Soft Sand handout
 #define FLAG_ITEM_MUNEN_TUNNEL_CARVED_MASK      FLAG_UNUSED_0x26B // ...the mask itself (key item, deepest chamber)
 #define FLAG_ITEM_NEWMAP_APPRENTICE_RARE_CANDY  FLAG_UNUSED_0x26C // item ball inside Itsuki's house
 
@@ -2578,6 +2583,28 @@
 #define FLAG_ACT3_JAIL_REVEAL_SEEN              FLAG_UNUSED_0x2A8 // the one-time "lights die" reveal on first jail entry
 #define FLAG_HIDE_ACT3_JAIL_GUARDS              FLAG_UNUSED_0x2A9 // the two sentries at the jail door; set (guards scatter) by the Minister's call
 #define FLAG_WOT_SB3_FNPC_INIT                  FLAG_UNUSED_0x2AA // one-time SaveBlock3 follower-NPC data wipe for saves made before FNPC_ENABLE_NPC_FOLLOWERS
+#define FLAG_WOT_FAIRY_TRIAL_DONE               FLAG_UNUSED_0x2AB // Celebi Island: all three keepers defeated; the shrine warden has left the bridge
+#define FLAG_WOT_ISLAND_CHECKPOINT              FLAG_UNUSED_0x2AC // Stop the Machine: first quest checkpoint (reached Celebi Island) toasted
+#define FLAG_HIDE_ACT3_PATROLS                  FLAG_UNUSED_0x2AD // red-alert Shadow patrols in the district; managed every ShinTokyo transition
+#define FLAG_WOT_DEOXYS_CAUGHT                  FLAG_UNUSED_0x2AE // the Prototype Lab Shadow DEOXYS was caught (object stays if merely defeated)
+#define FLAG_WOT_ONI_MET                        FLAG_UNUSED_0x2AF // the tower-summit Oni scene has played (his battle comes later)
+#define FLAG_WOT_HIDEOUT_REVEAL_DONE            FLAG_UNUSED_0x2B0 // the Zoroark reveal + briefing played inside the hideout (scripts don't survive warps -- the street scene ends AT the warp)
+#define FLAG_HIDE_REBEL_OPERATIVE               FLAG_UNUSED_0x2B1 // hides the hideout's static operative until the reveal has introduced her (managed every hideout transition)
+#define FLAG_WOT_INMATE_GONE                    FLAG_UNUSED_0x2B2 // the shiv inmate gave his Quick Claw and bolted
+#define FLAG_WOT_ARENA_INTRO_SEEN               FLAG_UNUSED_0x2B3 // the Underground Arena title-bout cutscene has played
+#define FLAG_WOT_ARENA_ENTERED                  FLAG_UNUSED_0x2B4 // signed up with the announcer; the (4,6) ring trigger is live
+#define FLAG_HIDE_ARENA_CHALLENGERS             FLAG_UNUSED_0x2B5 // the two gauntlet challengers (scene-only; set every arena transition)
+#define FLAG_WOT_ARENA_WON                      FLAG_UNUSED_0x2B6 // swept the tournament: UNDERGROUND BADGE earned
+#define FLAG_WOT_ITEM_SHINTOKYO_ALLEY           FLAG_UNUSED_0x2B7 // Big Nugget in the black-market alley
+#define FLAG_WOT_ITEM_SHINTOKYO_PLAZA           FLAG_UNUSED_0x2B8 // Pearl String at (29,18)
+#define FLAG_HIDE_WOT_LEADER_SCREEN             FLAG_UNUSED_0x2B9 // jumbotron: leader face (hidden at red alert)
+#define FLAG_HIDE_WOT_WANTED_POSTER             FLAG_UNUSED_0x2BA // jumbotron: wanted poster (shown at red alert)
+#define FLAG_HIDE_WOT_CELEBI                    FLAG_UNUSED_0x2BB // Celebi hides until the lake trio yields the shrine
+#define FLAG_WOT_DRAGON_WARDENS_BEATEN          FLAG_UNUSED_0x02B // Ryuden Island: the double battle is won
+#define FLAG_WOT_RYUDEN_EGG_TAKEN               FLAG_UNUSED_0x02C // one dragon egg claimed from the incubator
+#define FLAG_HIDE_RYUDEN_WARDENS                FLAG_UNUSED_0x02D // wardens hidden until they emerge (or after victory: shown)
+#define FLAG_WOT_SNAG_STAGE1                    FLAG_UNUSED_0x035 // Harness Darkness: first snag rewarded
+#define FLAG_WOT_SNAG_STAGE2                    FLAG_UNUSED_0x054 // Harness Darkness: five snags -- complete
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)

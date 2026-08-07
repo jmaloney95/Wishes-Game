@@ -182,7 +182,20 @@
     "ShinTokyoStation",
     "ShinTokyo",
     "ShinTokyoJail",
-    "RebelHideout"
+    "RebelHideout",
+    "CelebiIsland",
+    "PrototypeIsland",
+    "PrototypeLab",
+    "TowerStreet",
+    "TowerMid",
+    "TowerCommand",
+    "TowerTop",
+    "UndergroundArena",
+    "DragonKeeper",
+    "StarSummit_2",
+    "NorthwindCavern",
+    "Ashlands_Desert",
+    "Route2LifeguardShack"
   ],
   "gMapGroup_IndoorLittleroot": [
     "LittlerootTown_BrendansHouse_1F",

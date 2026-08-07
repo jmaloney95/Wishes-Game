@@ -490,7 +490,7 @@
     },
     {
       "id": "MAPSEC_ABANDONED_SHIP",
-      "name": "SHINKANSEN ACT 2",
+      "name": "DragonKeeper",
       "x": 6,
       "y": 14,
       "width": 1,
@@ -1752,6 +1752,30 @@
       "name": "DISTORTION WORLD",
       "x": 12,
       "y": 8,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_CELEBI_ISLAND",
+      "name": "CELEBI ISLAND",
+      "x": 16,
+      "y": 6,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_RYUDEN_ISLAND",
+      "name": "RYUDEN ISLAND",
+      "x": 16,
+      "y": 6,
+      "width": 1,
+      "height": 1
+    },
+    {
+      "id": "MAPSEC_PROTOTYPE_ISLAND",
+      "name": "PROTOTYPE ISLE",
+      "x": 15,
+      "y": 7,
       "width": 1,
       "height": 1
     }

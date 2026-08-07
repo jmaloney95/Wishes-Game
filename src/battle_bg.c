@@ -932,6 +932,11 @@ static u8 GetBattleEnvironmentOverride(void)
      && TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
         return BATTLE_ENVIRONMENT_VOLCANO;
 
+    // Sennen platform boss (General Edwards): same molten-volcano bg as the summit boss.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_SENNEN_CAPTAIN_KANNON)
+        return BATTLE_ENVIRONMENT_VOLCANO;
+
     if (TestRunner_Battle_GetForcedEnvironment()
      && gBattleEnvironmentInfo[gBattleEnvironment].background.tilemap
      && gBattleEnvironmentInfo[gBattleEnvironment].background.tileset)

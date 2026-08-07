@@ -15,9 +15,9 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE",
-      "x": 20,
-      "y": 16,
+      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS",
+      "x": 19,
+      "y": 14,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -171,7 +171,7 @@
       "flag": "FLAG_SENNEN_ACT2_B3_FALLEN"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SPECIES(HYDREIGON)",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(GARCHOMP)",
       "x": 20,
       "y": 20,
       "elevation": 3,

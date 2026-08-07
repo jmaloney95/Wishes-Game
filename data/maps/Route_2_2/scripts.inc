@@ -217,10 +217,28 @@ Route_2_2_EventScript_TMEarthquake::
 @ ===========================================================================
 @ Trainers (reuse existing parties, park-themed dialogue)
 @ ===========================================================================
+@ SIREN ALLISON: one-liner through the plate/portrait, boss card, battle.
+@ The trainer flag is shared across acts, so the card fires exactly once --
+@ at whichever of her encounters the player reaches first.
 Route_2_2_EventScript_SwimmerAllison::
-	trainerbattle_single TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_Text_AllisonIntro, Route_2_2_Text_AllisonDefeat
+	goto_if_defeated TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_EventScript_AllisonAfter
+	lockall
 	setspeaker SP_NAME_ALLISON
-	msgbox Route_2_2_Text_AllisonPost, MSGBOX_AUTOCLOSE
+	msgbox Route_2_2_Text_AllisonIntro, MSGBOX_DEFAULT
+	closemessage
+	bossintro BOSS_INTRO_ALLISON
+	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_Text_AllisonDefeat
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_2_Text_AllisonPost, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route_2_2_EventScript_AllisonAfter::
+	lock
+	faceplayer
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_2_Text_AllisonPost, MSGBOX_DEFAULT
+	release
 	end
 
 Route_2_2_EventScript_SwimmerMarina::

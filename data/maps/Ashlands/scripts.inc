@@ -142,21 +142,6 @@ Ashlands_Text_Sage:
 @  every NightMarket map in the chain ("skewed textures"). A warp does a full
 @  load, which swaps the primary cleanly.
 @ ----------------------------------------------------------------------------
-Ashlands_EventScript_SeamWest5::
-	warp MAP_ASHLANDS_2, 24, 5
-	waitstate
-	end
-
-Ashlands_EventScript_SeamWest6::
-	warp MAP_ASHLANDS_2, 24, 6
-	waitstate
-	end
-
-Ashlands_EventScript_SeamWest7::
-	warp MAP_ASHLANDS_2, 24, 7
-	waitstate
-	end
-
 Ashlands_EventScript_SeamWest8::
 	warp MAP_ASHLANDS_2, 24, 8
 	waitstate

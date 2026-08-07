@@ -136,6 +136,7 @@ Dojo_EventScript_RebelMinisterAfter::
 Dojo_EventScript_RebelMikmanc::
 	lock
 	faceplayer
+	setspeaker SP_NAME_MIKMANC
 	goto_if_set FLAG_ACT2_REBEL_GIFT_MIKMANC, Dojo_EventScript_RebelMikmancAfter
 	msgbox Dojo_Text_MikmancGift1, MSGBOX_DEFAULT
 	giveitem ITEM_LIFE_ORB

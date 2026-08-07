@@ -293,6 +293,15 @@ static bool32 WotBattlerShowsShadowIndicator(enum BattlerId battler)
     return GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW);
 }
 
+// WoT Shadow system: a purified mon (National Ribbon -- only granted by the
+// shrine) shows a small light in the same slot.
+static bool32 WotBattlerShowsPurifiedIndicator(enum BattlerId battler)
+{
+    struct Pokemon *mon = GetBattlerMon(battler);
+
+    return !GetMonData(mon, MON_DATA_IS_SHADOW) && GetMonData(mon, MON_DATA_NATIONAL_RIBBON);
+}
+
 const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
 {
     u32 gimmick = GetActiveGimmick(battler);
@@ -316,6 +325,10 @@ const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
     {
         return (u32 *)&sWotShadowIndicatorGfx;
     }
+    else if (WotBattlerShowsPurifiedIndicator(battler))
+    {
+        return (u32 *)&sWotPurifiedIndicatorGfx;
+    }
     else
     {
         return NULL;
@@ -330,6 +343,8 @@ u32 GetIndicatorPalTag(enum BattlerId battler)
     else if (gGimmicksInfo[gimmick].indicatorPalTag != 0)
         return gGimmicksInfo[gimmick].indicatorPalTag;
     else if (WotBattlerShowsShadowIndicator(battler))
+        return TAG_MISC_INDICATOR_PAL;
+    else if (WotBattlerShowsPurifiedIndicator(battler))
         return TAG_MISC_INDICATOR_PAL;
     else
         return TAG_NONE;

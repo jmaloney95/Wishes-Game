@@ -882,6 +882,8 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_WOTGOTCHASNAGGED]                     = COMPOUND_STRING("Gotcha! {B_DEF_NAME} was snagged away!\p"),
     [STRINGID_WOTSNAGGEDTOPARTY]                    = COMPOUND_STRING("The snagged {B_BUFF1} was added to your party!\p"),
     [STRINGID_WOTSNAGGEDTOPC]                       = COMPOUND_STRING("The snagged {B_BUFF1} was transferred to the PC!\p"),
+    [STRINGID_WOTSHADOWAURA]                        = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} is wreathed in a Shadow aura!"),
+    [STRINGID_WOTSNAGNICKNAMEQ]                     = COMPOUND_STRING("Give a nickname to the snagged {B_BUFF1}?"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =

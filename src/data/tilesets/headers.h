@@ -1800,3 +1800,80 @@ const struct Tileset gTileset_DistortionWorld =
     .metatileAttributes = gMetatileAttributes_DistortionWorld,
     .callback = InitTilesetAnim_DistortionWorld,
 };
+
+const struct Tileset gTileset_FearTown =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FearTown,
+    .palettes = gTilesetPalettes_FearTown,
+    .metatiles = gMetatiles_FearTown,
+    .metatileAttributes = gMetatileAttributes_FearTown,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_FairyTown =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FairyTown,
+    .palettes = gTilesetPalettes_FairyTown,
+    .metatiles = gMetatiles_FairyTown,
+    .metatileAttributes = gMetatileAttributes_FairyTown,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SumpRats =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SumpRats,
+    .palettes = gTilesetPalettes_SumpRats,
+    .metatiles = gMetatiles_SumpRats,
+    .metatileAttributes = gMetatileAttributes_SumpRats,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DragonKeepers =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DragonKeepers,
+    .palettes = gTilesetPalettes_DragonKeepers,
+    .metatiles = gMetatiles_DragonKeepers,
+    .metatileAttributes = gMetatileAttributes_DragonKeepers,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_CityBlocks =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_CityBlocks,
+    .palettes = gTilesetPalettes_CityBlocks,
+    .metatiles = gMetatiles_CityBlocks,
+    .metatileAttributes = gMetatileAttributes_CityBlocks,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_MiddleDistrict =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_MiddleDistrict,
+    .palettes = gTilesetPalettes_MiddleDistrict,
+    .metatiles = gMetatiles_MiddleDistrict,
+    .metatileAttributes = gMetatileAttributes_MiddleDistrict,
+    .callback = InitTilesetAnim_MiddleDistrict,
+};
+
+const struct Tileset gTileset_MiddleDistrictGround =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_MiddleDistrictGround,
+    .palettes = gTilesetPalettes_MiddleDistrictGround,
+    .metatiles = gMetatiles_MiddleDistrictGround,
+    .metatileAttributes = gMetatileAttributes_MiddleDistrictGround,
+    .callback = NULL,
+};

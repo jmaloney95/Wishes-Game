@@ -653,8 +653,8 @@
     {
       "id": "LAYOUT_HOUSE2",
       "name": "House2_Layout",
-      "width": 11,
-      "height": 8,
+      "width": 6,
+      "height": 5,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/House2/border.bin",
@@ -9431,10 +9431,10 @@
     {
       "id": "LAYOUT_ROUTE_2",
       "name": "Route_2_Layout",
-      "width": 24,
-      "height": 35,
+      "width": 43,
+      "height": 53,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_SootopolisGym",
+      "secondary_tileset": "gTileset_Slateport",
       "border_filepath": "data/layouts/Route_2/border.bin",
       "blockdata_filepath": "data/layouts/Route_2/map.bin"
     },
@@ -9531,10 +9531,10 @@
     {
       "id": "LAYOUT_MUNEN_TUNNEL",
       "name": "MunenTunnel_Layout",
-      "width": 32,
-      "height": 24,
+      "width": 104,
+      "height": 46,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Cave",
+      "secondary_tileset": "gTileset_MeteorFalls",
       "border_filepath": "data/layouts/MunenTunnel/border.bin",
       "blockdata_filepath": "data/layouts/MunenTunnel/map.bin"
     },
@@ -9643,7 +9643,7 @@
       "name": "SennenAct2_Layout",
       "width": 35,
       "height": 33,
-      "primary_tileset": "gTileset_NightMarket",
+      "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenAct2/border.bin",
       "blockdata_filepath": "data/layouts/SennenAct2/map.bin"
@@ -9722,8 +9722,8 @@
     {
       "id": "LAYOUT_SHIN_TOKYO_STATION",
       "name": "ShinTokyoStation_Layout",
-      "width": 18,
-      "height": 12,
+      "width": 17,
+      "height": 14,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_BattleFactory",
       "border_filepath": "data/layouts/ShinTokyoStation/border.bin",
@@ -9732,10 +9732,10 @@
     {
       "id": "LAYOUT_SHIN_TOKYO",
       "name": "ShinTokyo_Layout",
-      "width": 40,
-      "height": 30,
-      "primary_tileset": "gTileset_NightMarket",
-      "secondary_tileset": "gTileset_AshlandTrees",
+      "width": 79,
+      "height": 58,
+      "primary_tileset": "gTileset_MiddleDistrictGround",
+      "secondary_tileset": "gTileset_MiddleDistrict",
       "border_filepath": "data/layouts/ShinTokyo/border.bin",
       "blockdata_filepath": "data/layouts/ShinTokyo/map.bin"
     },
@@ -9753,11 +9753,132 @@
       "id": "LAYOUT_REBEL_HIDEOUT",
       "name": "RebelHideout_Layout",
       "width": 15,
-      "height": 11,
-      "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_PokemonCenter",
+      "height": 12,
+      "primary_tileset": "gTileset_MiddleDistrictGround",
+      "secondary_tileset": "gTileset_SumpRats",
       "border_filepath": "data/layouts/RebelHideout/border.bin",
       "blockdata_filepath": "data/layouts/RebelHideout/map.bin"
+    },
+    {
+      "id": "LAYOUT_CELEBI_ISLAND",
+      "name": "CelebiIsland_Layout",
+      "width": 50,
+      "height": 45,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_FairyTown",
+      "border_filepath": "data/layouts/CelebiIsland/border.bin",
+      "blockdata_filepath": "data/layouts/CelebiIsland/map.bin"
+    },
+    {
+      "id": "LAYOUT_PROTOTYPE_ISLAND",
+      "name": "PrototypeIsland_Layout",
+      "width": 16,
+      "height": 16,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/PrototypeIsland/border.bin",
+      "blockdata_filepath": "data/layouts/PrototypeIsland/map.bin"
+    },
+    {
+      "id": "LAYOUT_PROTOTYPE_LAB",
+      "name": "PrototypeLab_Layout",
+      "width": 18,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/PrototypeLab/border.bin",
+      "blockdata_filepath": "data/layouts/PrototypeLab/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_STREET",
+      "name": "TowerStreet_Layout",
+      "width": 9,
+      "height": 12,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleTent",
+      "border_filepath": "data/layouts/TowerStreet/border.bin",
+      "blockdata_filepath": "data/layouts/TowerStreet/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_MID",
+      "name": "TowerMid_Layout",
+      "width": 13,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFrontier",
+      "border_filepath": "data/layouts/TowerMid/border.bin",
+      "blockdata_filepath": "data/layouts/TowerMid/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_COMMAND",
+      "name": "TowerCommand_Layout",
+      "width": 15,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattlePyramid",
+      "border_filepath": "data/layouts/TowerCommand/border.bin",
+      "blockdata_filepath": "data/layouts/TowerCommand/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_TOP",
+      "name": "TowerTop_Layout",
+      "width": 16,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/TowerTop/border.bin",
+      "blockdata_filepath": "data/layouts/TowerTop/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERGROUND_ARENA",
+      "name": "UndergroundArena_Layout",
+      "width": 20,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BattleDome",
+      "border_filepath": "data/layouts/UndergroundArena/border.bin",
+      "blockdata_filepath": "data/layouts/UndergroundArena/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_DRAGON_KEEPER",
+      "name": "DragonKeeper_Layout",
+      "width": 35,
+      "height": 35,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DragonKeepers",
+      "border_filepath": "data/layouts/DragonKeeper/border.bin",
+      "blockdata_filepath": "data/layouts/DragonKeeper/map.bin"
+    },
+    {
+      "id": "LAYOUT_STAR_SUMMIT_2",
+      "name": "StarSummit_2_Layout",
+      "width": 30,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_LavaMap",
+      "border_filepath": "data/layouts/StarSummit_2/border.bin",
+      "blockdata_filepath": "data/layouts/StarSummit_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_NORTHWIND_CAVERN",
+      "name": "NorthwindCavern_Layout",
+      "width": 19,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_MirageTower",
+      "border_filepath": "data/layouts/NorthwindCavern/border.bin",
+      "blockdata_filepath": "data/layouts/NorthwindCavern/map.bin"
+    },
+    {
+      "id": "LAYOUT_ASHLANDS_DESERT",
+      "name": "Ashlands_Desert_Layout",
+      "width": 44,
+      "height": 42,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/Ashlands_Desert/border.bin",
+      "blockdata_filepath": "data/layouts/Ashlands_Desert/map.bin"
     }
   ]
 }

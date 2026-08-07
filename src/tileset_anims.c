@@ -709,6 +709,52 @@ static void QueueAnimTiles_General_Flower(u16 timer)
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Flower[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(508)), 4 * TILE_SIZE_4BPP);
 }
 
+// WoT: MiddleDistrict secondary -- plain ocean water (2 tiles, locals 496-497),
+// frames re-indexed from General's water anim into palette slot 12.
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame0[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/0.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame1[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/1.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame2[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/2.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame3[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/3.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame4[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/4.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame5[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/5.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame6[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/6.png", ".4bpp");
+const u16 gTilesetAnims_MiddleDistrict_Water_Frame7[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/7.png", ".4bpp");
+
+static const u16 *const gTilesetAnims_MiddleDistrict_Water[] = {
+    gTilesetAnims_MiddleDistrict_Water_Frame0,
+    gTilesetAnims_MiddleDistrict_Water_Frame1,
+    gTilesetAnims_MiddleDistrict_Water_Frame2,
+    gTilesetAnims_MiddleDistrict_Water_Frame3,
+    gTilesetAnims_MiddleDistrict_Water_Frame4,
+    gTilesetAnims_MiddleDistrict_Water_Frame5,
+    gTilesetAnims_MiddleDistrict_Water_Frame6,
+    gTilesetAnims_MiddleDistrict_Water_Frame7,
+};
+
+static void QueueAnimTiles_MiddleDistrict_Water(u16 timer)
+{
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_MiddleDistrict_Water);
+    AppendTilesetAnimToBuffer(gTilesetAnims_MiddleDistrict_Water[i],
+                              (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 496)),
+                              2 * TILE_SIZE_4BPP);
+}
+
+static void TilesetAnim_MiddleDistrict(u16 timer)
+{
+    if (timer % 16 == 1)
+        QueueAnimTiles_MiddleDistrict_Water(timer / 16);
+}
+
+void InitTilesetAnim_MiddleDistrict(void)
+{
+    // The MiddleDistrict PRIMARY has no anims (callback NULL), so inheriting
+    // the primary counter leaves CounterMax at 0 and the water never
+    // advances. Run our own counter (same shape as InitTilesetAnim_General).
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 256;
+    sSecondaryTilesetAnimCallback = TilesetAnim_MiddleDistrict;
+}
+
 static void QueueAnimTiles_General_Water(u16 timer)
 {
     u8 i = timer % ARRAY_COUNT(gTilesetAnims_General_Water);

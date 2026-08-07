@@ -352,7 +352,7 @@ enum {
     STATE_PRINT, // For some reason the first state is numerically last.
 };
 
-#define POPUP_OFFSCREEN_Y  ((OW_POPUP_GENERATION == GEN_5) ? 24 : 40)
+#define POPUP_OFFSCREEN_Y  ((OW_POPUP_GENERATION == GEN_5) ? 48 : 40) // GEN_5: both stacked decks (6 tile rows) must clear the screen
 #define POPUP_SLIDE_SPEED  2
 
 #define tState         data[0]
@@ -504,12 +504,32 @@ void HideMapNamePopUpWindow(void)
     }
 }
 
+// Quest notification popup (Pokémon Wishes of Tomorrow): reuses the map-name
+// popup window to show quest text instead of the current map name.
+// Call via `special ShowQuestPopup` with the text in STR_VAR_1 (gStringVar1);
+// the text is copied immediately, so the buffer may be reused right after.
+static u8 sQuestPopupText[36];
+static bool8 sQuestPopupPending = FALSE;
+// TRUE while the popup being shown is a quest toast: picks the green quest
+// skin instead of the gold map skin (both live in the BW palette slots).
+static bool8 sQuestVariantActive = FALSE;
+static const u8 *sQuestPopupLabel = NULL; // optional first line (quest toast)
+
 static void UpdateSecondaryPopUpWindow(u8 secondaryPopUpWindowId)
 {
     u8 mapDisplayHeader[24];
     u8 *withoutPrefixPtr = &(mapDisplayHeader[0]);
 
-    if (OW_POPUP_BW_TIME_MODE != OW_POPUP_BW_TIME_NONE)
+    if (sQuestPopupLabel != NULL)
+    {
+        // Quest toast: the event tag ("NEW QUEST" etc.) rides the under-deck
+        // in the skin's accent color (palette 5/6 = green on the quest skin).
+        u8 colors[3] = {TEXT_COLOR_TRANSPARENT, 5, 6};
+
+        AddTextPrinterParameterized3(secondaryPopUpWindowId, FONT_SMALL, 12, 0, colors, TEXT_SKIP_DRAW, sQuestPopupLabel);
+        sQuestPopupLabel = NULL;
+    }
+    else if (OW_POPUP_BW_TIME_MODE != OW_POPUP_BW_TIME_NONE)
     {
         RtcCalcLocalTime();
         FormatDecimalTimeWithoutSeconds(withoutPrefixPtr, gLocalTime.hours, gLocalTime.minutes, OW_POPUP_BW_TIME_MODE == OW_POPUP_BW_TIME_24_HR);
@@ -517,14 +537,6 @@ static void UpdateSecondaryPopUpWindow(u8 secondaryPopUpWindowId)
     }
     CopyWindowToVram(secondaryPopUpWindowId, COPYWIN_FULL);
 }
-
-// Quest notification popup (Pokémon Wishes of Tomorrow): reuses the map-name
-// popup window to show quest text instead of the current map name.
-// Call via `special ShowQuestPopup` with the text in STR_VAR_1 (gStringVar1);
-// the text is copied immediately, so the buffer may be reused right after.
-static u8 sQuestPopupText[36];
-static bool8 sQuestPopupPending = FALSE;
-static const u8 *sQuestPopupLabel = NULL; // optional first line (quest toast)
 
 // Quest toast entry point: like ShowQuestPopup, but with an event label
 // ("New Quest:" etc.) printed above the quest name (src/quest_toast.c).
@@ -575,6 +587,7 @@ static void ShowMapNamePopUpWindow(void)
     const u8 *mapDisplayHeaderSource;
     u8 mapNamePopUpWindowId, secondaryPopUpWindowId;
 
+    sQuestVariantActive = sQuestPopupPending;
     if (sQuestPopupPending)
     {
         withoutPrefixPtr = &(mapDisplayHeader[6]);
@@ -743,7 +756,9 @@ static void LoadMapNamePopUpWindowBg(void)
         {
         // add additional gen 5-style pop-up themes as cases here
         default: // MAPPOPUP_THEME_BW_DEFAULT
-            if (OW_POPUP_BW_COLOR == OW_POPUP_BW_COLOR_WHITE)
+            // WoT: the "White" slot holds the green QUEST skin; map popups
+            // use the gold "Black" skin. (OW_POPUP_BW_COLOR is superseded.)
+            if (sQuestVariantActive)
                 LoadPalette(sMapPopUpTilesPalette_BW_White, BG_PLTT_ID(14), sizeof(sMapPopUpTilesPalette_BW_White));
             else
                 LoadPalette(sMapPopUpTilesPalette_BW_Black, BG_PLTT_ID(14), sizeof(sMapPopUpTilesPalette_BW_Black));

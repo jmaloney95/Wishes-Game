@@ -422,6 +422,7 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_PAINTER_FRLG] =         { _("PAINTER"), 4 },
     [TRAINER_CLASS_TEAM_MUTRID] =          { _("???"), 5 },
     [TRAINER_CLASS_MUTRID] =               { _("Mutrid"), 5 },
+    [TRAINER_CLASS_DRAGON_WARDEN] =        { _("Dragon Warden"), 15 },
     [TRAINER_CLASS_GENERAL] =              { _("General"), 12 },
     [TRAINER_CLASS_ONI] =                  { _("Oni"), 8 },
     [TRAINER_CLASS_CAPTAIN] =              { _("Captain"), 10 },
@@ -2114,11 +2115,83 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
     return trainer->partySize;
 }
 
+// WoT: the red-alert Shin-Tokyo patrols draw their Shadow teams from a pool
+// at battle start, so every encounter is a fresh roll (leaving the city and
+// returning also clears their defeat flags -- see ShinTokyo ON_TRANSITION).
+// Which pool depends on the Act 2 research outcome: if Clarkson's research
+// was TAKEN, Mutrid's program accelerated -- species that used to resist the
+// process don't anymore.
+static const u16 sWotPatrolPoolStolen[] =
+{
+    SPECIES_RILLABOOM, SPECIES_HAXORUS, SPECIES_MELMETAL,
+    SPECIES_URSALUNA, SPECIES_RHYPERIOR, SPECIES_ANNIHILAPE,
+    SPECIES_ABSOL, SPECIES_ALAKAZAM, SPECIES_RAPIDASH,
+};
+static const u16 sWotPatrolPoolBase[] =
+{
+    SPECIES_WEAVILE, SPECIES_HONCHKROW, SPECIES_TOXICROAK,
+    SPECIES_DRAPION, SPECIES_CORVISQUIRE, SPECIES_CENTISKORCH,
+    SPECIES_TINKATON, SPECIES_ARCTOZOLT, SPECIES_ARCHEOPS,
+};
+
+static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
+{
+    static const u8 sLevels[] = { 43, 43, 44 };
+    const u16 *pool;
+    u32 poolSize, i, count;
+    u16 chosen[ARRAY_COUNT(sLevels)];
+
+    if (trainerNum != TRAINER_NATE && trainerNum != TRAINER_MACEY && trainerNum != TRAINER_CLIFFORD)
+        return FALSE;
+
+    if (FlagGet(FLAG_ACT3_RESEARCH_STOLEN))
+    {
+        pool = sWotPatrolPoolStolen;
+        poolSize = ARRAY_COUNT(sWotPatrolPoolStolen);
+    }
+    else
+    {
+        pool = sWotPatrolPoolBase;
+        poolSize = ARRAY_COUNT(sWotPatrolPoolBase);
+    }
+
+    count = ARRAY_COUNT(sLevels);
+    for (i = 0; i < count; i++)
+    {
+        u32 j, pick;
+    retry:
+        pick = pool[Random() % poolSize];
+        for (j = 0; j < i; j++)
+        {
+            if (chosen[j] == pick)
+                goto retry;
+        }
+        chosen[i] = pick;
+    }
+
+    ZeroEnemyPartyMons();
+    for (i = 0; i < count; i++)
+    {
+        bool32 isShadow = TRUE;
+        struct OriginalTrainerId otId = OTID_STRUCT_RANDOM_NO_SHINY;
+
+        CreateMon(&party[i], chosen[i], sLevels[i], Random32(), otId);
+        GiveMonInitialMoveset(&party[i]);
+        SetMonData(&party[i], MON_DATA_IS_SHADOW, &isShadow);
+        CalculateMonStats(&party[i]);
+    }
+    return TRUE;
+}
+
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer)
 {
     u8 retVal;
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
+
+    // WoT: randomized Shadow patrol teams (see above).
+    if (firstTrainer && WotTryRandomizeShadowPatrol(party, trainerNum))
+        return 3;
     if (GetTrainerStructFromId(trainerNum)->overrideTrainer)
     {
         struct Trainer tempTrainer;
@@ -3230,6 +3303,8 @@ void SwitchInClearSetData(enum BattlerId battler, struct Volatiles *volatilesCop
     enum BattleMoveEffects effect = GetMoveEffect(gCurrentMove);
 
     ClearIllusionMon(battler);
+    // WoT Shadow system: a fresh mon in this slot may announce its aura again.
+    gBattleStruct->wotAuraAnnounced &= ~(1u << battler);
     if (effect != EFFECT_BATON_PASS)
     {
         for (enum Stat i = 0; i < NUM_BATTLE_STATS; i++)

@@ -1429,8 +1429,12 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u32 personal
         }
     }
 
-    SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
-    SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
+    // Direct writes: the mon is still plaintext and its checksum unsealed
+    // here, and both fields form the substruct encryption key -- they must
+    // not take SetBoxMonData's re-key path (it decrypt-validates, which only
+    // makes sense on a sealed mon).
+    boxMon->personality = personality;
+    boxMon->otId = value;
 
     checksum = CalculateBoxMonChecksum(boxMon);
     SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &checksum);
@@ -3081,8 +3085,18 @@ void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg)
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
 {
     const u8 *data = dataArg;
+    // WoT: otId is half of the substruct encryption key (otId ^ personality).
+    // It sits BEFORE MON_DATA_ENCRYPT_SEPARATOR, so the plain branch used to
+    // write it without re-encrypting -- fine in vanilla (nothing ever changes
+    // a mon's OT id), but the Shadow snag flow hands a TRAINER's mon to the
+    // player: rewriting the OT id under encrypted data turned every snagged
+    // mon into a Bad Egg. Route it through the decrypt/re-encrypt envelope
+    // so the data is re-keyed. (MON_DATA_PERSONALITY would need this too --
+    // AND a substruct re-shuffle -- so it stays unsupported; nothing writes
+    // it after creation.)
+    bool32 reKey = (field == MON_DATA_OT_ID);
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR || reKey)
     {
         if (CalculateBoxMonChecksumDecrypt(boxMon) != boxMon->checksum)
         {
@@ -3095,6 +3109,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
 
         switch (field)
         {
+        case MON_DATA_OT_ID:
+            SET32(boxMon->otId);
+            break;
         case MON_DATA_NICKNAME:
         case MON_DATA_NICKNAME10:
         {
@@ -3386,9 +3403,8 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_PERSONALITY:
             SET32(boxMon->personality);
             break;
-        case MON_DATA_OT_ID:
-            SET32(boxMon->otId);
-            break;
+        // MON_DATA_OT_ID is handled in the encrypted branch above: it is part
+        // of the encryption key, so writing it must re-key the substructs.
         case MON_DATA_LANGUAGE:
             SET8(boxMon->language);
             break;
@@ -3436,7 +3452,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         }
     }
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR || reKey)
         boxMon->checksum = CalculateBoxMonChecksumReencrypt(boxMon);
 }
 

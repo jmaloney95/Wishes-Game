@@ -34,44 +34,22 @@
       "flag": "0"
     }
   ],
-  "warp_events": [],
-  "coord_events": [
+  "warp_events": [
     {
-      "type": "trigger",
-      "x": 24,
-      "y": 5,
-      "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "Ashlands_2_EventScript_SeamEast5"
-    },
-    {
-      "type": "trigger",
-      "x": 24,
-      "y": 6,
-      "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "Ashlands_2_EventScript_SeamEast6"
-    },
-    {
-      "type": "trigger",
-      "x": 24,
+      "x": 17,
       "y": 7,
       "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "Ashlands_2_EventScript_SeamEast7"
+      "dest_map": "MAP_ASHLANDS_DESERT",
+      "dest_warp_id": "0"
     },
     {
-      "type": "trigger",
-      "x": 24,
-      "y": 8,
+      "x": 18,
+      "y": 7,
       "elevation": 0,
-      "var": "VAR_TEMP_0",
-      "var_value": "0",
-      "script": "Ashlands_2_EventScript_SeamEast8"
+      "dest_map": "MAP_ASHLANDS_DESERT",
+      "dest_warp_id": "0"
     }
   ],
+  "coord_events": [],
   "bg_events": []
 }

@@ -12,7 +12,11 @@
 #define PORTRAIT_RED_FATALITY     4
 #define PORTRAIT_DRACO            5
 #define PORTRAIT_COBRA            6
-#define PORTRAIT_COUNT            7
+#define PORTRAIT_MINISTER         7
+#define PORTRAIT_EDWARDS          8
+#define PORTRAIT_MIKMANC          9
+#define PORTRAIT_ALLISON          10
+#define PORTRAIT_COUNT            11
 
 // Which side of the screen the portrait appears on, above the message box.
 #define PORTRAIT_LEFT   0

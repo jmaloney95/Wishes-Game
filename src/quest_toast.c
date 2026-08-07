@@ -28,9 +28,9 @@ static EWRAM_DATA u8 sQueueCount = 0;
 static EWRAM_DATA u8 sPumpTaskId = 0;
 static EWRAM_DATA bool8 sPumpActive = FALSE;
 
-static const u8 sText_ToastStart[] = _("New Quest:");
-static const u8 sText_ToastUpdate[] = _("Quest Update:");
-static const u8 sText_ToastComplete[] = _("Quest Complete:");
+static const u8 sText_ToastStart[] = _("NEW QUEST");
+static const u8 sText_ToastUpdate[] = _("QUEST UPDATED");
+static const u8 sText_ToastComplete[] = _("QUEST COMPLETE");
 
 static void Task_QuestToastPump(u8 taskId)
 {

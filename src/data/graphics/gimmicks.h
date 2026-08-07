@@ -95,6 +95,8 @@ static const u8 ALIGNED(4) sStellarIndicatorGfx[] = INCGFX_U8("graphics/battle_i
 // WoT Shadow system: healthbox icon for Shadow mons (uses the misc palette's
 // spare slots 12-14, repurposed as purples).
 static const u8 ALIGNED(4) sWotShadowIndicatorGfx[] = INCGFX_U8("graphics/battle_interface/shadow_indicator.png", ".4bpp");
+// WoT Shadow system: healthbox icon for purified mons (National Ribbon).
+static const u8 ALIGNED(4) sWotPurifiedIndicatorGfx[] = INCGFX_U8("graphics/battle_interface/purified_indicator.png", ".4bpp");
 
 static const u16 sMiscIndicatorPal[] = INCGFX_U16("graphics/battle_interface/misc_indicator.pal", ".gbapal"); // has room for more colors
 static const u16 sMegaIndicatorPal[] = INCGFX_U16("graphics/battle_interface/mega_indicator.png", ".gbapal");

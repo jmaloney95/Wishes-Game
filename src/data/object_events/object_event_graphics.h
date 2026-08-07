@@ -673,3 +673,29 @@ const u16 gObjectEventPic_PidgeyOld[] = INCGFX_U16("graphics/object_events/pics/
 const u16 gObjectEventPic_ClefairyOld[] = INCGFX_U16("graphics/object_events/pics/pokemon_old/clefairy.png", ".4bpp", "-mwidth 2 -mheight 2");
 
 #endif // IS_FRLG
+
+const u32 gObjectEventPic_WotLeaderScreen[] = INCGFX_U32("graphics/object_events/pics/misc/wot_leader_screen.png", ".4bpp");
+const u32 gObjectEventPic_WotWantedPoster[] = INCGFX_U32("graphics/object_events/pics/misc/wot_wanted_poster.png", ".4bpp");
+const u16 gObjectEventPal_WotScreen[] = INCGFX_U16("graphics/object_events/palettes/wot_screen.pal", ".gbapal");
+const u32 gObjectEventPic_WotDraco[] = INCGFX_U32("graphics/object_events/pics/people/wot_draco.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotDraco[] = INCGFX_U16("graphics/object_events/palettes/wot_draco.pal", ".gbapal");
+const u32 gObjectEventPic_WotMikmanc[] = INCGFX_U32("graphics/object_events/pics/people/wot_mikmanc.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotMikmanc[] = INCGFX_U16("graphics/object_events/palettes/wot_mikmanc.pal", ".gbapal");
+const u32 gObjectEventPic_WotNessa[] = INCGFX_U32("graphics/object_events/pics/people/wot_nessa.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotNessa[] = INCGFX_U16("graphics/object_events/palettes/wot_nessa.pal", ".gbapal");
+const u32 gObjectEventPic_WotEdwards[] = INCGFX_U32("graphics/object_events/pics/people/wot_edwards.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotEdwards[] = INCGFX_U16("graphics/object_events/palettes/wot_edwards.pal", ".gbapal");
+const u32 gObjectEventPic_WotShadowJirachi[] = INCGFX_U32("graphics/object_events/pics/misc/wot_shadow_jirachi.png", ".4bpp");
+const u16 gObjectEventPal_WotShadowJirachi[] = INCGFX_U16("graphics/object_events/palettes/wot_shadow_jirachi.pal", ".gbapal");
+const u32 gObjectEventPic_WotAllisonLand[] = INCGFX_U32("graphics/object_events/pics/people/wot_allison_land.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotAllisonLand[] = INCGFX_U16("graphics/object_events/palettes/wot_allison_land.pal", ".gbapal");
+const u32 gObjectEventPic_WotSkyeLand[] = INCGFX_U32("graphics/object_events/pics/people/wot_skye_land.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotSkyeLand[] = INCGFX_U16("graphics/object_events/palettes/wot_skye_land.pal", ".gbapal");
+const u32 gObjectEventPic_WotRosaLand[] = INCGFX_U32("graphics/object_events/pics/people/wot_rosa_land.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotRosaLand[] = INCGFX_U16("graphics/object_events/palettes/wot_rosa_land.pal", ".gbapal");
+const u32 gObjectEventPic_WotMarinaLand[] = INCGFX_U32("graphics/object_events/pics/people/wot_marina_land.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotMarinaLand[] = INCGFX_U16("graphics/object_events/palettes/wot_marina_land.pal", ".gbapal");
+const u32 gObjectEventPic_WotBeachBeauty[] = INCGFX_U32("graphics/object_events/pics/people/wot_beach_beauty.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotBeachBeauty[] = INCGFX_U16("graphics/object_events/palettes/wot_beach_beauty.pal", ".gbapal");
+
+const u32 gObjectEventPic_WotWantedSmall[] = INCGFX_U32("graphics/object_events/pics/misc/wot_wanted_small.png", ".4bpp");

@@ -105,19 +105,18 @@ NewMap_Text_Watchman::
 	.string "Before dawn, a line of them came\n"
 	.string "through the gate. Oni masks, every\l"
 	.string "one. Not a single word between them.\p"
-	.string "They went straight up Mount Munen\n"
+	.string "They went straight up to STAR SUMMIT\n"
 	.string "and didn't look back. Gave me chills.$"
 
 NewMap_Text_WorriedWoman::
 	.string "You saw the masked ones too?\p"
 	.string "What business do folk in demon masks\n"
-	.string "have up the mountain... and at that\l"
-	.string "hour? I don't like it. Not one bit.$"
+	.string "have at the summit...$"
 
 NewMap_Text_OldMan::
 	.string "Oni masks, before the sun.\p"
 	.string "In my grandfather's day, that meant\n"
-	.string "one of two things, boy -- a festival...\p"
+	.string "one of two things, a festival\p"
 	.string "or a reckoning. And I hear no drums.$"
 
 NewMap_Text_Kid::
@@ -134,10 +133,8 @@ NewMap_Text_Skeptic::
 
 NewMap_Text_MountainHint::
 	.string "Thinking of following them up?\p"
-	.string "Past the torii it turns bitter cold,\n"
-	.string "and the wind plays tricks.\p"
-	.string "Keep your Pokemon close, and don't\n"
-	.string "trust every face you meet up there.$"
+	.string "It's dangerous up there.\n"
+	.string "High level Pokemon prey under the fog.$"
 
 NewMap_Text_Poochyena::
 	.string "The town's Poochyena stands stiff by\n"
@@ -166,7 +163,7 @@ NewMap_Text_TunnelSign::
 	.string "Resting place of the mountain\n"
 	.string "dead. Sealed by order of the\l"
 	.string "village elders.\p"
-	.string "MOURN THEM. DO NOT WAKE THEM.\p"
+	.string "DO NOT WAKE THEM.\p"
 	.string "...The seal beneath the sign is\n"
 	.string "torn. The door stands open.$"
 

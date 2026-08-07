@@ -589,6 +589,17 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
 #endif //OW_FOLLOWERS_POKEBALLS
     {gObjectEventPal_Substitute,            OBJ_EVENT_PAL_TAG_SUBSTITUTE},
     {gObjectEventPaletteLight,              OBJ_EVENT_PAL_TAG_LIGHT},
+    {gObjectEventPal_WotScreen,             OBJ_EVENT_PAL_TAG_WOT_SCREEN},
+    {gObjectEventPal_WotDraco,              OBJ_EVENT_PAL_TAG_WOT_DRACO},
+    {gObjectEventPal_WotMikmanc,            OBJ_EVENT_PAL_TAG_WOT_MIKMANC},
+    {gObjectEventPal_WotNessa,              OBJ_EVENT_PAL_TAG_WOT_NESSA},
+    {gObjectEventPal_WotEdwards,            OBJ_EVENT_PAL_TAG_WOT_EDWARDS},
+    {gObjectEventPal_WotShadowJirachi,      OBJ_EVENT_PAL_TAG_WOT_SHADOW_JIRACHI},
+    {gObjectEventPal_WotAllisonLand,         OBJ_EVENT_PAL_TAG_WOT_ALLISON_LAND},
+    {gObjectEventPal_WotSkyeLand,            OBJ_EVENT_PAL_TAG_WOT_SKYE_LAND},
+    {gObjectEventPal_WotRosaLand,            OBJ_EVENT_PAL_TAG_WOT_ROSA_LAND},
+    {gObjectEventPal_WotMarinaLand,          OBJ_EVENT_PAL_TAG_WOT_MARINA_LAND},
+    {gObjectEventPal_WotBeachBeauty,         OBJ_EVENT_PAL_TAG_WOT_BEACH_BEAUTY},
     {gObjectEventPaletteLight2,             OBJ_EVENT_PAL_TAG_LIGHT_2},
     {gObjectEventPaletteEmotes,             OBJ_EVENT_PAL_TAG_EMOTES},
     {gObjectEventPaletteNeonLight,          OBJ_EVENT_PAL_TAG_NEON_LIGHT},
@@ -9656,6 +9667,14 @@ bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Spr
 
 static void UpdateObjectEventSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
+    // WoT: the jumbotron screens run their broadcast loop while standing --
+    // everything else pauses its anim when stationary.
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_LEADER_SCREEN
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_WANTED_POSTER)
+    {
+        sprite->animPaused = FALSE;
+        return;
+    }
     if (objectEvent->disableAnim)
         sprite->animPaused = TRUE;
 }

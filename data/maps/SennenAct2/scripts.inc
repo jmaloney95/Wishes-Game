@@ -327,9 +327,28 @@ SennenAct2_Movement_RyokoApproach:
 @ --------------------------------------------------------------------------
 @  The captains
 @ --------------------------------------------------------------------------
+@ The platform gate: one line through the namebox/portrait, then the boss
+@ intro card slams, then the battle (no_intro -- the line WAS the intro).
+@ Defeated = plain chat, the card never re-fires.
 SennenAct2_EventScript_CaptainKannon::
-	trainerbattle_single TRAINER_SENNEN_CAPTAIN_KANNON, SennenAct2_Text_KannonIntro, SennenAct2_Text_KannonDefeat
-	msgbox SennenAct2_Text_KannonPostBattle, MSGBOX_AUTOCLOSE
+	goto_if_defeated TRAINER_SENNEN_CAPTAIN_KANNON, SennenAct2_EventScript_EdwardsAfter
+	lockall
+	setspeaker SP_NAME_EDWARDS
+	msgbox SennenAct2_Text_KannonIntro, MSGBOX_DEFAULT
+	closemessage
+	bossintro BOSS_INTRO_EDWARDS
+	trainerbattle_no_intro TRAINER_SENNEN_CAPTAIN_KANNON, SennenAct2_Text_KannonDefeat
+	setspeaker SP_NAME_EDWARDS
+	msgbox SennenAct2_Text_KannonPostBattle, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SennenAct2_EventScript_EdwardsAfter::
+	lock
+	faceplayer
+	setspeaker SP_NAME_EDWARDS
+	msgbox SennenAct2_Text_KannonPostBattle, MSGBOX_DEFAULT
+	release
 	end
 
 SennenAct2_EventScript_CaptainRyoko::
@@ -444,54 +463,43 @@ SennenAct2_EventScript_GoonMon3::
 @  Text
 @ ============================================================================
 SennenAct2_Text_KannonIntro::
-	.string "CAPTAIN KANNON. Nobody boards.\p"
-	.string "The rabble out there can bleed on\n"
-	.string "the cobbles all they like.\p"
-	.string "The PLATFORM is mine.$"
+	.string "STAND DOWN.\p"
+	.string "Hands where I can see them.\p"
+	.string "Or I will execute lethal force.\n"
+	.string "That's a direct order.$"
 
 SennenAct2_Text_KannonDefeat::
-	.string "The platform... was mine...$"
+	.string "Impressive, Private...$"
 
 SennenAct2_Text_KannonPostBattle::
-	.string "You're the one they're bleeding\n"
-	.string "for. I see it now. Too late.$"
+	.string "You weren't worth the ammunition\n"
+	.string "anyway.$"
 
 SennenAct2_Text_RyokoIntro::
-	.string "CAPTAIN RYOKO. Hm. The little\n"
-	.string "ghost the reports keep dying\l"
-	.string "over.\p"
-	.string "The Wish wants you kneeling.\n"
-	.string "I'll settle for flattened.$"
+	.string "Siding with that old MASTER GEN?\n"
+	.string "His teachings are expired.\p"
+	.string "It's useless listening to elders.\n"
+	.string "Lemme teach you a thing or two.$"
 
 SennenAct2_Text_RyokoDefeat::
-	.string "Flattened... me...$"
+	.string "Soiled... it...$"
 
 SennenAct2_Text_RyokoPostBattle::
 	.string "Go, then. Board.\p"
-	.string "Shin-Tokyo doesn't spit anyone\n"
-	.string "back out.$"
+	.string "You'll never survive the\n"
+	.string "TOWER OF SHIN-TOKYO.$"
 
 SennenAct2_Text_RebelFighter1::
-	.string "REBEL: Two more! Come ON, big\n"
+	.string "Two more! Come ON, big\n"
 	.string "guy, stay up, stay UP--\p"
-	.string "{PLAYER}!! Eyes off us!\n"
+	.string "{PLAYER} Get to\n"
 	.string "The DOOR! GO!$"
 
 SennenAct2_Text_RebelFighter2::
-	.string "REBEL: Third wave. There's always\n"
-	.string "a third wave, isn't there.\p"
-	.string "We're the loudest thing in\n"
-	.string "Sennen, exactly like Minister\l"
-	.string "drew it up.\p"
-	.string "Every second you stand here, you\n"
-	.string "waste what we're PAYING for. RUN!$"
+	.string "Third wave. There's always\n"
+	.string "a third wave, isn't there.$"
 
 SennenAct2_Text_RebelFighter3::
-	.string "REBEL: Ha... haha... my poor\n"
-	.string "Raichu's down to fumes and I\l"
-	.string "can't feel my arm.\p"
-	.string "Best day of my life. We're worth\n"
-	.string "SOMETHING today.\p"
 	.string "Board that train, kid. Make it\n"
 	.string "worth EVERYTHING.$"
 
@@ -542,16 +550,15 @@ SennenAct2_Text_RebelMon3::
 
 SennenAct2_Text_GenBattleCry::
 	.string "Hold the line!\p"
-	.string "CHANDELURE -- light them a\n"
-	.string "lesson they'll keep!$"
+	.string "CHANDELURE light them up!$"
 
 SennenAct2_Text_GoonRout::
 	.string "The station belongs to the\n"
 	.string "WISH-- agh! Fall back!$"
 
 SennenAct2_Text_YifferBattleCry::
-	.string "MACHAMP doesn't kneel!\n"
-	.string "And neither do I!$"
+	.string "MACHAMP doesn't kneel to THE ONI!\n"
+	.string "And neither will I!$"
 
 SennenAct2_Text_RedFatalityBattleCry::
 	.string "RAICHU, one more! Everything\n"
@@ -559,12 +566,12 @@ SennenAct2_Text_RedFatalityBattleCry::
 
 SennenAct2_Text_RyokoChallenge::
 	.string "Hm. You watched three heroes\n"
-	.string "break, little ghost.\p"
-	.string "The Wish wants you kneeling.\n"
+	.string "die today.\p"
+	.string "The Oni wants you kneeling.\n"
 	.string "Come. Let's make it four.$"
 
 SennenAct2_Text_GoonFighter3::
-	.string "GOON: The captains hold the\n"
+	.string "The GENERAL holds the\n"
 	.string "platform. NOBODY reaches that\l"
 	.string "train.\p"
 	.string "...Right? Somebody tell me I'm\n"

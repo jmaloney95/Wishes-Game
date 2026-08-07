@@ -14794,8 +14794,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_SnagMachine,
+        .iconPalette = gItemIconPalette_SnagMachine,
     },
 
     [ITEM_SHINKANSEN_KEY] =

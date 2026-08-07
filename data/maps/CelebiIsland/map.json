@@ -1,0 +1,284 @@
+{
+  "id": "MAP_CELEBI_ISLAND",
+  "name": "CelebiIsland",
+  "layout": "LAYOUT_CELEBI_ISLAND",
+  "music": "MUS_FORTREE",
+  "region_map_section": "MAPSEC_CELEBI_ISLAND",
+  "requires_flash": false,
+  "weather": "WEATHER_SUNNY_CLOUDS",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(CELEBI)",
+      "x": 25,
+      "y": 15,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CelebiIsland_EventScript_Celebi",
+      "flag": "FLAG_HIDE_WOT_CELEBI"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "x": 23,
+      "y": 29,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "CelebiIsland_EventScript_KeeperSuzu",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
+      "x": 27,
+      "y": 29,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "CelebiIsland_EventScript_KeeperKaede",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
+      "x": 25,
+      "y": 29,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "CelebiIsland_EventScript_KeeperRan",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(UXIE)",
+      "x": 24,
+      "y": 22,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CelebiIsland_EventScript_Guardian",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MESPRIT)",
+      "x": 25,
+      "y": 22,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CelebiIsland_EventScript_Guardian",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(AZELF)",
+      "x": 26,
+      "y": 22,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "CelebiIsland_EventScript_Guardian",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 44,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 44,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 44,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 44,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 44,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 31,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 32,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 33,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 35,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 36,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 37,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 38,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 39,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 40,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 41,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 23,
+      "elevation": 0,
+      "var": "VAR_TEMP_4",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_TrioTrial"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 23,
+      "elevation": 0,
+      "var": "VAR_TEMP_4",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_TrioTrial"
+    },
+    {
+      "type": "trigger",
+      "x": 26,
+      "y": 23,
+      "elevation": 0,
+      "var": "VAR_TEMP_4",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_TrioTrial"
+    }
+  ],
+  "bg_events": []
+}

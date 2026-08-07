@@ -1950,7 +1950,9 @@ void BufferSaveMenuText(u8 textId, u8 *dest, u8 color)
 u8 AddSecondaryPopUpWindow(void)
 {
     if (sSecondaryPopupWindowId == WINDOW_NONE)
-        sSecondaryPopupWindowId = AddWindowParameterized(0, 0, 17, 30, 3, 14, 0x161);
+        // WoT: the under-deck sits directly below the name bar (stacked
+        // top-left indicator), not at the bottom of the screen like B2W2.
+        sSecondaryPopupWindowId = AddWindowParameterized(0, 0, 3, 30, 3, 14, 0x161);
     return sSecondaryPopupWindowId;
 }
 
@@ -1971,18 +1973,13 @@ void RemoveSecondaryPopUpWindow(void)
 void HBlankCB_DoublePopupWindow(void)
 {
     u16 offset = gTasks[gPopupTaskId].data[2];
-    u16 scanline = REG_VCOUNT;
 
-    if (scanline < 80 || scanline > 160)
-    {
-        REG_BG0VOFS = offset;
-        if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
-            REG_BLDALPHA = BLDALPHA_BLEND(15, 5);
-    }
-    else
-    {
-        REG_BG0VOFS = 512 - offset;
-    }
+    // WoT: both popup decks are stacked at the TOP of the screen, so the
+    // whole indicator slides as one block -- no split-scanline scroll for a
+    // bottom bar anymore.
+    REG_BG0VOFS = offset;
+    if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
+        REG_BLDALPHA = BLDALPHA_BLEND(15, 5);
 }
 
 #define tEvA data[0]

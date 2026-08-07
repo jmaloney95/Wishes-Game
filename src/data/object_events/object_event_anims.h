@@ -1220,6 +1220,29 @@ static const union AnimCmd *const sAnimTable_QuintyPlump[] = {
     [ANIM_STD_GO_FASTEST_EAST] = sAnim_QuintyPlumpGoFastestEast,
 };
 
+static const union AnimCmd sAnim_WotScreenLoop[] = {
+    ANIMCMD_FRAME(0, 60),
+    ANIMCMD_FRAME(0, 60),
+    ANIMCMD_FRAME(1, 60),
+    ANIMCMD_FRAME(1, 60),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_WotScreen[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_WotScreenLoop,
+    [ANIM_STD_FACE_NORTH] = sAnim_WotScreenLoop,
+    [ANIM_STD_FACE_WEST] = sAnim_WotScreenLoop,
+    [ANIM_STD_FACE_EAST] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_SOUTH] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_NORTH] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_WEST] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_EAST] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_WotScreenLoop,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_WotScreenLoop,
+};
+
 static const union AnimCmd *const sAnimTable_Standard[] = {
     [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
     [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth,
