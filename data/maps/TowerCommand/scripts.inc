@@ -143,5 +143,5 @@ TowerCommand_Text_CaptainRematch::
 TowerCommand_Text_LiftSealed::
 	.string "The executive lift reads your\n"
 	.string "badge case -- and refuses.\p"
-	.string "The CAPTAIN's final badge is\n"
+	.string "MUTRID ALPHA's final badge is\n"
 	.string "the only key it honors.$"

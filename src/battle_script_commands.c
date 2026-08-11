@@ -6226,6 +6226,15 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
         lastMonLevel = party[GetTrainerPartySizeFromId(trainerId) - 1].lvl;
         trainerMoney = gTrainerClasses[GetTrainerClassFromId(trainerId)].money ?: 5;
 
+        // WoT: Captain Ryoko is a named boss wearing a grunt class -- pay
+        // captain rates (4 * 41 * 20 = 3280), not grunt scraps.
+        if (trainerId == TRAINER_SENNEN_CAPTAIN_RYOKO)
+            trainerMoney = 20;
+        // WoT: THE ONI (final boss, repurposed Wally rematch id) pays
+        // champion rates: 4 * 60 * 25 = 6000.
+        if (trainerId == TRAINER_WALLY_VR_5)
+            trainerMoney = 25;
+
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
             moneyReward = 4 * lastMonLevel * gBattleStruct->moneyMultiplier * trainerMoney;
         else if (IsDoubleBattle())

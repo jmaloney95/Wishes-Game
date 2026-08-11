@@ -1,28 +1,25 @@
 Route129_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, Route129_OnTransition
-	map_script MAP_SCRIPT_ON_LOAD, Route129_OnLoad
-	map_script MAP_SCRIPT_ON_FRAME_TABLE, Route129_OnFrame
 	.byte 0
 
-Route129_OnLoad:
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_WEST, AbnormalWeather_EventScript_PlaceTilesRoute129West
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_EAST, AbnormalWeather_EventScript_PlaceTilesRoute129East
+@ ============================================================================
+@  WoT: Route 129 is the open transit sea between Shin-Tokyo (north) and
+@  Celebi Island (south). Full-width trigger rows on y=0 / y=39 carry the
+@  surfing player across (plain warps never fire on water). The old Hoenn
+@  connections + Kyogre abnormal-weather hooks are removed with them.
+@ ============================================================================
+Route129_EventScript_SurfNorthToCity::
+	lockall
+	warp MAP_SHIN_TOKYO, 26, 51
+	waitstate
+	releaseall
 	end
 
-Route129_OnTransition:
-	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
-	call_if_ge VAR_SOOTOPOLIS_CITY_STATE, 4, Route129_EventScript_CheckSetAbnormalWeather
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_WEST, AbnormalWeather_StartKyogreWeather
-	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_129_EAST, AbnormalWeather_StartKyogreWeather
+Route129_EventScript_SurfSouthToIsland::
+	lockall
+	warp MAP_CELEBI_ISLAND, 10, 43
+	waitstate
+	releaseall
 	end
-
-Route129_EventScript_CheckSetAbnormalWeather::
-	call_if_set FLAG_SYS_WEATHER_CTRL, Common_EventScript_SetAbnormalWeather
-	return
-
-Route129_OnFrame:
-	map_script_2 VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_EndEventAndCleanup_1
-	.2byte 0
 
 Route129_EventScript_Chase::
 	trainerbattle_single TRAINER_CHASE, Route129_Text_ChaseIntro, Route129_Text_ChaseDefeat

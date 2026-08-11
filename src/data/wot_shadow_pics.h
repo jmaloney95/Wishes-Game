@@ -20,6 +20,9 @@ static const u32 sWotShadowPic_Wigglytuff[] = INCGFX_U32("graphics/pokemon_shado
 static const u16 sWotShadowPal_Wigglytuff[] = INCBIN_U16("graphics/pokemon_shadow/wigglytuff.gbapal");
 static const u32 sWotShadowPic_Lugia[] = INCGFX_U32("graphics/pokemon_shadow/lugia.png", ".4bpp");
 static const u16 sWotShadowPal_Lugia[] = INCBIN_U16("graphics/pokemon_shadow/lugia.gbapal");
+// The endgame boss of the whole game: Joe's "galaxy alt" art.
+static const u32 sWotShadowPic_Jirachi[] = INCGFX_U32("graphics/pokemon_shadow/jirachi.png", ".4bpp");
+static const u16 sWotShadowPal_Jirachi[] = INCBIN_U16("graphics/pokemon_shadow/jirachi.gbapal");
 
 static const u32 sWotShadowPic_Alakazam[] = INCGFX_U32("graphics/pokemon_shadow/alakazam.png", ".4bpp");
 static const u16 sWotShadowPal_Alakazam[] = INCBIN_U16("graphics/pokemon_shadow/alakazam.gbapal");
@@ -106,4 +109,5 @@ static const struct WotShadowPic sWotShadowPics[] =
     { SPECIES_POLITOED,      sWotShadowPic_Politoed, sWotShadowPal_Politoed },
     { SPECIES_SQUIRTLE,      sWotShadowPic_Squirtle, sWotShadowPal_Squirtle },
     { SPECIES_TURTWIG,       sWotShadowPic_Turtwig, sWotShadowPal_Turtwig },
+    { SPECIES_JIRACHI,       sWotShadowPic_Jirachi, sWotShadowPal_Jirachi },
 };

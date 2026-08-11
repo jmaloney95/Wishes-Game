@@ -276,6 +276,14 @@ static const struct SpriteFrameImage sPicTable_WotNessa[] = {
     overworld_ascending_frames(gObjectEventPic_WotNessa, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_WotJet[] = {
+    obj_frame_tiles(gObjectEventPic_WotJet),
+};
+
+static const struct SpriteFrameImage sPicTable_WotEdwardsImpact[] = {
+    obj_frame_tiles(gObjectEventPic_WotEdwardsImpact),
+};
+
 static const struct SpriteFrameImage sPicTable_WotEdwards[] = {
     overworld_ascending_frames(gObjectEventPic_WotEdwards, 2, 4),
 };
@@ -302,6 +310,10 @@ static const struct SpriteFrameImage sPicTable_WotMarinaLand[] = {
 
 static const struct SpriteFrameImage sPicTable_WotBeachBeauty[] = {
     overworld_ascending_frames(gObjectEventPic_WotBeachBeauty, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotYiffer[] = {
+    overworld_ascending_frames(gObjectEventPic_WotYiffer, 2, 4),
 };
 
 static const struct SpriteFrameImage sPicTable_OniGoon[] = {

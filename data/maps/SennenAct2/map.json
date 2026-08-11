@@ -5,7 +5,7 @@
   "music": "MUS_DP_VS_GALACTIC",
   "region_map_section": "MAPSEC_SENNEN_LINE",
   "requires_flash": false,
-  "weather": "WEATHER_NONE",
+  "weather": "WEATHER_DOWNPOUR",
   "map_type": "MAP_TYPE_TOWN",
   "allow_cycling": false,
   "allow_escaping": false,
@@ -16,23 +16,23 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS",
-      "x": 19,
-      "y": 14,
+      "x": 21,
+      "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "4",
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_CaptainKannon",
-      "flag": "0"
+      "flag": "FLAG_WOT_SA2_EDWARDS_AWAY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE",
-      "x": 22,
-      "y": 20,
+      "x": 17,
+      "y": 18,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -41,11 +41,11 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BLACK_BELT",
-      "x": 11,
-      "y": 22,
+      "graphics_id": "OBJ_EVENT_GFX_WOT_YIFFER",
+      "x": 12,
+      "y": 12,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -55,10 +55,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MACHAMP)",
-      "x": 13,
-      "y": 22,
+      "x": 12,
+      "y": 14,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -68,10 +68,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(ALAKAZAM)",
-      "x": 14,
-      "y": 22,
+      "x": 12,
+      "y": 15,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -81,10 +81,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
-      "x": 16,
-      "y": 22,
+      "x": 12,
+      "y": 17,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -94,8 +94,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_M",
-      "x": 7,
-      "y": 21,
+      "x": 6,
+      "y": 14,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -107,8 +107,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CHANDELURE)",
-      "x": 7,
-      "y": 23,
+      "x": 6,
+      "y": 16,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -120,8 +120,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(HONCHKROW)",
-      "x": 7,
-      "y": 24,
+      "x": 6,
+      "y": 17,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
@@ -133,8 +133,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
-      "x": 7,
-      "y": 26,
+      "x": 6,
+      "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
@@ -142,14 +142,14 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonFighter2",
-      "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
+      "flag": "FLAG_WOT_SA2_GOON_WEST_FLED"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GORDIE",
       "x": 17,
-      "y": 20,
+      "y": 13,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -159,10 +159,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(RAICHU)",
-      "x": 19,
-      "y": 20,
+      "x": 17,
+      "y": 15,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -172,21 +172,21 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(GARCHOMP)",
-      "x": 20,
-      "y": 20,
+      "x": 17,
+      "y": 16,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonMon3",
-      "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
+      "flag": "FLAG_WOT_SA2_GARCHOMP_AWAY"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
-      "x": 25,
-      "y": 21,
+      "x": 24,
+      "y": 13,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
@@ -195,24 +195,89 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonFighter3",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOT_JET",
+      "x": 34,
+      "y": 4,
+      "elevation": 4,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_WOT_SA2_AIRSHOW"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT",
+      "x": 21,
+      "y": 7,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_WOT_SA2_AIRSHOW"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS",
+      "x": 21,
+      "y": 3,
+      "elevation": 4,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_WOT_SA2_FALLER"
     }
   ],
   "warp_events": [
     {
-      "x": 17,
-      "y": 29,
+      "x": 16,
+      "y": 22,
       "elevation": 0,
       "dest_map": "MAP_DOJO",
       "dest_warp_id": "0"
     },
     {
-      "x": 19,
-      "y": 15,
+      "x": 21,
+      "y": 6,
       "elevation": 0,
       "dest_map": "MAP_SHINKANSEN_INTERIOR_ACT2",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 17,
+      "y": 22,
+      "elevation": 0,
+      "dest_map": "MAP_DOJO",
+      "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "SennenAct2_EventScript_EdwardsAmbush"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_TEMP_2",
+      "var_value": "0",
+      "script": "SennenAct2_EventScript_EdwardsAmbush"
+    }
+  ],
   "bg_events": []
 }

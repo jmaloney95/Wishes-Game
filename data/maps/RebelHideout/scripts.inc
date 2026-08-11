@@ -117,6 +117,16 @@ RebelHideout_EventScript_Defector::
 	lock
 	faceplayer
 	setspeaker SP_NAME_DEFECTOR
+	goto_if_set FLAG_WOT_DEFECTOR_CHARM_GIVEN, RebelHideout_EventScript_DefectorAfter
+	msgbox RebelHideout_Text_Defector, MSGBOX_DEFAULT
+	giveitem ITEM_CATCHING_CHARM
+	giveitem ITEM_ULTRA_BALL, 30
+	setflag FLAG_WOT_DEFECTOR_CHARM_GIVEN
+	msgbox RebelHideout_Text_DefectorCharm, MSGBOX_DEFAULT
+	release
+	end
+
+RebelHideout_EventScript_DefectorAfter::
 	msgbox RebelHideout_Text_Defector, MSGBOX_DEFAULT
 	release
 	end
@@ -243,6 +253,12 @@ RebelHideout_Text_Defector::
 	.string "Snag them. Purify them.\p"
 	.string "Every Shadow you take from him\n"
 	.string "is a soul he cannot burn.$"
+
+RebelHideout_Text_DefectorCharm::
+	.string "I pocketed these on my way out\n"
+	.string "of his lab.\p"
+	.string "The charm tilts every throw your\n"
+	.string "way. The balls are for the souls.$"
 
 RebelHideout_Text_Zoroark::
 	.string "ZOROARK's grin does not waver.\p"

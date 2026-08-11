@@ -1854,3 +1854,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/NorthwindCavern/scripts.inc"
 
 	.include "data/maps/Ashlands_Desert/scripts.inc"
+
+	.include "data/maps/LifeguardShack/scripts.inc"

@@ -56,7 +56,7 @@ TowerMid_Text_SuzakuDefeat::
 	.string "guttered out...$"
 
 TowerMid_Text_SuzakuPost::
-	.string "The CAPTAIN holds the floor\n"
+	.string "MUTRID ALPHA holds the floor\n"
 	.string "above. Nobody holds harder.\p"
 	.string "Go. My feathers are ash.$"
 

@@ -68,10 +68,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE",
-      "x": 10,
-      "y": 41,
+      "x": 21,
+      "y": 24,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -380,8 +380,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(KOFFING)",
-      "x": 33,
-      "y": 18,
+      "x": 34,
+      "y": 19,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -550,6 +550,27 @@
       "y": 42,
       "elevation": 0,
       "dest_map": "MAP_SHIN_TOKYO_STATION",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 55,
+      "y": 23,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_PC",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 33,
+      "y": 42,
+      "elevation": 0,
+      "dest_map": "MAP_MAUVILLE_CITY_GAME_CORNER",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 34,
+      "y": 42,
+      "elevation": 0,
+      "dest_map": "MAP_MAUVILLE_CITY_GAME_CORNER",
       "dest_warp_id": "1"
     }
   ],

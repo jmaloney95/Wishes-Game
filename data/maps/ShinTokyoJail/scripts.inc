@@ -32,7 +32,14 @@ ShinTokyoJail_OnTransition::
 	setrespawn HEAL_LOCATION_SHIN_TOKYO_JAIL_ENTRY
 	end
 ShinTokyoJail_OnTransition_CellCheckpoint::
+	@ Once the city is at red alert, a jail re-entry must NOT re-arm the
+	@ stale cell checkpoint (that overwrote the hideout respawn and caused
+	@ the whiteout-into-guards loop). Hideout is the checkpoint from then on.
+	goto_if_set FLAG_ACT3_RED_ALERT, ShinTokyoJail_OnTransition_HideoutCheckpoint
 	setrespawn HEAL_LOCATION_SHIN_TOKYO_JAIL_CELL
+	end
+ShinTokyoJail_OnTransition_HideoutCheckpoint::
+	setrespawn HEAL_LOCATION_REBEL_HIDEOUT
 	end
 @ The scanline window itself is armed later in the map load
 @ (InitCurrentFlashLevelScanlineEffect) -- setting the level here is enough.

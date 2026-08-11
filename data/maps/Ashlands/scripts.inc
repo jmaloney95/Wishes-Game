@@ -1,5 +1,14 @@
 Ashlands_MapScripts::
+	map_script MAP_SCRIPT_ON_RESUME, Ashlands_OnResume
 	.byte 0
+
+@ Persistent "!" over the dying old man (local id 3) until he gets the
+@ FENTANYL -- his hide flag fires at the same beat, so the marker's lifetime
+@ matches his. flagindicator (not questindicator): the quest menu entry only
+@ unlocks at the bow pickup, long after the giver beat.
+Ashlands_OnResume::
+	flagindicator 3, FLAG_FENTANYL_GIVEN
+	end
 
 @==============================================================================
 @ THE DYING OLD MAN (lying in the ash) -- fetch quest for FENTANYL. Bring it and
@@ -146,3 +155,46 @@ Ashlands_EventScript_SeamWest8::
 	warp MAP_ASHLANDS_2, 24, 8
 	waitstate
 	end
+
+@ ============================================================================
+@  MAIN-QUEST GATE -- the west exit to Ashlands_Desert is blocked until the
+@  CATALPA BOW is in hand (VAR_QUEST_FATHERS_WISH >= 3). Trigger column at
+@  x=0, y=5-8 (the only walkable west-edge tiles) on VAR_TEMP_2.
+@ ============================================================================
+Ashlands_EventScript_WestGate::
+	lockall
+	goto_if_ge VAR_QUEST_FATHERS_WISH, 3, Ashlands_EventScript_WestGateOpen
+	goto_if_eq VAR_QUEST_FATHERS_WISH, 2, Ashlands_EventScript_WestGateBow
+	msgbox Ashlands_Text_OldManCallsOut, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Ashlands_Movement_TurnBack
+	waitmovement 0
+	releaseall
+	end
+
+Ashlands_EventScript_WestGateBow::
+	msgbox Ashlands_Text_WestGateBow, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Ashlands_Movement_TurnBack
+	waitmovement 0
+	releaseall
+	end
+
+Ashlands_EventScript_WestGateOpen::
+	setvar VAR_TEMP_2, 1
+	releaseall
+	end
+
+Ashlands_Movement_TurnBack:
+	walk_right
+	step_end
+
+Ashlands_Text_OldManCallsOut::
+	.string "OLD MAN: Help me… koff… please,\n"
+	.string "I need some help.$"
+
+Ashlands_Text_WestGateBow::
+	.string "The old man's last wish weighs on\n"
+	.string "you.\p"
+	.string "His CATALPA BOW still waits in the\n"
+	.string "house to the east.$"

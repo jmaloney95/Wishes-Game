@@ -1241,6 +1241,14 @@ u16 GetCurrLocationDefaultMusic(void)
      && GetSavedWeather() == WEATHER_SANDSTORM)
         return MUS_DESERT;
 
+    // WoT: once Captain Ryoko falls, the Sennen assault is over -- the
+    // Galactic battle theme gives way to the somber N's Castle piece. Also
+    // covers the resume after his battle and after the Edwards boss fight.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SENNEN_ACT2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SENNEN_ACT2)
+     && HasTrainerBeenFought(TRAINER_SENNEN_CAPTAIN_RYOKO))
+        return MUS_BW_N_CASTLE;
+
     music = GetLocationMusic(&gSaveBlock1Ptr->location);
     if (music != MUS_ROUTE118)
     {

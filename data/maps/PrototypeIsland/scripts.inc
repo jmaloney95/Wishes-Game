@@ -30,9 +30,21 @@ PrototypeIsland_EventScript_EnterLab::
 	releaseall
 	end
 
+@ The archipelago chain, north to south:
+@   Ryuden Island <-> Route 130 <-> PROTOTYPE ISLAND <-> Celebi Island
+@ (and Celebi Island <-> Route 129 <-> Shin-Tokyo below that).
+@ NOTE: the old south trigger row sat at y=28 on a 28-tall map -- out of
+@ bounds, so surfing south did nothing. It lives on y=27 now.
 PrototypeIsland_EventScript_SurfToCelebi::
 	lockall
-	warp MAP_CELEBI_ISLAND, 1, 36
+	warp MAP_CELEBI_ISLAND, 25, 1
+	waitstate
+	releaseall
+	end
+
+PrototypeIsland_EventScript_SurfToRoute130::
+	lockall
+	warp MAP_ROUTE130, 42, 31
 	waitstate
 	releaseall
 	end

@@ -10863,7 +10863,7 @@ Level: 44
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_KATHLEEN ===
-Name: CAPTAIN
+Name: MUTRID ALPHA
 Class: Mutrid
 Pic: Mutrid Grunt White
 Gender: Male
@@ -12371,55 +12371,48 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Psychic
 - Future Sight
 
+/*
+REPURPOSED (was the Victory Road Wally rematch, zero script references):
+THE ONI -- the final boss on TowerTop. Levels sit just above MUTRID ALPHA
+(TowerCommand, Lv54-55).
+*/
 === TRAINER_WALLY_VR_5 ===
-Name: WALLY
-Class: Rival
-Pic: Wally
+Name: THE ONI
+Class: Mutrid
+Pic: Mutrid Leader
 Gender: Male
-Music: Male
+Music: Magma
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Altaria
-Level: 56
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Aerial Ace
-- Safeguard
-- Dragon Breath
-- Dragon Dance
+Iron Valiant @ Booster Energy
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Delcatty
-Level: 55
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Sing
-- Assist
-- Charm
-- Feint Attack
-
-Roselia
-Level: 56
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Magical Leaf
-- Leech Seed
-- Giga Drain
-- Toxic
-
-Magneton
-Level: 53
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Supersonic
-- Thunderbolt
-- Tri Attack
-- Screech
-
-Gardevoir
+Grimmsnarl @ Light Clay
+Ability: Prankster
 Level: 57
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
-- Calm Mind
-- Psychic
-- Future Sight
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Metagross @ Weakness Policy
+Ability: Clear Body
+Level: 57
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Ceruledge
+Ability: Weak Armor
+Level: 57
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Haxorus
+Ability: Mold Breaker
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Greninja-Bond
+Level: 60
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_BRENDAN_LILYCOVE_MUDKIP ===
 Name: BRENDAN
@@ -17017,17 +17010,28 @@ Level: 10
 Finizen
 Level: 10
 
+/*
+REPURPOSED (was the LEAF placeholder -- the LAST free id in the pool):
+the Mutrid elite whose Mega Alakazam killed Yiffer in the Sennen assault.
+Optional talk battle on SennenAct2 (object 6, the mid-battle goon).
+*/
 === TRAINER_LEAF ===
-Name: LEAF
-Class: Rival
-Pic: Leaf
-Gender: Female
-Music: Male
+Name: VOSS
+Class: Team Mutrid
+Pic: Mutrid Goon
+Gender: Male
+Music: Magma
 Double Battle: No
+AI: Check Bad Move / Try To Faint
 
-Bulbasaur
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Kadabra
+Level: 34
+
+Grumpig
+Level: 35
+
+Alakazam @ Alakazite
+Level: 37
 
 /*
 REPURPOSED dead vanilla placeholder ids -- Act 3 Shin-Tokyo jail patrol
@@ -17616,7 +17620,7 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Mightyena
+Garchomp
 Level: 40
 
 Weezing

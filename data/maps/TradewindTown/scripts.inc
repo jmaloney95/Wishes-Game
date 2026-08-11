@@ -11,138 +11,32 @@ TradewindTown_OnTransition::
 
 @ ============================================================================
 @  B1 - Curio Merchant "Curios of the Crossing"
-@  One impossible thing at a time: the stall offers curio #N of 7
-@  (VAR_TRADEWIND_CURIO_STOCK) at 1,000 each. Buying one unlocks the next;
-@  each can only ever be bought once. At 7, the stall is sold out for good.
+@  RESTORED (Joe, 2026-08-10): the stall sells the seven impossible-goods
+@  CURIO ITEMS again (1,000 each, plain pokemart) -- the Pawnbroker (below,
+@  post-Lantern-Badge) exchanges each curio for its Mega Stone. The V3
+@  direct-mega-stone menu is retired; FLAG_CURIO_* / MULTI_TRADEWIND_CURIOS
+@  stay defined but unused.
 @ ============================================================================
-@ The cloth is spread with mega stones now -- browse freely, but each stone
-@ finds only one keeper, ever (per-stone FLAG_CURIO_*). CURIO_PRICE each; the
-@ stones themselves stay price-0 (unsellable), so the shop uses removemoney.
-.equ CURIO_PRICE, 15000
-
 Tradewind_EventScript_CurioMerchant::
 	lock
 	faceplayer
-	msgbox Tradewind_Text_CurioGreeting, MSGBOX_DEFAULT
-Tradewind_EventScript_CurioMenu::
-	multichoice 0, 0, MULTI_TRADEWIND_CURIOS, FALSE
-	switch VAR_RESULT
-	case 0, Tradewind_EventScript_Curio_LucarioZ
-	case 1, Tradewind_EventScript_Curio_Tyranitar
-	case 2, Tradewind_EventScript_Curio_Gyarados
-	case 3, Tradewind_EventScript_Curio_RaichuY
-	case 4, Tradewind_EventScript_Curio_Tatsugiri
-	case 5, Tradewind_EventScript_Curio_Houndoom
-	case 6, Tradewind_EventScript_Curio_Banette
-	case 7, Tradewind_EventScript_Curio_Garchomp
-	goto Tradewind_EventScript_CurioDecline
-
-Tradewind_EventScript_Curio_LucarioZ::
-	goto_if_set FLAG_CURIO_LUCARIONITE_Z, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_LUCARIONITE_Z
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_LUCARIONITE_Z
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_Tyranitar::
-	goto_if_set FLAG_CURIO_TYRANITARITE, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_TYRANITARITE
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_TYRANITARITE
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_Gyarados::
-	goto_if_set FLAG_CURIO_GYARADOSITE, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_GYARADOSITE
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_GYARADOSITE
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_RaichuY::
-	goto_if_set FLAG_CURIO_RAICHUNITE_Y, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_RAICHUNITE_Y
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_RAICHUNITE_Y
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_Tatsugiri::
-	goto_if_set FLAG_CURIO_TATSUGIRINITE, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_TATSUGIRINITE
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_TATSUGIRINITE
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_Houndoom::
-	goto_if_set FLAG_CURIO_HOUNDOOMINITE, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_HOUNDOOMINITE
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_HOUNDOOMINITE
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_Banette::
-	goto_if_set FLAG_CURIO_BANETTITE, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_BANETTITE
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_BANETTITE
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_Curio_Garchomp::
-	goto_if_set FLAG_CURIO_GARCHOMPITE, Tradewind_EventScript_CurioTaken
-	setvar VAR_0x8008, ITEM_GARCHOMPITE
-	call Tradewind_EventScript_CurioPurchase
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioMenu
-	setflag FLAG_CURIO_GARCHOMPITE
-	goto Tradewind_EventScript_CurioMenu
-
-@ Shared purchase (VAR_0x8008 = stone). Returns VAR_RESULT = TRUE if bought.
-Tradewind_EventScript_CurioPurchase::
-	bufferitemname STR_VAR_1, VAR_0x8008
-	showmoneybox 0, 0
-	msgbox Tradewind_Text_CurioOffer, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, Tradewind_EventScript_CurioPurchaseCancel
-	checkmoney CURIO_PRICE
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioPurchaseNoMoney
-	giveitem VAR_0x8008
-	goto_if_eq VAR_RESULT, FALSE, Tradewind_EventScript_CurioPurchaseNoRoom
-	removemoney CURIO_PRICE
-	updatemoneybox
-	hidemoneybox
-	msgbox Tradewind_Text_CurioBought, MSGBOX_DEFAULT
-	setvar VAR_RESULT, TRUE
-	return
-
-Tradewind_EventScript_CurioPurchaseCancel::
-	hidemoneybox
-	setvar VAR_RESULT, FALSE
-	return
-
-Tradewind_EventScript_CurioPurchaseNoMoney::
-	hidemoneybox
-	msgbox Tradewind_Text_CurioNoMoney, MSGBOX_DEFAULT
-	setvar VAR_RESULT, FALSE
-	return
-
-Tradewind_EventScript_CurioPurchaseNoRoom::
-	hidemoneybox
-	msgbox Tradewind_Text_CurioNoRoom, MSGBOX_DEFAULT
-	setvar VAR_RESULT, FALSE
-	return
-
-Tradewind_EventScript_CurioTaken::
-	msgbox Tradewind_Text_CurioTaken, MSGBOX_DEFAULT
-	goto Tradewind_EventScript_CurioMenu
-
-Tradewind_EventScript_CurioDecline::
+	message Tradewind_Text_CurioGreeting
+	waitmessage
+	pokemart Tradewind_CurioMart
 	msgbox Tradewind_Text_CurioFarewell, MSGBOX_DEFAULT
 	release
 	end
+
+	.align 2
+Tradewind_CurioMart:
+	.2byte ITEM_BOTTLED_WARMTH
+	.2byte ITEM_BORROWED_YEARS
+	.2byte ITEM_UNSPOKEN_LAST_WORDS
+	.2byte ITEM_A_STRANGERS_NAME
+	.2byte ITEM_FOLDED_GOODBYE
+	.2byte ITEM_ONE_GOOD_DREAM
+	.2byte ITEM_THE_LONG_WAY_HOME
+	pokemartlistend
 
 @ ============================================================================
 @  B2 - The Pawnbroker of Bonds (Mega-stone exchange)
@@ -474,33 +368,10 @@ Tradewind_EventScript_TrainerPiper::
 @  Text
 @ ============================================================================
 Tradewind_Text_CurioGreeting::
-	.string "Curios of the Crossing.\p"
-	.string "The cloth is spread with sleeping\n"
-	.string "stones tonight. Each finds only\l"
-	.string "one keeper. Ever.$"
-
-Tradewind_Text_CurioOffer::
-	.string "The {STR_VAR_1}.\p"
-	.string "15,000 coin. One only.\n"
-	.string "Will you keep it?$"
-
-Tradewind_Text_CurioBought::
-	.string "It is yours to keep now.\p"
-	.string "It has found its one keeper.\n"
-	.string "There is no second.$"
-
-Tradewind_Text_CurioTaken::
-	.string "That stone already found its\n"
-	.string "keeper. Ever means ever.$"
-
-Tradewind_Text_CurioNoMoney::
-	.string "The cloth does not haggle.\n"
-	.string "15,000 coin, or it waits.$"
-
-Tradewind_Text_CurioNoRoom::
-	.string "Your bag is full.\p"
-	.string "Impossible things still take up\n"
-	.string "room. Make some, then return.$"
+	.string "Curios of the Crossing.\n"
+	.string "A thousand coin apiece.\p"
+	.string "Look over the cloth, take\n"
+	.string "what calls to you.$"
 
 Tradewind_Text_CurioFarewell::
 	.string "The crossing keeps its\n"

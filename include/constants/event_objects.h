@@ -462,7 +462,10 @@
 #define OBJ_EVENT_GFX_WOT_ROSA_LAND              414
 #define OBJ_EVENT_GFX_WOT_MARINA_LAND            415
 #define OBJ_EVENT_GFX_WOT_BEACH_BEAUTY           416
-#define NUM_OBJ_EVENT_GFX                        417
+#define OBJ_EVENT_GFX_WOT_YIFFER                 417
+#define OBJ_EVENT_GFX_WOT_JET                    418
+#define OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT         419
+#define NUM_OBJ_EVENT_GFX                        420
 
 
 // These are dynamic object gfx ids.
@@ -599,6 +602,9 @@
 #define OBJ_EVENT_PAL_TAG_WOT_ROSA_LAND                         0x1149
 #define OBJ_EVENT_PAL_TAG_WOT_MARINA_LAND                       0x114A
 #define OBJ_EVENT_PAL_TAG_WOT_BEACH_BEAUTY                      0x114B
+#define OBJ_EVENT_PAL_TAG_WOT_YIFFER                            0x114C
+#define OBJ_EVENT_PAL_TAG_WOT_JET                               0x114D
+#define OBJ_EVENT_PAL_TAG_WOT_EDWARDS_IMPACT                    0x114E
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116

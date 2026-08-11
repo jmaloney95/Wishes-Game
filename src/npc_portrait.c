@@ -44,6 +44,8 @@ static const u8 sPortraitMikmancGfx[] = INCGFX_U8("graphics/portraits/mikmanc.pn
 static const u16 sPortraitMikmancPal[] = INCGFX_U16("graphics/portraits/mikmanc.png", ".gbapal");
 static const u8 sPortraitAllisonGfx[] = INCGFX_U8("graphics/portraits/allison.png", ".4bpp");
 static const u16 sPortraitAllisonPal[] = INCGFX_U16("graphics/portraits/allison.png", ".gbapal");
+static const u8 sPortraitYifferGfx[] = INCGFX_U8("graphics/portraits/yiffer.png", ".4bpp");
+static const u16 sPortraitYifferPal[] = INCGFX_U16("graphics/portraits/yiffer.png", ".gbapal");
 
 // Real art later = add the PNG, repoint that id's row. Nothing else changes.
 // PORTRAIT_COBRA intentionally points at the second placeholder to prove the
@@ -61,6 +63,7 @@ static const struct NpcPortrait sNpcPortraits[PORTRAIT_COUNT] =
     [PORTRAIT_EDWARDS]         = {sPortraitEdwardsGfx,      sPortraitEdwardsPal},
     [PORTRAIT_MIKMANC]         = {sPortraitMikmancGfx,      sPortraitMikmancPal},
     [PORTRAIT_ALLISON]         = {sPortraitAllisonGfx,      sPortraitAllisonPal},
+    [PORTRAIT_YIFFER]          = {sPortraitYifferGfx,       sPortraitYifferPal},
 };
 
 // Speaker-linked portraits: setspeaker with one of these SP_NAME_* ids
@@ -73,6 +76,7 @@ static const struct { u8 speaker; u8 portrait; } sSpeakerPortraits[] =
     { SP_NAME_EDWARDS,      PORTRAIT_EDWARDS },
     { SP_NAME_MIKMANC,      PORTRAIT_MIKMANC },
     { SP_NAME_ALLISON,      PORTRAIT_ALLISON },
+    { SP_NAME_YIFFER,       PORTRAIT_YIFFER },
 };
 
 static bool8 sAutoPortrait = FALSE;

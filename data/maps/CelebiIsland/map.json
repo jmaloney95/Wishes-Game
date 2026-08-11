@@ -17,7 +17,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(CELEBI)",
       "x": 25,
-      "y": 15,
+      "y": 21,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -30,7 +30,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_LASS",
       "x": 23,
-      "y": 29,
+      "y": 35,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -43,7 +43,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_BEAUTY",
       "x": 27,
-      "y": 29,
+      "y": 35,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
@@ -56,7 +56,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
       "x": 25,
-      "y": 29,
+      "y": 35,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -69,7 +69,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(UXIE)",
       "x": 24,
-      "y": 22,
+      "y": 28,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -82,7 +82,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(MESPRIT)",
       "x": 25,
-      "y": 22,
+      "y": 28,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -95,7 +95,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(AZELF)",
       "x": 26,
-      "y": 22,
+      "y": 28,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
@@ -110,152 +110,53 @@
   "coord_events": [
     {
       "type": "trigger",
+      "x": 4,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
       "x": 8,
-      "y": 44,
+      "y": 50,
       "elevation": 0,
       "var": "VAR_TEMP_7",
       "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToCity"
-    },
-    {
-      "type": "trigger",
-      "x": 9,
-      "y": 44,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToCity"
-    },
-    {
-      "type": "trigger",
-      "x": 10,
-      "y": 44,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToCity"
-    },
-    {
-      "type": "trigger",
-      "x": 11,
-      "y": 44,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToCity"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 44,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToCity"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 31,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 33,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 34,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 35,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 36,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 37,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 38,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 39,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 40,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 0,
-      "y": 41,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
       "type": "trigger",
       "x": 24,
-      "y": 23,
+      "y": 29,
       "elevation": 0,
       "var": "VAR_TEMP_4",
       "var_value": "0",
@@ -264,7 +165,7 @@
     {
       "type": "trigger",
       "x": 25,
-      "y": 23,
+      "y": 29,
       "elevation": 0,
       "var": "VAR_TEMP_4",
       "var_value": "0",
@@ -273,11 +174,488 @@
     {
       "type": "trigger",
       "x": 26,
-      "y": 23,
+      "y": 29,
       "elevation": 0,
       "var": "VAR_TEMP_4",
       "var_value": "0",
       "script": "CelebiIsland_EventScript_TrioTrial"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 50,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_SurfToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 1,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 2,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 26,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 27,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 28,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 29,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 34,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 35,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 36,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 37,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 38,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 39,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 40,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 41,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 42,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 43,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 44,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 45,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 47,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 48,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 49,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "CelebiIsland_EventScript_SurfToPrototype"
     }
   ],
   "bg_events": []

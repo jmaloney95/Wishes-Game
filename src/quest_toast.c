@@ -1,6 +1,8 @@
 #include "global.h"
 #include "quest_toast.h"
+#include "field_message_box.h"
 #include "map_name_popup.h"
+#include "script.h"
 #include "quests.h"
 #include "sound.h"
 #include "string_util.h"
@@ -38,6 +40,14 @@ static void Task_QuestToastPump(u8 taskId)
 
     if (MapNamePopupIsActive())
         return; // wait for the current toast (or map-name popup) to finish
+
+    // Defer while any script or field dialogue is live: the popup windows
+    // share BG0 tile VRAM (namebox/yes-no/msgbox ranges), palette 14, and
+    // the unified HBlank BG0VOFS scroll with the message system -- firing
+    // mid-dialogue shreds the text box. The queue itself is the deferral;
+    // toasts (and their SEs) fire on the first free frame after releaseall.
+    if (ScriptContext_IsEnabled() || !IsFieldMessageBoxHidden() || ArePlayerFieldControlsLocked())
+        return;
 
     if (sQueueCount == 0)
     {

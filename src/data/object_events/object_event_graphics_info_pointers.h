@@ -53,6 +53,9 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotSkyeLand
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotRosaLand;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMarinaLand;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBeachBeauty;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotYiffer;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJet;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwardsImpact;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerF;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BlackBelt;
@@ -487,6 +490,9 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOT_ROSA_LAND] =              &gObjectEventGraphicsInfo_WotRosaLand,
     [OBJ_EVENT_GFX_WOT_MARINA_LAND] =            &gObjectEventGraphicsInfo_WotMarinaLand,
     [OBJ_EVENT_GFX_WOT_BEACH_BEAUTY] =           &gObjectEventGraphicsInfo_WotBeachBeauty,
+    [OBJ_EVENT_GFX_WOT_YIFFER] =                 &gObjectEventGraphicsInfo_WotYiffer,
+    [OBJ_EVENT_GFX_WOT_JET] =                    &gObjectEventGraphicsInfo_WotJet,
+    [OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT] =         &gObjectEventGraphicsInfo_WotEdwardsImpact,
     [OBJ_EVENT_GFX_SWIMMER_M] =                &gObjectEventGraphicsInfo_SwimmerM,
     [OBJ_EVENT_GFX_SWIMMER_F] =                &gObjectEventGraphicsInfo_SwimmerF,
     [OBJ_EVENT_GFX_BLACK_BELT] =               &gObjectEventGraphicsInfo_BlackBelt,

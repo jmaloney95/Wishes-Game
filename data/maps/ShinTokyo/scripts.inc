@@ -43,6 +43,10 @@ ShinTokyo_OnTransition::
 	setflag FLAG_HIDE_WOT_WANTED_POSTER
 	end
 ShinTokyo_OnTransition_RedAlert::
+	@ Any red-alert street whiteout comes back to the hideout cots -- never
+	@ the jail cell (whiting out there walked the player straight back into
+	@ the sight guards: the "respawns into battle" loop).
+	setrespawn HEAL_LOCATION_REBEL_HIDEOUT
 	clearflag FLAG_HIDE_ACT3_PATROLS
 	@ The patrols re-form every time the city is re-entered: defeat flags
 	@ clear here, and their teams re-roll from the pool at battle start
@@ -137,7 +141,7 @@ ShinTokyo_EventScript_Patrol3::
 ShinTokyo_EventScript_SurfToIsland::
 	lockall
 	goto_if_unset FLAG_ACT3_RED_ALERT, ShinTokyo_EventScript_TideTooHigh
-	warp MAP_CELEBI_ISLAND, 10, 43
+	warp MAP_ROUTE129, 26, 1
 	waitstate
 	releaseall
 	end
@@ -271,7 +275,7 @@ ShinTokyo_EventScript_Inspection::
 	lockall
 	setvar VAR_TEMP_0, 1
 	goto_if_set FLAG_ACT3_INSPECTION_DONE, ShinTokyo_EventScript_InspectionDone
-	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyo_Movement_PlayerFaceUp
+	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyo_Movement_PlayerFaceLeft
 	waitmovement 0
 	addobject LOCALID_ACT3_CAPTAIN
 	applymovement LOCALID_ACT3_CAPTAIN, ShinTokyo_Movement_CaptainApproach
@@ -461,24 +465,29 @@ ShinTokyo_EventScript_TryArrestDone::
 	end
 
 @ --- Movement ----------------------------------------------------------------
+@ The captain now closes in FROM THE LEFT along the y=24 row (the object was
+@ stranded at its pre-MiddleDistrict coords (10,41) -- the whole approach
+@ played off-camera, hence "nobody appears").
+ShinTokyo_Movement_PlayerFaceLeft:
+	face_left
+	step_end
+
 ShinTokyo_Movement_PlayerFaceUp:
 	face_up
 	step_end
 
 ShinTokyo_Movement_CaptainApproach:
-	walk_down
-	walk_down
-	walk_down
-	walk_down
-	walk_down
+	walk_right
+	walk_right
+	walk_right
+	walk_right
 	step_end
 
 ShinTokyo_Movement_CaptainLeave:
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
+	walk_left
+	walk_left
+	walk_left
+	walk_left
 	step_end
 
 ShinTokyo_Movement_GoonConvergeRight:
@@ -839,7 +848,7 @@ ShinTokyo_EventScript_MinisterSettle::
 	msgbox ShinTokyo_Text_MinisterSettle, MSGBOX_DEFAULT
 	closemessage
 	completequest SIDE_QUEST_MINISTERS_FAVOR
-	giveitem ITEM_BIG_NUGGET
+	giveitem ITEM_SHINY_CHARM
 	msgbox ShinTokyo_Text_MinisterAfter, MSGBOX_DEFAULT
 	release
 	end

@@ -1239,10 +1239,13 @@ static void UpdateThunderSound(void)
             if (IsSEPlaying())
                 return;
 
-            if (Random() & 1)
-                PlaySE(SE_THUNDER);
-            else
-                PlaySE(SE_THUNDER2);
+            if (!WotWeatherSEIsSuppressed())
+            {
+                if (Random() & 1)
+                    PlaySE(SE_THUNDER);
+                else
+                    PlaySE(SE_THUNDER2);
+            }
 
             gWeatherPtr->thunderEnqueued = FALSE;
         }

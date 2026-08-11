@@ -104,6 +104,321 @@
       "var": "VAR_TEMP_1",
       "var_value": "0",
       "script": "DragonKeeper_EventScript_EggTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 1,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 2,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 22,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 24,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 26,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 27,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 28,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 29,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 34,
+      "y": 34,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "DragonKeeper_EventScript_SurfToRoute130"
     }
   ],
   "bg_events": [

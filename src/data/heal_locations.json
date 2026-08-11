@@ -421,6 +421,12 @@
       "map": "MAP_REBEL_HIDEOUT",
       "x": 11,
       "y": 4
+    },
+    {
+      "id": "HEAL_LOCATION_DOJO",
+      "map": "MAP_DOJO",
+      "x": 21,
+      "y": 17
     }
   ]
 }

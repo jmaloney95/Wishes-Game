@@ -523,18 +523,18 @@
 #define FLAG_ENABLE_TATE_AND_LIZA_MATCH_CALL 0x1D8
 #define FLAG_ENABLE_JUAN_MATCH_CALL          0x1D9
 
-#define FLAG_UNUSED_0x1DA                    0x1DA // Unused Flag
+#define FLAG_WOT_SA2_EDWARDS_AWAY            0x1DA // WoT: set = Edwards not on the SennenAct2 gate (pre-jet-drop)
 
 #define FLAG_SHOWN_MYSTIC_TICKET             0x1DB
 #define FLAG_DEFEATED_HO_OH                  0x1DC
 #define FLAG_DEFEATED_LUGIA                  0x1DD
 
-#define FLAG_UNUSED_0x1DE                    0x1DE // Unused Flag
-#define FLAG_UNUSED_0x1DF                    0x1DF // Unused Flag
-#define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
-#define FLAG_UNUSED_0x1E1                    0x1E1 // Unused Flag
-#define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
-#define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
+#define FLAG_WOT_SA2_AIRSHOW                 0x1DE // WoT: set = SennenAct2 jet + impact-pose props hidden
+#define FLAG_WOT_SA2_FALLER                  0x1DF // WoT: set = SennenAct2 falling-Edwards actor hidden
+#define FLAG_WOT_SA2_GOON_WEST_FLED          0x1E0 // WoT: set = routed west goon gone (own flag; sharing GOONS_CLEARED blocked Garchomp's respawn)
+#define FLAG_WOT_SA2_GARCHOMP_AWAY           0x1E1 // WoT: set = Ryoko recalled Garchomp in the assault ending
+#define FLAG_WOT_DEFECTOR_CHARM_GIVEN        0x1E2 // WoT: Prof. Assistant handed over the Catching Charm + Ultra Balls
+#define FLAG_WOT_ONI_DEFEATED                0x1E3 // WoT: the final boss fell and fled TowerTop by jet
 
 // Mystery Gift Flags (Unknown)
 #define FLAG_MYSTERY_GIFT_DONE               0x1E4
@@ -781,7 +781,7 @@
 #define FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_INVISIBLE_NINJA_BOY   0x2D7
 #define FLAG_HIDE_PETALBURG_CITY_WALLYS_MOM                         0x2D8
 
-#define FLAG_UNUSED_0x2D9                                           0x2D9 // Unused Flag
+#define FLAG_WOT_TOWER_JIRACHI_GONE                                 0x2D9 // WoT: Shadow Jirachi caught; the machine is broken (ON_LOAD tile swap)
 
 #define FLAG_HIDE_LILYCOVE_FAN_CLUB_INTERVIEWER                     0x2DA
 #define FLAG_HIDE_RUSTBORO_CITY_AQUA_GRUNT                          0x2DB
@@ -1227,7 +1227,7 @@
 #define FLAG_ITEM_SAFARI_ZONE_NORTH_EAST_NUGGET                     0x491
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 
-#define FLAG_UNUSED_0x493                                           0x493 // Unused Flag
+#define FLAG_WOT_TOWER_LEGENDS_AWAY                                 0x493 // WoT: hides TowerTop's jet + released legendaries (cutscene props)
 #define FLAG_UNUSED_0x494                                           0x494 // Unused Flag
 #define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
 #define FLAG_UNUSED_0x496                                           0x496 // Unused Flag

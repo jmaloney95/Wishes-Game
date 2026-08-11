@@ -1,6 +1,14 @@
 Dojo_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Dojo_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Dojo_OnFrame
 	.byte 0
+
+@ The safehouse is the checkpoint for the whole Sennen assault: whiteouts in
+@ SennenAct2 (which also setrespawns this) and in here come back to the cots
+@ beside the Blissey healer.
+Dojo_OnTransition::
+	setrespawn HEAL_LOCATION_DOJO
+	end
 
 Dojo_OnFrame:
 	map_script_2 VAR_TEMP_0, 0, Dojo_EventScript_RebellionIntro
@@ -104,6 +112,7 @@ Dojo_EventScript_RebelMomAfter::
 Dojo_EventScript_RebelRedFatality::
 	lock
 	faceplayer
+	setspeaker SP_NAME_RED_FATALITY
 	goto_if_set FLAG_ACT2_REBEL_GIFT_REDFATALITY, Dojo_EventScript_RebelRedFatalityAfter
 	msgbox Dojo_Text_RedFatalityGift1, MSGBOX_DEFAULT
 	giveitem ITEM_TM13
@@ -120,6 +129,7 @@ Dojo_EventScript_RebelRedFatalityAfter::
 Dojo_EventScript_RebelMinister::
 	lock
 	faceplayer
+	setspeaker SP_NAME_MINISTER
 	checkitem ITEM_SHINKANSEN_KEY
 	goto_if_eq VAR_RESULT, TRUE, Dojo_EventScript_RebelMinisterAfter
 	msgbox Dojo_Text_MinisterGift1, MSGBOX_DEFAULT
@@ -153,6 +163,7 @@ Dojo_EventScript_RebelMikmancAfter::
 Dojo_EventScript_RebelYiffer::
 	lock
 	faceplayer
+	setspeaker SP_NAME_YIFFER
 	goto_if_set FLAG_ACT2_REBEL_GIFT_YIFFER, Dojo_EventScript_RebelYifferAfter
 	msgbox Dojo_Text_YifferGift1, MSGBOX_DEFAULT
 	giveitem ITEM_LEFTOVERS
@@ -170,15 +181,26 @@ Dojo_EventScript_RebelYifferAfter::
 @  Text
 @ ============================================================================
 Dojo_Text_IntroWelcome::
-	.string "MOM: Welcome to the Rebellion,\n"
+	.string "Welcome to the Rebellion,\n"
 	.string "{PLAYER}.$"
 
+Dojo_Text_IntroBrief::
+	.string "Mutrid has taken over the\n"
+	.string "region. they're building a\l"
+	.string "machine that corrupts pokemon\l"
+	.string "and brainwashes people.\p"
+	.string "We need to stop them.\p"
+	.string "The plan is simple, love.\n"
+	.string "We fight them at Sennen and\l"
+	.string "take back the station.\p"
+	.string "You'll board the SHINKANSEN and\n"
+	.string "travel to SHIN-TOKYO, Mutrid's\l"
+	.string "evil HQ.\p"
+	.string "Find a way to stop the machine.$"
+
 Dojo_Text_IntroPlan::
-	.string "MOM: Look at them. Trainers from\n"
-	.string "every corner of this region --\l"
-	.string "Frostwood, the Ashlands, towns\l"
-	.string "whose names Mutrid already burned\l"
-	.string "off the map.\p"
+	.string "Trainers from\n"
+	.string "every corner of this region.\p"
 	.string "And every one of them is here\n"
 	.string "because of what YOU did.\p"
 	.string "You came down from the mountain\n"
@@ -186,26 +208,15 @@ Dojo_Text_IntroPlan::
 	.string "crossed the veil and came BACK.\p"
 	.string "If anyone alive can walk into\n"
 	.string "Shin-Tokyo and stop that machine,\l"
-	.string "it's you. It was always going to\l"
-	.string "be you.\p"
-	.string "The plan is simple, love. We\n"
-	.string "fight through SENNEN. We take the\l"
-	.string "station. Every mask in the region\l"
-	.string "comes running to stop us...\p"
-	.string "...and while they're looking at\n"
-	.string "US, you board the SHINKANSEN.\l"
-	.string "Alone. Straight into their\l"
-	.string "throat.$"
+	.string "it's you.$"
 
 Dojo_Text_IntroCost::
-	.string "MOM: {PLAYER}. Look at me.\p"
+	.string "{PLAYER}. Look at me.\p"
 	.string "Some of the people in this room\n"
-	.string "will not see the morning after.\p"
+	.string "will not make it.\p"
 	.string "They know it. They chose it.\n"
-	.string "Every single one of them chose\l"
-	.string "it, with their eyes open.\p"
-	.string "So when that train pulls away,\n"
-	.string "you don't look back at us.\p"
+	.string "So when that train pulls away,\l"
+	.string "you don't look back.\p"
 	.string "You look FORWARD.\n"
 	.string "And you END this.$"
 
@@ -228,80 +239,55 @@ Dojo_Text_MomGift2::
 	.string "That's me.$"
 
 Dojo_Text_YifferGift1::
-	.string "YIFFER: Yo. Yiffer. Frostwood\n"
-	.string "gym. The hiker you flattened\l"
-	.string "between the ice puzzles.\p"
-	.string "I'm not a planner like Minister\n"
-	.string "or a legend like the boss. But I\l"
-	.string "know what a long march needs.$"
+	.string "Big day tomorrow. You eaten?\p"
+	.string "Didn't think so. A fighter runs\n"
+	.string "on scraps and spite.\p"
+	.string "Here -- take mine.$"
 
 Dojo_Text_YifferGift2::
-	.string "YIFFER: LEFTOVERS. Best trail\n"
+	.string "LEFTOVERS. Best\n"
 	.string "item ever made. Your partner just\l"
 	.string "keeps going... bite by bite.\p"
-	.string "That's all any of us have to do\n"
-	.string "tomorrow, {PLAYER}. Keep going.\l"
-	.string "Bite by bite.\p"
 	.string "See you on the platform.$"
 
 Dojo_Text_YifferAfter::
-	.string "YIFFER: Ate my own leftovers\n"
-	.string "already. No regrets.\p"
-	.string "Keep going, {PLAYER}.\n"
-	.string "Bite by bite.$"
+	.string "Chew slow, breathe slower.\p"
+	.string "Spite's the real meal.$"
 
 Dojo_Text_MomAfter::
-	.string "MOM: Warm socks, healed Pokemon,\n"
-	.string "and no heroics before breakfast.\p"
-	.string "...I know, I know. Go on.\n"
-	.string "Let me look at you one more time.$"
+	.string "MOM: You can do it sweetie.$"
 
 Dojo_Text_RedFatalityGift1::
-	.string "REDFATALITY: Hey, {PLAYER}.\n"
+	.string "Hey, {PLAYER}.\n"
 	.string "Remember me? Frostwood.\p"
 	.string "You walked into my gym with cold\n"
 	.string "feet and walked out with my\l"
-	.string "badge. Best loss I ever took.\p"
-	.string "Gym's frozen SHUT now. Mutrid\n"
-	.string "runs coolant lines through my\l"
-	.string "battlefield.\p"
-	.string "So I've got no gym, no gate to\n"
-	.string "keep... and one thing left worth\l"
-	.string "giving.$"
+	.string "badge. Gym's frozen shut now.$"
 
 Dojo_Text_RedFatalityGift2::
-	.string "REDFATALITY: TM13. ICE BEAM.\n"
+	.string "TM13. ICE BEAM.\n"
 	.string "My signature.\p"
-	.string "A fighter's parting gift, kid.\n"
-	.string "When you're on that train and it\l"
-	.string "all goes loud--\p"
-	.string "--aim like Frostwood is watching.\n"
-	.string "Because we will be.$"
+	.string "It's a parting gift.\n"
+	.string "I'll see you on the other side,\n"
+	.string "dog.$"
 
 Dojo_Text_RedFatalityAfter::
-	.string "REDFATALITY: Tomorrow I hold a\n"
-	.string "platform instead of a gym.\p"
-	.string "Same job, really. Nobody gets\n"
-	.string "past me without earning it.$"
+	.string "See you on the other side, slugger.$"
 
 Dojo_Text_MinisterGift1::
-	.string "MINISTER: Remember me, {PLAYER}?\n"
-	.string "Frostwood gym. Back row. The one\l"
-	.string "with the laptop.\p"
 	.string "Everyone thinks a rebellion is\n"
 	.string "muscle. It's not. It's UPTIME.\p"
 	.string "Mutrid runs the whole line off\n"
 	.string "one network: cameras, door locks,\l"
 	.string "track signals, the lot.\p"
 	.string "I've been inside their system for\n"
-	.string "nine days. They still think I'm a\l"
+	.string "days. They still think I'm a\l"
 	.string "vending machine in Sennen.$"
 
 Dojo_Text_MinisterGift2::
-	.string "MINISTER: That's the driver's\n"
+	.string "That's the SHINKANSEN train\n"
 	.string "keycard. Cloned it off their own\l"
-	.string "sysadmin. The only copy Mutrid\l"
-	.string "doesn't control.\p"
+	.string "sysadmin.\p"
 	.string "Here's how tomorrow goes:\p"
 	.string "The moment we hit the platform, I\n"
 	.string "breach their network. Cameras\l"
@@ -314,37 +300,20 @@ Dojo_Text_MinisterGift2::
 	.string "is yours.$"
 
 Dojo_Text_MinisterAfter::
-	.string "MINISTER: Nine days in their\n"
-	.string "network and nobody noticed.\p"
-	.string "Tomorrow they notice.\n"
-	.string "Tomorrow EVERYTHING goes dark.$"
+	.string "Tomorrow everything goes dark.$"
 
 Dojo_Text_MikmancGift1::
-	.string "MIKMANC: {PLAYER}!! It's me,\n"
+	.string "{PLAYER}!! It's me,\n"
 	.string "MikManc! From the gym!\p"
-	.string "You beat me in like four turns\n"
-	.string "and I've told EVERYONE it was\l"
-	.string "nine.\p"
-	.string "I don't have a train key or army\n"
-	.string "tech or a famous TM. I just have\l"
-	.string "this. Saved up for it my whole\l"
-	.string "certification.$"
+	.string "I've got something for you.$"
 
 Dojo_Text_MikmancGift2::
-	.string "MIKMANC: LIFE ORB. It costs a\n"
+	.string "LIFE ORB. It costs a\n"
 	.string "little to hit a LOT harder.\p"
-	.string "Kind of like tomorrow, right?\n"
-	.string "It costs a little. It hits a lot\l"
-	.string "harder.\p"
-	.string "...When you're out there past\n"
-	.string "where we can follow -- hit\l"
-	.string "harder, {PLAYER}.\p"
+	.string "...When you make it out there\n"
+	.string " -- hit harder, {PLAYER}.\p"
 	.string "For all of us.$"
 
 Dojo_Text_MikmancAfter::
-	.string "MIKMANC: I'm not scared.\p"
-	.string "Okay. I'm a LITTLE scared.\n"
-	.string "But I'm still going to be on\l"
-	.string "that platform tomorrow.\p"
-	.string "Four turns, {PLAYER}. Tell them\n"
-	.string "it took nine.$"
+	.string "I'm not scared.\p"
+	.string "Okay. I'm a LITTLE scared.$"

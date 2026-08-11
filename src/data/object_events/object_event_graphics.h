@@ -697,5 +697,11 @@ const u32 gObjectEventPic_WotMarinaLand[] = INCGFX_U32("graphics/object_events/p
 const u16 gObjectEventPal_WotMarinaLand[] = INCGFX_U16("graphics/object_events/palettes/wot_marina_land.pal", ".gbapal");
 const u32 gObjectEventPic_WotBeachBeauty[] = INCGFX_U32("graphics/object_events/pics/people/wot_beach_beauty.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_WotBeachBeauty[] = INCGFX_U16("graphics/object_events/palettes/wot_beach_beauty.pal", ".gbapal");
+const u32 gObjectEventPic_WotYiffer[] = INCGFX_U32("graphics/object_events/pics/people/wot_yiffer.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotYiffer[] = INCGFX_U16("graphics/object_events/palettes/wot_yiffer.pal", ".gbapal");
+const u32 gObjectEventPic_WotJet[] = INCGFX_U32("graphics/object_events/pics/people/wot_jet.png", ".4bpp", "-mwidth 8 -mheight 8");
+const u16 gObjectEventPal_WotJet[] = INCGFX_U16("graphics/object_events/palettes/wot_jet.pal", ".gbapal");
+const u32 gObjectEventPic_WotEdwardsImpact[] = INCGFX_U32("graphics/object_events/pics/people/wot_edwards_impact.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotEdwardsImpact[] = INCGFX_U16("graphics/object_events/palettes/wot_edwards_impact.pal", ".gbapal");
 
 const u32 gObjectEventPic_WotWantedSmall[] = INCGFX_U32("graphics/object_events/pics/misc/wot_wanted_small.png", ".4bpp");

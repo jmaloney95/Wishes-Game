@@ -234,3 +234,12 @@ DragonKeeper_Text_MonFlygon::
 DragonKeeper_Text_MonBagon::
 	.string "BAGON headbutts the incubator\n"
 	.string "wall, dreaming of the sky.$"
+
+@ Surfing off the south shore crosses to Route 130 (and on to Prototype
+@ Island / Celebi Island beyond it).
+DragonKeeper_EventScript_SurfToRoute130::
+	lockall
+	warp MAP_ROUTE130, 10, 1
+	waitstate
+	releaseall
+	end

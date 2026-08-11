@@ -12,92 +12,227 @@
   "allow_running": true,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_ROUTE128",
-      "offset": 0,
-      "direction": "up"
-    },
-    {
-      "map": "MAP_ROUTE130",
-      "offset": 0,
-      "direction": "left"
-    },
-    {
-      "map": "MAP_UNDERWATER_ROUTE129",
-      "offset": 0,
-      "direction": "dive"
-    }
-  ],
-  "object_events": [
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 28,
-      "y": 16,
-      "elevation": 1,
-      "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_DOWN_LEFT_UP_RIGHT",
-      "movement_range_x": 3,
-      "movement_range_y": 4,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "3",
-      "script": "Route129_EventScript_Chase",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 10,
-      "y": 14,
-      "elevation": 1,
-      "movement_type": "MOVEMENT_TYPE_WALK_SEQUENCE_RIGHT_DOWN_LEFT_UP",
-      "movement_range_x": 5,
-      "movement_range_y": 2,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route129_EventScript_Allison",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_F",
-      "x": 13,
-      "y": 22,
-      "elevation": 1,
-      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_DOWN",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "5",
-      "script": "Route129_EventScript_Tisha",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 35,
-      "y": 9,
-      "elevation": 1,
-      "movement_type": "MOVEMENT_TYPE_ROTATE_CLOCKWISE",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "2",
-      "script": "Route129_EventScript_Reed",
-      "flag": "0"
-    },
-    {
-      "graphics_id": "OBJ_EVENT_GFX_SWIMMER_M",
-      "x": 13,
-      "y": 27,
-      "elevation": 1,
-      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_UP",
-      "movement_range_x": 1,
-      "movement_range_y": 1,
-      "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "5",
-      "script": "Route129_EventScript_Clarence",
-      "flag": "0"
-    }
-  ],
+  "connections": null,
+  "object_events": [],
   "warp_events": [],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 33,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 34,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 35,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 36,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 37,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 38,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 39,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 40,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 41,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 42,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 43,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfNorthToCity"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 24,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 23,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 22,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 21,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 20,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 19,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 18,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 16,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 15,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 78,
+      "y": 14,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route129_EventScript_SurfSouthToIsland"
+    }
+  ],
   "bg_events": [],
   "region": "REGION_HOENN"
 }

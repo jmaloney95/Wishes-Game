@@ -7,6 +7,7 @@
 
 CelebiIsland_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, CelebiIsland_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, CelebiIsland_OnFrame
 	.byte 0
 
 @ The lake trio guards the shrine until the keepers' trial is done; then
@@ -42,17 +43,20 @@ CelebiIsland_EventScript_ArrivalCheckpointDone::
 	end
 
 @ Surfing off the island's south edge returns to the city's tide waters.
+@ North (toward the city) now crosses Route 129's open sea. The old direct
+@ warp target (19,28) was STALE -- a solid city tile in the repainted layout.
 CelebiIsland_EventScript_SurfToCity::
 	lockall
-	warp MAP_SHIN_TOKYO, 19, 28
+	warp MAP_ROUTE129, 40, 37
 	waitstate
 	releaseall
 	end
 
 @ Surfing off the west edge crosses to Prototype Island's waters.
+@ NORTH now, not west: Prototype Island sits directly north of the island.
 CelebiIsland_EventScript_SurfToPrototype::
 	lockall
-	warp MAP_PROTOTYPE_ISLAND, 13, 8
+	warp MAP_PROTOTYPE_ISLAND, 11, 26
 	waitstate
 	releaseall
 	end
@@ -290,8 +294,15 @@ CelebiIsland_EventScript_TrioTrial::
 	waitmoncry
 	msgbox CelebiIsland_Text_TrioYield, MSGBOX_DEFAULT
 	closemessage
+	@ --- the scatter: three guardians burst apart in three directions ---
 	playse SE_FLEE
-	fadescreen FADE_TO_BLACK
+	applymovement LOCALID_ISLAND_UXIE, CelebiIsland_Movement_UxieScatterWest
+	applymovement LOCALID_ISLAND_AZELF, CelebiIsland_Movement_AzelfScatterEast
+	applymovement LOCALID_ISLAND_MESPRIT, CelebiIsland_Movement_MespritScatterSouth
+	waitmovement LOCALID_ISLAND_UXIE
+	waitmovement LOCALID_ISLAND_AZELF
+	waitmovement LOCALID_ISLAND_MESPRIT
+	@ relocate to their watch posts (off-camera; OnTransition re-applies)
 	setobjectxyperm LOCALID_ISLAND_UXIE, 4, 33
 	removeobject LOCALID_ISLAND_UXIE
 	addobject LOCALID_ISLAND_UXIE
@@ -301,14 +312,88 @@ CelebiIsland_EventScript_TrioTrial::
 	setobjectxyperm LOCALID_ISLAND_AZELF, 46, 33
 	removeobject LOCALID_ISLAND_AZELF
 	addobject LOCALID_ISLAND_AZELF
+	@ --- Celebi lowers from the sky onto the altar ---
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, CelebiIsland_Movement_CameraToShrine
+	waitmovement 0
+	delay 16
 	setflag FLAG_WOT_FAIRY_TRIAL_DONE
 	clearflag FLAG_HIDE_WOT_CELEBI
 	addobject LOCALID_ISLAND_CELEBI
-	fadescreen FADE_FROM_BLACK
+	setobjectxy LOCALID_ISLAND_CELEBI, 25, 17
+	playse SE_M_TELEPORT
+	applymovement LOCALID_ISLAND_CELEBI, CelebiIsland_Movement_CelebiDescend
+	waitmovement 0
+	waitse
+	playmoncry SPECIES_CELEBI, CRY_MODE_NORMAL
+	waitmoncry
+	delay 30
+	applymovement LOCALID_CAMERA, CelebiIsland_Movement_CameraBackToPlayer
+	waitmovement 0
+	special RemoveCameraObject
 	msgbox CelebiIsland_Text_TrioWatch, MSGBOX_DEFAULT
 CelebiIsland_EventScript_TrioTrialDone::
 	releaseall
 	end
+
+CelebiIsland_Movement_UxieScatterWest:
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	walk_faster_left
+	step_end
+
+CelebiIsland_Movement_AzelfScatterEast:
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	walk_faster_right
+	step_end
+
+CelebiIsland_Movement_MespritScatterSouth:
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	walk_faster_down
+	step_end
+
+CelebiIsland_Movement_CameraToShrine:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+CelebiIsland_Movement_CameraBackToPlayer:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+@ Slow float down out of the sky onto the altar tile (25,21).
+CelebiIsland_Movement_CelebiDescend:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
 
 CelebiIsland_EventScript_TrioNotYet::
 	msgbox CelebiIsland_Text_TrioNotYet, MSGBOX_DEFAULT

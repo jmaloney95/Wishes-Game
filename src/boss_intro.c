@@ -1,6 +1,7 @@
 #include "global.h"
 #include "boss_intro.h"
 #include "decompress.h"
+#include "event_data.h"
 #include "main.h"
 #include "npc_portrait.h"
 #include "palette.h"
@@ -78,7 +79,7 @@ static const struct BossIntroData sBossIntroData[BOSS_INTRO_COUNT] =
         .portraitId = PORTRAIT_EDWARDS,
         .nameSheet = &sBiNameSheet_Edwards,
         .seCue = SE_M_DETECT,
-        .seSlam = SE_MUGSHOT,
+        .seSlam = 0, // SE_MUGSHOT is silent in this fork and only cut the shimmer
         .holdFrames = 180,
         .tintColor = RGB(6, 2, 12),
         .cutMusic = TRUE,
@@ -89,7 +90,7 @@ static const struct BossIntroData sBossIntroData[BOSS_INTRO_COUNT] =
         .portraitId = PORTRAIT_ALLISON,
         .nameSheet = &sBiNameSheet_Allison,
         .seCue = SE_M_DETECT,
-        .seSlam = SE_MUGSHOT,
+        .seSlam = 0, // SE_MUGSHOT is silent in this fork and only cut the shimmer
         .holdFrames = 180,
         .tintColor = RGB(2, 6, 14),   // deep sea-blue for the siren
         .cutMusic = TRUE,
@@ -191,6 +192,7 @@ enum
 #define tVelBanner data[8]
 #define tVelPort   data[9]
 #define tExitT     data[10]
+#define tMusicWait data[11]
 
 // Every palette except the card's two OBJ palettes. Call only after the card
 // palettes are loaded. OBJ palette n = bit 16+n.
@@ -229,6 +231,31 @@ static void BossIntro_FlashCardWhite(void)
         BlendPalette(OBJ_PLTT_ID(idx), 16, 14, RGB_WHITE);
 }
 
+// Launch a boss battle theme and prime the battle-start path. Public so
+// scripts can detonate the theme mid-scene (Edwards's landing) long before
+// the card runs -- the card then leaves the music alone entirely.
+void WotStartBossTheme(u16 song)
+{
+    ResetMapMusic();   // no queued song may resurrect over the theme
+    // BGM player only -- m4aMPlayAllStop() also silences the SE
+    // players and audibly chopped the slam SE.
+    m4aMPlayStop(&gMPlayInfo_BGM);
+    m4aSongNumStart(song);
+    gMPlayInfo_BGM.fadeOI = 0; // kill any in-flight fade so the theme holds volume
+    gWotBossIntroPrimed = TRUE;
+}
+
+// special: song id in VAR_0x8004.
+void WotPrimeBossTheme(void)
+{
+    WotStartBossTheme(gSpecialVar_0x8004);
+}
+
+static void BossIntro_StartBattleTheme(const struct BossIntroData *boss)
+{
+    WotStartBossTheme(boss->battleBGM);
+}
+
 // Ease-out: velocity decays 3/4 per frame, min 2. Returns TRUE on arrival.
 static bool32 MoveTowardX(struct Sprite *sprite, s16 target, s16 *vel)
 {
@@ -262,13 +289,22 @@ static void Task_BossIntro(u8 taskId)
         // Never fight another fade (weather, transitions): wait our turn.
         if (gPaletteFade.active)
             return;
+        // THE card sound: the seCue shimmer, fired at frame 0 so it rings
+        // through the slide + slam untouched. seSlam is 0 for every boss --
+        // SE_MUGSHOT turned out to be a SILENT song in this fork (its voice
+        // in voicegroup_rs_sfx_2 produces nothing), and every PlaySE of it
+        // replaced the ringing shimmer on SE1 with silence. That was the
+        // entire "card sound never plays / muted partway" saga.
         PlaySE(boss->seCue);
         // FadeOutMapMusic (not raw FadeOutBGM): it also clears the map-music
         // state machine. The trainer-approach encounter jingle queues itself
         // there (state 6, "play the queued song once the BGM stops") -- a raw
         // stop at the slam SATISFIES that wait and the old track relaunches
         // on top of the boss theme.
-        if (boss->cutMusic)
+        // Already primed = a script detonated the boss theme earlier in the
+        // scene (Edwards's landing): leave the running theme completely
+        // alone (per Joe: no ducking).
+        if (!gWotBossIntroPrimed && boss->cutMusic)
             FadeOutMapMusic(4);
         LoadCompressedSpriteSheet(&sBiBannerSheet);
         LoadCompressedSpriteSheet(boss->nameSheet);
@@ -307,17 +343,14 @@ static void Task_BossIntro(u8 taskId)
             gSprites[tSprName].x = gSprites[tSprBanner].x + BI_NAME_X_NUDGE;
             if (arrived)
             {
-                // The slam: name appears this frame under a 2-frame white pop,
-                // and the boss's battle theme drops exactly here.
-                PlaySE(boss->seSlam);
-                if (boss->battleBGM != 0)
-                {
-                    ResetMapMusic();   // no queued song may resurrect over the theme
-                    m4aMPlayAllStop();
-                    m4aSongNumStart(boss->battleBGM);
-                    gMPlayInfo_BGM.fadeOI = 0; // kill any in-flight fade so the theme holds volume
-                    gWotBossIntroPrimed = TRUE;
-                }
+                // The slam: name appears this frame under a 2-frame white pop.
+                // No SE here unless a boss defines one -- a second PlaySE on
+                // SE1 would cut the shimmer mid-ring. The battle theme drops a
+                // hair AFTER (tMusicWait) so its dense opening chord can't
+                // fight the shimmer for m4a channels.
+                if (boss->seSlam != 0)
+                    PlaySE(boss->seSlam);
+                tMusicWait = (boss->battleBGM != 0 && !gWotBossIntroPrimed) ? 10 : 0;
                 gSprites[tSprName].invisible = FALSE;
                 BossIntro_FlashCardWhite();
                 tFlash = 3;
@@ -327,9 +360,18 @@ static void Task_BossIntro(u8 taskId)
         }
         break;
     case BI_STATE_HOLD:
+        if (tMusicWait > 0 && --tMusicWait == 0)
+            BossIntro_StartBattleTheme(boss);
         MoveTowardX(&gSprites[tSprPort], BI_PORTRAIT_X_ON, &tVelPort);
         if (--tHold <= 0 || (tElapsed > 30 && (JOY_NEW(A_BUTTON | B_BUTTON))))
         {
+            // A/B inside the 10-frame window must not lose the theme (and the
+            // primed flag the battle transition depends on).
+            if (tMusicWait > 0)
+            {
+                tMusicWait = 0;
+                BossIntro_StartBattleTheme(boss);
+            }
             tVelBanner = 6;
             tExitT = 0;
             tState = BI_STATE_EXIT;
@@ -369,7 +411,10 @@ void BossIntro_Start(u32 bossId)
 
     if (bossId >= BOSS_INTRO_COUNT)
         bossId = BOSS_INTRO_EDWARDS;
-    gWotBossIntroPrimed = FALSE;
+    // Do NOT reset gWotBossIntroPrimed here: when a script primed the theme
+    // earlier in the scene (Edwards's landing), clearing it made the card
+    // fade + RESTART the running song. The flag's only consumer-reset is
+    // battle start.
     if (FuncIsActiveTask(Task_BossIntro))
     {
         // Double trigger: skip the card rather than deadlocking the script.

@@ -2,6 +2,7 @@
 #include "battle_pyramid.h"
 #include "bg.h"
 #include "event_data.h"
+#include "field_message_box.h"
 #include "field_weather.h"
 #include "gpu_regs.h"
 #include "graphics.h"
@@ -12,6 +13,7 @@
 #include "palette.h"
 #include "region_map.h"
 #include "rtc.h"
+#include "script.h"
 #include "start_menu.h"
 #include "string_util.h"
 #include "task.h"
@@ -402,6 +404,17 @@ static void Task_MapNamePopUpWindow(u8 taskId)
     switch (task->tState)
     {
     case STATE_PRINT:
+        // WoT: hold here while a script/field dialogue is live -- the popup
+        // windows share BG0 VRAM, palette 14 and the HBlank scroll with the
+        // message system, so drawing mid-dialogue shreds the text box. This
+        // also covers the legacy `special ShowQuestPopup` path that bypasses
+        // the quest-toast queue (the text is already latched in the popup's
+        // own buffer, so waiting is safe).
+        if (ScriptContext_IsEnabled() || !IsFieldMessageBoxHidden() || ArePlayerFieldControlsLocked())
+        {
+            task->tPrintTimer = 0;
+            break;
+        }
         // Wait, then create and print the pop up window
         if (++task->tPrintTimer > 30)
         {

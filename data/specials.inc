@@ -656,3 +656,11 @@ gSpecials::
 	def_special WotRedAlertFlash
 	def_special WotIsHMUnlocked
 	def_special WotOpenFlyMap
+	def_special RemoveFollowingPokemon
+	def_special WotSuppressWeatherSE
+	def_special WotShakeCameraSilent
+	def_special WotPrimeBossTheme
+	def_special WotStopSceneSE
+	def_special WotStartFieldConfetti
+	def_special WotStopFieldConfetti
+	def_special WotStartObjectBob
