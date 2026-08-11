@@ -1,0 +1,4 @@
+# Extracted / third-party trees that don't belong in project history.
+# Both are large and reproducible from their own sources.
+nds-src/
+Tools/VGMTrans-v1.3/

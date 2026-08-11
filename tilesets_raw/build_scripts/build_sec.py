@@ -39,11 +39,13 @@ STAIRS=[(15,7),(16,7),(17,7)]
 MEMORIAL=[(25,0),(25,1),(26,0),(26,1),(27,0),(27,1)]
 POKEBALL=[(22,2),(23,2)]
 BUOY=[(30,7),(31,7)]
+TALLGRASS=[(1,0),(1,1),(1,2)]
 FLAT=GRASS+CLIFFTOP+SAND+SW+WATER+CFRAME1+CFRAME2+CSIDES+CFACE+CPEAK+ROCKS+SANDCLIFF+CAVE+STAIRS+MEMORIAL
 OVERLAY=POKEBALL+BUOY  # composite on sand, dark->transparent
 def subt(my,mx,td=False): return [gt(mx*2+sx,my*2+sy,td) for (sy,sx) in [(0,0),(0,1),(1,0),(1,1)]]
 flat_subs=[(rc,subt(*rc)) for rc in FLAT]
 ov_subs=[(rc,subt(rc[0],rc[1],True)) for rc in OVERLAY]
+tg_subs=[(rc,subt(*rc)) for rc in TALLGRASS]
 SANDTILE=gt(6*2+0,4*2+0)
 # palette packing
 uniq=[]; useen=set()
@@ -55,6 +57,8 @@ def reg(t):
 for _,s in flat_subs:
     for t in s: reg(t)
 for _,s in ov_subs:
+    for t in s: reg(t)
+for _,s in tg_subs:
     for t in s: reg(t)
 reg(SANDTILE)
 def agglo(sl,limit=15):
@@ -145,6 +149,11 @@ for rc_,s in ov_subs:
     for t in s:
         tid,xf,yf,pi=tile_id(t); ent.append((tid,xf,yf,slot(pi)) if tid else (0,0,0,0))
     metas.append((rc_,ent)); attrs.append(0)
+for rc_,s in tg_subs:
+    ent=[]
+    for t in s:
+        tid,xf,yf,pi=tile_id(t); ent.append((tid,xf,yf,slot(pi)) if tid else (0,0,0,0))
+    ent+=[(0,0,0,0)]*4; metas.append((rc_,ent)); attrs.append(0)
 NT=len(tiles);NM=len(metas)
 print("tiles",NT,"metatiles",NM,"covered",sum(1 for a in attrs if a)); assert NT<=512
 TW=16;rows=(NT+TW-1)//TW
@@ -178,7 +187,7 @@ print("NUM_TILES",NT,"max_tid",mx,"num_tiles_needed",mx+1)
 groups=[("grass",GRASS),("clifftop",CLIFFTOP),("sand",SAND),("sand/water",SW),("water",WATER),
 ("cliff frame",CFRAME1+CFRAME2),("cliff sides",CSIDES),("cliff face",CFACE),("cliff peak",CPEAK),
 ("rocks",ROCKS),("sand-cliff/cave frame",SANDCLIFF),("cave",CAVE),("STAIRS",STAIRS),
-("MEMORIAL",MEMORIAL),("POKEBALL",POKEBALL),("BUOY",BUOY)]
+("MEMORIAL",MEMORIAL),("POKEBALL",POKEBALL),("BUOY",BUOY),("TALL GRASS (encounters)",TALLGRASS)]
 i=0
 for n,g in groups:
     print(f"  metas {i}-{i+len(g)-1}: {n}"); i+=len(g)
