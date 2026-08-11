@@ -1241,6 +1241,14 @@ u16 GetCurrLocationDefaultMusic(void)
      && GetSavedWeather() == WEATHER_SANDSTORM)
         return MUS_DESERT;
 
+    // WoT: once Captain Ryoko falls, the Sennen assault is over -- the
+    // Galactic battle theme gives way to the somber N's Castle piece. Also
+    // covers the resume after his battle and after the Edwards boss fight.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SENNEN_ACT2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SENNEN_ACT2)
+     && HasTrainerBeenFought(TRAINER_SENNEN_CAPTAIN_RYOKO))
+        return MUS_BW_N_CASTLE;
+
     music = GetLocationMusic(&gSaveBlock1Ptr->location);
     if (music != MUS_ROUTE118)
     {
@@ -2075,6 +2083,23 @@ void CB2_ContinueSavedGame(void)
     if (gSaveFileStatus == SAVE_STATUS_ERROR)
         ResetWinStreaks();
 
+    // Wishes of Tomorrow: the Lantern Badge moved from legacy flag 0x4E into
+    // the numbered badge block (FLAG_BADGE04_GET). Migrate old saves once.
+    if (FlagGet(FLAG_BADGE_LANTERN_LEGACY))
+    {
+        FlagSet(FLAG_BADGE_LANTERN);
+        FlagClear(FLAG_BADGE_LANTERN_LEGACY);
+    }
+
+    // Wishes of Tomorrow: FNPC_ENABLE_NPC_FOLLOWERS grew SaveBlock3, so saves
+    // from before the change can hold garbage where follower data now lives.
+    // Wipe it once per save; after that the field is authoritative.
+    if (!FlagGet(FLAG_WOT_SB3_FNPC_INIT))
+    {
+        ClearFollowerNPCData();
+        FlagSet(FLAG_WOT_SB3_FNPC_INIT);
+    }
+
     LoadSaveblockMapHeader();
     ClearDiveAndHoleWarps();
     trainerHillMapId = GetCurrentTrainerHillMapId();
@@ -2169,6 +2194,16 @@ static void InitCurrentFlashLevelScanlineEffect(void)
         WriteFlashScanlineEffectBuffer(flashLevel);
         ScanlineEffect_SetParams(sFlashEffectParams);
     }
+}
+
+// WoT (special): arm the flash-darkness scanline window mid-map. Normally the
+// window only comes up during map load; the jail blackout scene instead sets
+// the flash level while the screen is faded and calls this before fading back
+// in, so the map returns as cave-style darkness with a light ring around the
+// player.
+void WotInitFlashScanlineEffect(void)
+{
+    InitCurrentFlashLevelScanlineEffect();
 }
 
 static bool32 LoadMapInStepsLink(u8 *state)

@@ -74,7 +74,7 @@ struct TrainerMon
     enum Type teraType:5;
     bool8 gigantamaxFactor:1;
     u8 shouldUseDynamax:1;
-    u8 padding1:1;
+    u8 isShadow:1; // WoT: Shadow Pokemon ("Shadow: Yes" in trainers.party)
     u8 dynamaxLevel:4;
     u8 padding2:4;
     u32 tags;
@@ -136,7 +136,7 @@ struct Trainer
 
 struct TrainerClass
 {
-    u8 name[13];
+    u8 name[14];    // widened from 13 for "Dragon Warden" (13 chars + EOS)
     u8 money;
     u16 ball;
 };

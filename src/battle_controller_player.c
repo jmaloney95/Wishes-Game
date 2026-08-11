@@ -1619,10 +1619,74 @@ static void OpenBagAndChooseItem(enum BattlerId battler)
     }
 }
 
+// WoT Shadow system: manual ball-target selection. Vanilla forbids throwing a
+// ball while two foes are out because it cannot tell which one you meant; we
+// ask instead, which is also what makes snagging a Shadow in a double battle
+// possible. Entered after the bag closes; mirrors the move-target cursor.
+static void WotHandleInputChooseBallTarget(enum BattlerId battler)
+{
+    enum BattlerId i;
+
+    DoBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX, 15, 1);
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (i != gMultiUsePlayerCursor)
+            EndBounceEffect(i, BOUNCE_HEALTHBOX);
+    }
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
+        EndBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX);
+        gBattleStruct->wotBallTarget = gMultiUsePlayerCursor + 1;
+        BtlController_EmitOneReturnValue(battler, B_COMM_TO_ENGINE, gSpecialVar_ItemId);
+        BtlController_Complete(battler);
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        // Cancel: the bag already took the ball out, so put it back and
+        // report "no item chosen" -- the engine reopens action selection.
+        PlaySE(SE_SELECT);
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
+        EndBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX);
+        AddBagItem(gSpecialVar_ItemId, 1);
+        gBattleStruct->wotBallTarget = 0;
+        gSpecialVar_ItemId = ITEM_NONE;
+        BtlController_EmitOneReturnValue(battler, B_COMM_TO_ENGINE, ITEM_NONE);
+        BtlController_Complete(battler);
+    }
+    else if (JOY_NEW(DPAD_ANY))
+    {
+        enum BattlerId other = gMultiUsePlayerCursor ^ BIT_FLANK;
+
+        if (IsBattlerAlive(other))
+        {
+            PlaySE(SE_SELECT);
+            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
+            gMultiUsePlayerCursor = other;
+            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
+        }
+    }
+}
+
 static void CompleteWhenChoseItem(enum BattlerId battler)
 {
     if (gMain.callback2 == BattleMainCB2 && !gPaletteFade.active)
     {
+        // WoT Shadow system: a ball thrown while two foes are alive goes
+        // through the target selector first.
+        if (gSpecialVar_ItemId != ITEM_NONE
+         && GetItemPocket(gSpecialVar_ItemId) == POCKET_POKE_BALLS
+         && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
+         && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
+        {
+            gMultiUsePlayerCursor = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
+            gBattlerControllerFuncs[battler] = WotHandleInputChooseBallTarget;
+            return;
+        }
+        gBattleStruct->wotBallTarget = 0;
         BtlController_EmitOneReturnValue(battler, B_COMM_TO_ENGINE, gSpecialVar_ItemId);
         BtlController_Complete(battler);
     }

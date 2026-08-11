@@ -877,6 +877,13 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_PKMNDISGUISEWASBUSTED]                = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX}'s disguise was busted!"),
     [STRINGID_ZENMODETRIGGERED]                     = COMPOUND_STRING("{B_SCR_ABILITY} triggered!"),
     [STRINGID_ZENMODEENDED]                         = COMPOUND_STRING("{B_SCR_ABILITY} ended!"),
+    // WoT Shadow system -- snagging. No PLAY_BGM here: unlike a wild catch,
+    // the battle keeps going, so the battle theme must keep playing.
+    [STRINGID_WOTGOTCHASNAGGED]                     = COMPOUND_STRING("Gotcha! {B_DEF_NAME} was snagged away!\p"),
+    [STRINGID_WOTSNAGGEDTOPARTY]                    = COMPOUND_STRING("The snagged {B_BUFF1} was added to your party!\p"),
+    [STRINGID_WOTSNAGGEDTOPC]                       = COMPOUND_STRING("The snagged {B_BUFF1} was transferred to the PC!\p"),
+    [STRINGID_WOTSHADOWAURA]                        = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} is wreathed in a Shadow aura!"),
+    [STRINGID_WOTSNAGNICKNAMEQ]                     = COMPOUND_STRING("Give a nickname to the snagged {B_BUFF1}?"),
 };
 
 const u16 gTrainerUsedItemStringIds[] =
@@ -1349,6 +1356,13 @@ const u16 gCaughtMonStringIds[] =
     [B_MSG_SOMEONES_BOX_FULL]  = STRINGID_PKMNBOXSOMEONESPCFULL,
     [B_MSG_LANETTES_BOX_FULL]  = STRINGID_PKMNBOXLANETTESPCFULL,
     [B_MSG_SWAPPED_INTO_PARTY] = STRINGID_PKMNSENTTOPCAFTERCATCH,
+};
+
+// WoT Shadow system: battle-end snag delivery (chooser 0 = party, 1 = PC).
+const u16 gWotSnagDeliveryStringIds[] =
+{
+    STRINGID_WOTSNAGGEDTOPARTY,
+    STRINGID_WOTSNAGGEDTOPC,
 };
 
 const u16 gRoomsStringIds[] =

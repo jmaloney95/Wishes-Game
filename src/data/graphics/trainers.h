@@ -35,6 +35,32 @@ const u32 gTrainerFrontPic_SwimmerMarina[] = INCGFX_U32("graphics/trainers/front
 const u16 gTrainerPalette_SwimmerMarina[] = INCGFX_U16("graphics/trainers/front_pics/swimmer_marina.png", ".gbapal");
 const u32 gTrainerFrontPic_GoldOni[] = INCGFX_U32("graphics/trainers/front_pics/gold_oni.png", ".4bpp.smol");
 const u16 gTrainerPalette_GoldOni[] = INCGFX_U16("graphics/trainers/front_pics/gold_oni.png", ".gbapal");
+const u32 gTrainerFrontPic_MutridLeader[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_leader.png", ".4bpp.smol");
+const u16 gTrainerPalette_MutridLeader[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_leader.png", ".gbapal");
+const u32 gTrainerFrontPic_MutridGrunt[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_grunt.png", ".4bpp.smol");
+const u16 gTrainerPalette_MutridGrunt[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt.png", ".gbapal");
+const u32 gTrainerFrontPic_MutridGruntWhite[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_grunt_white.png", ".4bpp.smol");
+const u16 gTrainerPalette_MutridGruntWhite[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt_white.png", ".gbapal");
+const u32 gTrainerFrontPic_MutridGruntF[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_grunt_f.png", ".4bpp.smol");
+const u16 gTrainerPalette_MutridGruntF[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt_f.png", ".gbapal");
+const u32 gTrainerFrontPic_GeneralEdwards[] = INCGFX_U32("graphics/trainers/front_pics/general_edwards.png", ".4bpp.smol");
+const u16 gTrainerPalette_GeneralEdwards[] = INCGFX_U16("graphics/trainers/front_pics/general_edwards.png", ".gbapal");
+const u32 gTrainerFrontPic_WotAllisonLand[] = INCGFX_U32("graphics/trainers/front_pics/wot_allison_land.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotAllisonLand[] = INCGFX_U16("graphics/trainers/front_pics/wot_allison_land.png", ".gbapal");
+const u32 gTrainerFrontPic_WotSkyeLand[] = INCGFX_U32("graphics/trainers/front_pics/wot_skye_land.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotSkyeLand[] = INCGFX_U16("graphics/trainers/front_pics/wot_skye_land.png", ".gbapal");
+const u32 gTrainerFrontPic_WotRosaLand[] = INCGFX_U32("graphics/trainers/front_pics/wot_rosa_land.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotRosaLand[] = INCGFX_U16("graphics/trainers/front_pics/wot_rosa_land.png", ".gbapal");
+const u32 gTrainerFrontPic_WotMarinaLand[] = INCGFX_U32("graphics/trainers/front_pics/wot_marina_land.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotMarinaLand[] = INCGFX_U16("graphics/trainers/front_pics/wot_marina_land.png", ".gbapal");
+const u32 gTrainerFrontPic_WotReinaVanessa[] = INCGFX_U32("graphics/trainers/front_pics/wot_reina_vanessa.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotReinaVanessa[] = INCGFX_U16("graphics/trainers/front_pics/wot_reina_vanessa.png", ".gbapal");
+const u32 gTrainerFrontPic_WotPokeKid[] = INCGFX_U32("graphics/trainers/front_pics/wot_poke_kid.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotPokeKid[] = INCGFX_U16("graphics/trainers/front_pics/wot_poke_kid.png", ".gbapal");
+const u32 gTrainerFrontPic_WotBeachGirl[] = INCGFX_U32("graphics/trainers/front_pics/wot_beach_girl.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotBeachGirl[] = INCGFX_U16("graphics/trainers/front_pics/wot_beach_girl.png", ".gbapal");
+const u32 gTrainerFrontPic_MutridGoon[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_goon.png", ".4bpp.smol");
+const u16 gTrainerPalette_MutridGoon[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_goon.png", ".gbapal");
 
 const u32 gTrainerFrontPic_MagmaGruntM[] = INCGFX_U32("graphics/trainers/front_pics/magma_grunt_m.png", ".4bpp.smol");
 const u16 gTrainerPalette_MagmaGruntM[] = INCGFX_U16("graphics/trainers/front_pics/magma_grunt_m.png", ".gbapal");
@@ -521,10 +547,23 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_M, gTrainerFrontPic_SwimmerM, gTrainerPalette_SwimmerM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MAGMA_GRUNT_M, gTrainerFrontPic_MagmaGruntM, gTrainerPalette_MagmaGruntM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_GOLD_ONI, gTrainerFrontPic_GoldOni, gTrainerPalette_GoldOni),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_LEADER, gTrainerFrontPic_MutridLeader, gTrainerPalette_MutridLeader),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_ALLISON, gTrainerFrontPic_SwimmerAllison, gTrainerPalette_SwimmerAllison),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_SKYE, gTrainerFrontPic_SwimmerSkye, gTrainerPalette_SwimmerSkye),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_ROSA, gTrainerFrontPic_SwimmerRosa, gTrainerPalette_SwimmerRosa),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_SWIMMER_MARINA, gTrainerFrontPic_SwimmerMarina, gTrainerPalette_SwimmerMarina),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT, gTrainerFrontPic_MutridGrunt, gTrainerPalette_MutridGrunt),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT_WHITE, gTrainerFrontPic_MutridGruntWhite, gTrainerPalette_MutridGruntWhite),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT_F, gTrainerFrontPic_MutridGruntF, gTrainerPalette_MutridGruntF),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GOON, gTrainerFrontPic_MutridGoon, gTrainerPalette_MutridGoon),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_GENERAL_EDWARDS, gTrainerFrontPic_GeneralEdwards, gTrainerPalette_GeneralEdwards),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_ALLISON_LAND, gTrainerFrontPic_WotAllisonLand, gTrainerPalette_WotAllisonLand),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_SKYE_LAND, gTrainerFrontPic_WotSkyeLand, gTrainerPalette_WotSkyeLand),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_ROSA_LAND, gTrainerFrontPic_WotRosaLand, gTrainerPalette_WotRosaLand),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_MARINA_LAND, gTrainerFrontPic_WotMarinaLand, gTrainerPalette_WotMarinaLand),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_REINA_VANESSA, gTrainerFrontPic_WotReinaVanessa, gTrainerPalette_WotReinaVanessa),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_POKE_KID, gTrainerFrontPic_WotPokeKid, gTrainerPalette_WotPokeKid),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_BEACH_GIRL, gTrainerFrontPic_WotBeachGirl, gTrainerPalette_WotBeachGirl),
 
     TRAINER_SPRITE(TRAINER_PIC_FRONT_EXPERT_M, gTrainerFrontPic_ExpertM, gTrainerPalette_ExpertM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_AQUA_ADMIN_M, gTrainerFrontPic_AquaAdminM, gTrainerPalette_AquaAdminM),

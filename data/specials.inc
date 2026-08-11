@@ -604,6 +604,7 @@ gSpecials::
 	def_special DoSSAnneDepartureCutscene
 	def_special StartMarowakBattle
 	def_special DoesPlayerPartyContainSpecies
+	def_special TakeFirstMonOfSpecies
 	def_special GetMagikarpSizeRecordInfo
 	def_special CompareMagikarpSize
 	def_special GetHeracrossSizeRecordInfo
@@ -643,3 +644,23 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
+	def_special ShowQuestPopup
+	def_special StartRiftDistortion
+	def_special EndRiftDistortion
+	def_special RefreshPlayerAvatarGraphicsIfOnFoot
+	def_special GetMonShadowState
+	def_special PurifyPartyMon
+	def_special CountShadowPartyMons
+	def_special WotInitFlashScanlineEffect
+	def_special WotMakeEventMonShadow
+	def_special WotRedAlertFlash
+	def_special WotIsHMUnlocked
+	def_special WotOpenFlyMap
+	def_special RemoveFollowingPokemon
+	def_special WotSuppressWeatherSE
+	def_special WotShakeCameraSilent
+	def_special WotPrimeBossTheme
+	def_special WotStopSceneSE
+	def_special WotStartFieldConfetti
+	def_special WotStopFieldConfetti
+	def_special WotStartObjectBob

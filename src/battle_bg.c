@@ -27,6 +27,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
+#include "constants/maps.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_partner.h"
 #include "data/battle_environment.h"
@@ -920,6 +921,21 @@ static void LoadBattleEnvironmentEntryGfx(u16 environment)
 static u8 GetBattleEnvironmentOverride(void)
 {
     u8 battleScene = GetCurrentMapBattleScene();
+
+    // National Park: always use the beach (sand) background, regardless of terrain or trainer class.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE_2_2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE_2_2))
+        return BATTLE_ENVIRONMENT_SAND;
+
+    // Star Summit boss: molten-summit volcano background (MAGMA here is a Stadium bg).
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+        return BATTLE_ENVIRONMENT_VOLCANO;
+
+    // Sennen platform boss (General Edwards): same molten-volcano bg as the summit boss.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_SENNEN_CAPTAIN_KANNON)
+        return BATTLE_ENVIRONMENT_VOLCANO;
 
     if (TestRunner_Battle_GetForcedEnvironment()
      && gBattleEnvironmentInfo[gBattleEnvironment].background.tilemap

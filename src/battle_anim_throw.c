@@ -1370,8 +1370,23 @@ static void SpriteCB_Ball_Capture_Step(struct Sprite *sprite)
     {
         gDoingBattleAnim = FALSE;
         UpdateOamPriorityInAllHealthboxes(1, FALSE);
-        m4aMPlayAllStop();
-        PlaySE(MUS_RG_CAUGHT_INTRO);
+        // WoT Shadow system: a trainer-battle capture is a SNAG -- the battle
+        // continues, so the battle theme must keep playing (no jingle), the
+        // ball palette must not be faded out (later throws of the same ball
+        // reuse it), and the mon sprite must be left alone: the faint flow
+        // that follows owns the exit, and destroying it at frame 315 would
+        // free a sprite slot the opponent's NEXT mon could already be using.
+        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        {
+            sprite->invisible = TRUE;
+            sprite->sState = 0; // sFrame for DestroySpriteAfterOneFrame
+            sprite->callback = DestroySpriteAfterOneFrame;
+        }
+        else
+        {
+            m4aMPlayAllStop();
+            PlaySE(MUS_RG_CAUGHT_INTRO);
+        }
     }
     else if (sprite->sTimer == 315)
     {

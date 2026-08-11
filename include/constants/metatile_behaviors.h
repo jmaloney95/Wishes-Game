@@ -242,6 +242,7 @@ enum {
     MB_DOWN_RIGHT_STAIR_WARP,
     MB_DOWN_LEFT_STAIR_WARP,
     MB_ROCK_CLIMB,
+    MB_DISTORTION_GRASS, // custom: cherry-blossom grass that rustles on step (distortion_world)
     NUM_METATILE_BEHAVIORS
 };
 

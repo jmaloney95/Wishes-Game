@@ -200,37 +200,127 @@ Debug_EventScript_Text_OffensiveIVs:
 Debug_EventScript_Text_DefensiveIVs:
 	.string "HP IVs: {STR_VAR_1}, DEF IVs: {STR_VAR_2}, SPDEF IVs: {STR_VAR_3}$"
 
+@ Quest menu smoke test: unlock the QUESTS start-menu entry and start a quest
 Debug_EventScript_Script_1::
+	setflag FLAG_SYS_QUEST_MENU_GET
+	startquest QUEST_WAKING_MOUNTAIN
 	release
 	end
 
+@ Quest menu smoke test: complete the quest started by Script 1
 Debug_EventScript_Script_2::
+	completequest QUEST_WAKING_MOUNTAIN
 	release
 	end
 
+@ Quest menu smoke test: open the quest menu directly
 Debug_EventScript_Script_3::
+	openquestmenu
 	release
 	end
 
+@ Namebox smoke test: one message per name-color tier
 Debug_EventScript_Script_4::
+	setspeaker SP_NAME_DRACO
+	msgbox Debug_Text_NameboxVillain, MSGBOX_DEFAULT
+	setspeaker SP_NAME_MASTER_GEN
+	msgbox Debug_Text_NameboxQuest, MSGBOX_DEFAULT
+	setspeaker SP_NAME_CLARKSON
+	msgbox Debug_Text_NameboxDefault, MSGBOX_DEFAULT
+	closemessage
 	release
 	end
 
+Debug_Text_NameboxVillain:
+	.string "DRACO, Team Mutrid:\n"
+	.string "the name should be red.$"
+
+Debug_Text_NameboxQuest:
+	.string "MASTER GEN, quest giver:\n"
+	.string "the name should be green.$"
+
+Debug_Text_NameboxDefault:
+	.string "PROFESSOR CLARKSON: white,\n"
+	.string "on a wide plate.$"
+
+@ Portrait smoke test: Clarkson art (default = LEFT, flush on the plate),
+@ compose with namebox, swap to the right, hide
 Debug_EventScript_Script_5::
+	showportrait PORTRAIT_CLARKSON_GENGAR
+	setspeaker SP_NAME_CLARKSON
+	msgbox Debug_Text_PortraitLeft, MSGBOX_DEFAULT
+	showportrait PORTRAIT_COBRA, PORTRAIT_RIGHT
+	setspeaker SP_NAME_COBRA
+	msgbox Debug_Text_PortraitRight, MSGBOX_DEFAULT
+	hideportrait
+	closemessage
 	release
 	end
 
+Debug_Text_PortraitLeft:
+	.string "Clarkson's portrait, default\n"
+	.string "LEFT, flush on the plate.$"
+
+Debug_Text_PortraitRight:
+	.string "Placeholder swapped to the\n"
+	.string "RIGHT.$"
+
+@ Quest toast queue test: complete + start back-to-back -> two toasts in
+@ order (SE_SUCCESS then SE_PIN), no blocking, player can walk during both.
+@ Boss intro card smoke test (was a stale Act-1 quest poke). Run 5x in a row
+@ to check for VRAM/palette leaks -- mGBA's sprite viewer should look
+@ identical after every run, and the tint must fully lift each time.
 Debug_EventScript_Script_6::
-	release
+	lockall
+	bossintro BOSS_INTRO_EDWARDS
+	releaseall
 	end
 
+@ ===========================================================================
+@  WoT Shadow system test harness (debug menu -> Scripts -> 7 / 8)
+@  7 = SINGLE vs a Shadow patroller. Tests: violet tint, healthbox flame,
+@      switch-in aura line, snag (trainer-block waiver), delivery + nickname
+@      prompt, heart gauge on the snagged mon, Shadow Boost, EXP lock.
+@  8 = the jail's PARTNER DOUBLE (Mikmanc, 2v1). Tests: half-party select,
+@      the manual ball-target selector, snagging the RIGHT-slot Shadow, and
+@      partner-battle snags landing in the PC.
+@  Both hand out balls and the Snag Machine and clear the trainer flag, so
+@  they can be re-run as often as you like.
+@ ===========================================================================
 Debug_EventScript_Script_7::
+	call Debug_EventScript_ShadowTestKit
+	cleartrainerflag TRAINER_NATE
+	trainerbattle_no_intro TRAINER_NATE, Debug_Text_ShadowTestDefeat
 	release
 	end
 
 Debug_EventScript_Script_8::
+	call Debug_EventScript_ShadowTestKit
+	cleartrainerflag TRAINER_PRESTON
+Debug_EventScript_Script_8_Choose::
+	special SavePlayerParty
+	fadescreen FADE_TO_BLACK
+	special ChooseHalfPartyForBattle
+	goto_if_ne VAR_RESULT, 0, Debug_EventScript_Script_8_Battle
+	special LoadPlayerParty
 	release
 	end
+
+Debug_EventScript_Script_8_Battle::
+	multi_2_vs_1 TRAINER_PRESTON, Debug_Text_ShadowTestDefeat, PARTNER_MIKMANC
+	release
+	end
+
+Debug_EventScript_ShadowTestKit::
+	additem ITEM_ULTRA_BALL, 20
+	checkitem ITEM_SNAG_MACHINE
+	goto_if_eq VAR_RESULT, TRUE, Debug_EventScript_ShadowTestKitDone
+	additem ITEM_SNAG_MACHINE, 1
+Debug_EventScript_ShadowTestKitDone::
+	return
+
+Debug_Text_ShadowTestDefeat:
+	.string "(debug) Shadow test battle over.$"
 
 Debug_CheckSaveBlock::
 	callnative CheckSaveBlock1Size

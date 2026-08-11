@@ -876,22 +876,71 @@
 #define TRAINER_TORII_ORACLE                862
 #define TRAINER_TORII_HIKER                 863
 #define TRAINER_TORII_BLACKBELT             864
-#define TRAINER_DRACO_TORII_AURORUS         865 // player chose Tyrunt
-#define TRAINER_DRACO_TORII_ARMALDO         866 // player chose Amaura
-#define TRAINER_DRACO_TORII_TYRANTRUM       867 // player chose Anorith
+#define TRAINER_DRACO_TORII_AURORUS         865 // player chose Pawniard (ace is now Zweilous)
+#define TRAINER_DRACO_TORII_ARMALDO         866 // player chose Impidimp (ace is now Bisharp)
+#define TRAINER_DRACO_TORII_TYRANTRUM       867 // player chose Deino (ace is now Morgrem)
 #define TRAINER_STARSUMMIT_BOSS             868
 #define TRAINER_ROUTE2_SWIMMER_ALLISON      869
 #define TRAINER_ROUTE2_SWIMMER_SKYE         870
 #define TRAINER_ROUTE2_SWIMMER_ROSA         871
 #define TRAINER_ROUTE2_SWIMMER_MARINA       872 // masked goon -- the "impossible" Jirachi-summit battle (Typhlosion + Feraligatr Lv50)
+#define TRAINER_NATIONAL_PARK_TUBER_EDDIE   873
+#define TRAINER_NATIONAL_PARK_SWIMMER_FINN  874
 
-// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is only space for 9 additional trainers before trainer flag space overflows
-//       More space can be made by shifting flags around in constants/flags.h or changing how trainer flags are handled
-//       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
-//       MAX raised to 880 (from 864) for headroom -- TRAINER_FLAGS_END + all SYSTEM_FLAGS shift up automatically (they are relative)
+// Tradewind Town -- the Lantern Gym (Madam Tsuji, Mega Evolution intro)
+#define TRAINER_TRADEWIND_GORO              875
+#define TRAINER_TRADEWIND_LANTERN_BEARER    876
+#define TRAINER_TSUJI_APPRENTICE            877
+#define TRAINER_MADAM_TSUJI                 878
 
-#define TRAINERS_COUNT_EMERALD     873
-#define MAX_TRAINERS_COUNT_EMERALD 880
+// Munen Tunnel (NewMap side quest) -- straggler oni grunt guarding the tomb camp
+#define TRAINER_MUNEN_TUNNEL_GRUNT          879
+
+// Act 2 occupied National Park -- oni goons (skippable via Carved Mask disguise)
+#define TRAINER_ACT2_PARK_GOON_EAST         880
+#define TRAINER_ACT2_PARK_GOON_WEST         881
+
+// Act 2 Munen lab -- Draco has the research (variant by VAR_STARTER_CHOICE, like Torii)
+#define TRAINER_DRACO_LAB_AURORUS           882 // player chose Pawniard (ace is now Hydreigon)
+#define TRAINER_DRACO_LAB_ARMALDO           883 // player chose Impidimp (ace is now Kingambit)
+#define TRAINER_DRACO_LAB_TYRANTRUM         884 // player chose Deino (ace is now Grimmsnarl)
+
+// Act 2 Sennen station assault -- the two Mutrid captains guarding the Shinkansen
+#define TRAINER_SENNEN_CAPTAIN_KANNON       885
+#define TRAINER_SENNEN_CAPTAIN_RYOKO        886
+
+// Pompeii / Munen Tunnel gauntlet -- Master Gen's quest (Flint Badge).
+// The tunnel boss is CAPTAIN KURODA (was "General Edwards"; same id 889, so
+// the defeat flag is unchanged -- "General Edwards" is reserved for the
+// Act 2 Dojo character).
+#define TRAINER_TUNNEL_GOON_A               887
+#define TRAINER_TUNNEL_GOON_B               888
+#define TRAINER_TUNNEL_CAPTAIN              889
+
+// Distortion World rift layers -- the Oni guarding the Rift Core (layer 4)
+#define TRAINER_DISTORTION_ONI              890
+#define TRAINER_RIFT_WARDEN                 891
+#define TRAINER_DISTORTION_LEADER           892
+
+// NOTE: Each trainer auto-uses a defeat flag at TRAINER_FLAGS_START + id; SYSTEM_FLAGS and
+//       FLAGS_COUNT are all relative to MAX_TRAINERS_COUNT, so raising MAX shifts them up
+//       automatically. Cost: NUM_FLAG_BYTES grows in SaveBlock1 (STATIC_ASSERT in save.c
+//       catches overflow at build time). Raising MAX also BREAKS EXISTING SAVES (system
+//       flags shift position).
+//       MAX raised 864 -> 880 (earlier) -> 896 (2026-07-02, headroom for new trainers).
+//
+//       >>> ADDING A TRAINER? Take the next sequential ID below, bump TRAINERS_COUNT_EMERALD
+//       >>> to (highest id + 1), and do NOT raise MAX again until count reaches 896.
+//       >>> Next free ID: NONE -- count is at MAX (896). Adding more trainers
+//       >>> requires raising MAX_TRAINERS_COUNT_EMERALD, which BREAKS SAVES.
+
+// Tradewind Town street trainers (eerie night-market, <=Lv20)
+#define TRAINER_TRADEWIND_SABLE             893
+#define TRAINER_TRADEWIND_ROSHAN            894
+#define TRAINER_TRADEWIND_PIPER             895
+
+#define TRAINERS_COUNT_EMERALD     896
+#define MAX_TRAINERS_COUNT_EMERALD 896
 
 #if IS_FRLG
 #define TRAINERS_COUNT                      TRAINERS_COUNT_FRLG

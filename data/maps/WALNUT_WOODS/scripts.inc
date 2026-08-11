@@ -10,21 +10,24 @@ WALNUT_WOODS_OnLoad::
 	call_if_set FLAG_WALNUT_WOODS_CUT_BUSH_2, WALNUT_WOODS_EventScript_SetBush2Snow
 	end
 
-@ setmetatile helpers (snow ground that matches each spot's surroundings)
+@ setmetatile helpers (snow ground that matches each spot's surroundings).
+@ NOTE: the map was widened 4 columns on the west after these were first
+@ written -- every x here was stale by -4, so cutting a bush or grabbing a
+@ tile-item cleared the WRONG tile (the Rock Smash pocket stayed sealed).
 WALNUT_WOODS_EventScript_SetBlizzardSnow::
-	setmetatile 23, 21, 94, FALSE
+	setmetatile 27, 21, 94, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetProtectSnow::
-	setmetatile 14, 13, 537, FALSE
+	setmetatile 18, 13, 537, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetBush1Snow::
-	setmetatile 16, 24, 94, FALSE
+	setmetatile 20, 24, 94, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetBush2Snow::
-	setmetatile 40, 26, 94, FALSE
+	setmetatile 44, 26, 94, FALSE
 	return
 
 @ ===========================================================================
@@ -33,11 +36,15 @@ WALNUT_WOODS_EventScript_SetBush2Snow::
 WALNUT_WOODS_EventScript_Clarkson::
 	lock
 	faceplayer
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox WALNUT_WOODS_Text_Clarkson1, MSGBOX_DEFAULT
 	closemessage
 	delay 45
+	setspeaker SP_NAME_CLARKSON
 	msgbox WALNUT_WOODS_Text_Clarkson2, MSGBOX_DEFAULT
 	closemessage
+	hideportrait
 	applymovement VAR_LAST_TALKED, WALNUT_WOODS_Movement_ClarksonRunOff
 	waitmovement 0
 	setflag FLAG_HIDE_WALNUT_CLARKSON
@@ -170,12 +177,12 @@ WALNUT_WOODS_Movement_ClarksonRunOff:
 @ Text
 @ ===========================================================================
 WALNUT_WOODS_Text_Clarkson1:
-	.string "PROF. CLARKSON: Glad to see you out\n"
+	.string "Glad to see you out\n"
 	.string "here training!\p"
 	.string "I used to battle with my son out here\n"
 	.string "in these very fields, back in the day…\p"
-	.string "before I moved on to bigger and\n"
-	.string "better things.\p"
+	.string "before he got involved with\n"
+	.string "the wrong group of friends.\p"
 	.string "You know… you remind me of him.$"
 
 WALNUT_WOODS_Text_Clarkson2:

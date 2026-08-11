@@ -5,7 +5,28 @@
 	.set LOCALID_STARSUMMIT_GOON_TOP2, 5
 
 StarSummit_MapScripts::
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, StarSummit_OnFrame
 	.byte 0
+
+@ Setting foot on the summit at all completes the Act 1 main quest -- fires
+@ once per map entry (VAR_TEMP_1) and only while the quest is still active,
+@ so it is idempotent AND backfills older saves that passed the summit before
+@ this hook existed.
+StarSummit_OnFrame:
+	map_script_2 VAR_TEMP_1, 0, StarSummit_EventScript_ReachedSummit
+	.2byte 0
+
+StarSummit_EventScript_ReachedSummit::
+	lockall
+	setvar VAR_TEMP_1, 1
+	goto_if_quest_active QUEST_WAKING_MOUNTAIN, StarSummit_EventScript_CompleteWakingMountain
+	releaseall
+	end
+
+StarSummit_EventScript_CompleteWakingMountain::
+	completequest QUEST_WAKING_MOUNTAIN
+	releaseall
+	end
 
 @==============================================================================
 @ ARRIVAL CUTSCENE -- fires at the top of the stairs (triggers @15-16,y18).
@@ -35,6 +56,7 @@ StarSummit_EventScript_IntroCutscene::
 	applymovement LOCALID_CAMERA, StarSummit_Movement_CameraToProf
 	waitmovement 0
 	delay 20
+	setspeaker SP_NAME_CLARKSON
 	msgbox StarSummit_Text_ClarksonLine1, MSGBOX_DEFAULT
 	closemessage
 	delay 10
@@ -43,10 +65,12 @@ StarSummit_EventScript_IntroCutscene::
 	applymovement LOCALID_STARSUMMIT_PROF, StarSummit_Movement_ProfPush
 	waitmovement 0
 	delay 20
+	setspeaker SP_NAME_CLARKSON
 	msgbox StarSummit_Text_ClarksonLine2, MSGBOX_DEFAULT
 	closemessage
 	delay 10
 	@ "Goodbye, Father" -> final shove into the lava
+	setspeaker SP_NAME_MUTRID_LEADER
 	msgbox StarSummit_Text_GoonGoodbye, MSGBOX_DEFAULT
 	closemessage
 	applymovement LOCALID_STARSUMMIT_GOON, StarSummit_Movement_GoonStepRight
@@ -251,33 +275,33 @@ StarSummit_Text_JirachiCry:
 	.string "the summit!$"
 
 StarSummit_Text_ClarksonLine1:
-	.string "CLARKSON: {PLAYER}…\p"
+	.string "{PLAYER}…\p"
 	.string "I should never have told you to\n"
 	.string "come here.$"
 
 StarSummit_Text_ClarksonLine2:
-	.string "CLARKSON: {PLAYER}…\p"
+	.string "{PLAYER}…\p"
 	.string "You can't let JIRACHI's power\n"
 	.string "fall into enemy hands!$"
 
 StarSummit_Text_GoonGoodbye:
-	.string "???: …Goodbye, Father.$"
+	.string "…Goodbye, FATHER.$"
 
 StarSummit_Text_GoonChallenge:
-	.string "???: He begged you to stay away.\n"
+	.string "He begged you to stay away.\n"
 	.string "You should have listened.\p"
 	.string "Now you'll watch me take it all.$"
 
 StarSummit_Text_GoonDefeat:
-	.string "???: …Tch. You're strong.\n"
+	.string "…Tch. You're strong.\n"
 	.string "But it changes nothing.$"
 
 StarSummit_Text_GoonAfterWin:
-	.string "???: Strong. But the WISH was\n"
+	.string "Strong. But the WISH was\n"
 	.string "never yours to protect.$"
 
 StarSummit_Text_GoonAfterLoss:
-	.string "???: Pathetic. Stay down.\n"
+	.string "Pathetic. Stay down.\n"
 	.string "The WISH is ours now.$"
 
 @ TODO: replace with the line Joe wants here (placeholder = a silent beat).

@@ -19,6 +19,9 @@
 #include "pokemon_icon.h"
 #include "region_map.h"
 #include "sound.h"
+#include "start_menu.h"
+#include "quest_toast.h"
+#include "quest_indicator.h"
 #include "string_util.h"
 #include "strings.h"
 #include "script.h"
@@ -141,6 +144,9 @@ static const struct MenuInfoIcon sMenuInfoIcons[] =
 void InitStandardTextBoxWindows(void)
 {
     ResetNameboxData();
+    ResetStartMenuIconBar();
+    QuestToast_Reset();
+    QuestIndicator_Reset();
     InitWindows(sStandardTextBox_WindowTemplates);
     sStartMenuWindowId = WINDOW_NONE;
     sMapNamePopupWindowId = WINDOW_NONE;
@@ -1883,7 +1889,6 @@ void BlitMenuInfoIcon(u8 windowId, u8 iconId, u16 x, u16 y)
 
 void BufferSaveMenuText(u8 textId, u8 *dest, u8 color)
 {
-    s32 curFlag;
     s32 flagCount;
     u8 *endOfString;
     u8 *string = dest;
@@ -1916,10 +1921,24 @@ void BufferSaveMenuText(u8 textId, u8 *dest, u8 color)
         GetMapNameGeneric(string, gMapHeader.regionMapSectionId);
         break;
     case SAVE_MENU_BADGES:
-        for (curFlag = FLAG_BADGE01_GET, flagCount = 0, endOfString = string + 1; curFlag < FLAG_BADGE01_GET + NUM_BADGES; curFlag++)
+        // WoT badges are non-contiguous (Lantern lives outside the numbered
+        // FLAG_BADGE0x block), so count the real four instead of scanning
+        // FLAG_BADGE01..08 -- same mapping as the trainer card
+        // (src/trainer_card.c sWotBadgeFlags).
         {
-            if (FlagGet(curFlag))
-                flagCount++;
+            static const u16 sWotBadgeFlags[] =
+            {
+                FLAG_BADGE01_GET,   // Ember
+                FLAG_BADGE03_GET,   // Flint
+                FLAG_BADGE_LANTERN, // Lantern
+                FLAG_BADGE05_GET,   // Distortion
+            };
+            u32 i;
+            for (i = 0, flagCount = 0, endOfString = string + 1; i < ARRAY_COUNT(sWotBadgeFlags); i++)
+            {
+                if (FlagGet(sWotBadgeFlags[i]))
+                    flagCount++;
+            }
         }
         *string = flagCount + CHAR_0;
         *endOfString = EOS;
@@ -1931,7 +1950,9 @@ void BufferSaveMenuText(u8 textId, u8 *dest, u8 color)
 u8 AddSecondaryPopUpWindow(void)
 {
     if (sSecondaryPopupWindowId == WINDOW_NONE)
-        sSecondaryPopupWindowId = AddWindowParameterized(0, 0, 17, 30, 3, 14, 0x161);
+        // WoT: the under-deck sits directly below the name bar (stacked
+        // top-left indicator), not at the bottom of the screen like B2W2.
+        sSecondaryPopupWindowId = AddWindowParameterized(0, 0, 3, 30, 3, 14, 0x161);
     return sSecondaryPopupWindowId;
 }
 
@@ -1952,18 +1973,13 @@ void RemoveSecondaryPopUpWindow(void)
 void HBlankCB_DoublePopupWindow(void)
 {
     u16 offset = gTasks[gPopupTaskId].data[2];
-    u16 scanline = REG_VCOUNT;
 
-    if (scanline < 80 || scanline > 160)
-    {
-        REG_BG0VOFS = offset;
-        if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
-            REG_BLDALPHA = BLDALPHA_BLEND(15, 5);
-    }
-    else
-    {
-        REG_BG0VOFS = 512 - offset;
-    }
+    // WoT: both popup decks are stacked at the TOP of the screen, so the
+    // whole indicator slides as one block -- no split-scanline scroll for a
+    // bottom bar anymore.
+    REG_BG0VOFS = offset;
+    if (OW_POPUP_BW_ALPHA_BLEND && !IsWeatherAlphaBlend())
+        REG_BLDALPHA = BLDALPHA_BLEND(15, 5);
 }
 
 #define tEvA data[0]

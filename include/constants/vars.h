@@ -176,6 +176,7 @@
 #define VAR_RUSTURF_TUNNEL_STATE                         0x409A
 #define VAR_UNUSED_0x409B                                0x409B // Unused Var
 #define VAR_ELITE_4_STATE                                0x409C
+#define VAR_WOT_SNAG_COUNT             VAR_UNUSED_0x409D // WoT: Shadow mons snagged (Harness Darkness)
 #define VAR_UNUSED_0x409D                                0x409D // Unused Var
 #define VAR_MOSSDEEP_SPACE_CENTER_STAIR_GUARD_STATE      0x409E
 #define VAR_MOSSDEEP_SPACE_CENTER_STATE                  0x409F
@@ -344,5 +345,20 @@
 #define VAR_MUNEN_INTRO_STATE          VAR_UNUSED_0x404E
 #define VAR_FROSTWOOD_STATE            VAR_UNUSED_0x4083  // Frostwood ON_FRAME trigger (Clarkson Mt. Munen call after Ember Badge)
 #define VAR_STARTER_CHOICE             VAR_DEWFORD_TOWN_STATE  // repurposes 0x4052 (Unused Var in vanilla)
+
+// === Pokemon Wishes of Tomorrow - Tradewind Town ===
+#define VAR_TRADEWIND_CURIO_STOCK      VAR_UNUSED_0x408B  // Curio Merchant stock (0-7)
+
+// === Pokemon Wishes of Tomorrow - QUEST SYSTEM ===
+// Convention: 0 = not started, 1..N = active stage, 100 = complete.
+// Notifications: bufferstring STR_VAR_1 + special ShowQuestPopup (+ fanfare).
+#define VAR_QUEST_FATHERS_WISH         VAR_UNUSED_0x4091  // A Father's Final Wish (Ashlands old prophet -> Catalpa Bow -> gravesite)
+#define VAR_HOT_SPRING_STATE           VAR_UNUSED_0x409B  // Act 2 opening ON_FRAME one-shot (starts QUEST_LIFES_WORK)
+
+// === Pokemon Wishes of Tomorrow - Distortion World rift layers (2026-07-10) ===
+// 0 = DistortionWorld_2 never entered; 1 = island reveal seen (cave -> layer 3);
+// 2 = Rift Shard taken (cave -> layer 4); 3 = Rift Core taken (cave -> layer 5);
+// 4 = Rift Heart taken (all layers cleared; cave keeps leading to layer 5).
+#define VAR_DISTORTION_RIFT_DEPTH      VAR_UNUSED_0x40F7
 
 #endif // GUARD_CONSTANTS_VARS_H

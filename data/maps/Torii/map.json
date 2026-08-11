@@ -23,7 +23,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_ETHER",
+      "trainer_sight_or_berry_tree_id": "ITEM_NUGGET",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_ITEM_ROUTE_120_NUGGET"
     },
@@ -81,7 +81,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_KYOGRE_FRONT",
-      "x": 29,
+      "x": 27,
       "y": 19,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_LEFT_AND_RIGHT",
@@ -93,7 +93,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WALLY",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_DRACO",
       "x": 13,
       "y": 8,
       "elevation": 0,
@@ -106,7 +106,7 @@
       "flag": "FLAG_HIDE_TORII_RIVAL"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_OLD_WOMAN",
+      "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 24,
       "y": 36,
       "elevation": 3,
@@ -124,8 +124,8 @@
       "x": 31,
       "y": 37,
       "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE_2",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_NEW_MAP",
+      "dest_warp_id": "3"
     },
     {
       "x": 8,
@@ -145,29 +145,29 @@
       "x": 31,
       "y": 38,
       "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE_2",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_NEW_MAP",
+      "dest_warp_id": "4"
     },
     {
       "x": 12,
       "y": 5,
       "elevation": 0,
-      "dest_map": "MAP_STAR_SUMMIT",
+      "dest_map": "MAP_STAR_SUMMIT_2",
       "dest_warp_id": "0"
     },
     {
       "x": 13,
       "y": 5,
       "elevation": 0,
-      "dest_map": "MAP_STAR_SUMMIT",
+      "dest_map": "MAP_STAR_SUMMIT_2",
       "dest_warp_id": "0"
     },
     {
       "x": 14,
       "y": 5,
       "elevation": 0,
-      "dest_map": "MAP_STAR_SUMMIT",
-      "dest_warp_id": "0"
+      "dest_map": "MAP_STAR_SUMMIT_2",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

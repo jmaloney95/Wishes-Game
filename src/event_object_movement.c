@@ -513,6 +513,8 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_SwimmerSky,            OBJ_EVENT_PAL_TAG_SWIMMER_SKY},
     {gObjectEventPal_GoldOni,               OBJ_EVENT_PAL_TAG_GOLD_ONI},
     {gObjectEventPal_OniGoon,               OBJ_EVENT_PAL_TAG_ONI_GOON},
+    {gObjectEventPal_MutridGruntWhite,      OBJ_EVENT_PAL_TAG_MUTRID_GRUNT_WHITE},
+    {gObjectEventPal_GroundItems,           OBJ_EVENT_PAL_TAG_GROUND_ITEMS},
     {gObjectEventPal_Truck,                 OBJ_EVENT_PAL_TAG_TRUCK},
     {gObjectEventPal_Vigoroth,              OBJ_EVENT_PAL_TAG_VIGOROTH},
     {gObjectEventPal_EnemyZigzagoon,        OBJ_EVENT_PAL_TAG_ZIGZAGOON},
@@ -534,17 +536,19 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Lugia,                 OBJ_EVENT_PAL_TAG_LUGIA},
     {gObjectEventPal_RubySapphireBrendan,   OBJ_EVENT_PAL_TAG_RS_BRENDAN},
     {gObjectEventPal_RubySapphireMay,       OBJ_EVENT_PAL_TAG_RS_MAY},
+    // NpcPink loads in ALL builds: FRLG-palette sprites (e.g. OldManLyingDown in
+    // the Ashlands) render invisible in emerald builds without it.
+    {gObjectEventPal_NpcPink,               OBJ_EVENT_PAL_TAG_NPC_PINK},
+    {gObjectEventPal_NpcPinkReflection,     OBJ_EVENT_PAL_TAG_NPC_PINK_REFLECTION},
 #if IS_FRLG
     {gObjectEventPal_PlayerFrlg,            OBJ_EVENT_PAL_TAG_PLAYER_RED},
     {gObjectEventPal_PlayerReflectionFrlg,  OBJ_EVENT_PAL_TAG_PLAYER_RED_REFLECTION},
     {gObjectEventPal_PlayerFrlg,            OBJ_EVENT_PAL_TAG_PLAYER_GREEN},
     {gObjectEventPal_PlayerReflectionFrlg,  OBJ_EVENT_PAL_TAG_PLAYER_GREEN_REFLECTION},
     {gObjectEventPal_NpcBlue,               OBJ_EVENT_PAL_TAG_NPC_BLUE},
-    {gObjectEventPal_NpcPink,               OBJ_EVENT_PAL_TAG_NPC_PINK},
     {gObjectEventPal_NpcGreen,              OBJ_EVENT_PAL_TAG_NPC_GREEN},
     {gObjectEventPal_NpcWhite,              OBJ_EVENT_PAL_TAG_NPC_WHITE},
     {gObjectEventPal_NpcBlueReflection,     OBJ_EVENT_PAL_TAG_NPC_BLUE_REFLECTION},
-    {gObjectEventPal_NpcPinkReflection,     OBJ_EVENT_PAL_TAG_NPC_PINK_REFLECTION},
     {gObjectEventPal_NpcGreenReflection,    OBJ_EVENT_PAL_TAG_NPC_GREEN_REFLECTION},
     {gObjectEventPal_NpcWhiteReflection,    OBJ_EVENT_PAL_TAG_NPC_WHITE_REFLECTION},
     {gObjectEventPal_Meteorite,             OBJ_EVENT_PAL_TAG_METEORITE},
@@ -585,6 +589,20 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
 #endif //OW_FOLLOWERS_POKEBALLS
     {gObjectEventPal_Substitute,            OBJ_EVENT_PAL_TAG_SUBSTITUTE},
     {gObjectEventPaletteLight,              OBJ_EVENT_PAL_TAG_LIGHT},
+    {gObjectEventPal_WotScreen,             OBJ_EVENT_PAL_TAG_WOT_SCREEN},
+    {gObjectEventPal_WotDraco,              OBJ_EVENT_PAL_TAG_WOT_DRACO},
+    {gObjectEventPal_WotMikmanc,            OBJ_EVENT_PAL_TAG_WOT_MIKMANC},
+    {gObjectEventPal_WotNessa,              OBJ_EVENT_PAL_TAG_WOT_NESSA},
+    {gObjectEventPal_WotEdwards,            OBJ_EVENT_PAL_TAG_WOT_EDWARDS},
+    {gObjectEventPal_WotShadowJirachi,      OBJ_EVENT_PAL_TAG_WOT_SHADOW_JIRACHI},
+    {gObjectEventPal_WotAllisonLand,         OBJ_EVENT_PAL_TAG_WOT_ALLISON_LAND},
+    {gObjectEventPal_WotSkyeLand,            OBJ_EVENT_PAL_TAG_WOT_SKYE_LAND},
+    {gObjectEventPal_WotRosaLand,            OBJ_EVENT_PAL_TAG_WOT_ROSA_LAND},
+    {gObjectEventPal_WotMarinaLand,          OBJ_EVENT_PAL_TAG_WOT_MARINA_LAND},
+    {gObjectEventPal_WotBeachBeauty,         OBJ_EVENT_PAL_TAG_WOT_BEACH_BEAUTY},
+    {gObjectEventPal_WotYiffer,              OBJ_EVENT_PAL_TAG_WOT_YIFFER},
+    {gObjectEventPal_WotJet,                 OBJ_EVENT_PAL_TAG_WOT_JET},
+    {gObjectEventPal_WotEdwardsImpact,       OBJ_EVENT_PAL_TAG_WOT_EDWARDS_IMPACT},
     {gObjectEventPaletteLight2,             OBJ_EVENT_PAL_TAG_LIGHT_2},
     {gObjectEventPaletteEmotes,             OBJ_EVENT_PAL_TAG_EMOTES},
     {gObjectEventPaletteNeonLight,          OBJ_EVENT_PAL_TAG_NEON_LIGHT},
@@ -1821,10 +1839,22 @@ u16 LoadSheetGraphicsInfo(const struct ObjectEventGraphicsInfo *info, u16 uuid, 
 
         if (sprite)
         {
-            sprite->sheetTileStart = tileStart;
             sprite->sheetSpan = sheetSpan;
             sprite->usingSheet = TRUE;
-            sprite->invisible = oldInvisible;
+            if (tileStart == 0)
+            {
+                // Both load attempts failed (OBJ VRAM pressure). Keep the
+                // sprite hidden until a later refresh succeeds -- assigning
+                // tileStart 0 would draw it with the PLAYER's tiles (start of
+                // OBJ VRAM) for a frame, which reads as a flickering clone.
+                sprite->sheetTileStart = 0;
+                sprite->invisible = TRUE;
+            }
+            else
+            {
+                sprite->sheetTileStart = tileStart;
+                sprite->invisible = oldInvisible;
+            }
         }
     // Going from sheet -> !sheet, reset tile number
     // (sheet stays loaded)
@@ -2379,6 +2409,7 @@ void UpdateFollowingPokemon(void)
      || !GetFollowerInfo(&species, &shiny, &female)
      || SpeciesToGraphicsInfo(species, shiny, female) == NULL
      || gMapHeader.mapType == MAP_TYPE_INDOOR // Wishes of Tomorrow: hide the Pokémon follower in all interiors
+     || gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD // Wishes of Tomorrow: no followers anywhere in the Distortion World
      || FlagGet(FLAG_TEMP_HIDE_FOLLOWER)
      || PlayerHasFollowerNPC()
      )
@@ -6278,6 +6309,11 @@ u8 GetFishingBiteDirectionAnimNum(enum Direction direction)
 
 u8 GetRunningDirectionAnimNum(enum Direction direction)
 {
+    // Carved Mask disguise: the Gold Oni NPC sheet has only the 20 standard
+    // anims -- ANIM_RUN_* would index past its anim table. Fastest walk reads
+    // fine on any standard sheet, so a masked runner "hustles" instead.
+    if (FlagGet(FLAG_ONI_MASK_WORN))
+        return GetMoveDirectionFastestAnimNum(direction);
     return sRunningDirectionAnimNums[direction];
 }
 
@@ -6909,6 +6945,32 @@ void UpdateObjectEventCurrentMovement(struct ObjectEvent *objectEvent, struct Sp
     DoGroundEffects_OnBeginStep(objectEvent, sprite);
     DoGroundEffects_OnFinishStep(objectEvent, sprite);
     UpdateObjectEventSpriteAnimPause(objectEvent, sprite);
+
+    // Wishes of Tomorrow: inverted gravity in the Distortion World. While
+    // FLAG_DW_INVERTED is set (ceiling-walkway triggers), render the player
+    // sprite vertically flipped. sprite->vFlip is XORed into the OAM flip bit
+    // by the anim system (SetSpriteOamFlipBits), but a paused/ended anim never
+    // rewrites OAM, so also toggle the OAM bit directly on state change; on a
+    // frame with an active anim the recomputed absolute value overwrites our
+    // XOR with the identical result. Scoping to the DW mapsec makes a stale
+    // flag harmless outside the rift.
+    {
+        bool8 inverted = objectEvent->isPlayer
+                      && gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD
+                      && FlagGet(FLAG_DW_INVERTED);
+        if (sprite->vFlip != inverted)
+        {
+            sprite->vFlip = inverted;
+            sprite->oam.matrixNum ^= ST_OAM_VFLIP;
+        }
+        // A v-flipped front view reads as a back view, so while inverted the
+        // player's N/S anims come from a table with those pairs pre-swapped.
+        if (inverted && sprite->anims == sAnimTable_Standard)
+            sprite->anims = sAnimTable_StandardInvertedNS;
+        else if (!inverted && sprite->anims == sAnimTable_StandardInvertedNS)
+            sprite->anims = sAnimTable_Standard;
+    }
+
     UpdateObjectEventVisibility(objectEvent, sprite);
     ObjectEventUpdateSubpriority(objectEvent, sprite);
 }
@@ -9608,6 +9670,14 @@ bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Spr
 
 static void UpdateObjectEventSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
+    // WoT: the jumbotron screens run their broadcast loop while standing --
+    // everything else pauses its anim when stationary.
+    if (objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_LEADER_SCREEN
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_WANTED_POSTER)
+    {
+        sprite->animPaused = FALSE;
+        return;
+    }
     if (objectEvent->disableAnim)
         sprite->animPaused = TRUE;
 }

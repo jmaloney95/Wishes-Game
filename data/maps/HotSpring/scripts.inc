@@ -1,10 +1,24 @@
 HotSpring_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, HotSpring_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, HotSpring_OnFrame
 	.byte 0
 
 @ Any tile flagged MB_CRACKED_FLOOR_HOLE drops the player to the pool center.
 HotSpring_OnTransition::
 	setholewarp MAP_HOT_SPRING, 15, 13
+	end
+
+HotSpring_OnFrame::
+	map_script_2 VAR_HOT_SPRING_STATE, 0, HotSpring_EventScript_Act2Opening
+	.2byte 0
+
+@ Act 2 opens here: the player comes to in the hot spring with Clarkson's
+@ final request still ringing in their ears.
+HotSpring_EventScript_Act2Opening::
+	lockall
+	setvar VAR_HOT_SPRING_STATE, 1
+	startquest QUEST_LIFES_WORK
+	releaseall
 	end
 
 @==============================================================================

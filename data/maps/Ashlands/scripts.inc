@@ -1,5 +1,14 @@
 Ashlands_MapScripts::
+	map_script MAP_SCRIPT_ON_RESUME, Ashlands_OnResume
 	.byte 0
+
+@ Persistent "!" over the dying old man (local id 3) until he gets the
+@ FENTANYL -- his hide flag fires at the same beat, so the marker's lifetime
+@ matches his. flagindicator (not questindicator): the quest menu entry only
+@ unlocks at the bow pickup, long after the giver beat.
+Ashlands_OnResume::
+	flagindicator 3, FLAG_FENTANYL_GIVEN
+	end
 
 @==============================================================================
 @ THE DYING OLD MAN (lying in the ash) -- fetch quest for FENTANYL. Bring it and
@@ -13,14 +22,36 @@ Ashlands_EventScript_OldMan::
 	compare VAR_RESULT, TRUE
 	goto_if_eq Ashlands_EventScript_OldManReceive
 	msgbox Ashlands_Text_OldManQuest, MSGBOX_DEFAULT
+	compare VAR_QUEST_FATHERS_WISH, 0
+	goto_if_ne Ashlands_EventScript_OldManQuestKnown
+	closemessage
+	setvar VAR_QUEST_FATHERS_WISH, 1
+	bufferstring STR_VAR_1, Quest_Text_FathersFinalWishTitle
+	call Quest_EventScript_NotifyStarted
+Ashlands_EventScript_OldManQuestKnown::
 	release
 	end
 
+@ Local ID 3 = the old man. After the lore he vanishes into ash
+@ (FLAG_HIDE_ASHLANDS_OLD_MAN), unblocking the door to his house,
+@ where the CATALPA BOW waits.
 Ashlands_EventScript_OldManReceive::
 	msgbox Ashlands_Text_OldManTakeItem, MSGBOX_DEFAULT
 	removeitem ITEM_FENTANYL
 	setflag FLAG_FENTANYL_GIVEN
 	msgbox Ashlands_Text_OldManLore, MSGBOX_DEFAULT
+	msgbox Ashlands_Text_OldManBequest, MSGBOX_DEFAULT
+	closemessage
+	playse SE_WARP_IN
+	fadescreen FADE_TO_BLACK
+	removeobject 3
+	setflag FLAG_HIDE_ASHLANDS_OLD_MAN
+	fadescreen FADE_FROM_BLACK
+	msgbox Ashlands_Text_OldManGone, MSGBOX_DEFAULT
+	closemessage
+	setvar VAR_QUEST_FATHERS_WISH, 2
+	bufferstring STR_VAR_1, Quest_Text_FathersFinalWishTitle
+	call Quest_EventScript_NotifyUpdated
 	release
 	end
 
@@ -56,27 +87,49 @@ Ashlands_Text_OldManTakeItem:
 	.string "…Ahh. The pain… it lets go.\n"
 	.string "Bless you, child.$"
 
-Ashlands_Text_OldManLore:
-	.string "Now listen, while I still can.\p"
-	.string "TEAM MUTRID. A doomsday cult, old\n"
-	.string "as the volcano they pray to.\p"
-	.string "They worship ruin -- believe the\n"
-	.string "world is rotten and begs to burn.\p"
-	.string "Their leader is a masked devil. The\n"
-	.string "old prophet's own blood, they say.\p"
-	.string "Days ago they climbed the mountain\n"
-	.string "and seized JIRACHI -- the Undying\l"
-	.string "Wish, that grants any desire.\p"
-	.string "And their desire… is the end of\n"
-	.string "everything. Look around you.\p"
-	.string "You were up on that summit, weren't\n"
-	.string "you? You saw their faces.\p"
-	.string "Then you may be the only soul alive\n"
-	.string "who can still stop them.$"
+Ashlands_Text_OldManLore::
+	.string "Listen, while I can.\p"
+	.string "TEAM MUTRID worships ruin.\n"
+	.string "Their leader: my GRANDSON.\p"
+	.string "I taught him this mountain's\n"
+	.string "rites. His father, the same.\p"
+	.string "My son, Professor CLARKSON,\n"
+	.string "climbed to STUDY JIRACHI.\p"
+	.string "His boy came to SEIZE it.\n"
+	.string "The Undying Wish.\p"
+	.string "His one desire: burn it all.\p"
+	.string "You saw him cast his own\n"
+	.string "father into the fire.\p"
+	.string "The hand that did it,\n"
+	.string "I taught its every rite.\p"
+	.string "This ash is his wish made real.\p"
+	.string "You may be the last soul\n"
+	.string "who can stop my family.$"
 
-Ashlands_Text_OldManAfter:
+Ashlands_Text_OldManAfter::
 	.string "Go on, child… before there's\n"
 	.string "nothing left to save.$"
+
+Ashlands_Text_OldManBequest::
+	.string "The medicine bought minutes,\n"
+	.string "not years. Let them count.\p"
+	.string "In my house hangs a CATALPA\n"
+	.string "bow, strung with prayer-cord.\p"
+	.string "A rite: play it at a grave,\n"
+	.string "so the dead aren't alone.\p"
+	.string "My son rests at the park\n"
+	.string "across the water.\p"
+	.string "Play the rite for him --\n"
+	.string "his own blood never will.\p"
+	.string "And tell his stone…\p"
+	.string "his father believes him now.$"
+Ashlands_Text_OldManGone:
+	.string "…\p"
+	.string "Where the old man lay there is\n"
+	.string "only a settling of fine ash,\l"
+	.string "already scattering on the wind.\p"
+	.string "The door of his house stands\n"
+	.string "unbarred.$"
 
 Ashlands_Text_Sage:
 	.string "It's fulfilled! The prophecy,\n"
@@ -89,3 +142,59 @@ Ashlands_Text_Sage:
 	.string "I can never tell anymore.\p"
 	.string "The ash tastes like snow on my\n"
 	.string "tongue. Isn't it beautiful?$"
+
+@ ----------------------------------------------------------------------------
+@  West seam -> Ashlands_2. This boundary CANNOT be a map connection: Ashlands
+@  uses the General primary tileset and Ashlands_2 uses NightMarket, and
+@  connection crossings never reload the primary tileset or its animation
+@  callback (only the secondary), so General's tiles + animations bleed into
+@  every NightMarket map in the chain ("skewed textures"). A warp does a full
+@  load, which swaps the primary cleanly.
+@ ----------------------------------------------------------------------------
+Ashlands_EventScript_SeamWest8::
+	warp MAP_ASHLANDS_2, 24, 8
+	waitstate
+	end
+
+@ ============================================================================
+@  MAIN-QUEST GATE -- the west exit to Ashlands_Desert is blocked until the
+@  CATALPA BOW is in hand (VAR_QUEST_FATHERS_WISH >= 3). Trigger column at
+@  x=0, y=5-8 (the only walkable west-edge tiles) on VAR_TEMP_2.
+@ ============================================================================
+Ashlands_EventScript_WestGate::
+	lockall
+	goto_if_ge VAR_QUEST_FATHERS_WISH, 3, Ashlands_EventScript_WestGateOpen
+	goto_if_eq VAR_QUEST_FATHERS_WISH, 2, Ashlands_EventScript_WestGateBow
+	msgbox Ashlands_Text_OldManCallsOut, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Ashlands_Movement_TurnBack
+	waitmovement 0
+	releaseall
+	end
+
+Ashlands_EventScript_WestGateBow::
+	msgbox Ashlands_Text_WestGateBow, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, Ashlands_Movement_TurnBack
+	waitmovement 0
+	releaseall
+	end
+
+Ashlands_EventScript_WestGateOpen::
+	setvar VAR_TEMP_2, 1
+	releaseall
+	end
+
+Ashlands_Movement_TurnBack:
+	walk_right
+	step_end
+
+Ashlands_Text_OldManCallsOut::
+	.string "OLD MAN: Help me… koff… please,\n"
+	.string "I need some help.$"
+
+Ashlands_Text_WestGateBow::
+	.string "The old man's last wish weighs on\n"
+	.string "you.\p"
+	.string "His CATALPA BOW still waits in the\n"
+	.string "house to the east.$"

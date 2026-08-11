@@ -28,6 +28,7 @@
 #include "option_menu.h"
 #include "overworld.h"
 #include "palette.h"
+#include "decompress.h"
 #include "party_menu.h"
 #include "pokedex.h"
 #include "pokenav.h"
@@ -44,6 +45,7 @@
 #include "text_window.h"
 #include "trainer_card.h"
 #include "window.h"
+#include "quests.h"
 #include "union_room.h"
 #include "dexnav.h"
 #include "wild_encounter.h"
@@ -69,6 +71,8 @@ enum
     MENU_ACTION_PYRAMID_BAG,
     MENU_ACTION_DEBUG,
     MENU_ACTION_DEXNAV,
+    MENU_ACTION_QUEST_MENU,
+    MENU_ACTION_WOT_HMS,
 };
 
 // Save status
@@ -88,7 +92,7 @@ EWRAM_DATA static u8 sSafariBallsWindowId = 0;
 EWRAM_DATA static u8 sBattlePyramidFloorWindowId = 0;
 EWRAM_DATA static u8 sStartMenuCursorPos = 0;
 EWRAM_DATA static u8 sNumStartMenuActions = 0;
-EWRAM_DATA static u8 sCurrentStartMenuActions[9] = {0};
+EWRAM_DATA static u8 sCurrentStartMenuActions[10] = {0};
 EWRAM_DATA static s8 sInitStartMenuData[2] = {0};
 
 EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
@@ -111,6 +115,7 @@ static bool8 StartMenuBattlePyramidRetireCallback(void);
 static bool8 StartMenuBattlePyramidBagCallback(void);
 static bool8 StartMenuDebugCallback(void);
 static bool8 StartMenuDexNavCallback(void);
+static bool8 QuestMenuCallback(void);
 
 // Menu callbacks
 static bool8 SaveStartCallback(void);
@@ -188,6 +193,12 @@ static const struct WindowTemplate sWindowTemplate_PyramidPeak = {
 };
 
 static const u8 sText_MenuDebug[] = _("DEBUG");
+static const u8 sText_QuestMenu[] = _("QUESTS");
+static const u8 sText_WotHMs[] = _("HMS");
+
+// WoT: HMs are badge-unlocked trainer abilities; this lists what's usable.
+extern const u8 WotHMs_EventScript_List[];
+static bool8 WotHMsCallback(void);
 
 static const struct MenuAction sStartMenuItems[] =
 {
@@ -206,6 +217,8 @@ static const struct MenuAction sStartMenuItems[] =
     [MENU_ACTION_PYRAMID_BAG]     = {gText_MenuBag,     {.u8_void = StartMenuBattlePyramidBagCallback}},
     [MENU_ACTION_DEBUG]           = {sText_MenuDebug,   {.u8_void = StartMenuDebugCallback}},
     [MENU_ACTION_DEXNAV]          = {gText_MenuDexNav,  {.u8_void = StartMenuDexNavCallback}},
+    [MENU_ACTION_QUEST_MENU]      = {sText_QuestMenu,   {.u8_void = QuestMenuCallback}},
+    [MENU_ACTION_WOT_HMS]         = {sText_WotHMs,      {.u8_void = WotHMsCallback}},
 };
 
 static const struct BgTemplate sBgTemplates_LinkBattleSave[] =
@@ -244,6 +257,186 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {
     .paletteNum = 15,
     .baseBlock = 8
 };
+
+// ---------------------------------------------------------------------------
+// Graphical start menu (USE_GRAPHICAL_START_MENU): horizontal icon bar.
+// Presentation only - the action list, Build* variants, and callbacks above
+// are untouched. Icon sheet frame order MUST match the MENU_ACTION enum;
+// frame 16 is the cursor ring. Placeholder art:
+// graphics/interface/start_menu_icons.png (32px wide, frames stacked
+// vertically) - real icons drop in by replacing that PNG, same frame order.
+// ---------------------------------------------------------------------------
+#define TAG_START_MENU_ICONS 0x4B20
+#define ICON_ANIM_CURSOR     16
+#define ICON_BAR_Y           136
+
+static const u32 sStartMenuIconsGfx[] = INCGFX_U32("graphics/interface/start_menu_icons.png", ".4bpp.smol");
+static const u16 sStartMenuIconsPal[] = INCGFX_U16("graphics/interface/start_menu_icons.png", ".gbapal");
+
+static EWRAM_DATA u8 sStartMenuIconSpriteIds[ARRAY_COUNT(sCurrentStartMenuActions)] = {0};
+static EWRAM_DATA u8 sStartMenuCursorSpriteId = 0;
+static EWRAM_INIT u8 sStartMenuLabelWindowId = WINDOW_NONE;
+static EWRAM_DATA bool8 sStartMenuIconBarActive = FALSE;
+
+static const struct OamData sOamData_StartMenuIcon =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(32x32),
+    .size = SPRITE_SIZE(32x32),
+    .priority = 0,
+};
+
+#define ICON_ANIM(n)                                        \
+static const union AnimCmd sAnim_StartMenuIcon_##n[] =      \
+{                                                           \
+    ANIMCMD_FRAME((n) * 16, 0),                             \
+    ANIMCMD_END                                             \
+}
+ICON_ANIM(0);  ICON_ANIM(1);  ICON_ANIM(2);  ICON_ANIM(3);
+ICON_ANIM(4);  ICON_ANIM(5);  ICON_ANIM(6);  ICON_ANIM(7);
+ICON_ANIM(8);  ICON_ANIM(9);  ICON_ANIM(10); ICON_ANIM(11);
+ICON_ANIM(12); ICON_ANIM(13); ICON_ANIM(14); ICON_ANIM(15);
+ICON_ANIM(16);
+#undef ICON_ANIM
+
+static const union AnimCmd *const sAnims_StartMenuIcons[] =
+{
+    sAnim_StartMenuIcon_0,  sAnim_StartMenuIcon_1,  sAnim_StartMenuIcon_2,  sAnim_StartMenuIcon_3,
+    sAnim_StartMenuIcon_4,  sAnim_StartMenuIcon_5,  sAnim_StartMenuIcon_6,  sAnim_StartMenuIcon_7,
+    sAnim_StartMenuIcon_8,  sAnim_StartMenuIcon_9,  sAnim_StartMenuIcon_10, sAnim_StartMenuIcon_11,
+    sAnim_StartMenuIcon_12, sAnim_StartMenuIcon_13, sAnim_StartMenuIcon_14, sAnim_StartMenuIcon_15,
+    sAnim_StartMenuIcon_16,
+};
+
+static const struct CompressedSpriteSheet sSpriteSheet_StartMenuIcons =
+{
+    sStartMenuIconsGfx, ARRAY_COUNT(sAnims_StartMenuIcons) * 16 * TILE_SIZE_4BPP, TAG_START_MENU_ICONS
+};
+
+static const struct SpritePalette sSpritePalette_StartMenuIcons =
+{
+    sStartMenuIconsPal, TAG_START_MENU_ICONS
+};
+
+static const struct SpriteTemplate sSpriteTemplate_StartMenuIcon =
+{
+    .tileTag = TAG_START_MENU_ICONS,
+    .paletteTag = TAG_START_MENU_ICONS,
+    .oam = &sOamData_StartMenuIcon,
+    .anims = sAnims_StartMenuIcons,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static u8 GetIconBarSpacing(void)
+{
+    return (sNumStartMenuActions > 8) ? 24 : 28;
+}
+
+static s16 GetIconBarX(u8 index)
+{
+    u8 spacing = GetIconBarSpacing();
+
+    return DISPLAY_WIDTH / 2 - ((sNumStartMenuActions - 1) * spacing) / 2 + index * spacing;
+}
+
+static void PrintSelectedActionName(void)
+{
+    u8 action = sCurrentStartMenuActions[sStartMenuCursorPos];
+
+    if (sStartMenuLabelWindowId == WINDOW_NONE)
+        return;
+    FillWindowPixelBuffer(sStartMenuLabelWindowId, PIXEL_FILL(1));
+    if (action == MENU_ACTION_PLAYER || action == MENU_ACTION_PLAYER_LINK)
+        PrintPlayerNameOnWindow(sStartMenuLabelWindowId, sStartMenuItems[action].text, 8, 1);
+    else
+        AddTextPrinterParameterized(sStartMenuLabelWindowId, FONT_NORMAL, sStartMenuItems[action].text, 8, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sStartMenuLabelWindowId, COPYWIN_FULL);
+}
+
+static void UpdateStartMenuIconCursor(void)
+{
+    if (sStartMenuIconBarActive && sStartMenuCursorSpriteId != MAX_SPRITES)
+        gSprites[sStartMenuCursorSpriteId].x = GetIconBarX(sStartMenuCursorPos);
+}
+
+static const struct WindowTemplate sStartMenuLabelWindowTemplate = {
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 12,
+    .width = 10,
+    .height = 2,
+    .paletteNum = 15,
+    .baseBlock = 0x139 // the vanilla list window's block; unused in graphical mode
+};
+
+static void CreateStartMenuLabelWindow(void)
+{
+    if (sStartMenuLabelWindowId == WINDOW_NONE)
+    {
+        sStartMenuLabelWindowId = AddWindow(&sStartMenuLabelWindowTemplate);
+        FillWindowPixelBuffer(sStartMenuLabelWindowId, PIXEL_FILL(1));
+        PutWindowTilemap(sStartMenuLabelWindowId);
+        DrawStdWindowFrame(sStartMenuLabelWindowId, FALSE);
+    }
+}
+
+static void CreateStartMenuIconBar(void)
+{
+    u32 i;
+
+    if (sStartMenuIconBarActive)
+        return;
+    LoadCompressedSpriteSheet(&sSpriteSheet_StartMenuIcons);
+    LoadSpritePalette(&sSpritePalette_StartMenuIcons);
+    for (i = 0; i < sNumStartMenuActions; i++)
+    {
+        sStartMenuIconSpriteIds[i] = CreateSprite(&sSpriteTemplate_StartMenuIcon, GetIconBarX(i), ICON_BAR_Y, 1);
+        if (sStartMenuIconSpriteIds[i] != MAX_SPRITES)
+            StartSpriteAnim(&gSprites[sStartMenuIconSpriteIds[i]], sCurrentStartMenuActions[i]);
+    }
+    sStartMenuCursorSpriteId = CreateSprite(&sSpriteTemplate_StartMenuIcon, GetIconBarX(0), ICON_BAR_Y, 0);
+    if (sStartMenuCursorSpriteId != MAX_SPRITES)
+        StartSpriteAnim(&gSprites[sStartMenuCursorSpriteId], ICON_ANIM_CURSOR);
+    sStartMenuIconBarActive = TRUE;
+}
+
+static void DestroyStartMenuIconBar(void)
+{
+    u32 i;
+
+    if (sStartMenuIconBarActive)
+    {
+        for (i = 0; i < sNumStartMenuActions; i++)
+        {
+            if (sStartMenuIconSpriteIds[i] != MAX_SPRITES)
+                DestroySprite(&gSprites[sStartMenuIconSpriteIds[i]]);
+        }
+        if (sStartMenuCursorSpriteId != MAX_SPRITES)
+            DestroySprite(&gSprites[sStartMenuCursorSpriteId]);
+        FreeSpriteTilesByTag(TAG_START_MENU_ICONS);
+        FreeSpritePaletteByTag(TAG_START_MENU_ICONS);
+        sStartMenuIconBarActive = FALSE;
+    }
+    if (sStartMenuLabelWindowId != WINDOW_NONE)
+    {
+        ClearStdWindowAndFrame(sStartMenuLabelWindowId, TRUE);
+        RemoveWindow(sStartMenuLabelWindowId);
+        sStartMenuLabelWindowId = WINDOW_NONE;
+    }
+}
+
+// Called from InitStandardTextBoxWindows on every field (re)load: the scene
+// reset already destroyed our sprites and windows, so only the bookkeeping
+// must be cleared or the next open would think the bar still exists.
+void ResetStartMenuIconBar(void)
+{
+    sStartMenuIconBarActive = FALSE;
+    sStartMenuLabelWindowId = WINDOW_NONE;
+}
 
 // Local functions
 static void BuildStartMenuActions(void);
@@ -346,6 +539,14 @@ static void BuildNormalStartMenu(void)
         AddStartMenuAction(MENU_ACTION_POKENAV);
 
     AddStartMenuAction(MENU_ACTION_PLAYER);
+
+    if (FlagGet(FLAG_SYS_QUEST_MENU_GET))
+        AddStartMenuAction(MENU_ACTION_QUEST_MENU);
+
+    // WoT: show the HMs list once the first badge has unlocked anything.
+    if (FlagGet(FLAG_BADGE01_GET))
+        AddStartMenuAction(MENU_ACTION_WOT_HMS);
+
     AddStartMenuAction(MENU_ACTION_SAVE);
     AddStartMenuAction(MENU_ACTION_OPTION);
     AddStartMenuAction(MENU_ACTION_EXIT);
@@ -533,7 +734,10 @@ static bool32 InitStartMenuStep(void)
         break;
     case 2:
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
+        if (USE_GRAPHICAL_START_MENU)
+            CreateStartMenuLabelWindow();
+        else
+            DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
         sInitStartMenuData[1] = 0;
         sInitStartMenuData[0]++;
         break;
@@ -545,12 +749,29 @@ static bool32 InitStartMenuStep(void)
         sInitStartMenuData[0]++;
         break;
     case 4:
-        if (PrintStartMenuActions(&sInitStartMenuData[1], 2))
+        if (USE_GRAPHICAL_START_MENU)
+        {
+            CreateStartMenuIconBar();
             sInitStartMenuData[0]++;
+        }
+        else if (PrintStartMenuActions(&sInitStartMenuData[1], 2))
+        {
+            sInitStartMenuData[0]++;
+        }
         break;
     case 5:
-        sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
-        CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
+        if (USE_GRAPHICAL_START_MENU)
+        {
+            if (sStartMenuCursorPos >= sNumStartMenuActions)
+                sStartMenuCursorPos = 0;
+            UpdateStartMenuIconCursor();
+            PrintSelectedActionName();
+        }
+        else
+        {
+            sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
+            CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
+        }
         return TRUE;
     }
 
@@ -633,16 +854,38 @@ void ShowStartMenu(void)
 
 static bool8 HandleStartMenuInput(void)
 {
-    if (JOY_NEW(DPAD_UP))
+    if (USE_GRAPHICAL_START_MENU)
     {
-        PlaySE(SE_SELECT);
-        sStartMenuCursorPos = Menu_MoveCursor(-1);
-    }
+        // Left/Right with wraparound (Up/Down aliased for comfort).
+        if (JOY_NEW(DPAD_LEFT) || JOY_NEW(DPAD_UP))
+        {
+            PlaySE(SE_SELECT);
+            sStartMenuCursorPos = (sStartMenuCursorPos + sNumStartMenuActions - 1) % sNumStartMenuActions;
+            UpdateStartMenuIconCursor();
+            PrintSelectedActionName();
+        }
 
-    if (JOY_NEW(DPAD_DOWN))
+        if (JOY_NEW(DPAD_RIGHT) || JOY_NEW(DPAD_DOWN))
+        {
+            PlaySE(SE_SELECT);
+            sStartMenuCursorPos = (sStartMenuCursorPos + 1) % sNumStartMenuActions;
+            UpdateStartMenuIconCursor();
+            PrintSelectedActionName();
+        }
+    }
+    else
     {
-        PlaySE(SE_SELECT);
-        sStartMenuCursorPos = Menu_MoveCursor(1);
+        if (JOY_NEW(DPAD_UP))
+        {
+            PlaySE(SE_SELECT);
+            sStartMenuCursorPos = Menu_MoveCursor(-1);
+        }
+
+        if (JOY_NEW(DPAD_DOWN))
+        {
+            PlaySE(SE_SELECT);
+            sStartMenuCursorPos = Menu_MoveCursor(1);
+        }
     }
 
     if (JOY_NEW(A_BUTTON))
@@ -659,11 +902,16 @@ static bool8 HandleStartMenuInput(void)
 
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void;
 
+        // These callbacks stay on the field (they run a script or a prompt in
+        // place) instead of opening a replacement screen, so the field must
+        // NOT be faded out from under them -- doing so leaves the map black
+        // with only the menu drawn over it. WoT's HMs submenu belongs here.
         if (gMenuCallback != StartMenuSaveCallback
             && gMenuCallback != StartMenuExitCallback
             && gMenuCallback != StartMenuDebugCallback
             && gMenuCallback != StartMenuSafariZoneRetireCallback
-            && gMenuCallback != StartMenuBattlePyramidRetireCallback)
+            && gMenuCallback != StartMenuBattlePyramidRetireCallback
+            && gMenuCallback != WotHMsCallback)
         {
            FadeScreen(FADE_TO_BLACK, 0);
         }
@@ -823,8 +1071,15 @@ static bool8 StartMenuSafariZoneRetireCallback(void)
 static void HideStartMenuDebug(void)
 {
     PlaySE(SE_SELECT);
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
-    RemoveStartMenuWindow();
+    if (USE_GRAPHICAL_START_MENU)
+    {
+        DestroyStartMenuIconBar();
+    }
+    else
+    {
+        ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+        RemoveStartMenuWindow();
+    }
 }
 
 static bool8 StartMenuLinkModePlayerNameCallback(void)
@@ -1043,8 +1298,15 @@ static bool8 SaveErrorTimer(void)
 
 static u8 SaveConfirmSaveCallback(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
-    RemoveStartMenuWindow();
+    if (USE_GRAPHICAL_START_MENU)
+    {
+        DestroyStartMenuIconBar();
+    }
+    else
+    {
+        ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
+        RemoveStartMenuWindow();
+    }
     ShowSaveInfoWindow();
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
@@ -1234,8 +1496,15 @@ static void InitBattlePyramidRetire(void)
 
 static u8 BattlePyramidConfirmRetireCallback(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
-    RemoveStartMenuWindow();
+    if (USE_GRAPHICAL_START_MENU)
+    {
+        DestroyStartMenuIconBar();
+    }
+    else
+    {
+        ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
+        RemoveStartMenuWindow();
+    }
     ShowSaveMessage(gText_BattlePyramidConfirmRetire, BattlePyramidRetireYesNoCallback);
 
     return SAVE_IN_PROGRESS;
@@ -1487,8 +1756,15 @@ void SaveForBattleTowerLink(void)
 
 static void HideStartMenuWindow(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
-    RemoveStartMenuWindow();
+    if (USE_GRAPHICAL_START_MENU)
+    {
+        DestroyStartMenuIconBar();
+    }
+    else
+    {
+        ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
+        RemoveStartMenuWindow();
+    }
     ScriptUnfreezeObjectEvents();
     UnlockPlayerFieldControls();
 }
@@ -1508,6 +1784,24 @@ void AppendToList(u8 *list, u8 *pos, u8 newEntry)
 static bool8 StartMenuDexNavCallback(void)
 {
     CreateTask(Task_OpenDexNavFromStartMenu, 0);
+    return TRUE;
+}
+
+static bool8 QuestMenuCallback(void)
+{
+    CreateTask(Task_QuestMenu_OpenFromStartMenu, 0);
+    return TRUE;
+}
+
+static bool8 WotHMsCallback(void)
+{
+    // Runs the HMs submenu script over the live field -- same shape as the
+    // Safari retire prompt. Requires the no-fade exemption in
+    // HandleStartMenuInput; the script does its own lockall/releaseall.
+    RemoveExtraStartMenuWindows();
+    HideStartMenu();
+    ScriptContext_SetupScript(WotHMs_EventScript_List);
+
     return TRUE;
 }
 

@@ -17,6 +17,7 @@
 #include "constants/battle_tent.h"
 #include "constants/battle_tower.h"
 #include "constants/berry.h"
+#include "constants/boss_intro.h"
 #include "constants/cable_club.h"
 #include "constants/coins.h"
 #include "constants/contest.h"
@@ -53,7 +54,10 @@
 #include "constants/pokeball.h"
 #include "constants/pokedex.h"
 #include "constants/pokemon.h"
+#include "config/ui.h"
 #include "constants/pokemon_size_record.h"
+#include "constants/portraits.h"
+#include "constants/quests.h"
 #include "constants/rtc.h"
 #include "constants/roulette.h"
 #include "constants/script_menu.h"
@@ -1735,6 +1739,9 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/dexnav.inc"
 	.include "data/scripts/battle_frontier.inc"
 	.include "data/scripts/apricorn_tree.inc"
+	.include "data/scripts/oni_mask_disguise.inc"
+	.include "data/scripts/catalpa_bow.inc"
+	.include "data/scripts/quests.inc"
 
 	.include "data/maps/MunenVillage/scripts.inc"
 
@@ -1775,3 +1782,77 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/Route_2_2/scripts.inc"
 
 	.include "data/maps/NewMap/scripts.inc"
+
+	.include "data/maps/TradewindTown/scripts.inc"
+
+	.include "data/maps/MunenTunnel/scripts.inc"
+	.include "data/maps/Route2LifeguardShack/scripts.inc"
+
+	.include "data/maps/NewMapInn/scripts.inc"
+
+	.include "data/maps/NewMapShop/scripts.inc"
+
+	.include "data/maps/NewMapMaskMaker/scripts.inc"
+
+	.include "data/maps/NewMapApprenticeHouse/scripts.inc"
+
+	.include "data/maps/NationalParkAct2/scripts.inc"
+
+	.include "data/maps/DistortionWorld/scripts.inc"
+
+	.include "data/maps/AshlandsOldMansHouse/scripts.inc"
+
+	.include "data/maps/MunenVillageAct2/scripts.inc"
+
+	.include "data/maps/MunenLabAct2/scripts.inc"
+
+	.include "data/maps/MunenHomeAct2/scripts.inc"
+
+	.include "data/maps/SennenAct2/scripts.inc"
+
+	.include "data/maps/DistortionWorld_2/scripts.inc"
+
+	.include "data/maps/DistortionWorld_3/scripts.inc"
+
+	.include "data/maps/DistortionWorld_5/scripts.inc"
+
+	.include "data/maps/DistortionWorld_4/scripts.inc"
+
+	.include "data/maps/Ashlands_2/scripts.inc"
+
+	.include "data/maps/TradewindPokecenter/scripts.inc"
+	.include "data/maps/TradewindGym/scripts.inc"
+	.include "data/maps/TradewindApartment/scripts.inc"
+	.include "data/maps/TradewindApartment_2/scripts.inc"
+	.include "data/maps/TradewindHouse/scripts.inc"
+	.include "data/maps/TradewindLab/scripts.inc"
+
+	.include "data/maps/Tradewind_PC/scripts.inc"
+
+	.include "data/maps/ShinkansenInterior_Act2/scripts.inc"
+
+	.include "data/maps/ShinTokyoStation/scripts.inc"
+	.include "data/maps/ShinTokyo/scripts.inc"
+	.include "data/maps/ShinTokyoJail/scripts.inc"
+	.include "data/maps/RebelHideout/scripts.inc"
+	.include "data/maps/CelebiIsland/scripts.inc"
+	.include "data/maps/PrototypeIsland/scripts.inc"
+	.include "data/maps/PrototypeLab/scripts.inc"
+	.include "data/scripts/wot_hms.inc"
+	.include "data/scripts/wot_snag_progress.inc"
+	.include "data/maps/TowerStreet/scripts.inc"
+	.include "data/maps/TowerMid/scripts.inc"
+	.include "data/maps/TowerCommand/scripts.inc"
+	.include "data/maps/TowerTop/scripts.inc"
+
+	.include "data/maps/UndergroundArena/scripts.inc"
+
+	.include "data/maps/DragonKeeper/scripts.inc"
+
+	.include "data/maps/StarSummit_2/scripts.inc"
+
+	.include "data/maps/NorthwindCavern/scripts.inc"
+
+	.include "data/maps/Ashlands_Desert/scripts.inc"
+
+	.include "data/maps/LifeguardShack/scripts.inc"

@@ -4015,11 +4015,18 @@ BattleScript_EffectCamouflage::
 BattleScript_FaintBattler::
 	tryillusionoff BS_FAINTED
 	undodynamax BS_FAINTED
+	@ WoT Shadow system: a snagged mon leaves silently -- the "Gotcha! ...was
+	@ snagged away!" message already played, so skip the cry + faint message.
+	wotjumpifsnaggedfaint BattleScript_FaintBattlerWotSnagged
 	playfaintcry BS_FAINTED
 	pause B_WAIT_TIME_LONG
 	dofaintanimation BS_FAINTED
 	copybyte sBATTLER, gBattlerFainted @ for message
 	printstring STRINGID_BATTLERFAINTED
+	goto BattleScript_FaintBattlerAfterMsg
+BattleScript_FaintBattlerWotSnagged:
+	dofaintanimation BS_FAINTED
+BattleScript_FaintBattlerAfterMsg:
 	cleareffectsonfaint BS_FAINTED
 	trytoclearprimalweather
 	call BattleScript_TryRevertWeatherform
@@ -4170,9 +4177,30 @@ BattleScript_LocalBattleWonReward::
 	printstring STRINGID_PLAYERGOTMONEY
 	waitmessage B_WAIT_TIME_LONG
 BattleScript_PayDayMoneyAndPickUpItems::
+	call BattleScript_WotDeliverSnagged
 	givepaydaymoney
 	pickup
 	end2
+
+@ WoT Shadow system: hand over every mon snagged this battle -- per mon a
+@ give plus a message ("added to your party" / "transferred to the PC").
+@ NO nickname prompt: the vanilla caught-mon naming flow expects the wild
+@ CAUGHT battle-end path and black-screened here, and snagged mons can be
+@ renamed at any time from the party menu anyway.
+BattleScript_WotDeliverSnagged::
+	wotcollectsnagged BattleScript_WotDeliverSnaggedEnd
+	wotgivesnagged
+	printfromtable gWotSnagDeliveryStringIds
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_WotDeliverSnagged
+BattleScript_WotDeliverSnaggedEnd::
+	return
+
+@ WoT Shadow system: the switch-in aura announce (either side).
+BattleScript_WotShadowAuraRet::
+	printstring STRINGID_WOTSHADOWAURA
+	waitmessage B_WAIT_TIME_LONG
+	return
 
 BattleScript_RivalBattleLost::
 	jumpifhasnohp BS_ATTACKER, BattleScript_RivalBattleLostSkipMonRecall
@@ -4307,6 +4335,7 @@ BattleScript_FrontierTrainerBattleWon_LoseTexts:
 	waitstate
 	printstring STRINGID_TRAINER2LOSETEXT
 BattleScript_TryPickUpItems:
+	call BattleScript_WotDeliverSnagged
 	jumpifnotbattletype BATTLE_TYPE_PYRAMID, BattleScript_FrontierTrainerBattleWon_End
 	pickup
 BattleScript_FrontierTrainerBattleWon_End:

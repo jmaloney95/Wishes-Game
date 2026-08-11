@@ -3,6 +3,7 @@ RustboroCity_Gym_MapScripts::
 
 RustboroCity_Gym_EventScript_Roxanne::
 	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	setspeaker SP_NAME_RED_FATALITY
 	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_PostBattleKnowsTrain
 	msgbox RustboroCity_Gym_Text_PostBattleNorth, MSGBOX_DEFAULT
 	release
@@ -21,14 +22,21 @@ RustboroCity_Gym_EventScript_RoxanneDefeated::
 	message RustboroCity_Gym_Text_ReceivedEmberBadge
 	waitmessage
 	call Common_EventScript_PlayGymBadgeFanfare
+	setspeaker SP_NAME_RED_FATALITY
 	msgbox RustboroCity_Gym_Text_EmberBadgeInfo, MSGBOX_DEFAULT
 	setflag FLAG_DEFEATED_RUSTBORO_GYM
 	setflag FLAG_BADGE01_GET
 	setvar VAR_RUSTBORO_CITY_STATE, 1
+	call_if_quest_active SIDE_QUEST_FROZEN_TRACKS, RustboroCity_Gym_EventScript_CompleteFrozenTracks
+	setspeaker SP_NAME_RED_FATALITY
 	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_KnownTrainHook
 	msgbox RustboroCity_Gym_Text_HeadNorthHook, MSGBOX_DEFAULT
 	release
 	end
+
+RustboroCity_Gym_EventScript_CompleteFrozenTracks::
+	completequest SIDE_QUEST_FROZEN_TRACKS
+	return
 
 RustboroCity_Gym_EventScript_KnownTrainHook::
 	msgbox RustboroCity_Gym_Text_FrozenTrainHook, MSGBOX_DEFAULT
@@ -37,16 +45,19 @@ RustboroCity_Gym_EventScript_KnownTrainHook::
 
 RustboroCity_Gym_EventScript_Josh::
 	trainerbattle_single TRAINER_JOSH, RustboroCity_Gym_Text_JoshIntro, RustboroCity_Gym_Text_JoshDefeat
+	setspeaker SP_NAME_MIKMANC
 	msgbox RustboroCity_Gym_Text_JoshPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 RustboroCity_Gym_EventScript_Tommy::
 	trainerbattle_single TRAINER_TOMMY, RustboroCity_Gym_Text_TommyIntro, RustboroCity_Gym_Text_TommyDefeat
+	setspeaker SP_NAME_MINISTER
 	msgbox RustboroCity_Gym_Text_TommyPostBattle, MSGBOX_AUTOCLOSE
 	end
 
 RustboroCity_Gym_EventScript_Marc::
 	trainerbattle_single TRAINER_MARC, RustboroCity_Gym_Text_MarcIntro, RustboroCity_Gym_Text_MarcDefeat
+	setspeaker SP_NAME_YIFFER
 	msgbox RustboroCity_Gym_Text_MarcPostBattle, MSGBOX_AUTOCLOSE
 	end
 
@@ -116,12 +127,11 @@ RustboroCity_Gym_Text_GymGuideAdvice:
 	.string "Now go earn that EMBER BADGE!$"
 
 RustboroCity_Gym_Text_GymGuidePostVictory:
-	.string "Whoa! You actually toppled RedFatality --\n"
-	.string "ace and all!\p"
+	.string "Whoa! You actually toppled RedFatality\p"
 	.string "That EMBER BADGE is the genuine\n"
 	.string "article.\p"
 	.string "You've taken your first big step\n"
-	.string "toward the top. Feels great, huh?$"
+	.string "toward the top. Feels great, huh champ?$"
 
 RustboroCity_Gym_Text_JoshIntro:
 	.string "Snow on the ground doesn't mean\n"
@@ -163,12 +173,12 @@ RustboroCity_Gym_Text_MarcPostBattle:
 
 RustboroCity_Gym_Text_RoxanneIntro:
 	.string "Welcome to the FROSTWOOD GYM.\p"
-	.string "That's right, I'm RedFatality.\n"
+	.string "That's right, I'm RedFatality.\p"
 	.string "And yeah, the rumors are true.\n"
 	.string "I was a Halo 3 MLG pro.\p"
 	.string "If you caught nothing but ICE types\n"
 	.string "like the others, you're in for a\p"
-	.string "rude awakening, buddy.\p"
+	.string "rude awakening, slugger.\p"
 	.string "Show me what you've got!$"
 
 RustboroCity_Gym_Text_RoxanneDefeat:

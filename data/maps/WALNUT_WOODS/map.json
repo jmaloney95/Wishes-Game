@@ -16,7 +16,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_PROF_BIRCH",
-      "x": 26,
+      "x": 30,
       "y": 25,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -29,7 +29,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PORYGON)",
-      "x": 20,
+      "x": 24,
       "y": 2,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -42,7 +42,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(BLISSEY)",
-      "x": 21,
+      "x": 25,
       "y": 2,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -52,43 +52,70 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "WALNUT_WOODS_EventScript_Blissey",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 45,
+      "y": 24,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_HM06",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_WALNUT_WOODS_HM06"
     }
   ],
   "warp_events": [
     {
-      "x": 0,
+      "x": 4,
       "y": 12,
       "elevation": 0,
       "dest_map": "MAP_MELTING_MILE",
       "dest_warp_id": "2"
     },
     {
-      "x": 0,
+      "x": 4,
       "y": 13,
       "elevation": 0,
       "dest_map": "MAP_MELTING_MILE",
       "dest_warp_id": "0"
     },
     {
-      "x": 40,
+      "x": 44,
       "y": 5,
       "elevation": 0,
       "dest_map": "MAP_FROSTWOOD_TOWN",
       "dest_warp_id": "6"
     },
     {
-      "x": 41,
+      "x": 45,
       "y": 5,
       "elevation": 0,
       "dest_map": "MAP_FROSTWOOD_TOWN",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 58,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 58,
+      "y": 19,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "5"
     }
   ],
   "coord_events": [],
   "bg_events": [
     {
       "type": "sign",
-      "x": 2,
+      "x": 6,
       "y": 11,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -96,7 +123,7 @@
     },
     {
       "type": "sign",
-      "x": 38,
+      "x": 42,
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -104,7 +131,7 @@
     },
     {
       "type": "sign",
-      "x": 23,
+      "x": 27,
       "y": 21,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -112,7 +139,7 @@
     },
     {
       "type": "sign",
-      "x": 14,
+      "x": 18,
       "y": 13,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -120,7 +147,7 @@
     },
     {
       "type": "sign",
-      "x": 16,
+      "x": 20,
       "y": 24,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -128,7 +155,7 @@
     },
     {
       "type": "sign",
-      "x": 40,
+      "x": 44,
       "y": 26,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",

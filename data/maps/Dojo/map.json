@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_KIMONO_GIRL",
+      "graphics_id": "OBJ_EVENT_GFX_GORDIE",
       "x": 20,
       "y": 19,
       "elevation": 0,
@@ -24,12 +24,25 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
-      "flag": "0"
+      "script": "Dojo_EventScript_RebelRedFatality",
+      "flag": "FLAG_HIDE_DOJO_REBELS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_EUSINE",
-      "x": 21,
+      "graphics_id": "OBJ_EVENT_GFX_MOM",
+      "x": 19,
+      "y": 21,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Dojo_EventScript_RebelMom",
+      "flag": "FLAG_HIDE_DOJO_REBELS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SCOTT",
+      "x": 18,
       "y": 19,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -37,16 +50,68 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "NULL",
+      "script": "Dojo_EventScript_RebelMinister",
+      "flag": "FLAG_HIDE_DOJO_REBELS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MIKMANC",
+      "x": 24,
+      "y": 19,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Dojo_EventScript_RebelMikmanc",
+      "flag": "FLAG_HIDE_DOJO_REBELS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_HIKER",
+      "x": 22,
+      "y": 19,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Dojo_EventScript_RebelYiffer",
+      "flag": "FLAG_HIDE_DOJO_REBELS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PORYGON)",
+      "x": 20,
+      "y": 16,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Porygon",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BLISSEY)",
+      "x": 21,
+      "y": 16,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Blissey",
       "flag": "0"
     }
   ],
   "warp_events": [
     {
       "x": 21,
-      "y": 36,
+      "y": 30,
       "elevation": 0,
-      "dest_map": "MAP_TEST",
+      "dest_map": "MAP_SENNEN_ACT2",
       "dest_warp_id": "0"
     }
   ],

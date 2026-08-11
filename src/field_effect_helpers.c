@@ -13,9 +13,14 @@
 #include "trig.h"
 #include "constants/event_objects.h"
 #include "constants/field_effects.h"
+#include "constants/metatile_behaviors.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/species.h"
+
+// Distortion World cherry-blossom grass: recolored tall-grass rustle (see
+// gFieldEffectObjectPalette_DistortionGrass). Same sprite as tall grass, dark palette.
+extern const struct SpritePalette gSpritePalette_DistortionGrass;
 
 #define OBJ_EVENT_PAL_TAG_NONE 0x11FF // duplicate of define in event_object_movement.c
 #define PAL_TAG_REFLECTION_OFFSET 0x0800 // reflection tag value is paletteTag + 0x0800
@@ -432,11 +437,15 @@ u32 FldEff_TallGrass(void)
     u8 spriteId;
     s16 x = gFieldEffectArguments[0];
     s16 y = gFieldEffectArguments[1];
+    // Distortion World grass reuses the tall-grass sprite but with a dark rose palette.
+    bool8 isDistortionGrass = (MapGridGetMetatileBehaviorAt(x, y) == MB_DISTORTION_GRASS);
     SetSpritePosToOffsetMapCoords(&x, &y, 8, 8);
     spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_TALL_GRASS], x, y, 0);
     if (spriteId != MAX_SPRITES)
     {
         struct Sprite *sprite = &gSprites[spriteId];
+        if (isDistortionGrass)
+            sprite->oam.paletteNum = LoadSpritePalette(&gSpritePalette_DistortionGrass);
         sprite->coordOffsetEnabled = TRUE;
         sprite->oam.priority = gFieldEffectArguments[3];
         sprite->sElevation = gFieldEffectArguments[2];

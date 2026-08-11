@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "load_save.h"
 #include "battle_setup.h"
+#include "boss_intro.h"
 #include "battle_tower.h"
 #include "battle_transition.h"
 #include "main.h"
@@ -270,7 +271,10 @@ static void CreateBattleStartTask(enum BattleTransition transition, u16 song)
     u8 taskId = CreateTask(Task_BattleStart, 1);
 
     gTasks[taskId].tTransition = transition;
-    PlayMapChosenOrBattleBGM(song);
+    if (gWotBossIntroPrimed)
+        gWotBossIntroPrimed = FALSE; // the boss card's theme carries into the battle
+    else
+        PlayMapChosenOrBattleBGM(song);
 }
 
 static void Task_BattleStart_Debug(u8 taskId)
@@ -894,6 +898,15 @@ enum BattleTransition GetTrainerBattleTransition(void)
     u32 trainerId = SanitizeTrainerId(TRAINER_BATTLE_PARAM.opponentA);
     enum TrainerClassID trainerClass = GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA);
 
+    // Star Summit boss: force the red Groudon lava-crack transition (overrides the map's blue water transition).
+    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+        return B_TRANSITION_GROUDON;
+
+    // Boss intro card battles: the card was the spectacle -- cut in fast with
+    // the white bars instead of the long class transition.
+    if (gWotBossIntroPrimed)
+        return B_TRANSITION_WHITE_BARS_FADE;
+
     if (DoesTrainerHaveMugshot(trainerId))
         return B_TRANSITION_MUGSHOT;
 
@@ -1348,7 +1361,11 @@ void BattleSetup_StartTrainerBattle(void)
         }
     }
 
-    if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL && GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL)
+    // Exact match required: RIVAL_BATTLE_TUTORIAL includes the HEAL_AFTER bit, so a
+    // plain `&` also matched battles that passed only RIVAL_BATTLE_HEAL_AFTER and gave
+    // them the tutorial flee AI (opponent runs at low player HP, ending the battle).
+    if (GetTrainerBattleMode() == TRAINER_BATTLE_EARLY_RIVAL
+     && (GetRivalBattleFlags() & RIVAL_BATTLE_TUTORIAL) == RIVAL_BATTLE_TUTORIAL)
         gBattleTypeFlags |= BATTLE_TYPE_FIRST_BATTLE;
 
     if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
@@ -1621,6 +1638,11 @@ void PlayTrainerEncounterMusic(void)
     u16 trainerId;
     u16 music;
 
+    // Boss intro card battles: the boss theme is already playing (started at
+    // the card's slam) -- the encounter jingle must not relaunch over it.
+    if (gWotBossIntroPrimed)
+        return;
+
     if (gApproachingTrainerId == 0)
         trainerId = TRAINER_BATTLE_PARAM.opponentA;
     else
@@ -1689,16 +1711,12 @@ static const u8 *GetIntroSpeechOfApproachingTrainer(void)
 {
     if (gApproachingTrainerId == 0)
     {
-        if (OW_NAME_BOX_NPC_TRAINER)
-            gSpeakerName = GetTrainerNameFromId(TRAINER_BATTLE_PARAM.opponentA);
-
+        SetSpeakerFromTrainer(TRAINER_BATTLE_PARAM.opponentA);
         return ReturnEmptyStringIfNull(TRAINER_BATTLE_PARAM.introTextA);
     }
     else
     {
-        if (OW_NAME_BOX_NPC_TRAINER)
-            gSpeakerName = GetTrainerNameFromId(TRAINER_BATTLE_PARAM.opponentB);
-
+        SetSpeakerFromTrainer(TRAINER_BATTLE_PARAM.opponentB);
         return ReturnEmptyStringIfNull(TRAINER_BATTLE_PARAM.introTextB);
     }
 }

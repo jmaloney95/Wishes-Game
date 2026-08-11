@@ -110,9 +110,28 @@ Route_2_Text_WildPsyduck:
 	.string "Psyyyyy\n"
 	.string "duckkkk$"
 
+@ SIREN ALLISON: one-liner through the plate/portrait, boss card, battle.
+@ The trainer flag is shared across acts, so the card fires exactly once --
+@ at whichever of her encounters the player reaches first.
 Route_2_EventScript_SwimmerAllison::
-	trainerbattle_single TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonIntro, Route_2_Text_AllisonDefeat
-	msgbox Route_2_Text_AllisonPost, MSGBOX_AUTOCLOSE
+	goto_if_defeated TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_EventScript_AllisonAfter
+	lockall
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonIntro, MSGBOX_DEFAULT
+	closemessage
+	bossintro BOSS_INTRO_ALLISON
+	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonPost, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route_2_EventScript_AllisonAfter::
+	lock
+	faceplayer
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonPost, MSGBOX_DEFAULT
+	release
 	end
 
 Route_2_EventScript_SwimmerSkye::
@@ -131,8 +150,8 @@ Route_2_EventScript_SwimmerMarina::
 	end
 
 Route_2_Text_AllisonIntro:
-	.string "The thaw made the water just right…\n"
-	.string "and you made the view even better!$"
+	.string "Its UV 9…\n"
+	.string "and you're blocking my rays.$"
 
 Route_2_Text_AllisonDefeat:
 	.string "Swept off my feet… and I'm not\n"
@@ -174,3 +193,127 @@ Route_2_Text_MarinaDefeat:
 Route_2_Text_MarinaPost:
 	.string "Strong AND charming? The Pro-\n"
 	.string "fessor's lucky to have you up there.$"
+
+@ ---------------------------------------------------------------------------
+@  Beach crowd -- the blizzard is one town south; here it is towel weather.
+@ ---------------------------------------------------------------------------
+Route_2_EventScript_YachtSign::
+	lockall
+	msgbox Route_2_Text_YachtSign, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route_2_EventScript_YachtSignDone
+	msgbox Route_2_Text_YachtFailed, MSGBOX_DEFAULT
+Route_2_EventScript_YachtSignDone::
+	releaseall
+	end
+
+Route_2_EventScript_TuberSandy::
+	trainerbattle_single TRAINER_CINDY_2, Route_2_Text_SandyIntro, Route_2_Text_SandyDefeat
+	msgbox Route_2_Text_SandyPost, MSGBOX_AUTOCLOSE
+	end
+
+Route_2_EventScript_TuberCoco::
+	trainerbattle_single TRAINER_LUCAS_2, Route_2_Text_CocoIntro, Route_2_Text_CocoDefeat
+	msgbox Route_2_Text_CocoPost, MSGBOX_AUTOCLOSE
+	end
+
+Route_2_EventScript_ExpertPete::
+	trainerbattle_single TRAINER_MIKE_1, Route_2_Text_PeteIntro, Route_2_Text_PeteDefeat
+	msgbox Route_2_Text_PetePost, MSGBOX_AUTOCLOSE
+	end
+
+Route_2_EventScript_BeachBeauty::
+	lock
+	faceplayer
+	msgbox Route_2_Text_BeachBeauty, MSGBOX_DEFAULT
+	release
+	end
+
+Route_2_EventScript_BeachSailor::
+	lock
+	faceplayer
+	msgbox Route_2_Text_BeachSailor, MSGBOX_DEFAULT
+	release
+	end
+
+Route_2_EventScript_BeachOldMan::
+	lock
+	faceplayer
+	msgbox Route_2_Text_BeachOldMan, MSGBOX_DEFAULT
+	release
+	end
+
+Route_2_Text_YachtSign::
+	.string "A gleaming yacht bobs at the\n"
+	.string "pier, keys in the ignition.\p"
+	.string "Hijack the yacht?$"
+
+Route_2_Text_YachtFailed::
+	.string "Failed!$"
+
+Route_2_Text_SandyIntro::
+	.string "I heard that one town south\n"
+	.string "it's a whiteout blizzard.$"
+
+Route_2_Text_SandyDefeat::
+	.string "Whatever, ya flatfoot.!$"
+
+Route_2_Text_SandyPost::
+	.string "Snowman or sandcastle?\n"
+	.string "I can't decide!$"
+
+Route_2_Text_CocoIntro::
+	.string "Prime beach weather every single\n"
+	.string "day! How is that even fair?$"
+
+Route_2_Text_CocoDefeat::
+	.string "Wipeout...$"
+
+Route_2_Text_CocoPost::
+	.string "They say you can see the storm\n"
+	.string "wall from the south fence. Brrr.$"
+
+Route_2_Text_PeteIntro::
+	.string "Personally? I prefer the cold.$"
+
+Route_2_Text_PeteDefeat::
+	.string "I am sweating. That is new.$"
+
+Route_2_Text_PetePost::
+	.string "The moment I save up, I am\n"
+	.string "moving to Frostwood for good.$"
+
+Route_2_Text_BeachBeauty::
+	.string "Sunscreen on the left arm,\n"
+	.string "frostbite cream on the right.$"
+
+Route_2_Text_BeachSailor::
+	.string "Get a load of the cheeks on her!\n"
+	.string "Arceus, have Mercy!$"
+
+Route_2_Text_BeachOldMan::
+	.string "Some say it is climate change,\n"
+	.string "but legend says JIRACHI\p"
+	.string "will rise again.$"
+
+Route_2_EventScript_TwinsReinaVanessa::
+	trainerbattle_double TRAINER_RED, Route_2_Text_TwinsIntro, Route_2_Text_TwinsDefeat, Route_2_Text_TwinsNotEnough
+	msgbox Route_2_Text_TwinsPost, MSGBOX_AUTOCLOSE
+	end
+
+Route_2_Text_TwinsIntro::
+	.string "REINA: We do everything as a\n"
+	.string "pair!\p"
+	.string "VANESSA: Even our FINIZEN\n"
+	.string "match! Double battle time!$"
+
+Route_2_Text_TwinsDefeat::
+	.string "Even our synchronized splash\n"
+	.string "failed!$"
+
+Route_2_Text_TwinsNotEnough::
+	.string "You only have one POKeMON?\n"
+	.string "Come back with a pair!$"
+
+Route_2_Text_TwinsPost::
+	.string "Matching partners, matching\n"
+	.string "losses... Still cute though!$"

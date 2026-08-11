@@ -46,6 +46,7 @@
 #include "berry_powder.h"
 #include "mystery_gift.h"
 #include "union_room_chat.h"
+#include "quests.h"
 #include "constants/map_groups.h"
 #include "constants/items.h"
 #include "constants/heal_locations.h"
@@ -188,6 +189,7 @@ void NewGameInitData(void)
     InitEventData();
     FlagSet(FLAG_SYS_B_DASH); // Pokémon Wishes of Tomorrow: give Running Shoes from the start.
     AddBagItem(ITEM_RARE_CANDY, 99); // TEST ONLY: stack of Rare Candies for playtesting -- remove before release.
+    AddBagItem(ITEM_QUEST_LOG, 1);   // Quest journal -- always in the bag from the start.
     // Pokémon Wishes of Tomorrow: white-out sends the player home (the player's house
     // front door, which heals via Mom inside), not to some other town's Pokémon Center.
     SetLastHealLocationWarp(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE);
@@ -240,6 +242,7 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+    QuestMenu_ResetMenuSaveData();
 }
 
 static void ResetMiniGamesRecords(void)

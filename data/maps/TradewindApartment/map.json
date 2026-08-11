@@ -1,0 +1,35 @@
+{
+  "id": "MAP_TRADEWIND_APARTMENT",
+  "name": "TradewindApartment",
+  "layout": "LAYOUT_SOOTOPOLIS_CITY_HOUSE1",
+  "music": "MUS_DP_MT_CORONET",
+  "region_map_section": "MAPSEC_TRADEWIND_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [],
+  "warp_events": [
+    {
+      "x": 3,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_TOWN",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_TOWN",
+      "dest_warp_id": "2"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

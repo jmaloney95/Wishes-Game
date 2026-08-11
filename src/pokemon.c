@@ -1429,8 +1429,12 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u32 personal
         }
     }
 
-    SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
-    SetBoxMonData(boxMon, MON_DATA_OT_ID, &value);
+    // Direct writes: the mon is still plaintext and its checksum unsealed
+    // here, and both fields form the substruct encryption key -- they must
+    // not take SetBoxMonData's re-key path (it decrypt-validates, which only
+    // makes sense on a sealed mon).
+    boxMon->personality = personality;
+    boxMon->otId = value;
 
     checksum = CalculateBoxMonChecksum(boxMon);
     SetBoxMonData(boxMon, MON_DATA_CHECKSUM, &checksum);
@@ -1836,6 +1840,10 @@ void CalculateMonStats(struct Pokemon *mon)
         n = ModifyStatByNature(nature, n, i);
         if (B_FRIENDSHIP_BOOST == TRUE)
             n = n + ((n * 10 * friendship) / (MAX_FRIENDSHIP * 100));
+        // Wishes of Tomorrow: permanent Paw modifiers (signed flat, floor at 1).
+        n += (s32)GetMonData(mon, MON_DATA_PAW_ATK + (i - STAT_ATK));
+        if (n < 1)
+            n = 1;
         SetMonData(mon, MON_DATA_MAX_HP + i, &n);
     }
 
@@ -2641,24 +2649,41 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_SPDEF_EV:
             retVal = GetSubstruct2(boxMon)->spDefenseEV;
             break;
+        // Wishes of Tomorrow: contest conditions are stubbed -- their substruct
+        // bytes now hold the Ability Machine override and Paw stat mods.
         case MON_DATA_COOL:
-            retVal = GetSubstruct2(boxMon)->cool;
-            break;
         case MON_DATA_BEAUTY:
-            retVal = GetSubstruct2(boxMon)->beauty;
-            break;
         case MON_DATA_CUTE:
-            retVal = GetSubstruct2(boxMon)->cute;
-            break;
         case MON_DATA_SMART:
-            retVal = GetSubstruct2(boxMon)->smart;
-            break;
         case MON_DATA_TOUGH:
-            retVal = GetSubstruct2(boxMon)->tough;
-            break;
         case MON_DATA_SHEEN:
-            retVal = GetSubstruct2(boxMon)->sheen;
+            retVal = 0;
             break;
+        case MON_DATA_CUSTOM_ABILITY:
+            retVal = GetSubstruct2(boxMon)->customAbility;
+            break;
+        case MON_DATA_PAW_ATK:
+        case MON_DATA_PAW_DEF:
+        case MON_DATA_PAW_SPEED:
+        case MON_DATA_PAW_SPATK:
+        case MON_DATA_PAW_SPDEF:
+        {
+            // 5-bit two's complement, sign-extended to a full s32 in the u32.
+            struct PokemonSubstruct2 *sub2 = GetSubstruct2(boxMon);
+            s32 raw;
+            switch (field)
+            {
+            case MON_DATA_PAW_ATK:   raw = sub2->pawAtk;   break;
+            case MON_DATA_PAW_DEF:   raw = sub2->pawDef;   break;
+            case MON_DATA_PAW_SPEED: raw = sub2->pawSpeed; break;
+            case MON_DATA_PAW_SPATK: raw = sub2->pawSpAtk; break;
+            default:                 raw = sub2->pawSpDef; break;
+            }
+            if (raw >= 16)
+                raw -= 32;
+            retVal = (u32)raw;
+            break;
+        }
         case MON_DATA_POKERUS:
             retVal = GetSubstruct3(boxMon)->pokerus;
             break;
@@ -2864,6 +2889,9 @@ u32 GetBoxMonData3(struct BoxPokemon *boxMon, s32 field, u8 *data)
         case MON_DATA_IS_SHADOW:
             retVal = GetSubstruct3(boxMon)->isShadow;
             break;
+        case MON_DATA_SHADOW_OPENED:
+            retVal = GetSubstruct3(boxMon)->shadowOpened;
+            break;
         case MON_DATA_DYNAMAX_LEVEL:
             retVal = GetSubstruct3(boxMon)->dynamaxLevel;
             break;
@@ -3057,8 +3085,18 @@ void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg)
 void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
 {
     const u8 *data = dataArg;
+    // WoT: otId is half of the substruct encryption key (otId ^ personality).
+    // It sits BEFORE MON_DATA_ENCRYPT_SEPARATOR, so the plain branch used to
+    // write it without re-encrypting -- fine in vanilla (nothing ever changes
+    // a mon's OT id), but the Shadow snag flow hands a TRAINER's mon to the
+    // player: rewriting the OT id under encrypted data turned every snagged
+    // mon into a Bad Egg. Route it through the decrypt/re-encrypt envelope
+    // so the data is re-keyed. (MON_DATA_PERSONALITY would need this too --
+    // AND a substruct re-shuffle -- so it stays unsupported; nothing writes
+    // it after creation.)
+    bool32 reKey = (field == MON_DATA_OT_ID);
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR || reKey)
     {
         if (CalculateBoxMonChecksumDecrypt(boxMon) != boxMon->checksum)
         {
@@ -3071,6 +3109,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
 
         switch (field)
         {
+        case MON_DATA_OT_ID:
+            SET32(boxMon->otId);
+            break;
         case MON_DATA_NICKNAME:
         case MON_DATA_NICKNAME10:
         {
@@ -3156,23 +3197,32 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_SPDEF_EV:
             SET8(GetSubstruct2(boxMon)->spDefenseEV);
             break;
+        // Wishes of Tomorrow: contest conditions are stubbed (writes ignored) --
+        // their substruct bytes now hold the AM override and Paw stat mods.
         case MON_DATA_COOL:
-            SET8(GetSubstruct2(boxMon)->cool);
-            break;
         case MON_DATA_BEAUTY:
-            SET8(GetSubstruct2(boxMon)->beauty);
-            break;
         case MON_DATA_CUTE:
-            SET8(GetSubstruct2(boxMon)->cute);
-            break;
         case MON_DATA_SMART:
-            SET8(GetSubstruct2(boxMon)->smart);
-            break;
         case MON_DATA_TOUGH:
-            SET8(GetSubstruct2(boxMon)->tough);
-            break;
         case MON_DATA_SHEEN:
-            SET8(GetSubstruct2(boxMon)->sheen);
+            break;
+        case MON_DATA_CUSTOM_ABILITY:
+            SET16(GetSubstruct2(boxMon)->customAbility);
+            break;
+        case MON_DATA_PAW_ATK:
+            GetSubstruct2(boxMon)->pawAtk = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_DEF:
+            GetSubstruct2(boxMon)->pawDef = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_SPEED:
+            GetSubstruct2(boxMon)->pawSpeed = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_SPATK:
+            GetSubstruct2(boxMon)->pawSpAtk = data[0] & 0x1F;
+            break;
+        case MON_DATA_PAW_SPDEF:
+            GetSubstruct2(boxMon)->pawSpDef = data[0] & 0x1F;
             break;
         case MON_DATA_POKERUS:
             SET8(GetSubstruct3(boxMon)->pokerus);
@@ -3311,6 +3361,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_IS_SHADOW:
             SET8(GetSubstruct3(boxMon)->isShadow);
             break;
+        case MON_DATA_SHADOW_OPENED:
+            SET8(GetSubstruct3(boxMon)->shadowOpened);
+            break;
         case MON_DATA_DYNAMAX_LEVEL:
             SET8(GetSubstruct3(boxMon)->dynamaxLevel);
             break;
@@ -3350,9 +3403,8 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         case MON_DATA_PERSONALITY:
             SET32(boxMon->personality);
             break;
-        case MON_DATA_OT_ID:
-            SET32(boxMon->otId);
-            break;
+        // MON_DATA_OT_ID is handled in the encrypted branch above: it is part
+        // of the encryption key, so writing it must re-key the substructs.
         case MON_DATA_LANGUAGE:
             SET8(boxMon->language);
             break;
@@ -3400,7 +3452,7 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         }
     }
 
-    if (field > MON_DATA_ENCRYPT_SEPARATOR)
+    if (field > MON_DATA_ENCRYPT_SEPARATOR || reKey)
         boxMon->checksum = CalculateBoxMonChecksumReencrypt(boxMon);
 }
 
@@ -3584,7 +3636,27 @@ enum Ability GetMonAbility(struct Pokemon *mon)
 {
     u16 species = GetMonData(mon, MON_DATA_SPECIES);
     u8 abilityNum = GetMonData(mon, MON_DATA_ABILITY_NUM);
+    // Wishes of Tomorrow: an Ability Machine override wins over the species
+    // slots. gLastUsedAbility must still be set (Trace/battle messages read it).
+    u16 override = GetMonData(mon, MON_DATA_CUSTOM_ABILITY);
+    if (override != ABILITY_NONE && override < ABILITIES_COUNT)
+    {
+        gLastUsedAbility = override;
+        return override;
+    }
     return GetAbilityBySpecies(species, abilityNum);
+}
+
+enum Ability GetBoxMonAbility(struct BoxPokemon *boxMon)
+{
+    u16 override = GetBoxMonData(boxMon, MON_DATA_CUSTOM_ABILITY);
+    if (override != ABILITY_NONE && override < ABILITIES_COUNT)
+    {
+        gLastUsedAbility = override;
+        return override;
+    }
+    return GetAbilityBySpecies(GetBoxMonData(boxMon, MON_DATA_SPECIES),
+                               GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM));
 }
 
 void CreateSecretBaseEnemyParty(struct SecretBase *secretBaseRecord)
@@ -3857,7 +3929,7 @@ void PokemonToBattleMon(struct Pokemon *src, struct BattlePokemon *dst)
     dst->types[1] = GetSpeciesType(dst->species, 1);
     dst->types[2] = TYPE_MYSTERY;
     dst->isShiny = IsMonShiny(src);
-    dst->ability = GetAbilityBySpecies(dst->species, dst->abilityNum);
+    dst->ability = GetMonAbility(src); // Wishes of Tomorrow: honors the AM override
     GetMonData(src, MON_DATA_NICKNAME, nickname);
     StringCopy_Nickname(dst->nickname, nickname);
     GetMonData(src, MON_DATA_OT_NAME, dst->otName);
@@ -5785,6 +5857,14 @@ u16 GetBattleBGM(void)
     {
         enum TrainerClassID trainerClass;
 
+        // Star Summit boss: force the FRLG champion battle theme.
+        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+            return MUS_RG_VS_CHAMPION;
+
+        // Vesper keeps the rift's heart -- his battle plays Giratina's theme.
+        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_DISTORTION_LEADER)
+            return MUS_PL_VS_GIRATINA;
+
         if (gBattleTypeFlags & BATTLE_TYPE_FRONTIER)
             trainerClass = GetFrontierOpponentClass(TRAINER_BATTLE_PARAM.opponentA);
         else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER_HILL)
@@ -6594,7 +6674,7 @@ u32 GetFormChangeTargetSpeciesBoxMon(struct BoxPokemon *boxMon, enum FormChanges
         .method = method,
         .currentSpecies = species,
         .heldItem = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM),
-        .ability = GetAbilityBySpecies(species, GetBoxMonData(boxMon, MON_DATA_ABILITY_NUM)),
+        .ability = GetBoxMonAbility(boxMon), // Wishes of Tomorrow: honors the AM override
         .partyItemUsed = gSpecialVar_ItemId,
         .multichoiceSelection = gSpecialVar_Result,
         .status = GetBoxMonData(boxMon, MON_DATA_STATUS),

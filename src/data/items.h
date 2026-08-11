@@ -256,6 +256,407 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_MasterBall,
     },
 
+    // ===== Wishes of Tomorrow: Ability Machines =====
+    [ITEM_AM_INTIMIDATE] =
+    {
+        .name = ITEM_NAME("AM Intimidate"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "Lowers the foe's\n"
+            "ATTACK as this\n"
+            "POKéMON appears."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_INTIMIDATE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_GUTS] =
+    {
+        .name = ITEM_NAME("AM Guts"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "Boosts ATTACK if\n"
+            "hit by a status\n"
+            "condition."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_GUTS,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_TECHNICIAN] =
+    {
+        .name = ITEM_NAME("AM Technician"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "Powers up its\n"
+            "weaker moves\n"
+            "(60 BP or less)."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_TECHNICIAN,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_MOXIE] =
+    {
+        .name = ITEM_NAME("AM Moxie"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "Raises ATTACK\n"
+            "after it knocks\n"
+            "out a foe."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MOXIE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_NormalTMHM,
+    },
+
+    [ITEM_AM_ADAPTABILITY] =
+    {
+        .name = ITEM_NAME("AM Adaptability"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Powers up its\n"
+            "same-type moves\n"
+            "even further."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_ADAPTABILITY,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_SHEER_FORCE] =
+    {
+        .name = ITEM_NAME("AM Sheer Force"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Powers up moves\n"
+            "that carry an\n"
+            "added effect."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SHEER_FORCE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_TOUGH_CLAWS] =
+    {
+        .name = ITEM_NAME("AM Tough Claws"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Powers up moves\n"
+            "that make\n"
+            "contact."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_TOUGH_CLAWS,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_IRON_FIST] =
+    {
+        .name = ITEM_NAME("AM Iron Fist"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Powers up\n"
+            "punching moves."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_IRON_FIST,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_TINTED_LENS] =
+    {
+        .name = ITEM_NAME("AM Tinted Lens"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Doubles power of\n"
+            "its 'not very\n"
+            "effective' hits."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_TINTED_LENS,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_SKILL_LINK] =
+    {
+        .name = ITEM_NAME("AM Skill Link"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Multi-hit moves\n"
+            "always strike the\n"
+            "maximum times."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SKILL_LINK,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_THICK_FAT] =
+    {
+        .name = ITEM_NAME("AM Thick Fat"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Halves damage\n"
+            "taken from FIRE\n"
+            "and ICE moves."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_THICK_FAT,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_STURDY] =
+    {
+        .name = ITEM_NAME("AM Sturdy"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Can't be downed\n"
+            "in one hit while\n"
+            "at full HP."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_STURDY,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_LEVITATE] =
+    {
+        .name = ITEM_NAME("AM Levitate"),
+        .price = 8000,
+        .description = COMPOUND_STRING(
+            "Grants immunity\n"
+            "to GROUND-type\n"
+            "moves."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_LEVITATE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_WaterTMHM,
+    },
+
+    [ITEM_AM_UNAWARE] =
+    {
+        .name = ITEM_NAME("AM Unaware"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "Ignores the\n"
+            "foe's stat\n"
+            "changes."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_UNAWARE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_SERENE_GRACE] =
+    {
+        .name = ITEM_NAME("AM Serene Grace"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "Doubles the odds\n"
+            "of a move's\n"
+            "added effect."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SERENE_GRACE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_PRANKSTER] =
+    {
+        .name = ITEM_NAME("AM Prankster"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "Gives priority\n"
+            "to its status\n"
+            "moves."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_PRANKSTER,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_POISON_HEAL] =
+    {
+        .name = ITEM_NAME("AM Poison Heal"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "Restores HP\n"
+            "instead of losing\n"
+            "it to poison."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_POISON_HEAL,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_MULTISCALE] =
+    {
+        .name = ITEM_NAME("AM Multiscale"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Halves damage\n"
+            "taken while at\n"
+            "full HP."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MULTISCALE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_MAGIC_GUARD] =
+    {
+        .name = ITEM_NAME("AM Magic Guard"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Takes damage\n"
+            "only from direct\n"
+            "attacks."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MAGIC_GUARD,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_REGENERATOR] =
+    {
+        .name = ITEM_NAME("AM Regenerator"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Restores some HP\n"
+            "when it is\n"
+            "switched out."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_REGENERATOR,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_SPEED_BOOST] =
+    {
+        .name = ITEM_NAME("AM Speed Boost"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Its SPEED rises\n"
+            "every turn."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_SPEED_BOOST,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_MAGIC_BOUNCE] =
+    {
+        .name = ITEM_NAME("AM Magic Bounce"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Reflects status\n"
+            "moves back at\n"
+            "the attacker."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_MAGIC_BOUNCE,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    // ===== Wishes of Tomorrow: the Paws =====
+    [ITEM_MANKEYS_PAW] =
+    {
+        .name = ITEM_NAME("Mankey's Paw"),
+        .price = 2000,
+        .description = COMPOUND_STRING(
+            "A wish: +1 to one\n"
+            "stat. A curse: -1\n"
+            "to another."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Paw,
+        .secondaryId = 1,
+        .iconPic = gItemIcon_QuickClaw,
+        .iconPalette = gItemIconPalette_QuickClaw,
+    },
+
+    [ITEM_PRIMEAPES_PAW] =
+    {
+        .name = ITEM_NAME("Primeape's Paw"),
+        .price = 4000,
+        .description = COMPOUND_STRING(
+            "A wish: +2 to one\n"
+            "stat. A curse: -2\n"
+            "to another."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Paw,
+        .secondaryId = 2,
+        .iconPic = gItemIcon_QuickClaw,
+        .iconPalette = gItemIconPalette_QuickClaw,
+    },
+
+    [ITEM_ANNIHILAPES_PAW] =
+    {
+        .name = ITEM_NAME("Annihilape Paw"),
+        .price = 6000,
+        .description = COMPOUND_STRING(
+            "A wish: +3 to one\n"
+            "stat. A curse: -3\n"
+            "to another."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Paw,
+        .secondaryId = 3,
+        .iconPic = gItemIcon_QuickClaw,
+        .iconPalette = gItemIconPalette_QuickClaw,
+    },
+
+
     [ITEM_PREMIER_BALL] =
     {
         .name = ITEM_NAME("Premier Ball"),
@@ -14209,6 +14610,275 @@ const struct ItemInfo gItemsInfo[] =
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
         .iconPic = gItemIcon_FullHeal,
         .iconPalette = gItemIconPalette_FullHeal,
+    },
+
+    // Tradewind Town curios (reuse Strange Souvenir icon)
+    [ITEM_BOTTLED_WARMTH] =
+    {
+        .name = ITEM_NAME("Bottled Warmth"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A jar warm to the\n"
+            "touch. It never cools,\n"
+            "and never opens."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_BORROWED_YEARS] =
+    {
+        .name = ITEM_NAME("Borrowed Years"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "Time that belonged to\n"
+            "someone else. Heavier\n"
+            "than it looks."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_UNSPOKEN_LAST_WORDS] =
+    {
+        .name = ITEM_NAME("Unspoken Last Words"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A goodbye no one got\n"
+            "to say. It hums softly\n"
+            "when you hold it."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_A_STRANGERS_NAME] =
+    {
+        .name = ITEM_NAME("Stranger's Name"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A name with no face\n"
+            "left to wear it. You\n"
+            "almost remember it."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_FOLDED_GOODBYE] =
+    {
+        .name = ITEM_NAME("Folded Goodbye"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A letter folded so\n"
+            "many times it can\n"
+            "never be opened again."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_ONE_GOOD_DREAM] =
+    {
+        .name = ITEM_NAME("One Good Dream"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A single good dream,\n"
+            "kept safe so it is\n"
+            "never forgotten."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_THE_LONG_WAY_HOME] =
+    {
+        .name = ITEM_NAME("Long Way Home"),
+        .price = 1000,
+        .description = COMPOUND_STRING(
+            "A path that always\n"
+            "leads home. No one\n"
+            "says how long it takes."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_CARVED_MASK] =
+    {
+        .name = ITEM_NAME("Carved Mask"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Itsuki's festival\n"
+            "mask. A warding face,\n"
+            "carved honest."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_OniMask,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_CATALPA_BOW] =
+    {
+        .name = ITEM_NAME("Catalpa Bow"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "An azusa spirit-bow.\n"
+            "Its unstrung song\n"
+            "opens thin places."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_CatalpaBow,
+        .iconPic = gItemIcon_CatalpaBow,
+        .iconPalette = gItemIconPalette_CatalpaBow,
+    },
+
+    [ITEM_SHADOW_DOSSIER] =
+    {
+        .name = ITEM_NAME("Shadow Dossier"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Clarkson's original\n"
+            "research. Heavy in\n"
+            "more ways than one."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_ShadowDossier,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_QUEST_LOG] =
+    {
+        .name = ITEM_NAME("Quest Log"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A journal tracking\n"
+            "every promise made\n"
+            "and kept."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_FIELD,
+        .fieldUseFunc = ItemUseOutOfBattle_QuestLog,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_SNAG_MACHINE] =
+    {
+        .name = ITEM_NAME("Snag Machine"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Turns Poke Balls\n"
+            "into Snag Balls vs\n"
+            "Shadow Pokemon."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_SnagMachine,
+        .iconPalette = gItemIconPalette_SnagMachine,
+    },
+
+    [ITEM_SHINKANSEN_KEY] =
+    {
+        .name = ITEM_NAME("Shinkansen Key"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Keycard to the\n"
+            "Shinkansen driver's\n"
+            "cab. One way: east."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    // Distortion World rift-layer relics. Names/descriptions PLACEHOLDER (Joe).
+    [ITEM_RIFT_SHARD] =
+    {
+        .name = ITEM_NAME("Rift Shard"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A splinter of the\n"
+            "rift. It hums with\n"
+            "kept-back time."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_RIFT_CORE] =
+    {
+        .name = ITEM_NAME("Rift Core"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A dense knot of\n"
+            "the rift. Cold on\n"
+            "one side only."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    [ITEM_RIFT_HEART] =
+    {
+        .name = ITEM_NAME("Rift Heart"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "The deepest kept\n"
+            "thing. It beats,\n"
+            "very slowly."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_StrangeSouvenir,
+        .iconPalette = gItemIconPalette_StrangeSouvenir,
+    },
+
+    // Tradewind department-store scam item: Master Ball's icon and description
+    // verbatim, 5,000 on the shelf -- but it goes to the ITEMS pocket and can't
+    // be used for anything at all. The shelf tag really does say "Waster Ball".
+    [ITEM_WASTER_BALL] =
+    {
+        .name = ITEM_NAME("Waster Ball"),
+        .price = 5000,
+        .description = COMPOUND_STRING(
+            "The best Ball that\n"
+            "catches a Pokémon\n"
+            "without fail."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_MasterBall,
+        .iconPalette = gItemIconPalette_MasterBall,
     },
 
     [ITEM_EON_TICKET] =

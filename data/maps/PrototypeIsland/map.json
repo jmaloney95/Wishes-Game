@@ -1,0 +1,440 @@
+{
+  "id": "MAP_PROTOTYPE_ISLAND",
+  "name": "PrototypeIsland",
+  "layout": "LAYOUT_PROTOTYPE_ISLAND",
+  "music": "MUS_ABANDONED_SHIP",
+  "region_map_section": "MAPSEC_PROTOTYPE_ISLAND",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_ROUTE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
+      "x": 6,
+      "y": 7,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PrototypeIsland_EventScript_Hermit",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 4,
+      "elevation": 0,
+      "var": "VAR_TEMP_6",
+      "var_value": "0",
+      "script": "PrototypeIsland_EventScript_EnterLab"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 1,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 2,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToCelebi"
+    },
+    {
+      "type": "trigger",
+      "x": 0,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 1,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 2,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 8,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 9,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 13,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 14,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    },
+    {
+      "type": "trigger",
+      "x": 21,
+      "y": 0,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": 0,
+      "script": "PrototypeIsland_EventScript_SurfToRoute130"
+    }
+  ],
+  "bg_events": []
+}

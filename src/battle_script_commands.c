@@ -4250,6 +4250,13 @@ static void Cmd_getexp(void)
                 gBattleScripting.getexpState = 5;
                 gBattleStruct->battlerExpReward = 0;
             }
+            else if (GetMonData(&gPlayerParty[*expMonId], MON_DATA_IS_SHADOW))
+            {
+                // WoT Shadow system: a sealed heart cannot grow -- Shadow
+                // mons gain no EXP until purified (the XD rule).
+                gBattleScripting.getexpState = 5;
+                gBattleStruct->battlerExpReward = 0;
+            }
             else if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && *expMonId >= 3)
                   || GetMonData(&gPlayerParty[*expMonId], MON_DATA_LEVEL) == MAX_LEVEL)
             {
@@ -5296,6 +5303,12 @@ static void Cmd_switchindataupdate(void)
     gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
     gBattleMons[battler].types[2] = TYPE_MYSTERY;
     gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
+    {
+        // Wishes of Tomorrow: apply the Ability Machine override on switch-in.
+        u16 amOverride = GetMonData(&GetBattlerParty(battler)[gBattlerPartyIndexes[battler]], MON_DATA_CUSTOM_ABILITY);
+        if (amOverride != ABILITY_NONE && amOverride < ABILITIES_COUNT)
+            gBattleMons[battler].ability = amOverride;
+    }
     #if TESTING
     if (gTestRunnerEnabled)
     {
@@ -6212,6 +6225,15 @@ static u32 GetTrainerMoneyToGive(u16 trainerId)
             return 20;
         lastMonLevel = party[GetTrainerPartySizeFromId(trainerId) - 1].lvl;
         trainerMoney = gTrainerClasses[GetTrainerClassFromId(trainerId)].money ?: 5;
+
+        // WoT: Captain Ryoko is a named boss wearing a grunt class -- pay
+        // captain rates (4 * 41 * 20 = 3280), not grunt scraps.
+        if (trainerId == TRAINER_SENNEN_CAPTAIN_RYOKO)
+            trainerMoney = 20;
+        // WoT: THE ONI (final boss, repurposed Wally rematch id) pays
+        // champion rates: 4 * 60 * 25 = 6000.
+        if (trainerId == TRAINER_WALLY_VR_5)
+            trainerMoney = 25;
 
         if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS)
             moneyReward = 4 * lastMonLevel * gBattleStruct->moneyMultiplier * trainerMoney;
@@ -10600,6 +10622,19 @@ static void FinalizeCapture(void)
         u32 friendship = (B_FRIEND_BALL_MODIFIER >= GEN_8 ? 150 : 200);
         SetMonData(caughtMon, MON_DATA_FRIENDSHIP, &friendship);
     }
+
+    // WoT Shadow system: in a trainer battle a successful throw is a SNAG.
+    // The mon leaves the field through the normal faint machinery (so the
+    // opponent switches in as usual) and is delivered at the END of the
+    // battle by BS_WotCollectSnaggedMons -- it can never be lost mid-fight.
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        u32 zero = 0;
+        gBattleStruct->wotSnaggedMons |= 1u << gBattlerPartyIndexes[gBattlerTarget];
+        gBattleMons[gBattlerTarget].hp = 0;
+        SetMonData(caughtMon, MON_DATA_HP, &zero);
+        gBattlescriptCurrInstr = BattleScript_WotSuccessSnag;
+    }
 }
 
 struct BallData
@@ -10916,6 +10951,15 @@ static u32 ComputeBallShakeOdds(u32 odds)
     return odds;
 }
 
+// WoT Shadow system (WoT_Act3_Canon.md §2.2): any thrown ball becomes a SNAG
+// BALL against a trainer's Shadow Pokemon -- the trainer-block rule is waived
+// for Shadow targets and the normal capture odds run instead.
+static bool32 WotIsSnaggableTarget(void)
+{
+    return !IsOnPlayerSide(gBattlerTarget)
+        && GetMonData(GetBattlerMon(gBattlerTarget), MON_DATA_IS_SHADOW);
+}
+
 static void Cmd_handleballthrow(void)
 {
     CMD_ARGS();
@@ -10925,13 +10969,42 @@ static void Cmd_handleballthrow(void)
 
     gBattlerTarget = GetCatchingBattler();
 
+    // WoT Shadow system: honour the manually chosen target (set by the
+    // ball-target selector when two foes are out); otherwise, in a trainer
+    // battle a thrown ball is a SNAG ball, so aim it at a Shadow --
+    // GetCatchingBattler always picks the left slot, which would leave a
+    // right-slot Shadow unsnaggable (the ball hits the non-Shadow and the
+    // trainer blocks it, even a Master Ball).
+    if (gBattleStruct->wotBallTarget != 0
+     && IsBattlerAlive(gBattleStruct->wotBallTarget - 1))
+    {
+        gBattlerTarget = gBattleStruct->wotBallTarget - 1;
+        gBattleStruct->wotBallTarget = 0;
+    }
+    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    {
+        enum BattlerId left = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+
+        if (IsBattlerAlive(left) && GetMonData(GetBattlerMon(left), MON_DATA_IS_SHADOW))
+        {
+            gBattlerTarget = left;
+        }
+        else if (IsDoubleBattle())
+        {
+            enum BattlerId right = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+
+            if (IsBattlerAlive(right) && GetMonData(GetBattlerMon(right), MON_DATA_IS_SHADOW))
+                gBattlerTarget = right;
+        }
+    }
+
     if (gBattleTypeFlags & BATTLE_TYPE_GHOST)
     {
         BtlController_EmitBallThrowAnim(gBattlerAttacker, B_COMM_TO_CONTROLLER, BALL_GHOST_DODGE);
         MarkBattlerForControllerExec(gBattlerAttacker);
         gBattlescriptCurrInstr = BattleScript_GhostBallDodge;
     }
-    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+    else if (gBattleTypeFlags & BATTLE_TYPE_TRAINER && !WotIsSnaggableTarget())
     {
         BtlController_EmitBallThrowAnim(gBattlerAttacker, B_COMM_TO_CONTROLLER, BALL_TRAINER_BLOCK);
         MarkBattlerForControllerExec(gBattlerAttacker);
@@ -11620,6 +11693,98 @@ void SaveBattlerAttacker(enum BattlerId battler)
     }
 
     gBattleStruct->savedBattlerAttacker[gBattleStruct->savedAttackerCount++] = battler;
+}
+
+// WoT Shadow system: select the next mon snagged this battle for delivery --
+// the script loops back until we jump to doneInstr. Heals and dex-flags it,
+// buffers its nickname, and points gBattlerTarget's party index at the slot
+// so the vanilla trygivecaughtmonnick machinery names THIS mon. The actual
+// hand-over happens in BS_WotGiveSnaggedMon after the nickname step.
+void BS_WotCollectSnaggedMons(void)
+{
+    NATIVE_ARGS(const u8 *doneInstr);
+    u32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (gBattleStruct->wotSnaggedMons & (1u << i))
+        {
+            u32 hp = GetMonData(&gEnemyParty[i], MON_DATA_MAX_HP);
+            enum NationalDexOrder natDexNo = SpeciesToNationalPokedexNum(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES));
+
+            gBattleStruct->wotSnaggedMons &= ~(1u << i);
+            gBattleStruct->wotDeliverSlot = i;
+            SetMonData(&gEnemyParty[i], MON_DATA_HP, &hp);
+            GetSetPokedexFlag(natDexNo, FLAG_SET_SEEN);
+            GetSetPokedexFlag(natDexNo, FLAG_SET_CAUGHT);
+            gBattlerTarget = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+            gBattlerPartyIndexes[gBattlerTarget] = i;
+            PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerTarget, i);
+            gBattlescriptCurrInstr = cmd->nextInstr;
+            return;
+        }
+    }
+    gBattlescriptCurrInstr = cmd->doneInstr;
+}
+
+// WoT Shadow system: hand the selected snagged mon (post-nickname) to the
+// player and pick the party/PC delivery message.
+void BS_WotGiveSnaggedMon(void)
+{
+    NATIVE_ARGS();
+    u32 i = gBattleStruct->wotDeliverSlot;
+
+    VarSet(VAR_WOT_SNAG_COUNT, VarGet(VAR_WOT_SNAG_COUNT) + 1);
+
+    if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
+    {
+        // Partner multis reduce gPlayerParty to 3 selected mons, put the
+        // partner's team in slots 3-5, and restore the whole party from a
+        // backup after the battle (LoadPlayerParty) -- anything delivered to
+        // the live party HERE would be wiped by that restore. So deliver into
+        // the BACKUP party (the thing that gets restored): first open slot
+        // joins the party, otherwise the PC.
+        u32 slot;
+
+        SetMonData(&gEnemyParty[i], MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
+        SetMonData(&gEnemyParty[i], MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
+        SetMonData(&gEnemyParty[i], MON_DATA_OT_ID, gSaveBlock2Ptr->playerTrainerId);
+        for (slot = 0; slot < PARTY_SIZE; slot++)
+        {
+            if (!GetMonData(GetSavedPlayerPartyMon(slot), MON_DATA_SPECIES))
+                break;
+        }
+        if (slot < PARTY_SIZE)
+        {
+            SavePlayerPartyMon(slot, &gEnemyParty[i]);
+            (*GetSavedPlayerPartyCount())++;
+            gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+        }
+        else
+        {
+            CopyMonToPC(&gEnemyParty[i]);
+            gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+        }
+    }
+    else if (GiveCapturedMonToPlayer(&gEnemyParty[i]) == MON_GIVEN_TO_PARTY)
+        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+    else
+        gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
+// WoT Shadow system: TRUE for an enemy battler that was snagged this battle.
+// Used by the faint script to swap the faint presentation for a silent exit
+// (the snag message already announced the departure).
+void BS_WotJumpIfSnaggedFaint(void)
+{
+    NATIVE_ARGS(const u8 *jumpInstr);
+
+    if (!IsOnPlayerSide(gBattlerFainted)
+     && (gBattleStruct->wotSnaggedMons & (1u << gBattlerPartyIndexes[gBattlerFainted])))
+        gBattlescriptCurrInstr = cmd->jumpInstr;
+    else
+        gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
 void BS_SaveTarget(void)

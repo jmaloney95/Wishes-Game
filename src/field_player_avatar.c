@@ -1587,6 +1587,16 @@ u16 GetRivalAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
 
 u16 GetPlayerAvatarGraphicsIdByStateIdAndGender(u8 state, enum Gender gender)
 {
+    // Carved Mask disguise: while FLAG_ONI_MASK_WORN is set the on-foot
+    // player renders as the Gold Oni (the Mutrid leader's skin -- a real
+    // 9-frame walking sheet; the white officer sheet's walk frames are
+    // copies of its standing frames, which is why it looked frozen). Only
+    // the NORMAL state is swapped -- bike/surf/underwater/fishing sheets
+    // need frames a 9-frame NPC sheet doesn't have, so mounting up visibly
+    // drops the disguise. Running while masked is handled in
+    // GetRunningDirectionAnimNum (no run frames on NPC sheets).
+    if (state == PLAYER_AVATAR_STATE_NORMAL && FlagGet(FLAG_ONI_MASK_WORN))
+        return OBJ_EVENT_GFX_GOLD_ONI;
     return sPlayerAvatarGfxIds[state][gender];
 }
 
@@ -1603,6 +1613,20 @@ u16 GetRSAvatarGraphicsIdByGender(enum Gender gender)
 u16 GetPlayerAvatarGraphicsIdByStateId(u8 state)
 {
     return GetPlayerAvatarGraphicsIdByStateIdAndGender(state, gPlayerAvatar.gender);
+}
+
+// Script special: re-apply the on-foot player sprite immediately (used when
+// the Carved Mask disguise toggles mid-map). No-op while biking/surfing --
+// those states re-run the gfx lookup on their own transitions anyway.
+void RefreshPlayerAvatarGraphicsIfOnFoot(void)
+{
+    if (TestPlayerAvatarFlags(PLAYER_AVATAR_FLAG_ON_FOOT))
+    {
+        struct ObjectEvent *objEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+        ObjectEventSetGraphicsId(objEvent, GetPlayerAvatarGraphicsIdByStateId(PLAYER_AVATAR_STATE_NORMAL));
+        ObjectEventTurn(objEvent, objEvent->movementDirection);
+    }
 }
 
 enum Gender GetPlayerAvatarGenderByGraphicsId(u16 gfxId)
@@ -1625,6 +1649,12 @@ enum Gender GetPlayerAvatarGenderByGraphicsId(u16 gfxId)
     case OBJ_EVENT_GFX_GREEN_VS_SEEKER:
     case OBJ_EVENT_GFX_GREEN_VS_SEEKER_BIKE:
         return FEMALE;
+    // The Carved Mask oni disguise is worn by either protagonist. The
+    // return-to-field path re-derives gPlayerAvatar.gender from the current
+    // graphics id, so falling through to MALE here silently flipped female
+    // saves while masked -- keep the saved gender instead.
+    case OBJ_EVENT_GFX_GOLD_ONI:
+        return gSaveBlock2Ptr->playerGender;
     default:
         return MALE;
     }

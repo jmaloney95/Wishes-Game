@@ -621,7 +621,7 @@
       "id": "LAYOUT_LITTLEROOT_TOWN_MAYS_HOUSE_2F",
       "name": "LittlerootTown_MaysHouse_2F_Layout",
       "width": 9,
-      "height": 8,
+      "height": 5,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_BrendansMaysHouse",
       "border_filepath": "data/layouts/LittlerootTown_MaysHouse_2F/border.bin",
@@ -653,7 +653,7 @@
     {
       "id": "LAYOUT_HOUSE2",
       "name": "House2_Layout",
-      "width": 11,
+      "width": 10,
       "height": 8,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_GenericBuilding",
@@ -2886,8 +2886,8 @@
     {
       "id": "LAYOUT_ROUTE130",
       "name": "Route130_Layout",
-      "width": 80,
-      "height": 40,
+      "width": 58,
+      "height": 33,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Cave",
       "border_filepath": "data/layouts/Route130/border.bin",
@@ -9394,7 +9394,7 @@
       "width": 41,
       "height": 41,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_MtMoonVillageInterior",
+      "secondary_tileset": "gTileset_LavaMap",
       "border_filepath": "data/layouts/test/border.bin",
       "blockdata_filepath": "data/layouts/test/map.bin"
     },
@@ -9412,7 +9412,7 @@
       "id": "LAYOUT_SENNEN_VILLAGE",
       "name": "SennenVillage_Layout",
       "width": 35,
-      "height": 20,
+      "height": 26,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenVillage/border.bin",
@@ -9431,10 +9431,10 @@
     {
       "id": "LAYOUT_ROUTE_2",
       "name": "Route_2_Layout",
-      "width": 24,
-      "height": 35,
+      "width": 43,
+      "height": 53,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_SootopolisGym",
+      "secondary_tileset": "gTileset_Slateport",
       "border_filepath": "data/layouts/Route_2/border.bin",
       "blockdata_filepath": "data/layouts/Route_2/map.bin"
     },
@@ -9451,8 +9451,8 @@
     {
       "id": "LAYOUT_ASHLANDS",
       "name": "Ashlands_Layout",
-      "width": 32,
-      "height": 31,
+      "width": 27,
+      "height": 32,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_AshlandTrees",
       "border_filepath": "data/layouts/Ashlands/border.bin",
@@ -9481,7 +9481,7 @@
     {
       "id": "LAYOUT_WALNUT_WOODS",
       "name": "WALNUT_WOODS_Layout",
-      "width": 55,
+      "width": 59,
       "height": 34,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Droid779Snow",
@@ -9501,8 +9501,8 @@
     {
       "id": "LAYOUT_NEW_MAP",
       "name": "NewMap_Layout",
-      "width": 20,
-      "height": 20,
+      "width": 52,
+      "height": 44,
       "primary_tileset": "gTileset_MtMoonVillage",
       "secondary_tileset": "gTileset_MtMoonVillageInterior",
       "border_filepath": "data/layouts/NewMap/border.bin",
@@ -9517,6 +9517,378 @@
       "secondary_tileset": "gTileset_Route224",
       "border_filepath": "data/layouts/Route_2_2/border.bin",
       "blockdata_filepath": "data/layouts/Route_2_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_TRADEWIND_TOWN",
+      "name": "TradewindTown_Layout",
+      "width": 80,
+      "height": 53,
+      "primary_tileset": "gTileset_NightMarket",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/TradewindTown/border.bin",
+      "blockdata_filepath": "data/layouts/TradewindTown/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_TUNNEL",
+      "name": "MunenTunnel_Layout",
+      "width": 104,
+      "height": 46,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_MeteorFalls",
+      "border_filepath": "data/layouts/MunenTunnel/border.bin",
+      "blockdata_filepath": "data/layouts/MunenTunnel/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_INN",
+      "name": "NewMapInn_Layout",
+      "width": 10,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/NewMapInn/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapInn/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_SHOP",
+      "name": "NewMapShop_Layout",
+      "width": 11,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Shop",
+      "border_filepath": "data/layouts/NewMapShop/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapShop/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_MASK_MAKER",
+      "name": "NewMapMaskMaker_Layout",
+      "width": 11,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/NewMapMaskMaker/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapMaskMaker/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_MAP_APPRENTICE_HOUSE",
+      "name": "NewMapApprenticeHouse_Layout",
+      "width": 10,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/NewMapApprenticeHouse/border.bin",
+      "blockdata_filepath": "data/layouts/NewMapApprenticeHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_NATIONAL_PARK_ACT2",
+      "name": "NationalParkAct2_Layout",
+      "width": 76,
+      "height": 97,
+      "primary_tileset": "gTileset_Route224Primary",
+      "secondary_tileset": "gTileset_Route224",
+      "border_filepath": "data/layouts/NationalParkAct2/border.bin",
+      "blockdata_filepath": "data/layouts/NationalParkAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD",
+      "name": "DistortionWorld_Layout",
+      "width": 35,
+      "height": 31,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld/map.bin"
+    },
+    {
+      "id": "LAYOUT_ASHLANDS_OLD_MANS_HOUSE",
+      "name": "AshlandsOldMansHouse_Layout",
+      "width": 10,
+      "height": 8,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/AshlandsOldMansHouse/border.bin",
+      "blockdata_filepath": "data/layouts/AshlandsOldMansHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_VILLAGE_ACT2",
+      "name": "MunenVillageAct2_Layout",
+      "width": 49,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_SnowAndStone",
+      "border_filepath": "data/layouts/MunenVillageAct2/border.bin",
+      "blockdata_filepath": "data/layouts/MunenVillageAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_LAB_ACT2",
+      "name": "MunenLabAct2_Layout",
+      "width": 13,
+      "height": 13,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/MunenLabAct2/border.bin",
+      "blockdata_filepath": "data/layouts/MunenLabAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_MUNEN_HOME_ACT2",
+      "name": "MunenHomeAct2_Layout",
+      "width": 11,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "border_filepath": "data/layouts/MunenHomeAct2/border.bin",
+      "blockdata_filepath": "data/layouts/MunenHomeAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SENNEN_ACT2",
+      "name": "SennenAct2_Layout",
+      "width": 37,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_MagnetTrain",
+      "border_filepath": "data/layouts/SennenAct2/border.bin",
+      "blockdata_filepath": "data/layouts/SennenAct2/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_2",
+      "name": "DistortionWorld_2_Layout",
+      "width": 35,
+      "height": 31,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_2/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_3",
+      "name": "DistortionWorld_3_Layout",
+      "width": 31,
+      "height": 42,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_3/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_3/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_5",
+      "name": "DistortionWorld_5_Layout",
+      "width": 35,
+      "height": 36,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_5/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_5/map.bin"
+    },
+    {
+      "id": "LAYOUT_DISTORTION_WORLD_4",
+      "name": "DistortionWorld_4_Layout",
+      "width": 43,
+      "height": 37,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DistortionWorld",
+      "border_filepath": "data/layouts/DistortionWorld_4/border.bin",
+      "blockdata_filepath": "data/layouts/DistortionWorld_4/map.bin"
+    },
+    {
+      "id": "LAYOUT_ASHLANDS_2",
+      "name": "Ashlands_2_Layout",
+      "width": 25,
+      "height": 32,
+      "primary_tileset": "gTileset_NightMarket",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/Ashlands_2/border.bin",
+      "blockdata_filepath": "data/layouts/Ashlands_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_TRADEWIND_PC",
+      "name": "Tradewind_PC_Layout",
+      "width": 14,
+      "height": 9,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonCenter",
+      "border_filepath": "data/layouts/Tradewind_PC/border.bin",
+      "blockdata_filepath": "data/layouts/Tradewind_PC/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_SHINKANSEN_INTERIOR_ACT2",
+      "name": "ShinkansenInterior_Act2_Layout",
+      "width": 14,
+      "height": 5,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFactory",
+      "border_filepath": "data/layouts/ShinkansenInterior_Act2/border.bin",
+      "blockdata_filepath": "data/layouts/ShinkansenInterior_Act2/map.bin"
+    },
+    {
+      "id": "LAYOUT_SHIN_TOKYO_STATION",
+      "name": "ShinTokyoStation_Layout",
+      "width": 17,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFactory",
+      "border_filepath": "data/layouts/ShinTokyoStation/border.bin",
+      "blockdata_filepath": "data/layouts/ShinTokyoStation/map.bin"
+    },
+    {
+      "id": "LAYOUT_SHIN_TOKYO",
+      "name": "ShinTokyo_Layout",
+      "width": 79,
+      "height": 58,
+      "primary_tileset": "gTileset_MiddleDistrictGround",
+      "secondary_tileset": "gTileset_MiddleDistrict",
+      "border_filepath": "data/layouts/ShinTokyo/border.bin",
+      "blockdata_filepath": "data/layouts/ShinTokyo/map.bin"
+    },
+    {
+      "id": "LAYOUT_SHIN_TOKYO_JAIL",
+      "name": "ShinTokyoJail_Layout",
+      "width": 24,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFactory",
+      "border_filepath": "data/layouts/ShinTokyoJail/border.bin",
+      "blockdata_filepath": "data/layouts/ShinTokyoJail/map.bin"
+    },
+    {
+      "id": "LAYOUT_REBEL_HIDEOUT",
+      "name": "RebelHideout_Layout",
+      "width": 15,
+      "height": 12,
+      "primary_tileset": "gTileset_MiddleDistrictGround",
+      "secondary_tileset": "gTileset_SumpRats",
+      "border_filepath": "data/layouts/RebelHideout/border.bin",
+      "blockdata_filepath": "data/layouts/RebelHideout/map.bin"
+    },
+    {
+      "id": "LAYOUT_CELEBI_ISLAND",
+      "name": "CelebiIsland_Layout",
+      "width": 50,
+      "height": 51,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_FairyTown",
+      "border_filepath": "data/layouts/CelebiIsland/border.bin",
+      "blockdata_filepath": "data/layouts/CelebiIsland/map.bin"
+    },
+    {
+      "id": "LAYOUT_PROTOTYPE_ISLAND",
+      "name": "PrototypeIsland_Layout",
+      "width": 22,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/PrototypeIsland/border.bin",
+      "blockdata_filepath": "data/layouts/PrototypeIsland/map.bin"
+    },
+    {
+      "id": "LAYOUT_PROTOTYPE_LAB",
+      "name": "PrototypeLab_Layout",
+      "width": 18,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/PrototypeLab/border.bin",
+      "blockdata_filepath": "data/layouts/PrototypeLab/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_STREET",
+      "name": "TowerStreet_Layout",
+      "width": 9,
+      "height": 12,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleTent",
+      "border_filepath": "data/layouts/TowerStreet/border.bin",
+      "blockdata_filepath": "data/layouts/TowerStreet/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_MID",
+      "name": "TowerMid_Layout",
+      "width": 13,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattleFrontier",
+      "border_filepath": "data/layouts/TowerMid/border.bin",
+      "blockdata_filepath": "data/layouts/TowerMid/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_COMMAND",
+      "name": "TowerCommand_Layout",
+      "width": 15,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BattlePyramid",
+      "border_filepath": "data/layouts/TowerCommand/border.bin",
+      "blockdata_filepath": "data/layouts/TowerCommand/map.bin"
+    },
+    {
+      "id": "LAYOUT_TOWER_TOP",
+      "name": "TowerTop_Layout",
+      "width": 16,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Facility",
+      "border_filepath": "data/layouts/TowerTop/border.bin",
+      "blockdata_filepath": "data/layouts/TowerTop/map.bin"
+    },
+    {
+      "id": "LAYOUT_UNDERGROUND_ARENA",
+      "name": "UndergroundArena_Layout",
+      "width": 20,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_BattleDome",
+      "border_filepath": "data/layouts/UndergroundArena/border.bin",
+      "blockdata_filepath": "data/layouts/UndergroundArena/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_DRAGON_KEEPER",
+      "name": "DragonKeeper_Layout",
+      "width": 35,
+      "height": 35,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_DragonKeepers",
+      "border_filepath": "data/layouts/DragonKeeper/border.bin",
+      "blockdata_filepath": "data/layouts/DragonKeeper/map.bin"
+    },
+    {
+      "id": "LAYOUT_STAR_SUMMIT_2",
+      "name": "StarSummit_2_Layout",
+      "width": 30,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_LavaMap",
+      "border_filepath": "data/layouts/StarSummit_2/border.bin",
+      "blockdata_filepath": "data/layouts/StarSummit_2/map.bin"
+    },
+    {
+      "id": "LAYOUT_NORTHWIND_CAVERN",
+      "name": "NorthwindCavern_Layout",
+      "width": 19,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_MirageTower",
+      "border_filepath": "data/layouts/NorthwindCavern/border.bin",
+      "blockdata_filepath": "data/layouts/NorthwindCavern/map.bin"
+    },
+    {
+      "id": "LAYOUT_ASHLANDS_DESERT",
+      "name": "Ashlands_Desert_Layout",
+      "width": 44,
+      "height": 42,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/Ashlands_Desert/border.bin",
+      "blockdata_filepath": "data/layouts/Ashlands_Desert/map.bin"
+    },
+    {
+      "id": "LAYOUT_LIFEGUARD_SHACK",
+      "name": "LifeguardShack_Layout",
+      "width": 6,
+      "height": 5,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding",
+      "border_filepath": "data/layouts/LifeguardShack/border.bin",
+      "blockdata_filepath": "data/layouts/LifeguardShack/map.bin"
     }
   ]
 }

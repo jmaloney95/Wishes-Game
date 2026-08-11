@@ -524,6 +524,12 @@ const u8 gText_VarietyTagMatch[] = _("VARIETY TAG MATCH");
 const u8 gText_UniqueTagMatch[] = _("UNIQUE TAG MATCH");
 const u8 gText_ExpertTagMatch[] = _("EXPERT TAG MATCH");
 const u8 gText_TradeCenter[] = _("TRADE CENTER");
+const u8 gText_KeepTheResearch[] = _("Keep the Research");
+const u8 gText_DestroyTheResearch[] = _("Destroy the Research");
+const u8 gText_CatalpaLab[] = _("Clarkson's Lab");
+const u8 gText_CatalpaDistortion[] = _("Distortion World");
+const u8 gText_ReadTheResearch[] = _("Read");
+const u8 gText_DestroyIt[] = _("Destroy");
 const u8 gText_Colosseum[] = _("COLOSSEUM");
 const u8 gText_RecordCorner[] = _("RECORD CORNER");
 const u8 gText_BerryCrush3[] = _("BERRY CRUSH");
@@ -1215,3 +1221,79 @@ const u8 gText_Volcanobadge[] = _("VOLCANOBADGE");
 const u8 gText_Earthbadge[] = _("EARTHBADGE");
 const u8 gText_OakImportantToGetToKnowPokemonThroughly[] = _("OAK: It's important to get to know\nyour POKéMON thoroughly.\p");
 const u8 gText_OakThisIsListOfPokemon[] = _("This is a list of your POKéMON,\n{PLAYER}.\pOpen this to check the skills\nand moves of your POKéMON.\pYou also choose POKéMON here if\nyou want to use an item on one.{PAUSE_UNTIL_PRESS}");
+
+
+//// Wishes of Tomorrow quest text (see Quest_Plan_Handoff.md)
+//generic quest announcement strings
+const u8 gText_QuestAnnounce[] = _("The quest '{STR_VAR_1}'\nis now {STR_VAR_2}.");
+const u8 gText_QuestComplete[] =_("complete");
+const u8 gText_QuestActive[] =_("active");
+
+//quest menu location labels
+const u8 gText_QuestLoc_MtMunen[] = _("MT. MUNEN");
+const u8 gText_QuestLoc_MunenVillage[] = _("MUNEN VILLAGE");
+const u8 gText_QuestLoc_SennenStation[] = _("SENNEN STATION");
+const u8 gText_QuestLoc_NationalPark[] = _("NATIONAL PARK");
+const u8 gText_QuestLoc_Pompeii[] = _("POMPEII");
+const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
+const u8 gText_QuestLoc_ShinTokyo[] = _("SHIN-TOKYO");
+
+const u8 gText_Quest_StopTheMachine_Name[] = _("Stop the Machine");
+const u8 gText_Quest_StopTheMachine_Desc1[] = _("The tides run low tonight.\nSurf south. Purify shadows,\nthen climb Mutrid's tower.");
+const u8 gText_Quest_StopTheMachine_DoneDesc[] = _("The Shadow Generator is silent.\nThe wish is mended.");
+
+const u8 gText_Quest_HarnessDarkness_Name[] = _("Harness Darkness");
+const u8 gText_Quest_HarnessDarkness_Desc1[] = _("Turn the SNAG MACHINE on them.\nCatch a Shadow Pokémon--\nthen five in all.");
+const u8 gText_Quest_HarnessDarkness_DoneDesc[] = _("Their darkness answers to\nyou now.");
+
+const u8 gText_Quest_MinistersFavor_Name[] = _("Jailbreaker");
+const u8 gText_Quest_MinistersFavor_Desc1[] = _("The Minister remoted into the\njail security. Bust Mikmanc\nout of prison.");
+const u8 gText_Quest_MinistersFavor_DoneDesc[] = _("Mikmanc walks free. The\nMinister paid what he owed.");
+
+//QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
+const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");
+const u8 gText_Quest_WakingMountain_Desc1[] = _("The thousand-year ice is\nbreaking. Only Prof. Clarkson\nknows why. Seek him out.");
+const u8 gText_Quest_WakingMountain_Desc2[] = _("Clarkson has called from the\npeak. Climb to STAR SUMMIT,\nwhere the ice finally ends.");
+const u8 gText_Quest_WakingMountain_DoneDesc[] = _("The mountain has woken. What\ncomes next, no one can say.");
+
+//SIDE_QUEST_ONE_THAT_GOT_AWAY - stage 2 once FLAG_SEAFLOOR_GYARADOS_GONE is set
+const u8 gText_Quest_OneThatGotAway_Name[] = _("The One That Got Away");
+const u8 gText_Quest_OneThatGotAway_Desc1[] = _("A boy in Munen waits for a\nfather lost to the ice. Find\nout what became of him.");
+const u8 gText_Quest_OneThatGotAway_Desc2[] = _("His father is alive! Return\nto the village and end the\nboy's long wait.");
+const u8 gText_Quest_OneThatGotAway_DoneDesc[] = _("The long wait by the lake is\nover. Father and son are\ntogether again.");
+
+//SIDE_QUEST_FROZEN_TRACKS
+const u8 gText_Quest_FrozenTracks_Name[] = _("Frozen in Its Tracks");
+const u8 gText_Quest_FrozenTracks_Desc[] = _("A Mutrid goon froze the Sennen\nLine's gears solid. Find a way\nto thaw the train.");
+const u8 gText_Quest_FrozenTracks_DoneDesc[] = _("Arcanine's flame thawed the\nSennen Line. The trains run\nonce more.");
+
+//SIDE_QUEST_EIGHT_WAYS
+const u8 gText_Quest_EightWays_Name[] = _("Eight Ways to Grow");
+const u8 gText_Quest_EightWays_Desc[] = _("A breeder in the park raises\nEevee. Prove yourself, and\none may choose you.");
+const u8 gText_Quest_EightWays_DoneDesc[] = _("Eevee chose you. What it\ngrows into is up to you.");
+
+//SIDE_QUEST_HEAVY_METAL - direction matches the built NPC: he wants a Scyther
+const u8 gText_Quest_HeavyMetal_Name[] = _("Heavy Metal");
+const u8 gText_Quest_HeavyMetal_Desc[] = _("A collector in the park wants\na Scyther. He offers one of\nthree rare starters in trade.");
+const u8 gText_Quest_HeavyMetal_DoneDesc[] = _("The collector got his Scyther.\nTreasure the partner he gave\nyou in return.");
+
+//SIDE_QUEST_SAVE_FACE - stage 2 once ITEM_CARVED_MASK is in the bag
+const u8 gText_Quest_SaveFace_Name[] = _("Save Face");
+const u8 gText_Quest_SaveFace_Desc1[] = _("Master Gen's apprentice lost a\nfinished mask in the tunnel.\nRecover it for him.");
+const u8 gText_Quest_SaveFace_Desc2[] = _("You have the missing mask.\nBring it back to Master Gen\nin Pompeii.");
+const u8 gText_Quest_SaveFace_DoneDesc[] = _("The mask is home. Master Gen\nkept face, his apprentice\nkept their place.");
+
+//QUEST_GRANDFATHERS_WISH (MAIN)
+const u8 gText_Quest_GrandfathersWish_Name[] = _("Grandfather's Last Wish");
+const u8 gText_Quest_GrandfathersWish_Desc[] = _("Carry the Catalpa Bow across\nthe water. Play the mourning\nrite at his son's grave.");
+const u8 gText_Quest_GrandfathersWish_DoneDesc[] = _("The bow sang at the graveside.\nA last wish, carried all the\nway through.");
+
+//QUEST_LIFES_WORK (MAIN)
+const u8 gText_Quest_LifesWork_Name[] = _("His Life's Work");
+const u8 gText_Quest_LifesWork_Desc[] = _("Clarkson's last wish: destroy\nhis research. Reach his lab\nin Munen and end it.");
+const u8 gText_Quest_LifesWork_DoneDesc[] = _("The research will never fall\ninto the wrong hands. His\nwork ends as he asked.");
+
+//QUEST_TOASTY_TIME (Side) - Frostwood gym leader's family
+const u8 gText_Quest_ToastyTime_Name[] = _("Toasty Time");
+const u8 gText_Quest_ToastyTime_Desc[] = _("The gym leader's father gave\nyou HOT COCOA. Coax his two\ndaughters home for dinner.");
+const u8 gText_Quest_ToastyTime_DoneDesc[] = _("The sisters warmed up and\nheaded home. Dinner is served.");

@@ -723,7 +723,12 @@ const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8("graphics/battle_interface
                                                   "graphics/battle_interface/status3.4bpp",
                                                   "graphics/battle_interface/status4.4bpp",
                                                   "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
-                                                  "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
+                                                  "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp",
+                                                  // WoT Shadow system: heart-gauge strips (ported from the psf fork).
+                                                  // Order matters: LINES strip first, plain strip second -- the
+                                                  // HEALTHBOX_GFX_SHADOWBAR_* enum entries map onto these tiles.
+                                                  "graphics/battle_interface/shadowbar_lines.4bpp",
+                                                  "graphics/battle_interface/shadowbar.4bpp");
 const u32 gBattleInterfaceGfx_UnusedWindow3[] = INCGFX_U32("graphics/battle_interface/unused_window3.png", ".4bpp.smol");
 const u32 gBattleInterfaceGfx_UnusedWindow4[] = INCGFX_U32("graphics/battle_interface/unused_window4.png", ".4bpp.smol");
 

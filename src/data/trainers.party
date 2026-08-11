@@ -2175,20 +2175,19 @@ Level: 30
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_CINDY_2 ===
-Name: CINDY
-Class: Lady
-Pic: Lady
-Gender: Female
-Music: Female
-Items: Full Restore
+Name: SANDY
+Class: Tuber M
+Pic: Wot Poke Kid
+Gender: Male
+Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Zigzagoon @ Nugget
-Level: 11
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Tackle
-- Tail Whip
+Wiglett
+Level: 9
+
+Crabrawler
+Level: 10
 
 === TRAINER_BRIANNA ===
 Name: BRIANNA
@@ -3065,17 +3064,21 @@ Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_DUDLEY ===
-Name: DUDLEY
-Class: Swimmer M
-Pic: Swimmer M
+Name: KENJI
+Class: Cooltrainer
+Pic: Cooltrainer M
 Gender: Male
-Music: Swimmer
+Music: Intense
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Tentacool
-Level: 33
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Hariyama
+Level: 46
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Obstagoon
+Level: 47
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Wingull
 Level: 33
@@ -4112,44 +4115,102 @@ Level: 15
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Hidden Power
 
+/*
+REPURPOSED from the unreachable vanilla Mossdeep gym -- Act 3 jailbreak
+escort-phase squads (partner doubles vs Mikmanc + player; the "Shadow"
+Pokemon are dark-typed stand-ins until a real Shadow system exists).
+Levels/teams PLACEHOLDER (Joe).
+*/
 === TRAINER_PRESTON ===
-Name: PRESTON
-Class: Psychic
-Pic: Psychic M
+Name: JUZO
+Class: Mutrid
+Pic: Magma Grunt M
 Gender: Male
-Music: Intense
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Kirlia
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Krookodile
+Level: 41
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Drapion
+Level: 41
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Bronzong
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Teddiursa
+Level: 30
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_VIRGIL ===
-Name: VIRGIL
-Class: Psychic
-Pic: Psychic M
-Gender: Male
-Music: Intense
+Name: SAYA
+Class: Mutrid
+Pic: Magma Grunt F
+Gender: Female
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Ralts
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Honchkrow
+Level: 41
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Weavile
+Level: 42
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Magnezone
+Level: 41
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Onix
+Level: 30
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_BLAKE ===
-Name: BLAKE
-Class: Psychic
-Pic: Psychic M
+Name: WHITETIGER
+Class: Expert
+Pic: Cooltrainer M
 Gender: Male
 Music: Intense
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Girafarig
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Incineroar
+Level: 44
+Shiny: Yes
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Chien-Pao
+Level: 44
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Absol @ Absolite
+Level: 45
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Landorus-Therian
+Level: 45
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Meowscarada
+Level: 45
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Raikou
+Level: 46
+Shadow: Yes
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 
 === TRAINER_WILLIAM ===
 Name: WILLIAM
@@ -4285,7 +4346,7 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 - Hidden Power
 
 === TRAINER_HANNAH ===
-Name: HANNAH
+Name: SUZU
 Class: Psychic
 Pic: Psychic F
 Gender: Female
@@ -4293,12 +4354,16 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Kirlia
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Mawile
+Level: 42
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Clefable
+Level: 43
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_SAMANTHA ===
-Name: SAMANTHA
+Name: KAEDE
 Class: Psychic
 Pic: Psychic F
 Gender: Female
@@ -4306,12 +4371,16 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Xatu
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Whimsicott
+Level: 42
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Sylveon
+Level: 43
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_MAURA ===
-Name: MAURA
+Name: RAN
 Class: Psychic
 Pic: Psychic F
 Gender: Female
@@ -4319,22 +4388,31 @@ Music: Intense
 Double Battle: No
 AI: Check Bad Move
 
-Kadabra
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Mimikyu
+Level: 43
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Hatterene
+Level: 44
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_KAYLA ===
-Name: KAYLA
-Class: Psychic
-Pic: Psychic F
+Name: ASUKA
+Class: Mutrid
+Pic: Magma Grunt F
 Gender: Female
-Music: Intense
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Wobbuffet
-Level: 26
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Klinklang
+Level: 44
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Bisharp
+Level: 45
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Natu
 Level: 26
@@ -8414,17 +8492,25 @@ Level: 33
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_KAYLEE ===
-Name: KAYLEE
-Class: Swimmer F
-Pic: Swimmer F
+Name: AYAME
+Class: Cooltrainer
+Pic: Cooltrainer F
 Gender: Female
-Music: Swimmer
+Music: Intense
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Lanturn
-Level: 34
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Ninetales
+Level: 47
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Toxicroak
+Level: 47
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Gyarados
+Level: 48
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 Pelipper
 Level: 34
@@ -8833,42 +8919,50 @@ Level: 26
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_AMY_AND_LIV_3 ===
-Name: AMY & LIV
-Class: Twins
-Pic: Twins
+Name: RYUJIN
+Class: Dragon Warden
+Pic: Dragon Tamer
 Gender: Male
-Music: Twins
-Double Battle: Yes
-AI: Check Bad Move
+Music: Intense
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Plusle
-Level: 9
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Naganadel
+Level: 50
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Minun
-Level: 9
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Dragonite
+Level: 55
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Rayquaza
+Level: 60
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+- Dragon Ascent
+- Extreme Speed
+- Earthquake
+- Dragon Dance
 
 === TRAINER_GINA_AND_MIA_2 ===
-Name: GINA & MIA
-Class: Twins
-Pic: Twins
-Gender: Male
-Music: Twins
-Double Battle: Yes
-AI: Check Bad Move
+Name: TATSUKO
+Class: Dragon Warden
+Pic: Dragon Tamer
+Gender: Female
+Music: Intense
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Duskull
-Level: 10
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Night Shade
-- Disable
+Charizard
+Level: 45
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 
-Shroomish
-Level: 10
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Absorb
-- Leech Seed
+Dragapult
+Level: 50
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+
+Dracovish
+Level: 50
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 
 === TRAINER_AMY_AND_LIV_4 ===
 Name: AMY & LIV
@@ -10501,22 +10595,26 @@ Golbat
 Level: 35
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
+/*
+REPURPOSED dead vanilla id (was unused filler) -- Act 3 Shin-Tokyo jail
+patrol guard A (WoT_Act3_Canon.md Step 4). Levels/teams PLACEHOLDER (Joe).
+*/
 === TRAINER_GRUNT_UNUSED ===
-Name: GRUNT
-Class: Team Magma
-Pic: Aqua Grunt F
-Gender: Female
-Music: Aqua
+Name: HOSHI
+Class: Mutrid
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Wailmer
-Level: 31
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Bisharp
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
-Zubat
-Level: 31
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Golbat
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_GRUNT_MT_PYRE_4 ===
 Name: GRUNT
@@ -10607,17 +10705,39 @@ Level: 13
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_SYLVIA ===
-Name: SYLVIA
-Class: Hex Maniac
-Pic: Hex Maniac
+Name: SUZAKU
+Class: Expert
+Pic: Cooltrainer F
 Gender: Female
-Music: Suspicious
+Music: Intense
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Meditite
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Talonflame
+Level: 49
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+
+Altaria @ Altarianite
+Level: 49
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+
+Fezandipiti
+Level: 50
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+
+Blaziken
+Level: 50
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+
+Moltres
+Level: 50
+Shadow: Yes
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
+
+Ho-Oh
+Level: 51
+Shadow: Yes
+IVs: 28 HP / 28 Atk / 28 Def / 28 SpA / 28 SpD / 28 Spe
 
 === TRAINER_LEONARDO ===
 Name: LEONARDO
@@ -10695,69 +10815,125 @@ Level: 34
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_TERRY ===
-Name: TERRY
-Class: Psychic
-Pic: Psychic F
-Gender: Female
+Name: VOLTEN
+Class: Leader
+Pic: Leader Wattson
+Gender: Male
 Music: Intense
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Girafarig
-Level: 37
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Manectric
+Level: 49
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Magnezone
+Level: 49
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Luxray
+Level: 50
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Ampharos @ Ampharosite
+Level: 51
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_NATE ===
-Name: NATE
-Class: Gentleman
-Pic: Gentleman
+Name: GORO
+Class: Mutrid
+Pic: Magma Grunt M
 Gender: Male
-Music: Rich
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Spoink
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Skuntank
+Level: 43
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Liepard
+Level: 43
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Bisharp
+Level: 44
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_KATHLEEN ===
-Name: KATHLEEN
-Class: Hex Maniac
-Pic: Hex Maniac
-Gender: Female
-Music: Suspicious
+Name: MUTRID ALPHA
+Class: Mutrid
+Pic: Mutrid Grunt White
+Gender: Male
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Kadabra
-Level: 36
-IVs: 12 HP / 12 Atk / 12 Def / 12 SpA / 12 SpD / 12 Spe
+Skarmory
+Level: 54
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Metagross
+Level: 54
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Salamence
+Level: 55
+Shadow: Yes
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Chandelure
+Level: 55
+Shadow: Yes
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Garchomp
+Level: 55
+Shadow: Yes
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_CLIFFORD ===
-Name: CLIFFORD
-Class: Gentleman
-Pic: Gentleman
+Name: ROKU
+Class: Mutrid
+Pic: Magma Grunt M
 Gender: Male
-Music: Rich
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Girafarig
-Level: 36
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Krookodile
+Level: 44
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Toxicroak
+Level: 43
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Magneton
+Level: 43
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_NICHOLAS ===
-Name: NICHOLAS
-Class: Psychic
-Pic: Psychic M
+Name: DAICHI
+Class: Mutrid
+Pic: Magma Grunt M
 Gender: Male
-Music: Intense
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Wobbuffet
-Level: 36
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Corviknight
+Level: 49
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Metagross
+Level: 50
+Shadow: Yes
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
 
 === TRAINER_GRUNT_SPACE_CENTER_3 ===
 Name: GRUNT
@@ -10829,17 +11005,27 @@ Level: 32
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_MACEY ===
-Name: MACEY
-Class: Psychic
-Pic: Psychic F
+Name: UME
+Class: Mutrid
+Pic: Magma Grunt F
 Gender: Female
-Music: Intense
+Music: Magma
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Natu
-Level: 36
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Mightyena
+Level: 43
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Drapion
+Level: 44
+Shadow: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Klefki
+Level: 43
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_BRENDAN_RUSTBORO_TREECKO ===
 Name: BRENDAN
@@ -11570,40 +11756,31 @@ Level: 20
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_LUCAS_2 ===
-Name: LUCAS
-Class: Hiker
-Pic: Hiker
-Gender: Male
-Music: Hiker
+Name: COCO
+Class: Tuber F
+Pic: Wot Beach Girl
+Gender: Female
+Music: Female
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Wailmer
+Clauncher
 Level: 9
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Splash
-- Water Gun
+
+Pyukumuku
+Level: 10
 
 === TRAINER_MIKE_1 ===
-Name: MIKE
-Class: Hiker
-Pic: Hiker
+Name: PETE
+Class: Expert
+Pic: Expert M
 Gender: Male
-Music: Hiker
+Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Basic Trainer
 
-Pelipper
+Eiscue
 Level: 10
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Gust
-- Growl
-
-Poochyena
-Level: 10
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-- Bite
-- Scary Face
 
 === TRAINER_MIKE_2 ===
 Name: MIKE
@@ -12194,55 +12371,48 @@ IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
 - Psychic
 - Future Sight
 
+/*
+REPURPOSED (was the Victory Road Wally rematch, zero script references):
+THE ONI -- the final boss on TowerTop. Levels sit just above MUTRID ALPHA
+(TowerCommand, Lv54-55).
+*/
 === TRAINER_WALLY_VR_5 ===
-Name: WALLY
-Class: Rival
-Pic: Wally
+Name: THE ONI
+Class: Mutrid
+Pic: Mutrid Leader
 Gender: Male
-Music: Male
+Music: Magma
 Items: Full Restore / Full Restore
 Double Battle: No
-AI: Basic Trainer
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Altaria
-Level: 56
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Aerial Ace
-- Safeguard
-- Dragon Breath
-- Dragon Dance
+Iron Valiant @ Booster Energy
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Delcatty
-Level: 55
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Sing
-- Assist
-- Charm
-- Feint Attack
-
-Roselia
-Level: 56
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Magical Leaf
-- Leech Seed
-- Giga Drain
-- Toxic
-
-Magneton
-Level: 53
-IVs: 18 HP / 18 Atk / 18 Def / 18 SpA / 18 SpD / 18 Spe
-- Supersonic
-- Thunderbolt
-- Tri Attack
-- Screech
-
-Gardevoir
+Grimmsnarl @ Light Clay
+Ability: Prankster
 Level: 57
-IVs: 30 HP / 30 Atk / 30 Def / 30 SpA / 30 SpD / 30 Spe
-- Double Team
-- Calm Mind
-- Psychic
-- Future Sight
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Metagross @ Weakness Policy
+Ability: Clear Body
+Level: 57
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Ceruledge
+Ability: Weak Armor
+Level: 57
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Haxorus
+Ability: Mold Breaker
+Level: 58
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Greninja-Bond
+Level: 60
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 === TRAINER_BRENDAN_LILYCOVE_MUDKIP ===
 Name: BRENDAN
@@ -16826,52 +16996,80 @@ Level: 41
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_RED ===
-Name: RED
-Class: Rival
-Pic: Red
-Gender: Male
-Music: Male
-Double Battle: No
-
-Charmander
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
-
-=== TRAINER_LEAF ===
-Name: LEAF
-Class: Rival
-Pic: Leaf
+Name: REINA & VAN
+Class: Twins
+Pic: Wot Reina Vanessa
 Gender: Female
-Music: Male
-Double Battle: No
+Music: Twins
+Double Battle: Yes
+AI: Basic Trainer
 
-Bulbasaur
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Finizen
+Level: 10
 
-=== TRAINER_BRENDAN_PLACEHOLDER ===
-Name: BRENDAN
-Class: RS Protag
-Pic: RS Brendan
+Finizen
+Level: 10
+
+/*
+REPURPOSED (was the LEAF placeholder -- the LAST free id in the pool):
+the Mutrid elite whose Mega Alakazam killed Yiffer in the Sennen assault.
+Optional talk battle on SennenAct2 (object 6, the mid-battle goon).
+*/
+=== TRAINER_LEAF ===
+Name: VOSS
+Class: Team Mutrid
+Pic: Mutrid Goon
 Gender: Male
-Music: Male
+Music: Magma
 Double Battle: No
+AI: Check Bad Move / Try To Faint
 
-Groudon
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Kadabra
+Level: 34
+
+Grumpig
+Level: 35
+
+Alakazam @ Alakazite
+Level: 37
+
+/*
+REPURPOSED dead vanilla placeholder ids -- Act 3 Shin-Tokyo jail patrol
+guards B and C (WoT_Act3_Canon.md Step 4). Levels/teams PLACEHOLDER (Joe).
+*/
+=== TRAINER_BRENDAN_PLACEHOLDER ===
+Name: RIN
+Class: Mutrid
+Pic: Magma Grunt F
+Gender: Female
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Mightyena
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Skarmory
+Level: 41
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_MAY_PLACEHOLDER ===
-Name: MAY
-Class: RS Protag
-Pic: RS May
-Gender: Female
-Music: Male
+Name: TETSU
+Class: Mutrid
+Pic: Magma Grunt M
+Gender: Male
+Music: Magma
 Double Battle: No
+AI: Check Bad Move / Try To Faint
 
-Kyogre
-Level: 5
-IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+Houndoom
+Level: 41
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Muk
+Level: 40
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 /*
 Pokémon Wishes of Tomorrow — Rival Haru, first encounter in Munen Village.
@@ -16891,7 +17089,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Amaura
+Deino
 Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
@@ -16904,7 +17102,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Anorith
+Pawniard
 Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
@@ -16917,14 +17115,14 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Tyrunt
+Impidimp
 Level: 5
 IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
 
 === TRAINER_SHINKANSEN_GOON ===
-Name: ???
-Class: Team Magma
-Pic: Magma Grunt M
+Name: Goon
+Class: Team Mutrid
+Pic: Mutrid Goon
 Gender: Male
 Music: Magma
 Double Battle: No
@@ -16949,10 +17147,10 @@ Double Battle: No
 AI: Check Bad Move
 
 Magikarp
-Level: 12
+Level: 10
 
 Goldeen
-Level: 14
+Level: 10
 
 === TRAINER_ROUTE2_HIKER ===
 Name: Clyde
@@ -16963,11 +17161,11 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move
 
-Geodude
-Level: 13
+Snorunt
+Level: 10
 
-Machop
-Level: 15
+Swinub
+Level: 10
 
 === TRAINER_ROUTE2_CAMPER ===
 Name: Denny
@@ -16979,73 +17177,79 @@ Double Battle: No
 AI: Check Bad Move
 
 Poochyena
-Level: 12
+Level: 10
 
 Zigzagoon
-Level: 13
+Level: 10
 
 Wingull
-Level: 15
+Level: 10
 
+/*
+Allison is a surf-era optional fight (Surf unlocks with the Distortion Badge),
+so her team is tuned to the late-Act-2 curve. Levels PLACEHOLDER (Joe).
+*/
 === TRAINER_ROUTE2_SWIMMER_ALLISON ===
 Name: Allison
 Class: Swimmer F
-Pic: Swimmer Allison
+Pic: Wot Allison Land
 Gender: Female
 Music: Swimmer
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Luvdisc
-Level: 12
+Cinderace
+Level: 40
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 
-Marill
-Level: 13
+Lopunny @ Lopunnite
+Level: 42
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
 
 === TRAINER_ROUTE2_SWIMMER_SKYE ===
 Name: Skye
 Class: Swimmer F
-Pic: Swimmer Skye
+Pic: Wot Skye Land
 Gender: Female
 Music: Swimmer
 Double Battle: No
 AI: Check Bad Move
 
 Wingull
-Level: 13
+Level: 10
 
 Staryu
-Level: 14
+Level: 10
 
 === TRAINER_ROUTE2_SWIMMER_ROSA ===
 Name: Rosa
 Class: Swimmer F
-Pic: Swimmer Rosa
+Pic: Wot Rosa Land
 Gender: Female
 Music: Swimmer
 Double Battle: No
 AI: Check Bad Move
 
 Luvdisc
-Level: 14
+Level: 10
 
 Corsola
-Level: 15
+Level: 10
 
 === TRAINER_ROUTE2_SWIMMER_MARINA ===
 Name: Marina
 Class: Swimmer F
-Pic: Swimmer Marina
+Pic: Wot Marina Land
 Gender: Female
 Music: Swimmer
 Double Battle: No
 AI: Check Bad Move
 
 Goldeen
-Level: 15
+Level: 10
 
 Wailmer
-Level: 16
+Level: 10
 
 === TRAINER_TORII_ORACLE ===
 Name: The Oracle
@@ -17113,7 +17317,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Aurorus
+Zweilous
 Level: 21
 
 Golbat
@@ -17131,7 +17335,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Armaldo
+Bisharp
 Level: 21
 
 Golbat
@@ -17149,7 +17353,7 @@ Music: Male
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
-Tyrantrum
+Morgrem
 Level: 21
 
 Golbat
@@ -17161,7 +17365,7 @@ Level: 20
 === TRAINER_STARSUMMIT_BOSS ===
 Name: ???
 Class: Leader
-Pic: Gold Oni
+Pic: Mutrid Leader
 Gender: Male
 Music: Magma
 Double Battle: No
@@ -17172,3 +17376,427 @@ Level: 50
 
 Feraligatr
 Level: 50
+
+=== TRAINER_NATIONAL_PARK_TUBER_EDDIE ===
+Name: Eddie
+Class: Tuber M
+Pic: Tuber M
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Sandygast
+Level: 15
+
+Dwebble
+Level: 15
+
+=== TRAINER_NATIONAL_PARK_SWIMMER_FINN ===
+Name: Finn
+Class: Swimmer M
+Pic: Swimmer M
+Gender: Male
+Music: Swimmer
+Double Battle: No
+AI: Check Bad Move
+
+Mareanie
+Level: 16
+
+Dhelmise
+Level: 17
+
+=== TRAINER_TRADEWIND_GORO ===
+Name: GORO
+Class: Black Belt
+Pic: Black Belt
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Pangoro
+Level: 29
+
+Snorlax
+Level: 30
+
+=== TRAINER_TRADEWIND_LANTERN_BEARER ===
+Name: HOZUKI
+Class: Hex Maniac
+Pic: Hex Maniac
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Lampent
+Level: 36
+
+Ninetales
+Level: 37
+
+=== TRAINER_TSUJI_APPRENTICE ===
+Name: KOHANA
+Class: Lady
+Pic: Lady
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Misdreavus
+Level: 36
+
+Sableye
+Level: 37
+
+=== TRAINER_MADAM_TSUJI ===
+Name: TSUJI
+Class: Leader
+Pic: Elite Four Phoebe
+Gender: Female
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Drifblim
+Level: 40
+
+Cofagrigus
+Level: 41
+
+Mismagius
+Level: 41
+
+Chandelure
+Level: 42
+
+Sableye @ Sablenite
+Level: 44
+
+=== TRAINER_MUNEN_TUNNEL_GRUNT ===
+Name: Goon
+Class: Team Mutrid
+Pic: Mutrid Goon
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Zubat
+Level: 14
+
+Shuppet
+Level: 15
+
+Duskull
+Level: 16
+
+=== TRAINER_ACT2_PARK_GOON_EAST ===
+Name: Goon
+Class: Mutrid
+Pic: Mutrid Goon
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Golbat
+Level: 38
+
+Banette
+Level: 39
+
+=== TRAINER_ACT2_PARK_GOON_WEST ===
+Name: Goon
+Class: Mutrid
+Pic: Mutrid Grunt F
+Gender: Female
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Mightyena
+Level: 38
+
+Dusclops
+Level: 39
+
+=== TRAINER_DRACO_LAB_AURORUS ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Skarmory
+Level: 38
+
+Sneasel
+Level: 38
+
+Hydreigon
+Level: 40
+
+=== TRAINER_DRACO_LAB_ARMALDO ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Skarmory
+Level: 38
+
+Sneasel
+Level: 38
+
+Kingambit
+Level: 40
+
+=== TRAINER_DRACO_LAB_TYRANTRUM ===
+Name: DRACO
+Class: Rival
+Pic: Wally
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Skarmory
+Level: 38
+
+Sneasel
+Level: 38
+
+Grimmsnarl
+Level: 40
+
+=== TRAINER_SENNEN_CAPTAIN_KANNON ===
+Name: EDWARDS
+Class: General
+Pic: General Edwards
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Tyranitar @ Tyranitarite
+Level: 41
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Corviknight
+Level: 36
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Blastoise
+Level: 38
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Lucario
+Level: 37
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Volcarona
+Level: 39
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Falinks
+Level: 35
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_SENNEN_CAPTAIN_RYOKO ===
+Name: RYOKO
+Class: Team Magma
+Pic: Mutrid Grunt White
+Gender: Female
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Garchomp
+Level: 40
+
+Weezing
+Level: 41
+
+Dusclops
+Level: 41
+
+=== TRAINER_TUNNEL_GOON_A ===
+Name: Goon
+Class: Team Mutrid
+Pic: Mutrid Goon
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move
+
+Poochyena
+Level: 16
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Zubat
+Level: 17
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+=== TRAINER_TUNNEL_GOON_B ===
+Name: Goon
+Class: Team Mutrid
+Pic: Mutrid Grunt F
+Gender: Female
+Music: Magma
+Double Battle: No
+AI: Check Bad Move
+
+Geodude
+Level: 17
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+Machop
+Level: 18
+IVs: 10 HP / 10 Atk / 10 Def / 10 SpA / 10 SpD / 10 Spe
+
+/*
+The Munen Tunnel boss (was "General Edwards" -- that identity now belongs to
+the Act 2 Dojo general). Name PLACEHOLDER (Joe).
+*/
+=== TRAINER_TUNNEL_CAPTAIN ===
+Name: McCormick
+Class: Captain
+Pic: Magma Leader Maxie
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Golbat
+Level: 18
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Machoke
+Level: 19
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Mightyena
+Level: 20
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+/*
+Distortion World layer 4 -- the Oni guarding the Rift Core.
+Name/level PLACEHOLDER (Joe).
+*/
+=== TRAINER_DISTORTION_ONI ===
+Name: KIYO
+Class: Oni
+Pic: Gold Oni
+Gender: Male
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+SPECIES_HELLRAISER
+Level: 38
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_RIFT_WARDEN ===
+Name: SILAS
+Class: Expert
+Pic: Expert M
+Gender: Male
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move / Try To Faint
+
+Bronzong
+Level: 35
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+Dusclops
+Level: 36
+IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
+
+=== TRAINER_DISTORTION_LEADER ===
+Name: VESPER
+Class: Leader
+Pic: Steven
+Gender: Male
+Music: Magma
+Double Battle: No
+AI: Check Bad Move / Try To Faint / Check Viability
+
+Mismagius
+Level: 37
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Spiritomb
+Level: 38
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Dusknoir
+Level: 38
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+
+Golurk
+Level: 39
+IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+- Shadow Punch
+- Earthquake
+- Hammer Arm
+- Phantom Force
+
+Giratina @ Sitrus Berry
+Level: 40
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+
+=== TRAINER_TRADEWIND_SABLE ===
+Name: SABLE
+Class: Hex Maniac
+Pic: Hex Maniac
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Shuppet
+Level: 18
+
+Duskull
+Level: 19
+
+=== TRAINER_TRADEWIND_ROSHAN ===
+Name: ROSHAN
+Class: Psychic
+Pic: Psychic M
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Gastly
+Level: 17
+
+Haunter
+Level: 19
+
+=== TRAINER_TRADEWIND_PIPER ===
+Name: PIPER
+Class: Lass
+Pic: Lass
+Gender: Female
+Music: Female
+Double Battle: No
+AI: Check Bad Move
+
+Zubat
+Level: 17
+
+Sableye
+Level: 19

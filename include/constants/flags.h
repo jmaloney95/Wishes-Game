@@ -91,14 +91,19 @@
 #define FLAG_UNUSED_0x045    0x45 // Unused Flag
 #define FLAG_UNUSED_0x046    0x46 // Unused Flag
 #define FLAG_UNUSED_0x047    0x47 // Unused Flag
-#define FLAG_UNUSED_0x048    0x48 // Unused Flag
-#define FLAG_UNUSED_0x049    0x49 // Unused Flag
-#define FLAG_UNUSED_0x04A    0x4A // Unused Flag
-#define FLAG_UNUSED_0x04B    0x4B // Unused Flag
-#define FLAG_UNUSED_0x04C    0x4C // Unused Flag
-#define FLAG_UNUSED_0x04D    0x4D // Unused Flag
-#define FLAG_UNUSED_0x04E    0x4E // Unused Flag
-#define FLAG_UNUSED_0x04F    0x4F // Unused Flag
+#define FLAG_ITEM_NATIONAL_PARK_TM_EARTHQUAKE 0x48
+#define FLAG_NATIONAL_PARK_EEVEE_BREEDER 0x49
+#define FLAG_NATIONAL_PARK_TOUR_DONE 0x4A
+#define FLAG_NATIONAL_PARK_METAL_COAT_DONE 0x4B
+#define FLAG_NATIONAL_PARK_GRAVE_SECRET 0x4C
+#define FLAG_NATIONAL_PARK_CUT_GIVEN 0x4D
+// Lantern Badge (Tradewind gym + Mega unlock) lives INSIDE the numbered badge
+// block (slot 04, unused by WoT content) so every vanilla badge counter --
+// save dialog, continue screen, catch malus, TV -- sees it. It originally
+// lived at raw flag 0x4E; CB2_ContinueSavedGame migrates old saves once.
+#define FLAG_BADGE_LANTERN          FLAG_BADGE04_GET
+#define FLAG_BADGE_LANTERN_LEGACY   0x4E // pre-move Lantern flag; migrated + cleared on continue
+#define FLAG_HIDE_TRADEWIND_PAWNBROKER 0x4F // hides the Pawnbroker (Mega-stone) stall until the Lantern Badge is earned
 
 // Scripts
 #define FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL  0x50
@@ -518,18 +523,18 @@
 #define FLAG_ENABLE_TATE_AND_LIZA_MATCH_CALL 0x1D8
 #define FLAG_ENABLE_JUAN_MATCH_CALL          0x1D9
 
-#define FLAG_UNUSED_0x1DA                    0x1DA // Unused Flag
+#define FLAG_WOT_SA2_EDWARDS_AWAY            0x1DA // WoT: set = Edwards not on the SennenAct2 gate (pre-jet-drop)
 
 #define FLAG_SHOWN_MYSTIC_TICKET             0x1DB
 #define FLAG_DEFEATED_HO_OH                  0x1DC
 #define FLAG_DEFEATED_LUGIA                  0x1DD
 
-#define FLAG_UNUSED_0x1DE                    0x1DE // Unused Flag
-#define FLAG_UNUSED_0x1DF                    0x1DF // Unused Flag
-#define FLAG_UNUSED_0x1E0                    0x1E0 // Unused Flag
-#define FLAG_UNUSED_0x1E1                    0x1E1 // Unused Flag
-#define FLAG_UNUSED_0x1E2                    0x1E2 // Unused Flag
-#define FLAG_UNUSED_0x1E3                    0x1E3 // Unused Flag
+#define FLAG_WOT_SA2_AIRSHOW                 0x1DE // WoT: set = SennenAct2 jet + impact-pose props hidden
+#define FLAG_WOT_SA2_FALLER                  0x1DF // WoT: set = SennenAct2 falling-Edwards actor hidden
+#define FLAG_WOT_SA2_GOON_WEST_FLED          0x1E0 // WoT: set = routed west goon gone (own flag; sharing GOONS_CLEARED blocked Garchomp's respawn)
+#define FLAG_WOT_SA2_GARCHOMP_AWAY           0x1E1 // WoT: set = Ryoko recalled Garchomp in the assault ending
+#define FLAG_WOT_DEFECTOR_CHARM_GIVEN        0x1E2 // WoT: Prof. Assistant handed over the Catching Charm + Ultra Balls
+#define FLAG_WOT_ONI_DEFEATED                0x1E3 // WoT: the final boss fell and fled TowerTop by jet
 
 // Mystery Gift Flags (Unknown)
 #define FLAG_MYSTERY_GIFT_DONE               0x1E4
@@ -689,7 +694,7 @@
 #define FLAG_UNUSED_0x27A  0x27A // Unused Flag
 #define FLAG_UNUSED_0x27B  0x27B // Unused Flag
 #define FLAG_UNUSED_0x27C  0x27C // Unused Flag
-#define FLAG_UNUSED_0x27D  0x27D // Unused Flag
+#define FLAG_ONI_MASK_WORN  0x27D // Carved Mask worn: goons treat the player as one of their own
 #define FLAG_UNUSED_0x27E  0x27E // Unused Flag
 #define FLAG_UNUSED_0x27F  0x27F // Unused Flag
 #define FLAG_UNUSED_0x280  0x280 // Unused Flag
@@ -776,7 +781,7 @@
 #define FLAG_HIDE_MOSSDEEP_CITY_STEVENS_HOUSE_INVISIBLE_NINJA_BOY   0x2D7
 #define FLAG_HIDE_PETALBURG_CITY_WALLYS_MOM                         0x2D8
 
-#define FLAG_UNUSED_0x2D9                                           0x2D9 // Unused Flag
+#define FLAG_WOT_TOWER_JIRACHI_GONE                                 0x2D9 // WoT: Shadow Jirachi caught; the machine is broken (ON_LOAD tile swap)
 
 #define FLAG_HIDE_LILYCOVE_FAN_CLUB_INTERVIEWER                     0x2DA
 #define FLAG_HIDE_RUSTBORO_CITY_AQUA_GRUNT                          0x2DB
@@ -1222,7 +1227,7 @@
 #define FLAG_ITEM_SAFARI_ZONE_NORTH_EAST_NUGGET                     0x491
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 
-#define FLAG_UNUSED_0x493                                           0x493 // Unused Flag
+#define FLAG_WOT_TOWER_LEGENDS_AWAY                                 0x493 // WoT: hides TowerTop's jet + released legendaries (cutscene props)
 #define FLAG_UNUSED_0x494                                           0x494 // Unused Flag
 #define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
 #define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
@@ -1350,7 +1355,7 @@
 #define FLAG_SYS_POKEMON_GET                         (SYSTEM_FLAGS + 0x0) // FLAG_0x860
 #define FLAG_SYS_POKEDEX_GET                         (SYSTEM_FLAGS + 0x1)
 #define FLAG_SYS_POKENAV_GET                         (SYSTEM_FLAGS + 0x2)
-#define FLAG_UNUSED_0x863                            (SYSTEM_FLAGS + 0x3) // Unused Flag
+#define FLAG_SYS_QUEST_MENU_GET                      (SYSTEM_FLAGS + 0x3) // add QUESTS to start menu
 #define FLAG_SYS_GAME_CLEAR                          (SYSTEM_FLAGS + 0x4)
 #define FLAG_SYS_CHAT_USED                           (SYSTEM_FLAGS + 0x5)
 #define FLAG_UNLOCKED_TRENDY_SAYINGS                 (SYSTEM_FLAGS + 0x6)
@@ -1387,7 +1392,7 @@
 #define FLAG_IS_CHAMPION                            (SYSTEM_FLAGS + 0x1F) // Seems to be related to linking.
 #define FLAG_NURSE_UNION_ROOM_REMINDER              (SYSTEM_FLAGS + 0x20)
 
-#define FLAG_UNUSED_0x881                           (SYSTEM_FLAGS + 0x21) // Unused Flag
+#define FLAG_SUPPRESS_SPEAKER_NAME                  (SYSTEM_FLAGS + 0x21) // Hides the speaker namebox while set
 #define FLAG_UNUSED_0x882                           (SYSTEM_FLAGS + 0x22) // Unused Flag
 #define FLAG_UNUSED_0x883                           (SYSTEM_FLAGS + 0x23) // Unused Flag
 #define FLAG_UNUSED_0x884                           (SYSTEM_FLAGS + 0x24) // Unused Flag
@@ -2495,5 +2500,115 @@
 // NOTE: FLAG_MET_HINOKI (0x022) is now the "met Clarkson" flag -- left
 // as MET_HINOKI for backward compatibility; new code should treat it as
 // FLAG_MET_CLARKSON.
+
+// === NewMap gate town + Munen Tunnel side quest (2026-07-02) ===
+// 0x35, 0x54, 0x55 are the only free slots below 0x56; using the big free run at 0x264+.
+#define FLAG_NEWMAP_TUNNEL_RUMOR                FLAG_UNUSED_0x264 // Master Gen asked the player to search the tomb tunnel
+#define FLAG_NEWMAP_MASK_RETURNED               FLAG_UNUSED_0x265 // showed Itsuki's carved mask to Master Gen (quest done)
+#define FLAG_NEWMAP_APPRENTICE_DOOR_OPEN        FLAG_UNUSED_0x266 // hides the crates blocking Itsuki's house door
+#define FLAG_HIDE_MUNEN_TUNNEL_GRUNT            FLAG_UNUSED_0x267 // straggler grunt flees the tunnel after losing
+#define FLAG_ITEM_MUNEN_TUNNEL_NUGGET           FLAG_UNUSED_0x268 // tunnel item balls...
+#define FLAG_ITEM_MUNEN_TUNNEL_MAX_ETHER        FLAG_UNUSED_0x269
+#define FLAG_ITEM_MUNEN_TUNNEL_TM_SHADOW_BALL   FLAG_UNUSED_0x26A
+#define FLAG_ITEM_MUNEN_TUNNEL_TM_THUNDERBOLT   FLAG_UNUSED_0x055 // (0x26B+ were already taken by later systems)
+#define FLAG_WOT_SUICUNE_CAUGHT                 FLAG_UNUSED_0x068 // Northwind Cavern: Suicune leaves only when caught
+#define FLAG_HIDE_ASHLANDS_MIRAGE               FLAG_UNUSED_0x0E9 // desert mirage actor (hidden except mid-scene)
+#define FLAG_WOT_MIRAGE_SEEN                    FLAG_UNUSED_0x1AA // Shadow Jirachi mirage played once
+#define FLAG_ROUTE2_GOT_SOFT_SAND               FLAG_UNUSED_0x1AB // lifeguard shack Soft Sand handout
+#define FLAG_ITEM_MUNEN_TUNNEL_CARVED_MASK      FLAG_UNUSED_0x26B // ...the mask itself (key item, deepest chamber)
+#define FLAG_ITEM_NEWMAP_APPRENTICE_RARE_CANDY  FLAG_UNUSED_0x26C // item ball inside Itsuki's house
+
+// === Act 2: boat to occupied National Park + Distortion World (2026-07-02) ===
+#define FLAG_ACT2_GRAVE_PORTAL_OPENED           FLAG_UNUSED_0x26D // first Catalpa Bow crossing seen (long cutscene once, short after)
+#define FLAG_ACT2_MET_CLARKSON_DISTORTION       FLAG_UNUSED_0x26E // Gengar-Clarkson scene done: Gengar joined, Distortion World collapsed, seam closed (also sets FLAG_NATIONAL_PARK_GRAVE_SECRET)
+#define FLAG_HIDE_ASHLANDS_OLD_MAN              FLAG_UNUSED_0x26F // Clarkson's father vanishes after the FENTANYL quest, unblocking his house door
+#define FLAG_ITEM_ASHLANDS_CATALPA_BOW          FLAG_UNUSED_0x270 // the Catalpa Bow item ball inside his house
+#define FLAG_ACT2_CROSSED_TO_MUNEN              FLAG_UNUSED_0x271 // Gengar ferried the player to occupied Munen (the point of no return)
+#define FLAG_ACT2_LAB_DRACO_FLED                FLAG_UNUSED_0x272 // Draco beaten/battled in the Munen lab; fled to Shin-Tokyo with the research in his head
+#define FLAG_ACT2_RESEARCH_RESOLVED             FLAG_UNUSED_0x273 // player chose the fate of the physical research (kept = has ITEM_SHADOW_DOSSIER; destroyed = no item)
+#define FLAG_ACT2_HOME_CUTSCENE_DONE            FLAG_UNUSED_0x274 // Mom fought off the goons and led the player to the safehouse (hides home objects)
+#define FLAG_HIDE_DOJO_REBELS                   FLAG_UNUSED_0x275 // SET at new game (new_game.inc); CLEARED when Mom brings the player to the Dojo safehouse
+#define FLAG_ACT2_SAFEHOUSE_INTRO_DONE          FLAG_UNUSED_0x276 // "Welcome to the Rebellion" pan-up cutscene has played
+#define FLAG_ACT2_REBEL_GIFT_REDFATALITY        FLAG_UNUSED_0x277 // RedFatality handed over TM13 Ice Beam (a fighter's parting gift)
+#define FLAG_ACT2_REBEL_GIFT_MOM                FLAG_UNUSED_0x278 // Mom gave the Soothe Bell from over the crib (+ Leftovers, because Mom)
+#define FLAG_ACT2_REBEL_GIFT_MIKMANC            FLAG_UNUSED_0x279 // MikManc handed over the Life Orb + a word of courage
+#define FLAG_ACT2_REBEL_GIFT_YIFFER             FLAG_UNUSED_0x27A // Yiffer handed over the Leftovers ("bite by bite")
+#define FLAG_HIDE_SHINKANSEN_ACT2_GOONS         FLAG_UNUSED_0x27B // SET at new game; CLEARED when the keycard door opens (act-2 passengers appear)
+#define FLAG_ACT3_STARTED                       FLAG_UNUSED_0x27C // took the seat; the Shinkansen departed -- ACT III: COOKED
+#define FLAG_ITEM_DISTORTION_WORLD_RARE_CANDY   FLAG_UNUSED_0x27E // item ball among the kept things (23,22)
+#define FLAG_MELTING_MILE_PIKACHU_JOINED        FLAG_UNUSED_0x27F // the trail Pikachu joined the party (secret starter, Lv8)
+#define FLAG_POMPEII_TUNNEL_ROCK_CLEARED        FLAG_UNUSED_0x280 // Master Gen had the tunnel-mouth slab cleared (quest start)
+#define FLAG_POMPEII_GENERAL_RETREATED          FLAG_UNUSED_0x281 // General Edwards beaten; he abandons the mask chamber
+#define FLAG_ITEM_DISTORTION_WORLD_3_MAX_REVIVE FLAG_UNUSED_0x285
+#define FLAG_ITEM_DISTORTION_WORLD_5_FULL_RESTORE FLAG_UNUSED_0x286
+#define FLAG_ITEM_DISTORTION_WORLD_5_PP_UP      FLAG_UNUSED_0x287
+// Tradewind Town street item balls (2026-07-15)
+#define FLAG_ITEM_TRADEWIND_TM30                FLAG_UNUSED_0x288 // Shadow Ball
+#define FLAG_ITEM_TRADEWIND_TM24                FLAG_UNUSED_0x289 // Thunderbolt
+#define FLAG_ITEM_TRADEWIND_TM29                FLAG_UNUSED_0x28A // Psychic
+#define FLAG_ITEM_TRADEWIND_MAX_POTION          FLAG_UNUSED_0x28B
+#define FLAG_ITEM_WALNUT_WOODS_HM06             FLAG_UNUSED_0x28C // Rock Smash
+// Sennen station assault cutscene (SennenAct2)
+#define FLAG_SENNEN_ACT2_INTRO_SEEN             FLAG_UNUSED_0x28D
+#define FLAG_SENNEN_ACT2_B1_FALLEN              FLAG_UNUSED_0x28E // Honchkrow KO'd
+#define FLAG_SENNEN_ACT2_B2_FALLEN              FLAG_UNUSED_0x28F // Machamp KO'd + Yiffer gone
+#define FLAG_SENNEN_ACT2_B3_FALLEN              FLAG_UNUSED_0x290 // Raichu KO'd + RedFatality gone
+#define FLAG_SENNEN_ACT2_GOONS_CLEARED          FLAG_UNUSED_0x291 // Alakazam/goons/Hydreigon
+// Distortion World inverted-gravity walkways
+#define FLAG_ITEM_DISTORTION_WORLD_3_TM26       FLAG_UNUSED_0x292 // Earthquake (ceiling)
+#define FLAG_ITEM_DISTORTION_WORLD_4_TM25       FLAG_UNUSED_0x293 // Thunder (lower walkway)
+#define FLAG_DW_INVERTED                        FLAG_UNUSED_0x294 // player walks the ceiling (sprite v-flip)
+#define FLAG_DW_INVERT_PENDING                  FLAG_UNUSED_0x295 // carry inversion through an intra-DW warp
+#define FLAG_GOT_TRADEWIND_MEGA_STONES          FLAG_UNUSED_0x296 // shady lab dealer's one-time Kanto-starter stones
+// Tradewind curio shop -- one of each mega stone, ever (buy-once)
+#define FLAG_CURIO_LUCARIONITE_Z                FLAG_UNUSED_0x297
+#define FLAG_CURIO_TYRANITARITE                 FLAG_UNUSED_0x298
+#define FLAG_CURIO_GYARADOSITE                  FLAG_UNUSED_0x299
+#define FLAG_CURIO_RAICHUNITE_Y                 FLAG_UNUSED_0x29A
+#define FLAG_CURIO_TATSUGIRINITE                FLAG_UNUSED_0x29B
+#define FLAG_CURIO_HOUNDOOMINITE                FLAG_UNUSED_0x29C
+#define FLAG_CURIO_BANETTITE                    FLAG_UNUSED_0x29D
+#define FLAG_CURIO_GARCHOMPITE                  FLAG_UNUSED_0x29E
+
+// === Act 3: Shin-Tokyo (2026-07-27) ===
+#define FLAG_ACT3_ARRIVED_SHIN_TOKYO            FLAG_UNUSED_0x29F // the rainy platform arrival scene has played (Step 1 opening)
+#define FLAG_ACT3_RESEARCH_STOLEN               FLAG_UNUSED_0x2A0 // kept path only: the Mutrid Captain took the Shadow Dossier at street level (Step 2)
+#define FLAG_ACT3_INSPECTION_DONE               FLAG_UNUSED_0x2A1 // the street inspection scene played (either path)
+#define FLAG_ACT3_MINISTER_CALLED               FLAG_UNUSED_0x2A2 // Minister's PokeNav call: Mikmanc compromised, jail door opened (Step 3)
+#define FLAG_ACT3_MIKMANC_FREED                 FLAG_UNUSED_0x2A3 // cell checkpoint reached; also hides the cell Mikmanc object (Step 4)
+#define FLAG_ACT3_RED_ALERT                     FLAG_UNUSED_0x2A4 // permanent city hostility after the jailbreak; mask useless (Step 5)
+#define FLAG_ACT3_ARREST_DONE                   FLAG_UNUSED_0x2A5 // the Zoroark operative arrest + hideout escort played (Step 6)
+#define FLAG_HIDE_ACT3_CAPTAIN                  FLAG_UNUSED_0x2A6 // scene-only NPC: set every ShinTokyo transition, addobject during Step 2
+#define FLAG_HIDE_ACT3_ARREST_NPCS              FLAG_UNUSED_0x2A7 // scene-only NPCs (officer + operative): set every transition, addobject during Step 6
+#define FLAG_ACT3_JAIL_REVEAL_SEEN              FLAG_UNUSED_0x2A8 // the one-time "lights die" reveal on first jail entry
+#define FLAG_HIDE_ACT3_JAIL_GUARDS              FLAG_UNUSED_0x2A9 // the two sentries at the jail door; set (guards scatter) by the Minister's call
+#define FLAG_WOT_SB3_FNPC_INIT                  FLAG_UNUSED_0x2AA // one-time SaveBlock3 follower-NPC data wipe for saves made before FNPC_ENABLE_NPC_FOLLOWERS
+#define FLAG_WOT_FAIRY_TRIAL_DONE               FLAG_UNUSED_0x2AB // Celebi Island: all three keepers defeated; the shrine warden has left the bridge
+#define FLAG_WOT_ISLAND_CHECKPOINT              FLAG_UNUSED_0x2AC // Stop the Machine: first quest checkpoint (reached Celebi Island) toasted
+#define FLAG_HIDE_ACT3_PATROLS                  FLAG_UNUSED_0x2AD // red-alert Shadow patrols in the district; managed every ShinTokyo transition
+#define FLAG_WOT_DEOXYS_CAUGHT                  FLAG_UNUSED_0x2AE // the Prototype Lab Shadow DEOXYS was caught (object stays if merely defeated)
+#define FLAG_WOT_ONI_MET                        FLAG_UNUSED_0x2AF // the tower-summit Oni scene has played (his battle comes later)
+#define FLAG_WOT_HIDEOUT_REVEAL_DONE            FLAG_UNUSED_0x2B0 // the Zoroark reveal + briefing played inside the hideout (scripts don't survive warps -- the street scene ends AT the warp)
+#define FLAG_HIDE_REBEL_OPERATIVE               FLAG_UNUSED_0x2B1 // hides the hideout's static operative until the reveal has introduced her (managed every hideout transition)
+#define FLAG_WOT_INMATE_GONE                    FLAG_UNUSED_0x2B2 // the shiv inmate gave his Quick Claw and bolted
+#define FLAG_WOT_ARENA_INTRO_SEEN               FLAG_UNUSED_0x2B3 // the Underground Arena title-bout cutscene has played
+#define FLAG_WOT_ARENA_ENTERED                  FLAG_UNUSED_0x2B4 // signed up with the announcer; the (4,6) ring trigger is live
+#define FLAG_HIDE_ARENA_CHALLENGERS             FLAG_UNUSED_0x2B5 // the two gauntlet challengers (scene-only; set every arena transition)
+#define FLAG_WOT_ARENA_WON                      FLAG_UNUSED_0x2B6 // swept the tournament: UNDERGROUND BADGE earned
+#define FLAG_WOT_ITEM_SHINTOKYO_ALLEY           FLAG_UNUSED_0x2B7 // Big Nugget in the black-market alley
+#define FLAG_WOT_ITEM_SHINTOKYO_PLAZA           FLAG_UNUSED_0x2B8 // Pearl String at (29,18)
+#define FLAG_HIDE_WOT_LEADER_SCREEN             FLAG_UNUSED_0x2B9 // jumbotron: leader face (hidden at red alert)
+#define FLAG_HIDE_WOT_WANTED_POSTER             FLAG_UNUSED_0x2BA // jumbotron: wanted poster (shown at red alert)
+#define FLAG_HIDE_WOT_CELEBI                    FLAG_UNUSED_0x2BB // Celebi hides until the lake trio yields the shrine
+#define FLAG_WOT_DRAGON_WARDENS_BEATEN          FLAG_UNUSED_0x02B // Ryuden Island: the double battle is won
+#define FLAG_WOT_RYUDEN_EGG_TAKEN               FLAG_UNUSED_0x02C // one dragon egg claimed from the incubator
+#define FLAG_HIDE_RYUDEN_WARDENS                FLAG_UNUSED_0x02D // wardens hidden until they emerge (or after victory: shown)
+#define FLAG_WOT_SNAG_STAGE1                    FLAG_UNUSED_0x035 // Harness Darkness: first snag rewarded
+#define FLAG_WOT_SNAG_STAGE2                    FLAG_UNUSED_0x054 // Harness Darkness: five snags -- complete
+
+// === Distortion World rift layers (2026-07-10) ===
+#define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)
+#define FLAG_ITEM_DISTORTION_WORLD_4_RIFT_CORE  FLAG_UNUSED_0x283 // relic ball in layer 4 (placeholder spot 23,18)
+#define FLAG_ITEM_DISTORTION_WORLD_5_RIFT_HEART FLAG_UNUSED_0x284 // relic ball in layer 5 (placeholder spot 26,19)
 
 #endif // GUARD_CONSTANTS_FLAGS_H

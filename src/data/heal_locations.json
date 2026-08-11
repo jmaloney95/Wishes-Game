@@ -366,6 +366,15 @@
       "y": 21
     },
     {
+      "id": "HEAL_LOCATION_NEW_MAP_INN",
+      "map": "MAP_NEW_MAP_INN",
+      "x": 1,
+      "y": 4,
+      "respawn_map": "MAP_NEW_MAP_INN",
+      "respawn_x": 4,
+      "respawn_y": 5
+    },
+    {
       "id": "HEAL_LOCATION_ROUTE115",
       "map": "MAP_ROUTE115",
       "x": 20,
@@ -375,13 +384,49 @@
       "id": "HEAL_LOCATION_SENNEN_VILLAGE",
       "map": "MAP_SENNEN_VILLAGE",
       "x": 7,
-      "y": 15
+      "y": 21
     },
     {
       "id": "HEAL_LOCATION_WALNUT_WOODS",
       "map": "MAP_WALNUT_WOODS",
-      "x": 21,
+      "x": 23,
       "y": 3
+    },
+    {
+      "id": "HEAL_LOCATION_FROSTWOOD_TOWN",
+      "map": "MAP_FROSTWOOD_TOWN",
+      "x": 16,
+      "y": 26
+    },
+    {
+      "id": "HEAL_LOCATION_TRADEWIND_TOWN",
+      "map": "MAP_TRADEWIND_TOWN",
+      "x": 24,
+      "y": 43
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_JAIL_ENTRY",
+      "map": "MAP_SHIN_TOKYO_JAIL",
+      "x": 12,
+      "y": 16
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_JAIL_CELL",
+      "map": "MAP_SHIN_TOKYO_JAIL",
+      "x": 15,
+      "y": 4
+    },
+    {
+      "id": "HEAL_LOCATION_REBEL_HIDEOUT",
+      "map": "MAP_REBEL_HIDEOUT",
+      "x": 11,
+      "y": 4
+    },
+    {
+      "id": "HEAL_LOCATION_DOJO",
+      "map": "MAP_DOJO",
+      "x": 21,
+      "y": 17
     }
   ]
 }

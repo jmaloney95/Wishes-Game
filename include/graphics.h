@@ -632,6 +632,10 @@ extern const u32 gItemIcon_RelicStatue[];
 extern const u32 gItemIcon_RelicCrown[];
 extern const u32 gItemIcon_StrangeSouvenir[];
 extern const u16 gItemIconPalette_StrangeSouvenir[];
+extern const u32 gItemIcon_CatalpaBow[];
+extern const u16 gItemIconPalette_CatalpaBow[];
+extern const u32 gItemIcon_SnagMachine[];
+extern const u16 gItemIconPalette_SnagMachine[];
 // Fossils
 extern const u32 gItemIcon_HelixFossil[];
 extern const u16 gItemIconPalette_KantoFossil[];

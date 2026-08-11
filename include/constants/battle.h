@@ -127,6 +127,9 @@ enum BattleSide
 #define BATTLE_MULTI_TEST                   (BATTLE_TYPE_IS_MASTER | BATTLE_TYPE_TRAINER | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_MULTI | BATTLE_TYPE_TWO_OPPONENTS)
 #define BATTLE_TWO_VS_ONE_TEST              (BATTLE_TYPE_IS_MASTER | BATTLE_TYPE_TRAINER | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_MULTI)
 
+// RIVAL_BATTLE_TUTORIAL is a composite: bit 1 (tutorial AI) | RIVAL_BATTLE_HEAL_AFTER.
+// Tests for the tutorial must use an exact mask match, not a plain `&`, or a battle
+// passing only HEAL_AFTER inherits the tutorial's flee AI (see battle_setup.c).
 #define RIVAL_BATTLE_HEAL_AFTER  1
 #define RIVAL_BATTLE_TUTORIAL    3
 

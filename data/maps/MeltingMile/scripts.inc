@@ -20,12 +20,36 @@ MeltingMile_EventScript_Gentleman::
 	release
 	end
 
+@ The trail Pikachu: a secret starter. Joins the party at Lv8 if the player
+@ says yes; the object hides for good via FLAG_MELTING_MILE_PIKACHU_JOINED.
 MeltingMile_EventScript_Pikachu::
 	lock
 	faceplayer
 	playmoncry SPECIES_PIKACHU, CRY_MODE_ENCOUNTER
 	msgbox MeltingMileText_Pikachu, MSGBOX_DEFAULT
 	waitmoncry
+	msgbox MeltingMileText_PikachuOffer, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq MeltingMile_EventScript_PikachuDecline
+	givemon SPECIES_PIKACHU, 8
+	compare VAR_RESULT, MON_CANT_GIVE
+	goto_if_eq MeltingMile_EventScript_PikachuNoRoom
+	playfanfare MUS_OBTAIN_ITEM
+	waitfanfare
+	msgbox MeltingMileText_PikachuJoined, MSGBOX_DEFAULT
+	closemessage
+	setflag FLAG_MELTING_MILE_PIKACHU_JOINED
+	removeobject VAR_LAST_TALKED
+	release
+	end
+
+MeltingMile_EventScript_PikachuDecline::
+	msgbox MeltingMileText_PikachuDecline, MSGBOX_DEFAULT
+	release
+	end
+
+MeltingMile_EventScript_PikachuNoRoom::
+	msgbox MeltingMileText_PikachuNoRoom, MSGBOX_DEFAULT
 	release
 	end
 
@@ -77,6 +101,7 @@ MeltingMile_EventScript_GirlsLeave::
 	msgbox MeltingMileText_GirlsLeave, MSGBOX_DEFAULT
 	closemessage
 	removeitem ITEM_HOT_COCOA          @ the cocoa is handed over
+	completequest QUEST_TOASTY_TIME
 	applymovement LOCALID_MM_GIRL_L, MeltingMile_Movement_StepAside
 	applymovement LOCALID_MM_GIRL_R, MeltingMile_Movement_StepAside
 	applymovement LOCALID_MM_AZURILL_L, MeltingMile_Movement_StepAside
@@ -123,6 +148,21 @@ MeltingMileText_Gentleman:
 MeltingMileText_Pikachu:
 	.string "The little yellow POKEMON notices you.\nIts cheeks crackle.\p"
 	.string "It doesn't run... it tilts its head,\ncurious. Almost like it wants to come\lalong.$"
+
+MeltingMileText_PikachuOffer:
+	.string "Bring PIKACHU with you?$"
+
+MeltingMileText_PikachuJoined:
+	.string "PIKACHU hops up your arm and settles\nin, sparks fizzing happily.\p"
+	.string "PIKACHU joined your party!$"
+
+MeltingMileText_PikachuDecline:
+	.string "It watches you go, ears drooping\njust a little.\p"
+	.string "It will be waiting here on the trail.$"
+
+MeltingMileText_PikachuNoRoom:
+	.string "Your party and boxes are full.\p"
+	.string "PIKACHU tilts its head -- it'll wait\nright here until you make room.$"
 
 MeltingMileText_UseSplash:
 	.string "AZURILL, use SPLASH!$"

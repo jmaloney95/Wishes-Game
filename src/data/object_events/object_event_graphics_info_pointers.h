@@ -40,6 +40,22 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SchoolKidM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_Maniac;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_HexManiac;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_RayquazaStill;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotLeaderScreen;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotWantedPoster;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotWantedSmall;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotDraco;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMikmanc;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotNessa;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwards;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotShadowJirachi;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotAllisonLand;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotSkyeLand;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotRosaLand;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMarinaLand;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBeachBeauty;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotYiffer;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJet;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwardsImpact;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerF;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BlackBelt;
@@ -413,6 +429,10 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerPink
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerSky;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_GoldOni;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_OniGoon;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MutridGruntWhite;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCarvedMask;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCatalpaBow;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemPotion;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -457,6 +477,22 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_MANIAC] =                   &gObjectEventGraphicsInfo_Maniac,
     [OBJ_EVENT_GFX_HEX_MANIAC] =               &gObjectEventGraphicsInfo_HexManiac,
     [OBJ_EVENT_GFX_RAYQUAZA_STILL] =           &gObjectEventGraphicsInfo_RayquazaStill,
+    [OBJ_EVENT_GFX_WOT_LEADER_SCREEN] =        &gObjectEventGraphicsInfo_WotLeaderScreen,
+    [OBJ_EVENT_GFX_WOT_WANTED_POSTER] =        &gObjectEventGraphicsInfo_WotWantedPoster,
+    [OBJ_EVENT_GFX_WOT_WANTED_SMALL] =         &gObjectEventGraphicsInfo_WotWantedSmall,
+    [OBJ_EVENT_GFX_WOT_DRACO] =                &gObjectEventGraphicsInfo_WotDraco,
+    [OBJ_EVENT_GFX_WOT_MIKMANC] =              &gObjectEventGraphicsInfo_WotMikmanc,
+    [OBJ_EVENT_GFX_WOT_NESSA] =                &gObjectEventGraphicsInfo_WotNessa,
+    [OBJ_EVENT_GFX_WOT_EDWARDS] =              &gObjectEventGraphicsInfo_WotEdwards,
+    [OBJ_EVENT_GFX_WOT_SHADOW_JIRACHI] =       &gObjectEventGraphicsInfo_WotShadowJirachi,
+    [OBJ_EVENT_GFX_WOT_ALLISON_LAND] =           &gObjectEventGraphicsInfo_WotAllisonLand,
+    [OBJ_EVENT_GFX_WOT_SKYE_LAND] =              &gObjectEventGraphicsInfo_WotSkyeLand,
+    [OBJ_EVENT_GFX_WOT_ROSA_LAND] =              &gObjectEventGraphicsInfo_WotRosaLand,
+    [OBJ_EVENT_GFX_WOT_MARINA_LAND] =            &gObjectEventGraphicsInfo_WotMarinaLand,
+    [OBJ_EVENT_GFX_WOT_BEACH_BEAUTY] =           &gObjectEventGraphicsInfo_WotBeachBeauty,
+    [OBJ_EVENT_GFX_WOT_YIFFER] =                 &gObjectEventGraphicsInfo_WotYiffer,
+    [OBJ_EVENT_GFX_WOT_JET] =                    &gObjectEventGraphicsInfo_WotJet,
+    [OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT] =         &gObjectEventGraphicsInfo_WotEdwardsImpact,
     [OBJ_EVENT_GFX_SWIMMER_M] =                &gObjectEventGraphicsInfo_SwimmerM,
     [OBJ_EVENT_GFX_SWIMMER_F] =                &gObjectEventGraphicsInfo_SwimmerF,
     [OBJ_EVENT_GFX_BLACK_BELT] =               &gObjectEventGraphicsInfo_BlackBelt,
@@ -670,7 +706,11 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_SWIMMER_PINK] = &gObjectEventGraphicsInfo_SwimmerPink,
     [OBJ_EVENT_GFX_SWIMMER_SKY] = &gObjectEventGraphicsInfo_SwimmerSky,
     [OBJ_EVENT_GFX_GOLD_ONI] = &gObjectEventGraphicsInfo_GoldOni,
-    [OBJ_EVENT_GFX_ONI_GOON] = &gObjectEventGraphicsInfo_OniGoon,
+    [OBJ_EVENT_GFX_MUTRID_GOON_RED] = &gObjectEventGraphicsInfo_OniGoon,
+    [OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE] = &gObjectEventGraphicsInfo_MutridGruntWhite,
+    [OBJ_EVENT_GFX_ITEM_CARVED_MASK] = &gObjectEventGraphicsInfo_ItemCarvedMask,
+    [OBJ_EVENT_GFX_ITEM_CATALPA_BOW] = &gObjectEventGraphicsInfo_ItemCatalpaBow,
+    [OBJ_EVENT_GFX_ITEM_POTION] = &gObjectEventGraphicsInfo_ItemPotion,
 #if IS_FRLG
     [OBJ_EVENT_GFX_RED_NORMAL] =               &gObjectEventGraphicsInfo_RedNormal,
     [OBJ_EVENT_GFX_RED_BIKE] =                 &gObjectEventGraphicsInfo_RedBike,

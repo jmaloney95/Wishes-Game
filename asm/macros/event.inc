@@ -1949,6 +1949,196 @@
 	_dynmultichoice \left, \top, \ignoreBPress, \maxBeforeScroll, \shouldSort, \initialSelected, \callbacks, NULL
 	.endm
 
+	.macro questmenu case:req, questId:req
+	.byte SCR_OP_QUESTMENU
+	.byte \case
+	.byte \questId
+	.endm
+
+	.macro subquestmenu case:req, parentId:req, childId:req
+	.byte SCR_OP_SUBQUESTMENU
+	.byte \case
+	.2byte \parentId
+	.2byte \childId
+	.endm
+
+	@ Check the quest state and return a number associated with quest state
+	.macro returnqueststate questId:req
+	.byte SCR_OP_RETURNQUESTSTATE
+	.byte \questId
+	.endm
+
+	.macro openquestmenu
+	questmenu QUEST_MENU_OPEN, 0
+	.endm
+
+	@ Fires a non-blocking quest toast (see src/quest_toast.c).
+	.macro questtoast event:req, quest:req
+	.byte SCR_OP_QUESTTOAST
+	.byte \event
+	.byte \quest
+	.endm
+
+	@ Shows a floating "!" over the given NPC while the quest is still
+	@ unstarted. Call from a map's OnLoad script.
+	.macro questindicator localId:req, quest:req
+	.byte SCR_OP_QUESTINDICATOR
+	.byte \localId
+	.byte \quest
+	.endm
+
+	@ Like questindicator, but shows the "!" while the given flag is clear
+	@ (for givers gated on a flag instead of a quest). Call from OnLoad.
+	.macro flagindicator localId:req, flag:req
+	.byte SCR_OP_FLAGINDICATOR
+	.byte \localId
+	.2byte \flag
+	.endm
+
+	@ Starts the specified quest with a non-blocking corner toast.
+	@ (Single definition on purpose: the test build's inline overworld
+	@ scripts feed this file to gas RAW, where cpp #if lines are comments --
+	@ a cpp-guarded alternate definition would define the macro twice. The
+	@ legacy blocking-announcement variant lived behind USE_QUEST_TOAST=0
+	@ and was removed with it.)
+	.macro startquest quest:req
+	questmenu QUEST_MENU_SET_ACTIVE, \quest
+	questtoast QUEST_TOAST_START, \quest
+	.endm
+
+	@ Completes the specified quest with a non-blocking corner toast.
+	.macro completequest quest:req
+	questmenu QUEST_MENU_COMPLETE_QUEST, \quest
+	questtoast QUEST_TOAST_COMPLETE, \quest
+	.endm
+
+	.macro goto_if_quest_inactive quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_INACTIVE, \quest
+	goto_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro goto_if_quest_active quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_ACTIVE, \quest
+	goto_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro goto_if_quest_reward quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_REWARD, \quest
+	goto_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro goto_if_quest_complete quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_COMPLETE, \quest
+	goto_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro goto_if_quest_not_inactive quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_INACTIVE, \quest
+	goto_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro goto_if_quest_not_active quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_ACTIVE, \quest
+	goto_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro goto_if_quest_not_reward quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_REWARD, \quest
+	goto_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro goto_if_quest_not_complete quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_COMPLETE, \quest
+	goto_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro call_if_quest_inactive quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_INACTIVE, \quest
+	call_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro call_if_quest_active quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_ACTIVE, \quest
+	call_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro call_if_quest_reward quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_REWARD, \quest
+	call_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro call_if_quest_complete quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_COMPLETE, \quest
+	call_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro call_if_quest_not_inactive quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_INACTIVE, \quest
+	call_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro call_if_quest_not_active quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_ACTIVE, \quest
+	call_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro call_if_quest_not_reward quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_REWARD, \quest
+	call_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro call_if_quest_not_complete quest:req, dest:req
+	questmenu QUEST_MENU_CHECK_COMPLETE, \quest
+	call_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	@ Shows a 64x64 character portrait beside the message box. It persists
+	@ across message boxes until hideportrait (or the script ends).
+	.macro showportrait portrait:req, side=PORTRAIT_LEFT
+	.byte SCR_OP_SHOWPORTRAIT
+	.byte \portrait
+	.byte \side
+	.endm
+
+	@ Boss intro card: tint + banner/name slam + portrait, then resumes the
+	@ script (the waitstate is embedded -- do not add another). Call between
+	@ closemessage and the battle. id = BOSS_INTRO_* (constants/boss_intro.h).
+	.macro bossintro id:req
+	callnative BossIntro_StartFromScript
+	.4byte \id
+	waitstate
+	.endm
+
+	@ Hides the character portrait shown by showportrait.
+	.macro hideportrait
+	.byte SCR_OP_HIDEPORTRAIT
+	.endm
+
+	.macro completesubquest quest:req, subquest:req
+	closemessage
+	subquestmenu QUEST_MENU_COMPLETE_QUEST, \quest, \subquest
+	.endm
+
+	.macro goto_if_subquest_complete parent:req, child:req, dest:req
+	subquestmenu QUEST_MENU_CHECK_COMPLETE, \parent, \child
+	goto_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro call_if_subquest_complete parent:req, child:req, dest:req
+	subquestmenu QUEST_MENU_CHECK_COMPLETE, \parent, \child
+	call_if_eq VAR_RESULT, TRUE, \dest
+	.endm
+
+	.macro goto_if_subquest_not_complete parent:req, child:req, dest:req
+	subquestmenu QUEST_MENU_CHECK_COMPLETE, \parent, \child
+	goto_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
+	.macro call_if_subquest_not_complete parent:req, child:req, dest:req
+	subquestmenu QUEST_MENU_CHECK_COMPLETE, \parent, \child
+	call_if_eq VAR_RESULT, FALSE, \dest
+	.endm
+
 @ Supplementary
 
 	.macro goto_if_unset flag:req, dest:req

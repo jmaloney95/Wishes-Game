@@ -14,10 +14,12 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "field_message_box.h"
+#include "field_move.h"
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
 #include "field_specials.h"
 #include "field_weather.h"
+#include "gpu_regs.h"
 #include "graphics.h"
 #include "international_string_util.h"
 #include "item.h"
@@ -53,6 +55,7 @@
 #include "text.h"
 #include "text_window.h"
 #include "tilesets.h"
+#include "trig.h"
 #include "tv.h"
 #include "wallclock.h"
 #include "window.h"
@@ -1576,6 +1579,20 @@ void ShakeCamera(void)
     PlaySE(SE_M_STRENGTH);
 }
 
+// WoT: identical to ShakeCamera minus its built-in PlaySE -- that thud
+// replaced whatever scene SE was ringing (Edwards's landing boom). Use when
+// the script supplies its own impact sound.
+void WotShakeCameraSilent(void)
+{
+    u8 taskId = CreateTask(Task_ShakeCamera, 9);
+    gTasks[taskId].tHorizontalPan = gSpecialVar_0x8005;
+    gTasks[taskId].tDelayCounter = 0;
+    gTasks[taskId].tNumShakes = gSpecialVar_0x8006;
+    gTasks[taskId].tDelay = gSpecialVar_0x8007;
+    gTasks[taskId].tVerticalPan = gSpecialVar_0x8004;
+    SetCameraPanningCallback(NULL);
+}
+
 static void Task_ShakeCamera(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
@@ -1607,6 +1624,191 @@ static void StopCameraShake(u8 taskId)
 #undef tNumShakes
 #undef tDelay
 #undef tVerticalPan
+
+// -- Rift distortion (Distortion World enter/exit transition) ----------------
+// StartRiftDistortion begins a mosaic-pulse + sinusoidal camera wobble that
+// runs until EndRiftDistortion. The overworld map BGs (1-3) already have their
+// BGxCNT mosaic bit set (InitOverworldBgs) and BG0 (the textbox) does not, so
+// writing REG_MOSAIC distorts the world while text stays crisp. Object-event
+// sprites don't mosaic (no OAM mosaic bit), which reads as "the world warps
+// around the people in it". Neither special uses waitstate; the intended
+// script shape is:
+//   special StartRiftDistortion   @ effect ramps in while the script goes on
+//   fadescreen FADE_TO_...        @ the world dissolves while distorted
+//   special EndRiftDistortion     @ cleanup while the screen is blank
+#define tTimer data[0]
+
+static void Task_RiftDistortion(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u16 mosaic, panAmp;
+
+    tTimer++;
+    mosaic = tTimer / 8;
+    if (mosaic > 4)
+        mosaic = 4;
+    mosaic += (tTimer >> 2) & 1; // crawling-block pulse on top of the ramp
+    SetGpuReg(REG_OFFSET_MOSAIC, (mosaic << 4) | mosaic);
+    panAmp = tTimer / 12;
+    if (panAmp > 3)
+        panAmp = 3;
+    SetCameraPanning(Sin((tTimer * 24) & 0xFF, panAmp + 1),
+                     Sin(((tTimer * 24) + 64) & 0xFF, panAmp));
+}
+
+void StartRiftDistortion(void)
+{
+    if (FindTaskIdByFunc(Task_RiftDistortion) == TASK_NONE)
+    {
+        SetCameraPanningCallback(NULL);
+        CreateTask(Task_RiftDistortion, 80);
+    }
+}
+
+void EndRiftDistortion(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_RiftDistortion);
+
+    if (taskId != TASK_NONE)
+        DestroyTask(taskId);
+    SetGpuReg(REG_OFFSET_MOSAIC, 0);
+    SetCameraPanning(0, 0);
+    InstallCameraPanAheadCallback();
+}
+
+#undef tTimer
+
+// -- WoT Shadow system, phase 1 (WoT_Act3_Canon.md §2.2) ---------------------
+// Script API over the per-mon shadow bits. VAR_0x8004 = party slot for the
+// single-mon calls (pair with `special ChoosePartyMon`).
+
+// gSpecialVar_Result: 0 = not a Shadow, 1 = Shadow (has not battled yet),
+// 2 = Shadow, opened -- ready for the shrine.
+void GetMonShadowState(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+
+    if (gSpecialVar_0x8004 >= PARTY_SIZE || !GetMonData(mon, MON_DATA_IS_SHADOW))
+        gSpecialVar_Result = 0;
+    else if (!GetMonData(mon, MON_DATA_SHADOW_OPENED))
+        gSpecialVar_Result = 1;
+    else
+        gSpecialVar_Result = 2;
+}
+
+// Instant purification (canon: no heart gauge -- the shrine mends it in one
+// motion). Clears both shadow bits and pins the Colosseum keepsake: the
+// NATIONAL RIBBON, "given to purified Shadow Pokemon".
+void PurifyPartyMon(void)
+{
+    struct Pokemon *mon = &gPlayerParty[gSpecialVar_0x8004];
+    u32 zero = FALSE, one = TRUE;
+
+    if (gSpecialVar_0x8004 >= PARTY_SIZE)
+        return;
+    SetMonData(mon, MON_DATA_IS_SHADOW, &zero);
+    SetMonData(mon, MON_DATA_SHADOW_OPENED, &zero);
+    SetMonData(mon, MON_DATA_NATIONAL_RIBBON, &one);
+    CalculateMonStats(mon);
+}
+
+// -- WoT: the HMs start-menu submenu ----------------------------------------
+// HMs are trainer abilities here: unlocked by badges, never taught. The menu
+// itself is scripted (wot_hms.inc); these are its two helpers.
+
+// gSpecialVar_0x8004 = a FIELD_MOVE_* id; gSpecialVar_Result = is it unlocked.
+// Keeps the badge mapping in ONE place (field_move.c) instead of duplicating
+// it into script flag checks.
+void WotIsHMUnlocked(void)
+{
+    gSpecialVar_Result = IsFieldMoveUnlocked(gSpecialVar_0x8004);
+}
+
+// Fly has no overworld tile to interact with, so it is used FROM the HM menu:
+// hand the screen to the region map (the same entry point the debug menu's
+// Fly utility uses). Call it as the script's last act.
+void WotOpenFlyMap(void)
+{
+    SetMainCallback2(CB2_OpenFlyMap);
+}
+
+// -- WoT: red-alert klaxon (jail escape, Act 3 Step 4) ----------------------
+// Pulses the whole screen red with an alarm beep. Blocking: pair with
+// `waitstate`. Uses the normal palette-fade machinery (not a raw BlendPalettes)
+// so the field's own palette updates don't fight it.
+#define tState  data[0]
+#define tCycles data[1]
+
+static void Task_WotRedAlertFlash(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+
+    if (gPaletteFade.active)
+        return;
+
+    switch (tState)
+    {
+    case 0:
+        PlaySE(SE_LOW_HEALTH);
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 10, RGB_RED);
+        tState = 1;
+        break;
+    case 1:
+        BeginNormalPaletteFade(PALETTES_ALL, 0, 10, 0, RGB_RED);
+        if (++tCycles >= 4)
+            tState = 2;
+        else
+            tState = 0;
+        break;
+    case 2:
+        DestroyTask(taskId);
+        ScriptContext_Enable();
+        break;
+    }
+}
+
+void WotRedAlertFlash(void)
+{
+    u8 taskId = CreateTask(Task_WotRedAlertFlash, 80);
+
+    gTasks[taskId].tState = 0;
+    gTasks[taskId].tCycles = 0;
+}
+
+#undef tState
+#undef tCycles
+
+// Marks the scripted wild mon (gEnemyParty[0], created by setwildbattle) as
+// a Shadow -- used for static Shadow encounters like the Prototype Lab
+// DEOXYS. Run it between setwildbattle and the battle special so the
+// healthbox indicator applies from turn one.
+void WotMakeEventMonShadow(void)
+{
+    u32 one = TRUE;
+
+    SetMonData(&gEnemyParty[0], MON_DATA_IS_SHADOW, &one);
+}
+
+// gSpecialVar_Result = number of Shadow mons in the party;
+// gSpecialVar_0x8005 = slot of the first one (PARTY_SIZE if none).
+void CountShadowPartyMons(void)
+{
+    u32 i, count = 0;
+
+    gSpecialVar_0x8005 = PARTY_SIZE;
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+            break;
+        if (GetMonData(&gPlayerParty[i], MON_DATA_IS_SHADOW))
+        {
+            if (count == 0)
+                gSpecialVar_0x8005 = i;
+            count++;
+        }
+    }
+    gSpecialVar_Result = count;
+}
 
 bool8 FoundBlackGlasses(void)
 {
@@ -4946,6 +5148,27 @@ bool8 DoesPlayerPartyContainSpecies(void)
             return TRUE;
     }
     return FALSE;
+}
+
+// Removes the first non-egg party Pokemon whose species == gSpecialVar_0x8004.
+// Sets gSpecialVar_Result to TRUE if one was removed, FALSE if none matched.
+void TakeFirstMonOfSpecies(void)
+{
+    u8 partyCount = CalculatePlayerPartyCount();
+    u8 i;
+    for (i = 0; i < partyCount; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL) == gSpecialVar_0x8004
+            && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG, NULL))
+        {
+            ZeroMonData(&gPlayerParty[i]);
+            CompactPartySlots();
+            CalculatePlayerPartyCount();
+            gSpecialVar_Result = TRUE;
+            return;
+        }
+    }
+    gSpecialVar_Result = FALSE;
 }
 
 static const u8 sSlotMachineIndices[] = {

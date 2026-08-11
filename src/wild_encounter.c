@@ -475,6 +475,16 @@ void CreateWildMon(u16 species, u8 level)
     u32 personality = GetMonPersonality(species, GetSynchronizedGender(WILDMON_ORIGIN, species), PickWildMonNature(species), RANDOM_UNOWN_LETTER);
     CreateMonWithIVs(&gEnemyParty[0], species, level, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     GiveMonInitialMoveset(&gEnemyParty[0]);
+    // WoT: Celebi Island wild mons are SHADOWS -- the island soaks in
+    // leakage from the generator across the water. Route 129 (the transit
+    // sea between Shin-Tokyo and the island) sits in the same plume.
+    if (gMapHeader.regionMapSectionId == MAPSEC_CELEBI_ISLAND
+     || gMapHeader.regionMapSectionId == MAPSEC_ROUTE_129)
+    {
+        u32 wotShadow = TRUE;
+        SetMonData(&gEnemyParty[0], MON_DATA_IS_SHADOW, &wotShadow);
+    }
+
 }
 
 #ifdef BUGFIX

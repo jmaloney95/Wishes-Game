@@ -420,6 +420,12 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_RUIN_MANIAC_FRLG] =     { _("RUIN MANIAC"), 12 },
     [TRAINER_CLASS_LADY_FRLG] =            { _("LADY"), 50 },
     [TRAINER_CLASS_PAINTER_FRLG] =         { _("PAINTER"), 4 },
+    [TRAINER_CLASS_TEAM_MUTRID] =          { _("???"), 5 },
+    [TRAINER_CLASS_MUTRID] =               { _("Mutrid"), 5 },
+    [TRAINER_CLASS_DRAGON_WARDEN] =        { _("Dragon Warden"), 15 },
+    [TRAINER_CLASS_GENERAL] =              { _("General"), 12 },
+    [TRAINER_CLASS_ONI] =                  { _("Oni"), 8 },
+    [TRAINER_CLASS_CAPTAIN] =              { _("Captain"), 10 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =
@@ -1951,6 +1957,44 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
         u32 monIndices[monsCount];
         DoTrainerPartyPool(trainer, monIndices, monsCount, battleTypeFlags);
 
+        // Gym level cap: for the four badge fights, cap the leader's TOP mon at
+        // the player's highest party level and slide the whole team down by the
+        // same amount, preserving the team's internal spread. Only scales DOWN
+        // (an over-leveled player still faces the designed team). Keyed on the
+        // trainer id from TRAINER_BATTLE_PARAM so it is difficulty-row agnostic.
+        u32 gymLevelShift = 0;
+        {
+            static const u16 sScaledGymLeaders[] = {
+                TRAINER_ROXANNE_1,         // Ember      (Frostwood Gym)
+                TRAINER_TUNNEL_CAPTAIN,    // Flint      (Munen Tunnel boss)
+                TRAINER_MADAM_TSUJI,       // Lantern    (Tradewind Gym)
+                TRAINER_DISTORTION_LEADER, // Distortion (Vesper, rift gym)
+            };
+            u16 trainerId = (firstTrainer == TRUE) ? TRAINER_BATTLE_PARAM.opponentA : TRAINER_BATTLE_PARAM.opponentB;
+            u32 k;
+
+            for (k = 0; k < ARRAY_COUNT(sScaledGymLeaders); k++)
+            {
+                if (sScaledGymLeaders[k] == trainerId)
+                {
+                    u32 teamTop = 0;
+                    s32 playerTop;
+                    s32 j;
+
+                    for (j = 0; j < monsCount; j++)
+                    {
+                        u32 lvl = trainer->party[monIndices[j]].lvl;
+                        if (lvl > teamTop)
+                            teamTop = lvl;
+                    }
+                    playerTop = GetHighestLevelInPlayerParty();
+                    if (playerTop > 0 && teamTop > (u32)playerTop)
+                        gymLevelShift = teamTop - (u32)playerTop;
+                    break;
+                }
+            }
+        }
+
         for (i = 0; i < monsCount; i++)
         {
             u32 monIndex = monIndices[i];
@@ -1980,7 +2024,10 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 otId.method = OT_ID_PRESET;
                 otId.value = HIHALF(personalityValue) ^ LOHALF(personalityValue);
             }
-            CreateMon(&party[i], partyData[monIndex].species, partyData[monIndex].lvl, personalityValue, otId);
+            u32 monLevel = partyData[monIndex].lvl;
+            if (gymLevelShift != 0)
+                monLevel = (monLevel > gymLevelShift) ? (monLevel - gymLevelShift) : 1;
+            CreateMon(&party[i], partyData[monIndex].species, monLevel, personalityValue, otId);
             SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
 
             CustomTrainerPartyAssignMoves(&party[i], &partyData[monIndex]);
@@ -2042,6 +2089,13 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 u32 data = partyData[monIndex].gigantamaxFactor;
                 SetMonData(&party[i], MON_DATA_GIGANTAMAX_FACTOR, &data);
             }
+            // WoT Shadow system: mark trainer-owned Shadow Pokemon
+            // ("Shadow: Yes" per-mon field in trainers.party).
+            if (partyData[monIndex].isShadow)
+            {
+                u32 data = TRUE;
+                SetMonData(&party[i], MON_DATA_IS_SHADOW, &data);
+            }
             if (partyData[monIndex].teraType > 0)
             {
                 gBattleStruct->opponentMonCanTera |= 1 << i;
@@ -2061,11 +2115,83 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
     return trainer->partySize;
 }
 
+// WoT: the red-alert Shin-Tokyo patrols draw their Shadow teams from a pool
+// at battle start, so every encounter is a fresh roll (leaving the city and
+// returning also clears their defeat flags -- see ShinTokyo ON_TRANSITION).
+// Which pool depends on the Act 2 research outcome: if Clarkson's research
+// was TAKEN, Mutrid's program accelerated -- species that used to resist the
+// process don't anymore.
+static const u16 sWotPatrolPoolStolen[] =
+{
+    SPECIES_RILLABOOM, SPECIES_HAXORUS, SPECIES_MELMETAL,
+    SPECIES_URSALUNA, SPECIES_RHYPERIOR, SPECIES_ANNIHILAPE,
+    SPECIES_ABSOL, SPECIES_ALAKAZAM, SPECIES_RAPIDASH,
+};
+static const u16 sWotPatrolPoolBase[] =
+{
+    SPECIES_WEAVILE, SPECIES_HONCHKROW, SPECIES_TOXICROAK,
+    SPECIES_DRAPION, SPECIES_CORVISQUIRE, SPECIES_CENTISKORCH,
+    SPECIES_TINKATON, SPECIES_ARCTOZOLT, SPECIES_ARCHEOPS,
+};
+
+static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
+{
+    static const u8 sLevels[] = { 43, 43, 44 };
+    const u16 *pool;
+    u32 poolSize, i, count;
+    u16 chosen[ARRAY_COUNT(sLevels)];
+
+    if (trainerNum != TRAINER_NATE && trainerNum != TRAINER_MACEY && trainerNum != TRAINER_CLIFFORD)
+        return FALSE;
+
+    if (FlagGet(FLAG_ACT3_RESEARCH_STOLEN))
+    {
+        pool = sWotPatrolPoolStolen;
+        poolSize = ARRAY_COUNT(sWotPatrolPoolStolen);
+    }
+    else
+    {
+        pool = sWotPatrolPoolBase;
+        poolSize = ARRAY_COUNT(sWotPatrolPoolBase);
+    }
+
+    count = ARRAY_COUNT(sLevels);
+    for (i = 0; i < count; i++)
+    {
+        u32 j, pick;
+    retry:
+        pick = pool[Random() % poolSize];
+        for (j = 0; j < i; j++)
+        {
+            if (chosen[j] == pick)
+                goto retry;
+        }
+        chosen[i] = pick;
+    }
+
+    ZeroEnemyPartyMons();
+    for (i = 0; i < count; i++)
+    {
+        bool32 isShadow = TRUE;
+        struct OriginalTrainerId otId = OTID_STRUCT_RANDOM_NO_SHINY;
+
+        CreateMon(&party[i], chosen[i], sLevels[i], Random32(), otId);
+        GiveMonInitialMoveset(&party[i]);
+        SetMonData(&party[i], MON_DATA_IS_SHADOW, &isShadow);
+        CalculateMonStats(&party[i]);
+    }
+    return TRUE;
+}
+
 static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 firstTrainer)
 {
     u8 retVal;
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
+
+    // WoT: randomized Shadow patrol teams (see above).
+    if (firstTrainer && WotTryRandomizeShadowPatrol(party, trainerNum))
+        return 3;
     if (GetTrainerStructFromId(trainerNum)->overrideTrainer)
     {
         struct Trainer tempTrainer;
@@ -3177,6 +3303,8 @@ void SwitchInClearSetData(enum BattlerId battler, struct Volatiles *volatilesCop
     enum BattleMoveEffects effect = GetMoveEffect(gCurrentMove);
 
     ClearIllusionMon(battler);
+    // WoT Shadow system: a fresh mon in this slot may announce its aura again.
+    gBattleStruct->wotAuraAnnounced &= ~(1u << battler);
     if (effect != EFFECT_BATON_PASS)
     {
         for (enum Stat i = 0; i < NUM_BATTLE_STATS; i++)
@@ -3518,6 +3646,14 @@ static void DoBattleIntro(void)
                 gBattleMons[battler].types[1] = GetSpeciesType(gBattleMons[battler].species, 1);
                 gBattleMons[battler].types[2] = TYPE_MYSTERY;
                 gBattleMons[battler].ability = GetAbilityBySpecies(gBattleMons[battler].species, gBattleMons[battler].abilityNum);
+                {
+                    // Wishes of Tomorrow: apply the Ability Machine override
+                    // (this site re-derives from species+abilityNum and would
+                    // otherwise discard it).
+                    u16 amOverride = GetMonData(&GetBattlerParty(battler)[gBattlerPartyIndexes[battler]], MON_DATA_CUSTOM_ABILITY);
+                    if (amOverride != ABILITY_NONE && amOverride < ABILITIES_COUNT)
+                        gBattleMons[battler].ability = amOverride;
+                }
                 gBattleStruct->battlerState[battler].hpOnSwitchout = gBattleMons[battler].hp;
                 memset(&gBattleMons[battler].volatiles, 0, sizeof(struct Volatiles));
                 for (i = 0; i < NUM_BATTLE_STATS; i++)

@@ -1686,6 +1686,20 @@ const struct Tileset gTileset_AshlandTrees =
     .callback = NULL,
 };
 
+// Pokemon Wishes of Tomorrow: NIGHT MARKET PRIMARY (odisea stalls + lanterns +
+// shikari dark town). Select it as the primary for a Tradewind/Ashlands night
+// market and keep gTileset_AshlandTrees as the secondary.
+const struct Tileset gTileset_NightMarket =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_NightMarket,
+    .palettes = gTilesetPalettes_NightMarket,
+    .metatiles = gMetatiles_NightMarket,
+    .metatileAttributes = gMetatileAttributes_NightMarket,
+    .callback = NULL,
+};
+
 // Pokemon Wishes of Tomorrow: Gold/Silver Japanese buildings SECONDARY (Ecruteak houses,
 // gold + red pagodas, grand temples). Pairs with gTileset_General; grass from primary.
 const struct Tileset gTileset_GsJapan =
@@ -1740,7 +1754,7 @@ const struct Tileset gTileset_MtMoonVillageInterior =
     .palettes = gTilesetPalettes_MtMoonVillageInterior,
     .metatiles = gMetatiles_MtMoonVillageInterior,
     .metatileAttributes = gMetatileAttributes_MtMoonVillageInterior,
-    .callback = NULL,
+    .callback = InitTilesetAnim_MtMoonVillageInterior,
 };
 
 const struct Tileset gTileset_Route224 =
@@ -1762,5 +1776,104 @@ const struct Tileset gTileset_Route224Primary =
     .palettes = gTilesetPalettes_Route224Primary,
     .metatiles = gMetatiles_Route224Primary,
     .metatileAttributes = gMetatileAttributes_Route224Primary,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_LavaMap =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_LavaMap,
+    .palettes = gTilesetPalettes_LavaMap,
+    .metatiles = gMetatiles_LavaMap,
+    .metatileAttributes = gMetatileAttributes_LavaMap,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DistortionWorld =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DistortionWorld,
+    .palettes = gTilesetPalettes_DistortionWorld,
+    .metatiles = gMetatiles_DistortionWorld,
+    .metatileAttributes = gMetatileAttributes_DistortionWorld,
+    .callback = InitTilesetAnim_DistortionWorld,
+};
+
+const struct Tileset gTileset_FearTown =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FearTown,
+    .palettes = gTilesetPalettes_FearTown,
+    .metatiles = gMetatiles_FearTown,
+    .metatileAttributes = gMetatileAttributes_FearTown,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_FairyTown =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FairyTown,
+    .palettes = gTilesetPalettes_FairyTown,
+    .metatiles = gMetatiles_FairyTown,
+    .metatileAttributes = gMetatileAttributes_FairyTown,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SumpRats =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SumpRats,
+    .palettes = gTilesetPalettes_SumpRats,
+    .metatiles = gMetatiles_SumpRats,
+    .metatileAttributes = gMetatileAttributes_SumpRats,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DragonKeepers =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DragonKeepers,
+    .palettes = gTilesetPalettes_DragonKeepers,
+    .metatiles = gMetatiles_DragonKeepers,
+    .metatileAttributes = gMetatileAttributes_DragonKeepers,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_CityBlocks =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_CityBlocks,
+    .palettes = gTilesetPalettes_CityBlocks,
+    .metatiles = gMetatiles_CityBlocks,
+    .metatileAttributes = gMetatileAttributes_CityBlocks,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_MiddleDistrict =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_MiddleDistrict,
+    .palettes = gTilesetPalettes_MiddleDistrict,
+    .metatiles = gMetatiles_MiddleDistrict,
+    .metatileAttributes = gMetatileAttributes_MiddleDistrict,
+    .callback = InitTilesetAnim_MiddleDistrict,
+};
+
+const struct Tileset gTileset_MiddleDistrictGround =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_MiddleDistrictGround,
+    .palettes = gTilesetPalettes_MiddleDistrictGround,
+    .metatiles = gMetatiles_MiddleDistrictGround,
+    .metatileAttributes = gMetatileAttributes_MiddleDistrictGround,
     .callback = NULL,
 };

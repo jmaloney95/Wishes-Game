@@ -3077,6 +3077,27 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
     {
     case ABILITYEFFECT_ON_SWITCHIN:
         gBattleScripting.battler = battler;
+        // WoT Shadow system: sending a snagged Shadow into battle "opens" it
+        // (canon: battle with it at least once) -- gates shrine purification.
+        if (GetBattlerSide(battler) == B_SIDE_PLAYER)
+        {
+            struct Pokemon *mon = &gPlayerParty[gBattlerPartyIndexes[battler]];
+            if (GetMonData(mon, MON_DATA_IS_SHADOW) && !GetMonData(mon, MON_DATA_SHADOW_OPENED))
+            {
+                u32 opened = TRUE;
+                SetMonData(mon, MON_DATA_SHADOW_OPENED, &opened);
+            }
+        }
+        // WoT Shadow system: announce the aura once per send-in, either side.
+        if (!(gBattleStruct->wotAuraAnnounced & (1u << battler))
+         && IsBattlerAlive(battler)
+         && GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW))
+        {
+            gBattleStruct->wotAuraAnnounced |= 1u << battler;
+            BattleScriptCall(BattleScript_WotShadowAuraRet);
+            effect++;
+            break;
+        }
         switch (gLastUsedAbility)
         {
         case ABILITY_TRACE:
@@ -7793,6 +7814,11 @@ s32 ApplyModifiersAfterDmgRoll(struct BattleContext *ctx, s32 dmg)
     DAMAGE_APPLY_MODIFIER(GetBurnOrFrostBiteModifier(ctx));
     DAMAGE_APPLY_MODIFIER(GetZMaxMoveAgainstProtectionModifier(ctx));
     DAMAGE_APPLY_MODIFIER(GetOtherModifiers(ctx));
+    // WoT Shadow system: the canon power tier ("Shadow ≈ 20% stronger than
+    // Mega") -- a sealed heart hits without restraint. Any Shadow attacker,
+    // either side, until purified.
+    if (GetMonData(GetBattlerMon(ctx->battlerAtk), MON_DATA_IS_SHADOW))
+        DAMAGE_APPLY_MODIFIER(UQ_4_12(1.2));
 
     return dmg;
 }

@@ -13294,6 +13294,7 @@ const struct SpeciesInfo gSpeciesInfoGen3[] =
         .perfectIVCount = LEGENDARY_PERFECT_IV_COUNT,
         .levelUpLearnset = sJirachiLevelUpLearnset,
         .teachableLearnset = sJirachiTeachableLearnset,
+        .formSpeciesIdTable = sJirachiFormSpeciesIdTable,
     },
 #endif //P_FAMILY_JIRACHI
 
