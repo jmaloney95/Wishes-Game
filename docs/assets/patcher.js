@@ -259,6 +259,7 @@
   var ui = {};
   var romBytes = null, romName = "";
   var patchBytes = null, patchName = "";
+  var patchAvailable = false, patchSize = 0;
   var resultUrl = null;
 
   function $(sel) { return document.querySelector(sel); }
@@ -286,7 +287,7 @@
   }
 
   function refresh() {
-    ui.apply.disabled = !(romBytes && patchBytes);
+    ui.apply.disabled = !(romBytes && (patchBytes || patchAvailable));
   }
 
   function setSlot(slot, name, note, ok) {
@@ -333,12 +334,28 @@
     refresh();
   }
 
+  // The patch is tens of megabytes, so it is fetched on demand rather than on
+  // page load — a visitor who never patches never downloads it.
+  function ensurePatch() {
+    if (patchBytes) return Promise.resolve();
+    say("busy", "Downloading the patch…", fmtBytes(patchSize) + " — this happens once.");
+    return fetch(PATCH.url).then(function (res) {
+      if (!res.ok) throw PatchError("Couldn't download the patch.", "The server returned " + res.status + ".");
+      return res.arrayBuffer();
+    }).then(function (buf) {
+      patchBytes = new Uint8Array(buf);
+      setSlot(ui.patchSlot, PATCH.url.split("/").pop(), fmtBytes(patchBytes.length) + " · downloaded", true);
+    });
+  }
+
   function apply() {
-    say("busy", "Patching…", "Large ROMs take a moment.");
     ui.apply.disabled = true;
 
-    // Yield a frame so the status paints before the synchronous work.
-    setTimeout(function () {
+    ensurePatch().then(function () {
+      say("busy", "Patching…", "Large ROMs take a moment.");
+      // Yield a frame so the status paints before the synchronous work.
+      return new Promise(function (r) { setTimeout(r, 30); });
+    }).then(function () {
       var out;
       try {
         out = detectAndApply(romBytes, patchBytes);
@@ -357,7 +374,10 @@
       say("ok", "Done — your patched ROM is ready.",
         "Nothing left this page; the file was built in your browser.");
       ui.apply.disabled = false;
-    }, 30);
+    }).catch(function (err) {
+      say("bad", err.message || "Something went wrong.", err.detail);
+      ui.apply.disabled = false;
+    });
   }
 
   /* ── wiring ─────────────────────────────────────────────────────── */
@@ -395,20 +415,21 @@
     setSlot(ui.romSlot, "No file chosen",
       PATCH.base.name + " · " + fmtBytes(PATCH.base.size), false);
 
-    // Try to load the published patch so step 2 is normally automatic.
-    fetch(PATCH.url).then(function (res) {
+    // Only ask whether the patch exists and how big it is — a HEAD request,
+    // not the file itself. The bytes come down when the player presses Apply.
+    fetch(PATCH.url, { method: "HEAD" }).then(function (res) {
       if (!res.ok) throw new Error(String(res.status));
-      return res.arrayBuffer();
-    }).then(function (buf) {
-      patchBytes = new Uint8Array(buf);
+      patchAvailable = true;
+      patchSize = parseInt(res.headers.get("content-length") || "0", 10);
       patchName = PATCH.url.split("/").pop();
-      setSlot(ui.patchSlot, patchName, fmtBytes(patchBytes.length) + " · loaded from this page", true);
+      setSlot(ui.patchSlot, patchName,
+        (patchSize ? fmtBytes(patchSize) + " · " : "") + "downloads when you patch", true);
       root.dataset.patchReady = "1";
       document.querySelectorAll("[data-patch-link]").forEach(function (a) {
         a.href = PATCH.url;
         a.setAttribute("download", "");
         var meta = a.querySelector(".dl-meta");
-        if (meta) meta.textContent = fmtBytes(patchBytes.length) + " ↓";
+        if (meta) meta.textContent = (patchSize ? fmtBytes(patchSize) + " " : "") + "↓";
       });
       say("idle", "Choose your base ROM to begin.");
       refresh();
