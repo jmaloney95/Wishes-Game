@@ -1,4 +1,15 @@
-# Extracted / third-party trees that don't belong in project history.
-# Both are large and reproducible from their own sources.
+# Third-party trees that don't belong in project history.
+# All of these are large and re-downloadable from their own sources; the
+# setup steps live in Toolchain_and_Setup_Guide.md.
 nds-src/
-Tools/VGMTrans-v1.3/
+Tools/
+mGBA-0.10.5-win32/
+
+# Local scratch and generated files.
+__pycache__/
+*.pyc
+*.backup.xlsx
+
+# OS cruft.
+.DS_Store
+Thumbs.db
