@@ -28,7 +28,17 @@ static const u32 sWotCreditsGfx_shadow_absol[] = INCGFX_U32("graphics/credits_po
 static const u16 sWotCreditsPal_shadow_absol[] = INCGFX_U16("graphics/credits_portraits/shadow_absol.png", ".gbapal");
 static const u32 sWotCreditsGfx_flatfoot_logo[] = INCGFX_U32("graphics/credits_portraits/flatfoot_logo.png", ".4bpp");
 static const u16 sWotCreditsPal_flatfoot_logo[] = INCGFX_U16("graphics/credits_portraits/flatfoot_logo.png", ".gbapal");
+static const u32 sWotCreditsGfx_shadow_charizard[] = INCGFX_U32("graphics/credits_portraits/shadow_charizard.png", ".4bpp");
+static const u16 sWotCreditsPal_shadow_charizard[] = INCGFX_U16("graphics/credits_portraits/shadow_charizard.png", ".gbapal");
+static const u32 sWotCreditsGfx_shadow_lugia[] = INCGFX_U32("graphics/credits_portraits/shadow_lugia.png", ".4bpp");
+static const u16 sWotCreditsPal_shadow_lugia[] = INCGFX_U16("graphics/credits_portraits/shadow_lugia.png", ".gbapal");
+static const u32 sWotCreditsGfx_ghost[] = INCGFX_U32("graphics/credits_portraits/wot_ghost.png", ".4bpp");
+static const u16 sWotCreditsPal_ghost[] = INCGFX_U16("graphics/credits_portraits/wot_ghost.png", ".gbapal");
+static const u32 sWotCreditsGfx_hellraiser[] = INCGFX_U32("graphics/credits_portraits/wot_hellraiser.png", ".4bpp");
+static const u16 sWotCreditsPal_hellraiser[] = INCGFX_U16("graphics/credits_portraits/wot_hellraiser.png", ".gbapal");
 
+// 12 pics = 4 interludes x 3 parked slots (L, C, R in creation order), each
+// shown exactly once. Order below IS the on-screen order.
 static const struct WotCreditsPic sWotCreditsPics[] =
 {
     { sWotCreditsGfx_shadow_jirachi,   sWotCreditsPal_shadow_jirachi   },
@@ -38,6 +48,10 @@ static const struct WotCreditsPic sWotCreditsPics[] =
     { sWotCreditsGfx_mutrid_officer,   sWotCreditsPal_mutrid_officer   },
     { sWotCreditsGfx_shadow_teddiursa, sWotCreditsPal_shadow_teddiursa },
     { sWotCreditsGfx_shadow_absol,     sWotCreditsPal_shadow_absol     },
+    { sWotCreditsGfx_ghost,            sWotCreditsPal_ghost            },
+    { sWotCreditsGfx_hellraiser,       sWotCreditsPal_hellraiser       },
+    { sWotCreditsGfx_shadow_charizard, sWotCreditsPal_shadow_charizard },
+    { sWotCreditsGfx_shadow_lugia,     sWotCreditsPal_shadow_lugia     },
     { sWotCreditsGfx_flatfoot_logo,    sWotCreditsPal_flatfoot_logo    },
 };
 

@@ -390,20 +390,17 @@ ShinTokyoJail_Movement_MikmancFlee:
 ShinTokyoJail_Text_Reveal0::
 	.string "Fluorescent light, humming.\p"
 	.string "Three patrols sweep the cell\n"
-	.string "block in slow, bored arcs.\p"
-	.string "Memorize it. All of it.$"
+	.string "block.$"
 
 ShinTokyoJail_Text_Reveal1::
 	.string "The door seals behind you.\p"
 	.string "The lights die with it.$"
 
 ShinTokyoJail_Text_Reveal2::
-	.string "One flicker of emergency power --\n"
-	.string "one snapshot of the room.\p"
-	.string "Then nothing but the weak ring\n"
-	.string "of your own lamp.\p"
-	.string "The patrols are still out there.\n"
-	.string "Move between them.$"
+	.string "One flash of emergency power --\n"
+	.string "then nothing.\p"
+	.string "Only a ring of light around\n"
+	.string "your feet.$"
 
 ShinTokyoJail_Text_GuardAIntro::
 	.string "A light snaps onto your face.\p"
@@ -439,26 +436,20 @@ ShinTokyoJail_Text_GuardCPost::
 	.string "gate he was guarding.$"
 
 ShinTokyoJail_Text_Cell1::
-	.string "...{PLAYER}? You actually came.\p"
-	.string "Kekeke -- sorry. Been in the dark\n"
-	.string "so long I'm talking like the\l"
-	.string "ghost.\p"
-	.string "On my way into this cell I\n"
-	.string "lifted something. Right out of\l"
-	.string "Mutrid's own lab.\p"
-	.string "They tore the block apart\n"
-	.string "looking for it. Never thought\l"
-	.string "to search ME twice.$"
+	.string "...{PLAYER}? Thank Arceus,\n"
+	.string "I don't have to murder that guy\l"
+	.string "in the next cell.\p"
+	.string "Oh wait! -- Check this out.\n"
+	.string "I rolled a nat 20 and swiped\l"
+	.string "this from a Mutrid Officer.$"
 
 ShinTokyoJail_Text_CellHandover::
-	.string "Hold out your arm.\p"
-	.string "Their machine. Turned around\n"
-	.string "on them.$"
+	.string "Hold out your arm.$"
 
 ShinTokyoJail_Text_CellExplain::
-	.string "The SNAG MACHINE. Mutrid built\n"
-	.string "it to steal POKéMON.\p"
-	.string "Their soldiers fight with\n"
+	.string "The SNAG MACHINE. Mutrid tech.\n"
+	.string "Top of the line.\p"
+	.string "They fight with\n"
 	.string "SHADOW POKéMON -- stolen souls,\l"
 	.string "sealed shut.\p"
 	.string "With that on your arm, any\n"
@@ -468,20 +459,20 @@ ShinTokyoJail_Text_CellExplain::
 	.string "Ordinary trainers are safe.$"
 
 ShinTokyoJail_Text_CellSpare::
-	.string "EDWARDS got you one already?\p"
-	.string "Good. Then mine stays hidden as\n"
-	.string "the backup it was meant to be.$"
+	.string "Huh. You've already got one\n"
+	.string "on your arm.\p"
+	.string "Nat 1 for my big reveal.$"
 
 ShinTokyoJail_Text_Cell2::
-	.string "The west service run. Second\n"
-	.string "exit, fresh goons.\p"
+	.string "Now. Let's head to the West\n"
+	.string "service exit, I've got a plan.\p"
 	.string "I'm right behind you -- we fight\n"
-	.string "as one until you're out.$"
+	.string "as one.$"
 
 ShinTokyoJail_Text_FollowerTalk::
 	.string "Right behind you.\p"
-	.string "The service run first -- then\n"
-	.string "the night air.$"
+	.string "Let's double team these goons.\n"
+	.string "...Oof. You get what I mean.$"
 
 ShinTokyoJail_Text_Inmate1::
 	.string "Psst. You're breaking out?\p"
@@ -490,20 +481,14 @@ ShinTokyoJail_Text_Inmate1::
 
 ShinTokyoJail_Text_Inmate2::
 	.string "Strikes first, every time.\n"
-	.string "Just like a shiv should.\p"
 	.string "Good luck, kid. I'm GONE.$"
 
 ShinTokyoJail_Text_RedAlert1::
-	.string "Somewhere above, a bolt SLAMS.\p"
-	.string "Every light in the block hammers\n"
-	.string "on at once -- white, then red,\l"
-	.string "then white.\p"
-	.string "An empty cell is a very loud\n"
-	.string "thing.$"
+	.string "Somewhere above, a bolt SLAMS.$"
 
 ShinTokyoJail_Text_RedAlert2::
-	.string "That's the block sealing itself.\p"
-	.string "The front door is gone, {PLAYER}.\n"
+	.string "We've tripped the alarms.\p"
+	.string "The front door is armed, {PLAYER}.\n"
 	.string "West service run -- GO!$"
 
 ShinTokyoJail_Text_FrontDoorSealed::
@@ -534,20 +519,17 @@ ShinTokyoJail_Text_Squad1Lose::
 	.string "never here.$"
 
 ShinTokyoJail_Text_Squad1Won::
-	.string "MIKMANC: One more squad between\n"
+	.string "One more squad between\n"
 	.string "us and the night air. Go!$"
 
 ShinTokyoJail_Text_Squad2Mikmanc::
-	.string "Last one. Make it loud enough\n"
-	.string "and they'll chase US, not the\l"
-	.string "others!$"
+	.string "Last one. I'm going plus-Ultra.$"
 
 ShinTokyoJail_Text_Squad2Lose::
 	.string "Lights out, prison breaker.$"
 
 ShinTokyoJail_Text_Squad2Won::
-	.string "MIKMANC: The run's clear!\n"
-	.string "Door at the end -- MOVE!$"
+	.string "The exit's clear!$"
 
 ShinTokyoJail_Text_SquadTalk::
 	.string "The squad stands lamp-lit in the\n"
@@ -558,10 +540,9 @@ ShinTokyoJail_Text_ExitSealed::
 
 ShinTokyoJail_Text_MikmancFlee::
 	.string "This is where we split.\p"
-	.string "Alarms in thirty seconds. I go\n"
-	.string "dark, you go LOUD.\p"
-	.string "Thank you, {PLAYER}. For the\n"
-	.string "light.$"
+	.string "Pints on me when we get home.\n"
+	.string "Thanks for the escort,\n"
+	.string "{PLAYER}.$"
 
 ShinTokyoJail_EventScript_JailbreakerClear::
 	questmenu QUEST_MENU_SET_REWARD, SIDE_QUEST_MINISTERS_FAVOR

@@ -556,6 +556,8 @@ enum TrainerClassID
     TRAINER_CLASS_ONI,
     // Mutrid field officers (the Munen Tunnel boss)
     TRAINER_CLASS_CAPTAIN,
+    // Swimmer Allison's boss identity (Route 2)
+    TRAINER_CLASS_SIREN,
 
     TRAINER_CLASS_COUNT,
 };

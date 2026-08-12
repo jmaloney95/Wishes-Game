@@ -479,7 +479,8 @@ void CreateWildMon(u16 species, u8 level)
     // leakage from the generator across the water. Route 129 (the transit
     // sea between Shin-Tokyo and the island) sits in the same plume.
     if (gMapHeader.regionMapSectionId == MAPSEC_CELEBI_ISLAND
-     || gMapHeader.regionMapSectionId == MAPSEC_ROUTE_129)
+     || gMapHeader.regionMapSectionId == MAPSEC_ROUTE_129
+     || gMapHeader.regionMapSectionId == MAPSEC_ROUTE_130)
     {
         u32 wotShadow = TRUE;
         SetMonData(&gEnemyParty[0], MON_DATA_IS_SHADOW, &wotShadow);

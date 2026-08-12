@@ -163,7 +163,11 @@ Ashlands_EventScript_SeamWest8::
 @ ============================================================================
 Ashlands_EventScript_WestGate::
 	lockall
-	goto_if_ge VAR_QUEST_FATHERS_WISH, 3, Ashlands_EventScript_WestGateOpen
+	@ Gate on the BOW ITSELF, not the quest stage -- the bow can be grabbed
+	@ before the fentanyl delivery, which left the stage behind and walled
+	@ off a player who already held it.
+	checkitem ITEM_CATALPA_BOW
+	goto_if_eq VAR_RESULT, TRUE, Ashlands_EventScript_WestGateOpen
 	goto_if_eq VAR_QUEST_FATHERS_WISH, 2, Ashlands_EventScript_WestGateBow
 	msgbox Ashlands_Text_OldManCallsOut, MSGBOX_DEFAULT
 	closemessage

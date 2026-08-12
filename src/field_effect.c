@@ -3644,7 +3644,9 @@ static u8 CreateFlyBirdSprite(void)
     struct Sprite *sprite;
     spriteId = CreateSprite(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_BIRD], 0xff, 0xb4, 0x1);
     sprite = &gSprites[spriteId];
-    sprite->oam.paletteNum = LoadPlayerObjectEventPalette(gSaveBlock2Ptr->playerGender);
+    // WoT: the "bird" is the PRIVATE JET -- it flies in its own palette, not
+    // the player's (see gFieldEffectObjectTemplate_Bird).
+    sprite->oam.paletteNum = LoadObjectEventPalette(OBJ_EVENT_PAL_TAG_WOT_JET);
     sprite->oam.priority = 1;
     sprite->callback = SpriteCB_FlyBirdLeaveBall;
     return spriteId;

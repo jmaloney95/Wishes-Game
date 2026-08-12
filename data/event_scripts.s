@@ -1839,6 +1839,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/PrototypeIsland/scripts.inc"
 	.include "data/maps/PrototypeLab/scripts.inc"
 	.include "data/scripts/wot_hms.inc"
+	.include "data/scripts/wot_shadow_log.inc"
 	.include "data/scripts/wot_snag_progress.inc"
 	.include "data/maps/TowerStreet/scripts.inc"
 	.include "data/maps/TowerMid/scripts.inc"
@@ -1856,3 +1857,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/Ashlands_Desert/scripts.inc"
 
 	.include "data/maps/LifeguardShack/scripts.inc"
+
+	.include "data/maps/MewtwoPostGame/scripts.inc"

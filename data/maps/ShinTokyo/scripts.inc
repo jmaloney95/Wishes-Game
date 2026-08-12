@@ -11,7 +11,32 @@
 ShinTokyo_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ShinTokyo_OnTransition
 	map_script MAP_SCRIPT_ON_LOAD, ShinTokyo_OnLoad
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, ShinTokyo_OnFrame
 	.byte 0
+
+ShinTokyo_OnFrame:
+	map_script_2 VAR_TEMP_4, 0, ShinTokyo_EventScript_DracoCall
+	.2byte 0
+
+@ ============================================================================
+@  POST-GAME HOOK -- DRACO'S CALL (fires on the first city entry after the
+@  hideout welcome scene: "you think it's over?"). Unlocks the dockhouse
+@  (warps 9/10 -> MewtwoPostGame) where he waits with ARMORED MEWTWO.
+@ ============================================================================
+ShinTokyo_EventScript_DracoCall::
+	lockall
+	setvar VAR_TEMP_4, 1
+	goto_if_unset FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_DracoCallSkip
+	goto_if_unset FLAG_WOT_POSTGAME_WELCOME_DONE, ShinTokyo_EventScript_DracoCallSkip
+	goto_if_set FLAG_WOT_DRACO_CALL_DONE, ShinTokyo_EventScript_DracoCallSkip
+	delay 20
+	pokenavcall ShinTokyo_Text_DracoCall
+	waitmessage
+	closemessage
+	setflag FLAG_WOT_DRACO_CALL_DONE
+ShinTokyo_EventScript_DracoCallSkip::
+	releaseall
+	end
 
 @ Tile edits must run in ON_LOAD -- ON_TRANSITION fires before the map layout
 @ is loaded, so a setmetatile there is thrown away (the fence never opened).
@@ -36,10 +61,22 @@ ShinTokyo_OnLoad_RedAlert::
 ShinTokyo_OnTransition::
 	setflag FLAG_HIDE_ACT3_CAPTAIN
 	setflag FLAG_HIDE_ACT3_ARREST_NPCS
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShinTokyo_OnTransition_PostGame
 	goto_if_set FLAG_ACT3_RED_ALERT, ShinTokyo_OnTransition_RedAlert
 	setflag FLAG_HIDE_ACT3_PATROLS
 	@ jumbotron: the Leader smiles down until the city turns on you
 	clearflag FLAG_HIDE_WOT_LEADER_SCREEN
+	setflag FLAG_HIDE_WOT_WANTED_POSTER
+	end
+@ The liberated city: the storm breaks, every screen goes dark, and not one
+@ Mutrid uniform is left on the streets.
+ShinTokyo_OnTransition_PostGame::
+	setrespawn HEAL_LOCATION_REBEL_HIDEOUT
+	setweather WEATHER_SUNNY
+	setflag FLAG_HIDE_ACT3_PATROLS
+	setflag FLAG_HIDE_ACT3_JAIL_GUARDS
+	setflag FLAG_WOT_HIDE_POSTGAME_MUTRIDS
+	setflag FLAG_HIDE_WOT_LEADER_SCREEN
 	setflag FLAG_HIDE_WOT_WANTED_POSTER
 	end
 ShinTokyo_OnTransition_RedAlert::
@@ -95,7 +132,13 @@ ShinTokyo_EventScript_Citizen3::
 	end
 
 ShinTokyo_EventScript_CitizenRedAlert::
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_CitizenFree
 	msgbox ShinTokyo_Text_CitizenRedAlert, MSGBOX_DEFAULT
+	release
+	end
+
+ShinTokyo_EventScript_CitizenFree::
+	msgbox ShinTokyo_Text_CitizenFree, MSGBOX_DEFAULT
 	release
 	end
 
@@ -230,9 +273,7 @@ ShinTokyo_Text_Citizen3::
 	.string "Upstairs. Forever.$"
 
 ShinTokyo_Text_GymDoor::
-	.string "VOLTEN GYM -- “THE CITY'S SPARK”\p"
-	.string "The doors are powered down.\n"
-	.string "(Gym interior comes later.)$"
+	.string "VOLTEN GYM -- “THE CITY'S SPARK”$"
 
 ShinTokyo_Text_BlackMarketDoor::
 	.string "The shutters hang half-open.\p"
@@ -548,6 +589,26 @@ ShinTokyo_Text_CitizenRedAlert::
 	.string "Your face is on every screen\n"
 	.string "in the city!$"
 
+ShinTokyo_Text_DracoCall::
+	.string "DRACO: You think it's over?\n"
+	.string "Ha!\p"
+	.string "You haven't even seen MUTRID's\n"
+	.string "secret weapon yet.\p"
+	.string "You think you've seen true\n"
+	.string "power unleashed?\p"
+	.string "Prepare to meet the primitive\n"
+	.string "lifeform.\p"
+	.string "I call it… ARMORED MEWTWO.\p"
+	.string "…\p"
+	.string "Meet at the dockhouse at dusk.$"
+
+ShinTokyo_Text_CitizenFree::
+	.string "The screens are dark. The\n"
+	.string "patrols are gone.\p"
+	.string "And have you SEEN the sun?\p"
+	.string "We're free. We're actually\n"
+	.string "free.$"
+
 ShinTokyo_Text_GoonRedAlert::
 	.string "That's-- the face from the\n"
 	.string "bounty screens!\p"
@@ -597,43 +658,43 @@ ShinTokyo_Text_BountyScreen::
 	.string "REWARD BEYOND MEASURE.”$"
 
 ShinTokyo_Text_CaptainMask::
-	.string "“Take that carnival prop off.\p"
+	.string "Take that carnival prop off.\p"
 	.string "“Masks are for the rank and\n"
-	.string "file. Officers see FACES.”$"
+	.string "file.$"
 
 ShinTokyo_Text_CaptainHalt::
 	.string "The street empties in seconds.\p"
-	.string "“Routine inspection, citizen.\n"
-	.string "Arms out. Bag open.”$"
+	.string "Routine inspection, citizen.\n"
+	.string "Arms out. Bag open.$"
 
 ShinTokyo_Text_CaptainNothing::
 	.string "Gloved hands turn out every\n"
 	.string "pocket. Twice.\p"
-	.string "“...Nothing. Tch.\p"
-	.string "“Move along, citizen. The city\n"
-	.string "thanks you for your compliance.”$"
+	.string "...Nothing. Tch.\p"
+	.string "Move along, citizen. The city\n"
+	.string "thanks you for your compliance.$"
 
 ShinTokyo_Text_CaptainTakes::
 	.string "Gloved fingers stop on the worn\n"
 	.string "cover of the SHADOW DOSSIER.\p"
-	.string "“...Well. The dead professor's\n"
+	.string "...Well. The dead professor's\n"
 	.string "handwriting.\p"
-	.string "“This is city property now.\n"
-	.string "By my authority.”$"
+	.string "This is city property now.\n"
+	.string "By my authority.$"
 
 ShinTokyo_Text_DossierTaken::
 	.string "The SHADOW DOSSIER was taken!$"
 
 ShinTokyo_Text_CaptainGloat::
-	.string "“You carried it all this way\n"
+	.string "You carried it all this way\n"
 	.string "just to hand-deliver it.\p"
-	.string "“The tower will remember the\n"
-	.string "favor. I won't.”$"
+	.string "The tower will remember the\n"
+	.string "favor. I won't.$"
 
 ShinTokyo_Text_GengarStateC::
-	.string "“...It's gone.\p"
-	.string "“After everything.\n"
-	.string "It's in his hands now.”$"
+	.string "...It's gone.\p"
+	.string "After everything.\n"
+	.string "It's in his hands now.$"
 
 ShinTokyo_Text_MinisterCall::
 	.string "MINISTER: {PLAYER}. Don't talk,\n"
@@ -657,10 +718,10 @@ ShinTokyo_Text_JailDoorOpens::
 	.string "The bolt hangs open.$"
 
 ShinTokyo_Text_JailGuard::
-	.string "“Detention block. Official\n"
+	.string "Detention block. Official\n"
 	.string "business only.\p"
-	.string "“Keep walking, citizen. The\n"
-	.string "city is watching you walk.”$"
+	.string "Keep walking, citizen. The\n"
+	.string "city is watching you walk.$"
 
 ShinTokyo_Text_GuardsScatter::
 	.string "Down the street, two radios\n"
@@ -686,7 +747,7 @@ ShinTokyo_Text_ArrestAnnounce::
 	.string "PERSONALLY.$"
 
 ShinTokyo_Text_MaskStripped::
-	.string "That carnival prop.\n"
+	.string "That Halloween costume.\n"
 	.string "Off.$"
 
 ShinTokyo_Text_EscortMarch::
@@ -791,6 +852,7 @@ ShinTokyo_Pokemart_BlackMarketBalls:
 	.2byte ITEM_SAFARI_BALL
 	.2byte ITEM_SPORT_BALL
 	.2byte ITEM_BEAST_BALL
+	.2byte ITEM_SNAG_BALL
 	.2byte ITEM_CHERISH_BALL
 	pokemartlistend
 
@@ -815,10 +877,8 @@ ShinTokyo_Text_BlackMarketPaw::
 	.string "ask. That's the problem.$"
 
 ShinTokyo_Text_BlackMarketBalls::
-	.string "Every ball ever made. Don't ask\n"
-	.string "how I got the rare ones.\p"
-	.string "Mutrid outlawed catching.\n"
-	.string "I outlawed listening.$"
+	.string "Every ball ever made.\n"
+	.string "Mutrid outlawed catching, ya know.$"
 
 ShinTokyo_Text_BlackMarketBye::
 	.string "You were never here.$"
@@ -848,7 +908,7 @@ ShinTokyo_EventScript_MinisterSettle::
 	msgbox ShinTokyo_Text_MinisterSettle, MSGBOX_DEFAULT
 	closemessage
 	completequest SIDE_QUEST_MINISTERS_FAVOR
-	giveitem ITEM_SHINY_CHARM
+	giveitem ITEM_SNAG_BALL, 15
 	msgbox ShinTokyo_Text_MinisterAfter, MSGBOX_DEFAULT
 	release
 	end
@@ -904,23 +964,22 @@ ShinTokyo_EventScript_SmallPoster::
 	end
 
 ShinTokyo_Text_MinisterIdle::
-	.string "Ah. A citizen.\p"
+	.string "Ah. lad.\p"
 	.string "Enjoy the city. It counts\n"
 	.string "everything you enjoy.$"
 
 ShinTokyo_Text_MinisterSettle::
-	.string "The prisoner walked free.\n"
-	.string "One phone call. Mine.\p"
 	.string "I never forget a favor,\n"
 	.string "{PLAYER}.\p"
-	.string "More importantly--\n"
-	.string "neither do you. Now we're\l"
-	.string "both invested.$"
+	.string "Now we're both fugitives.\n"
+	.string "Pretty badass. If you ask me.$"
 
 ShinTokyo_Text_MinisterAfter::
 	.string "Walk carefully.\p"
-	.string "The tower watches its\n"
-	.string "investments closest of all.$"
+	.string "The ONI doesn't take lightly\n"
+	.string "to treason.\p"
+	.string "(The MINISTER stamps out his\n"
+	.string "cigarette.)$"
 
 ShinTokyo_Text_MonWeezing::
 	.string "WEEZING drinks from the\n"

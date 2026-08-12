@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_shadow_log.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -2099,6 +2100,16 @@ void CB2_ContinueSavedGame(void)
         ClearFollowerNPCData();
         FlagSet(FLAG_WOT_SB3_FNPC_INIT);
     }
+
+    // Wishes of Tomorrow: derive Shadow Log bits from every mon the player
+    // holds (party + PC). Idempotent; retrofits saves from before the log
+    // existed and catches anything a hook ever missed.
+    WotShadowLog_Backfill();
+
+    // Wishes of Tomorrow: saves that already sat through the hideout
+    // briefing predate the Shadow Log gift beat -- grant it retroactively.
+    if (FlagGet(FLAG_WOT_HIDEOUT_REVEAL_DONE) && !FlagGet(FLAG_WOT_SHADOW_LOG_GET))
+        FlagSet(FLAG_WOT_SHADOW_LOG_GET);
 
     LoadSaveblockMapHeader();
     ClearDiveAndHoleWarps();

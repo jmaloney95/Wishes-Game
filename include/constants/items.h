@@ -1115,6 +1115,9 @@ enum __attribute__((packed)) Item
     ITEM_MANKEYS_PAW = 915,
     ITEM_PRIMEAPES_PAW = 916,
     ITEM_ANNIHILAPES_PAW = 917,
+
+    // Wishes of Tomorrow: the Snag Ball (secondaryId = BALL_SNAG; 4x on Shadows)
+    ITEM_SNAG_BALL = 918,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };
