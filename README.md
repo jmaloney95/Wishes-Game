@@ -10,7 +10,7 @@
 
 **Wishes of Tomorrow** is a full-length Pokémon ROM hack for the Game Boy Advance — an original region, cast, and three-act campaign built at source level on RHH's [`pokeemerald-expansion`](https://github.com/rh-hideout/pokeemerald-expansion) 1.15.3, itself a C and ARM decompilation of *Pokémon Emerald*. Nothing here is patched into a prebuilt binary: every map, system, and asset is compiled from source, so the engine is part of the deliverable rather than a black box the game sits on top of.
 
-**Status — content complete, in playtest.** All three acts run end to end, followed by a scripted finale, an original credits sequence, Hall-of-Fame save integration, and a post-game chapter. Current work is playtest triage and polish ahead of a public release build.
+**Status — content complete and play-tested.** All three acts run end to end, followed by a scripted finale, an original credits sequence, Hall-of-Fame save integration, and a post-game chapter. The full campaign and post-game have been played through and verified.
 
 ## Engineering summary
 
@@ -88,6 +88,17 @@ Based off RHH's pokeemerald-expansion 1.15.3 https://github.com/rh-hideout/pokee
 - *Pokémon Emerald Version* — GAME FREAK · Nintendo · The Pokémon Company
 
 Third-party asset attributions carried over from the base are listed in [`EXTRACTED_ASSETS_CREDITS.md`](EXTRACTED_ASSETS_CREDITS.md).
+
+# Source assets and design documents
+
+This branch holds the game. The **[`main`](https://github.com/jmaloney95/Emerald-Rom-Hack/tree/main)** branch is the development workspace behind it — separate history, published alongside it:
+
+- **Source art** — sprite sheets, Shadow Pokémon battle art, UI mockups, raw tilesets before they were compiled
+- **The tileset pipeline** — the Python that converts RMXP-format art into GBA-legal primary/secondary tileset pairs
+- **Design documents** — the GDD, story canon, quest plans, the full encounter spreadsheet, and a running development log covering every feature and engine gotcha (*contains story spoilers*)
+- **The music porting process** — how later-generation tracks were sequenced into the GBA's m4a engine
+
+Reuse terms differ by asset — most of the art belongs to the artists credited above, not to this project. See [Reusing this work](https://github.com/jmaloney95/Emerald-Rom-Hack/blob/main/README.md#reusing-this-work) before taking anything.
 
 # Building
 
