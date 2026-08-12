@@ -8,7 +8,7 @@ set -euo pipefail
 
 # ---- PATHS FOR "Pokémon Wishes of Tomorrow" (edit if your layout differs) ----
 # NOTE: this is the WSL/Linux view of the project. From Windows the repo lives at
-#   D:\ROM Hack Project\pokeemerald-expansion
+#   J:\ROM Hack Project\pokeemerald-expansion
 # In WSL that's typically /mnt/d/ROM Hack Project/pokeemerald-expansion
 POKEEMERALD="/mnt/d/ROM Hack Project/pokeemerald-expansion"   # your decomp project root
 PORYTILES="porytiles"                                          # or absolute path to the binary
