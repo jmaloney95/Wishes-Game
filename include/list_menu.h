@@ -89,7 +89,7 @@ struct ListMenu
     u8 unk_1C;
     u8 unk_1D;
     u8 taskId;
-    u8 unk_1F;
+    u8 cursorWrap; // repurposed unk_1F: wrap cursor top<->bottom (quest menu)
 };
 
 struct ListMenuWindowRect
@@ -141,6 +141,7 @@ void ChangeListMenuCoords(u8 listTaskId, u8 x, u8 y);
 s32 ListMenuTestInput(struct ListMenuTemplate *template, u32 scrollOffset, u32 selectedRow, u16 keys, u16 *newScrollOffset, u16 *newSelectedRow);
 void ListMenuGetCurrentItemArrayId(u8 listTaskId, u16 *arrayId);
 void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow);
+void ListMenuSetCursorWrap(u8 listTaskId, bool8 wrap);
 u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId);
 void ListMenuOverrideSetColors(u8 cursorPal, u8 fillValue, u8 cursorShadowPal);
 void ListMenuDefaultCursorMoveFunc(s32 itemIndex, bool8 onInit, struct ListMenu *list);

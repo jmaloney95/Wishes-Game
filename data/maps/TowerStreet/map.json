@@ -1,0 +1,53 @@
+{
+  "id": "MAP_TOWER_STREET",
+  "name": "TowerStreet",
+  "layout": "LAYOUT_TOWER_STREET",
+  "music": "MUS_AQUA_MAGMA_HIDEOUT",
+  "region_map_section": "MAPSEC_SHIN_TOKYO",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
+      "x": 2,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "TowerStreet_EventScript_WhiteTiger",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 9,
+      "elevation": 0,
+      "var": "VAR_TEMP_6",
+      "var_value": "0",
+      "script": "TowerStreet_EventScript_ExitToDistrict"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 3,
+      "elevation": 0,
+      "var": "VAR_TEMP_8",
+      "var_value": "0",
+      "script": "TowerStreet_EventScript_StairsUp"
+    }
+  ],
+  "bg_events": []
+}

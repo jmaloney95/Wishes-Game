@@ -490,7 +490,7 @@
 #define MUS_RG_TRAINER_TOWER        556 // MUS_RG_T_TOWER
 #define MUS_RG_SLOW_PALLET          557 // MUS_RG_SLOWMASARA
 #define MUS_RG_TEACHY_TV_MENU       558 // MUS_RG_TVNOIZE
-#define END_MUS                     MUS_RG_TEACHY_TV_MENU
+#define END_MUS                     MUS_DP_VS_UXIE_MESPRIT_AZELF
 
 // These PH_* constants are phoneme sounds used by the "bard" NPC (see src/bard_music.c and src/mauville_old_man.c).
 // Each comes in a triplet of PH_*_BLEND, PH_*_HELD, and PH_*_SOLO, and the name of each triplet incorporates the English phonetic sound it represents.
@@ -545,6 +545,36 @@
 #define PH_NURSE_BLEND              607
 #define PH_NURSE_HELD               608
 #define PH_NURSE_SOLO               609
+
+#define MUS_NATIONAL_PARK           610
+
+// ---- NDS Music Expansion (auto-added) ----
+#define MUS_DP_MT_CORONET           611
+#define MUS_DP_OLD_CHATEAU          612
+#define MUS_PL_DISTORTION_WORLD     613
+#define MUS_PL_VS_GIRATINA          614
+#define MUS_HG_ECRUTEAK             615
+#define MUS_HG_BELL_TOWER           616
+#define MUS_BW_ANVILLE              617
+#define MUS_BW_CASTELIA             618
+#define MUS_BW_BLACK_CITY           619
+#define MUS_BW_N_CASTLE             620
+
+// added music set
+#define MUS_DP_GALACTIC_HQ          621
+#define MUS_DP_VS_GALACTIC          622
+#define MUS_DP_VS_GALACTIC_BOSS     623
+#define MUS_DP_VS_CHAMPION          624
+#define MUS_HG_VS_RIVAL             625
+#define MUS_DP_VS_GYM_LEADER        626
+#define MUS_HG_VS_LUGIA             627
+#define MUS_DP_VS_DIALGA_PALKIA     628
+#define MUS_HG_VS_SUICUNE           629
+#define MUS_DP_ETERNA_FOREST        630
+#define MUS_DP_SNOWPOINT_DAY        631
+#define MUS_DP_HALL_OF_ORIGIN       632
+#define MUS_DP_SUNYSHORE_DAY        633
+#define MUS_DP_VS_UXIE_MESPRIT_AZELF 634
 
 #define MUS_ROUTE118                0x7FFF  // Map is split into 2 music sections. controlled by GetCurrLocationDefaultMusic().
 

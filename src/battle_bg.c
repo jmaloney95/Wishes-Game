@@ -1,5 +1,6 @@
 #include "global.h"
 #include "battle.h"
+#include "rtc.h"
 #include "battle_anim.h"
 #include "battle_bg.h"
 #include "battle_main.h"
@@ -26,6 +27,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
+#include "constants/maps.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_partner.h"
 #include "data/battle_environment.h"
@@ -861,15 +863,48 @@ static u8 GetBattleEnvironmentByMapScene(u8 mapBattleScene)
     return BATTLE_ENVIRONMENT_PLAIN;
 }
 
+
+// Wishes of Tomorrow: pick time-of-day variants for environments that have them.
+static void GetTimeVariantBackground(u16 environment, const u32 **tiles, const u32 **tilemap, const u16 **palette)
+{
+    *tiles   = gBattleEnvironmentInfo[environment].background.tileset;
+    *tilemap = gBattleEnvironmentInfo[environment].background.tilemap;
+    *palette = gBattleEnvironmentInfo[environment].palette;
+
+    switch (environment)
+    {
+    case BATTLE_ENVIRONMENT_MOUNTAIN:
+        switch (GetTimeOfDay())
+        {
+        case TIME_EVENING: *tiles = gBattleEnvironmentTiles_RockDusk;  *tilemap = gBattleEnvironmentTilemap_RockDusk;  *palette = gBattleEnvironmentPalette_RockDusk;  break;
+        case TIME_NIGHT:   *tiles = gBattleEnvironmentTiles_RockNight; *tilemap = gBattleEnvironmentTilemap_RockNight; *palette = gBattleEnvironmentPalette_RockNight; break;
+        default: break;
+        }
+        break;
+    case BATTLE_ENVIRONMENT_TORII:
+        switch (GetTimeOfDay())
+        {
+        case TIME_EVENING: *tiles = gBattleEnvironmentTiles_ToriiDusk;  *tilemap = gBattleEnvironmentTilemap_ToriiDusk;  *palette = gBattleEnvironmentPalette_ToriiDusk;  break;
+        case TIME_NIGHT:   *tiles = gBattleEnvironmentTiles_ToriiNight; *tilemap = gBattleEnvironmentTilemap_ToriiNight; *palette = gBattleEnvironmentPalette_ToriiNight; break;
+        default: break;
+        }
+        break;
+    }
+}
+
 // Loads the initial battle environment.
 static void LoadBattleEnvironmentGfx(u16 environment)
 {
+    const u32 *tiles, *tilemap;
+    const u16 *palette;
+
     if (environment >= NELEMS(gBattleEnvironmentInfo))
         environment = BATTLE_ENVIRONMENT_PLAIN;  // If higher than the number of entries in gBattleEnvironmentInfo, use the default.
+    GetTimeVariantBackground(environment, &tiles, &tilemap, &palette);
     // Copy to bg3
-    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].background.tileset, (void *)(BG_CHAR_ADDR(2)));
-    DecompressDataWithHeaderVram(gBattleEnvironmentInfo[environment].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
-    LoadPalette(gBattleEnvironmentInfo[environment].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+    DecompressDataWithHeaderVram(tiles, (void *)(BG_CHAR_ADDR(2)));
+    DecompressDataWithHeaderVram(tilemap, (void *)(BG_SCREEN_ADDR(26)));
+    LoadPalette(palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
 }
 
 // Loads the entry associated with the battle environment.
@@ -886,6 +921,21 @@ static void LoadBattleEnvironmentEntryGfx(u16 environment)
 static u8 GetBattleEnvironmentOverride(void)
 {
     u8 battleScene = GetCurrentMapBattleScene();
+
+    // National Park: always use the beach (sand) background, regardless of terrain or trainer class.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE_2_2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE_2_2))
+        return BATTLE_ENVIRONMENT_SAND;
+
+    // Star Summit boss: molten-summit volcano background (MAGMA here is a Stadium bg).
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+        return BATTLE_ENVIRONMENT_VOLCANO;
+
+    // Sennen platform boss (General Edwards): same molten-volcano bg as the summit boss.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_SENNEN_CAPTAIN_KANNON)
+        return BATTLE_ENVIRONMENT_VOLCANO;
 
     if (TestRunner_Battle_GetForcedEnvironment()
      && gBattleEnvironmentInfo[gBattleEnvironment].background.tilemap
@@ -1329,13 +1379,13 @@ bool8 LoadChosenBattleElement(u8 caseId)
         LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
         break;
     case 3:
-        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tileset, (void *)(BG_CHAR_ADDR(2)));
+        { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); DecompressDataWithHeaderVram(t, (void *)(BG_CHAR_ADDR(2))); }
         break;
     case 4:
-        DecompressDataWithHeaderVram(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].background.tilemap, (void *)(BG_SCREEN_ADDR(26)));
+        { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); DecompressDataWithHeaderVram(m, (void *)(BG_SCREEN_ADDR(26))); }
         break;
     case 5:
-        LoadPalette(gBattleEnvironmentInfo[GetBattleEnvironmentOverride()].palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+        { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); LoadPalette(p, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP); }
         break;
     case 6:
         LoadBattleMenuWindowGfx();

@@ -219,6 +219,22 @@ BattleScript_SuccessBallThrowEnd::
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
 
+@ WoT Shadow system: a successful SNAG in a trainer battle. The battle does
+@ NOT end -- the snagged mon leaves the field through the normal faint flow
+@ (FinalizeCapture zeroed its HP) and is delivered after the battle by
+@ BS_WotCollectSnaggedMons in the victory scripts.
+BattleScript_WotSuccessSnag::
+	setbyte sMON_CAUGHT, TRUE
+	incrementgamestat GAME_STAT_POKEMON_CAPTURES
+	printstring STRINGID_WOTGOTCHASNAGGED
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_TARGET
+	@ sMON_CAUGHT must not stay set once the battle carries on: a stale TRUE
+	@ makes ReshowBattleScreen skip recreating the opponent sprite (invisible
+	@ enemy after any party/bag screen) and hides enemy drop shadows.
+	setbyte sMON_CAUGHT, FALSE
+	goto BattleScript_MoveEnd
+
 BattleScript_WallyBallThrow::
 	printstring STRINGID_GOTCHAPKMNCAUGHTWALLY
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT

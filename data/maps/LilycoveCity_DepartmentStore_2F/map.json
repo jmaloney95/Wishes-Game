@@ -3,7 +3,6 @@
   "name": "LilycoveCity_DepartmentStore_2F",
   "layout": "LAYOUT_LILYCOVE_CITY_DEPARTMENT_STORE_2F",
   "music": "MUS_POKE_MART",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_LILYCOVE_CITY",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -16,21 +15,8 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_COOK",
-      "x": 8,
-      "y": 2,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
-      "movement_range_x": 0,
-      "movement_range_y": 0,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "LilycoveCity_DepartmentStore_2F_EventScript_Cook",
-      "flag": "0"
-    },
-    {
       "graphics_id": "OBJ_EVENT_GFX_POKEFAN_F",
-      "x": 0,
+      "x": 4,
       "y": 5,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
@@ -43,8 +29,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SAILOR",
-      "x": 13,
-      "y": 5,
+      "x": 9,
+      "y": 6,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -56,10 +42,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
-      "x": 10,
-      "y": 6,
+      "x": 9,
+      "y": 2,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -70,14 +56,40 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
       "x": 7,
-      "y": 6,
+      "y": 2,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "LilycoveCity_DepartmentStore_2F_EventScript_ClerkLeft",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAN_5",
+      "x": 14,
+      "y": 4,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "LilycoveCity_DepartmentStore_2F_EventScript_WasterHusband",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "x": 13,
+      "y": 4,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "LilycoveCity_DepartmentStore_2F_EventScript_WasterWife",
       "flag": "0"
     }
   ],
@@ -105,5 +117,6 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [],
+  "region": "REGION_HOENN"
 }

@@ -616,6 +616,17 @@ bool8 IsBGMPlaying(void)
     return TRUE;
 }
 
+// WoT: hard-stop ALL SE players. The only way to end a LOOPING field SE
+// (SE_M_EARTHQUAKE -- Edwards's landing rumble) on cue, and it also flushes
+// any lingering ambient tail on SE3 (rain remnants heard over the boss card).
+// Only for cutscenes that already muted the weather ambience.
+void WotStopSceneSE(void)
+{
+    m4aMPlayStop(&gMPlayInfo_SE1);
+    m4aMPlayStop(&gMPlayInfo_SE2);
+    m4aMPlayStop(&gMPlayInfo_SE3);
+}
+
 bool8 IsSpecialSEPlaying(void)
 {
     if (gMPlayInfo_SE3.status & MUSICPLAYER_STATUS_PAUSE)

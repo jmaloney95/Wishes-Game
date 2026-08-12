@@ -11,14 +11,18 @@
 #include "graphics.h"
 #include "script.h"
 #include "field_name_box.h"
+#include "npc_portrait.h"
 #include "event_data.h"
 #include "match_call.h"
 #include "malloc.h"
+#include "data.h"
+#include "constants/opponents.h"
 #include "constants/speaker_names.h"
 #include "data/speaker_names.h"
 
 static EWRAM_INIT u8 sNameboxWindowId = WINDOW_NONE;
 EWRAM_DATA const u8 *gSpeakerName = NULL;
+static EWRAM_DATA u8 sSpeakerTier = SPEAKER_TIER_DEFAULT;
 
 static const u32 sNameBoxDefaultGfx[] = INCGFX_U32("graphics/text_window/name_box.png", ".4bpp");
 static const u32 sNameBoxPokenavGfx[] = INCGFX_U32("graphics/pokenav/name_box.png", ".4bpp");
@@ -77,6 +81,21 @@ void PrepareNamebox(u32 tileNum)
 
     u8 colors[3] = {TEXT_COLOR_TRANSPARENT, OW_NAME_BOX_FOREGROUND_COLOR, OW_NAME_BOX_SHADOW_COLOR};
     int strX = GetStringCenterAlignXOffset(fontId, strbuf, (winWidth * 8));
+    switch (sSpeakerTier)
+    {
+    case SPEAKER_TIER_VILLAIN:
+        colors[1] = OW_NAME_BOX_VILLAIN_FG_COLOR;
+        colors[2] = OW_NAME_BOX_VILLAIN_SHADOW_COLOR;
+        break;
+    case SPEAKER_TIER_QUEST:
+        colors[1] = OW_NAME_BOX_QUEST_FG_COLOR;
+        colors[2] = OW_NAME_BOX_QUEST_SHADOW_COLOR;
+        break;
+    case SPEAKER_TIER_GHOST:
+        colors[1] = OW_NAME_BOX_GHOST_FG_COLOR;
+        colors[2] = OW_NAME_BOX_GHOST_SHADOW_COLOR;
+        break;
+    }
     if (matchCall)
     {
         colors[1] = 1;
@@ -98,6 +117,8 @@ void ResetNameboxData(void)
 {
     sNameboxWindowId = WINDOW_NONE;
     gSpeakerName = NULL;
+    sSpeakerTier = SPEAKER_TIER_DEFAULT;
+    WotHideAutoPortrait();
 }
 
 static void DestroyNameboxFrame(void)
@@ -184,19 +205,88 @@ void SetSpeaker(struct ScriptContext *ctx)
 {
     u32 arg = ScriptReadWord(ctx);
     const u8 *speaker = NULL;
+    u8 tier = SPEAKER_TIER_DEFAULT;
 
     if (arg < SP_NAME_COUNT)
+    {
         speaker = gSpeakerNamesTable[arg];
+        tier = gSpeakerNameTiers[arg];
+    }
     else if (arg >= ROM_START && arg < ROM_END)
+    {
         speaker = (const u8 *)arg;
+    }
 
     gSpeakerName = speaker;
+    sSpeakerTier = tier;
+
+    // Speaker-linked portrait: named cast members bring their face with them.
+    if (arg < SP_NAME_COUNT)
+        WotShowSpeakerPortrait(arg);
+    else
+        WotHideAutoPortrait();
+}
+
+// Named-cast trainers that should show a name plate on their battle-intro
+// speech, mapped to the SP_NAME_* the plate displays (which may differ from
+// the trainer's data name, e.g. TRAINER_JOSH shows "MikManc"). Random
+// trainers are absent and get no plate. Used by the approach code instead of
+// a `setspeaker` in the script, which is impossible before `trainerbattle`.
+static const struct { u16 trainerId; u8 speakerName; } sTrainerSpeakers[] =
+{
+    { TRAINER_JOSH,                    SP_NAME_MIKMANC },
+    { TRAINER_TOMMY,                   SP_NAME_MINISTER },
+    { TRAINER_MARC,                    SP_NAME_YIFFER },
+    { TRAINER_ROXANNE_1,               SP_NAME_RED_FATALITY },
+    { TRAINER_MADAM_TSUJI,             SP_NAME_MADAM_TSUJI },
+    { TRAINER_ROUTE2_SWIMMER_ALLISON,  SP_NAME_ALLISON },
+    { TRAINER_HARU_HAS_TYRUNT,         SP_NAME_DRACO },
+    { TRAINER_HARU_HAS_AMAURA,         SP_NAME_DRACO },
+    { TRAINER_HARU_HAS_ANORITH,        SP_NAME_DRACO },
+    { TRAINER_DRACO_TORII_AURORUS,     SP_NAME_DRACO },
+    { TRAINER_DRACO_TORII_ARMALDO,     SP_NAME_DRACO },
+    { TRAINER_DRACO_TORII_TYRANTRUM,   SP_NAME_DRACO },
+    { TRAINER_DRACO_LAB_AURORUS,       SP_NAME_DRACO },
+    { TRAINER_DRACO_LAB_ARMALDO,       SP_NAME_DRACO },
+    { TRAINER_DRACO_LAB_TYRANTRUM,     SP_NAME_DRACO },
+    { TRAINER_STARSUMMIT_BOSS,         SP_NAME_MUTRID_LEADER },
+    { TRAINER_SENNEN_CAPTAIN_KANNON,   SP_NAME_EDWARDS },
+};
+
+// Set the plate for an approaching trainer from the named-cast table (or clear
+// it for a random trainer). Honors OW_NAME_BOX_NPC_TRAINER: when that is TRUE,
+// every trainer instead shows their raw data name.
+void SetSpeakerFromTrainer(u16 trainerId)
+{
+    u32 i;
+
+    if (OW_NAME_BOX_NPC_TRAINER)
+    {
+        gSpeakerName = GetTrainerNameFromId(trainerId);
+        sSpeakerTier = SPEAKER_TIER_DEFAULT;
+        return;
+    }
+
+    for (i = 0; i < ARRAY_COUNT(sTrainerSpeakers); i++)
+    {
+        if (sTrainerSpeakers[i].trainerId == trainerId)
+        {
+            gSpeakerName = gSpeakerNamesTable[sTrainerSpeakers[i].speakerName];
+            sSpeakerTier = gSpeakerNameTiers[sTrainerSpeakers[i].speakerName];
+            WotShowSpeakerPortrait(sTrainerSpeakers[i].speakerName);
+            return;
+        }
+    }
+
+    gSpeakerName = NULL;
+    sSpeakerTier = SPEAKER_TIER_DEFAULT;
 }
 
 // useful for other context e.g. match call
 void TrySpawnAndShowNamebox(const u8 *speaker, u32 tileNum)
 {
     gSpeakerName = speaker;
+    sSpeakerTier = SPEAKER_TIER_DEFAULT;
     if (sNameboxWindowId != WINDOW_NONE && gSpeakerName == NULL)
     {
         ClearNamebox(sNameboxWindowId, TRUE);
@@ -216,6 +306,7 @@ bool32 IsSpeakerBuffered(const u8 *str)
      && str[2] >= SP_NAME_NONE)
     {
         gSpeakerName = gSpeakerNamesTable[str[2]];
+        sSpeakerTier = (str[2] < SP_NAME_COUNT) ? gSpeakerNameTiers[str[2]] : SPEAKER_TIER_DEFAULT;
     }
 
     u32 res = FALSE;

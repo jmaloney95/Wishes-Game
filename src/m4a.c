@@ -75,7 +75,11 @@ void m4aSoundInit(void)
     m4aSoundMode(SOUND_MODE_DA_BIT_8
                | SOUND_MODE_FREQ_13379
                | (12 << SOUND_MODE_MASVOL_SHIFT)
-               | (5 << SOUND_MODE_MAXCHN_SHIFT));
+               // WoT: 12 DirectSound channels, not vanilla's 5. The ported
+               // DP/BW themes are channel-dense enough to saturate 5 on their
+               // own, which starved every field SE (Edwards drop-in, boss
+               // card slam) into silence. 12 is the m4a mixer's max.
+               | (12 << SOUND_MODE_MAXCHN_SHIFT));
 
     for (i = 0; i < NUM_MUSIC_PLAYERS; i++)
     {

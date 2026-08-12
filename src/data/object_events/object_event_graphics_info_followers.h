@@ -52,5 +52,20 @@ const struct ObjectEventGraphicsInfo gPokeballGraphics[POKEBALL_COUNT] = {
     #ifdef ITEM_STRANGE_BALL
     POKEBALL_GFX_INFO(STRANGE),
     #endif
+    // WoT: Snag Ball followers reuse the Great Ball's overworld art (the
+    // snag ball is its recolor; no dedicated OW sheet needed).
+    [BALL_SNAG] = {
+        .tileTag = TAG_NONE,
+        .paletteTag = OBJ_EVENT_PAL_TAG_BALL_GREAT,
+        .size = 256,
+        .width = 16,
+        .height = 32,
+        .shadowSize = SHADOW_SIZE_M,
+        .inanimate = TRUE,
+        .oam = &gObjectEventBaseOam_16x32,
+        .subspriteTables = sOamTables_16x32,
+        .anims = sAnimTable_Following,
+        .images = sPicTable_Ball_GREAT,
+    },
 };
 #endif //OW_FOLLOWERS_POKEBALLS

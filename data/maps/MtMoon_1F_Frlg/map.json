@@ -3,7 +3,6 @@
   "name": "MtMoon_1F_Frlg",
   "layout": "LAYOUT_MT_MOON_1F",
   "music": "MUS_RG_MT_MOON",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_MT_MOON",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,12 +11,10 @@
   "allow_escaping": true,
   "allow_running": true,
   "show_map_name": true,
-  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_LASS_FRLG",
       "x": 20,
       "y": 26,
@@ -31,7 +28,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BUG_CATCHER_FRLG",
       "x": 36,
       "y": 30,
@@ -45,7 +41,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SCIENTIST",
       "x": 30,
       "y": 35,
@@ -59,7 +54,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_LASS_FRLG",
       "x": 33,
       "y": 4,
@@ -73,7 +67,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BUG_CATCHER_FRLG",
       "x": 7,
       "y": 26,
@@ -87,7 +80,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_YOUNGSTER_FRLG",
       "x": 13,
       "y": 17,
@@ -101,7 +93,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_HIKER_FRLG",
       "x": 7,
       "y": 10,
@@ -115,7 +106,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 2,
       "y": 22,
@@ -129,7 +119,6 @@
       "flag": "FLAG_HIDE_MT_MOON_1F_PARALYZE_HEAL"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 11,
       "y": 35,
@@ -143,7 +132,6 @@
       "flag": "FLAG_HIDE_MT_MOON_1F_TM09"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 26,
       "y": 32,
@@ -157,7 +145,6 @@
       "flag": "FLAG_HIDE_MT_MOON_1F_POTION"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 42,
       "y": 35,
@@ -171,7 +158,6 @@
       "flag": "FLAG_HIDE_MT_MOON_1F_RARE_CANDY"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 44,
       "y": 21,
@@ -185,7 +171,6 @@
       "flag": "FLAG_HIDE_MT_MOON_1F_ESCAPE_ROPE"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 3,
       "y": 2,
@@ -199,7 +184,6 @@
       "flag": "FLAG_HIDE_MT_MOON_1F_MOON_STONE"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 42,
       "y": 7,
@@ -253,5 +237,7 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "MtMoon_1F_EventScript_ZubatSign"
     }
-  ]
+  ],
+  "floor_number": 0,
+  "region": "REGION_KANTO"
 }

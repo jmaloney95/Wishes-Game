@@ -3,7 +3,6 @@
   "name": "Route116",
   "layout": "LAYOUT_ROUTE116",
   "music": "MUS_ROUTE104",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_ROUTE_116",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
@@ -341,7 +340,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_POTION",
       "x": 34,
       "y": 7,
       "elevation": 0,
@@ -526,5 +525,6 @@
       "item": "ITEM_BLACK_GLASSES",
       "flag": "FLAG_HIDDEN_ITEM_ROUTE_116_BLACK_GLASSES"
     }
-  ]
+  ],
+  "region": "REGION_HOENN"
 }

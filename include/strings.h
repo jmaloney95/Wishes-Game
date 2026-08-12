@@ -767,6 +767,12 @@ extern const u8 gText_Record2[];
 extern const u8 gText_Rest[];
 extern const u8 gText_Retire[];
 extern const u8 gText_TradeCenter[];
+extern const u8 gText_KeepTheResearch[];
+extern const u8 gText_DestroyTheResearch[];
+extern const u8 gText_CatalpaLab[];
+extern const u8 gText_CatalpaDistortion[];
+extern const u8 gText_ReadTheResearch[];
+extern const u8 gText_DestroyIt[];
 extern const u8 gText_Colosseum[];
 extern const u8 gText_RecordCorner[];
 extern const u8 gText_BerryCrush3[];
@@ -2202,5 +2208,58 @@ extern const u8 gText_OakThisIsListOfPokemon[];
 extern const u8 gText_Boy[];
 extern const u8 gText_Girl[];
 
+
+////Wishes of Tomorrow quest text
+extern const u8 gText_QuestAnnounce[];
+extern const u8 gText_QuestComplete[];
+extern const u8 gText_QuestActive[];
+
+extern const u8 gText_QuestLoc_MtMunen[];
+extern const u8 gText_QuestLoc_MunenVillage[];
+extern const u8 gText_QuestLoc_SennenStation[];
+extern const u8 gText_QuestLoc_NationalPark[];
+extern const u8 gText_QuestLoc_Pompeii[];
+
+extern const u8 gText_Quest_WakingMountain_Name[];
+extern const u8 gText_Quest_WakingMountain_Desc1[];
+extern const u8 gText_Quest_WakingMountain_Desc2[];
+extern const u8 gText_Quest_WakingMountain_DoneDesc[];
+extern const u8 gText_Quest_OneThatGotAway_Name[];
+extern const u8 gText_Quest_OneThatGotAway_Desc1[];
+extern const u8 gText_Quest_OneThatGotAway_Desc2[];
+extern const u8 gText_Quest_OneThatGotAway_DoneDesc[];
+extern const u8 gText_Quest_FrozenTracks_Name[];
+extern const u8 gText_Quest_FrozenTracks_Desc[];
+extern const u8 gText_Quest_FrozenTracks_DoneDesc[];
+extern const u8 gText_Quest_EightWays_Name[];
+extern const u8 gText_Quest_EightWays_Desc[];
+extern const u8 gText_Quest_EightWays_DoneDesc[];
+extern const u8 gText_Quest_HeavyMetal_Name[];
+extern const u8 gText_Quest_HeavyMetal_Desc[];
+extern const u8 gText_Quest_HeavyMetal_DoneDesc[];
+extern const u8 gText_Quest_SaveFace_Name[];
+extern const u8 gText_Quest_SaveFace_Desc1[];
+extern const u8 gText_Quest_SaveFace_Desc2[];
+extern const u8 gText_Quest_SaveFace_DoneDesc[];
+extern const u8 gText_Quest_GrandfathersWish_Name[];
+extern const u8 gText_Quest_GrandfathersWish_Desc[];
+extern const u8 gText_Quest_GrandfathersWish_DoneDesc[];
+extern const u8 gText_Quest_LifesWork_Name[];
+extern const u8 gText_Quest_LifesWork_Desc[];
+extern const u8 gText_Quest_LifesWork_DoneDesc[];
+extern const u8 gText_QuestLoc_FrostwoodTown[];
+extern const u8 gText_Quest_ToastyTime_Name[];
+extern const u8 gText_Quest_ToastyTime_Desc[];
+extern const u8 gText_Quest_ToastyTime_DoneDesc[];
+extern const u8 gText_QuestLoc_ShinTokyo[];
+extern const u8 gText_Quest_StopTheMachine_Name[];
+extern const u8 gText_Quest_StopTheMachine_Desc1[];
+extern const u8 gText_Quest_StopTheMachine_DoneDesc[];
+extern const u8 gText_Quest_HarnessDarkness_Name[];
+extern const u8 gText_Quest_HarnessDarkness_Desc1[];
+extern const u8 gText_Quest_HarnessDarkness_DoneDesc[];
+extern const u8 gText_Quest_MinistersFavor_Name[];
+extern const u8 gText_Quest_MinistersFavor_Desc1[];
+extern const u8 gText_Quest_MinistersFavor_DoneDesc[];
 
 #endif // GUARD_STRINGS_H

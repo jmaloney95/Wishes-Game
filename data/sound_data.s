@@ -9,6 +9,7 @@
 	.include "include/config/pokemon.h"
 	.include "sound/voice_groups.inc"
 	.include "sound/keysplit_tables.inc"
+	.include "sound/keysplit_tables_nds.inc"
 	.include "sound/programmable_wave_data.inc"
 	.include "sound/music_player_table.inc"
 	.include "sound/song_table.inc"

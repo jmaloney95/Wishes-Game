@@ -21,7 +21,8 @@ enum
 enum
 {
     HEALTH_BAR,
-    EXP_BAR
+    EXP_BAR,
+    HEART_GAUGE // WoT Shadow system: purple bar in the exp slot for the player's Shadow mons
 };
 
 enum

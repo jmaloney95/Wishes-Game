@@ -2923,14 +2923,9 @@ bool8 FldEff_FieldMoveShowMon(void)
 
 bool8 FldEff_FieldMoveShowMonInit(void)
 {
-    struct Pokemon *pokemon;
-    bool32 noDucking = gFieldEffectArguments[0] & SHOW_MON_CRY_NO_DUCKING;
-    pokemon = &gPlayerParty[(u8)gFieldEffectArguments[0]];
-    gFieldEffectArguments[0] = GetMonData(pokemon, MON_DATA_SPECIES);
-    gFieldEffectArguments[1] = GetMonData(pokemon, MON_DATA_IS_SHINY);
-    gFieldEffectArguments[2] = GetMonData(pokemon, MON_DATA_PERSONALITY);
-    gFieldEffectArguments[0] |= noDucking;
-    FieldEffectStart(FLDEFF_FIELD_MOVE_SHOW_MON);
+    // WoT: HMs are used by the TRAINER -- the "{mon} used X!" banner/cry pose
+    // is skipped entirely. Callers wait for FLDEFF_FIELD_MOVE_SHOW_MON to not
+    // be active, which is immediately true when it never starts.
     FieldEffectActiveListRemove(FLDEFF_FIELD_MOVE_SHOW_MON_INIT);
     return FALSE;
 }
@@ -3649,7 +3644,9 @@ static u8 CreateFlyBirdSprite(void)
     struct Sprite *sprite;
     spriteId = CreateSprite(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_BIRD], 0xff, 0xb4, 0x1);
     sprite = &gSprites[spriteId];
-    sprite->oam.paletteNum = LoadPlayerObjectEventPalette(gSaveBlock2Ptr->playerGender);
+    // WoT: the "bird" is the PRIVATE JET -- it flies in its own palette, not
+    // the player's (see gFieldEffectObjectTemplate_Bird).
+    sprite->oam.paletteNum = LoadObjectEventPalette(OBJ_EVENT_PAL_TAG_WOT_JET);
     sprite->oam.priority = 1;
     sprite->callback = SpriteCB_FlyBirdLeaveBall;
     return spriteId;

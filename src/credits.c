@@ -165,6 +165,7 @@ static const u8 sTheEnd_LetterMap_D[] =
 };
 
 #include "data/credits.h"
+#include "data/wot_credits_pics.h"
 
 static const struct BgTemplate sBackgroundTemplates[] =
 {
@@ -776,7 +777,8 @@ static void Task_UpdatePage(u8 taskId)
     case 3:
         if (!gPaletteFade.active)
         {
-            gTasks[taskId].tDelay = 115;
+            // WoT: longer page hold so the shorter deck stays readable.
+            gTasks[taskId].tDelay = 170;
             gTasks[taskId].tState++;
         }
         return;
@@ -907,16 +909,16 @@ static void Task_ShowMons(u8 taskId)
                                     sMonSpritePos[sCreditsData->nextImgPos][0],
                                     sMonSpritePos[sCreditsData->nextImgPos][1],
                                     sCreditsData->nextImgPos);
+        // WoT: exactly three pics per interlude and they PARK -- no mid-scene
+        // swapping. The lifetime outlasts any interlude; the sprite callback
+        // still destroys them the moment the scenery changes. data[5] is this
+        // task's per-interlude count (Task_ShowMons is created fresh per
+        // interlude, so it starts at 0).
         if (sCreditsData->currShownMon < sCreditsData->numMonToShow - 1)
-        {
             sCreditsData->currShownMon++;
-            gSprites[spriteId].data[3] = 50;
-        }
         else
-        {
             sCreditsData->currShownMon = 0;
-            gSprites[spriteId].data[3] = 512;
-        }
+        gSprites[spriteId].data[3] = 30000;
         sCreditsData->imgCounter++;
 
         if (sCreditsData->nextImgPos == POS_RIGHT)
@@ -924,7 +926,13 @@ static void Task_ShowMons(u8 taskId)
         else
             sCreditsData->nextImgPos++;
 
-        gTasks[taskId].tDelay = 50;
+        gTasks[taskId].data[5]++;
+        if (gTasks[taskId].data[5] >= 3)
+        {
+            gTasks[taskId].tState = 0;
+            break;
+        }
+        gTasks[taskId].tDelay = 40;
         gTasks[taskId].tState++;
         break;
     case 3:
@@ -1507,7 +1515,10 @@ static u8 CreateCreditsMonSprite(u16 nationalDexNum, s16 x, s16 y, u16 position)
     u8 monSpriteId;
     u8 bgSpriteId;
 
-    monSpriteId = CreateMonSpriteFromNationalDexNumber(nationalDexNum, x, y, position);
+    // WoT: `nationalDexNum` is an index into sWotCreditsPics -- the credits
+    // show the hack's own cast instead of the player's caught Pokemon.
+    monSpriteId = WotCreateRawPicSprite(sWotCreditsPics[nationalDexNum].gfx,
+                                        sWotCreditsPics[nationalDexNum].pal, x, y, position);
     gSprites[monSpriteId].oam.priority = 1;
     gSprites[monSpriteId].sPosition = position + 1;
     gSprites[monSpriteId].invisible = TRUE;
@@ -1542,86 +1553,13 @@ static void SpriteCB_CreditsMonBg(struct Sprite *sprite)
 
 static void DeterminePokemonToShow(void)
 {
-    enum NationalDexOrder starter = SpeciesToNationalPokedexNum(GetStarterPokemon(VarGet(VAR_STARTER_MON)));
-    u16 page;
-    u16 dexNum;
-    u16 j;
+    u16 i;
 
-    // Go through the Pokédex, and anything that has gotten caught we put into our massive array.
-    // This basically packs all of the caught Pokémon into the front of the array
-    for (dexNum = 1, j = 0; dexNum < NATIONAL_DEX_COUNT; dexNum++)
-    {
-        if (GetSetPokedexFlag(dexNum, FLAG_GET_CAUGHT))
-        {
-            sCreditsData->caughtMonIds[j] = dexNum;
-            j++;
-        }
-    }
-
-    // Fill the rest of the array with zeroes
-    for (dexNum = j; dexNum < NATIONAL_DEX_COUNT; dexNum++)
-        sCreditsData->caughtMonIds[dexNum] = NATIONAL_DEX_NONE;
-
-    // Cap the number of Pokémon we care about to NUM_MON_SLIDES, the max we show in the credits scene (-1 for the starter)
-    sCreditsData->numCaughtMon = j;
-    if (sCreditsData->numCaughtMon < NUM_MON_SLIDES)
-        sCreditsData->numMonToShow = j;
-    else
-        sCreditsData->numMonToShow = NUM_MON_SLIDES;
-
-    // Loop through our list of caught Pokémon and select randomly from it to fill the images to show
-    j = 0;
-    do
-    {
-        // Select a random mon, insert into array
-        page = Random() % sCreditsData->numCaughtMon;
-        sCreditsData->monToShow[j] = sCreditsData->caughtMonIds[page];
-
-        // Remove the select mon from the array, and condense array entries
-        j++;
-        sCreditsData->caughtMonIds[page] = 0;
-        sCreditsData->numCaughtMon--;
-        if (page != sCreditsData->numCaughtMon)
-        {
-            // Instead of looping through and moving everything down, just take from the end. Order doesn't matter after all.
-            sCreditsData->caughtMonIds[page] = sCreditsData->caughtMonIds[sCreditsData->numCaughtMon];
-            sCreditsData->caughtMonIds[sCreditsData->numCaughtMon] = 0;
-        }
-    }
-    while (sCreditsData->numCaughtMon != 0 && j < NUM_MON_SLIDES);
-
-    // If we don't have enough Pokémon in the dex to fill everything, copy the selected mon into the end of the array, so it loops
-    if (sCreditsData->numMonToShow < NUM_MON_SLIDES)
-    {
-        for (j = sCreditsData->numMonToShow, page = 0; j < NUM_MON_SLIDES; j++)
-        {
-            sCreditsData->monToShow[j] = sCreditsData->monToShow[page];
-
-            page++;
-            if (page == sCreditsData->numMonToShow)
-                page = 0;
-        }
-        // Ensure the last Pokémon is our starter
-        sCreditsData->monToShow[NUM_MON_SLIDES - 1] = starter;
-    }
-    else
-    {
-        // Check to see if our starter has already appeared in this list, break if it has
-        for (dexNum = 0; sCreditsData->monToShow[dexNum] != starter && dexNum < NUM_MON_SLIDES; dexNum++);
-
-        // If it has, swap it with the last Pokémon, to ensure our starter is the last image
-        if (dexNum < sCreditsData->numMonToShow - 1)
-        {
-            sCreditsData->monToShow[dexNum] = sCreditsData->monToShow[NUM_MON_SLIDES-1];
-            sCreditsData->monToShow[NUM_MON_SLIDES - 1] = starter;
-        }
-        else
-        {
-            // Ensure the last Pokémon is our starter
-            sCreditsData->monToShow[NUM_MON_SLIDES - 1] = starter;
-        }
-    }
-    sCreditsData->numMonToShow = NUM_MON_SLIDES;
+    // WoT: a fixed cast, in order, looping until the roll ends.
+    sCreditsData->numCaughtMon = NUM_WOT_CREDITS_PICS;
+    sCreditsData->numMonToShow = NUM_WOT_CREDITS_PICS;
+    for (i = 0; i < NUM_MON_SLIDES; i++)
+        sCreditsData->monToShow[i] = i % NUM_WOT_CREDITS_PICS;
 }
 
 #endif // !IS_FRLG

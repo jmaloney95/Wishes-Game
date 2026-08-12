@@ -558,6 +558,10 @@ struct BattleStruct
     u32 expShareExpValue;
     u32 expValue;
     u8 weatherDuration;
+    u8 wotSnaggedMons; // WoT Shadow system: bitmask of enemy party slots snagged this battle (delivered at battle end)
+    u8 wotAuraAnnounced; // WoT Shadow system: per-battler latch for the switch-in "Shadow aura" announce
+    u8 wotBallTarget; // WoT Shadow system: manually chosen ball target, stored +1 (0 = none chosen, so the zeroed struct means "auto")
+    u8 wotDeliverSlot; // WoT Shadow system: enemy party slot currently going through snag delivery/nicknaming
     u8 expGettersOrder[PARTY_SIZE]; // First battlers which were sent out, then via exp-share
     u8 expGetterMonId;
     u8 expOrderId:3;

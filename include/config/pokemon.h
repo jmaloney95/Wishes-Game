@@ -55,7 +55,7 @@
 #define P_EV_CAP                         GEN_LATEST  // Since Gen 6, the max EVs per stat is 252 instead of 255.
 #define P_SHOW_TERA_TYPE                 GEN_8       // Since Gen 9, the Tera Type is shown on the summary screen.
 #define P_TM_LITERACY                    GEN_LATEST  // Since Gen 6, TM illiterate Pokémon can learn TMs that teach moves that are in their level-up learnsets.
-#define P_CAN_FORGET_HIDDEN_MOVE         FALSE       // If TRUE, Pokémon can forget any move, even if it is an HM.
+#define P_CAN_FORGET_HIDDEN_MOVE         TRUE        // If TRUE, Pokémon can forget any move, even if it is an HM.
 #define P_ASK_MOVE_CONFIRMATION          FALSE       // If FALSE, when a player decides not to learn a move, the game does not ask the player for confirmation.
 #define P_EGG_CYCLE_LENGTH               GEN_LATEST  // Since Gen 8, Egg cycles take half as many steps as before. Previous generations have some varied step counts around 255.
 #define P_ONLY_OBTAINABLE_SHINIES        FALSE       // If TRUE, Pokémon encountered in the Battle Pyramid or while catching is disabled won't be Shiny.
@@ -79,5 +79,10 @@
 // Sound related settings
 #define P_MODIFIED_MEGA_CRIES            P_MEGA_EVOLUTIONS  // If TRUE, will use the extra separate Mega Cries (approx. 3% space of ROM). if FALSE, will use the same cry for all Mega Evolutions except modified with P_MODIFIED_MEGA_CRY_MODE. By default, this is set based on if mega evolutions are enabled.
 #define P_MODIFIED_MEGA_CRY_MODE         CRY_MODE_HIGH_PITCH
+
+// Wishes of Tomorrow: max cumulative per-stat modifier from Paw items (each
+// stat's total is clamped to [-PAW_MOD_CAP, +PAW_MOD_CAP]; storage is 5-bit
+// two's complement, so this must stay <= 15).
+#define PAW_MOD_CAP 12
 
 #endif // GUARD_CONFIG_POKEMON_H

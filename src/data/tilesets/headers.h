@@ -1541,3 +1541,339 @@ const struct Tileset gTileset_HallOfFame =
 };
 
 #endif // IS_FRLG
+
+const struct Tileset gTileset_ToriiMagiscarf =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_ToriiMagiscarf,
+    .palettes = gTilesetPalettes_ToriiMagiscarf,
+    .metatiles = gMetatiles_ToriiMagiscarf,
+    .metatileAttributes = gMetatileAttributes_ToriiMagiscarf,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SnowAndStone =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SnowAndStone,
+    .palettes = gTilesetPalettes_SnowAndStone,
+    .metatiles = gMetatiles_SnowAndStone,
+    .metatileAttributes = gMetatileAttributes_SnowAndStone,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: curated snow terrain PRIMARY (from Cinna's snow set).
+const struct Tileset gTileset_SnowCinna =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_SnowCinna,
+    .palettes = gTilesetPalettes_SnowCinna,
+    .metatiles = gMetatiles_SnowCinna,
+    .metatileAttributes = gMetatileAttributes_SnowCinna,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: snow buildings SECONDARY (PC, Mart, house, statue).
+const struct Tileset gTileset_SnowCinnaExtra =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SnowCinnaExtra,
+    .palettes = gTilesetPalettes_SnowCinnaExtra,
+    .metatiles = gMetatiles_SnowCinnaExtra,
+    .metatileAttributes = gMetatileAttributes_SnowCinnaExtra,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: Frostwood snow buildings SECONDARY (Gold/Silver style,
+// small/GBA-sized: PC, Gym, Mart, house, shop). Replaces the oversized SnowCinnaExtra.
+const struct Tileset gTileset_FrostwoodBuildings =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FrostwoodBuildings,
+    .palettes = gTilesetPalettes_FrostwoodBuildings,
+    .metatiles = gMetatiles_FrostwoodBuildings,
+    .metatileAttributes = gMetatileAttributes_FrostwoodBuildings,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: Gold/Silver town terrain PRIMARY (from skillmen's GS sheet).
+const struct Tileset gTileset_GsTownA =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_GsTownA,
+    .palettes = gTilesetPalettes_GsTownA,
+    .metatiles = gMetatiles_GsTownA,
+    .metatileAttributes = gMetatileAttributes_GsTownA,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: Gold/Silver Japanese houses SECONDARY (from skillmen's GS sheet).
+const struct Tileset gTileset_GsJapanHouses =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_GsJapanHouses,
+    .palettes = gTilesetPalettes_GsJapanHouses,
+    .metatiles = gMetatiles_GsJapanHouses,
+    .metatileAttributes = gMetatileAttributes_GsJapanHouses,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: dojo/shrine grounds SECONDARY (ekat99's halcyon dojo:
+// shrine building, bamboo fences, cherry trees, sand garden, statues).
+const struct Tileset gTileset_Dojo =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Dojo,
+    .palettes = gTilesetPalettes_Dojo,
+    .metatiles = gMetatiles_Dojo,
+    .metatileAttributes = gMetatileAttributes_Dojo,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: magnet train SECONDARY (the frozen train blocking the
+// route north of Frostwood). Pairs with any snow primary; art on slot 6, tiles 512+.
+const struct Tileset gTileset_MagnetTrain =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_MagnetTrain,
+    .palettes = gTilesetPalettes_MagnetTrain,
+    .metatiles = gMetatiles_MagnetTrain,
+    .metatileAttributes = gMetatileAttributes_MagnetTrain,
+    .callback = NULL,
+};
+
+// --- HnS-extracted town tile ART (traditional-Japanese towns). Tiles + palettes
+// come from HnS; metatiles start blank -- assemble the buildings in Porymap. ---
+const struct Tileset gTileset_EcruteakCity =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_EcruteakCity,
+    .palettes = gTilesetPalettes_EcruteakCity,
+    .metatiles = gMetatiles_EcruteakCity,
+    .metatileAttributes = gMetatileAttributes_EcruteakCity,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_VioletCity =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_VioletCity,
+    .palettes = gTilesetPalettes_VioletCity,
+    .metatiles = gMetatiles_VioletCity,
+    .metatileAttributes = gMetatileAttributes_VioletCity,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_AshlandTrees =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_AshlandTrees,
+    .palettes = gTilesetPalettes_AshlandTrees,
+    .metatiles = gMetatiles_AshlandTrees,
+    .metatileAttributes = gMetatileAttributes_AshlandTrees,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: NIGHT MARKET PRIMARY (odisea stalls + lanterns +
+// shikari dark town). Select it as the primary for a Tradewind/Ashlands night
+// market and keep gTileset_AshlandTrees as the secondary.
+const struct Tileset gTileset_NightMarket =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_NightMarket,
+    .palettes = gTilesetPalettes_NightMarket,
+    .metatiles = gMetatiles_NightMarket,
+    .metatileAttributes = gMetatileAttributes_NightMarket,
+    .callback = NULL,
+};
+
+// Pokemon Wishes of Tomorrow: Gold/Silver Japanese buildings SECONDARY (Ecruteak houses,
+// gold + red pagodas, grand temples). Pairs with gTileset_General; grass from primary.
+const struct Tileset gTileset_GsJapan =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_GsJapan,
+    .palettes = gTilesetPalettes_GsJapan,
+    .metatiles = gMetatiles_GsJapan,
+    .metatileAttributes = gMetatileAttributes_GsJapan,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SakuraPressGarden =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SakuraPressGarden,
+    .palettes = gTilesetPalettes_SakuraPressGarden,
+    .metatiles = gMetatiles_SakuraPressGarden,
+    .metatileAttributes = gMetatileAttributes_SakuraPressGarden,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Droid779Snow =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Droid779Snow,
+    .palettes = gTilesetPalettes_Droid779Snow,
+    .metatiles = gMetatiles_Droid779Snow,
+    .metatileAttributes = gMetatileAttributes_Droid779Snow,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_MtMoonVillage =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_MtMoonVillage,
+    .palettes = gTilesetPalettes_MtMoonVillage,
+    .metatiles = gMetatiles_MtMoonVillage,
+    .metatileAttributes = gMetatileAttributes_MtMoonVillage,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_MtMoonVillageInterior =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_MtMoonVillageInterior,
+    .palettes = gTilesetPalettes_MtMoonVillageInterior,
+    .metatiles = gMetatiles_MtMoonVillageInterior,
+    .metatileAttributes = gMetatileAttributes_MtMoonVillageInterior,
+    .callback = InitTilesetAnim_MtMoonVillageInterior,
+};
+
+const struct Tileset gTileset_Route224 =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Route224,
+    .palettes = gTilesetPalettes_Route224,
+    .metatiles = gMetatiles_Route224,
+    .metatileAttributes = gMetatileAttributes_Route224,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_Route224Primary =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_Route224Primary,
+    .palettes = gTilesetPalettes_Route224Primary,
+    .metatiles = gMetatiles_Route224Primary,
+    .metatileAttributes = gMetatileAttributes_Route224Primary,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_LavaMap =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_LavaMap,
+    .palettes = gTilesetPalettes_LavaMap,
+    .metatiles = gMetatiles_LavaMap,
+    .metatileAttributes = gMetatileAttributes_LavaMap,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DistortionWorld =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DistortionWorld,
+    .palettes = gTilesetPalettes_DistortionWorld,
+    .metatiles = gMetatiles_DistortionWorld,
+    .metatileAttributes = gMetatileAttributes_DistortionWorld,
+    .callback = InitTilesetAnim_DistortionWorld,
+};
+
+const struct Tileset gTileset_FearTown =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FearTown,
+    .palettes = gTilesetPalettes_FearTown,
+    .metatiles = gMetatiles_FearTown,
+    .metatileAttributes = gMetatileAttributes_FearTown,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_FairyTown =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FairyTown,
+    .palettes = gTilesetPalettes_FairyTown,
+    .metatiles = gMetatiles_FairyTown,
+    .metatileAttributes = gMetatileAttributes_FairyTown,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SumpRats =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SumpRats,
+    .palettes = gTilesetPalettes_SumpRats,
+    .metatiles = gMetatiles_SumpRats,
+    .metatileAttributes = gMetatileAttributes_SumpRats,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DragonKeepers =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DragonKeepers,
+    .palettes = gTilesetPalettes_DragonKeepers,
+    .metatiles = gMetatiles_DragonKeepers,
+    .metatileAttributes = gMetatileAttributes_DragonKeepers,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_CityBlocks =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_CityBlocks,
+    .palettes = gTilesetPalettes_CityBlocks,
+    .metatiles = gMetatiles_CityBlocks,
+    .metatileAttributes = gMetatileAttributes_CityBlocks,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_MiddleDistrict =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_MiddleDistrict,
+    .palettes = gTilesetPalettes_MiddleDistrict,
+    .metatiles = gMetatiles_MiddleDistrict,
+    .metatileAttributes = gMetatileAttributes_MiddleDistrict,
+    .callback = InitTilesetAnim_MiddleDistrict,
+};
+
+const struct Tileset gTileset_MiddleDistrictGround =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_MiddleDistrictGround,
+    .palettes = gTilesetPalettes_MiddleDistrictGround,
+    .metatiles = gMetatiles_MiddleDistrictGround,
+    .metatileAttributes = gMetatileAttributes_MiddleDistrictGround,
+    .callback = NULL,
+};

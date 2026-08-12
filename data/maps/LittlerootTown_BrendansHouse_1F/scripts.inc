@@ -321,22 +321,26 @@ PlayersHouse_1F_Text_ItsOverWeMissedHim:
 
 PlayersHouse_1F_Text_GoIntroduceYourselfNextDoor:
 	.string "Oh, yes.\n"
-	.string "One of DAD's friends lives in town.\p"
-	.string "PROF. BIRCH is his name.\p"
-	.string "He lives right next door, so you should\n"
-	.string "go over and introduce yourself.$"
+	.string "PROF. CLARKSON's lab is just down\l"
+	.string "the lane.\p"
+	.string "He's the only one who really\n"
+	.string "understands this thaw.\l"
+	.string "You should pay him a visit.$"
 
 PlayersHouse_1F_Text_SeeYouHoney:
 	.string "MOM: See you, honey!$"
 
 PlayersHouse_1F_Text_DidYouMeetProfBirch:
-	.string "MOM: Did you introduce yourself to\n"
-	.string "PROF. BIRCH?$"
+	.string "MOM: PROF. CLARKSON went up the\n"
+	.string "mountain to study the thaw.\p"
+	.string "A thousand years of ice, melting\n"
+	.string "in our lifetime… imagine that.$"
 
 PlayersHouse_1F_Text_YouShouldRestABit:
 	.string "MOM: How are you doing, {PLAYER}?\n"
 	.string "You look a little tired.\p"
-	.string "I think you should rest a bit.$"
+	.string "Rest a bit, honey. PROF. CLARKSON\n"
+	.string "is counting on you up there.$"
 
 PlayersHouse_1F_Text_TakeCareHoney:
 	.string "MOM: Take care, honey!$"

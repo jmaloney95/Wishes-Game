@@ -20,6 +20,7 @@
 #include "constants/event_objects.h"
 #include "constants/event_object_movement.h"
 #include "constants/field_effects.h"
+#include "constants/map_groups.h"
 #include "constants/script_commands.h"
 #include "constants/trainer_types.h"
 
@@ -638,6 +639,15 @@ static u8 GetTrainerApproachDistance(struct ObjectEvent *trainerObj)
     s16 x, y;
     u8 i;
     u8 approachDistance;
+
+    // WoT: the Carved Mask makes the jail's dark-phase sentries read the
+    // player as one of their own -- no sighting while masked and the block
+    // is still dark (Mikmanc's cell scene turns the lights on for good).
+    if (FlagGet(FLAG_ONI_MASK_WORN)
+     && !FlagGet(FLAG_ACT3_MIKMANC_FREED)
+     && gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SHIN_TOKYO_JAIL)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SHIN_TOKYO_JAIL))
+        return 0;
 
     PlayerGetDestCoords(&x, &y);
     if (trainerObj->trainerType == TRAINER_TYPE_NORMAL)  // can only see in one direction

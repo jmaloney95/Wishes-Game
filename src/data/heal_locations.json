@@ -5,7 +5,7 @@
       "map": "MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F",
       "x": 4,
       "y": 2,
-      "respawn_map": "MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F",
+      "respawn_map": "MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F",
       "respawn_npc": "LOCALID_PLAYERS_HOUSE_1F_MOM",
       "respawn_x": 2,
       "respawn_y": 7
@@ -193,10 +193,10 @@
       "map": "MAP_PALLET_TOWN",
       "x": 6,
       "y": 8,
-      "respawn_x": 8,
-      "respawn_y": 5,
       "respawn_map": "MAP_PALLET_TOWN_PLAYERS_HOUSE_1F",
-      "respawn_npc": "LOCALID_PLAYERS_HOUSE_1F_MOM"
+      "respawn_npc": "LOCALID_PLAYERS_HOUSE_1F_MOM",
+      "respawn_x": 8,
+      "respawn_y": 5
     },
     {
       "id": "HEAL_LOCATION_VIRIDIAN_CITY",
@@ -349,6 +349,84 @@
       "y": 12,
       "respawn_map": "MAP_SIX_ISLAND_POKEMON_CENTER_1F",
       "respawn_npc": "LOCALID_SIX_ISLAND_NURSE"
+    },
+    {
+      "id": "HEAL_LOCATION_MUNEN_VILLAGE",
+      "map": "MAP_MUNEN_VILLAGE_2",
+      "x": 9,
+      "y": 14,
+      "respawn_map": "MAP_MUNEN_VILLAGE_2",
+      "respawn_x": 9,
+      "respawn_y": 14
+    },
+    {
+      "id": "HEAL_LOCATION_TORII",
+      "map": "MAP_TORII",
+      "x": 8,
+      "y": 21
+    },
+    {
+      "id": "HEAL_LOCATION_NEW_MAP_INN",
+      "map": "MAP_NEW_MAP_INN",
+      "x": 1,
+      "y": 4,
+      "respawn_map": "MAP_NEW_MAP_INN",
+      "respawn_x": 4,
+      "respawn_y": 5
+    },
+    {
+      "id": "HEAL_LOCATION_ROUTE115",
+      "map": "MAP_ROUTE115",
+      "x": 20,
+      "y": 40
+    },
+    {
+      "id": "HEAL_LOCATION_SENNEN_VILLAGE",
+      "map": "MAP_SENNEN_VILLAGE",
+      "x": 7,
+      "y": 21
+    },
+    {
+      "id": "HEAL_LOCATION_WALNUT_WOODS",
+      "map": "MAP_WALNUT_WOODS",
+      "x": 23,
+      "y": 3
+    },
+    {
+      "id": "HEAL_LOCATION_FROSTWOOD_TOWN",
+      "map": "MAP_FROSTWOOD_TOWN",
+      "x": 16,
+      "y": 26
+    },
+    {
+      "id": "HEAL_LOCATION_TRADEWIND_TOWN",
+      "map": "MAP_TRADEWIND_TOWN",
+      "x": 24,
+      "y": 43
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_JAIL_ENTRY",
+      "map": "MAP_SHIN_TOKYO_JAIL",
+      "x": 12,
+      "y": 16
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_JAIL_CELL",
+      "map": "MAP_SHIN_TOKYO_JAIL",
+      "x": 15,
+      "y": 4
+    },
+    {
+      "id": "HEAL_LOCATION_REBEL_HIDEOUT",
+      "map": "MAP_REBEL_HIDEOUT",
+      "x": 11,
+      "y": 4
+    },
+    {
+      "id": "HEAL_LOCATION_DOJO",
+      "map": "MAP_DOJO",
+      "x": 21,
+      "y": 17
     }
   ]
 }

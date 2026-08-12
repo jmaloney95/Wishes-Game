@@ -46,7 +46,9 @@
 #include "constants/event_objects.h"
 #include "constants/item_effects.h"
 #include "constants/items.h"
+#include "constants/region_map_sections.h"
 #include "constants/songs.h"
+#include "constants/species.h"
 
 static void SetUpItemUseCallback(u8);
 static void FieldCB_UseItemOnField(void);
@@ -66,6 +68,7 @@ static void ItemUseOnFieldCB_Itemfinder(u8);
 static void ItemUseOnFieldCB_Berry(u8);
 static void ItemUseOnFieldCB_WailmerPailBerry(u8);
 static void ItemUseOnFieldCB_WailmerPailSudowoodo(u8);
+static void ItemUseOnFieldCB_OniMask(u8);
 static bool8 TryToWaterSudowoodo(void);
 static void BootUpSoundTMHM(u8);
 static void Task_ShowTMHMContainedMessage(u8);
@@ -827,6 +830,21 @@ void ItemUseOutOfBattle_WailmerPail(u8 taskId)
     }
 }
 
+// Carved Mask (Wishes of Tomorrow): toggle the oni disguise. Returns to the
+// field and runs a script that flips FLAG_ONI_MASK_WORN and reports it.
+void ItemUseOutOfBattle_OniMask(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_OniMask;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+static void ItemUseOnFieldCB_OniMask(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_UseOniMask);
+    DestroyTask(taskId);
+}
+
 static void ItemUseOnFieldCB_WailmerPailBerry(u8 taskId)
 {
     LockPlayerFieldControls();
@@ -870,6 +888,19 @@ void ItemUseOutOfBattle_AbilityCapsule(u8 taskId)
 void ItemUseOutOfBattle_AbilityPatch(u8 taskId)
 {
     gItemUseCB = ItemUseCB_AbilityPatch;
+    SetUpItemUseCallback(taskId);
+}
+
+// Wishes of Tomorrow
+void ItemUseOutOfBattle_AbilityMachine(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_AbilityMachine;
+    SetUpItemUseCallback(taskId);
+}
+
+void ItemUseOutOfBattle_Paw(u8 taskId)
+{
+    gItemUseCB = ItemUseCB_Paw;
     SetUpItemUseCallback(taskId);
 }
 
@@ -1136,6 +1167,143 @@ void ItemUseOutOfBattle_EscapeRope(u8 taskId)
     }
 }
 
+// Pokémon Wishes of Tomorrow: the CATALPA BOW.
+// Before the Distortion World scene: opens the gravesite seam in the Act 2
+// National Park (script coords 47-48,18), usable only in its vicinity.
+// After the scene (FLAG_ACT2_MET_CLARKSON_DISTORTION): with Gengar-Clarkson in
+// the party, using it anywhere lets him offer the ferry to occupied Munen
+// Village -- the Act 2 point of no return.
+extern const u8 NationalParkAct2_EventScript_CatalpaBowCrossing[];
+extern const u8 EventScript_CatalpaBowGengarFerry[];
+extern const u8 EventScript_CatalpaBowNoGengar[];
+extern const u8 EventScript_CatalpaBowLeaveRift[];
+
+static bool32 PlayerIsNearGravesiteSeam(void)
+{
+    s16 x, y;
+
+    if (gSaveBlock1Ptr->location.mapGroup != MAP_GROUP(MAP_NATIONAL_PARK_ACT2)
+     || gSaveBlock1Ptr->location.mapNum != MAP_NUM(MAP_NATIONAL_PARK_ACT2))
+        return FALSE;
+
+    PlayerGetDestCoords(&x, &y);
+    // PlayerGetDestCoords includes the MAP_OFFSET (+7) border margin.
+    return x >= 44 + MAP_OFFSET && x <= 51 + MAP_OFFSET
+        && y >= 15 + MAP_OFFSET && y <= 21 + MAP_OFFSET;
+}
+
+static bool32 PlayerPartyHasGengar(void)
+{
+    u32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        u32 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG);
+        if (species == SPECIES_NONE)
+            break;
+        if (species == SPECIES_GENGAR)
+            return TRUE;
+    }
+    return FALSE;
+}
+
+static void ItemUseOnFieldCB_CatalpaBow(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(NationalParkAct2_EventScript_CatalpaBowCrossing);
+    DestroyTask(taskId);
+}
+
+static void ItemUseOnFieldCB_CatalpaBowFerry(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_CatalpaBowGengarFerry);
+    DestroyTask(taskId);
+}
+
+static void ItemUseOnFieldCB_CatalpaBowNoGengar(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_CatalpaBowNoGengar);
+    DestroyTask(taskId);
+}
+
+static void ItemUseOnFieldCB_CatalpaBowLeaveRift(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_CatalpaBowLeaveRift);
+    DestroyTask(taskId);
+}
+
+// Quest Log -- opens the quest journal script (data/scripts/quests.inc).
+extern const u8 EventScript_QuestLog[];
+
+static void ItemUseOnFieldCB_QuestLog(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(EventScript_QuestLog);
+    DestroyTask(taskId);
+}
+
+void ItemUseOutOfBattle_QuestLog(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_QuestLog;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+// Clarkson's kept research -- Read / Destroy menu, usable from the bag anywhere.
+extern const u8 MunenLabAct2_EventScript_DossierBagMenu[];
+
+static void ItemUseOnFieldCB_ShadowDossier(u8 taskId)
+{
+    LockPlayerFieldControls();
+    ScriptContext_SetupScript(MunenLabAct2_EventScript_DossierBagMenu);
+    DestroyTask(taskId);
+}
+
+void ItemUseOutOfBattle_ShadowDossier(u8 taskId)
+{
+    sItemUseOnFieldCB = ItemUseOnFieldCB_ShadowDossier;
+    SetUpItemUseOnFieldCallback(taskId);
+}
+
+void ItemUseOutOfBattle_CatalpaBow(u8 taskId)
+{
+    // While Gengar is gating the Munen lab exit (research choice pending),
+    // the bow refuses too -- otherwise its travel menu would bypass the gate.
+    if (FlagGet(FLAG_ACT2_LAB_DRACO_FLED) && !FlagGet(FLAG_ACT2_RESEARCH_RESOLVED))
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+    else if (FlagGet(FLAG_ACT2_MET_CLARKSON_DISTORTION))
+    {
+        if (PlayerPartyHasGengar())
+        {
+            // Inside the rift the ghost-roads only lead OUT: the bow offers a
+            // quick exit to the gravesite instead of the travel menu. This is
+            // the intended way to leave the Distortion World.
+            if (gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD)
+                sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowLeaveRift;
+            else
+                sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowFerry;
+        }
+        else
+        {
+            sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBowNoGengar;
+        }
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else if (PlayerIsNearGravesiteSeam())
+    {
+        sItemUseOnFieldCB = ItemUseOnFieldCB_CatalpaBow;
+        SetUpItemUseOnFieldCallback(taskId);
+    }
+    else
+    {
+        DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
+    }
+}
+
 void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
 {
     gItemUseCB = ItemUseCB_EvolutionStone;
@@ -1144,10 +1312,12 @@ void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
 
 static u32 GetBallThrowableState(void)
 {
-    if (IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
-     && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
-        return BALL_THROW_UNABLE_TWO_MONS;
-    else if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
+    // WoT Shadow system: vanilla refuses the throw whenever two foes are out
+    // because it cannot tell which one you meant. We now ask -- the player
+    // picks a target after the bag closes (WotHandleInputChooseBallTarget in
+    // battle_controller_player.c) -- so the block is gone. Snagging a Shadow
+    // out of a double battle depends on this.
+    if (IsPlayerPartyAndPokemonStorageFull() == TRUE)
         return BALL_THROW_UNABLE_NO_ROOM;
     else if (GetConfig(B_SEMI_INVULNERABLE_CATCH) >= GEN_4 &&  IsSemiInvulnerable(GetCatchingBattler(), CHECK_ALL))
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;

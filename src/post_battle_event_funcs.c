@@ -36,10 +36,9 @@ int GameClear(void)
 
     SetContinueGameWarpStatus();
 
-    if (gSaveBlock2Ptr->playerGender == MALE)
-        SetContinueGameWarpToHealLocation(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F);
-    else
-        SetContinueGameWarpToHealLocation(HEAL_LOCATION_LITTLEROOT_TOWN_MAYS_HOUSE_2F);
+    // WoT: after the credits, Continue resumes at the Rebel Hideout cots --
+    // not vanilla's Littleroot bedroom.
+    SetContinueGameWarpToHealLocation(HEAL_LOCATION_REBEL_HIDEOUT);
 
     ribbonGet = FALSE;
 

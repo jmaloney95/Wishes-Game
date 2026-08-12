@@ -48,3 +48,21 @@ Route130_EventScript_Santiago::
 	msgbox Route130_Text_SantiagoPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+@ ============================================================================
+@  WoT: the open sea between PROTOTYPE ISLAND (south) and RYUDEN ISLAND
+@  (north). Surf-edge crossings are coord triggers + script warps -- plain
+@  warp events never fire on water behaviours.
+@ ============================================================================
+Route130_EventScript_SurfToPrototype::
+	lockall
+	warp MAP_PROTOTYPE_ISLAND, 11, 1
+	waitstate
+	releaseall
+	end
+
+Route130_EventScript_SurfToRyuden::
+	lockall
+	warp MAP_DRAGON_KEEPER, 20, 33
+	waitstate
+	releaseall
+	end

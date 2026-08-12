@@ -84,6 +84,9 @@ struct Pokemon
     bool gigantamax_factor;
     bool gigantamax_factor_line;
 
+    bool is_shadow;
+    int is_shadow_line;
+
     struct String tera_type;
     int tera_type_line;
 
@@ -1486,6 +1489,14 @@ static bool parse_trainer(struct Parser *p, const struct Parsed *parsed, struct 
                 pokemon->tera_type_line = value.location.line;
                 pokemon->tera_type = token_string(&value);
             }
+            else if (is_literal_token(&key, "Shadow"))
+            {
+                if (pokemon->is_shadow_line)
+                    any_error = !set_show_parse_error(p, key.location, "duplicate 'Shadow'");
+                pokemon->is_shadow_line = value.location.line;
+                if (!token_bool(p, &value, &pokemon->is_shadow))
+                    any_error = !show_parse_error(p);
+            }
             else if (is_literal_token(&key, "Tags"))
             {
                 if (pokemon->tags_line)
@@ -1496,7 +1507,7 @@ static bool parse_trainer(struct Parser *p, const struct Parsed *parsed, struct 
             }
             else
             {
-                any_error = !set_show_parse_error(p, key.location, "expected one of 'EVs', 'IVs', 'Ability', 'Level', 'Ball', 'Happiness', 'Nature', 'Shiny', 'Dynamax Level', 'Gigantamax', or 'Tera Type'");
+                any_error = !set_show_parse_error(p, key.location, "expected one of 'EVs', 'IVs', 'Ability', 'Level', 'Ball', 'Happiness', 'Nature', 'Shiny', 'Dynamax Level', 'Gigantamax', 'Tera Type', or 'Shadow'");
             }
         }
 
@@ -2075,6 +2086,14 @@ static void fprint_trainers(const char *output_path, FILE *f, struct Parsed *par
                 fprintf(f, "#line %d\n", pokemon->shiny_line);
                 fprintf(f, "            .isShiny = ");
                 fprint_bool(f, pokemon->shiny);
+                fprintf(f, ",\n");
+            }
+
+            if (pokemon->is_shadow_line)
+            {
+                fprintf(f, "#line %d\n", pokemon->is_shadow_line);
+                fprintf(f, "            .isShadow = ");
+                fprint_bool(f, pokemon->is_shadow);
                 fprintf(f, ",\n");
             }
 

@@ -3,7 +3,6 @@
   "name": "SSAnne_Exterior_Frlg",
   "layout": "LAYOUT_SSANNE_EXTERIOR",
   "music": "MUS_RG_SS_ANNE",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_S_S_ANNE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,13 +11,11 @@
   "allow_escaping": false,
   "allow_running": true,
   "show_map_name": true,
-  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": 0,
+  "connections": null,
   "object_events": [
     {
       "local_id": "LOCALID_SS_ANNE",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SS_ANNE",
       "x": 30,
       "y": 16,
@@ -69,9 +66,7 @@
       "dest_warp_id": "2"
     }
   ],
-  "coord_events": [
-
-  ],
+  "coord_events": [],
   "bg_events": [
     {
       "type": "hidden_item",
@@ -83,5 +78,7 @@
       "quantity": 1,
       "underfoot": false
     }
-  ]
+  ],
+  "floor_number": 0,
+  "region": "REGION_KANTO"
 }

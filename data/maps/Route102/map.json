@@ -3,7 +3,6 @@
   "name": "Route102",
   "layout": "LAYOUT_ROUTE102",
   "music": "MUS_ROUTE101",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_ROUTE_102",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
@@ -92,7 +91,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_POTION",
       "x": 11,
       "y": 15,
       "elevation": 3,
@@ -163,5 +162,6 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Route102_EventScript_RouteSignOldale"
     }
-  ]
+  ],
+  "region": "REGION_HOENN"
 }

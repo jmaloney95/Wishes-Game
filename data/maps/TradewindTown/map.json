@@ -1,0 +1,447 @@
+{
+  "id": "MAP_TRADEWIND_TOWN",
+  "name": "TradewindTown",
+  "layout": "LAYOUT_TRADEWIND_TOWN",
+  "music": "MUS_DP_MT_CORONET",
+  "region_map_section": "MAPSEC_TRADEWIND_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": [
+    {
+      "map": "MAP_ASHLANDS_2",
+      "offset": 11,
+      "direction": "up"
+    }
+  ],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MART_EMPLOYEE",
+      "x": 43,
+      "y": 11,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_CurioMerchant",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "x": 24,
+      "y": 28,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_Pawnbroker",
+      "flag": "FLAG_HIDE_TRADEWIND_PAWNBROKER"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_KIMONO_GIRL",
+      "x": 38,
+      "y": 22,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_DontEatHere",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
+      "x": 45,
+      "y": 21,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_AfterlifeRealtor",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
+      "x": 41,
+      "y": 14,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_FaeTouchedHint",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "x": 29,
+      "y": 18,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_SpiritShopper1",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_KIMONO_GIRL",
+      "x": 31,
+      "y": 10,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_SpiritShopper2",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_KIMONO_GIRL",
+      "x": 26,
+      "y": 12,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_MaskedMerchant",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SAILOR",
+      "x": 68,
+      "y": 27,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_Boatman",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_POKEFAN_M",
+      "x": 33,
+      "y": 31,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP_AND_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_MegaHint",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
+      "x": 13,
+      "y": 33,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "Tradewind_EventScript_TrainerSable",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_PSYCHIC_M",
+      "x": 43,
+      "y": 41,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_ROTATE_COUNTERCLOCKWISE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "Tradewind_EventScript_TrainerRoshan",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LASS",
+      "x": 50,
+      "y": 40,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 1,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "5",
+      "script": "Tradewind_EventScript_TrainerPiper",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DRIFLOON)",
+      "x": 63,
+      "y": 15,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostDrifloon",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(LAMPENT)",
+      "x": 68,
+      "y": 22,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostLampent",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(GASTLY)",
+      "x": 73,
+      "y": 28,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostGastly",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DUSKULL)",
+      "x": 60,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostDuskull",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(LITWICK)",
+      "x": 30,
+      "y": 14,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostLitwick",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(SHUPPET)",
+      "x": 15,
+      "y": 21,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND_SLOWER",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostShuppet",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MISDREAVUS)",
+      "x": 26,
+      "y": 26,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 2,
+      "movement_range_y": 2,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Tradewind_EventScript_GhostMisdreavus",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 39,
+      "y": 33,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_TM30",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_TRADEWIND_TM30"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 39,
+      "y": 5,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_TM24",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_TRADEWIND_TM24"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 13,
+      "y": 3,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_TM29",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_TRADEWIND_TM29"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 14,
+      "y": 32,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_MAX_POTION",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_TRADEWIND_MAX_POTION"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 35,
+      "y": 37,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_GYM",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 24,
+      "y": 42,
+      "elevation": 0,
+      "dest_map": "MAP_LILYCOVE_CITY_DEPARTMENT_STORE_1F",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 37,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_APARTMENT",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 40,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_APARTMENT_2",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 27,
+      "y": 33,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_HOUSE",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Tradewind_EventScript_DevWall"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 18,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Tradewind_EventScript_DevWall"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 19,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Tradewind_EventScript_DevWall"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 20,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Tradewind_EventScript_DevWall"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 21,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Tradewind_EventScript_DevWall"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 22,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "Tradewind_EventScript_DevWall"
+    }
+  ],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 23,
+      "y": 17,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Tradewind_EventScript_LockedDoor"
+    },
+    {
+      "type": "sign",
+      "x": 34,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Tradewind_EventScript_LockedDoor"
+    }
+  ]
+}

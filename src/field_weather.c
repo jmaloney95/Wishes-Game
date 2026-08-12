@@ -40,6 +40,8 @@ struct WeatherCallbacks
 
 // This file's functions.
 static bool8 LightenSpritePaletteInFog(u8);
+// WoT cutscene mute for weather ambience (see WotSuppressWeatherSE below).
+static bool8 sWotWeatherSESuppressed;
 static void UpdateWeatherColorMap(void);
 static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex);
 static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u32 blendColor);
@@ -195,6 +197,7 @@ const u16 ALIGNED(4) gFogPalette[] = INCGFX_U16("graphics/weather/fog.pal", ".gb
 
 void StartWeather(void)
 {
+    sWotWeatherSESuppressed = FALSE; // cutscene mute never outlives a map load
     if (!FuncIsActiveTask(Task_WeatherMain))
     {
         u8 index = AllocSpritePalette(PALTAG_WEATHER);
@@ -1096,6 +1099,23 @@ u8 GetCurrentWeather(void)
     return gWeatherPtr->currWeather;
 }
 
+// WoT: while set, the weather's ambient SE (rain loop, thunder claps) stays
+// silent so cutscene audio owns the sound channels -- the downpour loop runs
+// on the dedicated ambient player and starves DirectSound channels from
+// scene SEs and the boss card otherwise. Cleared by StartWeather on every
+// map load / battle return, so the storm audio always comes back by itself.
+void WotSuppressWeatherSE(void)
+{
+    sWotWeatherSESuppressed = TRUE;
+    if (IsSpecialSEPlaying())
+        PlayRainStoppingSoundEffect();
+}
+
+bool32 WotWeatherSEIsSuppressed(void)
+{
+    return sWotWeatherSESuppressed;
+}
+
 void SetRainStrengthFromSoundEffect(u16 soundEffect)
 {
     if (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_OUT)
@@ -1115,7 +1135,8 @@ void SetRainStrengthFromSoundEffect(u16 soundEffect)
             return;
         }
 
-        PlaySE(soundEffect);
+        if (!sWotWeatherSESuppressed)
+            PlaySE(soundEffect);
     }
 }
 

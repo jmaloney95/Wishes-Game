@@ -614,6 +614,32 @@ bool8 IsBattleSEPlaying(enum BattlerId battler)
     return TRUE;
 }
 
+#include "data/wot_shadow_pics.h"
+
+// Returns TRUE if custom shadow art was applied (gfx + palette overwritten).
+static bool32 WotTryLoadShadowMonGfx(u32 species, enum BattlerId battler, u32 paletteOffset)
+{
+    u32 i, f;
+    enum BattlerPosition position = GetBattlerPosition(battler);
+
+    if (IsOnPlayerSide(battler))
+        return FALSE;
+    for (i = 0; i < ARRAY_COUNT(sWotShadowPics); i++)
+    {
+        if (sWotShadowPics[i].species == species)
+        {
+            for (f = 0; f < MAX_MON_PIC_FRAMES; f++)
+                CpuCopy32(sWotShadowPics[i].pic,
+                          gMonSpritesGfxPtr->spritesGfx[position] + f * MON_PIC_SIZE,
+                          MON_PIC_SIZE);
+            LoadPalette(sWotShadowPics[i].pal, paletteOffset, PLTT_SIZE_4BPP);
+            LoadPalette(sWotShadowPics[i].pal, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
 {
     u32 personalityValue, isShiny, species, paletteOffset;
@@ -675,6 +701,19 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
         else
             BlendPalette(paletteOffset, 16, 4, RGB(31, 0, 12));
         CpuCopy32(gPlttBufferFaded + paletteOffset, gPlttBufferUnfaded + paletteOffset, PLTT_SIZEOF(16));
+    }
+
+    // WoT Shadow system: Shadow mons carry a violet cast -- an engine-side
+    // tint (same mechanism as the dynamax blend), no per-species art needed.
+    // The aura overlay + red eyes are an art pass on top of this.
+    if (GetMonData(mon, MON_DATA_IS_SHADOW))
+    {
+        // Custom shadow art replaces the tint where it exists (enemy side).
+        if (!WotTryLoadShadowMonGfx(species, battler, paletteOffset))
+        {
+            BlendPalette(paletteOffset, 16, 8, RGB(18, 4, 26));
+            CpuCopy32(gPlttBufferFaded + paletteOffset, gPlttBufferUnfaded + paletteOffset, PLTT_SIZEOF(16));
+        }
     }
 
     // Terastallization's tint

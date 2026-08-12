@@ -1,0 +1,165 @@
+{
+  "id": "MAP_WALNUT_WOODS",
+  "name": "WALNUT_WOODS",
+  "layout": "LAYOUT_WALNUT_WOODS",
+  "music": "MUS_EVER_GRANDE",
+  "region_map_section": "MAPSEC_WALNUT_WOODS",
+  "requires_flash": false,
+  "weather": "WEATHER_SNOW",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_PROF_BIRCH",
+      "x": 30,
+      "y": 25,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Clarkson",
+      "flag": "FLAG_HIDE_WALNUT_CLARKSON"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PORYGON)",
+      "x": 24,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Porygon",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(BLISSEY)",
+      "x": 25,
+      "y": 2,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WALNUT_WOODS_EventScript_Blissey",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
+      "x": 45,
+      "y": 24,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_HM06",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_WALNUT_WOODS_HM06"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 4,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_MELTING_MILE",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 4,
+      "y": 13,
+      "elevation": 0,
+      "dest_map": "MAP_MELTING_MILE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 44,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_FROSTWOOD_TOWN",
+      "dest_warp_id": "6"
+    },
+    {
+      "x": 45,
+      "y": 5,
+      "elevation": 0,
+      "dest_map": "MAP_FROSTWOOD_TOWN",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 58,
+      "y": 18,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "5"
+    },
+    {
+      "x": 58,
+      "y": 19,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "5"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 6,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "WALNUT_WOODS_EventScript_SignWest"
+    },
+    {
+      "type": "sign",
+      "x": 42,
+      "y": 7,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "WALNUT_WOODS_EventScript_SignEast"
+    },
+    {
+      "type": "sign",
+      "x": 27,
+      "y": 21,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "WALNUT_WOODS_EventScript_TMBlizzard"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 13,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "WALNUT_WOODS_EventScript_TMProtect"
+    },
+    {
+      "type": "sign",
+      "x": 20,
+      "y": 24,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "WALNUT_WOODS_EventScript_CutBush1"
+    },
+    {
+      "type": "sign",
+      "x": 44,
+      "y": 26,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "WALNUT_WOODS_EventScript_CutBush2"
+    }
+  ]
+}

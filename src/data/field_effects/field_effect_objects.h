@@ -1,5 +1,6 @@
 const struct SpritePalette gSpritePalette_GeneralFieldEffect0 = {gFieldEffectObjectPalette0, FLDEFF_PAL_TAG_GENERAL_0};
 const struct SpritePalette gSpritePalette_GeneralFieldEffect1 = {gFieldEffectObjectPalette1, FLDEFF_PAL_TAG_GENERAL_1};
+const struct SpritePalette gSpritePalette_DistortionGrass = {gFieldEffectObjectPalette_DistortionGrass, FLDEFF_PAL_TAG_DISTORTION_GRASS};
 
 static const union AnimCmd sAnim_Shadow[] =
 {
@@ -1106,8 +1107,11 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_SandDisguisePlaceholder =
     .callback = UpdateDisguiseFieldEffect,
 };
 
+// WoT: the Fly "bird" is the rebellion's PRIVATE JET -- same swoop tasks,
+// the 64x64 jet sheet instead of the bird (see CreateFlyBirdSprite, which
+// loads the jet's own palette rather than the player's).
 static const struct SpriteFrameImage sPicTable_Bird[] = {
-    obj_frame_tiles(gFieldEffectObjectPic_Bird),
+    obj_frame_tiles(gObjectEventPic_WotJet),
 };
 
 static const union AnimCmd sAnim_Bird[] =
@@ -1123,8 +1127,8 @@ static const union AnimCmd *const sAnimTable_Bird[] =
 
 const struct SpriteTemplate gFieldEffectObjectTemplate_Bird = {
     .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_MAY,
-    .oam = &gObjectEventBaseOam_32x32,
+    .paletteTag = OBJ_EVENT_PAL_TAG_WOT_JET,
+    .oam = &gObjectEventBaseOam_64x64,
     .anims = sAnimTable_Bird,
     .images = sPicTable_Bird,
 };

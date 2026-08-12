@@ -11,9 +11,12 @@ void ItemUseOutOfBattle_PokemonBoxLink(u8 taskId);
 void ItemUseOutOfBattle_PowderJar(u8 taskId);
 void ItemUseOutOfBattle_SSTicket(u8 taskId);
 void ItemUseOutOfBattle_WailmerPail(u8 taskId);
+void ItemUseOutOfBattle_OniMask(u8 taskId);
 void ItemUseOutOfBattle_Medicine(u8 taskId);
 void ItemUseOutOfBattle_AbilityCapsule(u8 taskId);
 void ItemUseOutOfBattle_AbilityPatch(u8 taskId);
+void ItemUseOutOfBattle_AbilityMachine(u8 taskId); // Wishes of Tomorrow
+void ItemUseOutOfBattle_Paw(u8 taskId);            // Wishes of Tomorrow
 void ItemUseOutOfBattle_Mint(u8 taskId);
 void ItemUseOutOfBattle_ResetEVs(u8 taskId);
 void ItemUseOutOfBattle_ReduceEV(u8 taskId);
@@ -26,6 +29,9 @@ void ItemUseOutOfBattle_TMHM(u8 taskId);
 void ItemUseOutOfBattle_Repel(u8 taskId);
 void ItemUseOutOfBattle_Lure(u8 taskId);
 void ItemUseOutOfBattle_EscapeRope(u8 taskId);
+void ItemUseOutOfBattle_CatalpaBow(u8 taskId);
+void ItemUseOutOfBattle_ShadowDossier(u8 taskId);
+void ItemUseOutOfBattle_QuestLog(u8 taskId);
 void ItemUseOutOfBattle_BlackWhiteFlute(u8 taskId);
 void ItemUseOutOfBattle_EvolutionStone(u8 taskId);
 void ItemUseOutOfBattle_Berry(u8 taskId);

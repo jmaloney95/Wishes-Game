@@ -681,3 +681,83 @@ void Script_SetKO(struct ScriptContext *ctx)
         SetMonData(&gPlayerParty[slot], MON_DATA_HP, &hp);
     }
 }
+
+// Forces the scripted wild encounter (gEnemyParty[0], created by setwildbattle)
+// to be shiny. Used for the Red Gyarados in SeafloorCavern_Entrance.
+void SetSeafloorGyaradosShiny(void)
+{
+    bool32 isShiny = TRUE;
+    SetMonData(&gEnemyParty[0], MON_DATA_IS_SHINY, &isShiny);
+}
+
+// Helper: locate a non-egg shiny Gyarados (the Red Gyarados) in the player's
+// party or PC boxes. Returns TRUE and reports its location via the out params.
+// foundInParty/slot describe a party hit; otherwise box/boxSlot describe a box hit.
+static bool32 FindRedGyarados(bool32 *foundInParty, u32 *partySlot, u32 *boxId, u32 *boxSlot)
+{
+    u32 i, box, slot;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_GYARADOS
+         && !GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG)
+         && GetMonData(&gPlayerParty[i], MON_DATA_IS_SHINY))
+        {
+            *foundInParty = TRUE;
+            *partySlot = i;
+            return TRUE;
+        }
+    }
+
+    for (box = 0; box < TOTAL_BOXES_COUNT; box++)
+    {
+        for (slot = 0; slot < IN_BOX_COUNT; slot++)
+        {
+            if (GetBoxMonDataAt(box, slot, MON_DATA_SPECIES) == SPECIES_GYARADOS
+             && !GetBoxMonDataAt(box, slot, MON_DATA_IS_EGG)
+             && GetBoxMonDataAt(box, slot, MON_DATA_IS_SHINY))
+            {
+                *foundInParty = FALSE;
+                *boxId = box;
+                *boxSlot = slot;
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
+}
+
+// Returns TRUE if the player currently has the Red Gyarados (party or PC).
+// Called via `specialvar`, which stores this return value into the dest var.
+u16 CheckPlayerHasRedGyarados(void)
+{
+    bool32 inParty = FALSE;
+    u32 partySlot = 0, boxId = 0, boxSlot = 0;
+    return FindRedGyarados(&inParty, &partySlot, &boxId, &boxSlot);
+}
+
+// Removes one Red Gyarados from the player (for the Munen Village trade).
+// Returns TRUE on success, FALSE if none found or it is the player's last
+// usable party Pokemon (to avoid leaving an empty party).
+u16 TakeRedGyaradosFromPlayer(void)
+{
+    bool32 inParty = FALSE;
+    u32 partySlot = 0, boxId = 0, boxSlot = 0;
+
+    if (!FindRedGyarados(&inParty, &partySlot, &boxId, &boxSlot))
+        return FALSE;
+
+    if (inParty)
+    {
+        if (CalculatePlayerPartyCount() <= 1)
+            return FALSE; // refuse to leave the player with no Pokemon
+        ZeroMonData(&gPlayerParty[partySlot]);
+        CompactPartySlots();
+        CalculatePlayerPartyCount();
+    }
+    else
+    {
+        ZeroBoxMonData(GetBoxedMonPtr(boxId, boxSlot));
+    }
+    return TRUE;
+}

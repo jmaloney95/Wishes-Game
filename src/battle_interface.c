@@ -170,6 +170,26 @@ enum
     HEALTHBOX_GFX_123,
     HEALTHBOX_GFX_FRAME_END,
     HEALTHBOX_GFX_FRAME_END_BAR,
+    // WoT Shadow system: heart-gauge tiles (psf-fork port). Each strip is 9
+    // contiguous tiles (0..8 filled pixels); the draw code indexes base+fill.
+    HEALTHBOX_GFX_SHADOWBAR_LINES_0, // "with lines" strip [0..8 px]
+    HEALTHBOX_GFX_SHADOWBAR_LINES_1,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_2,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_3,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_4,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_5,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_6,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_7,
+    HEALTHBOX_GFX_SHADOWBAR_LINES_8,
+    HEALTHBOX_GFX_SHADOWBAR_0,       // plain strip [0..8 px]
+    HEALTHBOX_GFX_SHADOWBAR_1,
+    HEALTHBOX_GFX_SHADOWBAR_2,
+    HEALTHBOX_GFX_SHADOWBAR_3,
+    HEALTHBOX_GFX_SHADOWBAR_4,
+    HEALTHBOX_GFX_SHADOWBAR_5,
+    HEALTHBOX_GFX_SHADOWBAR_6,
+    HEALTHBOX_GFX_SHADOWBAR_7,
+    HEALTHBOX_GFX_SHADOWBAR_8,
 };
 
 static const u8 *GetHealthboxElementGfxPtr(u8);
@@ -574,6 +594,16 @@ static const union TextColor sHealthBoxTextColor =
     .accent = 0
 };
 
+// Wishes of Tomorrow (BW battle bars): HP numbers use palette index 9 (white on the
+// player box) so the nickname can stay yellow via index 1.
+static const union TextColor sHpNumbersTextColor =
+{
+    .background = 0,
+    .foreground = 9,
+    .shadow = 3,
+    .accent = 0
+};
+
 // Because the healthbox is too large to fit into one sprite, it is divided into two sprites.
 // healthboxLeft  or healthboxMain  is the left part that is used as the 'main' sprite.
 // healthboxRight or healthboxOther is the right part of the healthbox.
@@ -924,9 +954,9 @@ static void PrintHpOnHealthbox(u32 spriteId, s16 currHp, s16 maxHp, u32 bgColor,
 
     width = GetStringWidth(HP_FONT, text, -1) + GetFontAttribute(HP_FONT, FONTATTR_LETTER_SPACING);
     if (width < 32)
-        AddSpriteTextPrinterParameterized6(spriteId2, HP_FONT, 32 - width, yOffset + 5, 0, 0, sHealthBoxTextColor, 0, text);
+        AddSpriteTextPrinterParameterized6(spriteId2, HP_FONT, 32 - width, yOffset + 5, 0, 0, sHpNumbersTextColor, 0, text);
     else
-        AddSpriteTextPrinterParameterized6(spriteId, HP_FONT, 64 - (width - 32), yOffset + 5, 0, 0, sHealthBoxTextColor, 0, text);
+        AddSpriteTextPrinterParameterized6(spriteId, HP_FONT, 64 - (width - 32), yOffset + 5, 0, 0, sHpNumbersTextColor, 0, text);
 
     gSprites[spriteId].data[1] = savedValue1;
     gSprites[spriteId2].data[1] = savedValue2;
@@ -1985,15 +2015,30 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
             s32 currExpBarValue, maxExpBarValue;
             u8 level;
 
+            u8 whichBar;
+
             LoadBattleBarGfx(3);
-            species = GetMonData(mon, MON_DATA_SPECIES);
-            level = GetMonData(mon, MON_DATA_LEVEL);
-            exp = GetMonData(mon, MON_DATA_EXP);
-            currLevelExp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
-            currExpBarValue = exp - currLevelExp;
-            maxExpBarValue = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1] - currLevelExp;
+            // WoT Shadow system: the player's Shadow mons show the HEART
+            // GAUGE in the exp slot instead -- full while the heart is
+            // sealed, empty once it has "opened" (ready for the shrine).
+            if (IsOnPlayerSide(battler) && GetMonData(mon, MON_DATA_IS_SHADOW))
+            {
+                currExpBarValue = GetMonData(mon, MON_DATA_SHADOW_OPENED) ? 0 : 8;
+                maxExpBarValue = 8;
+                whichBar = HEART_GAUGE;
+            }
+            else
+            {
+                species = GetMonData(mon, MON_DATA_SPECIES);
+                level = GetMonData(mon, MON_DATA_LEVEL);
+                exp = GetMonData(mon, MON_DATA_EXP);
+                currLevelExp = gExperienceTables[gSpeciesInfo[species].growthRate][level];
+                currExpBarValue = exp - currLevelExp;
+                maxExpBarValue = gExperienceTables[gSpeciesInfo[species].growthRate][level + 1] - currLevelExp;
+                whichBar = EXP_BAR;
+            }
             SetBattleBarStruct(battler, healthboxSpriteId, maxExpBarValue, currExpBarValue, isDoubles);
-            MoveBattleBar(battler, healthboxSpriteId, EXP_BAR, 0);
+            MoveBattleBar(battler, healthboxSpriteId, whichBar, 0);
         }
         if (elementId == HEALTHBOX_NICK || elementId == HEALTHBOX_ALL)
             UpdateNickInHealthbox(healthboxSpriteId, mon);
@@ -2062,7 +2107,8 @@ s32 MoveBattleBar(enum BattlerId battler, u8 healthboxSpriteId, u8 whichBar, u8 
                     B_EXPBAR_PIXELS / 8, expFraction);
     }
 
-    if (whichBar == EXP_BAR || (whichBar == HEALTH_BAR && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars))
+    if (whichBar == EXP_BAR || whichBar == HEART_GAUGE
+     || (whichBar == HEALTH_BAR && !gBattleSpritesDataPtr->battlerData[battler].hpNumbersNoBars))
         MoveBattleBarGraphically(battler, whichBar);
 
     if (currentBarValue == -1)
@@ -2154,6 +2200,32 @@ static void MoveBattleBarGraphically(enum BattlerId battler, u8 whichBar)
                           (void *)(OBJ_VRAM0 + (gSprites[gBattleSpritesDataPtr->battleBars[battler].healthboxSpriteId].oam.tileNum + 0x24 + i) * TILE_SIZE_4BPP), 32);
             else
                 CpuCopy32(GetHealthboxElementGfxPtr(HEALTHBOX_GFX_12) + array[i] * 32,
+                          (void *)(OBJ_VRAM0 + 0xB80 + (i + gSprites[gBattleSpritesDataPtr->battleBars[battler].healthboxSpriteId].oam.tileNum) * TILE_SIZE_4BPP), 32);
+        }
+        break;
+    // WoT Shadow system: the heart gauge -- same geometry as the exp bar,
+    // drawn from the purple strips (alternating "lines"/plain tiles, matching
+    // the psf-fork look). Full = sealed heart, empty = opened.
+    case HEART_GAUGE:
+        CalcBarFilledPixels(gBattleSpritesDataPtr->battleBars[battler].maxValue,
+                    gBattleSpritesDataPtr->battleBars[battler].oldValue,
+                    gBattleSpritesDataPtr->battleBars[battler].receivedValue,
+                    &gBattleSpritesDataPtr->battleBars[battler].currValue,
+                    array, B_EXPBAR_PIXELS / 8);
+        if (GetMonData(GetBattlerMon(battler), MON_DATA_SHADOW_OPENED))
+        {
+            for (i = 0; i < 8; i++)
+                array[i] = 0;
+        }
+        for (i = 0; i < 8; i++)
+        {
+            u8 barBase = (i % 2 == 0) ? HEALTHBOX_GFX_SHADOWBAR_LINES_0 : HEALTHBOX_GFX_SHADOWBAR_0;
+
+            if (i < 4)
+                CpuCopy32(GetHealthboxElementGfxPtr(barBase) + array[i] * 32,
+                          (void *)(OBJ_VRAM0 + (gSprites[gBattleSpritesDataPtr->battleBars[battler].healthboxSpriteId].oam.tileNum + 0x24 + i) * TILE_SIZE_4BPP), 32);
+            else
+                CpuCopy32(GetHealthboxElementGfxPtr(barBase) + array[i] * 32,
                           (void *)(OBJ_VRAM0 + 0xB80 + (i + gSprites[gBattleSpritesDataPtr->battleBars[battler].healthboxSpriteId].oam.tileNum) * TILE_SIZE_4BPP), 32);
         }
         break;
@@ -2823,6 +2895,12 @@ bool32 CanThrowLastUsedBall(void)
     if (B_LAST_USED_BALL == FALSE)
         return FALSE;
     if (!CanThrowBall())
+        return FALSE;
+    // WoT: the quick-throw button has no target prompt, so keep it to a
+    // single unambiguous foe. With two out, throw from the bag instead
+    // (that path runs the manual target selector).
+    if (IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
+     && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
         return FALSE;
     if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_FRONTIER))
         return FALSE;

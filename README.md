@@ -1,53 +1,78 @@
-# About `pokeemerald-expansion`
+# Wishes of Tomorrow
 
-![Gif that shows debugging functionality that is unique to pokeemerald-expansion such as rerolling Trainer ID, Cheat Start, PC from Debug Menu, Debug PC Fill, Pokémon Sprite Visualizer, Debug Warp to Map, and Battle Debug Menu](https://github.com/user-attachments/assets/cf9dfbee-4c6b-4bca-8e0a-07f116ef891c) ![Gif that shows overworld functionality that is unique to pokeemerald-expansion such as indoor running, BW2 style map popups, overworld followers, DNA Splicers, Gen 1 style fishing, OW Item descriptions, Quick Run from Battle, Use Last Ball, Wild Double Battles, and Catch from EXP](https://github.com/user-attachments/assets/383af243-0904-4d41-bced-721492fbc48e) ![Gif that shows off a number of modern Pokémon battle mechanics happening in the pokeemerald-expansion engine: 2 vs 1 battles, modern Pokémon, items, moves, abilities, fully customizable opponents and partners, Trainer Slides, and generational gimmicks](https://github.com/user-attachments/assets/50c576bc-415e-4d66-a38f-ad712f3316be)
+A full-length Pokémon ROM hack for the Game Boy Advance, with an original region, cast and three-act story, plus a post-game chapter. It's built from source on RHH's [pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion) 1.15.3.
 
-<!-- If you want to re-record or change these gifs, here are some notes that I used: https://files.catbox.moe/05001g.md -->
+**[Play it](https://flatfootlabs.com)** · [Releases](https://github.com/jmaloney95/Wishes-Game/releases) · [Report a bug](https://github.com/jmaloney95/Wishes-Game/issues/new/choose)
 
-**`pokeemerald-expansion`** is a GBA ROM hack base that equips developers with a comprehensive toolkit for creating Pokémon ROM hacks. **`pokeemerald-expansion`** is built on top of [pret's `pokeemerald`](https://github.com/pret/pokeemerald) decompilation project. **It is not a playable Pokémon game on its own.**
+The game is distributed as a patch. Apply it to your own legally obtained copy of *Pokémon Emerald*. This repository doesn't contain a ROM.
 
-# [Features](FEATURES.md)
+## Features
 
-**`pokeemerald-expansion`** offers hundreds of features from various [core series Pokémon games](https://bulbapedia.bulbagarden.net/wiki/Core_series), along with popular quality-of-life enhancements designed to streamline development and improve the player experience. A full list of those features can be found in [`FEATURES.md`](FEATURES.md).
+- **Shadow Pokémon.** Corrupted Pokémon hit harder and can slip into Hyper Mode mid-battle. Snag them from enemy trainers with the Snag Machine and Snag Balls, then purify them. The Shadow Log tracks every one in the game.
+- **Quest journal.** Main and side quests in the start menu, with on-screen notifications as they advance.
+- **Character portraits** during story dialogue.
+- **Boss battles** with animated intro cards, custom teams and scripted set pieces.
+- **Quality of life.** An HM menu that frees a party slot, custom heal locations and checkpoints, a curio shop for Mega Stones, and Ability Machines.
+- **Custom soundtrack** ported from later Pokémon games into the GBA's sound engine.
+- **Post-game chapter** with islands to surf and fish between, a legendary encounter, and an overworld that reflects the ending.
+- **Modern battle engine** from pokeemerald-expansion: current-generation Pokémon, moves, abilities, items and battle gimmicks.
 
-# [Credits](CREDITS.md)
+## Building
 
- [![](https://img.shields.io/github/all-contributors/rh-hideout/pokeemerald-expansion/upcoming)](CREDITS.md)
+On Linux or WSL2:
 
-If you use **`pokeemerald-expansion`**, please credit **RHH (Rom Hacking Hideout)**. Optionally, include the version number for clarity.
-
+```bash
+sudo apt install build-essential git gcc-arm-none-eabi binutils-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+git clone https://github.com/jmaloney95/Wishes-Game.git
+cd Wishes-Game
+make -j$(nproc)
 ```
-Based off RHH's pokeemerald-expansion 1.15.2 https://github.com/rh-hideout/pokeemerald-expansion/
-```
 
-Please consider [crediting all contributors](CREDITS.md) involved in the project!
+This builds `pokeemerald.gba`. Clone with git rather than downloading a ZIP, because the build stops if it can't find git history.
 
-# Choosing `pokeemerald` or **`pokeemerald-expansion`**
+The engine is documented in the [pokeemerald-expansion repository](https://github.com/rh-hideout/pokeemerald-expansion).
 
-- **`pokeemerald-expansion`** supports multiplayer functionality with other games built on **`pokeemerald-expansion`**. It is not compatible with official Pokémon games.
-- If compatibility with official games is important, use [`pokeemerald`](https://github.com/pret/pokeemerald). Otherwise, we recommend using **`pokeemerald-expansion`**.
-- **`pokeemerald-expansion`** incorporates regular updates from `pokeemerald`, including bug fixes and documentation improvements.
+## Credits
 
-# [Getting Started](INSTALL.md)
+**Wishes of Tomorrow** is a game by **Joe Maloney**: story, direction, game design, map design and event scripting.
 
-❗❗ **Important**: Do not use GitHub's "Download Zip" option as it will not include commit history. This is necessary if you want to update or merge other feature branches.
+**Sprite Design**
+Rafael Sanna · aveontrainer · baylorhernandez · biadoxaf · DarkusShadow · jaov46
 
-If you're new to git and GitHub, [Team Aqua's Asset Repo](https://github.com/Pawkkie/Team-Aquas-Asset-Repo/) has a [guide to forking and cloning the repository](https://github.com/Pawkkie/Team-Aquas-Asset-Repo/wiki/The-Basics-of-GitHub). Then you can follow one of the following guides:
+**Character Art**
+ToxShadows642
 
-## 📥 [Installing **`pokeemerald-expansion`**](INSTALL.md)
-## 🏗️ [Building **`pokeemerald-expansion`**](INSTALL.md#Building-pokeemerald-expansion)
-## 🚚 [Migrating from **`pokeemerald`**](INSTALL.md#Migrating-from-pokeemerald)
-## 🚀 [Updating **`pokeemerald-expansion`**](INSTALL.md#Updating-pokeemerald-expansion)
+**Shadow Sprites**
+pogokitten · WeeGeeDude · Quanyails
 
-# [Documentation](https://rh-hideout.github.io/pokeemerald-expansion/)
+**Tileset Art**
+pinkscales · Phyromatical · MagiScarf · PeekyChew · Elinthind · lo8jd · Dark Slayer
 
-For detailed documentation, visit the [pokeemerald-expansion documentation page](https://rh-hideout.github.io/pokeemerald-expansion/).
+**Shin-Tokyo Art**
+Emeiry · *Odisea* by ekat99, used under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-# [Contributions](CONTRIBUTING.md)
-If you are looking to [report a bug](CONTRIBUTING.md#Bug-Report), [open a pull request](CONTRIBUTING.md#Pull-Requests), or [request a feature](CONTRIBUTING.md#Feature-Request), our [`CONTRIBUTING.md`](CONTRIBUTING.md) has guides for each.
+**Battle Backdrops**
+carchagui (open sea, cave, and the FR-patch Lab/Town/Indoors) · LibertyTwins (space) · aveontrainer (Ashlands savanna, molten summit)
 
-# [Community](https://discord.gg/6CzjAG6GZk)
+**Music**
+Arranged from the Pokémon soundtracks.
 
-[![](https://dcbadge.limes.pink/api/server/6CzjAG6GZk)](https://discord.gg/6CzjAG6GZk)
+**Playtesting**
+Luke Devereux · Mike Mancuso · Kyle Clarkson
 
-Our community uses the [ROM Hacking Hideout (RHH) Discord server](https://discord.gg/6CzjAG6GZk) to communicate and organize. Most of our discussions take place there, and we welcome anybody to join us!
+**Special Thanks**
+The spriting community, and every artist who shares their work.
+
+*Rest in Paradise, Connor.*
+
+A **Flatfoot Labs** project.
+
+### Built with
+
+- [RHH's pokeemerald-expansion](https://github.com/rh-hideout/pokeemerald-expansion) and its [contributors](CREDITS.md)
+- [pret's pokeemerald](https://github.com/pret/pokeemerald) decompilation
+- Porymap, Porytiles, Poryscript, LibreSprite and VGMTrans
+
+Third-party asset attributions carried over from the base are in [EXTRACTED_ASSETS_CREDITS.md](EXTRACTED_ASSETS_CREDITS.md).
+
+*Pokémon* is a trademark of Nintendo, Creatures Inc. and GAME FREAK. This is a non-commercial fan project, not affiliated with or endorsed by them.

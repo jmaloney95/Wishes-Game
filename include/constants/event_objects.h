@@ -4,6 +4,11 @@
 #include "constants/global.h"
 #include "constants/map_event_ids.h"
 
+// Pokemon Wishes of Tomorrow: player avatar.
+// History: NINJA_BOY (id 5) read as a toddler. The flinkerflitzer Gen 3 Sprite
+// Pack kit turned out to be a layered sprite-maker that needs an external
+// compositor tool — so we're on BRENDAN_NORMAL until a finished custom sheet
+// is dropped into graphics/object_events/pics/people/.
 #define PLAYER_AVATAR_GFX_MALE_NORMAL     (IS_FRLG ? OBJ_EVENT_GFX_RED_NORMAL     : OBJ_EVENT_GFX_BRENDAN_NORMAL)
 #define PLAYER_AVATAR_GFX_MALE_MACH_BIKE  (IS_FRLG ? OBJ_EVENT_GFX_RED_BIKE       : OBJ_EVENT_GFX_BRENDAN_MACH_BIKE)
 #define PLAYER_AVATAR_GFX_MALE_ACRO_BIKE  (IS_FRLG ? OBJ_EVENT_GFX_RED_BIKE       : OBJ_EVENT_GFX_BRENDAN_ACRO_BIKE)
@@ -412,6 +417,27 @@
 #define OBJ_EVENT_GFX_PUSHABLE_BOULDER_FRLG      385
 #define OBJ_EVENT_GFX_CUTTABLE_TREE_FRLG         386
 #define OBJ_EVENT_GFX_BREAKABLE_ROCK_FRLG        387
+// --- HnS-extracted NPC overworld sprites (Johto flavor) ---
+#define OBJ_EVENT_GFX_KIMONO_GIRL                388
+#define OBJ_EVENT_GFX_EUSINE                     389
+#define OBJ_EVENT_GFX_SAGE                       390
+#define OBJ_EVENT_GFX_ONI                        391
+#define OBJ_EVENT_GFX_GORDIE                                   392
+#define OBJ_EVENT_GFX_SOPHOCLES                                393
+#define OBJ_EVENT_GFX_SWIMMER_ALLISON                          394
+#define OBJ_EVENT_GFX_SWIMMER_BLUE                             395
+#define OBJ_EVENT_GFX_SWIMMER_PINK                             396
+#define OBJ_EVENT_GFX_SWIMMER_SKY                              397
+#define OBJ_EVENT_GFX_GOLD_ONI                                 398
+// Team Mutrid overworld ranks (pair with the matching battle Pic: in trainers.party):
+//   MUTRID_GOON_RED      = rank-and-file walk cycle -> battle pics "Mutrid Goon" (blackwhite) or "Mutrid Grunt F" (cat mask)
+//   MUTRID_OFFICER_WHITE = officer walk cycle       -> battle pics "Mutrid Grunt" (red) or "Mutrid Grunt White"
+//   GOLD_ONI             = the Mutrid leader (StarSummit)
+#define OBJ_EVENT_GFX_MUTRID_GOON_RED                          399
+#define OBJ_EVENT_GFX_ITEM_CARVED_MASK                         400
+#define OBJ_EVENT_GFX_ITEM_CATALPA_BOW                         401
+#define OBJ_EVENT_GFX_ITEM_POTION                              402
+#define OBJ_EVENT_GFX_MUTRID_OFFICER_WHITE                     403
 
 // FRLG equivalents
 
@@ -423,7 +449,23 @@
 // NOTE: The maximum amount of object events has been expanded from 255 to 65535.
 // Since dynamic graphics ids still require at least 16 free values, the actual limit
 // is 65519, but even considering follower Pokémon, this should be more than enough :)
-#define NUM_OBJ_EVENT_GFX                        388
+#define OBJ_EVENT_GFX_WOT_LEADER_SCREEN          404
+#define OBJ_EVENT_GFX_WOT_WANTED_POSTER          405
+#define OBJ_EVENT_GFX_WOT_WANTED_SMALL           406
+#define OBJ_EVENT_GFX_WOT_DRACO                  407
+#define OBJ_EVENT_GFX_WOT_MIKMANC                408
+#define OBJ_EVENT_GFX_WOT_NESSA                  409
+#define OBJ_EVENT_GFX_WOT_EDWARDS                410
+#define OBJ_EVENT_GFX_WOT_SHADOW_JIRACHI         411
+#define OBJ_EVENT_GFX_WOT_ALLISON_LAND           412
+#define OBJ_EVENT_GFX_WOT_SKYE_LAND              413
+#define OBJ_EVENT_GFX_WOT_ROSA_LAND              414
+#define OBJ_EVENT_GFX_WOT_MARINA_LAND            415
+#define OBJ_EVENT_GFX_WOT_BEACH_BEAUTY           416
+#define OBJ_EVENT_GFX_WOT_YIFFER                 417
+#define OBJ_EVENT_GFX_WOT_JET                    418
+#define OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT         419
+#define NUM_OBJ_EVENT_GFX                        420
 
 
 // These are dynamic object gfx ids.
@@ -536,6 +578,33 @@
 #define OBJ_EVENT_PAL_TAG_MAY_REFLECTION          0x1111
 #define OBJ_EVENT_PAL_TAG_MOVING_BOX              0x1112
 #define OBJ_EVENT_PAL_TAG_CABLE_CAR               0x1113
+#define OBJ_EVENT_PAL_TAG_KIMONO                  0x1134
+#define OBJ_EVENT_PAL_TAG_EUSINE                  0x1135
+#define OBJ_EVENT_PAL_TAG_SAGE                    0x1136
+#define OBJ_EVENT_PAL_TAG_ONI                     0x1137
+#define OBJ_EVENT_PAL_TAG_GORDIE                                0x1138
+#define OBJ_EVENT_PAL_TAG_SOPHOCLES                             0x1139
+#define OBJ_EVENT_PAL_TAG_SWIMMER_ALLISON                       0x113A
+#define OBJ_EVENT_PAL_TAG_SWIMMER_BLUE                          0x113B
+#define OBJ_EVENT_PAL_TAG_SWIMMER_PINK                          0x113C
+#define OBJ_EVENT_PAL_TAG_SWIMMER_SKY                           0x113D
+#define OBJ_EVENT_PAL_TAG_GOLD_ONI                              0x113E
+#define OBJ_EVENT_PAL_TAG_ONI_GOON                              0x113F
+#define OBJ_EVENT_PAL_TAG_GROUND_ITEMS                          0x1140
+#define OBJ_EVENT_PAL_TAG_MUTRID_GRUNT_WHITE                    0x1141
+#define OBJ_EVENT_PAL_TAG_WOT_DRACO                             0x1142
+#define OBJ_EVENT_PAL_TAG_WOT_MIKMANC                           0x1143
+#define OBJ_EVENT_PAL_TAG_WOT_NESSA                             0x1144
+#define OBJ_EVENT_PAL_TAG_WOT_EDWARDS                           0x1145
+#define OBJ_EVENT_PAL_TAG_WOT_SHADOW_JIRACHI                   0x1146
+#define OBJ_EVENT_PAL_TAG_WOT_ALLISON_LAND                      0x1147
+#define OBJ_EVENT_PAL_TAG_WOT_SKYE_LAND                         0x1148
+#define OBJ_EVENT_PAL_TAG_WOT_ROSA_LAND                         0x1149
+#define OBJ_EVENT_PAL_TAG_WOT_MARINA_LAND                       0x114A
+#define OBJ_EVENT_PAL_TAG_WOT_BEACH_BEAUTY                      0x114B
+#define OBJ_EVENT_PAL_TAG_WOT_YIFFER                            0x114C
+#define OBJ_EVENT_PAL_TAG_WOT_JET                               0x114D
+#define OBJ_EVENT_PAL_TAG_WOT_EDWARDS_IMPACT                    0x114E
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116
@@ -610,6 +679,7 @@
 #define OBJ_EVENT_PAL_TAG_LIGHT_2                 0x8002
 #define OBJ_EVENT_PAL_TAG_EMOTES                  0x8003
 #define OBJ_EVENT_PAL_TAG_NEON_LIGHT              0x8004
+#define OBJ_EVENT_PAL_TAG_WOT_SCREEN              0x8005
 // Not a real OW palette tag; used for the white flash applied to followers
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_shadow_log.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -802,6 +803,10 @@ void SetWarpDestinationToFixedHoleWarp(s16 x, s16 y)
 {
     if (IsDummyWarp(&sFixedHoleWarp) == TRUE)
         sWarpDestination = gLastUsedWarp;
+    else if (sFixedHoleWarp.x != -1 && sFixedHoleWarp.y != -1)
+        // setholewarp was given explicit coords (e.g. HotSpring pool center):
+        // land on that fixed tile instead of falling straight down.
+        SetWarpDestination(sFixedHoleWarp.mapGroup, sFixedHoleWarp.mapNum, WARP_ID_NONE, sFixedHoleWarp.x, sFixedHoleWarp.y);
     else
         SetWarpDestination(sFixedHoleWarp.mapGroup, sFixedHoleWarp.mapNum, WARP_ID_NONE, x, y);
 }
@@ -1236,6 +1241,14 @@ u16 GetCurrLocationDefaultMusic(void)
      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE111)
      && GetSavedWeather() == WEATHER_SANDSTORM)
         return MUS_DESERT;
+
+    // WoT: once Captain Ryoko falls, the Sennen assault is over -- the
+    // Galactic battle theme gives way to the somber N's Castle piece. Also
+    // covers the resume after his battle and after the Edwards boss fight.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SENNEN_ACT2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SENNEN_ACT2)
+     && HasTrainerBeenFought(TRAINER_SENNEN_CAPTAIN_RYOKO))
+        return MUS_BW_N_CASTLE;
 
     music = GetLocationMusic(&gSaveBlock1Ptr->location);
     if (music != MUS_ROUTE118)
@@ -1885,10 +1898,12 @@ void CB2_NewGame(void)
     PlayTimeCounter_Start();
     ScriptContext_Init();
     UnlockPlayerFieldControls();
-    if (IS_FRLG)
-        gFieldCallback = FieldCB_WarpExitFadeFromBlack;
-    else
-        gFieldCallback = ExecuteTruckSequence;
+    // Pokemon Wishes of Tomorrow: use the standard warp fade-in (FieldCB_WarpExitFadeFromBlack)
+    // for both FRLG and Emerald base — this gives us a clean, well-tested entry into Munen.
+    // The intro cutscene uses its own fadescreen FADE_TO_BLACK to go dark for narration,
+    // and ends with a same-map warp so the standard warp-fade-in handles the final reveal.
+    gFieldCallback = FieldCB_WarpExitFadeFromBlack;
+    (void)IS_FRLG;
     gFieldCallback2 = NULL;
     DoMapLoadLoop(&gMain.state);
     SetFieldVBlankCallback();
@@ -2069,6 +2084,33 @@ void CB2_ContinueSavedGame(void)
     if (gSaveFileStatus == SAVE_STATUS_ERROR)
         ResetWinStreaks();
 
+    // Wishes of Tomorrow: the Lantern Badge moved from legacy flag 0x4E into
+    // the numbered badge block (FLAG_BADGE04_GET). Migrate old saves once.
+    if (FlagGet(FLAG_BADGE_LANTERN_LEGACY))
+    {
+        FlagSet(FLAG_BADGE_LANTERN);
+        FlagClear(FLAG_BADGE_LANTERN_LEGACY);
+    }
+
+    // Wishes of Tomorrow: FNPC_ENABLE_NPC_FOLLOWERS grew SaveBlock3, so saves
+    // from before the change can hold garbage where follower data now lives.
+    // Wipe it once per save; after that the field is authoritative.
+    if (!FlagGet(FLAG_WOT_SB3_FNPC_INIT))
+    {
+        ClearFollowerNPCData();
+        FlagSet(FLAG_WOT_SB3_FNPC_INIT);
+    }
+
+    // Wishes of Tomorrow: derive Shadow Log bits from every mon the player
+    // holds (party + PC). Idempotent; retrofits saves from before the log
+    // existed and catches anything a hook ever missed.
+    WotShadowLog_Backfill();
+
+    // Wishes of Tomorrow: saves that already sat through the hideout
+    // briefing predate the Shadow Log gift beat -- grant it retroactively.
+    if (FlagGet(FLAG_WOT_HIDEOUT_REVEAL_DONE) && !FlagGet(FLAG_WOT_SHADOW_LOG_GET))
+        FlagSet(FLAG_WOT_SHADOW_LOG_GET);
+
     LoadSaveblockMapHeader();
     ClearDiveAndHoleWarps();
     trainerHillMapId = GetCurrentTrainerHillMapId();
@@ -2163,6 +2205,16 @@ static void InitCurrentFlashLevelScanlineEffect(void)
         WriteFlashScanlineEffectBuffer(flashLevel);
         ScanlineEffect_SetParams(sFlashEffectParams);
     }
+}
+
+// WoT (special): arm the flash-darkness scanline window mid-map. Normally the
+// window only comes up during map load; the jail blackout scene instead sets
+// the flash level while the screen is faded and calls this before fading back
+// in, so the map returns as cave-style darkness with a light ring around the
+// player.
+void WotInitFlashScanlineEffect(void)
+{
+    InitCurrentFlashLevelScanlineEffect();
 }
 
 static bool32 LoadMapInStepsLink(u8 *state)

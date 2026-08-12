@@ -12,6 +12,7 @@
 #include "constants/map_scripts.h"
 #include "constants/script_commands.h"
 #include "field_message_box.h"
+#include "npc_portrait.h"
 
 #include "dexnav.h"
 
@@ -266,6 +267,7 @@ bool8 ScriptContext_RunScript(void)
     {
         sGlobalScriptContextStatus = CONTEXT_SHUTDOWN;
         UnlockPlayerFieldControls();
+        HideNpcPortrait(); // don't leave a speaker portrait stuck on screen
         return FALSE;
     }
 

@@ -1,0 +1,171 @@
+{
+  "id": "MAP_FROSTWOOD_TOWN",
+  "name": "FrostwoodTown",
+  "layout": "LAYOUT_FROSTWOOD_TOWN",
+  "music": "MUS_FALLARBOR",
+  "region_map_section": "MAPSEC_FROSTWOOD_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_SNOW",
+  "map_type": "MAP_TYPE_TOWN",
+  "allow_cycling": true,
+  "allow_escaping": false,
+  "allow_running": true,
+  "show_map_name": true,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_OLD_MAN",
+      "x": 14,
+      "y": 26,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FrostwoodTown_EventScript_OldMan",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
+      "x": 32,
+      "y": 18,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FrostwoodTown_EventScript_GymWoman",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LUCY",
+      "x": 27,
+      "y": 10,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_RIGHT_AND_LEFT",
+      "movement_range_x": 4,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FrostwoodTown_EventScript_Kid",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MAN_1",
+      "x": 24,
+      "y": 14,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FrostwoodTown_EventScript_Worried",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_5",
+      "x": 24,
+      "y": 26,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "FrostwoodTown_EventScript_MartLady",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY",
+      "x": 14,
+      "y": 3,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WANDER_DOWN_AND_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 3,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 7,
+      "y": 29,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 30,
+      "y": 29,
+      "elevation": 0,
+      "dest_map": "MAP_MUNEN_LAKE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 16,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_OLDALE_TOWN_POKEMON_CENTER_1F",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 22,
+      "y": 25,
+      "elevation": 0,
+      "dest_map": "MAP_OLDALE_TOWN_MART",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 45,
+      "y": 15,
+      "elevation": 0,
+      "dest_map": "MAP_RUSTBORO_CITY_GYM",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 15,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_OLDALE_TOWN_HOUSE2",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 6,
+      "y": 29,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 31,
+      "y": 29,
+      "elevation": 0,
+      "dest_map": "MAP_MUNEN_LAKE",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 25,
+      "y": 0,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "1"
+    },
+    {
+      "x": 24,
+      "y": 0,
+      "elevation": 0,
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "0"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [],
+  "region": "REGION_HOENN"
+}

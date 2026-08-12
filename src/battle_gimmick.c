@@ -285,6 +285,23 @@ static inline u32 GetIndicatorSpriteId(u32 healthboxId)
     return gBattleStruct->gimmick.indicatorSpriteId[gSprites[healthboxId].hMain_Battler];
 }
 
+// WoT Shadow system: any on-field Shadow mon (an enemy snag target, or a
+// snagged-but-unpurified mon of the player's) shows a purple flame by its
+// level. An active gimmick's indicator takes precedence.
+static bool32 WotBattlerShowsShadowIndicator(enum BattlerId battler)
+{
+    return GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW);
+}
+
+// WoT Shadow system: a purified mon (National Ribbon -- only granted by the
+// shrine) shows a small light in the same slot.
+static bool32 WotBattlerShowsPurifiedIndicator(enum BattlerId battler)
+{
+    struct Pokemon *mon = GetBattlerMon(battler);
+
+    return !GetMonData(mon, MON_DATA_IS_SHADOW) && GetMonData(mon, MON_DATA_NATIONAL_RIBBON);
+}
+
 const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
 {
     u32 gimmick = GetActiveGimmick(battler);
@@ -304,6 +321,14 @@ const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
     {
         return (u32 *)gGimmicksInfo[gimmick].indicatorData;
     }
+    else if (WotBattlerShowsShadowIndicator(battler))
+    {
+        return (u32 *)&sWotShadowIndicatorGfx;
+    }
+    else if (WotBattlerShowsPurifiedIndicator(battler))
+    {
+        return (u32 *)&sWotPurifiedIndicatorGfx;
+    }
     else
     {
         return NULL;
@@ -317,6 +342,10 @@ u32 GetIndicatorPalTag(enum BattlerId battler)
         return TAG_MISC_INDICATOR_PAL;
     else if (gGimmicksInfo[gimmick].indicatorPalTag != 0)
         return gGimmicksInfo[gimmick].indicatorPalTag;
+    else if (WotBattlerShowsShadowIndicator(battler))
+        return TAG_MISC_INDICATOR_PAL;
+    else if (WotBattlerShowsPurifiedIndicator(battler))
+        return TAG_MISC_INDICATOR_PAL;
     else
         return TAG_NONE;
 }

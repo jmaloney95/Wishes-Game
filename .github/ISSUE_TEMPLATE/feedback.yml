@@ -1,0 +1,17 @@
+name: Feedback or a suggestion
+description: Balance, difficulty, the story, or an idea. Not a bug, but worth saying.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: feedback
+    attributes:
+      label: What's on your mind?
+      description: Catch rates, prices, a difficulty spike, the story, a feature you'd like. All of it is welcome.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Game version
+      description: It's in the name of the patch file, for example `wishes-of-tomorrow-1.2.6.bps`.
+      placeholder: v1.2.6

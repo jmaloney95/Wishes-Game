@@ -1,0 +1,66 @@
+{
+  "id": "MAP_TRADEWIND_APARTMENT_2",
+  "name": "TradewindApartment_2",
+  "layout": "LAYOUT_SOOTOPOLIS_CITY_HOUSE1",
+  "music": "MUS_DP_MT_CORONET",
+  "region_map_section": "MAPSEC_TRADEWIND_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "graphics_id": "0",
+      "x": 2,
+      "y": 4,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_INVISIBLE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "TradewindApartment_2_EventScript_Presence",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 3,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_TOWN",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_TOWN",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "elevation": 0,
+      "dest_map": "MAP_TRADEWIND_APARTMENT_2",
+      "dest_warp_id": "2"
+    }
+  ],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 1,
+      "y": 2,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "TradewindApartment_2_EventScript_Hatch"
+    }
+  ],
+  "bg_events": []
+}

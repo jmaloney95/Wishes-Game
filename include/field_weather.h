@@ -164,6 +164,8 @@ bool8 Weather_UpdateBlend(void);
 u8 GetCurrentWeather(void);
 void SetRainStrengthFromSoundEffect(u16 soundEffect);
 void PlayRainStoppingSoundEffect(void);
+void WotSuppressWeatherSE(void);
+bool32 WotWeatherSEIsSuppressed(void);
 u8 IsWeatherChangeComplete(void);
 void SetWeatherScreenFadeOut(void);
 void SetWeatherPalStateIdle(void);

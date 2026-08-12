@@ -6476,6 +6476,60 @@ const u32 gObjectEventPic_Substitute[] = INCGFX_COMP("graphics/pokemon/question_
 #endif //OW_PKMN_OBJECTS_SHARE_PALETTES
 #endif //OW_POKEMON_OBJECT_EVENTS && OW_BATTLE_ONLY_FORMS
 #endif //P_MEGA_EVOLUTIONS
+
+    // Wishes of Tomorrow: Armored Mewtwo (cosmetic form; dev gift).
+    // Shiny palettes intentionally alias the normal ones (no shiny art exists).
+    const u32 gMonFrontPic_MewtwoArmored[] = INCGFX_U32("graphics/pokemon/mewtwo_armored/front.png", ".4bpp.smol");
+    const u16 gMonPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/normal.pal", ".gbapal");
+    const u32 gMonBackPic_MewtwoArmored[] = INCGFX_U32("graphics/pokemon/mewtwo_armored/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/normal.pal", ".gbapal");
+    const u8 gMonIcon_MewtwoArmored[] = INCGFX_U8("graphics/pokemon/mewtwo_armored/icon.png", ".4bpp");
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_MewtwoArmored[] = INCGFX_COMP("graphics/pokemon/mewtwo_armored/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    const u16 gOverworldPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/overworld_normal.pal", ".gbapal");
+    const u16 gShinyOverworldPalette_MewtwoArmored[] = INCGFX_U16("graphics/pokemon/mewtwo_armored/overworld_shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+#endif //OW_POKEMON_OBJECT_EVENTS
+
+    // Wishes of Tomorrow custom species (first-pass assets; backs are
+    // mirrored fronts; shinies alias normal except Delta Dodrio's true shiny).
+    const u32 gMonFrontPic_Browt[] = INCGFX_U32("graphics/pokemon/browt/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_Browt[] = INCGFX_U16("graphics/pokemon/browt/normal.pal", ".gbapal");
+    const u32 gMonBackPic_Browt[] = INCGFX_U32("graphics/pokemon/browt/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_Browt[] = INCGFX_U16("graphics/pokemon/browt/shiny.pal", ".gbapal");
+    const u32 gMonFrontPic_Gecqua[] = INCGFX_U32("graphics/pokemon/gecqua/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_Gecqua[] = INCGFX_U16("graphics/pokemon/gecqua/normal.pal", ".gbapal");
+    const u32 gMonBackPic_Gecqua[] = INCGFX_U32("graphics/pokemon/gecqua/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_Gecqua[] = INCGFX_U16("graphics/pokemon/gecqua/shiny.pal", ".gbapal");
+    const u32 gMonFrontPic_Pombon[] = INCGFX_U32("graphics/pokemon/pombon/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_Pombon[] = INCGFX_U16("graphics/pokemon/pombon/normal.pal", ".gbapal");
+    const u32 gMonBackPic_Pombon[] = INCGFX_U32("graphics/pokemon/pombon/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_Pombon[] = INCGFX_U16("graphics/pokemon/pombon/shiny.pal", ".gbapal");
+    const u32 gMonFrontPic_Hellraiser[] = INCGFX_U32("graphics/pokemon/hellraiser/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_Hellraiser[] = INCGFX_U16("graphics/pokemon/hellraiser/normal.pal", ".gbapal");
+    const u32 gMonBackPic_Hellraiser[] = INCGFX_U32("graphics/pokemon/hellraiser/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_Hellraiser[] = INCGFX_U16("graphics/pokemon/hellraiser/shiny.pal", ".gbapal");
+    const u32 gMonFrontPic_WotGhost[] = INCGFX_U32("graphics/pokemon/wot_ghost/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_WotGhost[] = INCGFX_U16("graphics/pokemon/wot_ghost/normal.pal", ".gbapal");
+    const u32 gMonBackPic_WotGhost[] = INCGFX_U32("graphics/pokemon/wot_ghost/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_WotGhost[] = INCGFX_U16("graphics/pokemon/wot_ghost/shiny.pal", ".gbapal");
+    const u32 gMonFrontPic_DodrioDelta[] = INCGFX_U32("graphics/pokemon/dodrio_delta/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_DodrioDelta[] = INCGFX_U16("graphics/pokemon/dodrio_delta/normal.pal", ".gbapal");
+    const u32 gMonBackPic_DodrioDelta[] = INCGFX_U32("graphics/pokemon/dodrio_delta/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_DodrioDelta[] = INCGFX_U16("graphics/pokemon/dodrio_delta/shiny.pal", ".gbapal");
+    const u32 gMonFrontPic_JirachiShadow[] = INCGFX_U32("graphics/pokemon/jirachi_shadow/anim_front.png", ".4bpp.smol");
+    const u16 gMonPalette_JirachiShadow[] = INCGFX_U16("graphics/pokemon/jirachi_shadow/normal.pal", ".gbapal");
+    const u32 gMonBackPic_JirachiShadow[] = INCGFX_U32("graphics/pokemon/jirachi_shadow/back.png", ".4bpp.smol");
+    const u16 gMonShinyPalette_JirachiShadow[] = INCGFX_U16("graphics/pokemon/jirachi_shadow/shiny.pal", ".gbapal");
+    const u8 gMonIcon_JirachiShadow[] = INCGFX_U8("graphics/pokemon/jirachi_shadow/icon.png", ".4bpp");
+#if OW_POKEMON_OBJECT_EVENTS
+    const u32 gObjectEventPic_JirachiShadow[] = INCGFX_COMP("graphics/pokemon/jirachi_shadow/overworld.png", ".4bpp", "-mwidth 4 -mheight 4");
+#if OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    const u16 gOverworldPalette_JirachiShadow[] = INCGFX_U16("graphics/pokemon/jirachi_shadow/overworld_normal.pal", ".gbapal");
+    const u16 gShinyOverworldPalette_JirachiShadow[] = INCGFX_U16("graphics/pokemon/jirachi_shadow/overworld_shiny.pal", ".gbapal");
+#endif //OW_PKMN_OBJECTS_SHARE_PALETTES
+#endif //OW_POKEMON_OBJECT_EVENTS
 #endif //P_FAMILY_MEWTWO
 
 #if P_FAMILY_MEW

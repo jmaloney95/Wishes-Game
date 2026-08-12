@@ -1090,8 +1090,21 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
 
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
-            gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
-            break;
+            // Pokemon Wishes of Tomorrow: skip the Birch intro and name input.
+            // Default gender = male, default name = "JOE". To restore the vanilla
+            // Birch sequence, replace this block with: gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+            gSaveBlock2Ptr->playerGender = MALE;
+            {
+                static const u8 sWishesDefaultPlayerName[] = _("JOE");
+                StringCopy(gSaveBlock2Ptr->playerName, sWishesDefaultPlayerName);
+            }
+            // Black out all palette buffers so the warp's fade-from-black has a clean
+            // starting state. Without this the spawn shows a flash of white/garbage
+            // until the player opens and closes a menu, which forces a palette refresh.
+            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+            SetMainCallback2(CB2_NewGame);
+            DestroyTask(taskId);
+            return;
         case ACTION_CONTINUE:
             gPlttBufferUnfaded[0] = RGB_BLACK;
             gPlttBufferFaded[0] = RGB_BLACK;
@@ -1293,6 +1306,10 @@ static void HighlightSelectedMainMenuItem(u8 menuType, u8 selectedMenuItem, s16 
 #define tBrendanSpriteId data[10]
 #define tMaySpriteId data[11]
 
+// Pokemon Wishes of Tomorrow: the Birch new-game speech is skipped (see CB2_NewGame
+// path above), which leaves this function uncalled. Marked unused so -Werror -Wall
+// doesn't fail; kept intact so the vanilla Birch sequence can be restored later.
+static void Task_NewGameBirchSpeech_Init(u8 taskId) __attribute__((unused));
 static void Task_NewGameBirchSpeech_Init(u8 taskId)
 {
     SetGpuReg(REG_OFFSET_DISPCNT, 0);

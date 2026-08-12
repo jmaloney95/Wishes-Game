@@ -403,12 +403,22 @@ s32 ListMenu_ProcessInput(u8 listTaskId)
     }
     else if (JOY_REPEAT(DPAD_UP))
     {
-        ListMenuChangeSelection(list, TRUE, 1, FALSE);
+        s32 currentPosition = list->scrollOffset + list->selectedRow;
+        s32 lastPosition = list->template.totalItems - 1;
+        if (list->cursorWrap && currentPosition == 0)
+            ListMenuChangeSelection(list, TRUE, lastPosition, TRUE);
+        else
+            ListMenuChangeSelection(list, TRUE, 1, FALSE);
         return LIST_NOTHING_CHOSEN;
     }
     else if (JOY_REPEAT(DPAD_DOWN))
     {
-        ListMenuChangeSelection(list, TRUE, 1, TRUE);
+        s32 currentPosition = list->scrollOffset + list->selectedRow;
+        s32 lastPosition = list->template.totalItems - 1;
+        if (list->cursorWrap && currentPosition == lastPosition)
+            ListMenuChangeSelection(list, TRUE, lastPosition, FALSE);
+        else
+            ListMenuChangeSelection(list, TRUE, 1, TRUE);
         return LIST_NOTHING_CHOSEN;
     }
     else // try to move by one window scroll
@@ -536,6 +546,13 @@ void ListMenuGetScrollAndRow(u8 listTaskId, u16 *scrollOffset, u16 *selectedRow)
         *selectedRow = list->selectedRow;
 }
 
+void ListMenuSetCursorWrap(u8 listTaskId, bool8 wrap)
+{
+    struct ListMenu *list = (void *) gTasks[listTaskId].data;
+
+    list->cursorWrap = wrap;
+}
+
 u16 ListMenuGetYCoordForPrintingArrowCursor(u8 listTaskId)
 {
     struct ListMenu *list = (void *) gTasks[listTaskId].data;
@@ -555,7 +572,7 @@ static u8 ListMenuInitInternal(struct ListMenuTemplate *listMenuTemplate, u16 sc
     list->unk_1C = 0;
     list->unk_1D = 0;
     list->taskId = TASK_NONE;
-    list->unk_1F = 0;
+    list->cursorWrap = FALSE;
 
     gListMenuOverride.cursorPal = list->template.cursorPal;
     gListMenuOverride.fillValue = list->template.fillValue;
