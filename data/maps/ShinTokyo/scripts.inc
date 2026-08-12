@@ -184,7 +184,9 @@ ShinTokyo_EventScript_Patrol3::
 ShinTokyo_EventScript_SurfToIsland::
 	lockall
 	goto_if_unset FLAG_ACT3_RED_ALERT, ShinTokyo_EventScript_TideTooHigh
-	warp MAP_ROUTE129, 26, 1
+	@ (26,1) put the surfer outside Route 129's playable water -- (37,1) is
+	@ the open channel below the city.
+	warp MAP_ROUTE129, 37, 1
 	waitstate
 	releaseall
 	end

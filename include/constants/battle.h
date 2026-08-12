@@ -652,6 +652,13 @@ enum BattleEnvironments
     BATTLE_ENVIRONMENT_SPACE,
     BATTLE_ENVIRONMENT_ULTRA_SPACE,
     BATTLE_ENVIRONMENT_TORII, // Wishes of Tomorrow: rocky Torii Route (time-of-day variants)
+    // Wishes of Tomorrow: carchagui/aveontrainer battle backdrops.
+    BATTLE_ENVIRONMENT_WOT_SEA,      // open-sea surf corridor (time-of-day variants)
+    BATTLE_ENVIRONMENT_WOT_CAVE,     // Munen Tunnel
+    BATTLE_ENVIRONMENT_WOT_ASHLANDS, // Ashlands savanna + Tradewind streets
+    BATTLE_ENVIRONMENT_WOT_LAB,      // Prototype Lab / tower machine floor / dockhouse
+    BATTLE_ENVIRONMENT_WOT_TOWN,     // Celebi Island village
+    BATTLE_ENVIRONMENT_WOT_INDOORS,  // Tradewind Gym
     BATTLE_ENVIRONMENT_COUNT,
 };
 

@@ -519,6 +519,97 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .battleIntroSlide = BattleIntroSlide1,
     },
 
+    // Wishes of Tomorrow: carchagui/aveontrainer backdrops.
+    [BATTLE_ENVIRONMENT_WOT_SEA] =
+    {
+        // carchagui's open sea (day base; dusk/night swapped at load).
+        .name = _("Sea"),
+        .naturePower = MOVE_HYDRO_PUMP,
+        .secretPowerAnimation = gBattleAnimMove_Surf,
+        .secretPowerEffect = MOVE_EFFECT_ATK_MINUS_1,
+        .camouflageType = TYPE_WATER,
+        .camouflageBlend = RGB(10, 16, 27),
+        .entry = ENVIRONMENT_ENTRY(Water),
+        .background = ENVIRONMENT_BACKGROUND(WotSea),
+        .palette = gBattleEnvironmentPalette_WotSea,
+        .battleIntroSlide = BattleIntroSlide2,
+    },
+
+    [BATTLE_ENVIRONMENT_WOT_CAVE] =
+    {
+        // carchagui's cavern (Munen Tunnel).
+        .name = _("Munen Tunnel"),
+        .naturePower = MOVE_ROCK_SLIDE,
+        .secretPowerAnimation = gBattleAnimMove_RockThrow,
+        .secretPowerEffect = MOVE_EFFECT_FLINCH,
+        .camouflageType = TYPE_ROCK,
+        .camouflageBlend = RGB(18, 14, 11),
+        .entry = ENVIRONMENT_ENTRY(Cave),
+        .background = ENVIRONMENT_BACKGROUND(WotCave),
+        .palette = gBattleEnvironmentPalette_WotCave,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
+    [BATTLE_ENVIRONMENT_WOT_ASHLANDS] =
+    {
+        // aveontrainer's savanna (the Ashlands + Tradewind streets).
+        .name = _("Ashlands"),
+        .naturePower = MOVE_EARTH_POWER,
+        .secretPowerAnimation = gBattleAnimMove_MudSlap,
+        .secretPowerEffect = MOVE_EFFECT_ACC_MINUS_1,
+        .camouflageType = TYPE_GROUND,
+        .camouflageBlend = RGB(26, 22, 13),
+        .entry = ENVIRONMENT_ENTRY(Sand),
+        .background = ENVIRONMENT_BACKGROUND(WotAshlands),
+        .palette = gBattleEnvironmentPalette_WotAshlands,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
+    [BATTLE_ENVIRONMENT_WOT_LAB] =
+    {
+        // carchagui's FR-patch laboratory (Deoxys, THE ONI, the dockhouse).
+        .name = _("Lab"),
+        .naturePower = MOVE_TRI_ATTACK,
+        .secretPowerAnimation = gBattleAnimMove_Pound,
+        .secretPowerEffect = MOVE_EFFECT_PARALYSIS,
+        .camouflageType = TYPE_NORMAL,
+        .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(WotLab),
+        .palette = gBattleEnvironmentPalette_WotLab,
+        .battleIntroSlide = BattleIntroSlide3,
+    },
+
+    [BATTLE_ENVIRONMENT_WOT_TOWN] =
+    {
+        // carchagui's FR-patch town (Celebi Island).
+        .name = _("Town"),
+        .naturePower = MOVE_TRI_ATTACK,
+        .secretPowerAnimation = gBattleAnimMove_Pound,
+        .secretPowerEffect = MOVE_EFFECT_PARALYSIS,
+        .camouflageType = TYPE_NORMAL,
+        .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(WotTown),
+        .palette = gBattleEnvironmentPalette_WotTown,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
+    [BATTLE_ENVIRONMENT_WOT_INDOORS] =
+    {
+        // carchagui's FR-patch interior (Tradewind Gym).
+        .name = _("Indoors"),
+        .naturePower = MOVE_TRI_ATTACK,
+        .secretPowerAnimation = gBattleAnimMove_Pound,
+        .secretPowerEffect = MOVE_EFFECT_PARALYSIS,
+        .camouflageType = TYPE_NORMAL,
+        .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(WotIndoors),
+        .palette = gBattleEnvironmentPalette_WotIndoors,
+        .battleIntroSlide = BattleIntroSlide3,
+    },
+
     [BATTLE_ENVIRONMENT_DISTORTION_WORLD] =
     {
         .name = _("Distortion World"),
@@ -537,6 +628,11 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = MOVE_EFFECT_FLINCH,
         .camouflageType = TYPE_DRAGON,
         .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        // Wishes of Tomorrow: carchagui's FR-patch starfield (DragonKeeper duo).
+        .entry = ENVIRONMENT_ENTRY(Rock),
+        .background = ENVIRONMENT_BACKGROUND(WotSpace),
+        .palette = gBattleEnvironmentPalette_WotSpace,
+        .battleIntroSlide = BattleIntroSlide1,
     },
 
     [BATTLE_ENVIRONMENT_ULTRA_SPACE] =

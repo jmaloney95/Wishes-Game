@@ -17,6 +17,7 @@ enum
     PAGE_TILESET_ART_1,
     PAGE_TILESET_ART_2,
     PAGE_SHIN_TOKYO_ART,
+    PAGE_BATTLE_ART,
     PAGE_MUSIC,
     PAGE_PLAYTESTING,
     PAGE_ENGINE,
@@ -26,7 +27,7 @@ enum
     PAGE_STUDIO,
     PAGE_CLOSING_1,
     PAGE_CLOSING_2,
-    PAGE_COUNT // 18 -- an exact multiple of 9, so scenes change every 2 pages
+    PAGE_COUNT // 19 -- PAGE_INTERVAL stays 2 (integer 19/9), scenes change every 2 pages
 };
 
 #define ENTRIES_PER_PAGE 5
@@ -67,6 +68,8 @@ static const u8 sCreditsText_Ekat99[]             = _("ekat99");
 static const u8 sCreditsText_ShinTokyoArt[]       = _("Shin-Tokyo Art");
 static const u8 sCreditsText_Emeiry[]             = _("Emeiry");
 static const u8 sCreditsText_OdiseaByEkat99[]     = _("Odisea by ekat99");
+static const u8 sCreditsText_BattleBackdrops[]    = _("Battle Backdrops");
+static const u8 sCreditsText_Carchagui[]          = _("carchagui");
 
 static const u8 sCreditsText_MapDesign[]          = _("Map Design");
 static const u8 sCreditsText_EventScripting[]     = _("Event Scripting");
@@ -130,6 +133,8 @@ static const struct CreditsEntry sCreditsEntry_Ekat99             = {11, FALSE, 
 static const struct CreditsEntry sCreditsEntry_ShinTokyoArt       = { 9,  TRUE, sCreditsText_ShinTokyoArt};
 static const struct CreditsEntry sCreditsEntry_Emeiry             = {11, FALSE, sCreditsText_Emeiry};
 static const struct CreditsEntry sCreditsEntry_OdiseaByEkat99     = { 8, FALSE, sCreditsText_OdiseaByEkat99};
+static const struct CreditsEntry sCreditsEntry_BattleBackdrops    = { 8,  TRUE, sCreditsText_BattleBackdrops};
+static const struct CreditsEntry sCreditsEntry_Carchagui          = {10, FALSE, sCreditsText_Carchagui};
 static const struct CreditsEntry sCreditsEntry_MapDesign          = {10,  TRUE, sCreditsText_MapDesign};
 static const struct CreditsEntry sCreditsEntry_EventScripting     = { 8,  TRUE, sCreditsText_EventScripting};
 static const struct CreditsEntry sCreditsEntry_Music              = {12,  TRUE, sCreditsText_Music};
@@ -220,6 +225,13 @@ static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][EN
         &sCreditsEntry_ShinTokyoArt,
         &sCreditsEntry_Emeiry,
         &sCreditsEntry_OdiseaByEkat99,
+        _
+    },
+    [PAGE_BATTLE_ART] = {
+        _,
+        &sCreditsEntry_BattleBackdrops,
+        &sCreditsEntry_Carchagui,
+        &sCreditsEntry_Aveontrainer,
         _
     },
     [PAGE_MUSIC] = {
