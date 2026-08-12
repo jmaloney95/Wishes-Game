@@ -19,7 +19,7 @@
 You set all of this up for FireRed and it's reused as-is:
 - ✅ WSL1 + Ubuntu
 - ✅ Git, `build-essential`, `binutils-arm-none-eabi`, `libpng-dev`, `python3`
-- ✅ The `D:\ROM Hack Project` working folder and the `metadata` drive-mount fix
+- ✅ The `J:\ROM Hack Project` working folder and the `metadata` drive-mount fix
 
 **You can ignore/delete the old `pokefirered` and `agbcc` folders — we're not using them.**
 
@@ -40,7 +40,7 @@ are the only genuinely new ones.)
 
 ---
 
-## Stage 2 — Make sure the D: drive allows Git permissions
+## Stage 2 — Make sure the project drive allows Git permissions
 
 If you applied the permanent `/etc/wsl.conf` fix earlier, skip this. If not, run it once so the
 clone doesn't hit the `core.filemode` error again:
@@ -49,7 +49,7 @@ clone doesn't hit the `core.filemode` error again:
 printf '[automount]\noptions = "metadata,noatime"\n' | sudo tee /etc/wsl.conf
 ```
 Then run `wsl --shutdown` in PowerShell, reopen Ubuntu. (Or, for just this session:
-`cd ~ && sudo umount /mnt/d && sudo mount -t drvfs D: /mnt/d -o metadata,noatime`.)
+`cd ~ && sudo umount /mnt/j && sudo mount -t drvfs J: /mnt/j -o metadata,noatime`.)
 
 ---
 
@@ -71,11 +71,11 @@ cd pokeemerald-expansion
 make -j$(nproc)
 ```
 
-When it finishes you'll have **`pokeemerald.gba`** in `D:\ROM Hack Project\pokeemerald-expansion\`.
+When it finishes you'll have **`pokeemerald.gba`** in `J:\ROM Hack Project\pokeemerald-expansion\`.
 
-> **Heads-up on build time:** because your files live on the Windows `D:` drive under WSL1, the
+> **Heads-up on build time:** because your files live on the Windows `J:` drive under WSL1, the
 > *first* build is I/O-heavy and can take a while (this is the trade-off for keeping everything
-> on D: where Porymap can see it). Later builds are incremental and quick. If first-build time
+> on J: where Porymap can see it). Later builds are incremental and quick. If first-build time
 > ever becomes painful, ask me about moving to WSL2 for a big speedup.
 
 ✅ **Checkpoint 3:** `pokeemerald.gba` exists in the folder.
@@ -84,8 +84,8 @@ When it finishes you'll have **`pokeemerald.gba`** in `D:\ROM Hack Project\pokee
 
 ## Stage 5 — Boot it in mGBA
 
-Open `D:\ROM Hack Project\mGBA-0.10.5-win32\mGBA.exe` → File → Load ROM →
-`D:\ROM Hack Project\pokeemerald-expansion\pokeemerald.gba`. You should reach the Emerald
+Open `J:\ROM Hack Project\mGBA-0.10.5-win32\mGBA.exe` → File → Load ROM →
+`J:\ROM Hack Project\pokeemerald-expansion\pokeemerald.gba`. You should reach the Emerald
 title screen and be able to start a game.
 
 ✅ **Checkpoint 4:** Emerald runs. **Your toolchain works.** Every source change now recompiles
@@ -95,8 +95,8 @@ with `make`.
 
 ## Stage 6 — Install the editors (Windows apps)
 
-- **Porymap** — https://github.com/huderlem/porymap/releases → unzip (e.g. `D:\ROM Hack Project\tools\`).
-  First launch: **Open Project** → select `D:\ROM Hack Project\pokeemerald-expansion`.
+- **Porymap** — https://github.com/huderlem/porymap/releases → unzip (e.g. `J:\ROM Hack Project\tools\`).
+  First launch: **Open Project** → select `J:\ROM Hack Project\pokeemerald-expansion`.
 - **Poryscript** — https://github.com/huderlem/poryscript/releases + the VS Code "Poryscript"
   extension. Turns our `.pory` files into the build.
 - **VS Code** — https://code.visualstudio.com + the **WSL** extension; open the
@@ -128,4 +128,4 @@ actual project.
 | `arm-none-eabi-gcc: command not found` | re-run Stage 1 (need `gcc-arm-none-eabi`) |
 | `cannot find -lc` / newlib errors | install `libnewlib-arm-none-eabi` (Stage 1) |
 | Build is very slow | expected on WSL1 + `/mnt/d`; ask about WSL2 migration |
-| Porymap can't read project | confirm the repo is under `D:\` (not `\\wsl$`) |
+| Porymap can't read project | confirm the repo is under `J:\` (not `\\wsl$`) |
