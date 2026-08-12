@@ -18,3 +18,7 @@ Thumbs.db
 # their own base ROM. A stray .gba under docs/ would go out with Pages.
 docs/**/*.gba
 docs/_test/
+
+# Local reference checkouts (removed from the public submodule set).
+pokefirered/
+pokemonHnS/
