@@ -63,6 +63,28 @@ patch, and owning the game remains the right thing to do.)
 | mid2agb (ships with toolchain) | Convert MIDI tracks into the decomp's song format | included |
 | Sappy / MIDI sources | Port atmospheric tracks (Golden Sun, etc.) | community |
 
+### 6. The `Tools/` directory (not in version control)
+
+`Tools/` and `mGBA-0.10.5-win32/` are **gitignored** — they are ~700 MB of
+third-party binaries that would otherwise dominate the repository. Nothing in
+the project references them by path, so a fresh clone builds without them;
+they are only needed for the authoring workflows below. Re-create the folder
+by downloading each of these:
+
+| In `Tools/` | Purpose | Where |
+|-------------|---------|-------|
+| `porymap.exe` | Map, event, and wild-encounter authoring | github.com/huderlem/porymap/releases |
+| `poryscript-windows` | Event-script language front end | github.com/huderlem/poryscript/releases |
+| `porytiles-linux-amd64` | Tileset compilation (run under WSL) | github.com/grunt-lucas/porytiles/releases |
+| `libresprite` | Pixel art and sprite editing | libresprite.github.io |
+| `VGMTrans-v1.3` | Extract NDS sequences and samples for music ports | github.com/vgmtrans/vgmtrans/releases |
+| `Gen 3 Sprite Pack` | Reference sprite sheets | community asset packs |
+| `mGBA-0.10.5-win32/` (repo root) | Run and debug the compiled `.gba` | mgba.io/downloads.html |
+
+The custom tileset build scripts in `tilesets_raw/build_scripts/` are pure
+Python + Pillow and do **not** depend on Porytiles — they are the pipeline
+actually used to produce the game's tilesets.
+
 ### 6. Testing
 | Tool | Purpose | Where |
 |------|---------|-------|
