@@ -5,12 +5,6 @@
 [submodule "agbcc"]
 	path = agbcc
 	url = https://github.com/pret/agbcc.git
-[submodule "pokefirered"]
-	path = pokefirered
-	url = https://github.com/pret/pokefirered.git
-[submodule "pokemonHnS"]
-	path = pokemonHnS
-	url = https://github.com/PokemonHnS-Development/pokemonHnS.git
 [submodule "Team-Aquas-Asset-Repo"]
 	path = Team-Aquas-Asset-Repo
 	url = https://github.com/TeamAquasHideout/Team-Aquas-Asset-Repo.git
