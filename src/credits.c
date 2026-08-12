@@ -777,7 +777,8 @@ static void Task_UpdatePage(u8 taskId)
     case 3:
         if (!gPaletteFade.active)
         {
-            gTasks[taskId].tDelay = 115;
+            // WoT: longer page hold so the shorter deck stays readable.
+            gTasks[taskId].tDelay = 170;
             gTasks[taskId].tState++;
         }
         return;
@@ -908,16 +909,16 @@ static void Task_ShowMons(u8 taskId)
                                     sMonSpritePos[sCreditsData->nextImgPos][0],
                                     sMonSpritePos[sCreditsData->nextImgPos][1],
                                     sCreditsData->nextImgPos);
+        // WoT: exactly three pics per interlude and they PARK -- no mid-scene
+        // swapping. The lifetime outlasts any interlude; the sprite callback
+        // still destroys them the moment the scenery changes. data[5] is this
+        // task's per-interlude count (Task_ShowMons is created fresh per
+        // interlude, so it starts at 0).
         if (sCreditsData->currShownMon < sCreditsData->numMonToShow - 1)
-        {
             sCreditsData->currShownMon++;
-            gSprites[spriteId].data[3] = 50;
-        }
         else
-        {
             sCreditsData->currShownMon = 0;
-            gSprites[spriteId].data[3] = 512;
-        }
+        gSprites[spriteId].data[3] = 30000;
         sCreditsData->imgCounter++;
 
         if (sCreditsData->nextImgPos == POS_RIGHT)
@@ -925,7 +926,13 @@ static void Task_ShowMons(u8 taskId)
         else
             sCreditsData->nextImgPos++;
 
-        gTasks[taskId].tDelay = 50;
+        gTasks[taskId].data[5]++;
+        if (gTasks[taskId].data[5] >= 3)
+        {
+            gTasks[taskId].tState = 0;
+            break;
+        }
+        gTasks[taskId].tDelay = 40;
         gTasks[taskId].tState++;
         break;
     case 3:

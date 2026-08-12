@@ -489,7 +489,7 @@
       "id": "LAYOUT_ROUTE129",
       "name": "Route129_Layout",
       "width": 80,
-      "height": 40,
+      "height": 41,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Mossdeep",
       "border_filepath": "data/layouts/Route129/border.bin",
@@ -9772,8 +9772,8 @@
     {
       "id": "LAYOUT_PROTOTYPE_ISLAND",
       "name": "PrototypeIsland_Layout",
-      "width": 22,
-      "height": 28,
+      "width": 36,
+      "height": 43,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Facility",
       "border_filepath": "data/layouts/PrototypeIsland/border.bin",
@@ -9889,6 +9889,16 @@
       "secondary_tileset": "gTileset_GenericBuilding",
       "border_filepath": "data/layouts/LifeguardShack/border.bin",
       "blockdata_filepath": "data/layouts/LifeguardShack/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEWTWO_POST_GAME",
+      "name": "MewtwoPostGame_Layout",
+      "width": 20,
+      "height": 20,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/MewtwoPostGame/border.bin",
+      "blockdata_filepath": "data/layouts/MewtwoPostGame/map.bin"
     }
   ]
 }

@@ -171,6 +171,13 @@ TowerTop_EventScript_JirachiFree::
 @ ============================================================================
 TowerTop_EventScript_Overload::
 	setflag FLAG_WOT_TOWER_JIRACHI_GONE
+	@ The machine has lost its heart: the Act-3 main line closes here, and
+	@ every earlier main quest is defensively closed with it -- the post-game
+	@ log must show all MAIN quests complete (toasts defer past the scene).
+	completequest QUEST_STOP_THE_MACHINE
+	completequest QUEST_WAKING_MOUNTAIN
+	completequest QUEST_GRANDFATHERS_WISH
+	completequest QUEST_LIFES_WORK
 	special WotSuppressWeatherSE
 	msgbox TowerTop_Text_MachineOverload, MSGBOX_DEFAULT
 	closemessage

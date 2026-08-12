@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_shadow_log.h"
 #include "battle.h"
 #include "battle_hold_effects.h"
 #include "battle_message.h"
@@ -6285,6 +6286,8 @@ static void Cmd_getmoneyreward(void)
             }
             money = sWhiteOutBadgeMoney[count] * sPartyLevel;
         }
+        // WoT: whiteouts sting half as hard as vanilla.
+        money /= 2;
         if (!IsEnoughMoney(&gSaveBlock1Ptr->money, money))
             money = GetMoney(&gSaveBlock1Ptr->money);
         RemoveMoney(&gSaveBlock1Ptr->money, money);
@@ -10832,6 +10835,11 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         ball->multiplier = 410;
         ball->divider = 4096;
         break;
+    case BALL_SNAG:
+        // WoT: tuned to Shadow auras -- 4x on any Shadow, plain otherwise.
+        if (GetMonData(GetBattlerMon(wildMonBattler), MON_DATA_IS_SHADOW))
+            ball->multiplier = 400;
+        break;
     }
 
 }
@@ -11188,6 +11196,9 @@ static void Cmd_givecaughtmon(void)
     case GIVECAUGHTMON_GIVE_AND_SHOW_MSG:
     {
         struct Pokemon *caughtMon = GetBattlerMon(GetCatchingBattler());
+        // WoT: wild Shadow catches (the plume routes, Deoxys, Jirachi) enter
+        // the Shadow Log here; trainer snags log in BS_WotGiveSnaggedMon.
+        WotShadowLog_MarkMon(caughtMon);
         if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9)
         {
             u16 lostItem = gBattleStruct->itemLost[B_SIDE_OPPONENT][gBattlerPartyIndexes[GetCatchingBattler()]].originalItem;
@@ -11735,6 +11746,7 @@ void BS_WotGiveSnaggedMon(void)
     u32 i = gBattleStruct->wotDeliverSlot;
 
     VarSet(VAR_WOT_SNAG_COUNT, VarGet(VAR_WOT_SNAG_COUNT) + 1);
+    WotShadowLog_MarkMon(&gEnemyParty[i]);
 
     if (gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER)
     {

@@ -533,7 +533,7 @@
 #define FLAG_WOT_SA2_FALLER                  0x1DF // WoT: set = SennenAct2 falling-Edwards actor hidden
 #define FLAG_WOT_SA2_GOON_WEST_FLED          0x1E0 // WoT: set = routed west goon gone (own flag; sharing GOONS_CLEARED blocked Garchomp's respawn)
 #define FLAG_WOT_SA2_GARCHOMP_AWAY           0x1E1 // WoT: set = Ryoko recalled Garchomp in the assault ending
-#define FLAG_WOT_DEFECTOR_CHARM_GIVEN        0x1E2 // WoT: Prof. Assistant handed over the Catching Charm + Ultra Balls
+#define FLAG_WOT_SHADOW_LOG_GET              0x1E2 // WoT: Prof. Assistant granted the SHADOW LOG (start-menu ledger)
 #define FLAG_WOT_ONI_DEFEATED                0x1E3 // WoT: the final boss fell and fled TowerTop by jet
 
 // Mystery Gift Flags (Unknown)
@@ -1228,13 +1228,13 @@
 #define FLAG_ITEM_SAFARI_ZONE_SOUTH_EAST_BIG_PEARL                  0x492
 
 #define FLAG_WOT_TOWER_LEGENDS_AWAY                                 0x493 // WoT: hides TowerTop's jet + released legendaries (cutscene props)
-#define FLAG_UNUSED_0x494                                           0x494 // Unused Flag
-#define FLAG_UNUSED_0x495                                           0x495 // Unused Flag
-#define FLAG_UNUSED_0x496                                           0x496 // Unused Flag
-#define FLAG_UNUSED_0x497                                           0x497 // Unused Flag
-#define FLAG_UNUSED_0x498                                           0x498 // Unused Flag
-#define FLAG_UNUSED_0x499                                           0x499 // Unused Flag
-#define FLAG_UNUSED_0x49A                                           0x49A // Unused Flag
+#define FLAG_WOT_POSTGAME_WELCOME_DONE                              0x494 // WoT: Nessa's post-credits congrats + jet delivery played
+#define FLAG_WOT_HIDE_POSTGAME_JET                                  0x495 // WoT: hides the hideout's parked Private Jet until delivered
+#define FLAG_WOT_HIDE_POSTGAME_REBELS                               0x496 // WoT: hides the post-game rebel gathering in the hideout
+#define FLAG_WOT_HIDE_POSTGAME_MUTRIDS                              0x497 // WoT: post-game -- hides the last always-on Mutrid street goon
+#define FLAG_WOT_DRACO_CALL_DONE                                    0x498 // WoT: post-game Draco call played; dockhouse (Armored Mewtwo den) unlocked
+#define FLAG_WOT_ARMORED_MEWTWO_GIVEN                               0x499 // WoT: the Armored Mewtwo handover completed (battle won + mon received)
+#define FLAG_WOT_HIDDEN_COIN_CASE                                   0x49A // WoT: hidden COIN CASE in the Game Corner garbage can (2,2)
 #define FLAG_UNUSED_0x49B                                           0x49B // Unused Flag
 #define FLAG_UNUSED_0x49C                                           0x49C // Unused Flag
 #define FLAG_UNUSED_0x49D                                           0x49D // Unused Flag

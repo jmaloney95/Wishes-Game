@@ -9,25 +9,24 @@
 enum
 {
     PAGE_TITLE,
-    PAGE_SPRITE_ART_1,
+    PAGE_SPRITE_ART_RAFAEL,
     PAGE_SPRITE_ART_2,
     PAGE_SPRITE_ART_3,
     PAGE_PORTRAIT_ART,
+    PAGE_SHADOW_SPRITES,
     PAGE_TILESET_ART_1,
     PAGE_TILESET_ART_2,
-    PAGE_TILESET_ART_3,
     PAGE_SHIN_TOKYO_ART,
     PAGE_MUSIC,
     PAGE_PLAYTESTING,
     PAGE_ENGINE,
-    PAGE_DECOMP,
     PAGE_BASED_ON,
-    PAGE_SPECIAL_THANKS_1,
-    PAGE_SPECIAL_THANKS_2,
+    PAGE_SPECIAL_THANKS,
+    PAGE_MEMORIAL,
     PAGE_STUDIO,
     PAGE_CLOSING_1,
     PAGE_CLOSING_2,
-    PAGE_COUNT
+    PAGE_COUNT // 18 -- an exact multiple of 9, so scenes change every 2 pages
 };
 
 #define ENTRIES_PER_PAGE 5
@@ -52,6 +51,10 @@ static const u8 sCreditsText_Jaov46[]             = _("jaov46");
 static const u8 sCreditsText_ToxShadows[]         = _("ToxShadows642");
 static const u8 sCreditsText_DarkSlayer[]         = _("Dark Slayer");
 
+static const u8 sCreditsText_ShadowSprites[]      = _("Shadow Sprites");
+static const u8 sCreditsText_Pogokitten[]         = _("pogokitten");
+static const u8 sCreditsText_Weegeedude[]         = _("WeeGeeDude");
+static const u8 sCreditsText_Quanyails[]          = _("Quanyails");
 static const u8 sCreditsText_TilesetArt[]         = _("Tileset Art");
 static const u8 sCreditsText_Pinkscales[]         = _("pinkscales");
 static const u8 sCreditsText_Phyromatical[]       = _("Phyromatical");
@@ -93,6 +96,7 @@ static const u8 sCreditsText_FlatfootGames[]      = _("Flatfoot Games");
 
 static const u8 sCreditsText_EveryWish[]          = _("Every wish is its own again.");
 static const u8 sCreditsText_TheEnd[]             = _("Wishes of Tomorrow");
+static const u8 sCreditsText_RestInParadise[]     = _("Rest in Paradise, Connor.");
 
 static const struct CreditsEntry sCreditsEntry_EmptyString        = { 0, FALSE, sCreditsText_EmptyString};
 static const struct CreditsEntry sCreditsEntry_WishesOfTomorrow   = { 6,  TRUE, sCreditsText_WishesOfTomorrow};
@@ -111,6 +115,10 @@ static const struct CreditsEntry sCreditsEntry_DarkusShadow       = { 9, FALSE, 
 static const struct CreditsEntry sCreditsEntry_Jaov46             = {11, FALSE, sCreditsText_Jaov46};
 static const struct CreditsEntry sCreditsEntry_ToxShadows         = { 9, FALSE, sCreditsText_ToxShadows};
 static const struct CreditsEntry sCreditsEntry_DarkSlayer         = { 9, FALSE, sCreditsText_DarkSlayer};
+static const struct CreditsEntry sCreditsEntry_ShadowSprites      = { 9,  TRUE, sCreditsText_ShadowSprites};
+static const struct CreditsEntry sCreditsEntry_Pogokitten         = {10, FALSE, sCreditsText_Pogokitten};
+static const struct CreditsEntry sCreditsEntry_Weegeedude         = {10, FALSE, sCreditsText_Weegeedude};
+static const struct CreditsEntry sCreditsEntry_Quanyails          = {10, FALSE, sCreditsText_Quanyails};
 static const struct CreditsEntry sCreditsEntry_TilesetArt         = {10,  TRUE, sCreditsText_TilesetArt};
 static const struct CreditsEntry sCreditsEntry_Pinkscales         = {10, FALSE, sCreditsText_Pinkscales};
 static const struct CreditsEntry sCreditsEntry_Phyromatical       = { 9, FALSE, sCreditsText_Phyromatical};
@@ -146,6 +154,7 @@ static const struct CreditsEntry sCreditsEntry_ThankYou           = { 6,  TRUE, 
 static const struct CreditsEntry sCreditsEntry_FlatfootGames      = { 9,  TRUE, sCreditsText_FlatfootGames};
 static const struct CreditsEntry sCreditsEntry_EveryWish          = { 4, FALSE, sCreditsText_EveryWish};
 static const struct CreditsEntry sCreditsEntry_TheEnd             = { 7,  TRUE, sCreditsText_TheEnd};
+static const struct CreditsEntry sCreditsEntry_RestInParadise     = { 7, FALSE, sCreditsText_RestInParadise};
 
 #define _ &sCreditsEntry_EmptyString
 static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][ENTRIES_PER_PAGE] =
@@ -157,19 +166,19 @@ static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][EN
         _,
         _
     },
-    [PAGE_SPRITE_ART_1] = {
+    [PAGE_SPRITE_ART_RAFAEL] = {
         _,
         &sCreditsEntry_SpriteDesign,
         &sCreditsEntry_RafaelSanna,
-        &sCreditsEntry_Aveontrainer,
+        _,
         _
     },
     [PAGE_SPRITE_ART_2] = {
         _,
         &sCreditsEntry_SpriteDesign,
+        &sCreditsEntry_Aveontrainer,
         &sCreditsEntry_BaylorHernandez,
-        &sCreditsEntry_Biadoxaf,
-        _
+        &sCreditsEntry_Biadoxaf
     },
     [PAGE_SPRITE_ART_3] = {
         _,
@@ -185,21 +194,21 @@ static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][EN
         _,
         _
     },
-    [PAGE_TILESET_ART_1] = {
+    [PAGE_SHADOW_SPRITES] = {
         _,
+        &sCreditsEntry_ShadowSprites,
+        &sCreditsEntry_Pogokitten,
+        &sCreditsEntry_Weegeedude,
+        &sCreditsEntry_Quanyails
+    },
+    [PAGE_TILESET_ART_1] = {
         &sCreditsEntry_TilesetArt,
         &sCreditsEntry_Pinkscales,
         &sCreditsEntry_Phyromatical,
-        _
+        &sCreditsEntry_Magiscarf,
+        &sCreditsEntry_Peekychew
     },
     [PAGE_TILESET_ART_2] = {
-        _,
-        &sCreditsEntry_TilesetArt,
-        &sCreditsEntry_Magiscarf,
-        &sCreditsEntry_Peekychew,
-        _
-    },
-    [PAGE_TILESET_ART_3] = {
         _,
         &sCreditsEntry_TilesetArt,
         &sCreditsEntry_Elinthind,
@@ -232,14 +241,7 @@ static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][EN
         &sCreditsEntry_BuiltWith,
         &sCreditsEntry_PokeemeraldExp,
         &sCreditsEntry_RomHackingHideout,
-        _
-    },
-    [PAGE_DECOMP] = {
-        _,
-        &sCreditsEntry_BuiltWith,
-        &sCreditsEntry_DecompTeam,
-        _,
-        _
+        &sCreditsEntry_DecompTeam
     },
     [PAGE_BASED_ON] = {
         _,
@@ -248,17 +250,17 @@ static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][EN
         &sCreditsEntry_GameFreakNintendo,
         _
     },
-    [PAGE_SPECIAL_THANKS_1] = {
+    [PAGE_SPECIAL_THANKS] = {
         _,
         &sCreditsEntry_SpecialThanks,
         &sCreditsEntry_SpritingCommunity,
-        _,
+        &sCreditsEntry_EveryArtist,
         _
     },
-    [PAGE_SPECIAL_THANKS_2] = {
+    [PAGE_MEMORIAL] = {
         _,
-        &sCreditsEntry_SpecialThanks,
-        &sCreditsEntry_EveryArtist,
+        _,
+        &sCreditsEntry_RestInParadise,
         _,
         _
     },

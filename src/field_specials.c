@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_shadow_log.h"
 #include "debug.h"
 #include "malloc.h"
 #include "battle.h"
@@ -1710,6 +1711,7 @@ void PurifyPartyMon(void)
     SetMonData(mon, MON_DATA_SHADOW_OPENED, &zero);
     SetMonData(mon, MON_DATA_NATIONAL_RIBBON, &one);
     CalculateMonStats(mon);
+    WotShadowLog_MarkPurifiedSpecies(GetMonData(mon, MON_DATA_SPECIES));
 }
 
 // -- WoT: the HMs start-menu submenu ----------------------------------------

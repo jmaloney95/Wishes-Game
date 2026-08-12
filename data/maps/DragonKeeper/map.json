@@ -111,7 +111,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -120,7 +120,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -129,7 +129,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -138,7 +138,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -147,7 +147,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -156,7 +156,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -165,7 +165,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -174,7 +174,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -183,7 +183,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -192,7 +192,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -201,7 +201,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -210,7 +210,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -219,7 +219,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -228,7 +228,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -237,7 +237,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -246,7 +246,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -255,7 +255,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -264,7 +264,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -273,7 +273,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -282,7 +282,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -291,7 +291,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -300,7 +300,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -309,7 +309,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -318,7 +318,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -327,7 +327,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -336,7 +336,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -345,7 +345,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -354,7 +354,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -363,7 +363,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -372,7 +372,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -381,7 +381,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -390,7 +390,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -399,7 +399,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -408,7 +408,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     },
     {
@@ -417,7 +417,7 @@
       "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "DragonKeeper_EventScript_SurfToRoute130"
     }
   ],

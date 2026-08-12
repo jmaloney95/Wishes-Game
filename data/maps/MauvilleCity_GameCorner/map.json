@@ -380,6 +380,14 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Roulette_EventScript_Table2"
+    },
+    {
+      "type": "hidden_item",
+      "x": 2,
+      "y": 2,
+      "elevation": 0,
+      "item": "ITEM_COIN_CASE",
+      "flag": "FLAG_WOT_HIDDEN_COIN_CASE"
     }
   ],
   "region": "REGION_HOENN"

@@ -76,6 +76,37 @@ static const u16 sWotShadowPal_Squirtle[] = INCBIN_U16("graphics/pokemon_shadow/
 static const u32 sWotShadowPic_Turtwig[] = INCGFX_U32("graphics/pokemon_shadow/turtwig.png", ".4bpp");
 static const u16 sWotShadowPal_Turtwig[] = INCBIN_U16("graphics/pokemon_shadow/turtwig.gbapal");
 
+
+// Wave 3 (2026-08-11): the pogokitten batch.
+static const u32 sWotShadowPic_Arcanine[] = INCGFX_U32("graphics/pokemon_shadow/arcanine.png", ".4bpp");
+static const u16 sWotShadowPal_Arcanine[] = INCBIN_U16("graphics/pokemon_shadow/arcanine.gbapal");
+static const u32 sWotShadowPic_Arceus[] = INCGFX_U32("graphics/pokemon_shadow/arceus.png", ".4bpp");
+static const u16 sWotShadowPal_Arceus[] = INCBIN_U16("graphics/pokemon_shadow/arceus.gbapal");
+static const u32 sWotShadowPic_Azurill[] = INCGFX_U32("graphics/pokemon_shadow/azurill.png", ".4bpp");
+static const u16 sWotShadowPal_Azurill[] = INCBIN_U16("graphics/pokemon_shadow/azurill.gbapal");
+static const u32 sWotShadowPic_Blastoise[] = INCGFX_U32("graphics/pokemon_shadow/blastoise.png", ".4bpp");
+static const u16 sWotShadowPal_Blastoise[] = INCBIN_U16("graphics/pokemon_shadow/blastoise.gbapal");
+static const u32 sWotShadowPic_Cresselia[] = INCGFX_U32("graphics/pokemon_shadow/cresselia.png", ".4bpp");
+static const u16 sWotShadowPal_Cresselia[] = INCBIN_U16("graphics/pokemon_shadow/cresselia.gbapal");
+static const u32 sWotShadowPic_Flygon[] = INCGFX_U32("graphics/pokemon_shadow/flygon.png", ".4bpp");
+static const u16 sWotShadowPal_Flygon[] = INCBIN_U16("graphics/pokemon_shadow/flygon.gbapal");
+static const u32 sWotShadowPic_Giratina[] = INCGFX_U32("graphics/pokemon_shadow/giratina.png", ".4bpp");
+static const u16 sWotShadowPal_Giratina[] = INCBIN_U16("graphics/pokemon_shadow/giratina.gbapal");
+static const u32 sWotShadowPic_Luxray[] = INCGFX_U32("graphics/pokemon_shadow/luxray.png", ".4bpp");
+static const u16 sWotShadowPal_Luxray[] = INCBIN_U16("graphics/pokemon_shadow/luxray.gbapal");
+static const u32 sWotShadowPic_Manectric[] = INCGFX_U32("graphics/pokemon_shadow/manectric.png", ".4bpp");
+static const u16 sWotShadowPal_Manectric[] = INCBIN_U16("graphics/pokemon_shadow/manectric.gbapal");
+static const u32 sWotShadowPic_Marowak[] = INCGFX_U32("graphics/pokemon_shadow/marowak.png", ".4bpp");
+static const u16 sWotShadowPal_Marowak[] = INCBIN_U16("graphics/pokemon_shadow/marowak.gbapal");
+static const u32 sWotShadowPic_Suicune[] = INCGFX_U32("graphics/pokemon_shadow/suicune.png", ".4bpp");
+static const u16 sWotShadowPal_Suicune[] = INCBIN_U16("graphics/pokemon_shadow/suicune.gbapal");
+static const u32 sWotShadowPic_Typhlosion[] = INCGFX_U32("graphics/pokemon_shadow/typhlosion.png", ".4bpp");
+static const u16 sWotShadowPal_Typhlosion[] = INCBIN_U16("graphics/pokemon_shadow/typhlosion.gbapal");
+static const u32 sWotShadowPic_Vaporeon[] = INCGFX_U32("graphics/pokemon_shadow/vaporeon.png", ".4bpp");
+static const u16 sWotShadowPal_Vaporeon[] = INCBIN_U16("graphics/pokemon_shadow/vaporeon.gbapal");
+static const u32 sWotShadowPic_Venusaur[] = INCGFX_U32("graphics/pokemon_shadow/venusaur.png", ".4bpp");
+static const u16 sWotShadowPal_Venusaur[] = INCBIN_U16("graphics/pokemon_shadow/venusaur.gbapal");
+
 static const struct WotShadowPic sWotShadowPics[] =
 {
     { SPECIES_ABSOL,      sWotShadowPic_Absol,      sWotShadowPal_Absol },
@@ -110,4 +141,18 @@ static const struct WotShadowPic sWotShadowPics[] =
     { SPECIES_SQUIRTLE,      sWotShadowPic_Squirtle, sWotShadowPal_Squirtle },
     { SPECIES_TURTWIG,       sWotShadowPic_Turtwig, sWotShadowPal_Turtwig },
     { SPECIES_JIRACHI,       sWotShadowPic_Jirachi, sWotShadowPal_Jirachi },
+    { SPECIES_ARCANINE,     sWotShadowPic_Arcanine, sWotShadowPal_Arcanine },
+    { SPECIES_ARCEUS,       sWotShadowPic_Arceus, sWotShadowPal_Arceus },
+    { SPECIES_AZURILL,      sWotShadowPic_Azurill, sWotShadowPal_Azurill },
+    { SPECIES_BLASTOISE,    sWotShadowPic_Blastoise, sWotShadowPal_Blastoise },
+    { SPECIES_CRESSELIA,    sWotShadowPic_Cresselia, sWotShadowPal_Cresselia },
+    { SPECIES_FLYGON,       sWotShadowPic_Flygon, sWotShadowPal_Flygon },
+    { SPECIES_GIRATINA,     sWotShadowPic_Giratina, sWotShadowPal_Giratina },
+    { SPECIES_LUXRAY,       sWotShadowPic_Luxray, sWotShadowPal_Luxray },
+    { SPECIES_MANECTRIC,    sWotShadowPic_Manectric, sWotShadowPal_Manectric },
+    { SPECIES_MAROWAK,      sWotShadowPic_Marowak, sWotShadowPal_Marowak },
+    { SPECIES_SUICUNE,      sWotShadowPic_Suicune, sWotShadowPal_Suicune },
+    { SPECIES_TYPHLOSION,   sWotShadowPic_Typhlosion, sWotShadowPal_Typhlosion },
+    { SPECIES_VAPOREON,     sWotShadowPic_Vaporeon, sWotShadowPal_Vaporeon },
+    { SPECIES_VENUSAUR,     sWotShadowPic_Venusaur, sWotShadowPal_Venusaur },
 };

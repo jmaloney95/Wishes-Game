@@ -304,6 +304,8 @@ static void SetNewMoveTypeIcon(void);
 static void SwapMovesTypeSprites(u8, u8);
 static u8 LoadMonGfxAndSprite(struct Pokemon *, s16 *);
 static u8 CreateMonSprite(struct Pokemon *);
+static void WotSummaryShadowBadge_Update(struct Pokemon *mon);
+static void WotSummaryShadowBadge_Destroy(void);
 static void SpriteCB_Pokemon(struct Sprite *);
 static void StopPokemonAnimations(void);
 static void CreateMonMarkingsSprite(struct Pokemon *);
@@ -1367,6 +1369,7 @@ static bool8 LoadGraphics(void)
         sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_MON] = LoadMonGfxAndSprite(&sMonSummaryScreen->currentMon, &sMonSummaryScreen->switchCounter);
         if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_MON] != SPRITE_NONE)
         {
+            WotSummaryShadowBadge_Update(&sMonSummaryScreen->currentMon);
             sMonSummaryScreen->switchCounter = 0;
             gMain.state++;
         }
@@ -1639,6 +1642,7 @@ static void FreeSummaryScreen(void)
 
 static void BeginCloseSummaryScreen(u8 taskId)
 {
+    WotSummaryShadowBadge_Destroy();
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = CloseSummaryScreen;
 }
@@ -2145,6 +2149,7 @@ static void Task_ChangeSummaryMon(u8 taskId)
         sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_MON] = LoadMonGfxAndSprite(&sMonSummaryScreen->currentMon, &data[1]);
         if (sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_MON] == SPRITE_NONE)
             return;
+        WotSummaryShadowBadge_Update(&sMonSummaryScreen->currentMon);
         gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_MON]].data[2] = 1;
         TryDrawExperienceProgressBar();
         data[1] = 0;
@@ -4616,6 +4621,94 @@ static void PlayMonCry(void)
         else
             PlayCry_ByMode(summary->species2, 0, CRY_MODE_WEAK);
     }
+}
+
+// --- WoT: shadow / purified badge beside the portrait ----------------------
+// 8x16 two-frame sheet (frame 0 = shadow flame, frame 1 = purified light,
+// the battle healthbox art). Lives at the portrait's top-left corner and
+// refreshes on every mon switch; hidden for ordinary mons.
+#define TAG_WOT_SUMMARY_SHADOW 0x4B50
+
+static const u32 sWotSummaryShadowGfx[] = INCGFX_U32("graphics/summary_screen/wot_shadow_state.png", ".4bpp");
+static const u16 sWotSummaryShadowPal[] = INCGFX_U16("graphics/summary_screen/wot_shadow_state.png", ".gbapal");
+
+static const struct OamData sWotSummaryShadowOam =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x16),
+    .size = SPRITE_SIZE(8x16),
+    .priority = 0,
+};
+
+static const union AnimCmd sWotSummaryShadowAnim_Shadow[] = { ANIMCMD_FRAME(0, 0), ANIMCMD_END };
+static const union AnimCmd sWotSummaryShadowAnim_Pure[]   = { ANIMCMD_FRAME(2, 0), ANIMCMD_END };
+static const union AnimCmd *const sWotSummaryShadowAnims[] =
+{
+    sWotSummaryShadowAnim_Shadow,
+    sWotSummaryShadowAnim_Pure,
+};
+
+static const struct SpriteSheet sWotSummaryShadowSheet =
+{
+    .data = sWotSummaryShadowGfx, .size = 0x100, .tag = TAG_WOT_SUMMARY_SHADOW,
+};
+static const struct SpritePalette sWotSummaryShadowPalette =
+{
+    .data = sWotSummaryShadowPal, .tag = TAG_WOT_SUMMARY_SHADOW,
+};
+static const struct SpriteTemplate sWotSummaryShadowTemplate =
+{
+    .tileTag = TAG_WOT_SUMMARY_SHADOW,
+    .paletteTag = TAG_WOT_SUMMARY_SHADOW,
+    .oam = &sWotSummaryShadowOam,
+    .anims = sWotSummaryShadowAnims,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+// 0 = no sprite; otherwise spriteId + 1 (EWRAM statics must zero-init).
+static EWRAM_DATA u8 sWotSummaryShadowSpriteId = 0;
+
+static void WotSummaryShadowBadge_Update(struct Pokemon *mon)
+{
+    bool32 isShadow = GetMonData(mon, MON_DATA_IS_SHADOW);
+    bool32 isPure = GetMonData(mon, MON_DATA_NATIONAL_RIBBON);
+
+    if (sWotSummaryShadowSpriteId == 0)
+    {
+        u8 spriteId;
+
+        LoadSpriteSheet(&sWotSummaryShadowSheet);
+        LoadSpritePalette(&sWotSummaryShadowPalette);
+        // Portrait sprite sits at (40,64); badge tucks by its top-left edge.
+        spriteId = CreateSprite(&sWotSummaryShadowTemplate, 14, 46, 0);
+        if (spriteId == MAX_SPRITES)
+            return;
+        sWotSummaryShadowSpriteId = spriteId + 1;
+    }
+    if (isShadow || isPure)
+    {
+        gSprites[sWotSummaryShadowSpriteId - 1].invisible = FALSE;
+        StartSpriteAnim(&gSprites[sWotSummaryShadowSpriteId - 1], isShadow ? 0 : 1);
+    }
+    else
+    {
+        gSprites[sWotSummaryShadowSpriteId - 1].invisible = TRUE;
+    }
+}
+
+static void WotSummaryShadowBadge_Destroy(void)
+{
+    if (sWotSummaryShadowSpriteId != 0)
+    {
+        DestroySprite(&gSprites[sWotSummaryShadowSpriteId - 1]);
+        sWotSummaryShadowSpriteId = 0;
+    }
+    FreeSpriteTilesByTag(TAG_WOT_SUMMARY_SHADOW);
+    FreeSpritePaletteByTag(TAG_WOT_SUMMARY_SHADOW);
 }
 
 static u8 CreateMonSprite(struct Pokemon *unused)

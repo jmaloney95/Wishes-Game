@@ -17,7 +17,8 @@
 #define PORTRAIT_MIKMANC          9
 #define PORTRAIT_ALLISON          10
 #define PORTRAIT_YIFFER           11
-#define PORTRAIT_COUNT            12
+#define PORTRAIT_NESSA            12
+#define PORTRAIT_COUNT            13
 
 // Which side of the screen the portrait appears on, above the message box.
 #define PORTRAIT_LEFT   0

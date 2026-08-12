@@ -1,5 +1,6 @@
 #include "global.h"
 #include "config/save.h"
+#include "wot_shadow_log.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
@@ -73,6 +74,7 @@ enum
     MENU_ACTION_DEXNAV,
     MENU_ACTION_QUEST_MENU,
     MENU_ACTION_WOT_HMS,
+    MENU_ACTION_WOT_SHADOW_LOG,
 };
 
 // Save status
@@ -195,10 +197,14 @@ static const struct WindowTemplate sWindowTemplate_PyramidPeak = {
 static const u8 sText_MenuDebug[] = _("DEBUG");
 static const u8 sText_QuestMenu[] = _("QUESTS");
 static const u8 sText_WotHMs[] = _("HMS");
+static const u8 sText_WotShadowLog[] = _("SHADOW LOG");
 
 // WoT: HMs are badge-unlocked trainer abilities; this lists what's usable.
 extern const u8 WotHMs_EventScript_List[];
 static bool8 WotHMsCallback(void);
+// WoT: the Shadow Log ledger (snagged/purified per species).
+extern const u8 WotShadowLog_EventScript_Open[];
+static bool8 WotShadowLogCallback(void);
 
 static const struct MenuAction sStartMenuItems[] =
 {
@@ -219,6 +225,7 @@ static const struct MenuAction sStartMenuItems[] =
     [MENU_ACTION_DEXNAV]          = {gText_MenuDexNav,  {.u8_void = StartMenuDexNavCallback}},
     [MENU_ACTION_QUEST_MENU]      = {sText_QuestMenu,   {.u8_void = QuestMenuCallback}},
     [MENU_ACTION_WOT_HMS]         = {sText_WotHMs,      {.u8_void = WotHMsCallback}},
+    [MENU_ACTION_WOT_SHADOW_LOG]  = {sText_WotShadowLog, {.u8_void = WotShadowLogCallback}},
 };
 
 static const struct BgTemplate sBgTemplates_LinkBattleSave[] =
@@ -546,6 +553,11 @@ static void BuildNormalStartMenu(void)
     // WoT: show the HMs list once the first badge has unlocked anything.
     if (FlagGet(FLAG_BADGE01_GET))
         AddStartMenuAction(MENU_ACTION_WOT_HMS);
+
+    // WoT: the Shadow Log is a gift from Prof. Assistant at the hideout
+    // briefing (FLAG_WOT_SHADOW_LOG_GET; migrated for older saves).
+    if (FlagGet(FLAG_WOT_SHADOW_LOG_GET))
+        AddStartMenuAction(MENU_ACTION_WOT_SHADOW_LOG);
 
     AddStartMenuAction(MENU_ACTION_SAVE);
     AddStartMenuAction(MENU_ACTION_OPTION);
@@ -911,7 +923,8 @@ static bool8 HandleStartMenuInput(void)
             && gMenuCallback != StartMenuDebugCallback
             && gMenuCallback != StartMenuSafariZoneRetireCallback
             && gMenuCallback != StartMenuBattlePyramidRetireCallback
-            && gMenuCallback != WotHMsCallback)
+            && gMenuCallback != WotHMsCallback
+            && gMenuCallback != WotShadowLogCallback)
         {
            FadeScreen(FADE_TO_BLACK, 0);
         }
@@ -1801,6 +1814,16 @@ static bool8 WotHMsCallback(void)
     RemoveExtraStartMenuWindows();
     HideStartMenu();
     ScriptContext_SetupScript(WotHMs_EventScript_List);
+
+    return TRUE;
+}
+
+static bool8 WotShadowLogCallback(void)
+{
+    // Same live-field script pattern as the HMs list.
+    RemoveExtraStartMenuWindows();
+    HideStartMenu();
+    ScriptContext_SetupScript(WotShadowLog_EventScript_Open);
 
     return TRUE;
 }

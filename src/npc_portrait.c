@@ -46,6 +46,10 @@ static const u8 sPortraitAllisonGfx[] = INCGFX_U8("graphics/portraits/allison.pn
 static const u16 sPortraitAllisonPal[] = INCGFX_U16("graphics/portraits/allison.png", ".gbapal");
 static const u8 sPortraitYifferGfx[] = INCGFX_U8("graphics/portraits/yiffer.png", ".4bpp");
 static const u16 sPortraitYifferPal[] = INCGFX_U16("graphics/portraits/yiffer.png", ".gbapal");
+static const u8 sPortraitNessaGfx[] = INCGFX_U8("graphics/portraits/nessa.png", ".4bpp");
+static const u16 sPortraitNessaPal[] = INCGFX_U16("graphics/portraits/nessa.png", ".gbapal");
+static const u8 sPortraitDracoGfx[] = INCGFX_U8("graphics/portraits/draco.png", ".4bpp");
+static const u16 sPortraitDracoPal[] = INCGFX_U16("graphics/portraits/draco.png", ".gbapal");
 
 // Real art later = add the PNG, repoint that id's row. Nothing else changes.
 // PORTRAIT_COBRA intentionally points at the second placeholder to prove the
@@ -57,13 +61,14 @@ static const struct NpcPortrait sNpcPortraits[PORTRAIT_COUNT] =
     [PORTRAIT_MADAM_TSUJI]     = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
     [PORTRAIT_MUTRID_LEADER]   = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
     [PORTRAIT_RED_FATALITY]    = {sPortraitRedFatalityGfx,  sPortraitRedFatalityPal},
-    [PORTRAIT_DRACO]           = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
+    [PORTRAIT_DRACO]           = {sPortraitDracoGfx,        sPortraitDracoPal},
     [PORTRAIT_COBRA]           = {sPortraitPlaceholder2Gfx, sPortraitPlaceholder2Pal},
     [PORTRAIT_MINISTER]        = {sPortraitMinisterGfx,     sPortraitMinisterPal},
     [PORTRAIT_EDWARDS]         = {sPortraitEdwardsGfx,      sPortraitEdwardsPal},
     [PORTRAIT_MIKMANC]         = {sPortraitMikmancGfx,      sPortraitMikmancPal},
     [PORTRAIT_ALLISON]         = {sPortraitAllisonGfx,      sPortraitAllisonPal},
     [PORTRAIT_YIFFER]          = {sPortraitYifferGfx,       sPortraitYifferPal},
+    [PORTRAIT_NESSA]           = {sPortraitNessaGfx,        sPortraitNessaPal},
 };
 
 // Speaker-linked portraits: setspeaker with one of these SP_NAME_* ids
@@ -77,6 +82,12 @@ static const struct { u8 speaker; u8 portrait; } sSpeakerPortraits[] =
     { SP_NAME_MIKMANC,      PORTRAIT_MIKMANC },
     { SP_NAME_ALLISON,      PORTRAIT_ALLISON },
     { SP_NAME_YIFFER,       PORTRAIT_YIFFER },
+    { SP_NAME_CLARKSON,     PORTRAIT_CLARKSON_GENGAR },
+    { SP_NAME_OPERATIVE,    PORTRAIT_NESSA },
+    { SP_NAME_DRACO,        PORTRAIT_DRACO },
+    // MASTER GEN and MOM are deliberately unbound: no portrait art exists, and
+    // an unmatched speaker shows the nameplate alone (WotShowSpeakerPortrait
+    // hides any auto portrait on a miss). Add art -> add a row here.
 };
 
 static bool8 sAutoPortrait = FALSE;

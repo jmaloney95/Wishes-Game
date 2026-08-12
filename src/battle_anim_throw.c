@@ -458,6 +458,15 @@ static const struct PokeBallParticles sBallParticles[POKEBALL_COUNT] =
         .animNums = 0,
         .particleAnimationFunc = MasterBallOpenParticleAnimation,
     },
+
+    // WoT: the Snag Ball bursts in shadow violet.
+    [BALL_SNAG] =
+    {
+        POKE_BALL_ANIMATION(TAG_PARTICLES_CHERISH_BALL, gBattleAnimSpriteGfx_Particles2, gBattleAnimSpritePal_Particles2),
+        .openFadeColor = RGB(16, 4, 24),
+        .animNums = 0,
+        .particleAnimationFunc = MasterBallOpenParticleAnimation,
+    },
 };
 
 const struct SpriteTemplate gPokeblockSpriteTemplate =
