@@ -1,10 +1,26 @@
 # Patch files
 
-Put the release patch here. The site loads it from this folder, so the
+The release patch lives here. The site serves it from this folder, so the
 in-browser patcher works without the player leaving the page.
 
+## Current patch
+
+`wishes-of-tomorrow-1.0.0.bps` — 21,056,836 bytes.
+
+| | CRC32 |
+| --- | --- |
+| Base ROM — Pokémon Emerald (U), 16 MB, `BPEE` | `1F1C08FB` |
+| Patched output — 32 MB | `4056030C` |
+
+Both checksums are embedded in the patch, so the patcher rejects a wrong base
+ROM before doing any work. Verified byte-exact against the built ROM.
+
+The page does **not** download this file on load — it sends a HEAD request for
+the size and fetches the bytes only when the player presses Apply.
+
 **Only patches belong here. Never a built `.gba`** — that would distribute the
-game itself. `.gitignore` blocks `docs/**/*.gba` as a backstop.
+game itself. `.gitignore` blocks `docs/**/*.gba` as a backstop, and neither the
+base ROM nor the built ROM is in this repo.
 
 ## Expected filename
 

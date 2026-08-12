@@ -236,15 +236,45 @@ p { margin: 0; }
   background: var(--color-surface); box-shadow: var(--shadow-lg);
   transition: transform .25s var(--ease);
 }
-.hero-art img {
-  width: 100%; height: auto; image-rendering: pixelated;
-  animation: float 9s ease-in-out infinite;
+/* Diagonal-hatch stage the oni bobs over, in place of key art. */
+.hero-art-stage {
+  aspect-ratio: 3 / 2;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: repeating-linear-gradient(135deg, var(--color-surface) 0 9px, #282a38 9px 18px);
+}
+.hero-art-stage img {
+  /* Scales with the card so it doesn't get lost on a wide viewport. */
+  width: clamp(112px, 36%, 190px); height: auto; aspect-ratio: 1;
+  image-rendering: pixelated;
+  animation: float 5s ease-in-out infinite;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .5));
 }
 .hero-art figcaption {
   font-family: var(--font-pixel); font-size: 8px; letter-spacing: .06em;
   color: rgba(233, 233, 237, .42);
   padding: 14px 16px; border-top: 1px solid rgba(233, 233, 237, .08);
 }
+
+/* — trailer placeholder ─────────────────────────────────────────────── */
+.trailer {
+  margin-top: 20px; aspect-ratio: 16 / 7;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 16px; text-align: center;
+  border-radius: var(--radius-lg);
+  background: repeating-linear-gradient(135deg, #1e2030 0 10px, var(--color-surface) 10px 20px);
+  box-shadow: var(--shadow-sm);
+}
+.trailer-play {
+  width: 64px; height: 64px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--color-accent); color: var(--color-accent); font-size: 20px;
+}
+.trailer-label {
+  font-family: var(--font-pixel); font-size: 9px; line-height: 1.9;
+  color: rgba(233, 233, 237, .45);
+}
+.trailer-label span { color: rgba(233, 233, 237, .3); }
 
 /* — marquee ────────────────────────────────────────────────────────── */
 .marquee {
@@ -281,18 +311,6 @@ p { margin: 0; }
 .feature p { margin-top: 10px; font-size: 14.5px; line-height: 1.6; color: rgba(233, 233, 237, .66); text-wrap: pretty; }
 
 /* — media ──────────────────────────────────────────────────────────── */
-.feature-shot {
-  margin-top: 20px; border-radius: var(--radius-lg); overflow: hidden;
-  background: var(--color-surface); box-shadow: var(--shadow-sm);
-  transition: box-shadow .25s ease;
-}
-.feature-shot:hover { box-shadow: 0 0 0 1px var(--color-accent-600), 0 20px 44px rgba(0, 0, 0, .5); }
-.feature-shot img { width: 100%; height: auto; image-rendering: pixelated; }
-.feature-shot figcaption {
-  padding: 16px 20px; font-size: 14px; color: rgba(233, 233, 237, .6);
-  border-top: 1px solid rgba(233, 233, 237, .08); text-wrap: pretty;
-}
-
 .shot-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 14px; margin-top: 20px;
@@ -301,23 +319,29 @@ p { margin: 0; }
    attributes, which would otherwise fix their height and leave CSS
    aspect-ratio with nothing to solve for. */
 .shot {
-  position: relative; aspect-ratio: 2 / 1;
   border-radius: var(--radius-md); overflow: hidden;
-  background: #1e2030; box-shadow: var(--shadow-sm);
+  background: var(--color-surface); box-shadow: var(--shadow-sm);
   transition: transform .25s var(--ease), box-shadow .25s ease;
 }
 .shot:hover {
   transform: translateY(-4px) scale(1.015);
   box-shadow: 0 0 0 1px var(--color-accent-600), 0 16px 34px rgba(0, 0, 0, .5);
 }
-.shot img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; }
+/* height:auto is load-bearing — the imgs carry width/height attributes, and
+   without it the presentational height wins and aspect-ratio never applies. */
+.shot img {
+  width: 100%; height: auto; aspect-ratio: 3 / 2;   /* the GBA's own 240x160 */
+  object-fit: cover; image-rendering: pixelated;
+}
+/* Captions sit under the frame, not over it: these are real screenshots and
+   the games's own text boxes live along the bottom edge. */
 .shot figcaption {
-  position: absolute; inset: auto 0 0 0; padding: 14px;
-  font-family: var(--font-pixel); font-size: 8px; line-height: 1.8;
-  background: linear-gradient(transparent, rgba(14, 15, 26, .88) 55%);
+  padding: 12px 14px;
+  border-top: 1px solid rgba(233, 233, 237, .08);
+  font-family: var(--font-pixel); font-size: 8px; line-height: 1.9;
 }
 .shot figcaption b { display: block; font-weight: 400; color: rgba(233, 233, 237, .88); }
-.shot figcaption span { color: rgba(233, 233, 237, .48); }
+.shot figcaption span { color: rgba(233, 233, 237, .45); }
 
 .rail-head { display: flex; align-items: baseline; gap: 16px; margin-top: 56px; }
 .rail-hint { font-size: 12.5px; white-space: nowrap; color: rgba(233, 233, 237, .4); }
