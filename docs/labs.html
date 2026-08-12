@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flatfoot Labs — we build the worlds we'd rather live in</title>
+<meta name="description" content="Flatfoot Labs is a one-room independent studio. Flatfoot Games is our label for everything you can play — starting with Wishes of Tomorrow.">
+<link rel="icon" href="assets/art/battle-sprite.png" type="image/png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Flatfoot Labs">
+<meta property="og:description" content="A one-room independent studio. Flatfoot Games is our label for everything you can play.">
+<meta property="og:image" content="assets/media/title-screen.webp">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body class="labs">
+
+<a class="skip" href="#top">Skip to content</a>
+
+<!-- Fixed atmosphere layer: two drifting blooms, a masked grid, a starfield. -->
+<div class="labs-bg" aria-hidden="true">
+  <div class="bloom bloom-a"></div>
+  <div class="bloom bloom-b"></div>
+  <div class="labs-grid"></div>
+  <div id="stars" class="stars"></div>
+</div>
+
+<header class="site-header">
+  <a class="brand labs-brand" href="#top">
+    <span class="logo-grid" aria-hidden="true">
+      <i class="on"></i><i></i><i class="on"></i>
+      <i></i><i class="on"></i><i></i>
+      <i class="on"></i><i class="on"></i><i></i>
+    </span>
+    <span class="labs-wordmark">Flatfoot Labs</span>
+  </a>
+  <nav class="site-nav">
+    <a href="#projects">Projects</a>
+    <a href="#studio">Studio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="btn-nav" href="index.html">Play the game</a>
+</header>
+
+<main class="labs-main">
+
+  <!-- ── hero ───────────────────────────────────────────────────────── -->
+  <section id="top" class="labs-hero wrap">
+    <div class="badge" data-reveal>
+      <span class="badge-dot"></span>
+      INDEPENDENT STUDIO · EST. 2024
+    </div>
+
+    <h1 data-reveal>We build the<br>worlds we'd<br><span class="accent">rather live in</span>.</h1>
+
+    <p class="lede wide" data-reveal>Flatfoot Labs is a one-room studio. We build the things we wish existed — pixel by pixel, on nights and weekends, without a roadmap meeting in sight. <b>Flatfoot Games</b> is our label for everything you can play.</p>
+
+    <div class="hero-actions" data-reveal>
+      <a class="btn-start btn-start-sm" href="index.html">
+        <span class="btn-start-label">Wishes of Tomorrow →</span>
+        <span class="btn-start-sweep" aria-hidden="true"></span>
+      </a>
+      <a class="btn-quiet btn-quiet-sm" href="#projects">See what we're building</a>
+    </div>
+  </section>
+
+  <!-- ── marquee ────────────────────────────────────────────────────── -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track slow">
+      <span>FLATFOOT LABS</span><span class="d">◆</span><span>WISHES OF TOMORROW</span><span class="d">◆</span><span>MADE NEAR THE MOUNTAIN</span><span class="d">◆</span><span>FLATFOOT GAMES</span><span class="d">◆</span>
+      <span>FLATFOOT LABS</span><span class="d">◆</span><span>WISHES OF TOMORROW</span><span class="d">◆</span><span>MADE NEAR THE MOUNTAIN</span><span class="d">◆</span><span>FLATFOOT GAMES</span><span class="d">◆</span>
+    </div>
+  </div>
+
+  <!-- ── projects ───────────────────────────────────────────────────── -->
+  <section id="projects" class="wrap section">
+    <div class="kicker" data-reveal>PROJECTS</div>
+    <h2 data-reveal>Out in the world, and what's next.</h2>
+
+    <a class="project" href="index.html" data-reveal data-tilt>
+      <div class="project-copy">
+        <div class="project-tags">
+          <span class="tag tag-accent">Released</span>
+          <span class="tag tag-outline">GBA · pixel RPG</span>
+        </div>
+        <h3>Wishes of Tomorrow</h3>
+        <p>A handmade creature-collecting adventure set in the forests and lake towns beneath Mt. Fuji. Catch, train, and travel a region built from a hundred late nights.</p>
+        <span class="project-cta">Download &amp; details <span class="arrow">→</span></span>
+      </div>
+      <div class="project-art">
+        <span class="scanlines"></span>
+        <img src="assets/art/battle-sprite.png" width="64" height="64" alt="Wishes of Tomorrow battle sprite">
+        <span class="project-version">v1.0.0</span>
+      </div>
+    </a>
+
+    <div class="slot-grid">
+      <div class="slot" data-reveal data-tilt>
+        <div class="slot-num">SLOT 02</div>
+        <div class="slot-title">Untitled second game</div>
+        <p>Early prototype. A smaller thing, finished faster, with a soundtrack recorded on real instruments.</p>
+        <span class="slot-status">In prototype<span class="caret">_</span></span>
+      </div>
+      <div class="slot" data-reveal data-tilt>
+        <div class="slot-num">SLOT 03</div>
+        <div class="slot-title">Open</div>
+        <p>Reserved for whatever the next idea turns out to be. It usually arrives around 2am.</p>
+        <span class="slot-status">Awaiting input<span class="caret">_</span></span>
+      </div>
+      <div class="slot" data-reveal data-tilt>
+        <div class="slot-num">SLOT 04</div>
+        <div class="slot-title">Open</div>
+        <p>Tools, jams, collaborations. If you have something in mind, the slot is yours to argue for.</p>
+        <span class="slot-status">Awaiting input<span class="caret">_</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── studio ─────────────────────────────────────────────────────── -->
+  <section id="studio" class="wrap section">
+    <div class="studio-grid">
+      <div data-reveal>
+        <div class="kicker">HOW WE WORK</div>
+        <p>No publisher, no deadline, no analytics dashboard. A project ships when it's good enough that we'd play it ourselves twice.</p>
+      </div>
+      <div data-reveal>
+        <div class="kicker">WHAT WE MAKE</div>
+        <p>Games under the Flatfoot Games label, plus the odd tool we needed and couldn't find. Everything runs on hardware you already own.</p>
+      </div>
+      <div data-reveal>
+        <div class="kicker">WHO IT IS</div>
+        <p>One person, mostly. Friends who draw, test, and talk me out of bad ideas. If you'd like to be one of them, say hello.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── contact ────────────────────────────────────────────────────── -->
+  <section id="contact" class="wrap section contact-section">
+    <div class="download-panel" data-reveal>
+      <div class="download-grid" aria-hidden="true"></div>
+      <div class="contact-inner">
+        <h2>Say hello, send a bug, pitch a collaboration.</h2>
+        <p>I read everything. Replies take a few days when a build is close.</p>
+        <div class="hero-actions">
+          <a class="dl dl-primary dl-inline" href="mailto:joe@flatfootlabs.com">joe@flatfootlabs.com</a>
+          <a class="dl dl-inline" href="https://github.com/jmaloney95/Wishes-Game/issues">Report a bug on GitHub <span class="dl-meta">↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span class="foot-brand">© 2026 Flatfoot Labs</span>
+  <a href="index.html">Wishes of Tomorrow</a>
+  <a href="https://github.com/jmaloney95/Wishes-Game">GitHub</a>
+  <a href="mailto:joe@flatfootlabs.com">Email</a>
+  <a href="#top">Back to top</a>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>

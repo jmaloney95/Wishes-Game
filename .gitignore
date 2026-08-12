@@ -13,3 +13,8 @@ __pycache__/
 # OS cruft.
 .DS_Store
 Thumbs.db
+
+# Never publish a built ROM. The site distributes a patch; players bring
+# their own base ROM. A stray .gba under docs/ would go out with Pages.
+docs/**/*.gba
+docs/_test/
