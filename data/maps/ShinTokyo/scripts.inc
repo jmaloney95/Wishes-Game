@@ -901,7 +901,15 @@ ShinTokyo_EventScript_Minister::
 	setspeaker SP_NAME_MINISTER
 	questmenu QUEST_MENU_CHECK_ACTIVE, SIDE_QUEST_MINISTERS_FAVOR
 	goto_if_eq VAR_RESULT, TRUE, ShinTokyo_EventScript_MinisterSettle
+	@ Favor settled: he trades in rumors now -- the Ryuden Island lead.
+	questmenu QUEST_MENU_CHECK_COMPLETE, SIDE_QUEST_MINISTERS_FAVOR
+	goto_if_eq VAR_RESULT, TRUE, ShinTokyo_EventScript_MinisterRyuden
 	msgbox ShinTokyo_Text_MinisterIdle, MSGBOX_DEFAULT
+	release
+	end
+
+ShinTokyo_EventScript_MinisterRyuden::
+	msgbox ShinTokyo_Text_MinisterRyuden, MSGBOX_DEFAULT
 	release
 	end
 
@@ -982,6 +990,15 @@ ShinTokyo_Text_MinisterAfter::
 	.string "to treason.\p"
 	.string "(The MINISTER stamps out his\n"
 	.string "cigarette.)$"
+
+ShinTokyo_Text_MinisterRyuden::
+	.string "A rumor, since we're friendly.\p"
+	.string "Far east of here lies RYUDEN\n"
+	.string "ISLAND -- the dragon keepers'\l"
+	.string "shrine.\p"
+	.string "SURF south and follow the\n"
+	.string "ocean path past the islands.\p"
+	.string "Keep going where the maps stop.$"
 
 ShinTokyo_Text_MonWeezing::
 	.string "WEEZING drinks from the\n"

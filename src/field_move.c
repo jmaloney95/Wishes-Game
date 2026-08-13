@@ -44,10 +44,9 @@ static bool32 IsFieldMoveUnlocked_Surf(void)
 
 static bool32 IsFieldMoveUnlocked_Fly(void)
 {
-    if (IS_FRLG)
-        return FlagGet(FLAG_BADGE03_GET);
-
-    return FlagGet(FLAG_BADGE06_GET);
+    // Wishes of Tomorrow: FLY is the post-game PRIVATE JET -- it unlocks when
+    // Nessa hands the jet over after the credits, never from a badge.
+    return FlagGet(FLAG_WOT_POSTGAME_WELCOME_DONE);
 }
 
 static bool32 IsFieldMoveUnlocked_Dive(void)
