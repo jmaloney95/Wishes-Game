@@ -383,7 +383,10 @@
       ui.result.textContent = "Save " + PATCH.outputName + " (" + fmtBytes(out.length) + ")";
 
       patchedRom = out;
-      if (ui.play) ui.play.hidden = false;
+      if (ui.play) {
+        ui.play.disabled = false;
+        ui.play.removeAttribute("title");
+      }
       say("ok", "Done — your patched ROM is ready.",
         "Nothing left this page; the file was built in your browser.");
       ui.apply.disabled = false;

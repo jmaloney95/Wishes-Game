@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260813d">
+<link rel="stylesheet" href="assets/styles.css?v=20260813e">
 </head>
 <body>
 
@@ -314,7 +314,10 @@
       <div class="patch-actions">
         <button class="patch-apply" type="button" data-patch-apply disabled>Apply patch</button>
         <a class="patch-result" data-patch-result hidden>Save patched ROM</a>
-        <button class="patch-play" type="button" data-patch-play hidden>▶ Play in browser</button>
+        <!-- Shown from the start, disabled, so it's obvious that patching
+             leads somewhere. Enabled once a patch succeeds. -->
+        <button class="patch-play" type="button" data-patch-play disabled
+                title="Apply the patch first">▶ Play in browser</button>
       </div>
 
       <p class="patch-status is-idle" data-patch-status role="status" aria-live="polite">
@@ -427,7 +430,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260813d" defer></script>
-<script src="assets/patcher.js?v=20260813d" defer></script>
+<script src="assets/site.js?v=20260813e" defer></script>
+<script src="assets/patcher.js?v=20260813e" defer></script>
 </body>
 </html>

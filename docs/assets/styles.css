@@ -615,7 +615,12 @@ p { margin: 0; }
   transition: background .2s ease, transform .2s ease, opacity .2s ease;
 }
 .patch-play:hover:not(:disabled) { background: rgba(145, 132, 217, .3); transform: translateY(-1px); }
-.patch-play:disabled { opacity: .55; cursor: default; }
+/* Visible but inert before a patch exists: it should read as a promise of
+   what happens next, not as something broken. */
+.patch-play:disabled {
+  opacity: .4; cursor: not-allowed;
+  background: transparent; border-color: rgba(233, 233, 237, .22);
+}
 
 /* — in-browser player ──────────────────────────────────────────────── */
 .player {
