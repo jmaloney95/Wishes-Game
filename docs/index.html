@@ -27,7 +27,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css">
+<!-- Assets carry a version query. GitHub Pages serves them with a four-hour
+     max-age, so without this a visitor can get new HTML alongside cached old
+     JS. Bump the stamp whenever anything in assets/ changes. -->
+<link rel="stylesheet" href="assets/styles.css?v=20260813b">
 </head>
 <body>
 
@@ -89,86 +92,13 @@
   <!-- ── marquee ────────────────────────────────────────────────────── -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
-      <span>GENS I–X</span><span class="d">◆</span><span>64 NEW MAPS</span><span class="d">◆</span><span>12 TRACKED QUESTS</span><span class="d">◆</span><span>4 SECRET BOSS FIGHTS</span><span class="d">◆</span><span>50+ CUSTOM SPRITE DESIGNS</span><span class="d">◆</span><span>NEW QOL AND BATTLE MECHANICS</span><span class="d">◆</span>
-      <span>GENS I–X</span><span class="d">◆</span><span>64 NEW MAPS</span><span class="d">◆</span><span>12 TRACKED QUESTS</span><span class="d">◆</span><span>4 SECRET BOSS FIGHTS</span><span class="d">◆</span><span>50+ CUSTOM SPRITE DESIGNS</span><span class="d">◆</span><span>NEW QOL AND BATTLE MECHANICS</span><span class="d">◆</span>
+      <span>GENS I–X</span><span class="d">◆</span><span>64 NEW MAPS</span><span class="d">◆</span><span>12 TRACKED QUESTS</span><span class="d">◆</span><span>4 SECRET BOSS FIGHTS</span><span class="d">◆</span><span>PLAY IT NOW IN BROWSER</span><span class="d">◆</span><span>NEW QOL AND BATTLE MECHANICS</span><span class="d">◆</span>
+      <span>GENS I–X</span><span class="d">◆</span><span>64 NEW MAPS</span><span class="d">◆</span><span>12 TRACKED QUESTS</span><span class="d">◆</span><span>4 SECRET BOSS FIGHTS</span><span class="d">◆</span><span>PLAY IT NOW IN BROWSER</span><span class="d">◆</span><span>NEW QOL AND BATTLE MECHANICS</span><span class="d">◆</span>
     </div>
   </div>
 
-  <!-- ── features ───────────────────────────────────────────────────── -->
-  <section id="features" class="wrap section">
-    <div class="kicker" data-reveal>WHAT'S INSIDE</div>
-    <h2 data-reveal>Built the long way round.</h2>
-
-    <div class="feature-grid">
-      <article class="feature" data-reveal>
-        <div class="feature-num">01</div>
-        <h3>64 new maps</h3>
-        <p>Towns, a lake, a shrine road and a mountain you can actually climb — sixty-four maps drawn tile by tile.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">02</div>
-        <h3>Gens I–X, 50+ new sprites</h3>
-        <p>Ten generations of creatures in one region, plus over fifty custom sprite designs drawn for this game alone.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">03</div>
-        <h3>Battles that respect you</h3>
-        <p>Reworked type balance, faster animations, and a difficulty curve tuned by people who beat the original blindfolded.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">04</div>
-        <h3>New QoL and battle mechanics</h3>
-        <p>Fast travel, a searchable bag, run by default, reusable balls, and a reworked battle system. The tedium is gone; the game isn't.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">05</div>
-        <h3>An original soundtrack</h3>
-        <p>Composed for the hardware, played on the hardware — every track sequenced to fit inside the cartridge it ships on.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">06</div>
-        <h3>12 quests, 4 secret bosses</h3>
-        <p>A dozen tracked side quests and four optional boss fights hidden well enough that the first one took testers nine hours to find.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ── media ──────────────────────────────────────────────────────── -->
-  <section id="media" class="wrap section">
-    <div class="kicker" data-reveal>TRAILER</div>
-    <div class="trailer" data-reveal>
-      <span class="trailer-play" aria-hidden="true">▶</span>
-      <span class="trailer-label">TRAILER<br><span>COMING SOON</span></span>
-    </div>
-
-    <div class="kicker mt" data-reveal>SCREENSHOTS</div>
-    <div class="shot-grid">
-      <figure class="shot" data-reveal>
-        <img src="assets/media/doubles.webp" width="960" height="640" loading="lazy" alt="A double battle: Baxcalibur and Armor Mewtwo facing Rayquaza and Dracovish, with the battle menu open.">
-        <figcaption><b>DOUBLE BATTLE</b><span>BATTLE</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/munen-lake.webp" width="832" height="444" loading="lazy" alt="Munen Lake overworld: a frozen surface with cracked ice tiles and boulders.">
-        <figcaption><b>MUNEN LAKE</b><span>OVERWORLD</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/edwards.webp" width="960" height="640" loading="lazy" alt="General Edwards on a rain-lashed dock, telling the player that use of deadly force is authorized.">
-        <figcaption><b>GENERAL EDWARDS</b><span>STORY</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/battle-beach.webp" width="1024" height="448" loading="lazy" alt="Coastal battle backdrop with palm trees and surf on pale sand.">
-        <figcaption><b>ONYX HARBOR</b><span>BATTLE BACKDROP</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/snag-ball.webp" width="960" height="640" loading="lazy" alt="An underwater battle against a shadow Lanturn, with the message &quot;You used Snag Ball!&quot;">
-        <figcaption><b>LAKE ENCOUNTER</b><span>BATTLE</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/summit-reveal.webp" width="960" height="640" loading="lazy" alt="Two figures facing each other on a rock above molten ground, mid-confrontation.">
-        <figcaption><b>THE SUMMIT REVEAL</b><span>STORY</span></figcaption>
-      </figure>
-    </div>
-
+  <!-- ── cast ─────────────────────────────────────────────────────── -->
+  <section id="cast" class="wrap section">
     <div class="rail-head" data-reveal>
       <div class="kicker">WHO YOU'LL MEET</div>
       <div class="rail-hint">scroll →</div>
@@ -233,6 +163,77 @@
     </div>
   </section>
 
+  <!-- ── features ───────────────────────────────────────────────────── -->
+  <section id="features" class="wrap section">
+    <div class="kicker" data-reveal>WHAT'S INSIDE</div>
+    <h2 data-reveal>Built the long way round.</h2>
+
+    <div class="feature-grid">
+      <article class="feature" data-reveal>
+        <div class="feature-num">01</div>
+        <h3>64 new maps</h3>
+        <p>Towns, a lake, a shrine road and a mountain you can actually climb — sixty-four maps drawn tile by tile.</p>
+      </article>
+      <article class="feature" data-reveal>
+        <div class="feature-num">02</div>
+        <h3>Gens I–X, 50+ new sprites</h3>
+        <p>Ten generations of creatures in one region, plus over fifty custom sprite designs drawn for this game alone.</p>
+      </article>
+      <article class="feature" data-reveal>
+        <div class="feature-num">03</div>
+        <h3>Battles that respect you</h3>
+        <p>Reworked type balance, faster animations, and a difficulty curve tuned by people who beat the original blindfolded.</p>
+      </article>
+      <article class="feature" data-reveal>
+        <div class="feature-num">04</div>
+        <h3>New QoL and battle mechanics</h3>
+        <p>Fast travel, a searchable bag, run by default, reusable balls, and a reworked battle system. The tedium is gone; the game isn't.</p>
+      </article>
+      <article class="feature" data-reveal>
+        <div class="feature-num">05</div>
+        <h3>Download and play it right here</h3>
+        <p>Patch your own copy <a href="#download">in this tab</a> and press play — the game runs in your browser, no emulator to install. Keep the patched file too, if you'd rather play it on something else.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── media ──────────────────────────────────────────────────────── -->
+  <section id="media" class="wrap section">
+    <div class="kicker" data-reveal>TRAILER</div>
+    <div class="trailer" data-reveal>
+      <span class="trailer-play" aria-hidden="true">▶</span>
+      <span class="trailer-label">TRAILER<br><span>COMING SOON</span></span>
+    </div>
+
+    <div class="kicker mt" data-reveal>SCREENSHOTS</div>
+    <div class="shot-grid">
+      <figure class="shot" data-reveal>
+        <img src="assets/media/doubles.webp" width="960" height="640" loading="lazy" alt="A double battle: Baxcalibur and Armor Mewtwo facing Rayquaza and Dracovish, with the battle menu open.">
+        <figcaption><b>DOUBLE BATTLE</b><span>BATTLE</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/munen-lake.webp" width="832" height="444" loading="lazy" alt="Munen Lake overworld: a frozen surface with cracked ice tiles and boulders.">
+        <figcaption><b>MUNEN LAKE</b><span>OVERWORLD</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/edwards.webp" width="960" height="640" loading="lazy" alt="General Edwards on a rain-lashed dock, telling the player that use of deadly force is authorized.">
+        <figcaption><b>GENERAL EDWARDS</b><span>STORY</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/battle-beach.webp" width="1024" height="448" loading="lazy" alt="Coastal battle backdrop with palm trees and surf on pale sand.">
+        <figcaption><b>ONYX HARBOR</b><span>BATTLE BACKDROP</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/snag-ball.webp" width="960" height="640" loading="lazy" alt="An underwater battle against a shadow Lanturn, with the message &quot;You used Snag Ball!&quot;">
+        <figcaption><b>LAKE ENCOUNTER</b><span>BATTLE</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/summit-reveal.webp" width="960" height="640" loading="lazy" alt="Two figures facing each other on a rock above molten ground, mid-confrontation.">
+        <figcaption><b>THE SUMMIT REVEAL</b><span>STORY</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- ── download ───────────────────────────────────────────────────── -->
   <section id="download" class="wrap section">
     <div class="download-panel" data-reveal>
@@ -242,11 +243,14 @@
           <h2>Download <span data-version>v1.0.0</span></h2>
           <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
 
-          <div class="version-chip">
-            <span class="digits" data-version-digits aria-hidden="true"></span>
+          <div class="version-chip" data-counter>
+            <!-- Seeded so the chip never renders empty if scripts are slow,
+                 blocked, or briefly stale from cache. -->
+            <span class="digits" data-count-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
             <span class="version-label">
-              Current version<br>
-              <span data-release-date>released 12 August 2026</span>
+              <span class="sr-only" data-count-sr></span>
+              <span data-count-title>Downloads</span><br>
+              <span data-count-sub>since 12 August 2026</span>
             </span>
           </div>
 
@@ -254,7 +258,11 @@
         </div>
 
         <div class="download-links">
-          <a class="dl dl-primary" data-patch-link href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
+          <!-- Points at the release asset, not the copy this site serves, so
+               GitHub records the download and the counter above has something
+               real to read. Works without JS. -->
+          <a class="dl dl-primary" data-patch-link
+             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.0.0/wishes-of-tomorrow-1.0.0.bps">
             <span>Patch file (.bps)</span><span class="dl-meta">↓</span>
           </a>
           <a class="dl" href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
@@ -306,13 +314,30 @@
       <div class="patch-actions">
         <button class="patch-apply" type="button" data-patch-apply disabled>Apply patch</button>
         <a class="patch-result" data-patch-result hidden>Save patched ROM</a>
+        <button class="patch-play" type="button" data-patch-play hidden>▶ Play in browser</button>
       </div>
 
       <p class="patch-status is-idle" data-patch-status role="status" aria-live="polite">
         <strong>Loading the patcher…</strong>
       </p>
 
-      <p class="patch-legal">We distribute a patch, never a game. You need your own legally obtained copy of the base ROM — we don't provide one and can't help you find one.</p>
+      <!-- Built only when the player asks for it: the emulator is about a
+           megabyte and a half, and most visitors just want the patch. -->
+      <div class="player" data-player hidden>
+        <div class="player-head">
+          <div class="kicker">NOW PLAYING</div>
+          <button class="player-close" type="button" data-player-close>Close player</button>
+        </div>
+        <div class="player-stage"><div id="game"></div></div>
+        <p class="player-note">
+          Keyboard on desktop: arrows to move, <b>Z</b> and <b>X</b> for A and B,
+          <b>Enter</b> for Start, <b>Shift</b> for Select. On a phone the on-screen
+          pad appears automatically. Saves live in this browser — export the
+          save from the emulator's menu if you want to keep it.
+        </p>
+      </div>
+
+      <p class="patch-legal">We distribute a patch, never a game. You need your own legally obtained copy of the base ROM — we don't provide one and can't help you find one. The ROM is never uploaded; the emulator itself is loaded from the EmulatorJS CDN when you press play.</p>
     </div>
   </section>
 
@@ -327,6 +352,7 @@
         <div data-reveal><dt>Emulator</dt><dd>mGBA 0.10+ recommended. VBA-M and Delta on iOS also tested.</dd></div>
         <div data-reveal><dt>Hardware</dt><dd>Runs on original GBA hardware via flash cart, and on Analogue Pocket.</dd></div>
         <div data-reveal><dt>Save files</dt><dd>128KB flash save. Set your emulator's save type to Flash 128K if it doesn't detect it.</dd></div>
+        <div data-reveal><dt>Or none of it</dt><dd>You can skip every line above and <a href="#download">play in this tab</a> — patch your ROM here and press play. Keyboard on desktop, on-screen pad on phones, saves kept in your browser.</dd></div>
       </dl>
     </div>
     <div>
@@ -361,6 +387,10 @@
       <p>Use <a href="#download">the patcher further up this page</a>: choose your base ROM, press Apply, save the result. It all happens inside your browser — the ROM is never uploaded anywhere, and this site has no server that could receive it. If you'd rather patch offline, the file is a standard BPS and works with Flips or any other patcher.</p>
     </details>
     <details data-reveal>
+      <summary><span>Can I play it without installing an emulator?</span><span class="plus">+</span></summary>
+      <p>Yes. Patch your ROM <a href="#download">on this page</a>, then press <b>Play in browser</b> — the emulator loads on demand and boots the ROM you just built, with keyboard controls on desktop and an on-screen pad on phones. Nothing is uploaded; the game runs on your own machine. Saves are kept in your browser, so export them from the emulator's menu if you want to move them to a real emulator or a flash cart.</p>
+    </details>
+    <details data-reveal>
       <summary><span>The patcher says my ROM is wrong. Now what?</span><span class="plus">+</span></summary>
       <p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE.</p>
     </details>
@@ -392,7 +422,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js" defer></script>
-<script src="assets/patcher.js" defer></script>
+<script src="assets/site.js?v=20260813b" defer></script>
+<script src="assets/patcher.js?v=20260813b" defer></script>
 </body>
 </html>

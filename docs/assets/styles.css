@@ -45,7 +45,15 @@
    hidden attribute and leave [hidden] elements on screen. */
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; }
+/* `clip` rather than `hidden`: hidden makes the element a scroll container,
+   which on iOS leaves the document pannable sideways and can upset sticky
+   positioning. clip just clips. Both html and body need it — constraining
+   only body still lets iOS drag the root. */
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
 
 body {
   margin: 0;
@@ -54,7 +62,9 @@ body {
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.55;
-  overflow-x: hidden;
+  overflow-x: hidden;   /* fallback for browsers without overflow: clip */
+  overflow-x: clip;
+  overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -74,6 +84,13 @@ p { margin: 0; }
 
 ::selection { background: var(--color-accent-800); color: var(--color-accent-100); }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* The counter's digits are decorative tiles marked aria-hidden; this carries
+   the same number as plain text for screen readers. */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
 
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 60;
@@ -319,10 +336,31 @@ p { margin: 0; }
    attributes, which would otherwise fix their height and leave CSS
    aspect-ratio with nothing to solve for. */
 .shot {
+  position: relative;
   border-radius: var(--radius-md); overflow: hidden;
   background: var(--color-surface); box-shadow: var(--shadow-sm);
   transition: transform .25s var(--ease), box-shadow .25s ease;
 }
+
+/* CRT treatment, the same idea as the cast portraits: scanlines plus a soft
+   bloom. Both layers are pinned to the image's 3:2 box rather than the whole
+   figure, so they stop cleanly at the caption bar. */
+.shot::before,
+.shot::after {
+  content: ""; position: absolute; inset: 0 0 auto 0;
+  aspect-ratio: 3 / 2; pointer-events: none;
+}
+.shot::before {
+  z-index: 2;
+  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, .20) 0 1px, transparent 1px 3px);
+}
+.shot::after {
+  z-index: 1;
+  background: radial-gradient(115% 78% at 50% 16%, rgba(196, 186, 255, .20), transparent 64%);
+  mix-blend-mode: screen;
+  transition: opacity .25s ease;
+}
+.shot:hover::after { opacity: .6; }
 .shot:hover {
   transform: translateY(-4px) scale(1.015);
   box-shadow: 0 0 0 1px var(--color-accent-600), 0 16px 34px rgba(0, 0, 0, .5);
@@ -332,7 +370,11 @@ p { margin: 0; }
 .shot img {
   width: 100%; height: auto; aspect-ratio: 3 / 2;   /* the GBA's own 240x160 */
   object-fit: cover; image-rendering: pixelated;
+  /* A little lift so GBA palettes read on a backlit screen. */
+  filter: saturate(1.14) contrast(1.05);
+  transition: filter .25s ease;
 }
+.shot:hover img { filter: saturate(1.22) contrast(1.08) brightness(1.04); }
 /* Captions sit under the frame, not over it: these are real screenshots and
    the games's own text boxes live along the bottom edge. */
 .shot figcaption {
@@ -343,13 +385,25 @@ p { margin: 0; }
 .shot figcaption b { display: block; font-weight: 400; color: rgba(233, 233, 237, .88); }
 .shot figcaption span { color: rgba(233, 233, 237, .45); }
 
-.rail-head { display: flex; align-items: baseline; gap: 16px; margin-top: 56px; }
+.rail-head { display: flex; align-items: baseline; gap: 16px; }
 .rail-hint { font-size: 12.5px; white-space: nowrap; color: rgba(233, 233, 237, .4); }
 
 .cast-rail {
-  display: flex; gap: 16px; margin: 20px calc(var(--gutter) * -1) 0;
-  padding: 4px var(--gutter) 22px;
-  overflow-x: auto; scroll-snap-type: x mandatory;
+  display: flex; gap: 16px; margin: 14px calc(var(--gutter) * -1) 0;
+  /* Vertical padding leaves room for the cards' hover lift and shadow, which
+     overflow-y: hidden would otherwise crop. */
+  padding: 10px var(--gutter) 26px;
+  /* Horizontal only. Setting overflow-x alone computes overflow-y to auto,
+     which makes this a two-axis scroller: a touch drag then wanders
+     diagonally and never hands vertical movement back to the page. Pinning
+     overflow-y closes that axis, so a vertical swipe scrolls the page as
+     normal and the browser locks the gesture to one axis on its own. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Don't let the end of the rail chain into panning the whole page. */
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
   scrollbar-width: thin; scrollbar-color: var(--color-neutral-800) transparent;
 }
 .cast {
@@ -525,6 +579,50 @@ p { margin: 0; }
   background: rgba(213, 206, 253, .12);
 }
 .patch-result:hover { color: var(--color-text); background: rgba(213, 206, 253, .2); }
+
+.patch-play {
+  cursor: pointer; font: inherit;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 24px; font-size: 14px; font-weight: 500;
+  color: var(--color-text);
+  background: rgba(145, 132, 217, .18);
+  border: 1px solid var(--color-accent); border-radius: var(--radius-md);
+  transition: background .2s ease, transform .2s ease, opacity .2s ease;
+}
+.patch-play:hover:not(:disabled) { background: rgba(145, 132, 217, .3); transform: translateY(-1px); }
+.patch-play:disabled { opacity: .55; cursor: default; }
+
+/* — in-browser player ──────────────────────────────────────────────── */
+.player {
+  margin-top: 22px; padding-top: 20px;
+  border-top: 1px solid rgba(233, 233, 237, .1);
+}
+.player-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin-bottom: 12px;
+}
+.player-close {
+  cursor: pointer; font: inherit; font-size: 13px;
+  color: rgba(233, 233, 237, .6); background: none;
+  border: 1px solid rgba(233, 233, 237, .2); border-radius: var(--radius-md);
+  padding: 6px 12px;
+  transition: color .2s ease, border-color .2s ease;
+}
+.player-close:hover { color: var(--color-text); border-color: rgba(233, 233, 237, .45); }
+
+/* The emulator fills this box and paints its own controls over it. */
+.player-stage {
+  position: relative; width: 100%; aspect-ratio: 3 / 2; min-height: 300px;
+  background: #000; border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.player-stage > div { width: 100%; height: 100%; }
+
+.player-note {
+  margin-top: 14px; font-size: 13px; line-height: 1.6;
+  color: rgba(233, 233, 237, .55); text-wrap: pretty;
+}
+.player-note b { color: rgba(233, 233, 237, .8); font-weight: 500; }
 
 .patch-status {
   margin-top: 18px; padding-left: 16px;
@@ -746,13 +844,65 @@ p { margin: 0; }
   .cast { flex-basis: 220px; }
 
   .patcher { padding: 24px 20px; }
-  .patch-slot { flex-wrap: wrap; }
-  .patch-pick { width: 100%; text-align: center; }
 
   .labs-hero { padding: 72px var(--gutter) 60px; }
   .project { grid-template-columns: 1fr; }
   .project-art { order: -1; min-height: 220px; }
   .project-copy { padding: 28px 24px 32px; }
+}
+
+/* Phones. One-up screenshots and full-width section padding made the page
+   about ten screens long; this trims it to roughly six without shrinking
+   anything to the point of being hard to read or tap. */
+@media (max-width: 700px) {
+  .section { padding-top: 52px; padding-bottom: 12px; }
+  .hero { padding-top: 48px; padding-bottom: 44px; }
+  .hero-inner { gap: 30px; }
+  .section > h2 { margin-top: 12px; }
+  .section h2.h-sm { margin: 12px 0 16px; }
+
+  .shot-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .shot figcaption { padding: 9px 10px; font-size: 7px; line-height: 1.7; }
+
+  .feature-grid { gap: 12px; margin-top: 24px; }
+  .feature { padding: 20px; }
+  .feature h3 { margin-top: 10px; font-size: 17.5px; }
+  .feature p { margin-top: 8px; font-size: 14px; line-height: 1.55; }
+
+  .download-panel { padding: 26px 20px; }
+  .download-inner { gap: 24px; }
+  .patcher { padding: 20px 16px; }
+  .patcher-head { gap: 16px; }
+  .patcher-head h3 { margin-top: 10px; }
+  .patcher-head p { margin-top: 10px; font-size: 14px; }
+  .patch-steps { gap: 10px; margin-top: 18px; }
+  .patch-slot { padding: 12px 14px; gap: 11px; }
+  .patch-actions { margin-top: 16px; }
+  .patch-legal { margin-top: 16px; padding-top: 12px; }
+  /* Room for the on-screen pad, which the emulator draws over the game. */
+  .player-stage { aspect-ratio: auto; height: 62vh; min-height: 400px; }
+
+  .two-col { gap: 28px; }
+  .req > div { padding: 10px 0; }
+  .change { padding-bottom: 16px; }
+
+  .faq { padding-bottom: 64px; }
+  .faq > h2 { margin-bottom: 18px; }
+  .faq details { padding: 14px 0; }
+  .faq summary { font-size: 15.5px; }
+
+  .cast-rail { padding-bottom: 16px; }
+  .cast-body { padding: 14px 16px 18px; }
+  .cast-name { font-size: 16.5px; }
+  .cast-body p { margin-top: 8px; font-size: 13.5px; }
+
+  /* The hero card is decorative; it needn't cost a third of the first screen. */
+  .hero-art-stage { aspect-ratio: 16 / 9; padding: 16px; }
+  .hero-art figcaption { padding: 11px 14px; }
+  .hero h1 { margin-top: 20px; }
+  .lede { margin-top: 20px; font-size: 16.5px; }
+  .hero-actions { margin-top: 26px; }
+  .hero-meta { margin-top: 22px; gap: 16px; }
 }
 
 @media (max-width: 460px) {

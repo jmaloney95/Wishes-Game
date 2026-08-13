@@ -4,33 +4,164 @@
 (function () {
   "use strict";
 
-  /* ── the one thing to edit per release ──────────────────────────────
-     The download buttons point at /releases/latest and never need touching.
-     These two strings are only the labels shown on the page. */
+  /* ── the one thing to edit per release ──────────────────────────── */
   var RELEASE = {
     version: "1.0.0",
     date: "12 August 2026"
   };
 
+  /* ── download counter ───────────────────────────────────────────────
+     There is no server here, so the count is GitHub's own tally of release
+     asset downloads, read back from the public API. The download button
+     therefore points at the release asset rather than the copy this site
+     serves — GitHub only counts the former.
+
+     Two things this number does not include: people who patch with the
+     in-page patcher (it reads the same-origin copy, because the release
+     asset host sends no CORS headers), and repeat downloads GitHub
+     de-duplicates. It is a floor, not a click count. */
+  var COUNTER = {
+    api: "https://api.github.com/repos/jmaloney95/Wishes-Game/releases",
+    asset: /\.bps$/i,
+    since: RELEASE.date,
+    minDigits: 4,
+    cacheKey: "wot:downloads",
+    cacheMs: 10 * 60 * 1000   // be kind to the 60-requests-an-hour limit
+  };
+
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function $(sel) { return document.querySelector(sel); }
 
   /* ── release labels ─────────────────────────────────────────────── */
   function paintRelease() {
-    var v = document.querySelector("[data-version]");
+    var v = $("[data-version]");
     if (v) v.textContent = "v" + RELEASE.version;
+  }
 
-    var d = document.querySelector("[data-release-date]");
-    if (d) d.textContent = "released " + RELEASE.date;
-
-    var digits = document.querySelector("[data-version-digits]");
-    if (!digits) return;
-    digits.textContent = "";
-    RELEASE.version.split("").forEach(function (ch) {
+  function renderDigits(host, text) {
+    host.textContent = "";
+    text.split("").forEach(function (ch) {
       var cell = document.createElement("span");
-      if (ch === ".") cell.className = "dot";
+      if (ch === "." || ch === ",") cell.className = "dot";
       cell.textContent = ch;
-      digits.appendChild(cell);
+      host.appendChild(cell);
     });
+  }
+
+  function group(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function padded(n) {
+    var s = group(n);
+    var digits = s.replace(/,/g, "").length;
+    while (digits < COUNTER.minDigits) { s = "0" + s; digits++; }
+    return s;
+  }
+
+  /* Fall back to what the chip used to show if the count can't be had. */
+  function showVersionInstead() {
+    var host = $("[data-count-digits]");
+    if (!host) return;
+    renderDigits(host, RELEASE.version);
+    var title = $("[data-count-title]"), sub = $("[data-count-sub]"), sr = $("[data-count-sr]");
+    if (title) title.textContent = "Current version";
+    if (sub) sub.textContent = "released " + RELEASE.date;
+    if (sr) sr.textContent = "Version " + RELEASE.version;
+  }
+
+  function cached() {
+    try {
+      var raw = window.localStorage.getItem(COUNTER.cacheKey);
+      if (!raw) return null;
+      var hit = JSON.parse(raw);
+      if (!hit || typeof hit.n !== "number") return null;
+      return (Date.now() - hit.t < COUNTER.cacheMs) ? hit.n : null;
+    } catch (e) { return null; }
+  }
+
+  function remember(n) {
+    try {
+      window.localStorage.setItem(COUNTER.cacheKey, JSON.stringify({ n: n, t: Date.now() }));
+    } catch (e) { /* private mode; not worth caring about */ }
+  }
+
+  function fetchCount() {
+    var hit = cached();
+    if (hit !== null) return Promise.resolve(hit);
+    if (!window.fetch) return Promise.reject();
+
+    return fetch(COUNTER.api, { headers: { Accept: "application/vnd.github+json" } })
+      .then(function (res) {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then(function (releases) {
+        // Sum every published patch across every release, so the number keeps
+        // climbing rather than resetting when a new version ships.
+        var total = 0;
+        (releases || []).forEach(function (rel) {
+          (rel.assets || []).forEach(function (a) {
+            if (COUNTER.asset.test(a.name || "")) total += (a.download_count || 0);
+          });
+        });
+        remember(total);
+        return total;
+      });
+  }
+
+  function countUp(host, sr, target) {
+    var paint = function (n) {
+      renderDigits(host, padded(n));
+      if (sr) sr.textContent = group(target) + (target === 1 ? " download" : " downloads");
+    };
+    if (reduced || !target || !window.requestAnimationFrame) { paint(target); return; }
+
+    var t0 = null, dur = 1500, done = false;
+    var tick = function (now) {
+      if (t0 === null) t0 = now;
+      var p = Math.min(1, (now - t0) / dur);
+      paint(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) requestAnimationFrame(tick); else done = true;
+    };
+    requestAnimationFrame(tick);
+
+    // Background tabs throttle rAF to a standstill. The animation is a nicety;
+    // showing the right number is not, so settle it either way.
+    setTimeout(function () { if (!done) paint(target); }, dur + 500);
+  }
+
+  function wireCounter() {
+    var chip = $("[data-counter]");
+    var host = $("[data-count-digits]");
+    if (!chip || !host) return;
+
+    renderDigits(host, padded(0));
+
+    fetchCount().then(function (total) {
+      var sr = $("[data-count-sr]"), sub = $("[data-count-sub]");
+      if (sub) sub.textContent = "since " + COUNTER.since;
+
+      var started = false;
+      var run = function () {
+        if (started) return;
+        started = true;
+        countUp(host, sr, total);
+      };
+
+      if (!reduced && "IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); run(); }
+        }, { threshold: 0.25 });
+        io.observe(chip);
+        // Don't let a throttled or never-delivered observer leave the counter
+        // reading zero — the count-up is decoration, the number is not.
+        setTimeout(run, 3000);
+      } else {
+        run();
+      }
+    }).catch(showVersionInstead);
   }
 
   /* ── starfield ──────────────────────────────────────────────────── */
@@ -115,6 +246,7 @@
   }
 
   paintRelease();
+  wireCounter();
   paintStars();
   wireCastRail();
   wireReveal();
