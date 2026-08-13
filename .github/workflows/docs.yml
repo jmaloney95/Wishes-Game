@@ -1,8 +1,12 @@
+# Wishes of Tomorrow: manual-only. This repo's GitHub Pages serves the
+# flatfootlabs.com site from the `main` branch's /docs, so this Actions-based
+# mdBook deploy is rejected in that configuration (its red X on every master
+# push was noise) -- and if Pages were ever switched to Actions mode, running
+# this would replace the game's website with engine documentation. Keep it
+# dispatch-only unless that is genuinely intended.
 name: Docs
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   deploy:
