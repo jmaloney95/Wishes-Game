@@ -58,6 +58,11 @@ Four places:
 | Patch filename the patcher loads | `PATCH.url` at the top of `assets/patcher.js` |
 | Patch download button | `data-patch-link` in `index.html` — **version-pinned**, see below |
 | Changelog entry | `index.html`, search `data-changelog` |
+| Asset cache stamp | `?v=` on the css/js tags in both HTML files — bump on any `assets/` change |
+
+That last one matters: Pages serves `assets/` with a four-hour `max-age`, so
+without a fresh stamp a returning visitor can load new HTML against cached old
+JS. Editing a script without bumping it is how the counter renders empty.
 
 "Release notes" and "Source & issues" point at `/releases/latest` and the repo,
 so they never need editing.

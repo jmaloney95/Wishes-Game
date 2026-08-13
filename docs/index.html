@@ -27,7 +27,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css">
+<!-- Assets carry a version query. GitHub Pages serves them with a four-hour
+     max-age, so without this a visitor can get new HTML alongside cached old
+     JS. Bump the stamp whenever anything in assets/ changes. -->
+<link rel="stylesheet" href="assets/styles.css?v=20260813">
 </head>
 <body>
 
@@ -246,7 +249,9 @@
           <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
 
           <div class="version-chip" data-counter>
-            <span class="digits" data-count-digits aria-hidden="true"></span>
+            <!-- Seeded so the chip never renders empty if scripts are slow,
+                 blocked, or briefly stale from cache. -->
+            <span class="digits" data-count-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
             <span class="version-label">
               <span class="sr-only" data-count-sr></span>
               <span data-count-title>Downloads</span><br>
@@ -400,7 +405,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js" defer></script>
-<script src="assets/patcher.js" defer></script>
+<script src="assets/site.js?v=20260813" defer></script>
+<script src="assets/patcher.js?v=20260813" defer></script>
 </body>
 </html>
