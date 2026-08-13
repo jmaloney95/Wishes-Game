@@ -45,7 +45,15 @@
    hidden attribute and leave [hidden] elements on screen. */
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; }
+/* `clip` rather than `hidden`: hidden makes the element a scroll container,
+   which on iOS leaves the document pannable sideways and can upset sticky
+   positioning. clip just clips. Both html and body need it — constraining
+   only body still lets iOS drag the root. */
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+}
 
 body {
   margin: 0;
@@ -54,7 +62,9 @@ body {
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.55;
-  overflow-x: hidden;
+  overflow-x: hidden;   /* fallback for browsers without overflow: clip */
+  overflow-x: clip;
+  overscroll-behavior-x: none;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -319,10 +329,31 @@ p { margin: 0; }
    attributes, which would otherwise fix their height and leave CSS
    aspect-ratio with nothing to solve for. */
 .shot {
+  position: relative;
   border-radius: var(--radius-md); overflow: hidden;
   background: var(--color-surface); box-shadow: var(--shadow-sm);
   transition: transform .25s var(--ease), box-shadow .25s ease;
 }
+
+/* CRT treatment, the same idea as the cast portraits: scanlines plus a soft
+   bloom. Both layers are pinned to the image's 3:2 box rather than the whole
+   figure, so they stop cleanly at the caption bar. */
+.shot::before,
+.shot::after {
+  content: ""; position: absolute; inset: 0 0 auto 0;
+  aspect-ratio: 3 / 2; pointer-events: none;
+}
+.shot::before {
+  z-index: 2;
+  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, .20) 0 1px, transparent 1px 3px);
+}
+.shot::after {
+  z-index: 1;
+  background: radial-gradient(115% 78% at 50% 16%, rgba(196, 186, 255, .20), transparent 64%);
+  mix-blend-mode: screen;
+  transition: opacity .25s ease;
+}
+.shot:hover::after { opacity: .6; }
 .shot:hover {
   transform: translateY(-4px) scale(1.015);
   box-shadow: 0 0 0 1px var(--color-accent-600), 0 16px 34px rgba(0, 0, 0, .5);
@@ -332,7 +363,11 @@ p { margin: 0; }
 .shot img {
   width: 100%; height: auto; aspect-ratio: 3 / 2;   /* the GBA's own 240x160 */
   object-fit: cover; image-rendering: pixelated;
+  /* A little lift so GBA palettes read on a backlit screen. */
+  filter: saturate(1.14) contrast(1.05);
+  transition: filter .25s ease;
 }
+.shot:hover img { filter: saturate(1.22) contrast(1.08) brightness(1.04); }
 /* Captions sit under the frame, not over it: these are real screenshots and
    the games's own text boxes live along the bottom edge. */
 .shot figcaption {
@@ -347,9 +382,21 @@ p { margin: 0; }
 .rail-hint { font-size: 12.5px; white-space: nowrap; color: rgba(233, 233, 237, .4); }
 
 .cast-rail {
-  display: flex; gap: 16px; margin: 20px calc(var(--gutter) * -1) 0;
-  padding: 4px var(--gutter) 22px;
-  overflow-x: auto; scroll-snap-type: x mandatory;
+  display: flex; gap: 16px; margin: 14px calc(var(--gutter) * -1) 0;
+  /* Vertical padding leaves room for the cards' hover lift and shadow, which
+     overflow-y: hidden would otherwise crop. */
+  padding: 10px var(--gutter) 26px;
+  /* Horizontal only. Setting overflow-x alone computes overflow-y to auto,
+     which makes this a two-axis scroller: a touch drag then wanders
+     diagonally and never hands vertical movement back to the page. Pinning
+     overflow-y closes that axis, so a vertical swipe scrolls the page as
+     normal and the browser locks the gesture to one axis on its own. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* Don't let the end of the rail chain into panning the whole page. */
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
   scrollbar-width: thin; scrollbar-color: var(--color-neutral-800) transparent;
 }
 .cast {
