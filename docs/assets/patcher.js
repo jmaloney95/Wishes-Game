@@ -261,6 +261,16 @@
   var patchBytes = null, patchName = "";
   var patchAvailable = false, patchSize = 0;
   var resultUrl = null;
+  var patchedRom = null, playerBooted = false;
+
+  /* ── in-browser player ──────────────────────────────────────────────
+     EmulatorJS (mGBA core) loaded on demand from its CDN. The patched ROM
+     is handed over as a blob made from the bytes already in memory, so
+     nothing is re-downloaded and the ROM still never leaves the browser. */
+  var PLAYER = {
+    data: "https://cdn.emulatorjs.org/stable/data/",
+    core: "gba"
+  };
 
   function $(sel) { return document.querySelector(sel); }
 
@@ -371,6 +381,9 @@
       ui.result.download = PATCH.outputName;
       ui.result.hidden = false;
       ui.result.textContent = "Save " + PATCH.outputName + " (" + fmtBytes(out.length) + ")";
+
+      patchedRom = out;
+      if (ui.play) ui.play.hidden = false;
       say("ok", "Done — your patched ROM is ready.",
         "Nothing left this page; the file was built in your browser.");
       ui.apply.disabled = false;
@@ -378,6 +391,49 @@
       say("bad", err.message || "Something went wrong.", err.detail);
       ui.apply.disabled = false;
     });
+  }
+
+  function bootPlayer() {
+    if (!patchedRom) return;
+    ui.player.hidden = false;
+    ui.player.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (playerBooted) return;
+    playerBooted = true;
+
+    ui.play.disabled = true;
+    ui.play.textContent = "Loading emulator…";
+
+    // EmulatorJS is configured through globals that its loader reads.
+    window.EJS_player = "#game";
+    window.EJS_core = PLAYER.core;
+    window.EJS_pathtodata = PLAYER.data;
+    window.EJS_gameUrl = URL.createObjectURL(new Blob([patchedRom], { type: "application/octet-stream" }));
+    window.EJS_gameName = "Wishes of Tomorrow";
+    window.EJS_color = "#9184d9";
+    window.EJS_startOnLoaded = true;
+    window.EJS_onGameStart = function () {
+      ui.play.disabled = false;
+      ui.play.textContent = "▶ Playing";
+    };
+
+    var s = document.createElement("script");
+    s.src = PLAYER.data + "loader.js";
+    s.onerror = function () {
+      playerBooted = false;
+      ui.play.disabled = false;
+      ui.play.textContent = "▶ Play in browser";
+      say("bad", "Couldn't load the emulator.",
+        "The player is fetched from the EmulatorJS CDN — check your connection or any blockers. Your patched ROM is still ready to save.");
+    };
+    document.body.appendChild(s);
+  }
+
+  function closePlayer() {
+    ui.player.hidden = true;
+    // Silence it rather than tear it down, so reopening is instant.
+    try {
+      if (window.EJS_emulator && window.EJS_emulator.pause) window.EJS_emulator.pause();
+    } catch (e) { /* emulator not ready yet */ }
   }
 
   /* ── wiring ─────────────────────────────────────────────────────── */
@@ -393,9 +449,15 @@
     ui.romInput = root.querySelector("#rom-file");
     ui.patchInput = root.querySelector("#patch-file");
 
+    ui.play = root.querySelector("[data-patch-play]");
+    ui.player = root.querySelector("[data-player]");
+
     ui.romInput.addEventListener("change", function () { onRom(this.files[0]); });
     ui.patchInput.addEventListener("change", function () { onPatch(this.files[0]); });
     ui.apply.addEventListener("click", apply);
+    if (ui.play) ui.play.addEventListener("click", bootPlayer);
+    var closeBtn = root.querySelector("[data-player-close]");
+    if (closeBtn) closeBtn.addEventListener("click", closePlayer);
 
     // Drag and drop onto either slot.
     [[ui.romSlot, onRom], [ui.patchSlot, onPatch]].forEach(function (pair) {

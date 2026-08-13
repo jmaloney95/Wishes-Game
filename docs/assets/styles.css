@@ -580,6 +580,50 @@ p { margin: 0; }
 }
 .patch-result:hover { color: var(--color-text); background: rgba(213, 206, 253, .2); }
 
+.patch-play {
+  cursor: pointer; font: inherit;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 24px; font-size: 14px; font-weight: 500;
+  color: var(--color-text);
+  background: rgba(145, 132, 217, .18);
+  border: 1px solid var(--color-accent); border-radius: var(--radius-md);
+  transition: background .2s ease, transform .2s ease, opacity .2s ease;
+}
+.patch-play:hover:not(:disabled) { background: rgba(145, 132, 217, .3); transform: translateY(-1px); }
+.patch-play:disabled { opacity: .55; cursor: default; }
+
+/* — in-browser player ──────────────────────────────────────────────── */
+.player {
+  margin-top: 22px; padding-top: 20px;
+  border-top: 1px solid rgba(233, 233, 237, .1);
+}
+.player-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; margin-bottom: 12px;
+}
+.player-close {
+  cursor: pointer; font: inherit; font-size: 13px;
+  color: rgba(233, 233, 237, .6); background: none;
+  border: 1px solid rgba(233, 233, 237, .2); border-radius: var(--radius-md);
+  padding: 6px 12px;
+  transition: color .2s ease, border-color .2s ease;
+}
+.player-close:hover { color: var(--color-text); border-color: rgba(233, 233, 237, .45); }
+
+/* The emulator fills this box and paints its own controls over it. */
+.player-stage {
+  position: relative; width: 100%; aspect-ratio: 3 / 2; min-height: 300px;
+  background: #000; border-radius: var(--radius-md); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.player-stage > div { width: 100%; height: 100%; }
+
+.player-note {
+  margin-top: 14px; font-size: 13px; line-height: 1.6;
+  color: rgba(233, 233, 237, .55); text-wrap: pretty;
+}
+.player-note b { color: rgba(233, 233, 237, .8); font-weight: 500; }
+
 .patch-status {
   margin-top: 18px; padding-left: 16px;
   border-left: 2px solid rgba(233, 233, 237, .2);
@@ -835,6 +879,8 @@ p { margin: 0; }
   .patch-slot { padding: 12px 14px; gap: 11px; }
   .patch-actions { margin-top: 16px; }
   .patch-legal { margin-top: 16px; padding-top: 12px; }
+  /* Room for the on-screen pad, which the emulator draws over the game. */
+  .player-stage { aspect-ratio: auto; height: 62vh; min-height: 400px; }
 
   .two-col { gap: 28px; }
   .req > div { padding: 10px 0; }

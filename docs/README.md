@@ -46,6 +46,23 @@ broken file. IPS carries no checksums, so only the GBA header is sanity-checked.
 The engine is also exposed as `window.WoTPatcher` for testing against known
 fixtures.
 
+## Play in browser
+
+After a successful patch, a **Play in browser** button boots the patched bytes
+straight from memory — nothing is re-downloaded and the ROM still never leaves
+the machine.
+
+The emulator is [EmulatorJS](https://emulatorjs.org) (mGBA core), loaded from
+its CDN **only when the button is pressed** — about 1.5 MB, so visitors who
+just want the patch never pay for it. Keyboard on desktop, on-screen pad on
+touch devices, both handled by EmulatorJS. Saves and save states live in the
+browser's own storage.
+
+This is the site's one third-party runtime dependency. If the CDN is
+unreachable the button reports it and the patch download is unaffected. To
+drop the dependency, vendor `emulator.min.js`, `emulator.css` and the mGBA
+core into `assets/` and point `PLAYER.data` in `patcher.js` at them.
+
 To publish a patch, see [`patches/README.md`](patches/README.md).
 
 ## Updating for a new release

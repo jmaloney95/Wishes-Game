@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260813">
+<link rel="stylesheet" href="assets/styles.css?v=20260813b">
 </head>
 <body>
 
@@ -319,13 +319,30 @@
       <div class="patch-actions">
         <button class="patch-apply" type="button" data-patch-apply disabled>Apply patch</button>
         <a class="patch-result" data-patch-result hidden>Save patched ROM</a>
+        <button class="patch-play" type="button" data-patch-play hidden>▶ Play in browser</button>
       </div>
 
       <p class="patch-status is-idle" data-patch-status role="status" aria-live="polite">
         <strong>Loading the patcher…</strong>
       </p>
 
-      <p class="patch-legal">We distribute a patch, never a game. You need your own legally obtained copy of the base ROM — we don't provide one and can't help you find one.</p>
+      <!-- Built only when the player asks for it: the emulator is about a
+           megabyte and a half, and most visitors just want the patch. -->
+      <div class="player" data-player hidden>
+        <div class="player-head">
+          <div class="kicker">NOW PLAYING</div>
+          <button class="player-close" type="button" data-player-close>Close player</button>
+        </div>
+        <div class="player-stage"><div id="game"></div></div>
+        <p class="player-note">
+          Keyboard on desktop: arrows to move, <b>Z</b> and <b>X</b> for A and B,
+          <b>Enter</b> for Start, <b>Shift</b> for Select. On a phone the on-screen
+          pad appears automatically. Saves live in this browser — export the
+          save from the emulator's menu if you want to keep it.
+        </p>
+      </div>
+
+      <p class="patch-legal">We distribute a patch, never a game. You need your own legally obtained copy of the base ROM — we don't provide one and can't help you find one. The ROM is never uploaded; the emulator itself is loaded from the EmulatorJS CDN when you press play.</p>
     </div>
   </section>
 
@@ -374,6 +391,10 @@
       <p>Use <a href="#download">the patcher further up this page</a>: choose your base ROM, press Apply, save the result. It all happens inside your browser — the ROM is never uploaded anywhere, and this site has no server that could receive it. If you'd rather patch offline, the file is a standard BPS and works with Flips or any other patcher.</p>
     </details>
     <details data-reveal>
+      <summary><span>Can I play it without installing an emulator?</span><span class="plus">+</span></summary>
+      <p>Yes. Patch your ROM <a href="#download">on this page</a>, then press <b>Play in browser</b> — the emulator loads on demand and boots the ROM you just built, with keyboard controls on desktop and an on-screen pad on phones. Nothing is uploaded; the game runs on your own machine. Saves are kept in your browser, so export them from the emulator's menu if you want to move them to a real emulator or a flash cart.</p>
+    </details>
+    <details data-reveal>
       <summary><span>The patcher says my ROM is wrong. Now what?</span><span class="plus">+</span></summary>
       <p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE.</p>
     </details>
@@ -405,7 +426,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260813" defer></script>
-<script src="assets/patcher.js?v=20260813" defer></script>
+<script src="assets/site.js?v=20260813b" defer></script>
+<script src="assets/patcher.js?v=20260813b" defer></script>
 </body>
 </html>
