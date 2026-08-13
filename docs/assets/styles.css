@@ -343,7 +343,7 @@ p { margin: 0; }
 .shot figcaption b { display: block; font-weight: 400; color: rgba(233, 233, 237, .88); }
 .shot figcaption span { color: rgba(233, 233, 237, .45); }
 
-.rail-head { display: flex; align-items: baseline; gap: 16px; margin-top: 56px; }
+.rail-head { display: flex; align-items: baseline; gap: 16px; }
 .rail-hint { font-size: 12.5px; white-space: nowrap; color: rgba(233, 233, 237, .4); }
 
 .cast-rail {
@@ -746,13 +746,63 @@ p { margin: 0; }
   .cast { flex-basis: 220px; }
 
   .patcher { padding: 24px 20px; }
-  .patch-slot { flex-wrap: wrap; }
-  .patch-pick { width: 100%; text-align: center; }
 
   .labs-hero { padding: 72px var(--gutter) 60px; }
   .project { grid-template-columns: 1fr; }
   .project-art { order: -1; min-height: 220px; }
   .project-copy { padding: 28px 24px 32px; }
+}
+
+/* Phones. One-up screenshots and full-width section padding made the page
+   about ten screens long; this trims it to roughly six without shrinking
+   anything to the point of being hard to read or tap. */
+@media (max-width: 700px) {
+  .section { padding-top: 52px; padding-bottom: 12px; }
+  .hero { padding-top: 48px; padding-bottom: 44px; }
+  .hero-inner { gap: 30px; }
+  .section > h2 { margin-top: 12px; }
+  .section h2.h-sm { margin: 12px 0 16px; }
+
+  .shot-grid { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+  .shot figcaption { padding: 9px 10px; font-size: 7px; line-height: 1.7; }
+
+  .feature-grid { gap: 12px; margin-top: 24px; }
+  .feature { padding: 20px; }
+  .feature h3 { margin-top: 10px; font-size: 17.5px; }
+  .feature p { margin-top: 8px; font-size: 14px; line-height: 1.55; }
+
+  .download-panel { padding: 26px 20px; }
+  .download-inner { gap: 24px; }
+  .patcher { padding: 20px 16px; }
+  .patcher-head { gap: 16px; }
+  .patcher-head h3 { margin-top: 10px; }
+  .patcher-head p { margin-top: 10px; font-size: 14px; }
+  .patch-steps { gap: 10px; margin-top: 18px; }
+  .patch-slot { padding: 12px 14px; gap: 11px; }
+  .patch-actions { margin-top: 16px; }
+  .patch-legal { margin-top: 16px; padding-top: 12px; }
+
+  .two-col { gap: 28px; }
+  .req > div { padding: 10px 0; }
+  .change { padding-bottom: 16px; }
+
+  .faq { padding-bottom: 64px; }
+  .faq > h2 { margin-bottom: 18px; }
+  .faq details { padding: 14px 0; }
+  .faq summary { font-size: 15.5px; }
+
+  .cast-rail { padding-bottom: 16px; }
+  .cast-body { padding: 14px 16px 18px; }
+  .cast-name { font-size: 16.5px; }
+  .cast-body p { margin-top: 8px; font-size: 13.5px; }
+
+  /* The hero card is decorative; it needn't cost a third of the first screen. */
+  .hero-art-stage { aspect-ratio: 16 / 9; padding: 16px; }
+  .hero-art figcaption { padding: 11px 14px; }
+  .hero h1 { margin-top: 20px; }
+  .lede { margin-top: 20px; font-size: 16.5px; }
+  .hero-actions { margin-top: 26px; }
+  .hero-meta { margin-top: 22px; gap: 16px; }
 }
 
 @media (max-width: 460px) {
