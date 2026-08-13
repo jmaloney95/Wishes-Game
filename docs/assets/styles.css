@@ -342,9 +342,10 @@ p { margin: 0; }
   transition: transform .25s var(--ease), box-shadow .25s ease;
 }
 
-/* CRT treatment, the same idea as the cast portraits: scanlines plus a soft
-   bloom. Both layers are pinned to the image's 3:2 box rather than the whole
-   figure, so they stop cleanly at the caption bar. */
+/* A glint that sweeps across on hover, plus a soft bloom underneath. No
+   scanlines here — the cast portraits are painted art and wear them well,
+   but over real gameplay pixels they just muddy the picture. Both layers are
+   pinned to the image's 3:2 box so they stop cleanly at the caption bar. */
 .shot::before,
 .shot::after {
   content: ""; position: absolute; inset: 0 0 auto 0;
@@ -352,8 +353,16 @@ p { margin: 0; }
 }
 .shot::before {
   z-index: 2;
-  background-image: repeating-linear-gradient(0deg, rgba(0, 0, 0, .20) 0 1px, transparent 1px 3px);
+  background: linear-gradient(105deg,
+    transparent 38%,
+    rgba(255, 255, 255, .10) 46%,
+    rgba(214, 206, 255, .34) 50%,
+    rgba(255, 255, 255, .10) 54%,
+    transparent 62%);
+  transform: translateX(-140%);
+  opacity: 0;
 }
+.shot:hover::before { opacity: 1; animation: shimmer .85s ease-out; }
 .shot::after {
   z-index: 1;
   background: radial-gradient(115% 78% at 50% 16%, rgba(196, 186, 255, .20), transparent 64%);
@@ -361,6 +370,22 @@ p { margin: 0; }
   transition: opacity .25s ease;
 }
 .shot:hover::after { opacity: .6; }
+
+@keyframes shimmer {
+  from { transform: translateX(-140%); }
+  to   { transform: translateX(140%); }
+}
+
+/* Touch devices never hover, so the glint runs on its own — slow, staggered
+   across the grid so they don't all flash together, and the picture itself
+   pushed a little richer to make up for the missing interaction. */
+@media (hover: none) {
+  .shot::before { opacity: 1; animation: shimmer 7s ease-in-out infinite; }
+  .shot:nth-child(2n)::before { animation-delay: 2.3s; }
+  .shot:nth-child(3n)::before { animation-delay: 4.6s; }
+  .shot::after { opacity: .85; }
+  .shot img { filter: saturate(1.3) contrast(1.09) brightness(1.03); }
+}
 .shot:hover {
   transform: translateY(-4px) scale(1.015);
   box-shadow: 0 0 0 1px var(--color-accent-600), 0 16px 34px rgba(0, 0, 0, .5);
