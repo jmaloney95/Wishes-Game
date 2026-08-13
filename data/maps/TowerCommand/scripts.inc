@@ -32,7 +32,9 @@ TowerCommand_EventScript_LiftUp::
 	end
 
 TowerCommand_EventScript_LiftOpen::
-	warp MAP_TOWER_TOP, 8, 11
+	@ (8,11) arrived at the map's south lip -- too low to see THE ONI at the
+	@ machine. Land mid-roof; the stairs-down triggers stay as the way back.
+	warp MAP_TOWER_TOP, 8, 9
 	waitstate
 	releaseall
 	end

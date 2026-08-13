@@ -10,7 +10,9 @@ TowerStreet_MapScripts::
 
 TowerStreet_EventScript_ExitToDistrict::
 	lockall
-	warp MAP_SHIN_TOKYO, 24, 5
+	@ (24,5) was the PRE-repaint district door; the tower door now sits at
+	@ (10,39) -- land one tile south of it.
+	warp MAP_SHIN_TOKYO, 10, 40
 	waitstate
 	releaseall
 	end

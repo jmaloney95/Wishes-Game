@@ -81,7 +81,7 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOT_ALLISON_LAND",
-      "x": 5,
+      "x": 6,
       "y": 38,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",

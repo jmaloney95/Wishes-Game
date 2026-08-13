@@ -197,7 +197,7 @@ static const struct WindowTemplate sWindowTemplate_PyramidPeak = {
 static const u8 sText_MenuDebug[] = _("DEBUG");
 static const u8 sText_QuestMenu[] = _("QUESTS");
 static const u8 sText_WotHMs[] = _("HMS");
-static const u8 sText_WotShadowLog[] = _("SHADOW LOG");
+static const u8 sText_WotShadowLog[] = _("LOG"); // "SHADOW LOG" overflowed the menu strip
 
 // WoT: HMs are badge-unlocked trainer abilities; this lists what's usable.
 extern const u8 WotHMs_EventScript_List[];
@@ -561,7 +561,6 @@ static void BuildNormalStartMenu(void)
 
     AddStartMenuAction(MENU_ACTION_SAVE);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildDebugStartMenu(void)
@@ -587,7 +586,6 @@ static void BuildSafariZoneStartMenu(void)
     AddStartMenuAction(MENU_ACTION_BAG);
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildLinkModeStartMenu(void)
@@ -602,7 +600,6 @@ static void BuildLinkModeStartMenu(void)
 
     AddStartMenuAction(MENU_ACTION_PLAYER_LINK);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildUnionRoomStartMenu(void)
@@ -617,7 +614,6 @@ static void BuildUnionRoomStartMenu(void)
 
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildBattlePikeStartMenu(void)
@@ -626,7 +622,6 @@ static void BuildBattlePikeStartMenu(void)
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildBattlePyramidStartMenu(void)
@@ -637,7 +632,6 @@ static void BuildBattlePyramidStartMenu(void)
     AddStartMenuAction(MENU_ACTION_REST_FRONTIER);
     AddStartMenuAction(MENU_ACTION_RETIRE_FRONTIER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildMultiPartnerRoomStartMenu(void)
@@ -645,7 +639,6 @@ static void BuildMultiPartnerRoomStartMenu(void)
     AddStartMenuAction(MENU_ACTION_POKEMON);
     AddStartMenuAction(MENU_ACTION_PLAYER);
     AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
 static void ShowSafariBallsWindow(void)

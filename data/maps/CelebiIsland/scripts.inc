@@ -47,7 +47,9 @@ CelebiIsland_EventScript_ArrivalCheckpointDone::
 @ warp target (19,28) was STALE -- a solid city tile in the repainted layout.
 CelebiIsland_EventScript_SurfToCity::
 	lockall
-	warp MAP_ROUTE129, 40, 37
+	@ (40,37) dropped the surfer outside Route 129's playable water --
+	@ (78,20) is the open sea off the island.
+	warp MAP_ROUTE129, 78, 20
 	waitstate
 	releaseall
 	end

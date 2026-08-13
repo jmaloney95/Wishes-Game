@@ -30,6 +30,7 @@
 #include "constants/maps.h"
 #include "constants/battle_anim.h"
 #include "constants/battle_partner.h"
+#include "constants/region_map_sections.h"
 #include "data/battle_environment.h"
 
 // .rodata
@@ -889,6 +890,14 @@ static void GetTimeVariantBackground(u16 environment, const u32 **tiles, const u
         default: break;
         }
         break;
+    case BATTLE_ENVIRONMENT_WOT_SEA:
+        switch (GetTimeOfDay())
+        {
+        case TIME_EVENING: *tiles = gBattleEnvironmentTiles_WotSeaDusk;  *tilemap = gBattleEnvironmentTilemap_WotSeaDusk;  *palette = gBattleEnvironmentPalette_WotSeaDusk;  break;
+        case TIME_NIGHT:   *tiles = gBattleEnvironmentTiles_WotSeaNight; *tilemap = gBattleEnvironmentTilemap_WotSeaNight; *palette = gBattleEnvironmentPalette_WotSeaNight; break;
+        default: break;
+        }
+        break;
     }
 }
 
@@ -937,6 +946,47 @@ static u8 GetBattleEnvironmentOverride(void)
      && TRAINER_BATTLE_PARAM.opponentA == TRAINER_SENNEN_CAPTAIN_KANNON)
         return BATTLE_ENVIRONMENT_VOLCANO;
 
+    // THE ONI on the machine floor + Draco in the dockhouse: the lab backdrop.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && (TRAINER_BATTLE_PARAM.opponentA == TRAINER_WALLY_VR_5
+      || TRAINER_BATTLE_PARAM.opponentA == TRAINER_WALLY_VR_4))
+        return BATTLE_ENVIRONMENT_WOT_LAB;
+
+    // The DragonKeeper warden duo on Ryuden Island fight under the stars.
+    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_AMY_AND_LIV_3)
+        return BATTLE_ENVIRONMENT_SPACE;
+
+    // Archipelago surf corridor: carchagui's open sea (tod variants at load).
+    if (gMapHeader.regionMapSectionId == MAPSEC_ROUTE_129
+     || gMapHeader.regionMapSectionId == MAPSEC_ROUTE_130)
+        return BATTLE_ENVIRONMENT_WOT_SEA;
+
+    // Celebi Island: the village backdrop everywhere on the island.
+    if (gMapHeader.regionMapSectionId == MAPSEC_CELEBI_ISLAND)
+        return BATTLE_ENVIRONMENT_WOT_TOWN;
+
+    // Munen Tunnel: carchagui's cavern.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MUNEN_TUNNEL)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MUNEN_TUNNEL))
+        return BATTLE_ENVIRONMENT_WOT_CAVE;
+
+    // The Ashlands trio + Tradewind's streets: aveontrainer's savanna.
+    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ASHLANDS)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ASHLANDS))
+     || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ASHLANDS_2)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ASHLANDS_2))
+     || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ASHLANDS_DESERT)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ASHLANDS_DESERT))
+     || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_TRADEWIND_TOWN)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_TRADEWIND_TOWN)))
+        return BATTLE_ENVIRONMENT_WOT_ASHLANDS;
+
+    // Tradewind Gym: carchagui's FR interior.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_TRADEWIND_GYM)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_TRADEWIND_GYM))
+        return BATTLE_ENVIRONMENT_WOT_INDOORS;
+
     if (TestRunner_Battle_GetForcedEnvironment()
      && gBattleEnvironmentInfo[gBattleEnvironment].background.tilemap
      && gBattleEnvironmentInfo[gBattleEnvironment].background.tileset)
@@ -955,6 +1005,9 @@ static u8 GetBattleEnvironmentOverride(void)
             return BATTLE_ENVIRONMENT_KYOGRE;
         case SPECIES_RAYQUAZA:
             return BATTLE_ENVIRONMENT_RAYQUAZA;
+        // Wishes of Tomorrow: Shadow Deoxys wakes up in the flooded lab.
+        case SPECIES_DEOXYS:
+            return BATTLE_ENVIRONMENT_WOT_LAB;
         default:
             return gBattleEnvironment;
         }

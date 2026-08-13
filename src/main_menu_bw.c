@@ -24,6 +24,9 @@
 #include "sound.h"
 #include "sprite.h"
 #include "string_util.h"
+#include "main_menu.h"
+#include "naming_screen.h"
+#include "random.h"
 #include "strings.h"
 #include "task.h"
 #include "text.h"
@@ -99,6 +102,20 @@ static void Task_ReturnToTitleScreen(u8 taskId);
 static void MoveWindowByMenuTypeAndCursorPos(u8 menuType, u8 cursorPos);
 static bool8 HandleMenuInput(u8 taskId);
 static void PrintContinueStats(void);
+static void CB2_BWNewGameFromNamingScreen(void);
+
+// Wishes of Tomorrow: the naming screen returns here with the chosen name.
+// An emptied-out entry falls back to a random preset, then the opening starts
+// with the same black-palette treatment the old skip-Birch path used.
+static void CB2_BWNewGameFromNamingScreen(void)
+{
+    if (gSaveBlock2Ptr->playerName[0] == EOS)
+        WotSetRandomPresetPlayerName();
+    gPlttBufferUnfaded[0] = RGB_BLACK;
+    gPlttBufferFaded[0] = RGB_BLACK;
+    BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+    SetMainCallback2(CB2_NewGame);
+}
 static void DestroyAllMenuSprites(void);
 static void LoadPlayerOverworldSprite(u8 anim);
 static void LoadPartyMonIcons(u8 anim);
@@ -399,18 +416,16 @@ static void Task_ExecuteMainMenuSelection(u8 taskId)
         {
         default:
         case ACTION_BW_NEWGAME:
-            gPlttBufferUnfaded[0] = RGB_BLACK;
-            gPlttBufferFaded[0] = RGB_BLACK;
-            // Wishes of Tomorrow: skip the Birch intro (mirrors main_menu.c).
+            // Wishes of Tomorrow: skip the Birch intro but ASK THE NAME --
+            // straight into the (B2W2-themed) naming screen with a random
+            // preset prefilled; CB2_BWNewGameFromNamingScreen then starts the
+            // opening. THIS is the menu the game actually runs -- main_menu.c
+            // has the same hook for completeness, but it is dormant.
             gSaveBlock2Ptr->playerGender = MALE;
-            {
-                static const u8 sWishesDefaultPlayerName[] = _("JOE");
-                StringCopy(gSaveBlock2Ptr->playerName, sWishesDefaultPlayerName);
-            }
-            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
-            FreeAllWindowBuffers();
-            SetMainCallback2(CB2_NewGame);
+            WotSetRandomPresetPlayerName();
             DestroyTask(taskId);
+            FreeAllWindowBuffers();
+            DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_BWNewGameFromNamingScreen);
             break;
         case ACTION_BW_CONTINUE:
             gPlttBufferUnfaded[0] = RGB_BLACK;

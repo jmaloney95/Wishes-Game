@@ -43,6 +43,36 @@ const u32 gBattleEnvironmentTiles_ToriiNight[] = INCGFX_U32("graphics/battle_env
 const u16 gBattleEnvironmentPalette_ToriiNight[] = INCGFX_U16("graphics/battle_environment/torii_night/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_ToriiNight[] = INCBIN_U32("graphics/battle_environment/torii_night/map.bin.smolTM");
 
+// Wishes of Tomorrow: carchagui backdrops (open sea with tod variants, Munen
+// cave, and the FR-patch Lab/Space/Town/Indoors) + aveontrainer's Ashlands.
+const u32 gBattleEnvironmentTiles_WotSea[] = INCGFX_U32("graphics/battle_environment/sea/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotSea[] = INCGFX_U16("graphics/battle_environment/sea/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotSea[] = INCBIN_U32("graphics/battle_environment/sea/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotSeaDusk[] = INCGFX_U32("graphics/battle_environment/sea_dusk/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotSeaDusk[] = INCGFX_U16("graphics/battle_environment/sea_dusk/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotSeaDusk[] = INCBIN_U32("graphics/battle_environment/sea_dusk/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotSeaNight[] = INCGFX_U32("graphics/battle_environment/sea_night/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotSeaNight[] = INCGFX_U16("graphics/battle_environment/sea_night/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotSeaNight[] = INCBIN_U32("graphics/battle_environment/sea_night/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotCave[] = INCGFX_U32("graphics/battle_environment/munen_cave/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotCave[] = INCGFX_U16("graphics/battle_environment/munen_cave/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotCave[] = INCBIN_U32("graphics/battle_environment/munen_cave/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotAshlands[] = INCGFX_U32("graphics/battle_environment/ashlands/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotAshlands[] = INCGFX_U16("graphics/battle_environment/ashlands/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotAshlands[] = INCBIN_U32("graphics/battle_environment/ashlands/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotLab[] = INCGFX_U32("graphics/battle_environment/lab/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotLab[] = INCGFX_U16("graphics/battle_environment/lab/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotLab[] = INCBIN_U32("graphics/battle_environment/lab/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotSpace[] = INCGFX_U32("graphics/battle_environment/space/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotSpace[] = INCGFX_U16("graphics/battle_environment/space/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotSpace[] = INCBIN_U32("graphics/battle_environment/space/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotTown[] = INCGFX_U32("graphics/battle_environment/town/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotTown[] = INCGFX_U16("graphics/battle_environment/town/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotTown[] = INCBIN_U32("graphics/battle_environment/town/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotIndoors[] = INCGFX_U32("graphics/battle_environment/indoors/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotIndoors[] = INCGFX_U16("graphics/battle_environment/indoors/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotIndoors[] = INCBIN_U32("graphics/battle_environment/indoors/map.bin.smolTM");
+
 // Volcano (Wishes of Tomorrow): painted molten-summit background (art: aveontrainer).
 const u32 gBattleEnvironmentTiles_Volcano[] = INCGFX_U32("graphics/battle_environment/volcano/tiles.png", ".4bpp.smol");
 const u16 gBattleEnvironmentPalette_Volcano[] = INCGFX_U16("graphics/battle_environment/volcano/palette.pal", ".gbapal");
