@@ -62,6 +62,9 @@ pinkscales · Phyromatical · MagiScarf · PeekyChew · Elinthind · lo8jd · Da
 **Shin-Tokyo Art**
 Emeiry · *Odisea* by ekat99 — used under [CC BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
+**Battle Backdrops**
+carchagui (open sea, cave, and the FR-patch Lab/Space/Town/Indoors) · aveontrainer (Ashlands savanna, molten summit)
+
 **Music**
 Arranged from the Pokémon soundtracks.
 

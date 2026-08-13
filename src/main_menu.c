@@ -178,6 +178,7 @@ static u8 sBirchSpeechMainTaskId;
 // Static ROM declarations
 
 static u32 InitMainMenu(bool8);
+static void CB2_WotNewGameFromNamingScreen(void);
 static void Task_MainMenuCheckSaveFile(u8);
 static void Task_MainMenuCheckBattery(u8);
 static void Task_WaitForSaveFileErrorWindow(u8);
@@ -952,6 +953,29 @@ static void Task_HandleMainMenuInput(u8 taskId)
         gTasks[taskId].func = Task_HighlightSelectedMainMenuItem;
 }
 
+// Wishes of Tomorrow: random preset name, exported so the BW main menu (the
+// one the game actually runs) can use NUM_PRESET_NAMES without duplicating it.
+void WotSetRandomPresetPlayerName(void)
+{
+    NewGameBirchSpeech_SetDefaultPlayerName(Random() % NUM_PRESET_NAMES);
+}
+
+// Wishes of Tomorrow: the naming screen returns here with the chosen name in
+// gSaveBlock2Ptr->playerName. An emptied-out entry falls back to a preset so
+// the save never carries a blank name; then the opening starts exactly as the
+// old skip-Birch path did (black palettes -> CB2_NewGame).
+static void CB2_WotNewGameFromNamingScreen(void)
+{
+    if (gSaveBlock2Ptr->playerName[0] == EOS)
+        NewGameBirchSpeech_SetDefaultPlayerName(Random() % NUM_PRESET_NAMES);
+    gPlttBufferUnfaded[0] = RGB_BLACK;
+    gPlttBufferFaded[0] = RGB_BLACK;
+    // Black out all palette buffers so the warp's fade-from-black has a clean
+    // starting state (see the old inline comment: prevents a garbage flash).
+    BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
+    SetMainCallback2(CB2_NewGame);
+}
+
 static void Task_HandleMainMenuAPressed(u8 taskId)
 {
     bool8 wirelessAdapterConnected;
@@ -1088,22 +1112,15 @@ static void Task_HandleMainMenuAPressed(u8 taskId)
                 return;
             }
 
-            gPlttBufferUnfaded[0] = RGB_BLACK;
-            gPlttBufferFaded[0] = RGB_BLACK;
-            // Pokemon Wishes of Tomorrow: skip the Birch intro and name input.
-            // Default gender = male, default name = "JOE". To restore the vanilla
-            // Birch sequence, replace this block with: gTasks[taskId].func = Task_NewGameBirchSpeech_Init;
+            // Pokemon Wishes of Tomorrow: skip the Birch intro but ASK THE
+            // NAME -- straight into the (B2W2-themed) naming screen with a
+            // random preset prefilled, then into the opening via
+            // CB2_WotNewGameFromNamingScreen below.
             gSaveBlock2Ptr->playerGender = MALE;
-            {
-                static const u8 sWishesDefaultPlayerName[] = _("JOE");
-                StringCopy(gSaveBlock2Ptr->playerName, sWishesDefaultPlayerName);
-            }
-            // Black out all palette buffers so the warp's fade-from-black has a clean
-            // starting state. Without this the spawn shows a flash of white/garbage
-            // until the player opens and closes a menu, which forces a palette refresh.
-            BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
-            SetMainCallback2(CB2_NewGame);
+            NewGameBirchSpeech_SetDefaultPlayerName(Random() % NUM_PRESET_NAMES);
             DestroyTask(taskId);
+            FreeAllWindowBuffers();
+            DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_WotNewGameFromNamingScreen);
             return;
         case ACTION_CONTINUE:
             gPlttBufferUnfaded[0] = RGB_BLACK;

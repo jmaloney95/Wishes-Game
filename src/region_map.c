@@ -386,6 +386,10 @@ static const u8 sMapHealLocations[][3] =
     [MAPSEC_POMPEII] = {MAP_GROUP(MAP_NEW_MAP), MAP_NUM(MAP_NEW_MAP), HEAL_LOCATION_NEW_MAP_INN},
     [MAPSEC_WALNUT_WOODS] = {MAP_GROUP(MAP_WALNUT_WOODS), MAP_NUM(MAP_WALNUT_WOODS), HEAL_LOCATION_WALNUT_WOODS},
     [MAPSEC_SENNEN_LINE] = {MAP_GROUP(MAP_SENNEN_VILLAGE), MAP_NUM(MAP_SENNEN_VILLAGE), HEAL_LOCATION_SENNEN_VILLAGE},
+    // Wishes of Tomorrow: post-game jet destinations with heal anchors.
+    [MAPSEC_FROSTWOOD_TOWN] = {MAP_GROUP(MAP_FROSTWOOD_TOWN), MAP_NUM(MAP_FROSTWOOD_TOWN), HEAL_LOCATION_FROSTWOOD_TOWN},
+    [MAPSEC_TRADEWIND_TOWN] = {MAP_GROUP(MAP_TRADEWIND_TOWN), MAP_NUM(MAP_TRADEWIND_TOWN), HEAL_LOCATION_TRADEWIND_TOWN},
+    [MAPSEC_SHIN_TOKYO] = {MAP_GROUP(MAP_REBEL_HIDEOUT), MAP_NUM(MAP_REBEL_HIDEOUT), HEAL_LOCATION_REBEL_HIDEOUT},
     [MAPSEC_OLDALE_TOWN] = {MAP_GROUP(MAP_OLDALE_TOWN), MAP_NUM(MAP_OLDALE_TOWN), HEAL_LOCATION_OLDALE_TOWN},
     [MAPSEC_DEWFORD_TOWN] = {MAP_GROUP(MAP_DEWFORD_TOWN), MAP_NUM(MAP_DEWFORD_TOWN), HEAL_LOCATION_DEWFORD_TOWN},
     [MAPSEC_LAVARIDGE_TOWN] = {MAP_GROUP(MAP_LAVARIDGE_TOWN), MAP_NUM(MAP_LAVARIDGE_TOWN), HEAL_LOCATION_LAVARIDGE_TOWN},
@@ -1434,8 +1438,20 @@ static u8 GetMapsecType(mapsec_u16_t mapSecId)
     case MAPSEC_POMPEII:
     case MAPSEC_WALNUT_WOODS:
     case MAPSEC_SENNEN_LINE:
-        // TEMP (testing): custom towns with heal locations are always flyable so the
-        // debug Fly menu works. Gate on visited/story flags before release.
+    case MAPSEC_FROSTWOOD_TOWN:
+    case MAPSEC_TRADEWIND_TOWN:
+    case MAPSEC_SHIN_TOKYO:
+    case MAPSEC_LAKE_MUNEN:
+    case MAPSEC_ROUTE_ONE:
+    case MAPSEC_STAR_SUMMIT:
+    case MAPSEC_ASHLANDS:
+    case MAPSEC_NATIONAL_PARK:
+    case MAPSEC_CELEBI_ISLAND:
+    case MAPSEC_RYUDEN_ISLAND:
+    case MAPSEC_PROTOTYPE_ISLAND:
+        // Wishes of Tomorrow: every region area is flyable. No visited gating
+        // is needed -- FLY itself only unlocks with the post-game PRIVATE JET
+        // (IsFieldMoveUnlocked_Fly), by which point the region is open.
         return MAPSECTYPE_CITY_CANFLY;
     case MAPSEC_LITTLEROOT_TOWN:
         return FlagGet(FLAG_VISITED_LITTLEROOT_TOWN) ? MAPSECTYPE_CITY_CANFLY : MAPSECTYPE_CITY_CANTFLY;
@@ -2532,7 +2548,39 @@ u32 FilterFlyDestination(struct RegionMap* regionMap)
 
 void SetFlyDestination(struct RegionMap* regionMap)
 {
-    u32 flyDestination = FilterFlyDestination(regionMap);
+    u32 flyDestination;
+
+    // Wishes of Tomorrow: areas without a heal anchor land the jet on a
+    // hand-verified open tile beside each area's entrance.
+    switch (regionMap->mapSecId)
+    {
+    case MAPSEC_LAKE_MUNEN:
+        SetWarpDestination(MAP_GROUP(MAP_MUNEN_LAKE), MAP_NUM(MAP_MUNEN_LAKE), WARP_ID_NONE, 15, 1);
+        return;
+    case MAPSEC_ROUTE_ONE: // Melting Mile
+        SetWarpDestination(MAP_GROUP(MAP_MELTING_MILE), MAP_NUM(MAP_MELTING_MILE), WARP_ID_NONE, 28, 7);
+        return;
+    case MAPSEC_STAR_SUMMIT:
+        SetWarpDestination(MAP_GROUP(MAP_STAR_SUMMIT), MAP_NUM(MAP_STAR_SUMMIT), WARP_ID_NONE, 16, 23);
+        return;
+    case MAPSEC_ASHLANDS:
+        SetWarpDestination(MAP_GROUP(MAP_ASHLANDS), MAP_NUM(MAP_ASHLANDS), WARP_ID_NONE, 22, 14);
+        return;
+    case MAPSEC_NATIONAL_PARK:
+        SetWarpDestination(MAP_GROUP(MAP_ROUTE_2_2), MAP_NUM(MAP_ROUTE_2_2), WARP_ID_NONE, 58, 11);
+        return;
+    case MAPSEC_CELEBI_ISLAND:
+        SetWarpDestination(MAP_GROUP(MAP_CELEBI_ISLAND), MAP_NUM(MAP_CELEBI_ISLAND), WARP_ID_NONE, 26, 21);
+        return;
+    case MAPSEC_RYUDEN_ISLAND:
+        SetWarpDestination(MAP_GROUP(MAP_DRAGON_KEEPER), MAP_NUM(MAP_DRAGON_KEEPER), WARP_ID_NONE, 11, 7);
+        return;
+    case MAPSEC_PROTOTYPE_ISLAND:
+        SetWarpDestination(MAP_GROUP(MAP_PROTOTYPE_ISLAND), MAP_NUM(MAP_PROTOTYPE_ISLAND), WARP_ID_NONE, 5, 17);
+        return;
+    }
+
+    flyDestination = FilterFlyDestination(regionMap);
 
     if (flyDestination != WARP_ID_NONE)
         SetWarpDestinationToHealLocation(flyDestination);
