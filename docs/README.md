@@ -50,15 +50,35 @@ To publish a patch, see [`patches/README.md`](patches/README.md).
 
 ## Updating for a new release
 
-Three places, all obvious:
+Four places:
 
 | What | Where |
 | --- | --- |
 | Version + date on the page | `RELEASE` at the top of `assets/site.js` |
-| Patch filename | `PATCH.url` at the top of `assets/patcher.js` |
+| Patch filename the patcher loads | `PATCH.url` at the top of `assets/patcher.js` |
+| Patch download button | `data-patch-link` in `index.html` — **version-pinned**, see below |
 | Changelog entry | `index.html`, search `data-changelog` |
 
-The GitHub buttons point at `/releases/latest` and never need editing.
+"Release notes" and "Source & issues" point at `/releases/latest` and the repo,
+so they never need editing.
+
+## The download counter
+
+There is no server here, so the number on the download panel is GitHub's own
+tally of release-asset downloads, read from the public API
+(`/repos/:owner/:repo/releases`, no auth, CORS-enabled, 60 requests an hour per
+visitor, cached in `localStorage` for ten minutes). It sums every `.bps` asset
+across every release, so it keeps climbing when a new version ships.
+
+**This is why the download button points at the release asset and not at
+`patches/…`.** GitHub only counts the former. Repointing that button at the
+local copy would peg the counter at zero for ever — which is also why the
+button URL is pinned to a specific version and has to be updated per release.
+
+Two things the number does not include: people who use the in-page patcher
+(it reads the same-origin copy, because the release asset host sends no CORS
+headers), and repeat downloads GitHub de-duplicates. It's a floor, not a click
+count. If the API call fails, the chip falls back to showing the version.
 
 ## Local preview
 

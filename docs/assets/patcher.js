@@ -425,11 +425,11 @@
       setSlot(ui.patchSlot, patchName,
         (patchSize ? fmtBytes(patchSize) + " · " : "") + "downloads when you patch", true);
       root.dataset.patchReady = "1";
-      document.querySelectorAll("[data-patch-link]").forEach(function (a) {
-        a.href = PATCH.url;
-        a.setAttribute("download", "");
-        var meta = a.querySelector(".dl-meta");
-        if (meta) meta.textContent = (patchSize ? fmtBytes(patchSize) + " " : "") + "↓";
+      // Only fill in the size. The href stays on the release asset so the
+      // download registers with GitHub and feeds the counter; pointing it at
+      // this local copy would make that number permanently zero.
+      document.querySelectorAll("[data-patch-link] .dl-meta").forEach(function (meta) {
+        meta.textContent = (patchSize ? fmtBytes(patchSize) + " " : "") + "↓";
       });
       say("idle", "Choose your base ROM to begin.");
       refresh();

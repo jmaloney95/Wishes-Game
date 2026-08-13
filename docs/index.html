@@ -245,11 +245,12 @@
           <h2>Download <span data-version>v1.0.0</span></h2>
           <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
 
-          <div class="version-chip">
-            <span class="digits" data-version-digits aria-hidden="true"></span>
+          <div class="version-chip" data-counter>
+            <span class="digits" data-count-digits aria-hidden="true"></span>
             <span class="version-label">
-              Current version<br>
-              <span data-release-date>released 12 August 2026</span>
+              <span class="sr-only" data-count-sr></span>
+              <span data-count-title>Downloads</span><br>
+              <span data-count-sub>since 12 August 2026</span>
             </span>
           </div>
 
@@ -257,7 +258,11 @@
         </div>
 
         <div class="download-links">
-          <a class="dl dl-primary" data-patch-link href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
+          <!-- Points at the release asset, not the copy this site serves, so
+               GitHub records the download and the counter above has something
+               real to read. Works without JS. -->
+          <a class="dl dl-primary" data-patch-link
+             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.0.0/wishes-of-tomorrow-1.0.0.bps">
             <span>Patch file (.bps)</span><span class="dl-meta">↓</span>
           </a>
           <a class="dl" href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
