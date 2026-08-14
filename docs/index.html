@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260813e">
+<link rel="stylesheet" href="assets/styles.css?v=20260814a">
 </head>
 <body>
 
@@ -281,7 +281,7 @@
         <div>
           <div class="kicker">APPLY THE PATCH</div>
           <h3>Patch it here, in this tab.</h3>
-          <p>Pick your own copy of <b>Pokémon Emerald (U)</b> and this page will build your patched ROM. Your file is read and written locally by your browser — it is never uploaded, and there is no server here to upload it to.</p>
+          <p>Pick your own copy of <b>Pokémon Emerald (U)</b> — the 16&nbsp;MB .gba or a .zip of it, either works — and this page will build your patched ROM. Your file is read and written locally by your browser — it is never uploaded, and there is no server here to upload it to.</p>
         </div>
         <div class="patcher-privacy" aria-hidden="true">
           <span class="lock">▣</span>
@@ -297,7 +297,7 @@
             <div class="patch-slot-name" data-slot-name>No file chosen</div>
             <div class="patch-slot-note" data-slot-note></div>
           </div>
-          <label class="patch-pick" for="rom-file">Choose…<input id="rom-file" type="file" accept=".gba,.bin"></label>
+          <label class="patch-pick" for="rom-file">Choose…<input id="rom-file" type="file"></label>
         </div>
 
         <div class="patch-slot" data-slot="patch">
@@ -307,7 +307,7 @@
             <div class="patch-slot-name" data-slot-name>Loading…</div>
             <div class="patch-slot-note" data-slot-note></div>
           </div>
-          <label class="patch-pick" for="patch-file">Choose…<input id="patch-file" type="file" accept=".bps,.ups,.ips"></label>
+          <label class="patch-pick" for="patch-file">Choose…<input id="patch-file" type="file"></label>
         </div>
       </div>
 
@@ -350,7 +350,7 @@
       <div class="kicker" data-reveal>REQUIREMENTS</div>
       <h2 class="h-sm" data-reveal>What you need</h2>
       <dl class="req">
-        <div data-reveal><dt>Base ROM</dt><dd>Your own legally obtained dump of <b>Pokémon Emerald (U)</b> — 16 MB, header code BPEE. Not included, not linked.</dd></div>
+        <div data-reveal><dt>Base ROM</dt><dd>Your own legally obtained dump of <b>Pokémon Emerald (U)</b> — 16 MB unzipped, header code BPEE. A zipped copy (about 6 MB) is fine too: <a href="#download">the patcher on this page</a> unzips it for you. Not included, not linked.</dd></div>
         <div data-reveal><dt>Patcher</dt><dd>None needed — <a href="#download">the patcher on this page</a> runs in your browser. Flips works too if you'd rather do it offline.</dd></div>
         <div data-reveal><dt>Emulator</dt><dd>mGBA 0.10+ recommended. VBA-M and Delta on iOS also tested.</dd></div>
         <div data-reveal><dt>Hardware</dt><dd>Runs on original GBA hardware via flash cart, and on Analogue Pocket.</dd></div>
@@ -400,7 +400,7 @@
     </details>
     <details data-reveal>
       <summary><span>The patcher says my ROM is wrong. Now what?</span><span class="plus">+</span></summary>
-      <p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE.</p>
+      <p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE. A .zip of that file also works — the patcher unzips it before checking.</p>
     </details>
     <details data-reveal>
       <summary><span>Can I play it on my phone?</span><span class="plus">+</span></summary>
@@ -430,7 +430,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260813e" defer></script>
-<script src="assets/patcher.js?v=20260813e" defer></script>
+<script src="assets/site.js?v=20260814a" defer></script>
+<script src="assets/patcher.js?v=20260814a" defer></script>
 </body>
 </html>
