@@ -499,6 +499,29 @@
     clone.addEventListener("mousedown", flip);
   }
 
+  /* ── keep the emulator menu behind the ☰ button ───────────────────
+     EmulatorJS opens its menu bar on any click on the game container,
+     and its attempt to ignore touch-generated clicks checks
+     e.pointerType === "touch" — a field iOS Safari's click events don't
+     carry. So on iPhones, stray taps near the on-screen controls popped
+     the menu mid-game. This capture-phase listener swallows clicks that
+     land on the bare game area (canvas, virtual gamepad, or the
+     container itself) before that menu listener sees them. The ☰ button
+     and the menu's own controls are untouched. */
+  function restrictMenuToButton() {
+    var em = window.EJS_emulator;
+    if (!em || !em.elements || !em.elements.parent) return;
+    var parent = em.elements.parent;
+    parent.addEventListener("click", function (e) {
+      var t = e.target;
+      if (!t) return;
+      if (em.elements.menuToggle && em.elements.menuToggle.contains(t)) return;
+      var bare = t === parent || t === em.game || t === em.canvas ||
+        (em.virtualGamepad && em.virtualGamepad.contains(t));
+      if (bare) e.stopPropagation();
+    }, true);
+  }
+
   /* ── fullscreen ─────────────────────────────────────────────────────
      Native Fullscreen API where it exists; on iPhone (which has no
      Fullscreen API for elements) the same button falls back to a
@@ -552,6 +575,7 @@
       ui.play.disabled = false;
       ui.play.textContent = "▶ Playing";
       makeFastForwardToggle();
+      restrictMenuToButton();
     };
 
     var s = document.createElement("script");
