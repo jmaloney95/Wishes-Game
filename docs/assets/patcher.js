@@ -476,6 +476,53 @@
     });
   }
 
+  /* ── fast-forward as a toggle ─────────────────────────────────────
+     The emulator's on-screen "Fast" button only fast-forwards while held,
+     which is miserable on a phone. Rebinding it to the persistent
+     "Fast Forward" setting (the same one in the emulator's settings menu)
+     turns it into a press-on / press-off toggle. Cloning the element
+     drops the emulator's own hold listeners. */
+  function makeFastForwardToggle() {
+    var em = window.EJS_emulator;
+    var btn = document.querySelector("#game .b_speed_fast");
+    if (!em || !btn || !em.changeSettingOption) return;
+    var clone = btn.cloneNode(true);
+    btn.parentNode.replaceChild(clone, btn);
+    function flip(e) {
+      e.preventDefault();
+      var on = !em.isFastForward;
+      em.changeSettingOption("fastForward", on ? "enabled" : "disabled");
+      clone.classList.toggle("ejs_virtualGamepad_button_down", on);
+      em.displayMessage(on ? "FAST FORWARD ON" : "FAST FORWARD OFF");
+    }
+    clone.addEventListener("touchstart", flip);
+    clone.addEventListener("mousedown", flip);
+  }
+
+  /* ── fullscreen ─────────────────────────────────────────────────────
+     Native Fullscreen API where it exists; on iPhone (which has no
+     Fullscreen API for elements) the same button falls back to a
+     fixed-position overlay that fills the visual viewport. */
+  var fsActive = false;
+  function setFs(on) {
+    fsActive = on;
+    ui.player.classList.toggle("is-fs", on);
+    document.documentElement.classList.toggle("has-fs-player", on);
+    if (ui.fs) ui.fs.textContent = on ? "✕ Exit fullscreen" : "⛶ Fullscreen";
+    // Nudge the emulator to re-measure its canvas.
+    window.dispatchEvent(new Event("resize"));
+  }
+  function toggleFs() {
+    var native = document.fullscreenEnabled && ui.player.requestFullscreen;
+    if (!fsActive) {
+      setFs(true);
+      if (native) ui.player.requestFullscreen().catch(function () {});
+    } else {
+      if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+      setFs(false);
+    }
+  }
+
   function bootPlayer() {
     if (!patchedRom) return;
     ui.player.hidden = false;
@@ -493,10 +540,18 @@
     window.EJS_gameUrl = URL.createObjectURL(new Blob([patchedRom], { type: "application/octet-stream" }));
     window.EJS_gameName = "Wishes of Tomorrow";
     window.EJS_color = "#9184d9";
+    window.EJS_backgroundColor = "#161826";
+    window.EJS_startButtonName = "PRESS START";
+    window.EJS_alignStartButton = "center";
+    // Menu entries we have no use for: cheats, the download cache manager,
+    // and Exit (the Close button above the stage already does that).
+    window.EJS_Buttons = { cheat: false, cacheManager: false, exitEmulation: false };
+    window.EJS_defaultOptions = { "ff-ratio": "3.0" };
     window.EJS_startOnLoaded = true;
     window.EJS_onGameStart = function () {
       ui.play.disabled = false;
       ui.play.textContent = "▶ Playing";
+      makeFastForwardToggle();
     };
 
     var s = document.createElement("script");
@@ -512,6 +567,7 @@
   }
 
   function closePlayer() {
+    if (fsActive) toggleFs();
     ui.player.hidden = true;
     // Silence it rather than tear it down, so reopening is instant.
     try {
@@ -541,6 +597,12 @@
     if (ui.play) ui.play.addEventListener("click", bootPlayer);
     var closeBtn = root.querySelector("[data-player-close]");
     if (closeBtn) closeBtn.addEventListener("click", closePlayer);
+    ui.fs = root.querySelector("[data-player-fs]");
+    if (ui.fs) ui.fs.addEventListener("click", toggleFs);
+    // Leaving native fullscreen via Esc or a system gesture: drop the overlay.
+    document.addEventListener("fullscreenchange", function () {
+      if (!document.fullscreenElement && fsActive) setFs(false);
+    });
 
     // Drag and drop onto either slot.
     [[ui.romSlot, onRom], [ui.patchSlot, onPatch]].forEach(function (pair) {
