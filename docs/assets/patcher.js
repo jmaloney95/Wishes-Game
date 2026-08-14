@@ -255,6 +255,61 @@
     throw PatchError("That file isn't a patch.", "Expected a .bps, .ups or .ips file.");
   }
 
+
+  /* ── zip support ────────────────────────────────────────────────────
+     Dumps often travel as a ~6 MB .zip of the 16 MB ROM, and iOS makes
+     unzipping a chore, so the patcher accepts the zip directly. Minimal
+     reader: walk the central directory, take the entry that looks most
+     like a GBA ROM, inflate it with the browser's DecompressionStream. */
+  function isZip(b) {
+    return b.length > 4 && b[0] === 0x50 && b[1] === 0x4b && b[2] === 0x03 && b[3] === 0x04;
+  }
+  function u16(b, o) { return b[o] | (b[o + 1] << 8); }
+  function u32(b, o) { return (b[o] | (b[o + 1] << 8) | (b[o + 2] << 16) | (b[o + 3] << 24)) >>> 0; }
+
+  function inflateRaw(bytes) {
+    if (typeof DecompressionStream === "undefined") {
+      return Promise.reject(PatchError("This browser can't unzip files.",
+        "Unzip it yourself and choose the .gba inside."));
+    }
+    var stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return new Response(stream).arrayBuffer().then(function (buf) { return new Uint8Array(buf); });
+  }
+
+  function unzipRom(bytes) {
+    var cantRead = PatchError("Couldn't read that zip file.", "Unzip it yourself and choose the .gba inside.");
+    // End-of-central-directory record: scan back past any zip comment.
+    var i = bytes.length - 22, stop = Math.max(0, bytes.length - 22 - 65535);
+    while (i >= stop && u32(bytes, i) !== 0x06054b50) i--;
+    if (i < stop || i < 0) return Promise.reject(cantRead);
+    var count = u16(bytes, i + 10), off = u32(bytes, i + 16), best = null;
+    for (var n = 0; n < count && u32(bytes, off) === 0x02014b50; n++) {
+      var nlen = u16(bytes, off + 28), elen = u16(bytes, off + 30), clen = u16(bytes, off + 32);
+      var name = "";
+      for (var c = 0; c < nlen; c++) name += String.fromCharCode(bytes[off + 46 + c]);
+      var e = {
+        name: name,
+        method: u16(bytes, off + 10),
+        csize: u32(bytes, off + 20),
+        usize: u32(bytes, off + 24),
+        lho: u32(bytes, off + 42),
+        isGba: /\.(gba|bin)$/i.test(name)
+      };
+      if (!best || (e.isGba && !best.isGba) || (e.isGba === best.isGba && e.usize > best.usize)) best = e;
+      off += 46 + nlen + elen + clen;
+    }
+    if (!best || !best.usize) return Promise.reject(PatchError("That zip file looks empty."));
+    if (best.method !== 0 && best.method !== 8) return Promise.reject(cantRead);
+    var lh = best.lho;
+    if (u32(bytes, lh) !== 0x04034b50) return Promise.reject(cantRead);
+    var start = lh + 30 + u16(bytes, lh + 26) + u16(bytes, lh + 28);
+    var data = bytes.subarray(start, start + best.csize);
+    var out = best.method === 0 ? Promise.resolve(new Uint8Array(data)) : inflateRaw(data);
+    return out.then(function (rom) {
+      return { name: best.name.split("/").pop() || best.name, bytes: rom };
+    });
+  }
+
   /* ── UI ─────────────────────────────────────────────────────────── */
   var ui = {};
   var romBytes = null, romName = "";
@@ -315,15 +370,40 @@
       return;
     }
     romName = file.name;
+    var fromZip = false;
+
+    // A zipped dump is fine — unzip it here rather than sending the
+    // player off to find an unzipper (a real chore on a phone).
+    if (isZip(romBytes)) {
+      say("busy", "Unzipping…");
+      try {
+        var entry = await unzipRom(romBytes);
+        romBytes = entry.bytes;
+        romName = entry.name || file.name;
+        fromZip = true;
+      } catch (err) {
+        romBytes = null;
+        setSlot(ui.romSlot, file.name, "couldn't unzip", false);
+        say("bad", err.message, err.detail);
+        refresh();
+        return;
+      }
+    }
+
     var code = headerCode(romBytes);
-    var note = fmtBytes(romBytes.length) + (code ? " · " + code : "");
-    setSlot(ui.romSlot, file.name, note, true);
+    var note = fmtBytes(romBytes.length) + (code ? " · " + code : "") +
+      (fromZip ? " · unzipped" : "");
+    setSlot(ui.romSlot, romName, note, true);
 
     // A friendly nudge before the real checksum test runs on apply.
     if (code && PATCH.base.code && code !== PATCH.base.code) {
       say("warn", "That looks like the wrong game.",
         "The header says " + code + "; this patch is for " + PATCH.base.name +
         " (" + PATCH.base.code + "). You can still try.");
+    } else if (PATCH.base.size && romBytes.length !== PATCH.base.size) {
+      say("warn", "That file isn't the usual size.",
+        "The base ROM is " + fmtBytes(PATCH.base.size) + " unzipped; this file is " +
+        fmtBytes(romBytes.length) + ". You can still try.");
     } else {
       say("idle", "Ready when you are.");
     }
@@ -478,7 +558,7 @@
     });
 
     setSlot(ui.romSlot, "No file chosen",
-      PATCH.base.name + " · " + fmtBytes(PATCH.base.size), false);
+      PATCH.base.name + " · " + fmtBytes(PATCH.base.size) + " · .gba or .zip", false);
 
     // Only ask whether the patch exists and how big it is — a HEAD request,
     // not the file itself. The bytes come down when the player presses Apply.
@@ -522,6 +602,8 @@
     applyBPS: applyBPS,
     applyUPS: applyUPS,
     applyIPS: applyIPS,
-    detectAndApply: detectAndApply
+    detectAndApply: detectAndApply,
+    isZip: isZip,
+    unzipRom: unzipRom
   };
 })();
