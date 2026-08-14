@@ -654,6 +654,44 @@ p { margin: 0; }
 }
 .player-note b { color: rgba(233, 233, 237, .8); font-weight: 500; }
 
+.player-head-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* — fullscreen mode ─────────────────────────────────────────────────
+   Applied by the ⛶ button. Rides on the Fullscreen API where available;
+   on iPhone it is just this fixed overlay, which is why it uses dvh. */
+.player.is-fs {
+  position: fixed; inset: 0; z-index: 1000;
+  margin: 0; padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  border-top: 0; background: var(--color-bg);
+  display: flex; flex-direction: column;
+  height: 100dvh; box-sizing: border-box;
+}
+.player.is-fs .player-head { margin-bottom: 8px; flex: none; }
+.player.is-fs .player-stage {
+  flex: 1; min-height: 0; height: auto; aspect-ratio: auto;
+  border-radius: 0;
+}
+.player.is-fs .player-note { display: none; }
+html.has-fs-player, html.has-fs-player body { overflow: hidden; }
+.player.is-fs:fullscreen { background: #000; }
+
+/* — emulator cosmetics ──────────────────────────────────────────────
+   EmulatorJS takes its accent from EJS_color; these override the rest
+   of its stock look to match the site. Scoped to the stage. */
+.player-stage .ejs_start_button {
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px; letter-spacing: 1px; line-height: 45px;
+  border-radius: 8px;
+}
+.player-stage .ejs_small_screen .ejs_menu_bar {
+  background: rgba(22, 24, 38, .96);
+  border: 1px solid rgba(233, 233, 237, .12);
+  border-bottom: 0; border-radius: 10px 10px 0 0;
+}
+.player-stage .ejs_virtualGamepad_button {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .8);
+}
+
 .patch-status {
   margin-top: 18px; padding-left: 16px;
   border-left: 2px solid rgba(233, 233, 237, .2);
@@ -910,7 +948,7 @@ p { margin: 0; }
   .patch-actions { margin-top: 16px; }
   .patch-legal { margin-top: 16px; padding-top: 12px; }
   /* Room for the on-screen pad, which the emulator draws over the game. */
-  .player-stage { aspect-ratio: auto; height: 62vh; min-height: 400px; }
+  .player-stage { aspect-ratio: auto; height: 68dvh; min-height: 380px; }
 
   .two-col { gap: 28px; }
   .req > div { padding: 10px 0; }
