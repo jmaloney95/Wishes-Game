@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260814a">
+<link rel="stylesheet" href="assets/styles.css?v=20260814b">
 </head>
 <body>
 
@@ -329,13 +329,18 @@
       <div class="player" data-player hidden>
         <div class="player-head">
           <div class="kicker">NOW PLAYING</div>
-          <button class="player-close" type="button" data-player-close>Close player</button>
+          <div class="player-head-actions">
+            <button class="player-close" type="button" data-player-fs>⛶ Fullscreen</button>
+            <button class="player-close" type="button" data-player-close>Close player</button>
+          </div>
         </div>
         <div class="player-stage"><div id="game"></div></div>
         <p class="player-note">
           Keyboard on desktop: arrows to move, <b>Z</b> and <b>X</b> for A and B,
           <b>Enter</b> for Start, <b>Shift</b> for Select. On a phone the on-screen
-          pad appears automatically. Saves live in this browser — export the
+          pad appears automatically, and <b>⛶ Fullscreen</b> gives the game the
+          whole screen. The on-screen <b>Fast</b> button toggles fast-forward on
+          and off — no need to hold it. Saves live in this browser — export the
           save from the emulator's menu if you want to keep it.
         </p>
       </div>
@@ -430,7 +435,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260814a" defer></script>
-<script src="assets/patcher.js?v=20260814a" defer></script>
+<script src="assets/site.js?v=20260814b" defer></script>
+<script src="assets/patcher.js?v=20260814b" defer></script>
 </body>
 </html>
