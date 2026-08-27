@@ -3,7 +3,6 @@
   "name": "TrainerTower_Lobby_Frlg",
   "layout": "LAYOUT_TRAINER_TOWER_LOBBY",
   "music": "MUS_RG_TRAINER_TOWER",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_TRAINER_TOWER_2",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,13 +11,11 @@
   "allow_escaping": false,
   "allow_running": true,
   "show_map_name": false,
-  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [
     {
       "local_id": "LOCALID_TOWER_NURSE",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_NURSE_FRLG",
       "x": 4,
       "y": 9,
@@ -33,7 +30,6 @@
     },
     {
       "local_id": "LOCALID_TOWER_MART_CLERK",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_UNION_ROOM_RECEPTIONIST",
       "x": 14,
       "y": 9,
@@ -48,7 +44,6 @@
     },
     {
       "local_id": "LOCALID_TOWER_RECEPTIONIST",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_UNION_ROOM_RECEPTIONIST",
       "x": 11,
       "y": 7,
@@ -63,7 +58,6 @@
     },
     {
       "local_id": "LOCALID_TOWER_COOLTRAINER_F",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_F",
       "x": 12,
       "y": 13,
@@ -78,7 +72,6 @@
     },
     {
       "local_id": "LOCALID_TOWER_BALDING_MAN",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BALDING_MAN",
       "x": 2,
       "y": 12,
@@ -135,5 +128,7 @@
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",
       "script": "TrainerTower_Lobby_EventScript_ShowRecords"
     }
-  ]
+  ],
+  "floor_number": 0,
+  "region": "REGION_KANTO"
 }

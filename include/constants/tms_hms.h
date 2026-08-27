@@ -51,7 +51,12 @@
     F(STEEL_WING) \
     F(SKILL_SWAP) \
     F(SNATCH) \
-    F(OVERHEAT)
+    F(OVERHEAT)         /* Wishes of Tomorrow: Game Corner prize TMs. These occupy the already
+     * reserved ITEM_TM51..ITEM_TM59 slots (item ids 632-640), so NO existing
+     * item id moves and saves are unaffected. Adding them here also makes the
+     * build regenerate teachable_learnsets.h -- tms_hms.h is a make dependency
+     * of it -- so every species that can legitimately learn these moves picks
+     * them up automatically. */     F(DRACO_METEOR)     F(CLOSE_COMBAT)     F(SCALE_SHOT)     F(PLAY_ROUGH)     F(SWORDS_DANCE)     F(NASTY_PLOT)     F(SCORCHING_SANDS)     F(EARTH_POWER)     F(KNOCK_OFF)
 
 #define FOREACH_HM(F) \
     F(CUT) \

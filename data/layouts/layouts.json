@@ -9551,10 +9551,10 @@
     {
       "id": "LAYOUT_NEW_MAP_SHOP",
       "name": "NewMapShop_Layout",
-      "width": 11,
-      "height": 8,
+      "width": 15,
+      "height": 9,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_Shop",
+      "secondary_tileset": "gTileset_PrettyPetalFlowerShop",
       "border_filepath": "data/layouts/NewMapShop/border.bin",
       "blockdata_filepath": "data/layouts/NewMapShop/map.bin"
     },
@@ -9899,6 +9899,16 @@
       "secondary_tileset": "gTileset_Lab",
       "border_filepath": "data/layouts/MewtwoPostGame/border.bin",
       "blockdata_filepath": "data/layouts/MewtwoPostGame/map.bin"
+    },
+    {
+      "id": "LAYOUT_YACHT_INTERIOR",
+      "name": "YachtInterior_Layout",
+      "width": 12,
+      "height": 10,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Lab",
+      "border_filepath": "data/layouts/YachtInterior/border.bin",
+      "blockdata_filepath": "data/layouts/YachtInterior/map.bin"
     }
   ]
 }

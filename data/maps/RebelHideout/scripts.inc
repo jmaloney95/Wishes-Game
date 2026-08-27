@@ -185,6 +185,21 @@ RebelHideout_EventScript_Reveal::
 	setspeaker SP_NAME_OPERATIVE
 	msgbox RebelHideout_Text_OperativeReveal, MSGBOX_DEFAULT
 	closemessage
+	@ -- her own reveal beat: the archipelago chart --
+	setspeaker SP_NAME_OPERATIVE
+	msgbox RebelHideout_Text_NessaMapGift, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
+	playfanfare MUS_OBTAIN_ITEM
+	message RebelHideout_Text_ReceivedPostgameMap
+	waitmessage
+	waitfanfare
+	closemessage
+	setflag FLAG_WOT_POSTGAME_MAP_GET
+	setspeaker SP_NAME_OPERATIVE
+	msgbox RebelHideout_Text_NessaMapHowTo, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
 	@ -- the defector crosses the room for the briefing --
 	applymovement LOCALID_HIDEOUT_DEFECTOR, RebelHideout_Movement_DefectorApproach
 	waitmovement LOCALID_HIDEOUT_DEFECTOR
@@ -264,8 +279,63 @@ RebelHideout_EventScript_DefectorAnalysis::
 	release
 	end
 
+@ Harness Darkness, part 1: the first purification buys the sky. He works out
+@ where CELEBI actually is, and FLY comes with the coordinates.
 RebelHideout_EventScript_DefectorPurified::
+	goto_if_unset FLAG_WOT_FLY_GRANTED, RebelHideout_EventScript_DefectorGrantFly
+	goto_if_set FLAG_WOT_HARNESS_PART2_DONE, RebelHideout_EventScript_DefectorAllDone
+	special WotShadowLogPurifiedCount
+	goto_if_ge VAR_RESULT, 5, RebelHideout_EventScript_DefectorPartTwoReward
 	msgbox RebelHideout_Text_DefectorPurified, MSGBOX_DEFAULT
+	release
+	end
+
+RebelHideout_EventScript_DefectorGrantFly::
+	msgbox RebelHideout_Text_DefectorPurified, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
+	msgbox RebelHideout_Text_DefectorTriangulated, MSGBOX_DEFAULT
+	closemessage
+	playfanfare MUS_OBTAIN_ITEM
+	message RebelHideout_Text_ReceivedFly
+	waitmessage
+	waitfanfare
+	closemessage
+	setflag FLAG_WOT_FLY_GRANTED
+	questtoast QUEST_TOAST_UPDATE, SIDE_QUEST_HARNESS_DARKNESS
+	setspeaker SP_NAME_DEFECTOR
+	msgbox RebelHideout_Text_DefectorAssignFive, MSGBOX_DEFAULT
+	release
+	end
+
+@ Harness Darkness, part 2: five PURIFIED, reported back. The reward is a GOLD
+@ BOTTLE CAP -- what the shrine left behind in the machine room.
+RebelHideout_EventScript_DefectorPartTwoReward::
+	msgbox RebelHideout_Text_DefectorFiveDone, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
+	@ giveitem prints its own "obtained"/"no room" message and leaves the
+	@ outcome in VAR_0x8007 (VAR_RESULT is clobbered by the calls it makes).
+	giveitem ITEM_GOLD_BOTTLE_CAP
+	goto_if_eq VAR_0x8007, FALSE, RebelHideout_EventScript_DefectorNoRoom
+	setflag FLAG_WOT_HARNESS_PART2_DONE
+	completequest SIDE_QUEST_HARNESS_DARKNESS
+	questtoast QUEST_TOAST_COMPLETE, SIDE_QUEST_HARNESS_DARKNESS
+	setspeaker SP_NAME_DEFECTOR
+	msgbox RebelHideout_Text_DefectorAfterFive, MSGBOX_DEFAULT
+	release
+	end
+
+@ Bag full. The quest is deliberately NOT completed here, so coming back once
+@ there is room still hands the cap over.
+RebelHideout_EventScript_DefectorNoRoom::
+	setspeaker SP_NAME_DEFECTOR
+	msgbox RebelHideout_Text_DefectorCapNoRoom, MSGBOX_DEFAULT
+	release
+	end
+
+RebelHideout_EventScript_DefectorAllDone::
+	msgbox RebelHideout_Text_DefectorAfterFive, MSGBOX_DEFAULT
 	release
 	end
 
@@ -489,10 +559,66 @@ RebelHideout_Text_DefectorPurified::
 	.string "It KEPT the 20 percent attack\n"
 	.string "boost. No defense loss. No\l"
 	.string "HYPER MODE. No side effects.\p"
-	.string "Remarkable!\p"
-	.string "Catch 5 Shadows and bring them\n"
-	.string "to the shrine. Every one you\l"
-	.string "free weakens HIS arsenal.$"
+	.string "Remarkable!$"
+
+RebelHideout_Text_DefectorTriangulated::
+	.string "And the readings gave me\n"
+	.string "something else.\p"
+	.string "Whatever purified that POKéMON\n"
+	.string "left a signature in the air.\p"
+	.string "I have TRIANGULATED IT.\n"
+	.string "I know where CELEBI is.\p"
+	.string "Coordinates like these are no\n"
+	.string "use to anyone on foot.$"
+
+RebelHideout_Text_ReceivedFly::
+	.string "{PLAYER} can now use FLY\n"
+	.string "outside of battle!$"
+
+RebelHideout_Text_DefectorAssignFive::
+	.string "The sky is yours now. Use it.\p"
+	.string "Snag FIVE Shadows and bring me\n"
+	.string "the readings.\p"
+	.string "Every one you take from him is\n"
+	.string "a soul he cannot burn.$"
+
+RebelHideout_Text_DefectorFiveDone::
+	.string "Five souls, given back.\p"
+	.string "Something happened while you\n"
+	.string "were doing it.\p"
+	.string "Every time the shrine's readings\n"
+	.string "spiked, the metal down in the\l"
+	.string "machine room grew a shade\l"
+	.string "brighter.\p"
+	.string "This is what settled out of it.\p"
+	.string "Find someone who knows how to\n"
+	.string "read what is inside a POKéMON.$"
+
+RebelHideout_Text_DefectorCapNoRoom::
+	.string "Your BAG is full.\p"
+	.string "Make room. I am not carrying\n"
+	.string "this thing around.$"
+
+RebelHideout_Text_DefectorAfterFive::
+	.string "The numbers are all yours now.\p"
+	.string "Go and turn that machine off.$"
+
+RebelHideout_Text_NessaMapGift::
+	.string "Kekeke. One more thing, before\n"
+	.string "the science starts.\p"
+	.string "Every chart they print stops at\n"
+	.string "the city limits. On purpose.\p"
+	.string "This one doesn't.$"
+
+RebelHideout_Text_ReceivedPostgameMap::
+	.string "{PLAYER} received the\n"
+	.string "ARCHIPELAGO CHART!$"
+
+RebelHideout_Text_NessaMapHowTo::
+	.string "Open the region map and press R\n"
+	.string "to switch between them.\p"
+	.string "Everything past the water is on\n"
+	.string "the second one.$"
 
 RebelHideout_Text_BriefingLogGift::
 	.string "One more thing. I kept a ledger\n"

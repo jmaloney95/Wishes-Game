@@ -1,10 +1,8 @@
 {
   "id": "MAP_SECRET_BASE_RED_CAVE4",
   "name": "SecretBase_RedCave4",
-  "shared_scripts_map": "SecretBase",
   "layout": "LAYOUT_SECRET_BASE_RED_CAVE4",
   "music": "MUS_FORTREE",
-  "region": "REGION_HOENN",
   "region_map_section": "MAPSEC_SECRET_BASE",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -15,6 +13,7 @@
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_FRONTIER",
   "connections": null,
+  "shared_scripts_map": "SecretBase",
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_VAR_F",
@@ -222,5 +221,6 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [],
+  "region": "REGION_HOENN"
 }

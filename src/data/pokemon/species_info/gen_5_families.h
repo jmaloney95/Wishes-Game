@@ -10361,7 +10361,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         .levelUpLearnset = sAxewLevelUpLearnset,
         .teachableLearnset = sAxewTeachableLearnset,
         .eggMoveLearnset = sAxewEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 38, SPECIES_FRAXURE}),
+        // Wishes of Tomorrow: starter cadence -- 2nd stage at 16 (was 38).
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_FRAXURE}),
     },
 
     [SPECIES_FRAXURE] =
@@ -10428,7 +10429,8 @@ const struct SpeciesInfo gSpeciesInfoGen5[] =
         )
         .levelUpLearnset = sFraxureLevelUpLearnset,
         .teachableLearnset = sFraxureTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 48, SPECIES_HAXORUS}),
+        // Wishes of Tomorrow: starter cadence -- 3rd stage at 36 (was 48).
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_HAXORUS}),
     },
 
     [SPECIES_HAXORUS] =

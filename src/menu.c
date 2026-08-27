@@ -1972,7 +1972,15 @@ void RemoveSecondaryPopUpWindow(void)
 
 void HBlankCB_DoublePopupWindow(void)
 {
-    u16 offset = gTasks[gPopupTaskId].data[2];
+    u16 offset;
+
+    // Belt and braces: if this callback outlives the popup task for even a
+    // frame, gPopupTaskId points at a dead slot and we would scroll BG0 -- the
+    // text/menu layer -- by whatever junk is in it.
+    if (gPopupTaskId >= NUM_TASKS || !gTasks[gPopupTaskId].isActive)
+        return;
+
+    offset = gTasks[gPopupTaskId].data[2];
 
     // WoT: both popup decks are stacked at the TOP of the screen, so the
     // whole indicator slides as one block -- no split-scanline scroll for a

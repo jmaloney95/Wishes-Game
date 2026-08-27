@@ -176,6 +176,17 @@ static void FieldUpdateRegionMap(void)
         }
         break;
     case 4:
+        // WoT: SELECT flips between the main survey and Nessa's archipelago
+        // chart. R is already taken here by the Poke Rider fly shortcut, so the
+        // toggle lives on SELECT; the fly map accepts either.
+        if (JOY_NEW(SELECT_BUTTON) && WotPostgameMapActive_CanToggle())
+        {
+            PlaySE(SE_SELECT);
+            WotToggleRegionMapChart();
+            PrintRegionMapSecName();
+            PrintTitleWindowText();
+            break;
+        }
         switch (DoRegionMapInputCallback())
         {
         case MAP_INPUT_MOVE_END:

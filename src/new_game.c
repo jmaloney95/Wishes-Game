@@ -52,6 +52,7 @@
 #include "constants/heal_locations.h"
 #include "difficulty.h"
 #include "follower_npc.h"
+#include "wot_randomizer.h"
 
 extern const u8 EventScript_ResetAllMapFlags[];
 extern const u8 EventScript_ResetAllMapFlagsFrlg[];
@@ -243,6 +244,10 @@ void NewGameInitData(void)
     ResetDexNav();
     ClearFollowerNPCData();
     QuestMenu_ResetMenuSaveData();
+    // Wishes of Tomorrow: the randomizer settings screen runs before this
+    // function, and the memset above would erase its flags. Re-apply them here,
+    // last, so they survive -- and so the seed reads the trainer id just made.
+    WotApplyQueuedRandomizerSettings();
 }
 
 static void ResetMiniGamesRecords(void)

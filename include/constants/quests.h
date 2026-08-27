@@ -24,7 +24,7 @@
 #define SIDE_QUEST_SAVE_FACE             5  // Side - MaskMaker (Pompeii)
 #define QUEST_GRANDFATHERS_WISH          6  // MAIN - Catalpa Bow rite
 #define QUEST_LIFES_WORK                 7  // MAIN - destroy Clarkson's research
-#define QUEST_TOASTY_TIME                8  // Side - fetch the gym leader's sisters (Frostwood)
+#define SIDE_QUEST_TOASTY_TIME                8  // Side - fetch the gym leader's sisters (Frostwood)
 #define QUEST_STOP_THE_MACHINE           9  // MAIN - Act 3 main line: purify, then tear out the Shadow Generator's heart
 #define SIDE_QUEST_HARNESS_DARKNESS     10  // Side - snag Mutrid's Shadow Pokemon with the stolen Snag Machine (starts at the first jail squad)
 #define SIDE_QUEST_MINISTERS_FAVOR      11  // Side - the Minister opened the jail; find out what his mercy costs

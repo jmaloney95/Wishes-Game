@@ -88,6 +88,9 @@ static u8 ProcessRegionMapInput_Zoomed(void);
 static u8 MoveRegionMapCursor_Zoomed(void);
 static void CalcZoomScrollParams(s16 scrollX, s16 scrollY, s16 c, s16 d, u16 e, u16 f, u8 rotation);
 static mapsec_u16_t GetMapSecIdAt(u16 x, u16 y);
+static enum RegionMapType WotResolveRegionMapType(void);
+static const struct RegionMapLocation *WotMapSecEntry(u32 mapSecId);
+static void WotRebuildFlyDestIcons(void);
 static void RegionMap_SetBG2XAndBG2Y(s16 x, s16 y);
 static void InitMapBasedOnPlayerLocation(void);
 static void RegionMap_InitializeStateBasedOnSSTidalLocation(void);
@@ -123,6 +126,12 @@ static const u32 sRegionMapCursorLargeGfxLZ[] = INCGFX_U32("graphics/pokenav/reg
 static const u16 sRegionMapBg_Pal[] = INCGFX_U16("graphics/pokenav/region_map/map.pal", ".gbapal");
 static const u32 sRegionMapBg_GfxLZ[] = INCGFX_U32("graphics/pokenav/region_map/map.png", ".8bpp.smol", "-num_tiles 233 -Wnum_tiles");
 static const u32 sRegionMapBg_TilemapLZ[] = INCBIN_U32("graphics/pokenav/region_map/map.bin.smolTM");
+// Wishes of Tomorrow: the post-game archipelago chart. Same contract as the
+// main survey -- 8bpp tileset (<=256 tiles, indices 112..159), 48-colour
+// palette into BG slots 7/8/9, and a 64x64 ONE-BYTE-PER-ENTRY affine tilemap.
+static const u16 ALIGNED(4) sRegionMapWotPostgame_Pal[] = INCGFX_U16("graphics/pokenav/region_map/map_postgame.pal", ".gbapal");
+static const u32 sRegionMapWotPostgame_Gfx[] = INCGFX_U32("graphics/pokenav/region_map/map_postgame.png", ".8bpp.smol", "-num_tiles 250 -Wnum_tiles");
+static const u32 sRegionMapWotPostgame_Tilemap[] = INCBIN_U32("graphics/pokenav/region_map/map_postgame.bin.smolTM");
 static const u16 sRegionMapPlayerIcon_BrendanPal[] = INCGFX_U16("graphics/pokenav/region_map/brendan_icon.png", ".gbapal");
 static const u8 sRegionMapPlayerIcon_BrendanGfx[] = INCGFX_U8("graphics/pokenav/region_map/brendan_icon.png", ".4bpp");
 static const u16 sRegionMapPlayerIcon_MayPal[] = INCGFX_U16("graphics/pokenav/region_map/may_icon.png", ".gbapal");
@@ -137,6 +146,7 @@ static const u8 sRegionMapPlayerIcon_LeafGfx[] = INCGFX_U8("graphics/pokenav/reg
 #include "data/region_map/region_map_layout_sevii123.h"
 #include "data/region_map/region_map_layout_sevii45.h"
 #include "data/region_map/region_map_layout_sevii67.h"
+#include "data/region_map/region_map_layout_wot_postgame.h"
 #include "data/region_map/region_map_entries.h"
 
 static const mapsec_u16_t sRegionMap_SpecialPlaceLocations[][2] =
@@ -367,6 +377,19 @@ const struct RegionMapInfo gRegionMapInfos[] =
         .regionMapGfx = sRegionMapSevii45_Gfx,
         .regionMapTilemap = sRegionMapSevii45_Tilemap,
     },
+    // Wishes of Tomorrow: post-game chart. The Pokedex area screen never
+    // resolves to this entry (see WotResolveRegionMapType), so its dex fields
+    // deliberately alias Hoenn's rather than shipping a second dex map.
+    [REGION_MAP_WOT_POSTGAME] =
+    {
+        .dexMapPalette = sPokedexAreaMap_Pal,
+        .dexMapGfx = sPokedexAreaMap_Gfx,
+        .dexMapTilemap = sPokedexAreaMap_Tilemap,
+        .dexMapPaletteSize = sizeof(sPokedexAreaMap_Pal),
+        .regionMapPalette = sRegionMapWotPostgame_Pal,
+        .regionMapGfx = sRegionMapWotPostgame_Gfx,
+        .regionMapTilemap = sRegionMapWotPostgame_Tilemap,
+    },
     [REGION_MAP_SEVII67]  =
     {
         .dexMapPalette = sPokedexAreaMapSevii67_Pal,
@@ -389,7 +412,6 @@ static const u8 sMapHealLocations[][3] =
     // Wishes of Tomorrow: post-game jet destinations with heal anchors.
     [MAPSEC_FROSTWOOD_TOWN] = {MAP_GROUP(MAP_FROSTWOOD_TOWN), MAP_NUM(MAP_FROSTWOOD_TOWN), HEAL_LOCATION_FROSTWOOD_TOWN},
     [MAPSEC_TRADEWIND_TOWN] = {MAP_GROUP(MAP_TRADEWIND_TOWN), MAP_NUM(MAP_TRADEWIND_TOWN), HEAL_LOCATION_TRADEWIND_TOWN},
-    [MAPSEC_SHIN_TOKYO] = {MAP_GROUP(MAP_REBEL_HIDEOUT), MAP_NUM(MAP_REBEL_HIDEOUT), HEAL_LOCATION_REBEL_HIDEOUT},
     [MAPSEC_OLDALE_TOWN] = {MAP_GROUP(MAP_OLDALE_TOWN), MAP_NUM(MAP_OLDALE_TOWN), HEAL_LOCATION_OLDALE_TOWN},
     [MAPSEC_DEWFORD_TOWN] = {MAP_GROUP(MAP_DEWFORD_TOWN), MAP_NUM(MAP_DEWFORD_TOWN), HEAL_LOCATION_DEWFORD_TOWN},
     [MAPSEC_LAVARIDGE_TOWN] = {MAP_GROUP(MAP_LAVARIDGE_TOWN), MAP_NUM(MAP_LAVARIDGE_TOWN), HEAL_LOCATION_LAVARIDGE_TOWN},
@@ -749,14 +771,14 @@ bool8 LoadRegionMapGfx(void)
     switch (sRegionMap->initStep)
     {
     case 0:
-        regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+        regionMapType = WotResolveRegionMapType();
         if (sRegionMap->bgManaged)
             DecompressAndCopyTileDataToVram(sRegionMap->bgNum, gRegionMapInfos[regionMapType].regionMapGfx, 0, 0, 0);
         else
             DecompressDataWithHeaderVram(gRegionMapInfos[regionMapType].regionMapGfx, (u16 *)BG_CHAR_ADDR(2));
         break;
     case 1:
-        regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+        regionMapType = WotResolveRegionMapType();
         if (sRegionMap->bgManaged)
         {
             if (!FreeTempTileDataBuffersIfPossible())
@@ -768,7 +790,7 @@ bool8 LoadRegionMapGfx(void)
         }
         break;
     case 2:
-        regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+        regionMapType = WotResolveRegionMapType();
         if (!FreeTempTileDataBuffersIfPossible())
             LoadPalette(gRegionMapInfos[regionMapType].regionMapPalette, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
         break;
@@ -822,6 +844,36 @@ bool8 LoadRegionMapGfx(void)
     }
     sRegionMap->initStep++;
     return TRUE;
+}
+
+// WoT: swap the chart under an already-open region map. Only the three
+// graphics pieces are re-sent (tiles / tilemap / palette) -- cursor, sprites
+// and window state are left alone -- then the cursor's mapsec is re-derived
+// because the same screen position means a different place on the other chart.
+// Safe to call synchronously: both callers open the map with a NULL BgTemplate,
+// so bgManaged is FALSE and these are direct VRAM writes.
+void WotToggleRegionMapChart(void)
+{
+    enum RegionMapType regionMapType;
+    mapsec_u16_t mapSecId;
+
+    if (!FlagGet(FLAG_WOT_POSTGAME_MAP_GET))
+        return;
+
+    FlagToggle(FLAG_WOT_POSTGAME_MAP_ACTIVE);
+    regionMapType = WotResolveRegionMapType();
+
+    DecompressDataWithHeaderVram(gRegionMapInfos[regionMapType].regionMapGfx, (u16 *)BG_CHAR_ADDR(2));
+    DecompressDataWithHeaderVram(gRegionMapInfos[regionMapType].regionMapTilemap, (u16 *)BG_SCREEN_ADDR(28));
+    LoadPalette(gRegionMapInfos[regionMapType].regionMapPalette, BG_PLTT_ID(7), 3 * PLTT_SIZE_4BPP);
+    CpuCopy16(&gPlttBufferFaded[BG_PLTT_ID(7)], &gPlttBufferUnfaded[BG_PLTT_ID(7)], 3 * PLTT_SIZE_4BPP);
+
+    mapSecId = GetMapSecIdAt(sRegionMap->cursorPosX, sRegionMap->cursorPosY);
+    sRegionMap->mapSecType = GetMapsecType(mapSecId);
+    sRegionMap->mapSecId = mapSecId;
+    GetMapName(sRegionMap->mapSecName, sRegionMap->mapSecId, MAP_NAME_LENGTH);
+
+    WotRebuildFlyDestIcons();
 }
 
 void BlendRegionMap(u16 color, u32 coeff)
@@ -1168,6 +1220,60 @@ void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y)
     }
 }
 
+
+// ============================================================================
+//  Wishes of Tomorrow -- the post-game archipelago chart
+//  Nessa hands this over at the hideout (FLAG_WOT_POSTGAME_MAP_GET). It is a
+//  second survey of the SAME region, so it needs three things the engine's
+//  Kanto/Sevii maps get for free by being different regions: its own art, its
+//  own cursor->mapsec layout, and its own per-mapsec coordinates (the global
+//  gRegionMapEntries[] stores exactly ONE position per mapsec).
+//  Scope is deliberately narrow: only the region-map UI resolves to it, so the
+//  Pokedex area screen keeps using the main survey (see GetRegionMapType,
+//  which is intentionally left untouched).
+// ============================================================================
+
+// True once Nessa has handed the chart over -- i.e. the toggle is available.
+bool32 WotPostgameMapActive_CanToggle(void)
+{
+    return FlagGet(FLAG_WOT_POSTGAME_MAP_GET);
+}
+
+bool32 WotPostgameMapActive(void)
+{
+    return FlagGet(FLAG_WOT_POSTGAME_MAP_GET) && FlagGet(FLAG_WOT_POSTGAME_MAP_ACTIVE);
+}
+
+static enum RegionMapType WotResolveRegionMapType(void)
+{
+    if (WotPostgameMapActive())
+        return REGION_MAP_WOT_POSTGAME;
+    return GetRegionMapType(gMapHeader.regionMapSectionId);
+}
+
+// Per-mapsec coordinates on the post-game chart. width == 0 means "not drawn
+// on this chart" and falls back to the main survey's entry.
+static const struct RegionMapLocation sWotPostgameEntries[] = {
+    [MAPSEC_RYUDEN_ISLAND]    = {14,  2, 1, 1, NULL},
+    [MAPSEC_PROTOTYPE_ISLAND] = {22,  4, 1, 1, NULL},
+    [MAPSEC_SHIN_TOKYO]       = {14,  8, 1, 1, NULL},
+    [MAPSEC_REBEL_HIDEOUT]    = {12,  7, 1, 1, NULL},
+    [MAPSEC_CELEBI_ISLAND]    = {22, 10, 1, 1, NULL},
+    [MAPSEC_ROUTE_130]        = {20,  3, 1, 1, NULL},
+    [MAPSEC_ROUTE_129]        = {15, 11, 1, 1, NULL},
+};
+
+// All cursor/icon placement in this file goes through here so the two charts
+// can put the same mapsec in different places.
+static const struct RegionMapLocation *WotMapSecEntry(u32 mapSecId)
+{
+    if (WotPostgameMapActive()
+     && mapSecId < ARRAY_COUNT(sWotPostgameEntries)
+     && sWotPostgameEntries[mapSecId].width != 0)
+        return &sWotPostgameEntries[mapSecId];
+    return &gRegionMapEntries[mapSecId];
+}
+
 enum RegionMapType GetRegionMapType(u32 mapSecId)
 {
     switch (GetRegionForSectionId(mapSecId))
@@ -1199,6 +1305,10 @@ static mapsec_u16_t GetMapSecIdAt(u16 x, u16 y)
     }
     y -= MAPCURSOR_Y_MIN;
     x -= MAPCURSOR_X_MIN;
+
+    // WoT: the post-game chart has its own cursor->mapsec grid.
+    if (WotPostgameMapActive())
+        return sRegionMap_WotPostgameLayout[y][x];
 
     switch (GetCurrentRegion())
     {
@@ -1317,26 +1427,26 @@ static void InitMapBasedOnPlayerLocation(void)
 
     xOnMap = x;
 
-    dimensionScale = mapWidth / gRegionMapEntries[sRegionMap->mapSecId].width;
+    dimensionScale = mapWidth / WotMapSecEntry(sRegionMap->mapSecId)->width;
     if (dimensionScale == 0)
     {
         dimensionScale = 1;
     }
     x /= dimensionScale;
-    if (x >= gRegionMapEntries[sRegionMap->mapSecId].width)
+    if (x >= WotMapSecEntry(sRegionMap->mapSecId)->width)
     {
-        x = gRegionMapEntries[sRegionMap->mapSecId].width - 1;
+        x = WotMapSecEntry(sRegionMap->mapSecId)->width - 1;
     }
 
-    dimensionScale = mapHeight / gRegionMapEntries[sRegionMap->mapSecId].height;
+    dimensionScale = mapHeight / WotMapSecEntry(sRegionMap->mapSecId)->height;
     if (dimensionScale == 0)
     {
         dimensionScale = 1;
     }
     y /= dimensionScale;
-    if (y >= gRegionMapEntries[sRegionMap->mapSecId].height)
+    if (y >= WotMapSecEntry(sRegionMap->mapSecId)->height)
     {
-        y = gRegionMapEntries[sRegionMap->mapSecId].height - 1;
+        y = WotMapSecEntry(sRegionMap->mapSecId)->height - 1;
     }
 
     switch (sRegionMap->mapSecId)
@@ -1372,8 +1482,8 @@ static void InitMapBasedOnPlayerLocation(void)
         GetMarineCaveCoords(&sRegionMap->cursorPosX, &sRegionMap->cursorPosY);
         return;
     }
-    sRegionMap->cursorPosX = gRegionMapEntries[sRegionMap->mapSecId].x + x + MAPCURSOR_X_MIN;
-    sRegionMap->cursorPosY = gRegionMapEntries[sRegionMap->mapSecId].y + y + MAPCURSOR_Y_MIN;
+    sRegionMap->cursorPosX = WotMapSecEntry(sRegionMap->mapSecId)->x + x + MAPCURSOR_X_MIN;
+    sRegionMap->cursorPosY = WotMapSecEntry(sRegionMap->mapSecId)->y + y + MAPCURSOR_Y_MIN;
 }
 
 static void RegionMap_InitializeStateBasedOnSSTidalLocation(void)
@@ -1408,24 +1518,24 @@ static void RegionMap_InitializeStateBasedOnSSTidalLocation(void)
         mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
 
         sRegionMap->mapSecId = mapHeader->regionMapSectionId;
-        dimensionScale = mapHeader->mapLayout->width / gRegionMapEntries[sRegionMap->mapSecId].width;
+        dimensionScale = mapHeader->mapLayout->width / WotMapSecEntry(sRegionMap->mapSecId)->width;
         if (dimensionScale == 0)
             dimensionScale = 1;
         x = xOnMap / dimensionScale;
-        if (x >= gRegionMapEntries[sRegionMap->mapSecId].width)
-            x = gRegionMapEntries[sRegionMap->mapSecId].width - 1;
+        if (x >= WotMapSecEntry(sRegionMap->mapSecId)->width)
+            x = WotMapSecEntry(sRegionMap->mapSecId)->width - 1;
 
-        dimensionScale = mapHeader->mapLayout->height / gRegionMapEntries[sRegionMap->mapSecId].height;
+        dimensionScale = mapHeader->mapLayout->height / WotMapSecEntry(sRegionMap->mapSecId)->height;
         if (dimensionScale == 0)
             dimensionScale = 1;
         y = yOnMap / dimensionScale;
-        if (y >= gRegionMapEntries[sRegionMap->mapSecId].height)
-            y = gRegionMapEntries[sRegionMap->mapSecId].height - 1;
+        if (y >= WotMapSecEntry(sRegionMap->mapSecId)->height)
+            y = WotMapSecEntry(sRegionMap->mapSecId)->height - 1;
         break;
     }
     sRegionMap->playerIsInCave = FALSE;
-    sRegionMap->cursorPosX = gRegionMapEntries[sRegionMap->mapSecId].x + x + MAPCURSOR_X_MIN;
-    sRegionMap->cursorPosY = gRegionMapEntries[sRegionMap->mapSecId].y + y + MAPCURSOR_Y_MIN;
+    sRegionMap->cursorPosX = WotMapSecEntry(sRegionMap->mapSecId)->x + x + MAPCURSOR_X_MIN;
+    sRegionMap->cursorPosY = WotMapSecEntry(sRegionMap->mapSecId)->y + y + MAPCURSOR_Y_MIN;
 }
 
 static u8 GetMapsecType(mapsec_u16_t mapSecId)
@@ -1449,6 +1559,7 @@ static u8 GetMapsecType(mapsec_u16_t mapSecId)
     case MAPSEC_CELEBI_ISLAND:
     case MAPSEC_RYUDEN_ISLAND:
     case MAPSEC_PROTOTYPE_ISLAND:
+    case MAPSEC_REBEL_HIDEOUT:
         // Wishes of Tomorrow: every region area is flyable. No visited gating
         // is needed -- FLY itself only unlocks with the post-game PRIVATE JET
         // (IsFieldMoveUnlocked_Fly), by which point the region is open.
@@ -1946,10 +2057,10 @@ u8 *GetMapNameHandleAquaHideout(u8 *dest, mapsec_u16_t mapSecId)
 
 static void GetMapSecDimensions(mapsec_u16_t mapSecId, u16 *x, u16 *y, u16 *width, u16 *height)
 {
-    *x = gRegionMapEntries[mapSecId].x;
-    *y = gRegionMapEntries[mapSecId].y;
-    *width = gRegionMapEntries[mapSecId].width;
-    *height = gRegionMapEntries[mapSecId].height;
+    *x = WotMapSecEntry(mapSecId)->x;
+    *y = WotMapSecEntry(mapSecId)->y;
+    *width = WotMapSecEntry(mapSecId)->width;
+    *height = WotMapSecEntry(mapSecId)->height;
 }
 
 bool8 IsRegionMapZoomed(void)
@@ -2166,85 +2277,101 @@ struct FlyLocation
 
 static const struct FlyLocation sFlyLocations[] =
 {
+    // Wishes of Tomorrow -- the MAIN survey's destinations. The vanilla Hoenn
+    // town list was still here, which is why the map showed sixteen blips at
+    // Hoenn coordinates scattered over WoT's own art. Every entry below has a
+    // cursor cell in region_map_layout.h AND a landing in SetFlyDestination.
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_LITTLEROOT_TOWN,
-        .flag = FLAG_VISITED_LITTLEROOT_TOWN,
+        .mapsec = MAPSEC_STAR_SUMMIT,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_OLDALE_TOWN,
-        .flag = FLAG_VISITED_OLDALE_TOWN,
+        .mapsec = MAPSEC_ASHLANDS,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_DEWFORD_TOWN,
-        .flag = FLAG_VISITED_DEWFORD_TOWN,
+        .mapsec = MAPSEC_SHIN_TOKYO,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_LAVARIDGE_TOWN,
-        .flag = FLAG_VISITED_LAVARIDGE_TOWN,
+        .mapsec = MAPSEC_CELEBI_ISLAND,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_FALLARBOR_TOWN,
-        .flag = FLAG_VISITED_FALLARBOR_TOWN,
+        .mapsec = MAPSEC_SENNEN_LINE,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_VERDANTURF_TOWN,
-        .flag = FLAG_VISITED_VERDANTURF_TOWN,
+        .mapsec = MAPSEC_PROTOTYPE_ISLAND,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_PACIFIDLOG_TOWN,
-        .flag = FLAG_VISITED_PACIFIDLOG_TOWN,
+        .mapsec = MAPSEC_TRADEWIND_TOWN,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_PETALBURG_CITY,
-        .flag = FLAG_VISITED_PETALBURG_CITY,
+        .mapsec = MAPSEC_ROUTE_2,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_SLATEPORT_CITY,
-        .flag = FLAG_VISITED_SLATEPORT_CITY,
+        .mapsec = MAPSEC_ROUTE_3,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_MAUVILLE_CITY,
-        .flag = FLAG_VISITED_MAUVILLE_CITY,
+        .mapsec = MAPSEC_FROSTWOOD_TOWN,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_RUSTBORO_CITY,
-        .flag = FLAG_VISITED_RUSTBORO_CITY,
+        .mapsec = MAPSEC_LAKE_MUNEN,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_FORTREE_CITY,
-        .flag = FLAG_VISITED_FORTREE_CITY,
+        .mapsec = MAPSEC_ROUTE_ONE,
+        .flag = FLAG_WOT_FLY_GRANTED,
     },
     {
         .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_LILYCOVE_CITY,
-        .flag = FLAG_VISITED_LILYCOVE_CITY,
+        .mapsec = MAPSEC_MUNEN_VILLAGE,
+        .flag = FLAG_WOT_FLY_GRANTED,
+    },
+    // Wishes of Tomorrow -- the five post-game chart destinations. The flag is
+    // the chart itself: once Nessa hands it over, all five are live.
+    {
+        .regionMapType = REGION_MAP_WOT_POSTGAME,
+        .mapsec = MAPSEC_RYUDEN_ISLAND,
+        .flag = FLAG_WOT_POSTGAME_MAP_GET,
     },
     {
-        .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_MOSSDEEP_CITY,
-        .flag = FLAG_VISITED_MOSSDEEP_CITY,
+        .regionMapType = REGION_MAP_WOT_POSTGAME,
+        .mapsec = MAPSEC_PROTOTYPE_ISLAND,
+        .flag = FLAG_WOT_POSTGAME_MAP_GET,
     },
     {
-        .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_SOOTOPOLIS_CITY,
-        .flag = FLAG_VISITED_SOOTOPOLIS_CITY,
+        .regionMapType = REGION_MAP_WOT_POSTGAME,
+        .mapsec = MAPSEC_SHIN_TOKYO,
+        .flag = FLAG_WOT_POSTGAME_MAP_GET,
     },
     {
-        .regionMapType = REGION_MAP_HOENN,
-        .mapsec = MAPSEC_EVER_GRANDE_CITY,
-        .flag = FLAG_VISITED_EVER_GRANDE_CITY,
+        .regionMapType = REGION_MAP_WOT_POSTGAME,
+        .mapsec = MAPSEC_REBEL_HIDEOUT,
+        .flag = FLAG_WOT_POSTGAME_MAP_GET,
+    },
+    {
+        .regionMapType = REGION_MAP_WOT_POSTGAME,
+        .mapsec = MAPSEC_CELEBI_ISLAND,
+        .flag = FLAG_WOT_POSTGAME_MAP_GET,
     },
     {
         .regionMapType = REGION_MAP_KANTO,
@@ -2353,9 +2480,25 @@ static const struct FlyLocation sFlyLocations[] =
 #define sIconMapSec   data[0]
 #define sFlickerTimer data[1]
 
+// WoT: the fly-destination markers are built once at fly-map init, so a chart
+// toggle would leave the previous chart's markers on screen at the previous
+// chart's coordinates. Tear them down and rebuild against the active chart.
+static void WotRebuildFlyDestIcons(void)
+{
+    u32 i;
+
+    for (i = 0; i < MAX_SPRITES; i++)
+    {
+        if (gSprites[i].inUse && gSprites[i].template == &sFlyDestIconSpriteTemplate)
+            DestroySprite(&gSprites[i]);
+    }
+    CreateFlyDestIcons();
+    TryCreateRedOutlineFlyDestIcons();
+}
+
 static void CreateFlyDestIcons(void)
 {
-    enum RegionMapType regionMapType = GetRegionMapType(gMapHeader.regionMapSectionId);
+    enum RegionMapType regionMapType = WotResolveRegionMapType();
     u32 i;
     u16 x;
     u16 y;
@@ -2470,6 +2613,13 @@ static void CB_HandleFlyMapInput(void)
 {
     if (sFlyMap->state == 0)
     {
+        if (JOY_NEW(SELECT_BUTTON) && WotPostgameMapActive_CanToggle())
+        {
+            m4aSongNumStart(SE_SELECT);
+            WotToggleRegionMapChart();
+            DrawFlyDestTextWindow();
+            return;
+        }
         switch (DoRegionMapInputCallback())
         {
         case MAP_INPUT_NONE:
@@ -2491,6 +2641,17 @@ static void CB_HandleFlyMapInput(void)
             m4aSongNumStart(SE_SELECT);
             sFlyMap->choseFlyLocation = FALSE;
             SetFlyMapCallback(CB_ExitFlyMap);
+            break;
+        case MAP_INPUT_R_BUTTON:
+            // WoT: R flips between the main survey and Nessa's archipelago
+            // chart. No-op until she hands it over. (SELECT does the same, and
+            // is the button the field region map uses -- see field_region_map.c.)
+            if (WotPostgameMapActive_CanToggle())
+            {
+                m4aSongNumStart(SE_SELECT);
+                WotToggleRegionMapChart();
+                DrawFlyDestTextWindow();
+            }
             break;
         }
     }
@@ -2554,6 +2715,22 @@ void SetFlyDestination(struct RegionMap* regionMap)
     // hand-verified open tile beside each area's entrance.
     switch (regionMap->mapSecId)
     {
+    // -- post-game archipelago landings (Joe's coordinates) --
+    case MAPSEC_CELEBI_ISLAND:
+        SetWarpDestination(MAP_GROUP(MAP_CELEBI_ISLAND), MAP_NUM(MAP_CELEBI_ISLAND), WARP_ID_NONE, 31, 35);
+        return;
+    case MAPSEC_RYUDEN_ISLAND:
+        SetWarpDestination(MAP_GROUP(MAP_DRAGON_KEEPER), MAP_NUM(MAP_DRAGON_KEEPER), WARP_ID_NONE, 18, 20);
+        return;
+    case MAPSEC_PROTOTYPE_ISLAND:
+        SetWarpDestination(MAP_GROUP(MAP_PROTOTYPE_ISLAND), MAP_NUM(MAP_PROTOTYPE_ISLAND), WARP_ID_NONE, 6, 17);
+        return;
+    case MAPSEC_SHIN_TOKYO:
+        SetWarpDestination(MAP_GROUP(MAP_SHIN_TOKYO), MAP_NUM(MAP_SHIN_TOKYO), WARP_ID_NONE, 28, 21);
+        return;
+    case MAPSEC_REBEL_HIDEOUT:
+        SetWarpDestination(MAP_GROUP(MAP_REBEL_HIDEOUT), MAP_NUM(MAP_REBEL_HIDEOUT), WARP_ID_NONE, 11, 4);
+        return;
     case MAPSEC_LAKE_MUNEN:
         SetWarpDestination(MAP_GROUP(MAP_MUNEN_LAKE), MAP_NUM(MAP_MUNEN_LAKE), WARP_ID_NONE, 15, 1);
         return;
@@ -2568,15 +2745,6 @@ void SetFlyDestination(struct RegionMap* regionMap)
         return;
     case MAPSEC_NATIONAL_PARK:
         SetWarpDestination(MAP_GROUP(MAP_ROUTE_2_2), MAP_NUM(MAP_ROUTE_2_2), WARP_ID_NONE, 58, 11);
-        return;
-    case MAPSEC_CELEBI_ISLAND:
-        SetWarpDestination(MAP_GROUP(MAP_CELEBI_ISLAND), MAP_NUM(MAP_CELEBI_ISLAND), WARP_ID_NONE, 26, 21);
-        return;
-    case MAPSEC_RYUDEN_ISLAND:
-        SetWarpDestination(MAP_GROUP(MAP_DRAGON_KEEPER), MAP_NUM(MAP_DRAGON_KEEPER), WARP_ID_NONE, 11, 7);
-        return;
-    case MAPSEC_PROTOTYPE_ISLAND:
-        SetWarpDestination(MAP_GROUP(MAP_PROTOTYPE_ISLAND), MAP_NUM(MAP_PROTOTYPE_ISLAND), WARP_ID_NONE, 5, 17);
         return;
     }
 

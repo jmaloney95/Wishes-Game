@@ -41,19 +41,13 @@ NewMapShop_EventScript_Shopper::
 @ ============================================================================
 NewMapShop_Text_Greeting::
 	.string "Welcome!\p"
-	.string "Heading up? Then buy double.\n"
-	.string "STAR SUMMIT doesn't do refunds.$"
+	.string "What can I get ya, darling?$"
 
 NewMapShop_Text_Farewell::
-	.string "Mind the cold past the torii.\n"
 	.string "Come back down in one piece, eh?$"
 
 NewMapShop_Text_Shopper::
-	.string "I was here when he opened up shop\n"
-	.string "this morning. The shelves were\l"
-	.string "already half bare!\p"
-	.string "He says the masked ones came in the\n"
-	.string "night and bought out every coil of\l"
-	.string "rope and drop of lantern oil.\p"
-	.string "Paid in old coins, he says. COLD\n"
-	.string "ones. Straight out of the ground.$"
+	.string "I'd grab an ESCAPE ROPE\n"
+	.string "if I were you.\l"
+	.string "It'll save ya if ya find yourself\n"
+	.string "caught in a pickle!$"

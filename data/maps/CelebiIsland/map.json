@@ -76,7 +76,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "CelebiIsland_EventScript_Guardian",
+      "script": "CelebiIsland_EventScript_GuardianUxie",
       "flag": "0"
     },
     {
@@ -89,7 +89,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "CelebiIsland_EventScript_Guardian",
+      "script": "CelebiIsland_EventScript_GuardianMesprit",
       "flag": "0"
     },
     {
@@ -102,7 +102,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "CelebiIsland_EventScript_Guardian",
+      "script": "CelebiIsland_EventScript_GuardianAzelf",
       "flag": "0"
     }
   ],
@@ -213,7 +213,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -222,7 +222,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -231,7 +231,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -240,7 +240,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -249,7 +249,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -258,7 +258,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -267,7 +267,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -276,7 +276,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -285,7 +285,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -294,7 +294,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -303,7 +303,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -312,7 +312,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -321,7 +321,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -330,7 +330,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -339,7 +339,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -348,7 +348,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -357,7 +357,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -366,7 +366,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -375,7 +375,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -384,7 +384,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -393,7 +393,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -402,7 +402,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -411,7 +411,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -420,7 +420,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -429,7 +429,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -438,7 +438,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -447,7 +447,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -456,7 +456,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -465,7 +465,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -474,7 +474,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -483,7 +483,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -492,7 +492,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -501,7 +501,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -510,7 +510,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -519,7 +519,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -528,7 +528,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -537,7 +537,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -546,7 +546,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -555,7 +555,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -564,7 +564,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -573,7 +573,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -582,7 +582,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -591,7 +591,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -600,7 +600,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -609,7 +609,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -618,7 +618,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -627,7 +627,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -636,7 +636,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -645,7 +645,7 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
     },
     {
@@ -654,8 +654,17 @@
       "y": 0,
       "elevation": 0,
       "var": "VAR_TEMP_7",
-      "var_value": 0,
+      "var_value": "0",
       "script": "CelebiIsland_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 25,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_4",
+      "var_value": "0",
+      "script": "CelebiIsland_EventScript_TrioTrial"
     }
   ],
   "bg_events": []

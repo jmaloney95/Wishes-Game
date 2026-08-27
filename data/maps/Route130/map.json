@@ -18,260 +18,8 @@
   "coord_events": [
     {
       "type": "trigger",
-      "x": 28,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 29,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 30,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 31,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 32,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 33,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 34,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 35,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 36,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 37,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 38,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 39,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 40,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 41,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 42,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 43,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 44,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 45,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 46,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 47,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 48,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 49,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 50,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 51,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 52,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 53,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 54,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 55,
-      "y": 32,
-      "elevation": 0,
-      "var": "VAR_TEMP_7",
-      "var_value": "0",
-      "script": "Route130_EventScript_SurfToPrototype"
-    },
-    {
-      "type": "trigger",
-      "x": 56,
-      "y": 32,
+      "x": 57,
+      "y": 8,
       "elevation": 0,
       "var": "VAR_TEMP_7",
       "var_value": "0",
@@ -280,7 +28,106 @@
     {
       "type": "trigger",
       "x": 57,
-      "y": 32,
+      "y": 9,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 12,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 13,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 14,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 15,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 16,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 17,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 18,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 19,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "Route130_EventScript_SurfToPrototype"
+    },
+    {
+      "type": "trigger",
+      "x": 57,
+      "y": 20,
       "elevation": 0,
       "var": "VAR_TEMP_7",
       "var_value": "0",

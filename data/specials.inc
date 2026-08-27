@@ -667,3 +667,6 @@ gSpecials::
 	def_special WotShowShadowLog
 	def_special WotShadowLogSnaggedCount
 	def_special WotShadowLogPurifiedCount
+	def_special WotSetStarterSpecies
+	def_special WotOpenRandomizerMenu
+	def_special WotGetPartyLeaderMegaStone

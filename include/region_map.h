@@ -12,7 +12,10 @@ enum RegionMapType
     REGION_MAP_KANTO,
     REGION_MAP_SEVII123,
     REGION_MAP_SEVII45,
-    REGION_MAP_SEVII67
+    REGION_MAP_SEVII67,
+    // Wishes of Tomorrow: the post-game archipelago chart Nessa hands over.
+    // Same region, different survey -- toggled with R on the region map.
+    REGION_MAP_WOT_POSTGAME
 };
 
 enum
@@ -136,6 +139,9 @@ void TrySetPlayerIconBlink(void);
 void BlendRegionMap(u16 color, u32 coeff);
 void SetRegionMapDataForZoom(void);
 enum RegionMapType GetRegionMapType(u32 mapSecId);
+bool32 WotPostgameMapActive(void);
+bool32 WotPostgameMapActive_CanToggle(void);
+void WotToggleRegionMapChart(void);
 
 //Pokenav Fly funcs
 u32 FilterFlyDestination(struct RegionMap* regionMap);

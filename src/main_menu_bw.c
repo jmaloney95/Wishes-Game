@@ -26,6 +26,7 @@
 #include "string_util.h"
 #include "main_menu.h"
 #include "naming_screen.h"
+#include "wot_randomizer.h"
 #include "random.h"
 #include "strings.h"
 #include "task.h"
@@ -107,14 +108,22 @@ static void CB2_BWNewGameFromNamingScreen(void);
 // Wishes of Tomorrow: the naming screen returns here with the chosen name.
 // An emptied-out entry falls back to a random preset, then the opening starts
 // with the same black-palette treatment the old skip-Birch path used.
-static void CB2_BWNewGameFromNamingScreen(void)
+static void CB2_BWStartGameAfterSettings(void)
 {
-    if (gSaveBlock2Ptr->playerName[0] == EOS)
-        WotSetRandomPresetPlayerName();
     gPlttBufferUnfaded[0] = RGB_BLACK;
     gPlttBufferFaded[0] = RGB_BLACK;
     BlendPalettes(PALETTES_ALL, 16, RGB_BLACK);
     SetMainCallback2(CB2_NewGame);
+}
+
+static void CB2_BWNewGameFromNamingScreen(void)
+{
+    if (gSaveBlock2Ptr->playerName[0] == EOS)
+        WotSetRandomPresetPlayerName();
+    // WoT: the RANDOMIZER settings page sits between naming and the opening,
+    // so the choice is made before a single encounter exists. It commits its
+    // flags and then hands control to the game start.
+    WotStartRandomizerMenu(CB2_BWStartGameAfterSettings);
 }
 static void DestroyAllMenuSprites(void);
 static void LoadPlayerOverworldSprite(u8 anim);

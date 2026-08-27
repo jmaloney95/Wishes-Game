@@ -343,12 +343,12 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      gText_Quest_LifesWork_Desc,
 	      gText_Quest_LifesWork_DoneDesc,
 	      gText_QuestLoc_MunenVillage,
-	      OBJ_EVENT_GFX_SCIENTIST_1,
+	      OBJ_EVENT_GFX_PROF_BIRCH,
 	      OBJECT,
 	      NULL,
 	      0
 	),
-	[QUEST_TOASTY_TIME] = side_quest(
+	[SIDE_QUEST_TOASTY_TIME] = side_quest(
 	      gText_Quest_ToastyTime_Name,
 	      gText_Quest_ToastyTime_Desc,
 	      gText_Quest_ToastyTime_DoneDesc,
@@ -373,8 +373,8 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      gText_Quest_MinistersFavor_Desc1,
 	      gText_Quest_MinistersFavor_DoneDesc,
 	      gText_QuestLoc_ShinTokyo,
-	      SPECIES_PERSIAN,
-	      PKMN,
+	      OBJ_EVENT_GFX_MAN_2,
+	      OBJECT,
 	      NULL,
 	      0
 	),
@@ -1605,6 +1605,10 @@ void UpdateQuestFlavorText(s32 questId)
 	case SIDE_QUEST_SAVE_FACE:
 		if (CheckBagHasItem(ITEM_CARVED_MASK, 1)) // the mask has been recovered
 			desc = gText_Quest_SaveFace_Desc2;
+		break;
+	case SIDE_QUEST_HARNESS_DARKNESS:
+		if (FlagGet(FLAG_WOT_FLY_GRANTED)) // part 1 paid out: FLY + Celebi's fix
+			desc = gText_Quest_HarnessDarkness_Desc2;
 		break;
 	}
 
