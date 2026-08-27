@@ -465,7 +465,12 @@
 #define OBJ_EVENT_GFX_WOT_YIFFER                 417
 #define OBJ_EVENT_GFX_WOT_JET                    418
 #define OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT         419
-#define NUM_OBJ_EVENT_GFX                        420
+// Wishes of Tomorrow: mega stones lying on the Distortion World floor,
+// drawn as the stone itself rather than as a Poke Ball.
+#define OBJ_EVENT_GFX_ITEM_GARCHOMPITE              420
+#define OBJ_EVENT_GFX_ITEM_BAXCALIBRITE             421
+#define OBJ_EVENT_GFX_ITEM_GYARADOSITE              422
+#define NUM_OBJ_EVENT_GFX                        423
 
 
 // These are dynamic object gfx ids.
@@ -680,6 +685,12 @@
 #define OBJ_EVENT_PAL_TAG_EMOTES                  0x8003
 #define OBJ_EVENT_PAL_TAG_NEON_LIGHT              0x8004
 #define OBJ_EVENT_PAL_TAG_WOT_SCREEN              0x8005
+// Each mega stone keeps its own bag-icon palette: the shared
+// GROUND_ITEMS palette has all 16 slots used, and no two stones
+// ever share a map, so a palette each costs nothing at runtime.
+#define OBJ_EVENT_PAL_TAG_ITEM_GARCHOMPITE        0x8006
+#define OBJ_EVENT_PAL_TAG_ITEM_BAXCALIBRITE       0x8007
+#define OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE        0x8008
 // Not a real OW palette tag; used for the white flash applied to followers
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF

@@ -3,7 +3,6 @@
   "name": "FiveIsland_LostCave_Room3_Frlg",
   "layout": "LAYOUT_FIVE_ISLAND_LOST_CAVE_ROOM3",
   "music": "MUS_RG_SEVII_CAVE",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_LOST_CAVE",
   "requires_flash": false,
   "weather": "WEATHER_FOG_HORIZONTAL",
@@ -12,7 +11,6 @@
   "allow_escaping": true,
   "allow_running": true,
   "show_map_name": true,
-  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [],
@@ -47,5 +45,7 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [],
+  "floor_number": 0,
+  "region": "REGION_KANTO"
 }

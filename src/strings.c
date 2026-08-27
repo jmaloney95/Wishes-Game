@@ -1239,15 +1239,16 @@ const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
 const u8 gText_QuestLoc_ShinTokyo[] = _("SHIN-TOKYO");
 
 const u8 gText_Quest_StopTheMachine_Name[] = _("Stop the Machine");
-const u8 gText_Quest_StopTheMachine_Desc1[] = _("The tides run low tonight.\nSurf south. Purify shadows,\nthen climb Mutrid's tower.");
+const u8 gText_Quest_StopTheMachine_Desc1[] = _("The tides run low tonight.\nSurf south, find the shrine,\nthen climb Mutrid's tower.");
 const u8 gText_Quest_StopTheMachine_DoneDesc[] = _("The Shadow Generator is silent.\nThe wish is mended.");
 
 const u8 gText_Quest_HarnessDarkness_Name[] = _("Harness Darkness");
-const u8 gText_Quest_HarnessDarkness_Desc1[] = _("Turn the SNAG MACHINE on them.\nCatch a Shadow Pokémon--\nthen five in all.");
+const u8 gText_Quest_HarnessDarkness_Desc1[] = _("Purify one Shadow at the\nshrine, then report back to\nPROF. ASSISTANT.");
+const u8 gText_Quest_HarnessDarkness_Desc2[] = _("The sky is open. Now snag\nfive Shadows and return to\nPROF. ASSISTANT.");
 const u8 gText_Quest_HarnessDarkness_DoneDesc[] = _("Their darkness answers to\nyou now.");
 
 const u8 gText_Quest_MinistersFavor_Name[] = _("Jailbreaker");
-const u8 gText_Quest_MinistersFavor_Desc1[] = _("The Minister remoted into the\njail security. Bust Mikmanc\nout of prison.");
+const u8 gText_Quest_MinistersFavor_Desc1[] = _("Meet the MINISTER at the\nSHIN-TOKYO docks, then bust\nMikmanc out of the jail.");
 const u8 gText_Quest_MinistersFavor_DoneDesc[] = _("Mikmanc walks free. The\nMinister paid what he owed.");
 
 //QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
@@ -1293,7 +1294,7 @@ const u8 gText_Quest_LifesWork_Name[] = _("His Life's Work");
 const u8 gText_Quest_LifesWork_Desc[] = _("Clarkson's last wish: destroy\nhis research. Reach his lab\nin Munen and end it.");
 const u8 gText_Quest_LifesWork_DoneDesc[] = _("The research will never fall\ninto the wrong hands. His\nwork ends as he asked.");
 
-//QUEST_TOASTY_TIME (Side) - Frostwood gym leader's family
+//SIDE_QUEST_TOASTY_TIME (Side) - Frostwood gym leader's family
 const u8 gText_Quest_ToastyTime_Name[] = _("Toasty Time");
 const u8 gText_Quest_ToastyTime_Desc[] = _("The gym leader's father gave\nyou HOT COCOA. Coax his two\ndaughters home for dinner.");
 const u8 gText_Quest_ToastyTime_DoneDesc[] = _("The sisters warmed up and\nheaded home. Dinner is served.");

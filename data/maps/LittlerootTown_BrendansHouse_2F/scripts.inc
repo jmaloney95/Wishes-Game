@@ -233,8 +233,28 @@ LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanEast:
 	walk_in_place_faster_left
 	step_end
 
+WotText_PCRandomizerAsk::
+	.string "The home computer is still on\n"
+	.string "the setup screen.\p"
+	.string "Open RANDOMIZER SETTINGS?$"
+
 LittlerootTown_BrendansHouse_2F_EventScript_PC::
 	lockall
+	@ Wishes of Tomorrow: this is the player's bedroom (Munen's house warps
+	@ here). Until the adventure actually starts -- i.e. before the starter is
+	@ taken -- the PC offers the RANDOMIZER settings, so the choice can be
+	@ revisited without starting a new file. Afterwards it is a normal PC.
+	goto_if_set FLAG_RECEIVED_STARTER, LittlerootTown_BrendansHouse_2F_EventScript_PCNormal
+	msgbox WotText_PCRandomizerAsk, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, LittlerootTown_BrendansHouse_2F_EventScript_PCNormal
+	closemessage
+	fadescreen FADE_TO_BLACK
+	special WotOpenRandomizerMenu
+	waitstate
+	releaseall
+	end
+
+LittlerootTown_BrendansHouse_2F_EventScript_PCNormal::
 	checkplayergender
 	goto_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_2F_EventScript_CheckPlayersPC
 	goto_if_eq VAR_RESULT, FEMALE, LittlerootTown_BrendansHouse_2F_EventScript_CheckRivalsPC

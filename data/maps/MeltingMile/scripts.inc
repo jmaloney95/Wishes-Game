@@ -101,7 +101,7 @@ MeltingMile_EventScript_GirlsLeave::
 	msgbox MeltingMileText_GirlsLeave, MSGBOX_DEFAULT
 	closemessage
 	removeitem ITEM_HOT_COCOA          @ the cocoa is handed over
-	completequest QUEST_TOASTY_TIME
+	completequest SIDE_QUEST_TOASTY_TIME
 	applymovement LOCALID_MM_GIRL_L, MeltingMile_Movement_StepAside
 	applymovement LOCALID_MM_GIRL_R, MeltingMile_Movement_StepAside
 	applymovement LOCALID_MM_AZURILL_L, MeltingMile_Movement_StepAside

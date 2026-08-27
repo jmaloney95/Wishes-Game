@@ -56,6 +56,8 @@ Munen_village_2_OnFrame:
 Munen_village_2_EventScript_Intro::
 	lockall
 	setvar VAR_MUNEN_INTRO_STATE, 1
+Munen_village_2_EventScript_IntroNarration::
+	closemessage
 	fadescreen FADE_TO_BLACK         @ go dark for narration
 	delay 30
 	playbgm MUS_RG_LAVENDER, FALSE
@@ -120,37 +122,73 @@ Munen_village_2_EventScript_ClarksonAfterStarter::
 Munen_village_2_EventScript_IceTyrunt::
 	lock
 	faceplayer
+	setvar VAR_0x8004, 0
+	special WotSetStarterSpecies
+	showmonpic VAR_0x8005, 10, 3
 	msgbox MunenText_IceTyrunt, MSGBOX_YESNO
+	hidemonpic
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 1
 	setvar VAR_STARTER_MON, 0
-	givemon SPECIES_PAWNIARD, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_METAL_CLAW, move4=MOVE_BITE
-	bufferspeciesname STR_VAR_1, SPECIES_PAWNIARD
+	@ A randomized starter gets its own level-up moves; the authored
+	@ set belongs to SPECIES_GIBLE and would be nonsense on anything else.
+	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceTyruntRandom
+	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_DRAGON_BREATH, move4=MOVE_BITE
+	bufferspeciesname STR_VAR_1, SPECIES_GIBLE
+	goto Munen_village_2_EventScript_StarterReceived
+
+Munen_village_2_EventScript_GiveIceTyruntRandom::
+	givemon VAR_0x8005, 5
+	bufferspeciesname STR_VAR_1, VAR_0x8005
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_IceAmaura::
 	lock
 	faceplayer
+	setvar VAR_0x8004, 1
+	special WotSetStarterSpecies
+	showmonpic VAR_0x8005, 10, 3
 	msgbox MunenText_IceAmaura, MSGBOX_YESNO
+	hidemonpic
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 2
 	setvar VAR_STARTER_MON, 1
-	givemon SPECIES_IMPIDIMP, 5, move1=MOVE_FAKE_OUT, move2=MOVE_LEER, move3=MOVE_FAIRY_WIND, move4=MOVE_BITE
-	bufferspeciesname STR_VAR_1, SPECIES_IMPIDIMP
+	@ A randomized starter gets its own level-up moves; the authored
+	@ set belongs to SPECIES_FRIGIBAX and would be nonsense on anything else.
+	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceAmauraRandom
+	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_ICY_WIND
+	bufferspeciesname STR_VAR_1, SPECIES_FRIGIBAX
+	goto Munen_village_2_EventScript_StarterReceived
+
+Munen_village_2_EventScript_GiveIceAmauraRandom::
+	givemon VAR_0x8005, 5
+	bufferspeciesname STR_VAR_1, VAR_0x8005
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_IceAnorith::
 	lock
 	faceplayer
+	setvar VAR_0x8004, 2
+	special WotSetStarterSpecies
+	showmonpic VAR_0x8005, 10, 3
 	msgbox MunenText_IceAnorith, MSGBOX_YESNO
+	hidemonpic
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 3
 	setvar VAR_STARTER_MON, 2
-	givemon SPECIES_DEINO, 5, move1=MOVE_TACKLE, move2=MOVE_FOCUS_ENERGY, move3=MOVE_DRAGON_BREATH, move4=MOVE_BITE
-	bufferspeciesname STR_VAR_1, SPECIES_DEINO
+	@ A randomized starter gets its own level-up moves; the authored
+	@ set belongs to SPECIES_AXEW and would be nonsense on anything else.
+	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceAnorithRandom
+	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_ASSURANCE
+	bufferspeciesname STR_VAR_1, SPECIES_AXEW
+	goto Munen_village_2_EventScript_StarterReceived
+
+Munen_village_2_EventScript_GiveIceAnorithRandom::
+	givemon VAR_0x8005, 5
+	bufferspeciesname STR_VAR_1, VAR_0x8005
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_StarterRefuse::
@@ -256,8 +294,8 @@ Munen_village_2_EventScript_FishermanReunited::
 
 @ ===========================================================================
 @ The father, reunited from SeafloorCavern. Recognizes the player and asks
-@ for the Red Gyarados. Yes -> trades it for TM Earthquake. No -> keep it.
-@ If the player KO'd it (has none), he gives the TM as thanks anyway.
+@ for the Red Gyarados. Yes -> trades it for the YACHT KEY. No -> keep it.
+@ If the player KO'd it (has none), he gives the key as thanks anyway.
 @ ===========================================================================
 Munen_village_2_EventScript_FishermanDad::
 	lock
@@ -273,7 +311,7 @@ Munen_village_2_EventScript_FishermanDad::
 	specialvar VAR_RESULT, TakeRedGyaradosFromPlayer
 	goto_if_eq VAR_RESULT, FALSE, Munen_village_2_EventScript_FishermanDadLastMon
 	msgbox Munen_village_2_Text_DadThanks, MSGBOX_DEFAULT
-	giveitem ITEM_TM_EARTHQUAKE, 1
+	giveitem ITEM_YACHT_KEY
 	setflag FLAG_MUNEN_FISHERMAN_REWARDED
 	release
 	end
@@ -297,7 +335,7 @@ Munen_village_2_EventScript_FishermanDadLastMon::
 @ Player KO'd it (or no longer has it) -- reward the TM as thanks.
 Munen_village_2_EventScript_FishermanDadGift::
 	msgbox Munen_village_2_Text_DadGift, MSGBOX_DEFAULT
-	giveitem ITEM_TM_EARTHQUAKE, 1
+	giveitem ITEM_YACHT_KEY
 	setflag FLAG_MUNEN_FISHERMAN_REWARDED
 	release
 	end
@@ -437,17 +475,17 @@ Munen_village_2_EventScript_HaruIntro::
 	@ Fallback (shouldn't be reachable) -- skip battle, go to farewell.
 	goto Munen_village_2_EventScript_HaruAfterBattle
 
-@ Player chose Pawniard -> Haru fights with Deino.
+@ Player chose GIBLE -> Draco counters with AXEW.
 Munen_village_2_EventScript_HaruBattleVsTyrunt::
 	trainerbattle_single TRAINER_HARU_HAS_AMAURA, MunenText_HaruBattleStart, MunenText_HaruDefeated, Munen_village_2_EventScript_HaruAfterBattle
 	end
 
-@ Player chose Impidimp -> Haru fights with Pawniard.
+@ Player chose FRIGIBAX -> Draco counters with GIBLE.
 Munen_village_2_EventScript_HaruBattleVsAmaura::
 	trainerbattle_single TRAINER_HARU_HAS_ANORITH, MunenText_HaruBattleStart, MunenText_HaruDefeated, Munen_village_2_EventScript_HaruAfterBattle
 	end
 
-@ Player chose Deino -> Haru fights with Impidimp.
+@ Player chose AXEW -> Draco counters with FRIGIBAX.
 Munen_village_2_EventScript_HaruBattleVsAnorith::
 	trainerbattle_single TRAINER_HARU_HAS_TYRUNT, MunenText_HaruBattleStart, MunenText_HaruDefeated, Munen_village_2_EventScript_HaruAfterBattle
 	end

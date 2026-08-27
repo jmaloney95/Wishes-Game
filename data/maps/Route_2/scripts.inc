@@ -201,8 +201,21 @@ Route_2_EventScript_YachtSign::
 	lockall
 	msgbox Route_2_Text_YachtSign, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, Route_2_EventScript_YachtSignDone
+	@ The joke finally pays off: the fisherman's key starts her.
+	checkitem ITEM_YACHT_KEY
+	goto_if_eq VAR_RESULT, TRUE, Route_2_EventScript_YachtBoard
 	msgbox Route_2_Text_YachtFailed, MSGBOX_DEFAULT
 Route_2_EventScript_YachtSignDone::
+	releaseall
+	end
+
+Route_2_EventScript_YachtBoard::
+	msgbox Route_2_Text_YachtStarts, MSGBOX_DEFAULT
+	closemessage
+	playse SE_DOOR
+	fadescreen FADE_TO_BLACK
+	warp MAP_YACHT_INTERIOR, 6, 7
+	waitstate
 	releaseall
 	end
 
@@ -249,6 +262,12 @@ Route_2_Text_YachtSign::
 
 Route_2_Text_YachtFailed::
 	.string "Failed!$"
+
+Route_2_Text_YachtStarts::
+	.string "You try the fisherman's key.\p"
+	.string "The engine catches on the\n"
+	.string "first turn.\p"
+	.string "...Nobody comes running.$"
 
 Route_2_Text_SandyIntro::
 	.string "I heard that one town south\n"

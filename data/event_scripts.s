@@ -1859,3 +1859,4 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/LifeguardShack/scripts.inc"
 
 	.include "data/maps/MewtwoPostGame/scripts.inc"
+	.include "data/maps/YachtInterior/scripts.inc"

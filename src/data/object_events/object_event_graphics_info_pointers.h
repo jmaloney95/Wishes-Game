@@ -433,6 +433,9 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_MutridGrunt
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCarvedMask;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCatalpaBow;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemPotion;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemGarchompite;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemBaxcalibrite;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemGyaradosite;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -711,6 +714,9 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_ITEM_CARVED_MASK] = &gObjectEventGraphicsInfo_ItemCarvedMask,
     [OBJ_EVENT_GFX_ITEM_CATALPA_BOW] = &gObjectEventGraphicsInfo_ItemCatalpaBow,
     [OBJ_EVENT_GFX_ITEM_POTION] = &gObjectEventGraphicsInfo_ItemPotion,
+    [OBJ_EVENT_GFX_ITEM_GARCHOMPITE] = &gObjectEventGraphicsInfo_ItemGarchompite,
+    [OBJ_EVENT_GFX_ITEM_BAXCALIBRITE] = &gObjectEventGraphicsInfo_ItemBaxcalibrite,
+    [OBJ_EVENT_GFX_ITEM_GYARADOSITE] = &gObjectEventGraphicsInfo_ItemGyaradosite,
 #if IS_FRLG
     [OBJ_EVENT_GFX_RED_NORMAL] =               &gObjectEventGraphicsInfo_RedNormal,
     [OBJ_EVENT_GFX_RED_BIKE] =                 &gObjectEventGraphicsInfo_RedBike,

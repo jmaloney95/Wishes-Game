@@ -112,9 +112,9 @@ static const u8 sStarterLabelCoords[STARTER_MON_COUNT][2] =
 
 // Wishes of Tomorrow — the dark trio (sealed in the shrine ice).
 // Macro names kept as-is for engine compatibility; values are our starters.
-#define GRASS_STARTER SPECIES_PAWNIARD // proud / regal
-#define FIRE_STARTER  SPECIES_IMPIDIMP // impish / mischievous
-#define WATER_STARTER SPECIES_DEINO    // scrappy / instinctive
+#define GRASS_STARTER SPECIES_GIBLE    // blunt / relentless
+#define FIRE_STARTER  SPECIES_FRIGIBAX // cold / deliberate
+#define WATER_STARTER SPECIES_AXEW     // proud / patient
 
 static const u16 sStarterMon[STARTER_MON_COUNT] =
 {

@@ -2257,6 +2257,7 @@ extern const u8 gText_Quest_StopTheMachine_Desc1[];
 extern const u8 gText_Quest_StopTheMachine_DoneDesc[];
 extern const u8 gText_Quest_HarnessDarkness_Name[];
 extern const u8 gText_Quest_HarnessDarkness_Desc1[];
+extern const u8 gText_Quest_HarnessDarkness_Desc2[];
 extern const u8 gText_Quest_HarnessDarkness_DoneDesc[];
 extern const u8 gText_Quest_MinistersFavor_Name[];
 extern const u8 gText_Quest_MinistersFavor_Desc1[];

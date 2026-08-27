@@ -86,6 +86,8 @@ const u16 gItemIconPalette_ParkBall[] = INCGFX_U16("graphics/items/icon_palettes
 const u32 gItemIcon_BeastBall[] = INCGFX_U32("graphics/items/icons/beast_ball.png", ".4bpp.smol");
 const u32 gItemIcon_SnagBall[] = INCGFX_U32("graphics/items/icons/snag_ball.png", ".4bpp.smol");
 const u16 gItemIconPalette_SnagBall[] = INCGFX_U16("graphics/items/icon_palettes/snag_ball.pal", ".gbapal");
+const u32 gItemIcon_YachtKey[] = INCGFX_U32("graphics/items/icons/yacht_key.png", ".4bpp.smol");
+const u16 gItemIconPalette_YachtKey[] = INCGFX_U16("graphics/items/icon_palettes/yacht_key.pal", ".gbapal");
 const u16 gItemIconPalette_BeastBall[] = INCGFX_U16("graphics/items/icon_palettes/beast_ball.pal", ".gbapal");
 
 const u32 gItemIcon_CherishBall[] = INCGFX_U32("graphics/items/icons/cherish_ball.png", ".4bpp.smol");

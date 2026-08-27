@@ -1118,6 +1118,8 @@ enum __attribute__((packed)) Item
 
     // Wishes of Tomorrow: the Snag Ball (secondaryId = BALL_SNAG; 4x on Shadows)
     ITEM_SNAG_BALL = 918,
+    // Wishes of Tomorrow: the fisherman's thanks -- starts the Route 2 yacht.
+    ITEM_YACHT_KEY = 919,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

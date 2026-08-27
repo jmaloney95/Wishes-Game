@@ -1778,6 +1778,14 @@
       "y": 7,
       "width": 1,
       "height": 1
+    },
+    {
+      "id": "MAPSEC_REBEL_HIDEOUT",
+      "name": "REBEL HIDEOUT",
+      "x": 16,
+      "y": 4,
+      "width": 1,
+      "height": 1
     }
   ]
 }

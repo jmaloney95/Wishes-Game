@@ -5,7 +5,7 @@ OldaleTown_House2_MapScripts::
 @ OnResume (not OnLoad): OnLoad runs before ResumeMap's ResetSpriteData,
 @ which would wipe the indicator sprite before it renders.
 OldaleTown_House2_OnResume::
-	questindicator 2, QUEST_TOASTY_TIME  @ Dad, until the cocoa quest is picked up
+	questindicator 2, SIDE_QUEST_TOASTY_TIME  @ Dad, until the cocoa quest is picked up
 	end
 
 @ Frostwood Town gym leader's family home (reuses the OldaleTown_House2 interior).
@@ -26,7 +26,7 @@ OldaleTown_House2_EventScript_Man::
 	msgbox OldaleTown_House2_Text_DadAsk, MSGBOX_DEFAULT
 	giveitem ITEM_HOT_COCOA
 	setflag FLAG_GOT_HOT_COCOA
-	startquest QUEST_TOASTY_TIME
+	startquest SIDE_QUEST_TOASTY_TIME
 	msgbox OldaleTown_House2_Text_DadAfterGive, MSGBOX_DEFAULT
 	release
 	end

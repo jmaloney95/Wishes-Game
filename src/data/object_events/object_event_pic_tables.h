@@ -454,6 +454,18 @@ static const struct SpriteFrameImage sPicTable_ItemPotion[] = {
     overworld_ascending_frames(gObjectEventPic_ItemPotion, 2, 2),
 };
 
+static const struct SpriteFrameImage sPicTable_ItemGarchompite[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemGarchompite, 2, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_ItemBaxcalibrite[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemBaxcalibrite, 2, 2),
+};
+
+static const struct SpriteFrameImage sPicTable_ItemGyaradosite[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemGyaradosite, 2, 2),
+};
+
 static const struct SpriteFrameImage sPicTable_MartEmployee[] = {
     overworld_ascending_frames(gObjectEventPic_MartEmployee, 2, 4),
 };

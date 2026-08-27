@@ -2111,6 +2111,11 @@ void CB2_ContinueSavedGame(void)
     if (FlagGet(FLAG_WOT_HIDEOUT_REVEAL_DONE) && !FlagGet(FLAG_WOT_SHADOW_LOG_GET))
         FlagSet(FLAG_WOT_SHADOW_LOG_GET);
 
+    // Same story for the archipelago chart: Nessa hands it over on the Zoroark
+    // reveal, which is one-shot, so any save past that point would never get it.
+    if (FlagGet(FLAG_WOT_HIDEOUT_REVEAL_DONE) && !FlagGet(FLAG_WOT_POSTGAME_MAP_GET))
+        FlagSet(FLAG_WOT_POSTGAME_MAP_GET);
+
     LoadSaveblockMapHeader();
     ClearDiveAndHoleWarps();
     trainerHillMapId = GetCurrentTrainerHillMapId();
@@ -2174,6 +2179,17 @@ static void FieldClearVBlankHBlankCallbacks(void)
 
     SetVBlankCallback(NULL);
     SetHBlankCallback(NULL);
+
+    // Wishes of Tomorrow: the BW map-name popup slides by writing REG_BG0VOFS
+    // from its HBlank callback, and only HideMapNamePopUpWindow() puts that
+    // register back. Warp off a tile while the popup is still on screen and the
+    // popup task dies with the map -- the cleanup never runs, and BG0VOFS keeps
+    // the slide offset. Nothing else in the field writes BG0VOFS (
+    // FieldUpdateBgTilemapScroll only touches BG1-3), and BG0 is where every
+    // text box and menu is drawn, so they all render off screen from then on --
+    // permanently, across maps. Clearing it here covers every exit from the
+    // field, warps included.
+    SetGpuReg_ForcedBlank(REG_OFFSET_BG0VOFS, 0);
 }
 
 static void SetFieldVBlankCallback(void)

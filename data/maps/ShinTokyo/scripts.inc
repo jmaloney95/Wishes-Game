@@ -1,4 +1,7 @@
 	.equ LOCALID_ACT3_CAPTAIN, 5
+
+	@ Flat price of any Mega Stone from the Minister.
+	.set MINISTER_MEGA_STONE_PRICE, 10000
 	.equ LOCALID_ARREST_OFFICER, 6
 	.equ LOCALID_ARREST_OPERATIVE, 7
 	.equ LOCALID_JAIL_GUARD_A, 8
@@ -23,6 +26,34 @@ ShinTokyo_OnFrame:
 @  hideout welcome scene: "you think it's over?"). Unlocks the dockhouse
 @  (warps 9/10 -> MewtwoPostGame) where he waits with ARMORED MEWTWO.
 @ ============================================================================
+ShinTokyo_EventScript_HideFerry::
+	setflag FLAG_WOT_HIDE_FRONTIER_FERRY
+	return
+
+@ ============================================================================
+@  THE FRONTIER FERRY -- post-game only. Docks at the Shin-Tokyo waterfront
+@  and runs to the Battle Frontier, arriving at the same harbour tile the
+@  vanilla SS Tidal uses (BattleFrontier_OutsideWest 19,67).
+@ ============================================================================
+ShinTokyo_EventScript_FrontierFerry::
+	lock
+	faceplayer
+	msgbox ShinTokyo_Text_FerryAsk, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ShinTokyo_EventScript_FerryDeclined
+	msgbox ShinTokyo_Text_FerryBoard, MSGBOX_DEFAULT
+	closemessage
+	playse SE_SHIP
+	fadescreen FADE_TO_BLACK
+	warp MAP_BATTLE_FRONTIER_OUTSIDE_WEST, 19, 67
+	waitstate
+	release
+	end
+
+ShinTokyo_EventScript_FerryDeclined::
+	msgbox ShinTokyo_Text_FerryDeclined, MSGBOX_DEFAULT
+	release
+	end
+
 ShinTokyo_EventScript_DracoCall::
 	lockall
 	setvar VAR_TEMP_4, 1
@@ -61,6 +92,9 @@ ShinTokyo_OnLoad_RedAlert::
 ShinTokyo_OnTransition::
 	setflag FLAG_HIDE_ACT3_CAPTAIN
 	setflag FLAG_HIDE_ACT3_ARREST_NPCS
+	@ Hide-flags default CLEAR, so the ferry must be hidden explicitly on every
+	@ pre-clear load (see the round-6 jet bug for why this matters).
+	call_if_unset FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_HideFerry
 	goto_if_set FLAG_SYS_GAME_CLEAR, ShinTokyo_OnTransition_PostGame
 	goto_if_set FLAG_ACT3_RED_ALERT, ShinTokyo_OnTransition_RedAlert
 	setflag FLAG_HIDE_ACT3_PATROLS
@@ -73,6 +107,8 @@ ShinTokyo_OnTransition::
 ShinTokyo_OnTransition_PostGame::
 	setrespawn HEAL_LOCATION_REBEL_HIDEOUT
 	setweather WEATHER_SUNNY
+	@ the trade lanes reopen: the Frontier ferry starts calling at the docks
+	clearflag FLAG_WOT_HIDE_FRONTIER_FERRY
 	setflag FLAG_HIDE_ACT3_PATROLS
 	setflag FLAG_HIDE_ACT3_JAIL_GUARDS
 	setflag FLAG_WOT_HIDE_POSTGAME_MUTRIDS
@@ -591,6 +627,25 @@ ShinTokyo_Text_CitizenRedAlert::
 	.string "Your face is on every screen\n"
 	.string "in the city!$"
 
+ShinTokyo_Text_FerryAsk::
+	.string "A ferry idles at the dock, the\n"
+	.string "first one to call here in\l"
+	.string "years.\p"
+	.string "DECKHAND: We run to the BATTLE\n"
+	.string "FRONTIER now that the lanes\l"
+	.string "are open.\p"
+	.string "Care to sail?$"
+
+ShinTokyo_Text_FerryBoard::
+	.string "DECKHAND: Mind the step.\p"
+	.string "Nobody sails out of this city\n"
+	.string "for fun. You will be the first.$"
+
+ShinTokyo_Text_FerryDeclined::
+	.string "DECKHAND: We are here every\n"
+	.string "day now. Come back when the\l"
+	.string "sea agrees with you.$"
+
 ShinTokyo_Text_DracoCall::
 	.string "DRACO: You think it's over?\n"
 	.string "Ha!\p"
@@ -905,12 +960,12 @@ ShinTokyo_EventScript_Minister::
 	questmenu QUEST_MENU_CHECK_COMPLETE, SIDE_QUEST_MINISTERS_FAVOR
 	goto_if_eq VAR_RESULT, TRUE, ShinTokyo_EventScript_MinisterRyuden
 	msgbox ShinTokyo_Text_MinisterIdle, MSGBOX_DEFAULT
-	release
+	goto ShinTokyo_EventScript_MinisterMegaTrade
 	end
 
 ShinTokyo_EventScript_MinisterRyuden::
 	msgbox ShinTokyo_Text_MinisterRyuden, MSGBOX_DEFAULT
-	release
+	goto ShinTokyo_EventScript_MinisterMegaTrade
 	end
 
 ShinTokyo_EventScript_MinisterSettle::
@@ -919,12 +974,112 @@ ShinTokyo_EventScript_MinisterSettle::
 	closemessage
 	completequest SIDE_QUEST_MINISTERS_FAVOR
 	giveitem ITEM_SNAG_BALL, 15
+	giveitem ITEM_CATCHING_CHARM
 	msgbox ShinTokyo_Text_MinisterAfter, MSGBOX_DEFAULT
-	release
+	goto ShinTokyo_EventScript_MinisterMegaTrade
 	end
 
 ShinTokyo_EventScript_MinisterWaiting::
 	msgbox ShinTokyo_Text_MinisterWaiting, MSGBOX_DEFAULT
+	goto ShinTokyo_EventScript_MinisterMegaTrade
+	end
+
+@ --- THE MINISTER'S MEGA STONE TRADE ----------------------------------------
+@ Reached by falling through from EVERY one of his quest branches above, so his
+@ story lines always play first and this is offered afterwards.
+@
+@ He deals in the stone for whatever is at the FRONT of the party, priced at a
+@ flat 10,000. WotGetPartyLeaderMegaStone looks the stone up in that species'
+@ own form-change table, so a species with no Mega simply has nothing to sell
+@ and he says so -- the sale can never go through for a Pokemon that cannot
+@ Mega Evolve. Doing it this way puts every Mega Stone in the build behind one
+@ NPC instead of scattering them across the world.
+
+ShinTokyo_EventScript_MinisterMegaTrade::
+	@ Resolve what the lead Pokemon can use. The special buffers STR_VAR_1 with
+	@ its name and STR_VAR_2/3 with the stone names, returns the stone selected
+	@ by VAR_0x8004, and reports how many exist in VAR_0x8006.
+	setvar VAR_0x8004, 0
+	specialvar VAR_RESULT, WotGetPartyLeaderMegaStone
+	copyvar VAR_TEMP_1, VAR_RESULT
+	copyvar VAR_TEMP_2, VAR_0x8006
+	goto_if_eq VAR_TEMP_1, ITEM_NONE, ShinTokyo_EventScript_MinisterMegaNoStone
+	@ Six species (Charizard/Raichu/Mewtwo X-Y, and the Z stones for Absol,
+	@ Garchomp and Lucario) have two. Let the player pick rather than quietly
+	@ handing over the first -- otherwise those six stones are unobtainable.
+	goto_if_ge VAR_TEMP_2, 2, ShinTokyo_EventScript_MinisterMegaTwoStones
+	msgbox ShinTokyo_Text_MinisterMegaOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ShinTokyo_EventScript_MinisterMegaDeclined
+	goto ShinTokyo_EventScript_MinisterMegaBuy
+	end
+
+ShinTokyo_EventScript_MinisterMegaTwoStones::
+	message ShinTokyo_Text_MinisterMegaChoose
+	waitmessage
+	@ The rows are {STR_VAR_2}/{STR_VAR_3} placeholders -- dynmultichoice runs
+	@ StringExpandPlaceholders over each row, so they resolve to the two stone
+	@ names the special just buffered.
+	dynmultichoice 0, 0, FALSE, 6, 0, DYN_MULTICHOICE_CB_NONE, ShinTokyo_Text_MinisterMegaStoneA, ShinTokyo_Text_MinisterMegaStoneB, ShinTokyo_Text_MinisterMegaStoneNone
+	switch VAR_RESULT
+	case 0, ShinTokyo_EventScript_MinisterMegaPickA
+	case 1, ShinTokyo_EventScript_MinisterMegaPickB
+	case 2, ShinTokyo_EventScript_MinisterMegaDeclined
+	case MULTI_B_PRESSED, ShinTokyo_EventScript_MinisterMegaDeclined
+	end
+
+ShinTokyo_EventScript_MinisterMegaPickA::
+	setvar VAR_0x8004, 0
+	goto ShinTokyo_EventScript_MinisterMegaReselect
+	end
+
+ShinTokyo_EventScript_MinisterMegaPickB::
+	setvar VAR_0x8004, 1
+	goto ShinTokyo_EventScript_MinisterMegaReselect
+	end
+
+ShinTokyo_EventScript_MinisterMegaReselect::
+	specialvar VAR_RESULT, WotGetPartyLeaderMegaStone
+	copyvar VAR_TEMP_1, VAR_RESULT
+	bufferitemname STR_VAR_2, VAR_TEMP_1
+	msgbox ShinTokyo_Text_MinisterMegaOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ShinTokyo_EventScript_MinisterMegaDeclined
+	goto ShinTokyo_EventScript_MinisterMegaBuy
+	end
+
+@ Common purchase path. VAR_TEMP_1 holds the chosen stone by the time we arrive.
+ShinTokyo_EventScript_MinisterMegaBuy::
+	checkmoney MINISTER_MEGA_STONE_PRICE
+	goto_if_eq VAR_RESULT, FALSE, ShinTokyo_EventScript_MinisterMegaNoMoney
+	checkitemspace VAR_TEMP_1, 1
+	goto_if_eq VAR_RESULT, FALSE, ShinTokyo_EventScript_MinisterMegaNoRoom
+	additem VAR_TEMP_1, 1
+	removemoney MINISTER_MEGA_STONE_PRICE
+	bufferitemname STR_VAR_2, VAR_TEMP_1
+	playfanfare MUS_OBTAIN_ITEM
+	message ShinTokyo_Text_MinisterMegaSold
+	waitmessage
+	waitfanfare
+	msgbox ShinTokyo_Text_MinisterMegaThanks, MSGBOX_DEFAULT
+	release
+	end
+
+ShinTokyo_EventScript_MinisterMegaNoStone::
+	msgbox ShinTokyo_Text_MinisterMegaNoStone, MSGBOX_DEFAULT
+	release
+	end
+
+ShinTokyo_EventScript_MinisterMegaNoMoney::
+	msgbox ShinTokyo_Text_MinisterMegaNoMoney, MSGBOX_DEFAULT
+	release
+	end
+
+ShinTokyo_EventScript_MinisterMegaNoRoom::
+	call Common_EventScript_BagIsFull
+	release
+	end
+
+ShinTokyo_EventScript_MinisterMegaDeclined::
+	msgbox ShinTokyo_Text_MinisterMegaDeclined, MSGBOX_DEFAULT
 	release
 	end
 
@@ -1031,3 +1186,50 @@ ShinTokyo_Text_MinisterWaiting::
 	.string "The cell I opened is still\n"
 	.string "occupied, {PLAYER}.\p"
 	.string "Finish the job.$"
+
+ShinTokyo_Text_MinisterMegaOffer::
+	.string "That {STR_VAR_1} of yours.\p"
+	.string "I can put my hands on a\n"
+	.string "{STR_VAR_2}. Ten thousand.\p"
+	.string "No questions, no paperwork.\n"
+	.string "Interested?$"
+
+ShinTokyo_Text_MinisterMegaSold::
+	.string "{PLAYER} handed over the money\n"
+	.string "and received the {STR_VAR_2}!$"
+
+ShinTokyo_Text_MinisterMegaThanks::
+	.string "Keep it on the {STR_VAR_1} and\n"
+	.string "the rest takes care of itself.\p"
+	.string "Bring me another one up front\n"
+	.string "and we'll talk again.$"
+
+ShinTokyo_Text_MinisterMegaNoStone::
+	.string "I deal in Mega Stones, friend.\p"
+	.string "Whatever you've got leading that\n"
+	.string "party has no Mega form -- there's\l"
+	.string "no stone in the world for it.\p"
+	.string "Put something else up front and\n"
+	.string "come see me again.$"
+
+ShinTokyo_Text_MinisterMegaNoMoney::
+	.string "Ten thousand. Not a yen less.\p"
+	.string "Come back when you're carrying.$"
+
+ShinTokyo_Text_MinisterMegaDeclined::
+	.string "Suit yourself.\p"
+	.string "The offer stands.$"
+
+ShinTokyo_Text_MinisterMegaChoose::
+	.string "There are two stones cut for\n"
+	.string "{STR_VAR_1}. Your pick.$"
+
+ShinTokyo_Text_MinisterMegaStoneA::
+	.string "{STR_VAR_2}$"
+
+ShinTokyo_Text_MinisterMegaStoneB::
+	.string "{STR_VAR_3}$"
+
+ShinTokyo_Text_MinisterMegaStoneNone::
+	.string "Neither$"
+

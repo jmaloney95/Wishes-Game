@@ -4278,7 +4278,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         .levelUpLearnset = sGibleLevelUpLearnset,
         .teachableLearnset = sGibleTeachableLearnset,
         .eggMoveLearnset = sGibleEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 24, SPECIES_GABITE}),
+        // Wishes of Tomorrow: starter cadence -- 2nd stage at 16 (was 24).
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_GABITE}),
     },
 
     [SPECIES_GABITE] =
@@ -4358,7 +4359,8 @@ const struct SpeciesInfo gSpeciesInfoGen4[] =
         )
         .levelUpLearnset = sGabiteLevelUpLearnset,
         .teachableLearnset = sGabiteTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 48, SPECIES_GARCHOMP}),
+        // Wishes of Tomorrow: starter cadence -- 3rd stage at 36 (was 48).
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_GARCHOMP}),
     },
 
     [SPECIES_GARCHOMP] =

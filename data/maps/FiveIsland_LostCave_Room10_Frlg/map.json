@@ -3,7 +3,6 @@
   "name": "FiveIsland_LostCave_Room10_Frlg",
   "layout": "LAYOUT_FIVE_ISLAND_LOST_CAVE_ROOM10",
   "music": "MUS_RG_SEVII_CAVE",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_LOST_CAVE",
   "requires_flash": false,
   "weather": "WEATHER_FOG_HORIZONTAL",
@@ -12,13 +11,11 @@
   "allow_escaping": true,
   "allow_running": true,
   "show_map_name": true,
-  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": null,
   "object_events": [
     {
       "local_id": "LOCALID_LOST_CAVE_SELPHY",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_2_FRLG",
       "x": 5,
       "y": 5,
@@ -32,7 +29,6 @@
       "flag": "FLAG_HIDE_LOST_CAVE_SELPHY"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 5,
       "y": 2,
@@ -56,5 +52,7 @@
     }
   ],
   "coord_events": [],
-  "bg_events": []
+  "bg_events": [],
+  "floor_number": 0,
+  "region": "REGION_KANTO"
 }

@@ -323,6 +323,12 @@ const u16 gObjectEventPal_MutridGruntWhite[] = INCGFX_U16("graphics/object_event
 const u32 gObjectEventPic_ItemCarvedMask[] = INCGFX_U32("graphics/object_events/pics/misc/item_carved_mask.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_ItemCatalpaBow[] = INCGFX_U32("graphics/object_events/pics/misc/item_catalpa_bow.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_ItemPotion[] = INCGFX_U32("graphics/object_events/pics/misc/item_potion.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u32 gObjectEventPic_ItemGarchompite[] = INCGFX_U32("graphics/object_events/pics/misc/item_garchompite.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u16 gObjectEventPal_ItemGarchompite[] = INCGFX_U16("graphics/items/icon_palettes/garchompite.pal", ".gbapal");
+const u32 gObjectEventPic_ItemBaxcalibrite[] = INCGFX_U32("graphics/object_events/pics/misc/item_baxcalibrite.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u16 gObjectEventPal_ItemBaxcalibrite[] = INCGFX_U16("graphics/items/icon_palettes/baxcalibrite.pal", ".gbapal");
+const u32 gObjectEventPic_ItemGyaradosite[] = INCGFX_U32("graphics/object_events/pics/misc/item_gyaradosite.png", ".4bpp", "-mwidth 2 -mheight 2");
+const u16 gObjectEventPal_ItemGyaradosite[] = INCGFX_U16("graphics/items/icon_palettes/gyaradosite.pal", ".gbapal");
 const u16 gObjectEventPal_GroundItems[] = INCGFX_U16("graphics/object_events/palettes/ground_items.pal", ".gbapal");
 
 const u32 gFieldEffectObjectPic_ShadowSmall[] = INCGFX_U32("graphics/field_effects/pics/shadow_small.png", ".4bpp");

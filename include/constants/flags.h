@@ -1235,16 +1235,16 @@
 #define FLAG_WOT_DRACO_CALL_DONE                                    0x498 // WoT: post-game Draco call played; dockhouse (Armored Mewtwo den) unlocked
 #define FLAG_WOT_ARMORED_MEWTWO_GIVEN                               0x499 // WoT: the Armored Mewtwo handover completed (battle won + mon received)
 #define FLAG_WOT_HIDDEN_COIN_CASE                                   0x49A // WoT: hidden COIN CASE in the Game Corner garbage can (2,2)
-#define FLAG_UNUSED_0x49B                                           0x49B // Unused Flag
-#define FLAG_UNUSED_0x49C                                           0x49C // Unused Flag
-#define FLAG_UNUSED_0x49D                                           0x49D // Unused Flag
-#define FLAG_UNUSED_0x49E                                           0x49E // Unused Flag
-#define FLAG_UNUSED_0x49F                                           0x49F // Unused Flag
-#define FLAG_UNUSED_0x4A0                                           0x4A0 // Unused Flag
-#define FLAG_UNUSED_0x4A1                                           0x4A1 // Unused Flag
-#define FLAG_UNUSED_0x4A2                                           0x4A2 // Unused Flag
-#define FLAG_UNUSED_0x4A3                                           0x4A3 // Unused Flag
-#define FLAG_UNUSED_0x4A4                                           0x4A4 // Unused Flag
+#define FLAG_WOT_POSTGAME_MAP_GET                                   0x49B // WoT: Nessa handed over the archipelago chart (unlocks the R toggle)
+#define FLAG_WOT_POSTGAME_MAP_ACTIVE                                0x49C // WoT: region map is currently showing the archipelago chart
+#define FLAG_WOT_FLY_GRANTED                                        0x49D // WoT: Prof. Assistant granted FLY for purifying a Shadow
+#define FLAG_WOT_HARNESS_PART2_DONE                                 0x49E // WoT: Harness Darkness part 2 (5 snagged) rewarded
+#define FLAG_WOT_YACHT_STARTER_TAKEN                                0x49F // WoT: one of the yacht's three Hoenn starters has been claimed
+#define FLAG_WOT_RANDOMIZER                                         0x4A0 // WoT: Randomizer Mode chosen at New Game
+#define FLAG_WOT_HIDE_FRONTIER_FERRY                                0x4A1 // WoT: hides the Battle Frontier ferry at the Shin-Tokyo docks until the game is cleared
+#define FLAG_WOT_RAND_STARTERS                                      0x4A2 // WoT: randomize the three sealed starters
+#define FLAG_WOT_RAND_WILD                                          0x4A3 // WoT: randomize wild encounters
+#define FLAG_WOT_RAND_TRAINERS                                      0x4A4 // WoT: randomize trainer teams
 #define FLAG_UNUSED_0x4A5                                           0x4A5 // Unused Flag
 #define FLAG_UNUSED_0x4A6                                           0x4A6 // Unused Flag
 #define FLAG_UNUSED_0x4A7                                           0x4A7 // Unused Flag
@@ -2540,6 +2540,9 @@
 #define FLAG_POMPEII_TUNNEL_ROCK_CLEARED        FLAG_UNUSED_0x280 // Master Gen had the tunnel-mouth slab cleared (quest start)
 #define FLAG_POMPEII_GENERAL_RETREATED          FLAG_UNUSED_0x281 // General Edwards beaten; he abandons the mask chamber
 #define FLAG_ITEM_DISTORTION_WORLD_3_MAX_REVIVE FLAG_UNUSED_0x285
+#define FLAG_ITEM_DISTORTION_WORLD_5_GARCHOMPITE FLAG_UNUSED_0x4A5
+#define FLAG_ITEM_DISTORTION_WORLD_4_BAXCALIBRITE FLAG_UNUSED_0x4A6
+#define FLAG_ITEM_DISTORTION_WORLD_3_GYARADOSITE FLAG_UNUSED_0x4A7
 #define FLAG_ITEM_DISTORTION_WORLD_5_FULL_RESTORE FLAG_UNUSED_0x286
 #define FLAG_ITEM_DISTORTION_WORLD_5_PP_UP      FLAG_UNUSED_0x287
 // Tradewind Town street item balls (2026-07-15)

@@ -269,14 +269,65 @@ CelebiIsland_Text_Checkpoint:
 	.string "since the city went dark.$"
 
 @ --- the guardians and their trial -------------------------------------------
-CelebiIsland_EventScript_Guardian::
-	lock
-	faceplayer
+@ Each guardian gates the trial the same way, then teaches its own half of
+@ how purification actually works.
+CelebiIsland_EventScript_GuardianUxie::
+	lockall
+	goto_if_set FLAG_WOT_FAIRY_TRIAL_DONE, CelebiIsland_EventScript_LessonUxie
+	goto_if_not_defeated TRAINER_HANNAH, CelebiIsland_EventScript_GuardianBlocked
+	goto_if_not_defeated TRAINER_SAMANTHA, CelebiIsland_EventScript_GuardianBlocked
+	goto_if_not_defeated TRAINER_MAURA, CelebiIsland_EventScript_GuardianBlocked
+	goto CelebiIsland_EventScript_TrioYield
+
+CelebiIsland_EventScript_GuardianMesprit::
+	lockall
+	goto_if_set FLAG_WOT_FAIRY_TRIAL_DONE, CelebiIsland_EventScript_LessonMesprit
+	goto_if_not_defeated TRAINER_HANNAH, CelebiIsland_EventScript_GuardianBlocked
+	goto_if_not_defeated TRAINER_SAMANTHA, CelebiIsland_EventScript_GuardianBlocked
+	goto_if_not_defeated TRAINER_MAURA, CelebiIsland_EventScript_GuardianBlocked
+	goto CelebiIsland_EventScript_TrioYield
+
+CelebiIsland_EventScript_GuardianAzelf::
+	lockall
+	goto_if_set FLAG_WOT_FAIRY_TRIAL_DONE, CelebiIsland_EventScript_LessonAzelf
+	goto_if_not_defeated TRAINER_HANNAH, CelebiIsland_EventScript_GuardianBlocked
+	goto_if_not_defeated TRAINER_SAMANTHA, CelebiIsland_EventScript_GuardianBlocked
+	goto_if_not_defeated TRAINER_MAURA, CelebiIsland_EventScript_GuardianBlocked
+	goto CelebiIsland_EventScript_TrioYield
+
+CelebiIsland_EventScript_GuardianBlocked::
 	waitse
 	playmoncry SPECIES_UXIE, CRY_MODE_NORMAL
 	waitmoncry
 	msgbox CelebiIsland_Text_GuardianBlocks, MSGBOX_DEFAULT
-	release
+	releaseall
+	end
+
+@ UXIE (knowledge): how to open a sealed heart.
+CelebiIsland_EventScript_LessonUxie::
+	waitse
+	playmoncry SPECIES_UXIE, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox CelebiIsland_Text_LessonUxie, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ MESPRIT (emotion): what purification is worth.
+CelebiIsland_EventScript_LessonMesprit::
+	waitse
+	playmoncry SPECIES_MESPRIT, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox CelebiIsland_Text_LessonMesprit, MSGBOX_DEFAULT
+	releaseall
+	end
+
+@ AZELF (willpower): wondering how far it could be pushed.
+CelebiIsland_EventScript_LessonAzelf::
+	waitse
+	playmoncry SPECIES_AZELF, CRY_MODE_NORMAL
+	waitmoncry
+	msgbox CelebiIsland_Text_LessonAzelf, MSGBOX_DEFAULT
+	releaseall
 	end
 
 CelebiIsland_EventScript_TrioTrial::
@@ -286,7 +337,11 @@ CelebiIsland_EventScript_TrioTrial::
 	goto_if_not_defeated TRAINER_HANNAH, CelebiIsland_EventScript_TrioNotYet
 	goto_if_not_defeated TRAINER_SAMANTHA, CelebiIsland_EventScript_TrioNotYet
 	goto_if_not_defeated TRAINER_MAURA, CelebiIsland_EventScript_TrioNotYet
-	@ the trial is complete: the trio yields the shrine
+	goto CelebiIsland_EventScript_TrioYield
+
+@ The yield + scatter + CELEBI descent. Entered either by stepping on the
+@ shrine approach or by talking to a guardian once the keepers are beaten.
+CelebiIsland_EventScript_TrioYield::
 	waitse
 	playmoncry SPECIES_UXIE, CRY_MODE_NORMAL
 	waitmoncry
@@ -407,6 +462,39 @@ CelebiIsland_Text_GuardianBlocks::
 	.string "you and the shrine.\p"
 	.string "Its closed eyes see everything\n"
 	.string "you have ever done.$"
+
+CelebiIsland_Text_LessonUxie::
+	.string "UXIE presses a thought into\n"
+	.string "your head, patiently.\p"
+	.string "A sealed heart cannot be\n"
+	.string "reached from outside.\p"
+	.string "BATTLE with the Shadow one.\n"
+	.string "Stand beside it while it\l"
+	.string "fights, and the seal loosens.\p"
+	.string "Only then can the shrine\n"
+	.string "finish the work.$"
+
+CelebiIsland_Text_LessonMesprit::
+	.string "MESPRIT turns a slow circle,\n"
+	.string "delighted with itself.\p"
+	.string "You fear losing the strength\n"
+	.string "the shadow gave them.\p"
+	.string "Do not. A purified one keeps\n"
+	.string "every bit of that power --\l"
+	.string "and pays none of the cost.\p"
+	.string "No brittle defense. No HYPER\n"
+	.string "MODE. Stronger than it was\l"
+	.string "as a shadow.$"
+
+CelebiIsland_Text_LessonAzelf::
+	.string "AZELF will not settle.\p"
+	.string "It has been thinking about\n"
+	.string "the stones. The MEGA stones.\p"
+	.string "A purified heart, it wonders,\n"
+	.string "pushed through a MEGA bond...\p"
+	.string "Nobody has ever done it.\n"
+	.string "AZELF very much wants someone\l"
+	.string "to try.$"
 
 CelebiIsland_Text_TrioNotYet::
 	.string "Three presences press against\n"

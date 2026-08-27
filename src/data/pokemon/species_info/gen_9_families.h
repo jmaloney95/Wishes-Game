@@ -6450,7 +6450,8 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         .levelUpLearnset = sFrigibaxLevelUpLearnset,
         .teachableLearnset = sFrigibaxTeachableLearnset,
         .eggMoveLearnset = sFrigibaxEggMoveLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 35, SPECIES_ARCTIBAX}),
+        // Wishes of Tomorrow: starter cadence -- 2nd stage at 16 (was 35).
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_ARCTIBAX}),
     },
 
     [SPECIES_ARCTIBAX] =
@@ -6514,7 +6515,8 @@ const struct SpeciesInfo gSpeciesInfoGen9[] =
         )
         .levelUpLearnset = sArctibaxLevelUpLearnset,
         .teachableLearnset = sArctibaxTeachableLearnset,
-        .evolutions = EVOLUTION({EVO_LEVEL, 54, SPECIES_BAXCALIBUR}),
+        // Wishes of Tomorrow: starter cadence -- 3rd stage at 36 (was 54).
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_BAXCALIBUR}),
     },
 
     [SPECIES_BAXCALIBUR] =
