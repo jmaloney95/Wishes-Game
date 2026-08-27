@@ -5,15 +5,16 @@ in-browser patcher works without the player leaving the page.
 
 ## Current patch
 
-`wishes-of-tomorrow-1.1.0.bps` — 22,759,108 bytes.
+`wishes-of-tomorrow-1.2.0.bps` — 22,709,339 bytes.
 
 | | CRC32 |
 | --- | --- |
 | Base ROM — Pokémon Emerald (U), 16 MB, `BPEE` | `1F1C08FB` |
-| Patched output — 32 MB | `47253C41` |
+| Patched output — 32 MB | `8AA8F352` |
 
-`wishes-of-tomorrow-1.0.0.bps` stays in this folder as the archived first
-release (output CRC32 `4056030C`); its GitHub release asset keeps working.
+`wishes-of-tomorrow-1.1.0.bps` (output CRC32 `47253C41`) and
+`wishes-of-tomorrow-1.0.0.bps` (output CRC32 `4056030C`) stay in this folder as
+archived releases; their GitHub release assets keep working.
 
 Both checksums are embedded in the patch, so the patcher rejects a wrong base
 ROM before doing any work. Verified byte-exact against the built ROM.
@@ -30,7 +31,7 @@ base ROM nor the built ROM is in this repo.
 `assets/patcher.js` looks for exactly one path:
 
 ```js
-url: "patches/wishes-of-tomorrow-1.1.0.bps"
+url: "patches/wishes-of-tomorrow-1.2.0.bps"
 ```
 
 Name the file to match, or change that line. If the file is absent the page
@@ -49,9 +50,10 @@ flips --create --bps \
   "docs/patches/wishes-of-tomorrow-<version>.bps"
 ```
 
-(v1.1.0 was generated with an equivalent in-repo Python BPS encoder and
-verified by independently re-applying the patch: the output is byte-identical
-to the built ROM.)
+(v1.1.0 and v1.2.0 were generated with an equivalent in-repo Python BPS
+encoder and verified by independently re-applying the patch with a separate
+applier written from the spec: the output is byte-identical to the built ROM
+and all three embedded CRCs check.)
 
 - **Base ROM** — Pokémon Emerald (U), 16 MB, header code `BPEE`.
 - **Built ROM** — `pokeemerald-expansion/pokeemerald.gba`, 32 MB after expansion.
