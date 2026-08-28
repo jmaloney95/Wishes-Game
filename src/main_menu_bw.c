@@ -39,6 +39,7 @@
 #include "constants/event_objects.h"
 #include "constants/flags.h"
 #include "constants/songs.h"
+#include "wot_mega_shop.h"
 
 void CB2_InitMainMenuBW(void);
 
@@ -625,7 +626,9 @@ static void LoadPartyMonIcons(u8 anim)
     LoadMonIconPalettes();
     for (i = 0; i < gPlayerPartyCount; i++)
     {
-        species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG, NULL);
+        // WoT: show a stone-carrying mon as its Mega here too, so the save
+        // slot matches the team the player remembers finishing with.
+        species = WotGetDisplaySpecies(&gPlayerParty[i]);
         personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY, NULL);
         if (anim == 0)
             spriteId = CreateMonIcon(species, SpriteCallbackDummy, 32 * i + 40, 88, 0, personality);

@@ -14,6 +14,24 @@
 #include "window.h"
 #include "constants/songs.h"
 #include "wot_shadow_log.h"
+#include "constants/species.h"
+
+bool32 WotSpeciesIsShadow(u16 species)
+{
+    return species == SPECIES_JIRACHI_SHADOW || species == SPECIES_LUGIA_SHADOW;
+}
+
+bool32 WotMonIsShadow(struct Pokemon *mon)
+{
+    if (GetMonData(mon, MON_DATA_IS_SHADOW, NULL))
+        return TRUE;
+
+    // A story Shadow species is Shadow by its very identity, flag or no flag --
+    // UNLESS it has been purified. Purification clears the flag, and the shrine
+    // must stay done: the National Ribbon is the record that it happened.
+    return WotSpeciesIsShadow(GetMonData(mon, MON_DATA_SPECIES, NULL))
+        && !GetMonData(mon, MON_DATA_NATIONAL_RIBBON, NULL);
+}
 
 // WoT SHADOW LOG -- the post-game collection ledger.
 //
@@ -111,10 +129,25 @@ static const u16 sPureBitVars[] =
     VAR_WOT_SHADOWLOG_PURE_2, VAR_WOT_SHADOWLOG_PURE_3,
 };
 
+// The story Shadow species are their own species ids, but the log is keyed on
+// the ORDINARY species and its saved bit indices must never move. Fold them
+// back before looking up, so a Shadow Jirachi fills the Jirachi row exactly as
+// a flagged plain one used to -- and old saves keep the bit they already have.
+u16 WotBaseSpeciesForShadow(u16 species)
+{
+    switch (species)
+    {
+    case SPECIES_JIRACHI_SHADOW: return SPECIES_JIRACHI;
+    case SPECIES_LUGIA_SHADOW:   return SPECIES_LUGIA;
+    default:                     return species;
+    }
+}
+
 static s32 LogIndexOfSpecies(u16 species)
 {
     u32 i;
 
+    species = WotBaseSpeciesForShadow(species);
     for (i = 0; i < WOT_SHADOW_LOG_COUNT; i++)
     {
         if (sWotShadowLogSpecies[i] == species)
@@ -158,7 +191,7 @@ void WotShadowLog_MarkMon(struct Pokemon *mon)
 {
     u16 species = GetMonData(mon, MON_DATA_SPECIES);
 
-    if (GetMonData(mon, MON_DATA_IS_SHADOW))
+    if (WotMonIsShadow(mon))
         WotShadowLog_MarkSnaggedSpecies(species);
     else if (GetMonData(mon, MON_DATA_NATIONAL_RIBBON))
         WotShadowLog_MarkPurifiedSpecies(species);

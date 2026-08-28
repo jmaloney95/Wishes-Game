@@ -615,6 +615,7 @@ bool8 IsBattleSEPlaying(enum BattlerId battler)
 }
 
 #include "data/wot_shadow_pics.h"
+#include "wot_shadow_log.h"
 
 // Returns TRUE if custom shadow art was applied (gfx + palette overwritten).
 static bool32 WotTryLoadShadowMonGfx(u32 species, enum BattlerId battler, u32 paletteOffset)
@@ -706,9 +707,11 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
     // WoT Shadow system: Shadow mons carry a violet cast -- an engine-side
     // tint (same mechanism as the dynamax blend), no per-species art needed.
     // The aura overlay + red eyes are an art pass on top of this.
-    if (GetMonData(mon, MON_DATA_IS_SHADOW))
+    if (WotMonIsShadow(mon) && !WotSpeciesIsShadow(species))
     {
         // Custom shadow art replaces the tint where it exists (enemy side).
+        // A species that IS a Shadow species is already drawn that way and is
+        // excluded above -- tinting it again would only muddy its own art.
         if (!WotTryLoadShadowMonGfx(species, battler, paletteOffset))
         {
             BlendPalette(paletteOffset, 16, 8, RGB(18, 4, 26));

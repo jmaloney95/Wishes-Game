@@ -34,6 +34,7 @@
 #include "constants/songs.h"
 #include "constants/items.h"
 #include "caps.h"
+#include "wot_shadow_log.h"
 
 #define HEALTHBOX_BG_INDEX 2
 
@@ -2021,7 +2022,7 @@ void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elem
             // WoT Shadow system: the player's Shadow mons show the HEART
             // GAUGE in the exp slot instead -- full while the heart is
             // sealed, empty once it has "opened" (ready for the shrine).
-            if (IsOnPlayerSide(battler) && GetMonData(mon, MON_DATA_IS_SHADOW))
+            if (IsOnPlayerSide(battler) && WotMonIsShadow(mon))
             {
                 currExpBarValue = GetMonData(mon, MON_DATA_SHADOW_OPENED) ? 0 : 8;
                 maxExpBarValue = 8;

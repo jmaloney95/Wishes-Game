@@ -15,6 +15,7 @@
 #include "test_runner.h"
 
 #include "data/gimmicks.h"
+#include "wot_shadow_log.h"
 
 // Populates gBattleStruct->gimmick.usableGimmick for each battler.
 void AssignUsableGimmicks(void)
@@ -290,7 +291,7 @@ static inline u32 GetIndicatorSpriteId(u32 healthboxId)
 // level. An active gimmick's indicator takes precedence.
 static bool32 WotBattlerShowsShadowIndicator(enum BattlerId battler)
 {
-    return GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW);
+    return WotMonIsShadow(GetBattlerMon(battler));
 }
 
 // WoT Shadow system: a purified mon (National Ribbon -- only granted by the
@@ -299,7 +300,7 @@ static bool32 WotBattlerShowsPurifiedIndicator(enum BattlerId battler)
 {
     struct Pokemon *mon = GetBattlerMon(battler);
 
-    return !GetMonData(mon, MON_DATA_IS_SHADOW) && GetMonData(mon, MON_DATA_NATIONAL_RIBBON);
+    return !WotMonIsShadow(mon) && GetMonData(mon, MON_DATA_NATIONAL_RIBBON);
 }
 
 const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)

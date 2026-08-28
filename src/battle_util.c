@@ -52,6 +52,7 @@
 #include "constants/trainers.h"
 #include "constants/weather.h"
 #include "constants/pokemon.h"
+#include "wot_shadow_log.h"
 
 static bool32 TryRemoveScreens(enum BattlerId battler);
 static bool32 IsUnnerveAbilityOnOpposingSide(enum BattlerId battler);
@@ -3091,7 +3092,7 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
         // WoT Shadow system: announce the aura once per send-in, either side.
         if (!(gBattleStruct->wotAuraAnnounced & (1u << battler))
          && IsBattlerAlive(battler)
-         && GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW))
+         && WotMonIsShadow(GetBattlerMon(battler)))
         {
             gBattleStruct->wotAuraAnnounced |= 1u << battler;
             BattleScriptCall(BattleScript_WotShadowAuraRet);

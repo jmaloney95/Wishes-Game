@@ -153,7 +153,10 @@ TowerTop_EventScript_JirachiFree::
 	waitmoncry
 	msgbox TowerTop_Text_JirachiUnbound, MSGBOX_DEFAULT
 	closemessage
-	setwildbattle SPECIES_JIRACHI, 70
+	@ The CUSTOM Shadow species (Steel/Dark, its own art), not plain Jirachi
+	@ wearing the Shadow flag -- otherwise the caught mon reverts to an
+	@ ordinary Jirachi everywhere outside this battle.
+	setwildbattle SPECIES_JIRACHI_SHADOW, 70
 	special WotMakeEventMonShadow
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle

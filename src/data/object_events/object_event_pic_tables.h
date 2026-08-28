@@ -293,7 +293,7 @@ static const struct SpriteFrameImage sPicTable_WotShadowJirachi[] = {
 };
 
 static const struct SpriteFrameImage sPicTable_WotAllisonLand[] = {
-    overworld_ascending_frames(gObjectEventPic_WotAllisonLand, 4, 4),
+    overworld_ascending_frames(gObjectEventPic_WotAllisonLand, 2, 4),
 };
 
 static const struct SpriteFrameImage sPicTable_WotSkyeLand[] = {
