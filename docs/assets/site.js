@@ -188,18 +188,20 @@
 
   /* ── horizontal cast rail: let a vertical wheel scroll it sideways ── */
   function wireCastRail() {
-    var rail = document.querySelector("[data-cast-rail]");
-    if (!rail) return;
-    rail.addEventListener("wheel", function (e) {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      var max = rail.scrollWidth - rail.clientWidth;
-      // Only hijack the wheel while the rail still has somewhere to go,
-      // so the page keeps scrolling normally at either end.
-      if ((e.deltaY < 0 && rail.scrollLeft > 0) || (e.deltaY > 0 && rail.scrollLeft < max)) {
-        e.preventDefault();
-        rail.scrollLeft += e.deltaY;
-      }
-    }, { passive: false });
+    // Every [data-rail] gets this, not just the cast: the screenshots are a
+    // rail too now, and a page with two of them should behave the same on both.
+    Array.prototype.forEach.call(document.querySelectorAll("[data-rail]"), function (rail) {
+      rail.addEventListener("wheel", function (e) {
+        if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        var max = rail.scrollWidth - rail.clientWidth;
+        // Only hijack the wheel while the rail still has somewhere to go,
+        // so the page keeps scrolling normally at either end.
+        if ((e.deltaY < 0 && rail.scrollLeft > 0) || (e.deltaY > 0 && rail.scrollLeft < max)) {
+          e.preventDefault();
+          rail.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    });
   }
 
   /* ── reveal on scroll ───────────────────────────────────────────── */
