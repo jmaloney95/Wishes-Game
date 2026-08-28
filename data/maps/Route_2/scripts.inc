@@ -1,5 +1,21 @@
+	.equ LOCALID_ROUTE2_ALLISON, 6
+
 Route_2_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route_2_OnTransition
 	.byte 0
+
+Route_2_OnTransition::
+	@ Siren Allison spawns out in the sea, so her template graphic has to be
+	@ the swimming sprite every time the map loads. It is a VAR graphic purely
+	@ so the approach scene can swap in the walking sprite when she comes
+	@ ashore; this puts it back.
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_SWIMMER_ALLISON
+	@ The approach scene moves her template with setobjectxyperm to respawn her
+	@ on the walking sprite. Templates live in the save block, so put her back
+	@ out at sea here rather than letting her creep towards the beach a little
+	@ further with every encounter.
+	setobjectxyperm LOCALID_ROUTE2_ALLISON, 6, 38
+	end
 
 @ -- Route 2 grinding trainers (weak, pre-Gym-1) --
 
@@ -113,12 +129,98 @@ Route_2_Text_WildPsyduck:
 @ SIREN ALLISON: one-liner through the plate/portrait, boss card, battle.
 @ The trainer flag is shared across acts, so the card fires exactly once --
 @ at whichever of her encounters the player reaches first.
+@ ===========================================================================
+@ SIREN ALLISON -- the approach.
+@
+@ Her trainer sight only ever worked on a surfing player, and that is
+@ structural rather than a mistake: CheckPathBetweenTrainerAndPlayer walks
+@ every tile between trainer and player and refuses the sighting on the first
+@ collision, and a water-bound object is blocked the moment that path steps up
+@ onto the sand. So sight still handles players out on the water, and these
+@ shore triggers handle players on the beach -- she notices, swims in, comes
+@ out of the surf and challenges them on dry land.
+@
+@ Scripted applymovement never collision-checks, which is what lets her cross
+@ the waterline at all.
+@ ===========================================================================
+Route_2_EventScript_AllisonNotice::
+	goto_if_defeated TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_EventScript_AllisonNoticeDone
+	setvar VAR_TEMP_1, 1
+	lockall
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonSpot
+	waitmovement 0
+	delay 20
+	@ Three strokes in, a splash on each -- one long SE would be over before
+	@ she arrived, so the wash is retriggered per tile as she closes.
+	playse SE_M_SURF
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonStroke
+	waitmovement 0
+	playse SE_M_SURF
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonStroke
+	waitmovement 0
+	playse SE_M_SURF
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonStroke
+	waitmovement 0
+	@ Out of the water. An object cannot be handed a new graphic in place, so
+	@ she is respawned: remove -> setobjectxyperm (the template, not the live
+	@ object) -> add. She reappears in the shallows on the walking sprite and
+	@ then takes a real step up onto the sand.
+	playse SE_M_DIVE
+	removeobject LOCALID_ROUTE2_ALLISON
+	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_WOT_ALLISON_LAND
+	setobjectxyperm LOCALID_ROUTE2_ALLISON, 9, 38
+	addobject LOCALID_ROUTE2_ALLISON
+	delay 12
+	playse SE_PUDDLE
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonAshore
+	waitmovement 0
+	delay 16
+	goto Route_2_EventScript_AllisonChallenge
+	end
+
+Route_2_EventScript_AllisonNoticeDone::
+	end
+
+Route_2_EventScript_AllisonChallenge::
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonIntro, MSGBOX_DEFAULT
+	closemessage
+	@ Flush every SE player before the card. Her banner's shimmer (SE_M_DETECT)
+	@ shares the SE channels with the splashes that just played, and the same
+	@ collision is what made Edwards' card sound cut out until his scene was
+	@ made to clear the bed first.
+	special WotSuppressWeatherSE
+	special WotStopSceneSE
+	bossintro BOSS_INTRO_ALLISON
+	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonPost, MSGBOX_DEFAULT
+	releaseall
+	end
+
+Route_2_Movement_AllisonSpot:
+	emote_exclamation_mark
+	delay_16
+	step_end
+
+Route_2_Movement_AllisonStroke:
+	walk_right
+	step_end
+
+Route_2_Movement_AllisonAshore:
+	walk_right
+	face_right
+	step_end
+
 Route_2_EventScript_SwimmerAllison::
 	goto_if_defeated TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_EventScript_AllisonAfter
 	lockall
 	setspeaker SP_NAME_ALLISON
 	msgbox Route_2_Text_AllisonIntro, MSGBOX_DEFAULT
 	closemessage
+	@ Clear the SE bed so the banner shimmer is not fighting the surf.
+	special WotSuppressWeatherSE
+	special WotStopSceneSE
 	bossintro BOSS_INTRO_ALLISON
 	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat
 	setspeaker SP_NAME_ALLISON

@@ -226,6 +226,9 @@ Route_2_2_EventScript_SwimmerAllison::
 	setspeaker SP_NAME_ALLISON
 	msgbox Route_2_2_Text_AllisonIntro, MSGBOX_DEFAULT
 	closemessage
+	@ Clear the SE bed so the banner shimmer is not fighting the surf.
+	special WotSuppressWeatherSE
+	special WotStopSceneSE
 	bossintro BOSS_INTRO_ALLISON
 	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_Text_AllisonDefeat
 	setspeaker SP_NAME_ALLISON

@@ -33,6 +33,37 @@
 // Six species carry two stones (Charizard/Raichu/Mewtwo X and Y, and the Z
 // variants of Absol, Garchomp and Lucario), so the caller is given the count
 // and can offer a choice rather than silently handing over the first one.
+// The species a mon should be SHOWN as. A Pokemon carrying its own Mega Stone
+// is drawn in its Mega form on the Hall of Fame and on the continue screen --
+// both are trophy shots, and the Mega is the shape the player actually finished
+// the game with. Nothing about battle is affected: this is presentation only,
+// and a mon holding no stone (or a stone that is not its own) is unchanged.
+u16 WotGetDisplaySpecies(struct Pokemon *mon)
+{
+    const struct FormChange *formChanges;
+    u16 species, heldItem;
+    u32 i;
+
+    // Eggs report SPECIES_EGG and have nothing to evolve into.
+    if (GetMonData(mon, MON_DATA_IS_EGG, NULL))
+        return GetMonData(mon, MON_DATA_SPECIES_OR_EGG, NULL);
+
+    species = GetMonData(mon, MON_DATA_SPECIES, NULL);
+    heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
+    if (heldItem == ITEM_NONE)
+        return species;
+
+    formChanges = GetSpeciesFormChanges(species);
+    for (i = 0; formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
+    {
+        if (formChanges[i].method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM
+         && formChanges[i].param1 == heldItem)
+            return formChanges[i].targetSpecies;
+    }
+
+    return species;
+}
+
 void WotGetPartyLeaderMegaStone(void)
 {
     const struct FormChange *formChanges;
