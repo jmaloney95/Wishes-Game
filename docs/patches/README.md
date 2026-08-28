@@ -5,13 +5,14 @@ in-browser patcher works without the player leaving the page.
 
 ## Current patch
 
-`wishes-of-tomorrow-1.2.0.bps` — 22,709,339 bytes.
+`wishes-of-tomorrow-1.2.1.bps` — 22,736,706 bytes.
 
 | | CRC32 |
 | --- | --- |
 | Base ROM — Pokémon Emerald (U), 16 MB, `BPEE` | `1F1C08FB` |
-| Patched output — 32 MB | `8AA8F352` |
+| Patched output — 32 MB | `81AF35BA` |
 
+`wishes-of-tomorrow-1.2.0.bps` (output CRC32 `8AA8F352`),
 `wishes-of-tomorrow-1.1.0.bps` (output CRC32 `47253C41`) and
 `wishes-of-tomorrow-1.0.0.bps` (output CRC32 `4056030C`) stay in this folder as
 archived releases; their GitHub release assets keep working.
@@ -31,7 +32,7 @@ base ROM nor the built ROM is in this repo.
 `assets/patcher.js` looks for exactly one path:
 
 ```js
-url: "patches/wishes-of-tomorrow-1.2.0.bps"
+url: "patches/wishes-of-tomorrow-1.2.1.bps"
 ```
 
 Name the file to match, or change that line. If the file is absent the page
@@ -50,8 +51,8 @@ flips --create --bps \
   "docs/patches/wishes-of-tomorrow-<version>.bps"
 ```
 
-(v1.1.0 and v1.2.0 were generated with an equivalent in-repo Python BPS
-encoder and verified by independently re-applying the patch with a separate
+(v1.1.0 onward were generated with an equivalent in-repo Python BPS encoder,
+`Tools/make_bps_patch.py <version>`, and verified by independently re-applying the patch with a separate
 applier written from the spec: the output is byte-identical to the built ROM
 and all three embedded CRCs check.)
 
