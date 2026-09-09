@@ -87,4 +87,9 @@ Freeing what's in the tower scattered Shadow legendaries across the region, and 
 - **Tileset Art:** pinkscales, Phyromatical, MagiScarf, PeekyChew, Elinthind, lo8jd, Dark Slayer
 - **Shin-Tokyo Art:** Emeiry; *Odisea* by ekat99 (CC BY-NC-SA)
 - **Battle Backdrops:** carchagui (open sea, cave, laboratory, space, town, interior); aveontrainer (Ashlands savanna, molten summit)
+- **Johto Tileset & Overworld Art:** via *Pokémon Heart & Soul* — Crystal Advance (Kertra), Ekat99, TheDeadHeroAlistair, the Johto Redrawn Team and the HnS team
+- **Quest Menu:** PokemonSanFran (`unbound-quest-menu`); original FireRed implementation by ghoulslash
+- **Heart Gauge:** RHH's `pokeemerald-expansion-shadow`
 - **Playtesting:** Luke Devereux, Mike Mancuso, Kyle Clarkson
+
+Built from source on RHH's `pokeemerald-expansion` (1.15.3 dev line) and pret's `pokeemerald`.
