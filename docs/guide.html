@@ -62,7 +62,7 @@
 .gd-legend span { display:flex; align-items:center; gap:8px; }
 
 .gd-h2 { font-family:var(--font-pixel); font-weight:400; font-size:14px; margin:30px 0 14px; }
-.gd-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr)); gap:16px; }
+.gd-grid { margin-top:30px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr)); gap:16px; }
 .gd-tile { border:2px dashed rgba(233,233,237,.18); border-radius:var(--radius-md); padding:16px;
            background:var(--color-neutral-900); display:flex; flex-direction:column; gap:10px; }
 .gd-tile-head { display:flex; align-items:center; gap:10px; }
@@ -169,7 +169,6 @@
       <span><svg width="34" height="8" aria-hidden="true"><line x1="0" y1="4" x2="34" y2="4" stroke="currentColor" stroke-width="6" stroke-dasharray="8 8" style="color:var(--color-accent)"></line></svg>ROUTE</span>
     </div>
 
-    <h2 class="gd-h2">Along the way</h2>
     <p class="gd-empty" id="gd-empty" hidden>Route only &mdash; no marked stops on this map.</p>
     <div class="gd-grid" id="gd-grid"></div>
   </section>
