@@ -17,8 +17,8 @@
      isn't there yet the UI falls back to "choose the patch you
      downloaded" instead of showing a broken button. */
   var PATCH = {
-    url: "patches/wishes-of-tomorrow-1.2.1.bps",
-    outputName: "Wishes of Tomorrow 1.2.1.gba",
+    url: "patches/wishes-of-tomorrow-1.2.2.bps",
+    outputName: "Wishes of Tomorrow 1.2.2.gba",
     base: {
       name: "Pokémon Emerald (U)",
       code: "BPEE",     // GBA header game code at 0xAC
