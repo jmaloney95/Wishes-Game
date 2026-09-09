@@ -1245,6 +1245,7 @@
 #define FLAG_WOT_RAND_STARTERS                                      0x4A2 // WoT: randomize the three sealed starters
 #define FLAG_WOT_RAND_WILD                                          0x4A3 // WoT: randomize wild encounters
 #define FLAG_WOT_RAND_TRAINERS                                      0x4A4 // WoT: randomize trainer teams
+#define FLAG_WOT_EXP_SHARE_ON                                       0x4A8 // WoT: party-wide Exp Share switch, toggled from the bag
 #define FLAG_UNUSED_0x4A5                                           0x4A5 // Unused Flag
 #define FLAG_UNUSED_0x4A6                                           0x4A6 // Unused Flag
 #define FLAG_UNUSED_0x4A7                                           0x4A7 // Unused Flag

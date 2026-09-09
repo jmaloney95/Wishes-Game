@@ -66,7 +66,7 @@ MunenVillageAct2_Text_GoonPatrol::
 MunenVillageAct2_Text_OccupationNotice::
 	.string "A notice is nailed over the old\n"
 	.string "village sign, ink still wet:\p"
-	.string "“BY ORDER OF TEAM MUTRID --\p"
+	.string "“BY ORDER OF TEAM MUTRID…\p"
 	.string "“This village and all it remembers\n"
 	.string "now serve the Wish.\p"
 	.string "“Remain indoors. The mountain will\n"

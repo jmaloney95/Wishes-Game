@@ -176,12 +176,12 @@ DragonKeeper_EventScript_MonBagon::
 
 @ --- Text (all PLACEHOLDER (Joe)) -------------------------------------------
 DragonKeeper_Text_WardenChallenge::
-	.string "You reach for the eggs--\p"
+	.string "You reach for the eggs…\p"
 	.string "TWO shadows fall across you.\p"
 	.string "“Outsider. Those clutches carry\n"
 	.string "the old blood.\p"
 	.string "“Prove your worth to the wardens\n"
-	.string "of Ryuden -- or leave empty.”$"
+	.string "of Ryuden, or leave empty.”$"
 
 DragonKeeper_Text_WardenALose::
 	.string "The old blood... accepts you.$"
@@ -192,7 +192,7 @@ DragonKeeper_Text_WardenBLose::
 DragonKeeper_Text_WardenYield::
 	.string "“It is decided.\p"
 	.string "“ONE egg. Choose with your\n"
-	.string "heart -- the shell already\l"
+	.string "heart, the shell already\l"
 	.string "knows what sleeps inside.”$"
 
 DragonKeeper_Text_WardenAPost::
@@ -224,7 +224,7 @@ DragonKeeper_Text_EggGuarded::
 	.string "You feel watched.$"
 
 DragonKeeper_Text_EggGone::
-	.string "Two eggs remain -- promised\n"
+	.string "Two eggs remain, promised\n"
 	.string "to other hands.$"
 
 DragonKeeper_Text_MonFlygon::

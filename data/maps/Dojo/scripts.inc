@@ -234,15 +234,15 @@ Dojo_Text_MomGift2::
 	.string "Pokemon that frets.\p"
 	.string "And when you hear it ring,\n"
 	.string "somewhere out there in all that\l"
-	.string "noise and dark--\p"
-	.string "--that's me, love.\n"
+	.string "noise and dark…\p"
+	.string "that's me, love.\n"
 	.string "That's me.$"
 
 Dojo_Text_YifferGift1::
 	.string "Big day tomorrow. You eaten?\p"
 	.string "Didn't think so. A fighter runs\n"
 	.string "on scraps and spite.\p"
-	.string "Here -- take mine.$"
+	.string "Here, take mine.$"
 
 Dojo_Text_YifferGift2::
 	.string "LEFTOVERS. Best\n"
@@ -311,7 +311,7 @@ Dojo_Text_MikmancGift2::
 	.string "LIFE ORB. It costs a\n"
 	.string "little to hit a LOT harder.\p"
 	.string "...When you make it out there\n"
-	.string " -- hit harder, {PLAYER}.\p"
+	.string ", hit harder, {PLAYER}.\p"
 	.string "For all of us.$"
 
 Dojo_Text_MikmancAfter::

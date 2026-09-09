@@ -45,7 +45,7 @@ TowerMid_EventScript_Suzaku::
 TowerMid_Text_SuzakuIntro::
 	.string "So the TIGER's claw broke.\p"
 	.string "I am SUZAKU. Every wing in\n"
-	.string "this tower answers my call --\p"
+	.string "this tower answers my call…\p"
 	.string "even the rainbow one they\n"
 	.string "dragged out of the sky and\l"
 	.string "sealed in the dark.\p"

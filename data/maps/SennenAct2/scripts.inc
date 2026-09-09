@@ -319,21 +319,26 @@ SennenAct2_Movement_FlinchLeft:
 
 @ Panicked scramble right-and-down toward the dojo entrance the player came
 @ in through (the old straight-down route ran him through the map wall).
+@ Run the whole way east on row 19 BEFORE dropping. The old route turned down
+@ at x=8, where rows 20 and 21 are still walled (x=7,8 at y20; x<=8 at y21).
+@ Row 19 is clear to x=17, row 21 opens from x=9, and row 22 opens at x=16 --
+@ so going east first and descending late is the only legal way out.
 SennenAct2_Movement_GoonRout:
 	face_right
 	delay_8
 	walk_fast_right
 	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
 	walk_fast_down
 	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
 	walk_fast_down
-	walk_fast_right
-	walk_fast_down
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
-	walk_fast_right
 	step_end
 
 @ Blown straight backwards -- north off the cliff and into the sea.
@@ -674,7 +679,7 @@ SennenAct2_Text_RyokoPostBattle::
 
 SennenAct2_Text_RebelFighter1::
 	.string "Two more! Come ON, big\n"
-	.string "guy, stay up, stay UP--\p"
+	.string "guy, stay up, stay UP…\p"
 	.string "{PLAYER} Get to\n"
 	.string "The DOOR! GO!$"
 
@@ -705,8 +710,8 @@ SennenAct2_Text_GoonFighter2::
 	.string "GOON: Wave after wave of them!\n"
 	.string "Where do these rebels keep\l"
 	.string "COMING from?!\p"
-	.string "...wait. Why would they all-- oh\n"
-	.string "no. OH NO. IT'S A DIVERSION--$"
+	.string "...wait. Why would they all… oh\n"
+	.string "no. OH NO. IT'S A DIVERSION…$"
 
 SennenAct2_Text_GoonMon1::
 	.string "Houndoom's jaws glow like a\n"
@@ -719,7 +724,7 @@ SennenAct2_Text_GoonMon2::
 	.string "The Golbat wheels and dives,\n"
 	.string "shrieking.\p"
 	.string "The Chandelure's flames have\n"
-	.string "gone small and blue -- almost\l"
+	.string "gone small and blue, almost\l"
 	.string "out. Almost.$"
 
 SennenAct2_Text_GoonMon3::
@@ -747,7 +752,7 @@ SennenAct2_Text_GenBattleCry::
 
 SennenAct2_Text_GoonRout::
 	.string "The station belongs to\n"
-	.string "MUTRID-- agh! Fall back!$"
+	.string "MUTRID… agh! Fall back!$"
 
 SennenAct2_Text_YifferBattleCry::
 	.string "MACHAMP doesn't kneel to THE ONI!\n"

@@ -289,7 +289,7 @@ UndergroundArena_Text_Intro1::
 	.string "still going at it.$"
 
 UndergroundArena_Text_Intro2::
-	.string "ANNOUNCER: --AND THAT'S THE\n"
+	.string "ANNOUNCER:…AND THAT'S THE\n"
 	.string "MATCH!\p"
 	.string "The challenger is DOWN, folks!\n"
 	.string "What a run they had!$"
@@ -297,7 +297,7 @@ UndergroundArena_Text_Intro2::
 UndergroundArena_Text_Intro3::
 	.string "ANNOUNCER: STILL your undisputed\n"
 	.string "champion of the UNDERGROUND\l"
-	.string "ARENA --\p"
+	.string "ARENA…\p"
 	.string "V O L T E N !\p"
 	.string "The tunnel shakes. Somewhere\n"
 	.string "above, Mutrid hears nothing.$"
@@ -306,7 +306,7 @@ UndergroundArena_Text_AnnouncerOffer::
 	.string "You're not here to watch, are\n"
 	.string "you. I know that face.\p"
 	.string "Three bouts, back to back. No\n"
-	.string "breaks, no potions between --\l"
+	.string "breaks, no potions between…\l"
 	.string "you go in with what you've got.\p"
 	.string "Want in?$"
 
@@ -315,7 +315,7 @@ UndergroundArena_Text_AnnouncerDecline::
 	.string "team's ready.$"
 
 UndergroundArena_Text_AnnouncerEntry::
-	.string "ANNOUNCER: WAIT! WAIT --\p"
+	.string "ANNOUNCER: WAIT! WAIT…\p"
 	.string "WE HAVE A LAST-MINUTE ENTRY!\p"
 	.string "{PLAYER}!!$"
 
@@ -340,7 +340,7 @@ UndergroundArena_Text_Challenger1Lose::
 	.string "...You did your worst.$"
 
 UndergroundArena_Text_RoundTwo::
-	.string "ANNOUNCER: ROUND TWO -- no rest,\n"
+	.string "ANNOUNCER: ROUND TWO, no rest,\n"
 	.string "that's the underground rule!$"
 
 UndergroundArena_Text_Challenger2::

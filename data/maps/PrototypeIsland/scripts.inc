@@ -60,7 +60,7 @@ PrototypeIsland_Text_Hermit1::
 
 PrototypeIsland_Text_Hermit2::
 	.string "They wanted a “perfect form”.\p"
-	.string "A POKéMON built from scratch --\n"
+	.string "A POKéMON built from scratch…\n"
 	.string "no soul to seal, nothing to\l"
 	.string "resist them.\p"
 	.string "What woke up down there was\n"

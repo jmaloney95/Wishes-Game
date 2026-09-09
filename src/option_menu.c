@@ -24,6 +24,8 @@
 #define tButtonMode data[5]
 #define tWindowFrameType data[6]
 #define tPortraitsOff data[7]
+#define tFastForward data[8]
+#define tScroll data[9]
 
 enum
 {
@@ -34,6 +36,7 @@ enum
     MENUITEM_BUTTONMODE,
     MENUITEM_FRAMETYPE,
     MENUITEM_PORTRAITS,
+    MENUITEM_FASTFORWARD,
     MENUITEM_CANCEL,
     MENUITEM_COUNT,
 };
@@ -44,13 +47,21 @@ enum
     WIN_OPTIONS
 };
 
-#define YPOS_TEXTSPEED    (MENUITEM_TEXTSPEED * 16)
-#define YPOS_BATTLESCENE  (MENUITEM_BATTLESCENE * 16)
-#define YPOS_BATTLESTYLE  (MENUITEM_BATTLESTYLE * 16)
-#define YPOS_SOUND        (MENUITEM_SOUND * 16)
-#define YPOS_BUTTONMODE   (MENUITEM_BUTTONMODE * 16)
-#define YPOS_FRAMETYPE    (MENUITEM_FRAMETYPE * 16)
-#define YPOS_PORTRAITS    (MENUITEM_PORTRAITS * 16)
+#define VISIBLE_ROWS 8          // what the 16-tile-tall window holds at 16px each
+
+// Index of the list item drawn on the window's top row.
+static u8 sScroll;
+
+#define ROW_Y(item)       (((item) - sScroll) * 16)
+
+#define YPOS_TEXTSPEED    ROW_Y(MENUITEM_TEXTSPEED)
+#define YPOS_BATTLESCENE  ROW_Y(MENUITEM_BATTLESCENE)
+#define YPOS_BATTLESTYLE  ROW_Y(MENUITEM_BATTLESTYLE)
+#define YPOS_SOUND        ROW_Y(MENUITEM_SOUND)
+#define YPOS_BUTTONMODE   ROW_Y(MENUITEM_BUTTONMODE)
+#define YPOS_FRAMETYPE    ROW_Y(MENUITEM_FRAMETYPE)
+#define YPOS_PORTRAITS    ROW_Y(MENUITEM_PORTRAITS)
+#define YPOS_FASTFORWARD  ROW_Y(MENUITEM_FASTFORWARD)
 
 // The frame graphics live in the same BG tile space as the windows, so they
 // must start AFTER every window's allocation or the windows draw over them.
@@ -90,6 +101,10 @@ static u8 ButtonMode_ProcessInput(u8 selection);
 static void ButtonMode_DrawChoices(u8 selection);
 static u8 Portraits_ProcessInput(u8 selection);
 static void Portraits_DrawChoices(u8 selection);
+static u8 FastForward_ProcessInput(u8 selection);
+static void FastForward_DrawChoices(u8 selection);
+static void RedrawVisibleRows(u8 taskId);
+static void ScrollToSelection(u8 taskId);
 static void DrawHeaderText(void);
 static void DrawOptionMenuTexts(void);
 static void DrawBgWindowFrames(void);
@@ -104,6 +119,8 @@ static const u8 gText_BattleSceneOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_BattleSceneOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 static const u8 gText_PortraitsOn[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 static const u8 gText_PortraitsOff[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+static const u8 gText_FastForwardOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+static const u8 gText_FastForwardOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
 static const u8 gText_BattleStyleShift[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
 static const u8 gText_BattleStyleSet[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
 static const u8 gText_SoundMono[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");
@@ -127,6 +144,7 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
     [MENUITEM_BUTTONMODE]  = COMPOUND_STRING("BUTTON MODE"),
     [MENUITEM_FRAMETYPE]   = COMPOUND_STRING("FRAME"),
     [MENUITEM_PORTRAITS]   = COMPOUND_STRING("PORTRAITS"),
+    [MENUITEM_FASTFORWARD] = COMPOUND_STRING("FAST FORWARD"),
     [MENUITEM_CANCEL]      = COMPOUND_STRING("CANCEL"),
 };
 
@@ -278,6 +296,9 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
         gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
         gTasks[taskId].tPortraitsOff = gSaveBlock2Ptr->optionsPortraitsOff;
+        gTasks[taskId].tFastForward = gSaveBlock2Ptr->optionsFastForward;
+        gTasks[taskId].tScroll = 0;
+        sScroll = 0;
 
         TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
         BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
@@ -286,6 +307,7 @@ void CB2_InitOptionMenu(void)
         ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
         FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
         Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
+        FastForward_DrawChoices(gTasks[taskId].tFastForward);
         HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
 
         CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
@@ -323,7 +345,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             gTasks[taskId].tMenuSelection--;
         else
             gTasks[taskId].tMenuSelection = MENUITEM_CANCEL;
-        HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
+        ScrollToSelection(taskId);
     }
     else if (JOY_NEW(DPAD_DOWN))
     {
@@ -331,7 +353,7 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             gTasks[taskId].tMenuSelection++;
         else
             gTasks[taskId].tMenuSelection = 0;
-        HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
+        ScrollToSelection(taskId);
     }
     else
     {
@@ -366,6 +388,13 @@ static void Task_OptionMenuProcessInput(u8 taskId)
 
             if (previousOption != gTasks[taskId].tSound)
                 Sound_DrawChoices(gTasks[taskId].tSound);
+            break;
+        case MENUITEM_FASTFORWARD:
+            previousOption = gTasks[taskId].tFastForward;
+            gTasks[taskId].tFastForward = FastForward_ProcessInput(gTasks[taskId].tFastForward);
+
+            if (previousOption != gTasks[taskId].tFastForward)
+                FastForward_DrawChoices(gTasks[taskId].tFastForward);
             break;
         case MENUITEM_PORTRAITS:
             previousOption = gTasks[taskId].tPortraitsOff;
@@ -409,6 +438,7 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
     gSaveBlock2Ptr->optionsPortraitsOff = gTasks[taskId].tPortraitsOff;
+    gSaveBlock2Ptr->optionsFastForward = gTasks[taskId].tFastForward;
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -427,6 +457,7 @@ static void Task_OptionMenuFadeOut(u8 taskId)
 static void HighlightOptionMenuItem(u8 index)
 {
     SetGpuReg(REG_OFFSET_WIN0H, WIN_RANGE(16, DISPLAY_WIDTH - 16));
+    index -= sScroll;
     SetGpuReg(REG_OFFSET_WIN0V, WIN_RANGE(index * 16 + 24, index * 16 + 40));
 }
 
@@ -434,6 +465,11 @@ static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style)
 {
     u8 dst[16];
     u16 i;
+
+    // Scrolled out of view: above the window wraps to a big u8, below it is
+    // >= the window height. Either way there is nothing to draw.
+    if (y >= VISIBLE_ROWS * 16)
+        return;
 
     for (i = 0; *text != EOS && i < ARRAY_COUNT(dst) - 1; i++)
         dst[i] = *(text++);
@@ -492,6 +528,68 @@ static void TextSpeed_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_TextSpeedMid, xMid, YPOS_TEXTSPEED, styles[1]);
 
     DrawOptionMenuChoice(gText_TextSpeedFast, GetStringRightAlignXOffset(FONT_NORMAL, gText_TextSpeedFast, 198), YPOS_TEXTSPEED, styles[2]);
+}
+
+// Redraw every row of the window. Called when the window moves; the per-row
+// DrawChoices are cheap and there are only eight of them, so there is nothing
+// to gain from working out which ones actually changed.
+static void RedrawVisibleRows(u8 taskId)
+{
+    DrawOptionMenuTexts();
+    TextSpeed_DrawChoices(gTasks[taskId].tTextSpeed);
+    BattleScene_DrawChoices(gTasks[taskId].tBattleSceneOff);
+    BattleStyle_DrawChoices(gTasks[taskId].tBattleStyle);
+    Sound_DrawChoices(gTasks[taskId].tSound);
+    ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
+    FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+    Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
+    FastForward_DrawChoices(gTasks[taskId].tFastForward);
+    CopyWindowToVram(WIN_OPTIONS, COPYWIN_GFX);
+}
+
+// Keep the cursor inside the window, moving the window only when it has to.
+static void ScrollToSelection(u8 taskId)
+{
+    u8 sel = gTasks[taskId].tMenuSelection;
+    u8 want = sScroll;
+
+    if (sel < want)
+        want = sel;
+    else if (sel >= want + VISIBLE_ROWS)
+        want = sel - (VISIBLE_ROWS - 1);
+
+    if (want != sScroll)
+    {
+        sScroll = want;
+        gTasks[taskId].tScroll = want;
+        RedrawVisibleRows(taskId);
+    }
+    HighlightOptionMenuItem(sel);
+}
+
+// OFF or 3x. Stored as a plain on/off; the multiplier itself lives in main.c,
+// which is the only place that knows what a frame is.
+static u8 FastForward_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void FastForward_DrawChoices(u8 selection)
+{
+    u8 styles[2];
+
+    styles[0] = 0;
+    styles[1] = 0;
+    styles[selection] = 1;
+
+    DrawOptionMenuChoice(gText_FastForwardOff, 104, YPOS_FASTFORWARD, styles[0]);
+    DrawOptionMenuChoice(gText_FastForwardOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_FastForwardOn, 198), YPOS_FASTFORWARD, styles[1]);
 }
 
 // Stored as "off" so that a zero -- which is what every existing save has in
@@ -705,8 +803,8 @@ static void DrawOptionMenuTexts(void)
     u8 i;
 
     FillWindowPixelBuffer(WIN_OPTIONS, PIXEL_FILL(1));
-    for (i = 0; i < MENUITEM_COUNT; i++)
-        AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[i], 8, (i * 16) + 1, TEXT_SKIP_DRAW, NULL);
+    for (i = sScroll; i < MENUITEM_COUNT && i < sScroll + VISIBLE_ROWS; i++)
+        AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, sOptionMenuItemsNames[i], 8, ROW_Y(i) + 1, TEXT_SKIP_DRAW, NULL);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
 }
 

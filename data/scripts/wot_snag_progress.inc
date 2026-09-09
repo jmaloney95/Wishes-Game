@@ -24,7 +24,7 @@ Wot_EventScript_SnagProgressEnd::
 	return
 
 Wot_Text_SnagStage1::
-	.string "The SNAG MACHINE thrums--\n"
+	.string "The SNAG MACHINE thrums…\n"
 	.string "its first stolen soul secured.\p"
 	.string "Four more and Mutrid will\n"
 	.string "feel it.$"

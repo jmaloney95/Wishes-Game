@@ -75,12 +75,12 @@ FrostwoodTown_EventScript_MartLady::
 FrostwoodText_OldMan:
 	.string "Welcome to FROSTWOOD TOWN, traveler.\p"
 	.string "These woods have worn the same white\ncoat for a thousand winters.\p"
-	.string "But walk the trees now and you'll hear\nit -- dripping. The frost is letting go.\p"
+	.string "But walk the trees now and you'll hear\nit, dripping. The frost is letting go.\p"
 	.string "Snow that old should never melt. Same\nas they say down in MUNEN.$"
 
 FrostwoodText_GymWoman:
 	.string "See that big building with the snowed-\nover roof? That's our POKEMON GYM.\p"
-	.string "If you're starting out, this is where it\ngets real -- your first Badge.\p"
+	.string "If you're starting out, this is where it\ngets real, your first Badge.\p"
 	.string "Warm up at the POKEMON CENTER first.\nThe LEADER won't go easy on you.$"
 
 FrostwoodText_Kid:
@@ -98,8 +98,8 @@ FrostwoodText_MartLady:
 	.string "Stock up before you head up the\nmountain trail. It's no place to be\lcaught short.$"
 
 FrostwoodTown_Text_ClarksonCall:
-	.string "… … … … … …\n"
-	.string "… … … … … Ring!\p"
+	.string "………………\n"
+	.string "…………… Ring!\p"
 	.string "CLARKSON: {PLAYER}! It's PROFESSOR\n"
 	.string "CLARKSON. Word travels fast up here,\l"
 	.string "they tell me you took \l"
@@ -116,12 +116,12 @@ FrostwoodTown_Text_ClarksonCall:
 	.string "and meet me at the summit.\p"
 	.string "There's something up there I have to\n"
 	.string "show you with my own hands. Not \l"
-	.string "over a call -- you'll understand \l"
+	.string "over a call, you'll understand \l"
 	.string "when you see it.\p"
 	.string "I'll be waiting. Don't keep an old man\n"
 	.string "out in the cold too long!\p"
-	.string "… … … … … …\n"
-	.string "… … … … … Click!$"
+	.string "………………\n"
+	.string "…………… Click!$"
 
 FrostwoodTown_Text_ClarksonReminder:
 	.string "The PROFESSOR wants to meet at\n"

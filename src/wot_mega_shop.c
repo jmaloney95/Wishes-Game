@@ -53,7 +53,13 @@ u16 WotGetDisplaySpecies(struct Pokemon *mon)
     if (heldItem == ITEM_NONE)
         return species;
 
+    // NULL for any species with no form-change table -- which is MOST of them.
+    // Without this the champion roll and the continue screen dereference NULL
+    // for any party member holding an item that is not a Mega Stone.
     formChanges = GetSpeciesFormChanges(species);
+    if (formChanges == NULL)
+        return species;
+
     for (i = 0; formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
     {
         if (formChanges[i].method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM
@@ -64,7 +70,13 @@ u16 WotGetDisplaySpecies(struct Pokemon *mon)
     return species;
 }
 
-void WotGetPartyLeaderMegaStone(void)
+// MUST return u16, not void: `specialvar` assigns this function's RETURN
+// VALUE to the script variable (`*ptr = gSpecials[index]()`), and SpecialFunc
+// is `u16 (*)(void)`. Declared void, the script received a leftover register
+// value -- which is how a Pokemon with no Mega still got an offer, and how a
+// garbage id reached bufferitemname and additem.
+// gSpecialVar_Result is still set as well, for any plain `special` caller.
+u16 WotGetPartyLeaderMegaStone(void)
 {
     const struct FormChange *formChanges;
     u16 stones[MAX_MEGA_STONES_PER_SPECIES];
@@ -79,24 +91,42 @@ void WotGetPartyLeaderMegaStone(void)
     // report the mon inside it -- so check the egg flag explicitly.
     if (GetMonData(&gPlayerParty[0], MON_DATA_SPECIES_OR_EGG, NULL) == SPECIES_NONE
      || GetMonData(&gPlayerParty[0], MON_DATA_IS_EGG, NULL))
-        return;
+        return ITEM_NONE;
 
     species = GetMonData(&gPlayerParty[0], MON_DATA_SPECIES, NULL);
     StringCopy(gStringVar1, GetSpeciesName(species));
 
-    formChanges = GetSpeciesFormChanges(species);
+    // NOT GetSpeciesFormChanges(): that helper never reports "this species has
+    // no form changes". When the table is NULL it quietly substitutes
+    // gSpeciesInfo[SPECIES_NONE].formChangeTable, so checking its result for
+    // NULL does not answer the question we are actually asking. Read the
+    // species' own pointer, where NULL genuinely means "no Mega, no stone".
+    formChanges = gSpeciesInfo[SanitizeSpeciesId(species)].formChangeTable;
+    if (formChanges == NULL)
+        return ITEM_NONE;
+
     for (i = 0; formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
     {
+        u16 stone;
+
         if (formChanges[i].method != FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM)
             continue;
 
-        stones[count++] = formChanges[i].param1;
+        // Never hand the script an id it cannot buy. VAR_TEMP_1 goes straight
+        // to additem, and additem indexing past the item table is a hard crash
+        // -- a bad id here shows up first as a blank name in the offer and then
+        // as a blue screen the moment the player accepts.
+        stone = formChanges[i].param1;
+        if (stone == ITEM_NONE || stone >= ITEMS_COUNT)
+            continue;
+
+        stones[count++] = stone;
         if (count == ARRAY_COUNT(stones))
             break;
     }
 
     if (count == 0)
-        return;
+        return ITEM_NONE;
 
     CopyItemName(stones[0], gStringVar2);
     if (count > 1)
@@ -104,4 +134,31 @@ void WotGetPartyLeaderMegaStone(void)
 
     gSpecialVar_0x8006 = count;
     gSpecialVar_Result = stones[gSpecialVar_0x8004 < count ? gSpecialVar_0x8004 : 0];
+    return gSpecialVar_Result;
+}
+
+// Buy the stone the script resolved, with the id validated on this side of the
+// fence. VAR_0x8005 carries it in; VAR_RESULT comes back TRUE only if the stone
+// is real AND it actually reached the bag.
+//
+// This exists because `additem VAR_TEMP_1, 1` in script cannot check anything:
+// it passes the variable straight through, and an id past the end of the item
+// table takes the game down. Buying here also re-buffers the item name, so the
+// name and the item can never disagree.
+u16 WotBuyLeaderMegaStone(void)
+{
+    u16 stone = gSpecialVar_0x8005;
+
+    gSpecialVar_Result = FALSE;
+
+    if (stone == ITEM_NONE || stone >= ITEMS_COUNT)
+        return FALSE;
+    if (!CheckBagHasSpace(stone, 1))
+        return FALSE;
+    if (!AddBagItem(stone, 1))
+        return FALSE;
+
+    CopyItemName(stone, gStringVar2);
+    gSpecialVar_Result = TRUE;
+    return TRUE;
 }

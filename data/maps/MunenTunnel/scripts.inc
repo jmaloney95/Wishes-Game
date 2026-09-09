@@ -136,9 +136,14 @@ MunenTunnel_EventScript_GruntFlee::
 	releaseall
 	end
 
+@ Down first, then east. From (94,32) the fourth step east lands on the wall
+@ at x=98. Column 94 is clear down to y=35, row 35 runs east to x=96, and
+@ column 96 continues down to y=38 -- which is well past the bottom of the
+@ screen, so he is gone before removeobject.
 MunenTunnel_Movement_GruntFlee:
-	walk_fast_right
-	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
 	walk_fast_right
 	walk_fast_right
 	walk_fast_down
@@ -175,7 +180,7 @@ MunenTunnel_EventScript_UnsentLetter::
 MunenTunnel_Text_Houndoom::
 	.string "A HOUNDOOM prowls between the\n"
 	.string "graves, hackles raised.\p"
-	.string "Its eyes catch the torchlight--\n"
+	.string "Its eyes catch the torchlight…\n"
 	.string "it is watching you back.$"
 
 MunenTunnel_Text_MaskGuarded::
@@ -217,10 +222,10 @@ MunenTunnel_Text_GeneralIntro::
 	.string "playing archaeologist.\p"
 	.string "The apprentice's little mask?\n"
 	.string "It stays in the dirt where he\l"
-	.string "threw it -- and so will you.$"
+	.string "threw it, and so will you.$"
 
 MunenTunnel_Text_GeneralDefeat::
-	.string "...Company -- withdraw.$"
+	.string "...Company, withdraw.$"
 
 MunenTunnel_Text_GeneralRetreat::
 	.string "A tomb is a poor hill to die on.\p"
@@ -233,7 +238,7 @@ MunenTunnel_Text_GruntIntro::
 	.string "Hm? A villager?\p"
 	.string "No... doesn't matter. The ritual has\n"
 	.string "begun. Everyone else has climbed.\p"
-	.string "My orders are simple -- NOBODY\n"
+	.string "My orders are simple, NOBODY\n"
 	.string "disturbs what we left down here!$"
 
 MunenTunnel_Text_GruntDefeat::
@@ -244,7 +249,7 @@ MunenTunnel_Text_GruntFlee::
 	.string "You don't get it! The Summit Gate\n"
 	.string "only opens for the masked!\p"
 	.string "The mountain keeps what people\n"
-	.string "regret -- and the master's going\l"
+	.string "regret, and the master's going\l"
 	.string "to give it all BACK!\p"
 	.string "Laugh if you want! You'll see!\n"
 	.string "Up top... everyone will see!$"
@@ -275,12 +280,12 @@ MunenTunnel_Text_CampOrders::
 	.string "Masks stay ON. The Summit Gate\n"
 	.string "opens for no bare face.\p"
 	.string "When the bell sounds twice, burn\n"
-	.string "this camp and climb.    -- CPT. M$"
+	.string "this camp and climb. CPT. M$"
 
 MunenTunnel_Text_UnsentLetter::
 	.string "A letter, folded with great care.\n"
 	.string "It was never sent.\p"
-	.string "“Master Gen --\p"
+	.string "“Master Gen…\p"
 	.string "“I'm sorry about the mask. I know\n"
 	.string "it wasn't mine to take.\p"
 	.string "“But the man with the face of an Oni\n"
@@ -291,7 +296,7 @@ MunenTunnel_Text_UnsentLetter::
 	.string "give it back.\p"
 	.string "“I have to see him again. Even\n"
 	.string "once. Please don't follow me.\p"
-	.string "“                    -- Ryoko”$"
+	.string "“, Ryoko”$"
 
 MunenTunnel_Text_Sableye::
 	.string "A SABLEYE picks at the tomb\n"

@@ -76,7 +76,7 @@ MewtwoPostGame_Text_DracoIntro::
 	.string "even THE ONI feared.\p"
 	.string "A living weapon. Older than the\n"
 	.string "machine. Angrier than the sea.\p"
-	.string "The primitive lifeform --\n"
+	.string "The primitive lifeform…\n"
 	.string "ARMORED MEWTWO.\p"
 	.string "Show me true power unleashed!$"
 
@@ -86,7 +86,7 @@ MewtwoPostGame_Text_DracoDefeat::
 
 MewtwoPostGame_Text_DracoHandOver::
 	.string "A deal's a deal.\p"
-	.string "The armor stays on -- it keeps\n"
+	.string "The armor stays on, it keeps\n"
 	.string "the anger in.\p"
 	.string "Take it.$"
 

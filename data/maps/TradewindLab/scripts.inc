@@ -47,7 +47,7 @@ TradewindLab_Text_ShadyDealer::
 	.string "or for real merchandise?\p"
 	.string "Kanto's finest. Fell off a truck\n"
 	.string "in another world. No questions.\p"
-	.string "Here--take 'em. On the house.\n"
+	.string "Here…take 'em. On the house.\n"
 	.string "First one's always free.$"
 
 TradewindLab_Text_ShadyDealerAfter::

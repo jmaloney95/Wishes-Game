@@ -68,4 +68,4 @@ DistortionWorld_3_Text_WardenDefeat::
 DistortionWorld_3_Text_WardenPost::
 	.string "Deeper down, the stones drift\n"
 	.string "further apart. Jump like you mean\l"
-	.string "it -- hesitation is a long fall.$"
+	.string "it, hesitation is a long fall.$"

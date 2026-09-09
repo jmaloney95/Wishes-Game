@@ -58,6 +58,8 @@ Route_2_2_EventScript_ParkGuide::
 	special RemoveCameraObject
 	fadescreen FADE_FROM_BLACK
 	setflag FLAG_NATIONAL_PARK_TOUR_DONE
+	msgbox Route_2_2_Text_GuideExitNorth, MSGBOX_DEFAULT
+	closemessage
 	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
 	releaseall
 	end
@@ -432,6 +434,13 @@ Route_2_2_Text_GuideShot3:
 	.string "They say gentle SPIRITS still drift\n"
 	.string "among the graves. Do be respectful\l"
 	.string "if you wander up that way.$"
+
+Route_2_2_Text_GuideExitNorth:
+	.string "Oh, one more thing!\p"
+	.string "The way onward is north, out\n"
+	.string "the top of the park.\p"
+	.string "That trail climbs toward\n"
+	.string "the mountain. Mind your step.$"
 
 Route_2_2_Text_GuideAgain:
 	.string "Enjoy the NATIONAL PARK!\p"

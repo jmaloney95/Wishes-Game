@@ -209,12 +209,12 @@ MunenHomeAct2_Text_GoonFlee::
 
 MunenHomeAct2_Text_MomGasp::
 	.string "MOM: And STAY out!\p"
-	.string "Honestly, the NERVE of--\p"
+	.string "Honestly, the NERVE of…\p"
 	.string "...\p"
 	.string "MOM: ...{PLAYER}?$"
 
 MunenHomeAct2_Text_MomReunion::
-	.string "MOM: {PLAYER}!! Oh-- oh, look at\n"
+	.string "MOM: {PLAYER}!! Oh… oh, look at\n"
 	.string "you. LOOK at you.\p"
 	.string "They told us no one came down\n"
 	.string "from that mountain. They stood in\l"
@@ -222,7 +222,7 @@ MunenHomeAct2_Text_MomReunion::
 	.string "was GONE.\p"
 	.string "...You're thinner. And you've\n"
 	.string "been fighting.\p"
-	.string "Not another word -- not HERE.\n"
+	.string "Not another word, not HERE.\n"
 	.string "The walls have masks these days.\p"
 	.string "Your Pokemon first. Come here,\n"
 	.string "all of you.$"
@@ -238,7 +238,7 @@ MunenHomeAct2_Text_MomSafehouse::
 
 MunenHomeAct2_Text_OverturnedTable::
 	.string "The kitchen table is overturned.\p"
-	.string "Dinner for one -- long cold --\n"
+	.string "Dinner for one, long cold…\n"
 	.string "is spread across the floorboards.\p"
 	.string "She set a place anyway. She\n"
 	.string "always sets a place.$"

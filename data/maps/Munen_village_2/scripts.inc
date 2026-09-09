@@ -134,7 +134,7 @@ Munen_village_2_EventScript_IceTyrunt::
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_GIBLE and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceTyruntRandom
-	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_DRAGON_BREATH, move4=MOVE_BITE
+	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_DRAGON_BREATH, move4=MOVE_THOUSAND_ARROWS
 	bufferspeciesname STR_VAR_1, SPECIES_GIBLE
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -158,7 +158,7 @@ Munen_village_2_EventScript_IceAmaura::
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_FRIGIBAX and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceAmauraRandom
-	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_ICY_WIND
+	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_GLACIATE
 	bufferspeciesname STR_VAR_1, SPECIES_FRIGIBAX
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -182,7 +182,7 @@ Munen_village_2_EventScript_IceAnorith::
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_AXEW and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceAnorithRandom
-	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_ASSURANCE
+	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_DRAGON_DARTS
 	bufferspeciesname STR_VAR_1, SPECIES_AXEW
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -522,17 +522,26 @@ Munen_village_2_Movement_HaruApproach:
 	face_up
 	step_end
 
-@ Haru runs back south off-stage after the battle, returning the way he came
-@ and continuing a few extra tiles so he exits the camera view cleanly.
+@ Haru bolts NORTH after the battle rather than retreating the way he came --
+@ he leaves ahead of the player, not back past them.
+@
+@ The sidestep west first is load-bearing. He ends the approach at (25,5),
+@ deliberately "just south of the player" at (25,4), so running straight up
+@ would walk him through the player -- applymovement never collision-checks, so
+@ nothing would stop it. Column x=24 is walkable from y=5 clear to y=0, so one
+@ step west opens a lane past them.
+@
+@ The last steps carry him off the top of the map: the camera sits on the
+@ player around y=4, so he is out of sight well before removeobject fires.
 Munen_village_2_Movement_HaruLeave:
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
-	walk_fast_down
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
 	step_end
 
 Munen_village_2_Movement_PlayerFaceDown:
@@ -578,7 +587,7 @@ MunenText_MomAgain:
 	.string "The Professor's waiting at his\nlab, dear. Wrap up warm.$"
 
 MunenText_Clarkson:
-	.string "There you are.\pI study what this mountain remembers --\nits old ice, its stories.\pDeep in the frozen lake I found three\nof them. Sleeping in the ice.\pI revived them. I shouldn't have.\pGo on -- choose one.\nLet it choose you back.$"
+	.string "There you are.\pI study what this mountain remembers…\nits old ice, its stories.\pDeep in the frozen lake I found three\nof them. Sleeping in the ice.\pI revived them. I shouldn't have.\pGo on, choose one.\nLet it choose you back.$"
 
 MunenText_ClarksonAfter:
 	.string "It already trusts you. Good.\pYou're holding part of an answer\nthis mountain has kept for a long time.$"
@@ -590,7 +599,7 @@ MunenText_IceAmaura:
 	.string "Inside the ice, something stirs.\pIt grins at you through the frost,\ndelighted you noticed.\pTake this one?$"
 
 MunenText_IceAnorith:
-	.string "Inside the ice, something stirs.\pIt cannot see you -- but its jaws\nare already testing the ice.\pTake this one?$"
+	.string "Inside the ice, something stirs.\pIt cannot see you, but its jaws\nare already testing the ice.\pTake this one?$"
 
 MunenText_StarterChosen:
 	.string "The ice cracks.\pIt breathes for the first time in a\nthousand years and chooses to\lbreathe beside you.$"
@@ -618,18 +627,18 @@ MunenText_HaruIntro:
 	.string "So that's where they went.\pPROFESSOR CLARKSON said he'd left\nsomething for me too! I'm not letting\lyou walk off with all of it.\pI'm taking what's left.\pConsider this a warning,\n{PLAYER}.$"
 
 MunenText_HaruFarewell:
-	.string "Next time we meet --\nwe're settling this.\pSee you on the road.$"
+	.string "Next time we meet…\nwe're settling this.\pSee you on the road.$"
 
 @ Professor Clarkson north-exit encounter
 MunenText_ProfessorHello:
-	.string "Hold up, {PLAYER}!\pYou can't go wandering off the mountain\nempty-handed.\pHere -- I came to give you these\nbefore you set out.$"
+	.string "Hold up, {PLAYER}!\pYou can't go wandering off the mountain\nempty-handed.\pHere, I came to give you these\nbefore you set out.$"
 
 MunenText_ProfessorAfterItems:
-	.string "The Poke Balls are for catching\nwild Pokemon -- you'll find a few along\lthe northern trail.\pThe Potions are for when your partner\nneeds patching up.\pNow then. Be careful out there.\pAnd write to your mother.$"
+	.string "The Poke Balls are for catching\nwild Pokemon, you'll find a few along\lthe northern trail.\pThe Potions are for when your partner\nneeds patching up.\pNow then. Be careful out there.\pAnd write to your mother.$"
 
 @ North-exit gate text (shown until starter + rival + professor are done)
 MunenText_NorthGate:
-	.string "It's not safe to head up the mountain\nyet.\pProfessor Clarkson asked to see you\nbefore you set out -- and you'll want\la partner at your side first.$"
+	.string "It's not safe to head up the mountain\nyet.\pProfessor Clarkson asked to see you\nbefore you set out, and you'll want\la partner at your side first.$"
 
 @ Rival Haru in-battle text
 MunenText_HaruBattleStart:

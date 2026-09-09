@@ -120,10 +120,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOT_ROSA_LAND",
-      "x": 13,
-      "y": 36,
+      "x": 17,
+      "y": 7,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
@@ -246,27 +246,6 @@
       "dest_warp_id": "8"
     },
     {
-      "x": 13,
-      "y": 1,
-      "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE",
-      "dest_warp_id": "1"
-    },
-    {
-      "x": 14,
-      "y": 1,
-      "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE",
-      "dest_warp_id": "2"
-    },
-    {
-      "x": 15,
-      "y": 1,
-      "elevation": 0,
-      "dest_map": "MAP_SENNEN_VILLAGE",
-      "dest_warp_id": "3"
-    },
-    {
       "x": 22,
       "y": 46,
       "elevation": 0,
@@ -298,62 +277,8 @@
   "coord_events": [
     {
       "type": "trigger",
-      "x": 12,
-      "y": 35,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route_2_EventScript_AllisonNotice"
-    },
-    {
-      "type": "trigger",
-      "x": 11,
-      "y": 36,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route_2_EventScript_AllisonNotice"
-    },
-    {
-      "type": "trigger",
-      "x": 11,
-      "y": 37,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route_2_EventScript_AllisonNotice"
-    },
-    {
-      "type": "trigger",
-      "x": 11,
+      "x": 10,
       "y": 38,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route_2_EventScript_AllisonNotice"
-    },
-    {
-      "type": "trigger",
-      "x": 11,
-      "y": 39,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route_2_EventScript_AllisonNotice"
-    },
-    {
-      "type": "trigger",
-      "x": 12,
-      "y": 40,
-      "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "Route_2_EventScript_AllisonNotice"
-    },
-    {
-      "type": "trigger",
-      "x": 13,
-      "y": 41,
       "elevation": 0,
       "var": "VAR_TEMP_1",
       "var_value": "0",

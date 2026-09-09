@@ -107,6 +107,7 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->optionsPortraitsOff = FALSE;
+    gSaveBlock2Ptr->optionsFastForward = FALSE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
 }
 
@@ -190,8 +191,6 @@ void NewGameInitData(void)
     ClearPokedexFlags();
     InitEventData();
     FlagSet(FLAG_SYS_B_DASH); // Pokémon Wishes of Tomorrow: give Running Shoes from the start.
-    AddBagItem(ITEM_RARE_CANDY, 99); // TEST ONLY: stack of Rare Candies for playtesting -- remove before release.
-    AddBagItem(ITEM_QUEST_LOG, 1);   // Quest journal -- always in the bag from the start.
     // Pokémon Wishes of Tomorrow: white-out sends the player home (the player's house
     // front door, which heals via Mom inside), not to some other town's Pokémon Center.
     SetLastHealLocationWarp(HEAL_LOCATION_LITTLEROOT_TOWN_BRENDANS_HOUSE);
@@ -213,6 +212,13 @@ void NewGameInitData(void)
     DeactivateAllRoamers();
     gSaveBlock1Ptr->registeredItem = ITEM_NONE;
     ClearBag();
+    // Pokémon Wishes of Tomorrow: starting bag. This has to come AFTER
+    // ClearBag(), which CpuFastFills the whole bag struct to zero -- these
+    // calls used to sit further up and were being wiped every new game.
+    AddBagItem(ITEM_RARE_CANDY, 99); // TEST ONLY: stack of Rare Candies for playtesting -- remove before release.
+    AddBagItem(ITEM_QUEST_LOG, 1);   // Quest journal -- always in the bag from the start.
+    AddBagItem(ITEM_EXP_SHARE, 1);   // Exp. Share, in the bag from the start...
+    FlagSet(I_EXP_SHARE_FLAG);       // ...and switched ON; using it in the bag toggles it off.
     NewGameInitPCItems();
     ClearPokeblocks();
     ClearDecorationInventories();
