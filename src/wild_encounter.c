@@ -746,9 +746,23 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
                     if (TryDoDoubleWildBattle())
                     {
                         struct Pokemon mon1 = gEnemyParty[0];
-                        TryGenerateWildMon(gWildMonHeaders[headerId].encounterTypes[timeOfDay].landMonsInfo, WILD_AREA_LAND, WILD_CHECK_KEEN_EYE);
-                        gEnemyParty[1] = mon1;
-                        BattleSetup_StartDoubleWildBattle();
+
+                        // TryGenerateWildMon returns FALSE without creating
+                        // anything when Keen Eye or repel turns the encounter
+                        // away. Ignoring that left the FIRST mon in slot 0 and
+                        // copied it into slot 1 -- a double battle against one
+                        // Pokemon twice. Fall back to the single battle that
+                        // has already been generated.
+                        if (TryGenerateWildMon(gWildMonHeaders[headerId].encounterTypes[timeOfDay].landMonsInfo, WILD_AREA_LAND, WILD_CHECK_KEEN_EYE) == TRUE)
+                        {
+                            gEnemyParty[1] = mon1;
+                            BattleSetup_StartDoubleWildBattle();
+                        }
+                        else
+                        {
+                            gEnemyParty[0] = mon1;
+                            BattleSetup_StartWildBattle();
+                        }
                     }
                     else
                     {
@@ -791,9 +805,23 @@ bool8 StandardWildEncounter(u16 curMetatileBehavior, u16 prevMetatileBehavior)
                     if (TryDoDoubleWildBattle())
                     {
                         struct Pokemon mon1 = gEnemyParty[0];
-                        TryGenerateWildMon(gWildMonHeaders[headerId].encounterTypes[timeOfDay].waterMonsInfo, WILD_AREA_WATER, WILD_CHECK_KEEN_EYE);
-                        gEnemyParty[1] = mon1;
-                        BattleSetup_StartDoubleWildBattle();
+
+                        // TryGenerateWildMon returns FALSE without creating
+                        // anything when Keen Eye or repel turns the encounter
+                        // away. Ignoring that left the FIRST mon in slot 0 and
+                        // copied it into slot 1 -- a double battle against one
+                        // Pokemon twice. Fall back to the single battle that
+                        // has already been generated.
+                        if (TryGenerateWildMon(gWildMonHeaders[headerId].encounterTypes[timeOfDay].waterMonsInfo, WILD_AREA_WATER, WILD_CHECK_KEEN_EYE) == TRUE)
+                        {
+                            gEnemyParty[1] = mon1;
+                            BattleSetup_StartDoubleWildBattle();
+                        }
+                        else
+                        {
+                            gEnemyParty[0] = mon1;
+                            BattleSetup_StartWildBattle();
+                        }
                     }
                     else
                     {
@@ -831,9 +859,23 @@ void RockSmashWildEncounter(void)
             if (TryDoDoubleWildBattle())
             {
                 struct Pokemon mon1 = gEnemyParty[0];
-                TryGenerateWildMon(wildPokemonInfo, WILD_AREA_ROCKS, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE);
-                gEnemyParty[1] = mon1;
-                BattleSetup_StartDoubleWildBattle();
+
+                // TryGenerateWildMon returns FALSE without creating
+                // anything when Keen Eye or repel turns the encounter
+                // away. Ignoring that left the FIRST mon in slot 0 and
+                // copied it into slot 1 -- a double battle against one
+                // Pokemon twice. Fall back to the single battle that
+                // has already been generated.
+                if (TryGenerateWildMon(wildPokemonInfo, WILD_AREA_ROCKS, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE)
+                {
+                    gEnemyParty[1] = mon1;
+                    BattleSetup_StartDoubleWildBattle();
+                }
+                else
+                {
+                    gEnemyParty[0] = mon1;
+                    BattleSetup_StartWildBattle();
+                }
                 gSpecialVar_Result = TRUE;
             }
             else {

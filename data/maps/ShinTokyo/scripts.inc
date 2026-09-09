@@ -311,7 +311,7 @@ ShinTokyo_Text_Citizen3::
 	.string "Upstairs. Forever.$"
 
 ShinTokyo_Text_GymDoor::
-	.string "VOLTEN GYM -- “THE CITY'S SPARK”$"
+	.string "VOLTEN GYM: “THE CITY'S SPARK”$"
 
 ShinTokyo_Text_BlackMarketDoor::
 	.string "The shutters hang half-open.\p"
@@ -320,7 +320,7 @@ ShinTokyo_Text_BlackMarketDoor::
 	.string "(Black market comes later.)$"
 
 ShinTokyo_Text_CafeDoor::
-	.string "BATTLE CAFE -- OPEN ALL NIGHT\p"
+	.string "BATTLE CAFE: OPEN ALL NIGHT\p"
 	.string "(Cafe interior comes later.)$"
 
 ShinTokyo_Text_PropagandaScreen::
@@ -601,9 +601,18 @@ ShinTokyo_Movement_GoonDeferRunLeft:
 	walk_fast_left
 	step_end
 
+@ Two south, THEN east. He stands at (35,44) with the block at x=36..41 filling
+@ rows 42-45, so every step of the old run east was inside a building. Row 46
+@ is open right across, so he drops to it first and leaves along the street.
 ShinTokyo_Movement_GoonDeferRunRight:
 	face_up
 	delay_16
+	walk_fast_down
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
@@ -667,7 +676,7 @@ ShinTokyo_Text_CitizenFree::
 	.string "free.$"
 
 ShinTokyo_Text_GoonRedAlert::
-	.string "That's-- the face from the\n"
+	.string "That's… the face from the\n"
 	.string "bounty screens!\p"
 	.string "All units! ALL UNITS!$"
 
@@ -701,7 +710,7 @@ ShinTokyo_Text_PatrolPost::
 	.string "empty BALL on their belt.$"
 
 ShinTokyo_Text_TowerSealed::
-	.string "MUTRID TOWER -- EXECUTIVE\n"
+	.string "MUTRID TOWER: EXECUTIVE\n"
 	.string "ENTRANCE.\p"
 	.string "Sealed. Whatever waits above\n"
 	.string "unmakes anything it touches.\p"
@@ -757,7 +766,7 @@ ShinTokyo_Text_MinisterCall::
 	.string "MINISTER: {PLAYER}. Don't talk,\n"
 	.string "walk. Casual.\p"
 	.string "MIKMANC's been made. They have\n"
-	.string "him in the east block -- and he\l"
+	.string "him in the east block, and he\l"
 	.string "is HOLDING something they must\l"
 	.string "not find.\p"
 	.string "I'm in their cameras. The front\n"
@@ -784,17 +793,17 @@ ShinTokyo_Text_GuardsScatter::
 	.string "Down the street, two radios\n"
 	.string "crackle at once.\p"
 	.string "The sentries at the detention\n"
-	.string "door glance at each other--\p"
-	.string "--and peel away into the rain.$"
+	.string "door glance at each other…\p"
+	.string "and peel away into the rain.$"
 
 ShinTokyo_Text_RedAlertWail::
 	.string "Sirens.\p"
 	.string "Every screen on the street\n"
-	.string "changes at once -- to YOUR face.$"
+	.string "changes at once, to YOUR face.$"
 
 ShinTokyo_Text_GoonsBoxIn::
 	.string "Bounty target boxed in!\p"
-	.string "Nobody touch the prize --\n"
+	.string "Nobody touch the prize…\n"
 	.string "hold for command!$"
 
 ShinTokyo_Text_ArrestAnnounce::
@@ -1008,6 +1017,9 @@ ShinTokyo_EventScript_MinisterMegaTrade::
 	@ Garchomp and Lucario) have two. Let the player pick rather than quietly
 	@ handing over the first -- otherwise those six stones are unobtainable.
 	goto_if_ge VAR_TEMP_2, 2, ShinTokyo_EventScript_MinisterMegaTwoStones
+	@ Buffer the name HERE too. The two-stone path already did this and read
+	@ correctly; this one leaned on the C helper alone and showed a blank.
+	bufferitemname STR_VAR_2, VAR_TEMP_1
 	msgbox ShinTokyo_Text_MinisterMegaOffer, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, ShinTokyo_EventScript_MinisterMegaDeclined
 	goto ShinTokyo_EventScript_MinisterMegaBuy
@@ -1048,13 +1060,19 @@ ShinTokyo_EventScript_MinisterMegaReselect::
 
 @ Common purchase path. VAR_TEMP_1 holds the chosen stone by the time we arrive.
 ShinTokyo_EventScript_MinisterMegaBuy::
+	@ Last line of defence: VAR_TEMP_1 is about to be handed to additem,
+	@ and additem with an id outside the item table is a hard crash. If
+	@ anything upstream failed to resolve a stone, say so instead.
+	goto_if_eq VAR_TEMP_1, ITEM_NONE, ShinTokyo_EventScript_MinisterMegaNoStone
 	checkmoney MINISTER_MEGA_STONE_PRICE
 	goto_if_eq VAR_RESULT, FALSE, ShinTokyo_EventScript_MinisterMegaNoMoney
-	checkitemspace VAR_TEMP_1, 1
+	@ The bag work happens in C, where the id is checked before anything
+	@ touches the item table. `additem VAR_TEMP_1, 1` could not check it and
+	@ took the game down on a bad id.
+	copyvar VAR_0x8005, VAR_TEMP_1
+	specialvar VAR_RESULT, WotBuyLeaderMegaStone
 	goto_if_eq VAR_RESULT, FALSE, ShinTokyo_EventScript_MinisterMegaNoRoom
-	additem VAR_TEMP_1, 1
 	removemoney MINISTER_MEGA_STONE_PRICE
-	bufferitemname STR_VAR_2, VAR_TEMP_1
 	playfanfare MUS_OBTAIN_ITEM
 	message ShinTokyo_Text_MinisterMegaSold
 	waitmessage
@@ -1149,7 +1167,7 @@ ShinTokyo_Text_MinisterAfter::
 ShinTokyo_Text_MinisterRyuden::
 	.string "A rumor, since we're friendly.\p"
 	.string "Far east of here lies RYUDEN\n"
-	.string "ISLAND -- the dragon keepers'\l"
+	.string "ISLAND: the dragon keepers'\l"
 	.string "shrine.\p"
 	.string "SURF south and follow the\n"
 	.string "ocean path past the islands.\p"
@@ -1188,9 +1206,10 @@ ShinTokyo_Text_MinisterWaiting::
 	.string "Finish the job.$"
 
 ShinTokyo_Text_MinisterMegaOffer::
-	.string "That {STR_VAR_1} of yours.\p"
-	.string "I can put my hands on a\n"
-	.string "{STR_VAR_2}. Ten thousand.\p"
+	.string "That {STR_VAR_1} at the front\n"
+	.string "of your party.\p"
+	.string "I can put my hands on its\n"
+	.string "{STR_VAR_2}, ten thousand.\p"
 	.string "No questions, no paperwork.\n"
 	.string "Interested?$"
 
@@ -1207,7 +1226,7 @@ ShinTokyo_Text_MinisterMegaThanks::
 ShinTokyo_Text_MinisterMegaNoStone::
 	.string "I deal in Mega Stones, friend.\p"
 	.string "Whatever you've got leading that\n"
-	.string "party has no Mega form -- there's\l"
+	.string "party has no Mega form, there's\l"
 	.string "no stone in the world for it.\p"
 	.string "Put something else up front and\n"
 	.string "come see me again.$"

@@ -78,7 +78,7 @@ Ashlands_Text_OldManQuest:
 	.string "My body's giving out. The ash got\n"
 	.string "into my lungs days ago.\p"
 	.string "There's medicine in an old supply\n"
-	.string "ball, west of here -- FENTANYL.\p"
+	.string "ball, west of here, FENTANYL.\p"
 	.string "Bring it to me… and I'll tell you\n"
 	.string "what did this to us.$"
 
@@ -119,7 +119,7 @@ Ashlands_Text_OldManBequest::
 	.string "so the dead aren't alone.\p"
 	.string "My son rests at the park\n"
 	.string "across the water.\p"
-	.string "Play the rite for him --\n"
+	.string "Play the rite for him…\n"
 	.string "his own blood never will.\p"
 	.string "And tell his stone…\p"
 	.string "his father believes him now.$"

@@ -244,7 +244,11 @@ RebelHideout_Movement_DefectorApproach:
 	face_right
 	step_end
 
+@ Step down first: (2,8) and everything west of it on row 8 is wall, so all
+@ three of the old steps were inside it. Row 9 is open from x=0, which is where
+@ he was trying to get back to.
 RebelHideout_Movement_DefectorReturn:
+	walk_down
 	walk_left
 	walk_left
 	walk_left

@@ -193,6 +193,10 @@ void ShowNpcPortrait(u8 portraitId, u8 side)
 
     if (!USE_NPC_PORTRAITS)
         return;
+    // Read live rather than cached, so switching the option off takes effect on
+    // the very next line of dialogue instead of at the next map load.
+    if (gSaveBlock2Ptr->optionsPortraitsOff)
+        return;
     if (portraitId >= PORTRAIT_COUNT)
         portraitId = PORTRAIT_PLACEHOLDER;
 

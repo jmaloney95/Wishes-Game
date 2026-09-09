@@ -68,5 +68,5 @@ ShinTokyoStation_Text_Arrival3::
 
 ShinTokyoStation_Text_DepartureBoard::
 	.string "DEPARTURES:\p"
-	.string "-- ALL SERVICES SUSPENDED --\n"
+	.string "ALL SERVICES SUSPENDED…\n"
 	.string "BY ORDER OF CITY ADMINISTRATION.$"

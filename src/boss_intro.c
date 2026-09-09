@@ -328,6 +328,13 @@ static void Task_BossIntro(u8 taskId)
         SetSubspriteTables(&gSprites[tSprName], sBiNameSubTable);
         gSprites[tSprName].invisible = TRUE;
         tSprPort = CreateSprite(&sBiPortraitTemplate, BI_PORTRAIT_X_OFF, BI_PORTRAIT_Y, 1);
+        // Portraits can be switched off in Options. The card keeps its entire
+        // performance -- slide, slam, name, shimmer, white pop, tint -- and only
+        // the portrait stops being DRAWN. The sprite is still created and still
+        // slides: BI_STATE_EXIT waits on its x to leave the screen, and the
+        // flash and the fade mask both address its palette, so removing it
+        // would strand the exit and unbalance the tint.
+        gSprites[tSprPort].invisible = gSaveBlock2Ptr->optionsPortraitsOff;
         BeginNormalPaletteFade(BossIntro_FadeMask(), 0, 0, 10, boss->tintColor);
         tVelBanner = 64;
         tVelPort = 26;

@@ -250,12 +250,20 @@ TowerTop_Movement_OniFaceMachine:
 	step_end
 
 @ From (8,6): right 5, up 4 -> (13,2), the back edge of the roof.
+@ Round the pillar, not through it. He is making for the jet at (15,2), but
+@ rows 6 and 7 are walled at x=12-13 so running straight east crossed them.
+@ Row 8 is open the full width, and column 14 climbs cleanly from there to the
+@ top -- same destination, a route that exists.
 TowerTop_Movement_OniRunOut:
+	walk_fast_down
+	walk_fast_down
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
+	walk_fast_right
+	walk_fast_up
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up

@@ -279,7 +279,7 @@ DistortionWorld_2_Text_SeamRemembers::
 	.string "like smoke.\p"
 	.string "“Kekeke. Welcome back, {PLAYER}.\n"
 	.string "The seam remembers you.\p"
-	.string "But look -- it is not\n"
+	.string "But look, it is not\n"
 	.string "quite as we left it…$"
 
 DistortionWorld_2_Text_IslandRose::
@@ -293,13 +293,13 @@ DistortionWorld_2_Text_CaveAbove::
 	.string "to refuse.$"
 
 DistortionRift_Text_CantHoldIt::
-	.string "{PLAYER}! The rift is closing in--\n"
+	.string "{PLAYER}! The rift is closing in…\n"
 	.string "I can't hold it open.\l"
 	.string "Hold on to me!$"
 
 DistortionRift_Text_RiftFolds::
 	.string "The Distortion World folds\n"
-	.string "inward--$"
+	.string "inward…$"
 
 @ Ferry pad (15,24) -> island heart (25,11): east 10, north 13, moved under a
 @ fade with walk_faster (hidden reposition, park-tour style). Then a slow

@@ -28,8 +28,8 @@
 // Exp. Share config
 // To use this feature, replace the 0 with the flag ID you're assigning it to.
 // Eg: Replace with FLAG_UNUSED_0x264 so you can use that flag to toggle the feature.
-#define I_EXP_SHARE_FLAG        FLAG_SYS_POKEMON_GET // Party-wide Exp Share always on (this flag is set once the player owns a Pokemon and never clears). Wishes-of-Tomorrow tweak.
-#define I_EXP_SHARE_ITEM        GEN_5       // In Gen6+, the Exp. Share was changed from a held item to a Key item that toggles the effect described above.
+#define I_EXP_SHARE_FLAG        FLAG_WOT_EXP_SHARE_ON // Party-wide Exp Share, switched on at New Game and toggled by using the Exp. Share in the bag. Wishes-of-Tomorrow tweak.
+#define I_EXP_SHARE_ITEM        GEN_6       // In Gen6+, the Exp. Share was changed from a held item to a Key item that toggles the effect described above. Wishes-of-Tomorrow: GEN_6, so it sits in the bag as a switch.
 
 // Repel/Lure config
 // These two settings are both independent and complementary.

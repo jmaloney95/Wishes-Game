@@ -10873,26 +10873,28 @@ Music: Magma
 Double Battle: No
 AI: Check Bad Move / Try To Faint / Check Viability
 
-Skarmory
-Level: 54
+Gyarados @ Gyaradosite
+Level: 55
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
-Metagross
-Level: 54
+Dragonair @ Eviolite
+Level: 55
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Walking Wake
+Level: 55
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Latios
+Level: 56
+IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+
+Miraidon
+Level: 56
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 
 Salamence
-Level: 55
-Shadow: Yes
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-
-Chandelure
-Level: 55
-Shadow: Yes
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
-
-Garchomp
-Level: 55
+Level: 57
 Shadow: Yes
 IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 

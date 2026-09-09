@@ -1982,11 +1982,80 @@ static void UpdateLeftNoOfBallsTextOnHealthbox(u8 healthboxSpriteId)
     gSprites[healthboxSpriteId2].data[1] = savedValue2;
 }
 
+// ── Wishes of Tomorrow: a shiny's HP/EXP box is gold ─────────────────────────
+// Only the BOX is recoloured. The health bar is a separate sprite on its own
+// TAG_HEALTHBAR_PAL, so its green/yellow/red readout is untouched -- tinting
+// that too would trade a status signal for a decoration.
+#define TAG_HEALTHBOX_SHINY_PAL 0xD712
+
+// One gold palette per battle, shared by every shiny on screen. It is derived
+// from the real healthbox palette rather than authored as a second .pal, so it
+// follows any later change to the box art instead of drifting out of step.
+static u8 WotShinyHealthboxPalette(void)
+{
+    u8 src, dst;
+    u32 i;
+
+    dst = IndexOfSpritePaletteTag(TAG_HEALTHBOX_SHINY_PAL);
+    if (dst != 0xFF)
+        return dst;
+
+    src = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PAL);
+    if (src == 0xFF)
+        return 0xFF;
+
+    // OBJ palettes are a scarce sixteen, and doubles with megas and status
+    // icons can genuinely run them out. If none is free the box simply stays
+    // its normal colour rather than stealing a slot from something louder.
+    dst = AllocSpritePalette(TAG_HEALTHBOX_SHINY_PAL);
+    if (dst == 0xFF)
+        return 0xFF;
+
+    for (i = 0; i < 16; i++)
+    {
+        u16 c = gPlttBufferUnfaded[OBJ_PLTT_ID(src) + i];
+        u32 r = GET_R(c), g = GET_G(c), b = GET_B(c);
+
+        // Push the whole ramp toward gold instead of flooding it flat, so the
+        // box keeps its shading and the numbers on it stay readable.
+        r = r + (31 - r) / 2;
+        g = g + (31 - g) / 3;
+        b = b / 3;
+        c = RGB(r, g, b);
+        gPlttBufferUnfaded[OBJ_PLTT_ID(dst) + i] = c;
+        gPlttBufferFaded[OBJ_PLTT_ID(dst) + i] = c;
+    }
+    return dst;
+}
+
+// The box is two sprites: healthboxSpriteId is the left half and carries the
+// right half's id in oam.affineParam. Both must move together or the box comes
+// out half gold.
+static void WotSetHealthboxShiny(u8 healthboxSpriteId, bool32 shiny)
+{
+    u8 normal = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PAL);
+    u8 right = gSprites[healthboxSpriteId].oam.affineParam;
+    u8 pal = shiny ? WotShinyHealthboxPalette() : normal;
+
+    if (pal == 0xFF)
+        pal = normal;
+    if (pal == 0xFF)
+        return;
+
+    gSprites[healthboxSpriteId].oam.paletteNum = pal;
+    if (right < MAX_SPRITES)
+        gSprites[right].oam.paletteNum = pal;
+}
+
 void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elementId)
 {
     enum BattlerId battler = gSprites[healthboxSpriteId].hMain_Battler;
     s32 maxHp = GetMonData(mon, MON_DATA_MAX_HP);
     s32 currHp = GetMonData(mon, MON_DATA_HP);
+
+    // Set here rather than at creation: the box outlives the mon standing in
+    // it, so a switch has to be able to take the gold away again.
+    WotSetHealthboxShiny(healthboxSpriteId, IsMonShiny(mon));
 
     if (IsOnPlayerSide(battler))
     {

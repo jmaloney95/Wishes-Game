@@ -243,12 +243,24 @@ MunenLabAct2_Movement_Exclaim:
 
 @ Draco bolts NORTH out the top of the lab (he starts at 6,2; three fast
 @ steps put him past the map edge before removeobject).
+@ OUT THE DOOR, not through the north wall. He starts at (6,2) and every tile
+@ on rows 0 and 1 is solid -- "three fast steps put him past the map edge" put
+@ him through the lab's back wall instead. The lab's only exit is the warp pair
+@ at (6,12)/(7,12), and column 6 is clear the whole way down to it, so he now
+@ bolts for the door he actually came in by.
 MunenLabAct2_Movement_DracoFlee:
-	face_up
+	face_down
 	delay_8
-	walk_fast_up
-	walk_fast_up
-	walk_fast_up
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
 	step_end
 
 @ ============================================================================
@@ -263,7 +275,7 @@ MunenLabAct2_Text_DracoIntro1::
 MunenLabAct2_Text_DracoIntro2::
 	.string "Do you know what this is?\p"
 	.string "CLARKSON'S proof. The mountain is\n"
-	.string "a MACHINE -- and machines can be\l"
+	.string "a MACHINE, and machines can be\l"
 	.string "owned.\p"
 	.string "The Dark Lord in Shin-Tokyo pays\n"
 	.string "for knowledge like this. Pays in\l"
@@ -325,7 +337,7 @@ MunenLabAct2_Text_DestroyResearch2::
 	.string "The pages catch quickly.\p"
 	.string "A life's work becomes light, then\n"
 	.string "warmth, then ash.\p"
-	.string "Somewhere -- maybe in your bag,\n"
+	.string "Somewhere, maybe in your bag,\n"
 	.string "you could swear something grins,\l"
 	.string "and lets out a long-held breath.$"
 
@@ -365,11 +377,11 @@ MunenLabAct2_Text_BagDestroyDeclined::
 MunenLabAct2_Text_Dossier1::
 	.string "{PLAYER} opened the Shadow\n"
 	.string "Dossier...\p"
-	.string "“FIELD NOTES, VOL. IX -- FINAL.\n"
-	.string "-- E. CLARKSON\p"
+	.string "“FIELD NOTES, VOL. IX, FINAL.\n"
+	.string "E. CLARKSON\p"
 	.string "“The mountain is not a god. It is\n"
 	.string "a MECHANISM. It keeps what grief\l"
-	.string "cannot release -- and what is\l"
+	.string "cannot release, and what is\l"
 	.string "kept can be RESHAPED.$"
 
 MunenLabAct2_Text_Dossier2::
@@ -378,7 +390,7 @@ MunenLabAct2_Text_Dossier2::
 	.string "“I have seen the specimens. I\n"
 	.string "will call them what they are:\l"
 	.string "SHADOW POKEMON. Pokemon whose\l"
-	.string "hearts have been shut --\l"
+	.string "hearts have been shut…\l"
 	.string "artificially. Deliberately.\p"
 	.string "“And JIRACHI... the Undying Wish\n"
 	.string "is force without shape. Shaped\l"
@@ -399,7 +411,7 @@ MunenLabAct2_Text_Dossier3::
 	.string "demand exactly what the shadows\l"
 	.string "lack: time. Memory. Care.\p"
 	.string "“If you are reading this and I am\n"
-	.string "gone -- the Gate must NOT be\l"
+	.string "gone, the Gate must NOT be\l"
 	.string "given a wish.”$"
 
 MunenLabAct2_Text_RansackedShelves::
@@ -407,7 +419,7 @@ MunenLabAct2_Text_RansackedShelves::
 	.string "in one long armful.\p"
 	.string "Whoever searched here knew\n"
 	.string "exactly what they were looking\l"
-	.string "for -- and didn't care what broke.$"
+	.string "for, and didn't care what broke.$"
 
 MunenLabAct2_Text_DeadMachines::
 	.string "The lab machines are dark.\p"

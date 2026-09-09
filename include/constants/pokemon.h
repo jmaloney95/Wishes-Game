@@ -101,7 +101,7 @@ enum __attribute__((packed)) Stat
 #define MAX_STAT_STAGE    12
 
 // Shiny odds
-#define SHINY_ODDS 131 // Actual probability is SHINY_ODDS/65536 (~1/500). Wishes-of-Tomorrow tweak (vanilla was 8 = 1/8192).
+#define SHINY_ODDS 256 // Actual probability is SHINY_ODDS/65536 = 1/256. Wishes-of-Tomorrow tweak (vanilla was 8 = 1/8192; this hack ran 131 = ~1/500 before).
 
 // Ribbon IDs used by TV and Pokénav
 #define CHAMPION_RIBBON       0

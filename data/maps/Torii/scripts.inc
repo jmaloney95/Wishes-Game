@@ -152,7 +152,7 @@ Torii_Text_OracleIntro:
 	.string "Turn back, child of the valley…\p"
 	.string "The mountain is no place for the\n"
 	.string "living. The dead walk its slopes.\p"
-	.string "I am THE ORACLE -- and I will not\n"
+	.string "I am THE ORACLE, and I will not\n"
 	.string "let you pass to your doom!$"
 
 Torii_Text_OracleDefeat:
@@ -164,7 +164,7 @@ Torii_Text_OracleNotEnough:
 	.string "waits above…$"
 
 Torii_Text_OraclePost:
-	.string "Go, then. But heed my warning --\n"
+	.string "Go, then. But heed my warning…\n"
 	.string "what sleeps above does not forgive.$"
 
 Torii_Text_OracleMan:
@@ -186,7 +186,7 @@ Torii_Text_HikerDefeat:
 
 Torii_Text_HikerPost:
 	.string "Mind the wild POKéMON in the\n"
-	.string "brush -- they bite.$"
+	.string "brush, they bite.$"
 
 Torii_Text_BlackbeltIntro:
 	.string "Only the strong climb this mountain!\n"
@@ -205,7 +205,7 @@ Torii_Text_BlackbeltHealOffer:
 	.string "Want me to patch up your team?$"
 
 Torii_Text_BlackbeltGoodLuck:
-	.string "There -- good as new.\n"
+	.string "There, good as new.\n"
 	.string "Good luck up there, challenger!$"
 
 Torii_Text_BlackbeltDecline:
@@ -221,11 +221,11 @@ Torii_Text_RivalTaunt:
 	.string "really are!$"
 
 Torii_Text_RivalDefeat:
-	.string "DRACO: …Tch. Lucky. That's all\n"
+	.string "DRACO:…Tch. Lucky. That's all\n"
 	.string "that was.$"
 
 Torii_Text_RivalRunoff:
 	.string "DRACO: Don't get comfortable.\n"
 	.string "The summit is MINE.\p"
-	.string "I'll be waiting up there -- and next\n"
+	.string "I'll be waiting up there, and next\n"
 	.string "time, I won't go easy.$"

@@ -39,6 +39,7 @@
 #define tStarters       data[2]
 #define tWild           data[3]
 #define tTrainers       data[4]
+#define tInputDelay     data[5]
 
 enum
 {
@@ -288,15 +289,18 @@ void CB2_WotRandomizerMenu(void)
     {
         u8 taskId = CreateTask(Task_FadeIn, 0);
 
-        gTasks[taskId].tSelection = 0;
+        // Open on START THE GAME so a player who wants the default can just
+        // confirm. What stops that becoming an accident is the input lockout
+        // below, not the cursor's position -- see MENU_INPUT_DELAY.
+        gTasks[taskId].tSelection = MENUITEM_START;
         gTasks[taskId].tMaster    = FlagGet(FLAG_WOT_RANDOMIZER);
         gTasks[taskId].tStarters  = FlagGet(FLAG_WOT_RAND_STARTERS);
         gTasks[taskId].tWild      = FlagGet(FLAG_WOT_RAND_WILD);
         gTasks[taskId].tTrainers  = FlagGet(FLAG_WOT_RAND_TRAINERS);
 
         DrawChoices(taskId);
-        DrawDescription(0);
-        HighlightItem(0);
+        DrawDescription(MENUITEM_START);
+        HighlightItem(MENUITEM_START);
         CopyWindowToVram(WIN_OPTIONS, COPYWIN_FULL);
         gMain.state++;
         break;
@@ -316,10 +320,20 @@ void WotStartRandomizerMenu(MainCallback returnCallback)
     SetMainCallback2(CB2_WotRandomizerMenu);
 }
 
+// Frames of deafness once the menu is live. This screen opens immediately
+// after name entry, where the player has been mashing A to confirm, and those
+// presses otherwise land here -- on a menu whose whole purpose is a decision
+// that cannot be changed later. Half a second is enough to break the streak
+// without feeling unresponsive.
+#define MENU_INPUT_DELAY 30
+
 static void Task_FadeIn(u8 taskId)
 {
     if (!gPaletteFade.active)
+    {
+        gTasks[taskId].tInputDelay = MENU_INPUT_DELAY;
         gTasks[taskId].func = Task_ProcessInput;
+    }
 }
 
 // Maps a row to the task word holding its value; NULL for rows with no value.
@@ -339,6 +353,13 @@ static void Task_ProcessInput(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
 
+    // Swallow whatever was still being mashed on the way in.
+    if (tInputDelay > 0)
+    {
+        tInputDelay--;
+        return;
+    }
+
     if (JOY_NEW(A_BUTTON) && tSelection == MENUITEM_START)
     {
         PlaySE(SE_SELECT);
@@ -350,6 +371,16 @@ static void Task_ProcessInput(u8 taskId)
         PlaySE(SE_SELECT);
         gTasks[taskId].func = Task_FadeOut;
         return;
+    }
+    else if (JOY_NEW(START_BUTTON))
+    {
+        // START jumps to the START row rather than starting outright: from
+        // anywhere in the list one press brings the cursor home, and a second
+        // A confirms. Two deliberate presses, no accidental launch.
+        PlaySE(SE_SELECT);
+        tSelection = MENUITEM_START;
+        HighlightItem(tSelection);
+        DrawDescription(tSelection);
     }
     else if (JOY_NEW(DPAD_UP))
     {

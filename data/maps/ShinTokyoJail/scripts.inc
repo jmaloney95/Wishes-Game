@@ -397,7 +397,7 @@ ShinTokyoJail_Text_Reveal1::
 	.string "The lights die with it.$"
 
 ShinTokyoJail_Text_Reveal2::
-	.string "One flash of emergency power --\n"
+	.string "One flash of emergency power…\n"
 	.string "then nothing.\p"
 	.string "Only a ring of light around\n"
 	.string "your feet.$"
@@ -439,7 +439,7 @@ ShinTokyoJail_Text_Cell1::
 	.string "...{PLAYER}? Thank Arceus,\n"
 	.string "I don't have to murder that guy\l"
 	.string "in the next cell.\p"
-	.string "Oh wait! -- Check this out.\n"
+	.string "Oh wait! Check this out.\n"
 	.string "I rolled a nat 20 and swiped\l"
 	.string "this from a Mutrid Officer.$"
 
@@ -450,7 +450,7 @@ ShinTokyoJail_Text_CellExplain::
 	.string "The SNAG MACHINE. Mutrid tech.\n"
 	.string "Top of the line.\p"
 	.string "They fight with\n"
-	.string "SHADOW POKéMON -- stolen souls,\l"
+	.string "SHADOW POKéMON, stolen souls,\l"
 	.string "sealed shut.\p"
 	.string "With that on your arm, any\n"
 	.string "BALL you throw can rip a\l"
@@ -466,7 +466,7 @@ ShinTokyoJail_Text_CellSpare::
 ShinTokyoJail_Text_Cell2::
 	.string "Now. Let's head to the West\n"
 	.string "service exit, I've got a plan.\p"
-	.string "I'm right behind you -- we fight\n"
+	.string "I'm right behind you, we fight\n"
 	.string "as one.$"
 
 ShinTokyoJail_Text_FollowerTalk::
@@ -477,7 +477,7 @@ ShinTokyoJail_Text_FollowerTalk::
 ShinTokyoJail_Text_Inmate1::
 	.string "Psst. You're breaking out?\p"
 	.string "I made a shiv to help us\n"
-	.string "escape. Here -- take one.$"
+	.string "escape. Here, take one.$"
 
 ShinTokyoJail_Text_Inmate2::
 	.string "Strikes first, every time.\n"
@@ -489,7 +489,7 @@ ShinTokyoJail_Text_RedAlert1::
 ShinTokyoJail_Text_RedAlert2::
 	.string "We've tripped the alarms.\p"
 	.string "The front door is armed, {PLAYER}.\n"
-	.string "West service run -- GO!$"
+	.string "West service run, GO!$"
 
 ShinTokyoJail_Text_FrontDoorSealed::
 	.string "The front door is a slab of\n"
@@ -499,19 +499,19 @@ ShinTokyoJail_Text_FrontDoorSealed::
 
 ShinTokyoJail_Text_GateSealed::
 	.string "A reinforced shutter.\p"
-	.string "It won't budge -- the release is\n"
+	.string "It won't budge, the release is\n"
 	.string "inside the cell block.$"
 
 ShinTokyoJail_Text_SquadMustPick::
 	.string "No time to hesitate!\p"
-	.string "Pick your three -- I'll cover\n"
+	.string "Pick your three, I'll cover\n"
 	.string "the rest!$"
 
 ShinTokyoJail_Text_Squad1Mikmanc::
-	.string "Squad ahead -- and they've got\n"
+	.string "Squad ahead, and they've got\n"
 	.string "Shadows with them!\p"
 	.string "Here's our chance, {PLAYER}!\p"
-	.string "Use the SNAG MACHINE -- capture\n"
+	.string "Use the SNAG MACHINE, capture\n"
 	.string "their SHADOW POKéMON!$"
 
 ShinTokyoJail_Text_Squad1Lose::

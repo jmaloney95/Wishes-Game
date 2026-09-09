@@ -93,8 +93,8 @@ PrototypeLab_Text_DeoxysStirs::
 	.string "The water around the ring goes\n"
 	.string "utterly still.\p"
 	.string "Something uncoils from the\n"
-	.string "cracked glass --\p"
-	.string "-- and rebuilds itself, piece\n"
+	.string "cracked glass…\p"
+	.string "and rebuilds itself, piece\n"
 	.string "by piece, to face you.$"
 
 PrototypeLab_Text_DeoxysSinks::

@@ -5,6 +5,7 @@
 #include "link_rfu.h"
 #include "librfu.h"
 #include "m4a.h"
+#include "battle_anim.h"
 #include "bg.h"
 #include "rtc.h"
 #include "scanline_effect.h"
@@ -131,6 +132,66 @@ void AgbMain(void)
     AgbMainLoop();
 }
 
+// ── Wishes of Tomorrow: 3x fast forward ─────────────────────────────────────
+// One pass of AgbMainLoop is one LOGIC frame, and the audio is not driven from
+// it at all: m4aSoundMain() runs in VBlankIntr and m4aSoundVSync() in
+// VCountIntr, both on the hardware's own interrupt schedule. So running the
+// logic three times between two VBlanks makes the game move at 3x while the
+// music keeps real time at its own pitch and tempo -- nothing about the sound
+// path is touched or resampled.
+//
+// Only the WAIT is skipped, never the work. Every logic frame still runs its
+// callbacks, so nothing is stepped over; the screen simply updates once per
+// hardware frame, which is what makes this read as fast forward rather than as
+// dropped input.
+//
+// Never active in a link session: two linked games must agree on how many
+// frames have passed, and one running triple would desync them immediately.
+#define WOT_FAST_FORWARD_SPEED 3
+// Battles get a bigger multiplier than the field, but a much smaller one than
+// the 8x this started at. 8x got battles STUCK MID-ANIMATION, and the reason is
+// the DMA queue: graphics requests are serviced once per VBlank by
+// ProcessDma3Requests, the queue holds MAX_DMA_REQUESTS (128), and
+// RequestDma3Copy silently returns -1 once it is full. Eight logic frames
+// feeding one VBlank overran it on animation-heavy frames, so the copy that
+// would have advanced an animation was simply dropped and it sat there
+// forever. 4x keeps the per-VBlank load comfortably inside the queue.
+#define WOT_FAST_FORWARD_BATTLE_SPEED 4
+
+static bool32 WotSkipThisVBlank(void)
+{
+    static u8 sSubFrame;
+    u32 speed;
+
+    if (gSaveBlock2Ptr == NULL
+     || !gSaveBlock2Ptr->optionsFastForward
+     || gReceivedRemoteLinkPlayers
+     || gLinkTransferringData)
+    {
+        sSubFrame = 0;
+        return FALSE;
+    }
+
+    // Never compress a battle ANIMATION. It is the single heaviest consumer of
+    // DMA and sprite updates in the game, and it is the thing that actually got
+    // stuck. Everything around it -- text, menus, waits, switch-ins, the intro
+    // -- still runs at speed, which is where most of a battle's dead time is.
+    if (gAnimScriptActive)
+    {
+        sSubFrame = 0;
+        return FALSE;
+    }
+
+    speed = gMain.inBattle ? WOT_FAST_FORWARD_BATTLE_SPEED : WOT_FAST_FORWARD_SPEED;
+
+    if (++sSubFrame >= speed)
+    {
+        sSubFrame = 0;
+        return FALSE;
+    }
+    return TRUE;
+}
+
 void AgbMainLoop(void)
 {
     for (;;)
@@ -166,6 +227,15 @@ void AgbMainLoop(void)
                 gLinkTransferringData = FALSE;
             }
         }
+
+        // Everything above runs per LOGIC frame. The three below measure REAL
+        // time -- the play timer counts real seconds, the map-music state
+        // machine runs fades and queued tracks, and the wait is the frame
+        // itself -- so they stay at one per displayed frame even at 3x.
+        // Ticking them per logic frame would run the clock and every music
+        // fade at triple speed, which is exactly what this must not do.
+        if (WotSkipThisVBlank())
+            continue;
 
         PlayTimeCounter_Update();
         MapMusicMain();

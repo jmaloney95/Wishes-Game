@@ -238,8 +238,8 @@ CelebiIsland_Text_NotOpened:
 CelebiIsland_Text_Ready:
 	.string "CELEBI cups {STR_VAR_1}'s face\n"
 	.string "in its hands.\p"
-	.string "The shadow strains-- light\n"
-	.string "gathers--$"
+	.string "The shadow strains… light\n"
+	.string "gathers…$"
 
 CelebiIsland_Text_Purified:
 	.string "The shadow lifts!\p"
@@ -480,7 +480,7 @@ CelebiIsland_Text_LessonMesprit::
 	.string "You fear losing the strength\n"
 	.string "the shadow gave them.\p"
 	.string "Do not. A purified one keeps\n"
-	.string "every bit of that power --\l"
+	.string "every bit of that power…\l"
 	.string "and pays none of the cost.\p"
 	.string "No brittle defense. No HYPER\n"
 	.string "MODE. Stronger than it was\l"
@@ -512,7 +512,7 @@ CelebiIsland_Text_TrioYield::
 
 CelebiIsland_Text_TrioWatch::
 	.string "They scatter to the island's\n"
-	.string "ends -- three sleepless\l"
+	.string "ends, three sleepless\l"
 	.string "sentinels.\p"
 	.string "At the shrine... something\n"
 	.string "green flickers into being.$"

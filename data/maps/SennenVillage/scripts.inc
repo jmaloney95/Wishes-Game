@@ -137,6 +137,6 @@ SennenVillage_EventScript_LineSign::
 
 SennenVillage_Text_LineSign:
 	.string "SENNEN LINE\p"
-	.string "Northbound:  SENNEN -> SHIN-TOKYO\p"
+	.string "Northbound: SENNEN -> SHIN-TOKYO\p"
 	.string "NOTICE: the SHINKANSEN bullet train\n"
 	.string "is CLOSED until further notice.$"

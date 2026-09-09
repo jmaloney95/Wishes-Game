@@ -182,12 +182,12 @@ DistortionWorld_Text_GengarClarkson3::
 	.string "Take us with you, {PLAYER}.$"
 
 DistortionWorld_Text_GengarJoined::
-	.string "GENGAR -- and everything riding\n"
-	.string "within it -- joined your party!$"
+	.string "GENGAR: and everything riding\n"
+	.string "within it, joined your party!$"
 
 DistortionWorld_Text_GengarJoinedPC::
-	.string "GENGAR -- and everything riding\n"
-	.string "within it -- was sent to the PC.\p"
+	.string "GENGAR: and everything riding\n"
+	.string "within it, was sent to the PC.\p"
 	.string "Box logistics. Even death has\n"
 	.string "paperwork, kekeke.$"
 
@@ -200,7 +200,7 @@ DistortionWorld_Text_NoRoom::
 
 DistortionWorld_Text_GengarTeleportHome::
 	.string "This place won't hold together\n"
-	.string "much longer -- and neither will I.\p"
+	.string "much longer, and neither will I.\p"
 	.string "But I have just enough left in me\n"
 	.string "for one last trick.\p"
 	.string "Let me send you home, {PLAYER}.\n"
@@ -216,7 +216,7 @@ DistortionWorld_Text_Collapse1::
 DistortionWorld_Text_Collapse2::
 	.string "The floating stones crack apart\p"
 	.string "The Distortion World folds\n"
-	.string "inward--$"
+	.string "inward…$"
 
 DistortionWorld_Text_Rift::
 	.string "The seam hangs in the air here,\n"

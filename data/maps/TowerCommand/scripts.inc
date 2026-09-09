@@ -89,7 +89,7 @@ TowerCommand_Text_Captain1::
 
 TowerCommand_Text_CaptainThanks::
 	.string "I never thanked you properly.\p"
-	.string "The professor's research --\n"
+	.string "The professor's research…\n"
 	.string "hand-delivered into my gloves.\p"
 	.string "Every Shadow bred on the floor\n"
 	.string "below us is its child.\p"
@@ -105,7 +105,7 @@ TowerCommand_Text_CaptainNoResearch::
 TowerCommand_Text_CaptainChallenge::
 	.string "The tower trusted me with its\n"
 	.string "final badge.\p"
-	.string "Take it from me -- or feed the\n"
+	.string "Take it from me, or feed the\n"
 	.string "machine. Those are the doors.$"
 
 TowerCommand_Text_CaptainDefeat::
@@ -119,7 +119,7 @@ TowerCommand_Text_CaptainConcede::
 
 TowerCommand_Text_ReceivedBadge::
 	.string "{PLAYER} earned the TOWER\n"
-	.string "BADGE -- the final badge!$"
+	.string "BADGE: the final badge!$"
 
 TowerCommand_Text_CaptainMasterBall::
 	.string "...And this. The tower's\n"
@@ -144,6 +144,6 @@ TowerCommand_Text_CaptainRematch::
 
 TowerCommand_Text_LiftSealed::
 	.string "The executive lift reads your\n"
-	.string "badge case -- and refuses.\p"
+	.string "badge case, and refuses.\p"
 	.string "MUTRID ALPHA's final badge is\n"
 	.string "the only key it honors.$"

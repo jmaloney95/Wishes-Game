@@ -162,7 +162,16 @@ WALNUT_WOODS_EventScript_SignEast::
 @ ===========================================================================
 @ Movement
 @ ===========================================================================
+@ Down one, THEN east. He starts at (30,25) and row 25 is walled at x=31, 33,
+@ 34 and 35 -- running straight east put him through the pots and the trees,
+@ because applymovement never collision-checks. Row 26 is clear from x=28 to
+@ x=43, so the single step down is what makes the exit legal.
+@ Ten steps east reaches x=40; the screen's right edge sits around x=37 with
+@ the player where they'd be standing, so he is gone before removeobject.
 WALNUT_WOODS_Movement_ClarksonRunOff:
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right

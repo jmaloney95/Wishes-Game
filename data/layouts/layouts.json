@@ -9380,7 +9380,7 @@
     {
       "id": "LAYOUT_FROSTWOOD_TOWN",
       "name": "FrostwoodTown_Layout",
-      "width": 56,
+      "width": 62,
       "height": 36,
       "primary_tileset": "gTileset_SnowCinna",
       "secondary_tileset": "gTileset_FrostwoodBuildings",

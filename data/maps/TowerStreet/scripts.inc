@@ -39,6 +39,17 @@ TowerStreet_Movement_StepBack:
 	walk_down
 	step_end
 
+@ SIGHT RADIUS IS 2, NOT 4, AND MUST STAY <= 2.
+@ The player arrives from Shin-Tokyo at (4,8); the White Tiger stands at (4,5)
+@ on the same column with a clear line between. At radius 4 he sighted the
+@ player on the frame the warp landed, firing a trainer battle while the map
+@ was still coming up. Radius 2 stops his cone one tile short of the door, so
+@ the player has to step in before he reacts -- the ambush survives, the
+@ arrival is quiet. TowerMid gets away with radius 4 only because its door is
+@ five tiles from its guard.
+@
+@ The return trip from TowerMid lands at (4,4), one tile from him, but the
+@ stairs are sealed until he is beaten, so by then he no longer sights.
 TowerStreet_EventScript_WhiteTiger::
 	trainerbattle_single TRAINER_BLAKE, TowerStreet_Text_WhiteTigerIntro, TowerStreet_Text_WhiteTigerDefeat
 	msgbox TowerStreet_Text_WhiteTigerPost, MSGBOX_AUTOCLOSE
@@ -47,7 +58,7 @@ TowerStreet_EventScript_WhiteTiger::
 
 TowerStreet_Text_WhiteTigerIntro::
 	.string "The tower keeps four beasts.\p"
-	.string "I am the WHITE TIGER -- the\n"
+	.string "I am the WHITE TIGER, the\n"
 	.string "claw at its foot.\p"
 	.string "The thunder in my ranks was\n"
 	.string "sealed screaming. It fights\l"
