@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Field Guide — Wishes of Tomorrow</title>
+<meta name="description" content="A route-by-route field guide to Wishes of Tomorrow: every map across all three acts, with the path through it and what is worth stopping for.">
+<link rel="icon" href="assets/art/battle-sprite.png" type="image/png">
+<link rel="canonical" href="https://flatfootlabs.com/guide.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Flatfoot Games">
+<meta property="og:url" content="https://flatfootlabs.com/guide.html">
+<meta property="og:title" content="Wishes of Tomorrow — Field Guide">
+<meta property="og:description" content="Every map across all three acts, with the route through it and what is worth stopping for.">
+<meta property="og:image" content="https://flatfootlabs.com/assets/og-wishes.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://flatfootlabs.com/assets/og-wishes.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=20260909a">
+<style>
+/* The guide reuses the site's tokens; only the map plate is new. */
+.act-blurb { max-width: 60ch; color: rgba(233,233,237,.6); font-size: 14.5px; margin: -4px 0 22px; }
+.gm { margin: 0 0 40px; }
+.gm-title { font-family: var(--font-pixel); font-size: 11px; letter-spacing: .06em; margin: 0 0 10px; }
+.gm-fig { position: relative; margin: 0 0 14px; border-radius: var(--radius-md); overflow: hidden;
+          background: var(--color-surface); box-shadow: var(--shadow-sm); line-height: 0; }
+/* image-rendering keeps the tiles crisp; the maps are pixel art at 1x. */
+.gm-fig img { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.gm-route { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+/* vector-effect on all three, so the casing, core and dashes keep their weight
+   whatever the map's aspect ratio does to the viewBox. */
+.gm-route polyline { fill: none; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.gm-casing { stroke: #161826; stroke-opacity: .6; stroke-width: 11; }
+.gm-core   { stroke: #e9e9ed; stroke-width: 5; }
+.gm-dash   { stroke: var(--color-accent, #9184d9); stroke-width: 5; stroke-dasharray: 12 12;
+             animation: gmAnts 1.1s linear infinite; }
+@keyframes gmAnts { to { stroke-dashoffset: -24; } }
+.gm-pin { position: absolute; transform: translate(-50%, -50%);
+          min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px;
+          background: var(--color-accent, #9184d9); color: #12131c;
+          font-family: var(--font-pixel); font-size: 8px; line-height: 20px; text-align: center;
+          box-shadow: 0 0 0 2px #161826, 0 2px 6px rgba(0,0,0,.5); }
+.gm-stops { margin: 0; padding-left: 26px; display: grid; gap: 7px; }
+.gm-stops li { font-size: 14.5px; line-height: 1.55; color: rgba(233,233,237,.72); text-wrap: pretty; }
+.gm-stops li::marker { color: var(--color-accent); font-family: var(--font-pixel); font-size: 9px; }
+.gm-stops b { color: var(--color-text); font-weight: 600; }
+.gm-stops span { display: block; color: rgba(233,233,237,.62); }
+.gm-none { font-size: 14px; color: rgba(233,233,237,.45); margin: 0; }
+.guide-jump { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 0; }
+.guide-jump a { font-family: var(--font-pixel); font-size: 9px; padding: 8px 12px;
+                border: 1px solid rgba(233,233,237,.16); border-radius: var(--radius-md);
+                color: rgba(233,233,237,.75); }
+.guide-jump a:hover { border-color: var(--color-accent-600); color: var(--color-text); }
+@media (prefers-reduced-motion: reduce) { .gm-dash { animation: none; } }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="site-header">
+  <a class="back-link" href="index.html"><span aria-hidden="true">&#8592;</span> Wishes of Tomorrow</a>
+  <nav class="site-nav">
+    <a href="#act1">Act One</a>
+    <a href="#act2">Act Two</a>
+    <a href="#act3">Act Three</a>
+  </nav>
+  <a class="btn-nav" href="index.html#download">Download</a>
+</header>
+
+<main>
+
+  <section id="top" class="wrap section">
+    <div class="kicker" data-reveal>FIELD GUIDE</div>
+    <h1 class="h-sm" data-reveal>Every map, and the way through it.</h1>
+    <p class="act-blurb" data-reveal>The route is the line. The numbers are what is worth stopping for &mdash; people to talk to, items on the floor, the odd thing that is easy to walk straight past. Spoilers ahead, obviously.</p>
+    <div class="guide-jump" data-reveal>
+      <a href="#act1">Act One</a><a href="#act2">Act Two</a><a href="#act3">Act Three</a>
+    </div>
+  </section>
+
+  <section id="act1" class="wrap section">
+    <div class="kicker" data-reveal>ACT ONE</div>
+    <h2 class="h-sm" data-reveal>Act One</h2>
+    <p class="act-blurb" data-reveal>Munen Village to the Torii — the region before it turns.</p>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">1 — Munen Village</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m1-1-munen-village.png" alt="Map of 1 — Munen Village" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="20.868,60.236 20.972,68.289 41.891,68.188 41.995,54.196 50.432,38.945" class="gm-casing"></polyline>
+          <polyline points="20.868,60.236 20.972,68.289 41.891,68.188 41.995,54.196 50.432,38.945" class="gm-core"></polyline>
+          <polyline points="20.868,60.236 20.972,68.289 41.891,68.188 41.995,54.196 50.432,38.945" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:32.400%;top:63.860%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:60.806%;top:44.859%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:49.049%;top:32.905%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:58.212%;top:44.708%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:17.583%;top:50.773%" aria-hidden="true">5</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Oracle</b><span>A foreshadow for what&#x27;s to come.</span></li>
+        <li><b>Fisherman&#x27;s son</b><span>Quest: The One That Got Away
+Select QUESTS in the start menu for more details.
+Hint: Discover the secrets of Munen Lake</span></li>
+        <li><b>Choose Starter</b><span>Gible / Frigibax / Axew</span></li>
+        <li><b>Fisherman returned</b><span>Offers to trade his egg for Red Gyarados.</span></li>
+        <li><b>Developer&#x27;s Gift</b><span>On 2F of Player&#x27;s home, accept the Developer&#x27;s Gift to receive, Armored Mewtwo LV80</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">2 — Melting Mile</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m2-2-melting-mile.png" alt="Map of 2 — Melting Mile" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="36.981,98.236 37.535,53.855 57.797,53.284 57.815,39.877 37.742,40.067 37.811,21.145 71.992,20.860 90.405,25.733" class="gm-casing"></polyline>
+          <polyline points="36.981,98.236 37.535,53.855 57.797,53.284 57.815,39.877 37.742,40.067 37.811,21.145 71.992,20.860 90.405,25.733" class="gm-core"></polyline>
+          <polyline points="36.981,98.236 37.535,53.855 57.797,53.284 57.815,39.877 37.742,40.067 37.811,21.145 71.992,20.860 90.405,25.733" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:28.250%;top:52.714%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:73.945%;top:41.779%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Fourth Starter</b><span>Interact to bring Pikachu on your journey.</span></li>
+        <li><b>Toasty time</b><span>The Azurill Girls will block the path to Munen Lake until a key item is obtained.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">3 — Walnut Woods</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m3-3-walnut-woods.png" alt="Map of 3 — Walnut Woods" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="8.800,37.042 18.655,39.198 18.568,62.609 31.276,76.625 52.403,78.535 68.015,77.858 67.929,65.844 53.060,51.828 76.314,23.026" class="gm-casing"></polyline>
+          <polyline points="8.800,37.042 18.655,39.198 18.568,62.609 31.276,76.625 52.403,78.535 68.015,77.858 67.929,65.844 53.060,51.828 76.314,23.026" class="gm-core"></polyline>
+          <polyline points="8.800,37.042 18.655,39.198 18.568,62.609 31.276,76.625 52.403,78.535 68.015,77.858 67.929,65.844 53.060,51.828 76.314,23.026" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:50.467%;top:72.621%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:43.292%;top:9.010%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:32.313%;top:38.428%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:45.885%;top:62.609%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:77.922%;top:68.924%" aria-hidden="true">5</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Professor Clarkson</b><span>Learn some backstory about the region&#x27;s professor.</span></li>
+        <li><b>Healing / Storage</b><span>Chansey / Porygon serve as the mobile pokemon center.</span></li>
+        <li><b>Item</b><span>TM Protect</span></li>
+        <li><b>Item</b><span>TM Blizzard - Requires Cut, obtained in National Park</span></li>
+        <li><b>Shortcut / Item</b><span>National Park links back to here for conveniency. TM is Rock Smash.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">4 — Frostwood Town</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m4-4-frostwood-town.png" alt="Map of 4 — Frostwood Town" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="11.566,82.683 11.601,76.188 50.536,76.308 50.328,53.561 89.799,53.501" class="gm-casing"></polyline>
+          <polyline points="11.566,82.683 11.601,76.188 50.536,76.308 50.328,53.561 89.799,53.501" class="gm-core"></polyline>
+          <polyline points="11.566,82.683 11.601,76.188 50.536,76.308 50.328,53.561 89.799,53.501" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:36.463%;top:71.310%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:25.052%;top:35.543%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:40.353%;top:2.020%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:50.207%;top:82.983%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:73.513%;top:43.325%" aria-hidden="true">5</span>
+        <span class="gm-pin" style="left:89.506%;top:53.501%" aria-hidden="true">6</span>
+        <span class="gm-pin" style="left:75.501%;top:46.826%" aria-hidden="true">7</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Mart</b><span>Purchase Poke Balls, Potions, Repels</span></li>
+        <li><b>Toasty Time</b><span>Obtain Hot Cocoa to deliver to the Azurill Girls on Melting Mile. Unlocks access to Munen Lake.</span></li>
+        <li><b>To Route 2</b><span>Training area for Gym 1.  Battles are Lvl 8-12.</span></li>
+        <li><b>Munen Lake Overlook</b><span>Hint at what&#x27;s hiding beneath the lake.</span></li>
+        <li><b>First Gym</b><span>Defeat 4 trainers to earn the Ember badge.  The gym leader, Red Fatality will clear the path through Sennen.</span></li>
+        <li><b>To Sennen</b><span>Recommend visiting before defeating the gym for a piece of storyline with the game antagonist.</span></li>
+        <li><b>Phone call</b><span>After earning the badge, Prof. Clarkson will give you a call to meet him at Star Summit.  The path forward is through Sennen.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">5 — Munen Lake</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m5-5-munen-lake.png" alt="Map of 5 — Munen Lake" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="2.023,20.954 78.925,20.669 79.305,70.511 25.190,70.103 25.259,61.293 9.561,61.211 9.630,84.297 71.456,84.460 71.266,47.874" class="gm-casing"></polyline>
+          <polyline points="2.023,20.954 78.925,20.669 79.305,70.511 25.190,70.103 25.259,61.293 9.561,61.211 9.630,84.297 71.456,84.460 71.266,47.874" class="gm-core"></polyline>
+          <polyline points="2.023,20.954 78.925,20.669 79.305,70.511 25.190,70.103 25.259,61.293 9.561,61.211 9.630,84.297 71.456,84.460 71.266,47.874" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:78.354%;top:5.965%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:86.999%;top:28.418%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:71.093%;top:47.486%" aria-hidden="true">3</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Photographer</b><span>Hints at a Red serpent living beneath the frozen lake</span></li>
+        <li><b>Fishing Failure</b><span>Interact to receive the Super Rod.</span></li>
+        <li><b>Ice Puzzle</b><span>Go under the lake to find the Munen kid&#x27;s lost father, who gets choked up and can&#x27;t reel in Red Gyarados Lvl20.  Receive Ultra Balls x5 from him.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">6 — Route 2</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m6-6-route-2.png" alt="Map of 6 — Route 2" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.605,90.376 50.086,64.096 66.961,57.205 43.084,54.747 35.045,31.337 43.257,27.583 38.416,13.744 15.768,20.884" class="gm-casing"></polyline>
+          <polyline points="50.605,90.376 50.086,64.096 66.961,57.205 43.084,54.747 35.045,31.337 43.257,27.583 38.416,13.744 15.768,20.884" class="gm-core"></polyline>
+          <polyline points="50.605,90.376 50.086,64.096 66.961,57.205 43.084,54.747 35.045,31.337 43.257,27.583 38.416,13.744 15.768,20.884" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:46.196%;top:60.562%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:24.499%;top:74.622%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:66.684%;top:54.379%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:80.429%;top:52.833%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Battles</b><span>Several trainers in this area Lvl8-12 pokemon, including a double battle. </span></li>
+        <li><b>Siren Allison</b><span>Return here later to trigger a Boss battle with Siren Allison with her ace, Mega Lopunny Lvl40.</span></li>
+        <li><b>beach shack</b><span>Acquire Item Soft Sand</span></li>
+        <li><b>Board the Yacht</b><span>Return here in the post-game once acquiring the Yacht Key to obtain one of the three Hoenn starters.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">7 — Gym 1</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m7-7-gym-1.png" alt="Map of 7 — Gym 1" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="52.334,97.285 14.298,81.379 14.471,61.917 51.470,61.917 51.262,41.520 22.856,41.614 23.288,25.801 51.193,14.947" class="gm-casing"></polyline>
+          <polyline points="52.334,97.285 14.298,81.379 14.471,61.917 51.470,61.917 51.262,41.520 22.856,41.614 23.288,25.801 51.193,14.947" class="gm-core"></polyline>
+          <polyline points="52.334,97.285 14.298,81.379 14.471,61.917 51.470,61.917 51.262,41.520 22.856,41.614 23.288,25.801 51.193,14.947" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:53.198%;top:12.234%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Gym Leader</b><span>Has Lvl18 Arcanine.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">8 — Sennen Line</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m8-8-sennen-line.png" alt="Map of 8 — Sennen Line" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="18.741,98.035 65.612,77.116 93.275,76.745 93.067,37.647 77.507,37.461 77.438,23.809 42.445,23.717 42.427,17.239" class="gm-casing"></polyline>
+          <polyline points="18.741,98.035 65.612,77.116 93.275,76.745 93.067,37.647 77.507,37.461 77.438,23.809 42.445,23.717 42.427,17.239" class="gm-core"></polyline>
+          <polyline points="18.741,98.035 65.612,77.116 93.275,76.745 93.067,37.647 77.507,37.461 77.438,23.809 42.445,23.717 42.427,17.239" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:92.998%;top:47.886%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:42.393%;top:17.471%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Shinkansen interior</b><span>Before beating the first Gym, enter the Shinkansen and encounter a Team Mutrid Goon. Defeat him, and he&#x27;ll freeze the train gears to stop your progress. Red Fatality will use Arcanine to thaw the train allowing access to the National Park.</span></li>
+        <li><b>To National Park</b><span>Towards the mountain.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — National Park</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m9-9-national-park.png" alt="Map of 9 — National Park" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="38.935,80.256 50.501,80.194 50.086,53.075 58.662,53.012 58.662,35.828 49.810,36.016 50.640,16.270 80.792,14.583 81.898,1.773" class="gm-casing"></polyline>
+          <polyline points="38.935,80.256 50.501,80.194 50.086,53.075 58.662,53.012 58.662,35.828 49.810,36.016 50.640,16.270 80.792,14.583 81.898,1.773" class="gm-core"></polyline>
+          <polyline points="38.935,80.256 50.501,80.194 50.086,53.075 58.662,53.012 58.662,35.828 49.810,36.016 50.640,16.270 80.792,14.583 81.898,1.773" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:42.220%;top:70.883%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:10.667%;top:36.234%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:50.432%;top:39.515%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:69.364%;top:45.451%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:48.703%;top:93.878%" aria-hidden="true">5</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Park Guide</b><span>Cutscene shows the map, most importantly the gravesite, which will be central to the plot later.</span></li>
+        <li><b>Cut</b><span>Receive the HM Cut. Take the west path back to Walnut Woods to earn TMs Rock Smash &amp; Blizzard</span></li>
+        <li><b>Tm</b><span>TM Earthquake</span></li>
+        <li><b>Eevee Trainer</b><span>Spend 10,000 for a Shiny Eevee.</span></li>
+        <li><b>Heavy Metal</b><span>Trade Scyther for one of three random Kanto starters.  Scyther can be found in Torii.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">10 — Pompeii</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m10-10-pompeii.png" alt="Map of 10 — Pompeii" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="72.908,84.124 72.994,40.406 54.236,40.100 54.236,62.520 48.703,60.787 40.232,63.539 40.197,40.141 52.593,19.209 52.023,37.940 28.164,38.266 28.026,12.015 15.249,11.974" class="gm-casing"></polyline>
+          <polyline points="72.908,84.124 72.994,40.406 54.236,40.100 54.236,62.520 48.703,60.787 40.232,63.539 40.197,40.141 52.593,19.209 52.023,37.940 28.164,38.266 28.026,12.015 15.249,11.974" class="gm-core"></polyline>
+          <polyline points="72.908,84.124 72.994,40.406 54.236,40.100 54.236,62.520 48.703,60.787 40.232,63.539 40.197,40.141 52.593,19.209 52.023,37.940 28.164,38.266 28.026,12.015 15.249,11.974" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:85.615%;top:28.483%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:48.530%;top:59.667%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:52.766%;top:18.822%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:34.180%;top:64.578%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:17.842%;top:11.893%" aria-hidden="true">5</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>mountainside hotel</b><span>Healing station.</span></li>
+        <li><b>Save Face</b><span>Speak with Master Gen. Retrieve the Carved Mask from Munen Tunnel to receive his reward, badge 2.</span></li>
+        <li><b>Munen Tunnel</b><span>Boulder clears once Save Face quest is started. </span></li>
+        <li><b>Apprentice&#x27;s House</b><span>The creator of the Carved Mask has left behind his Diary and a Rare Candy. Access after completing Save Face.</span></li>
+        <li><b>Boulder Obstacle</b><span>Clear the boulders with Rock Smash, which can only be used after earning the badge given by Master Gen.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">11 — Munen Tunnel</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m11-11-munen-tunnel.png" alt="Map of 11 — Munen Tunnel" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="87.984,50.833 80.896,18.707 68.620,20.274 61.359,28.110 60.909,44.094 76.815,44.094 93.517,79.628 21.594,88.834 20.038,57.101 9.872,56.787" class="gm-casing"></polyline>
+          <polyline points="87.984,50.833 80.896,18.707 68.620,20.274 61.359,28.110 60.909,44.094 76.815,44.094 93.517,79.628 21.594,88.834 20.038,57.101 9.872,56.787" class="gm-core"></polyline>
+          <polyline points="87.984,50.833 80.896,18.707 68.620,20.274 61.359,28.110 60.909,44.094 76.815,44.094 93.517,79.628 21.594,88.834 20.038,57.101 9.872,56.787" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:8.627%;top:52.791%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:84.440%;top:82.174%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:34.215%;top:10.088%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:34.561%;top:60.235%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Carved Mask</b><span>Defeat all the goons and the leader to retrieve the Carved Mask.</span></li>
+        <li><b>TM</b><span>TM Shadow Ball</span></li>
+        <li><b>TM</b><span>TM Thunderbolt</span></li>
+        <li><b>Northwind Cavern</b><span>The nest of Shadow Suicune.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">12 — Torii</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act1/m12-12-torii.png" alt="Map of 12 — Torii" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="79.046,72.692 33.351,72.931 33.351,0.338" class="gm-casing"></polyline>
+          <polyline points="79.046,72.692 33.351,72.931 33.351,0.338" class="gm-core"></polyline>
+          <polyline points="79.046,72.692 33.351,72.931 33.351,0.338" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:60.114%;top:69.116%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:26.314%;top:47.457%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:21.041%;top:35.469%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:34.440%;top:15.797%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Oracle Returns</b><span>Her final warning not to ascend the mountain is a Ghost type double battle.</span></li>
+        <li><b>Healing</b><span>Defeat the Fighting type trainer and your party will be healed.</span></li>
+        <li><b>Return Post Game</b><span>Come back when Surf is learned to gain access to the area below.</span></li>
+        <li><b>Defeat Draco</b><span>The rematch with Rival Draco features evolved starters and is the final test before the showdown at the summit.</span></li>
+      </ol>
+    </article>
+  </section>
+  <section id="act2" class="wrap section">
+    <div class="kicker" data-reveal>ACT TWO</div>
+    <h2 class="h-sm" data-reveal>Act Two</h2>
+    <p class="act-blurb" data-reveal>The Ashlands, Tradewind, and the Distortion World beneath the park.</p>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">1 — Hotsprings</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-1-1-hotsprings.png" alt="Map of 1 — Hotsprings" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="49.395,33.525 76.539,61.099 76.625,69.453 50.086,97.545" class="gm-casing"></polyline>
+          <polyline points="49.395,33.525 76.539,61.099 76.625,69.453 50.086,97.545" class="gm-core"></polyline>
+          <polyline points="49.395,33.525 76.539,61.099 76.625,69.453 50.086,97.545" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:56.656%;top:68.196%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Fugue State</b><span>After an impossible battle at Star Summit we wake up in a dreamlike state.  Stepping out of the spring will spawn you right back in the center. Use the ladder to exit.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">2 — Ashlands</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-2-2-ashlands.png" alt="Map of 2 — Ashlands" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="86.999,42.164 86.878,65.724 70.003,65.945 77.541,68.078 77.663,51.268 41.027,51.378 41.234,23.790 58.385,23.790 11.705,23.864" class="gm-casing"></polyline>
+          <polyline points="86.999,42.164 86.878,65.724 70.003,65.945 77.541,68.078 77.663,51.268 41.027,51.378 41.234,23.790 58.385,23.790 11.705,23.864" class="gm-core"></polyline>
+          <polyline points="86.999,42.164 86.878,65.724 70.003,65.945 77.541,68.078 77.663,51.268 41.027,51.378 41.234,23.790 58.385,23.790 11.705,23.864" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:69.191%;top:60.924%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:60.460%;top:21.565%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:66.425%;top:59.324%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:21.905%;top:23.367%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Main Quest</b><span>Interact with the man to learn he is Prof. Clarkson&#x27;s father, making him The Oni&#x27;s grandfather.  The first of his 3-stage quest is to retrieve the item (2) to help ease him to his rest.</span></li>
+        <li><b>Quest Item</b><span>Return the quest item to the Grandfather to hear his dying wish.</span></li>
+        <li><b>Catalpa Bow</b><span>He fades to dust, leaving you as the only one capable to fulfill the prophecy.  Enter his home and retrieve the Catalpa Bow.  The Bow allows communication with the dead, and must be brought to the gravesite in National Park to reconnect with Prof. Clarkson (deceased).</span></li>
+        <li><b>To Ashlands Desert</b><span>You can only advance once the Catalpa Bow has been acquired.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">3 — Ashlands Desert</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-3-3-ashlands-desert.png" alt="Map of 3 — Ashlands Desert" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="86.255,28.603 56.276,60.165 37.120,60.257 16.995,8.506 1.452,8.690" class="gm-casing"></polyline>
+          <polyline points="86.255,28.603 56.276,60.165 37.120,60.257 16.995,8.506 1.452,8.690" class="gm-core"></polyline>
+          <polyline points="86.255,28.603 56.276,60.165 37.120,60.257 16.995,8.506 1.452,8.690" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:42.860%;top:59.452%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Mirage</b><span>What appears to be a mirage is actually Shadow Jirachi floating through the desert, foreshadowing The Oni&#x27;s sinister plans with Jirachi&#x27;s power.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">4 — Tradewind Town</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-4-4-tradewind-town.png" alt="Map of 4 — Tradewind Town" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="39.056,1.345 39.229,39.652 43.638,49.517 43.620,64.712 39.333,64.814 39.333,94.127 82.002,93.922 86.013,61.944 96.369,61.816" class="gm-casing"></polyline>
+          <polyline points="39.056,1.345 39.229,39.652 43.638,49.517 43.620,64.712 39.333,64.814 39.333,94.127 82.002,93.922 86.013,61.944 96.369,61.816" class="gm-core"></polyline>
+          <polyline points="39.056,1.345 39.229,39.652 43.638,49.517 43.620,64.712 39.333,64.814 39.333,94.127 82.002,93.922 86.013,61.944 96.369,61.816" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:57.210%;top:22.613%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:30.411%;top:92.180%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:46.490%;top:80.906%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:94.381%;top:57.973%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:53.890%;top:20.947%" aria-hidden="true">5</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Curio Merchant</b><span>Sells Curios for 1,000 / each. After defeating the Tradewind Gym Leader, Curios can be exchanged for their corresponding Mega Stones.</span></li>
+        <li><b>PC / Department Store</b><span>Heal, Box, &amp; 4 floors of wares to purchase.</span></li>
+        <li><b>Tradewind Gym</b><span>Ghost type.  Up to Lvl40.  Recommend moving to the next area then coming back.</span></li>
+        <li><b>Cross the veil</b><span>Silent boatman will take you to and from National Park (annexed).</span></li>
+        <li><b>Apartment Secret</b><span>Enter the hidden staircase behind the bookcase to find an underground lab, awarding Mega Stones for all 3 Kanto starters.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">5 — Tradewind Apartment</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-5-5-tradewind-apartment.png" alt="Map of 5 — Tradewind Apartment" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.571,91.650 73.185,91.650 73.046,28.779 19.796,28.543" class="gm-casing"></polyline>
+          <polyline points="50.571,91.650 73.185,91.650 73.046,28.779 19.796,28.543" class="gm-core"></polyline>
+          <polyline points="50.571,91.650 73.185,91.650 73.046,28.779 19.796,28.543" class="gm-dash"></polyline>
+        </svg>
+      </figure>
+      <p class="gm-none">Route only — no marked stops on this map.</p>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">6 — Dept. Store 1F</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-6a-6-dept-store-1f.png" alt="Map of 6 — Dept. Store 1F" loading="lazy" decoding="async">
+        <span class="gm-pin" style="left:66.632%;top:43.253%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Chansey / Porygon</b><span>Healing / Box Storage</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">6 — Dept. Store 2F</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-6b-6-dept-store-2f.png" alt="Map of 6 — Dept. Store 2F" loading="lazy" decoding="async">
+        <span class="gm-pin" style="left:41.649%;top:38.759%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Waster Ball</b><span>Purchase a &#x27;Master Ball&#x27; for 5,000 from here to discover that it&#x27;s actually &#x27;Waster Ball&#x27; - a complete waste!</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">6 — Dept. Store 3F</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-6c-6-dept-store-3f.png" alt="Map of 6 — Dept. Store 3F" loading="lazy" decoding="async">
+        <span class="gm-pin" style="left:58.766%;top:37.280%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:47.701%;top:36.696%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Paw Vendor</b><span>Purchase the &#x27;Mankey&#x27;s Paw&#x27; - new custom item: &quot;A wish: + to one stat, A curse: -1 to another.&quot;</span></li>
+        <li><b>vendor</b><span>Purchase Evolution Stones, Mints, and other standard items</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">6 — Dept. Store 4F</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-6d-6-dept-store-4f.png" alt="Map of 6 — Dept. Store 4F" loading="lazy" decoding="async">
+        <span class="gm-pin" style="left:52.801%;top:72.901%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:42.168%;top:71.925%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>AM Vendor</b><span>Purchase &#x27;Ability Machines&#x27; to customize a Pokemon&#x27;s ability from one of 20 brand new abilities. Defensive AM&#x27;s/TM&#x27;s</span></li>
+        <li><b>AM Vendor</b><span>Purchase Offensive AM&#x27;s &amp; Offensive TM&#x27;s</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">7 — Tradewind Gym</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-7-7-tradewind-gym.png" alt="Map of 7 — Tradewind Gym" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="32.970,98.328 33.005,80.071 64.817,79.982 64.748,51.221 30.930,51.310 30.861,58.732 11.636,58.688 12.137,39.458 14.886,39.425 14.817,57.738 28.734,57.627 28.994,50.161 53.026,50.117 53.129,29.485 77.057,29.573 77.230,22.780 87.846,22.725 87.777,21.621 67.860,21.621 67.790,18.881 24.775,18.970 24.758,15.380" class="gm-casing"></polyline>
+          <polyline points="32.970,98.328 33.005,80.071 64.817,79.982 64.748,51.221 30.930,51.310 30.861,58.732 11.636,58.688 12.137,39.458 14.886,39.425 14.817,57.738 28.734,57.627 28.994,50.161 53.026,50.117 53.129,29.485 77.057,29.573 77.230,22.780 87.846,22.725 87.777,21.621 67.860,21.621 67.790,18.881 24.775,18.970 24.758,15.380" class="gm-core"></polyline>
+          <polyline points="32.970,98.328 33.005,80.071 64.817,79.982 64.748,51.221 30.930,51.310 30.861,58.732 11.636,58.688 12.137,39.458 14.886,39.425 14.817,57.738 28.734,57.627 28.994,50.161 53.026,50.117 53.129,29.485 77.057,29.573 77.230,22.780 87.846,22.725 87.777,21.621 67.860,21.621 67.790,18.881 24.775,18.970 24.758,15.380" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:27.265%;top:11.956%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Madame Tsuji</b><span>Mega Sableye Lvl40.  Awards the Lantern badge &amp; Mega Ring.  Enables the Curio Exchange.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">8 — National Park (Annexed)</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-8-8-national-park-annexed.png" alt="Map of 8 — National Park (Annexed)" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="23.461,35.526 52.991,35.570 53.544,16.155 72.908,16.110 72.822,10.831" class="gm-casing"></polyline>
+          <polyline points="23.461,35.526 52.991,35.570 53.544,16.155 72.908,16.110 72.822,10.831" class="gm-core"></polyline>
+          <polyline points="23.461,35.526 52.991,35.570 53.544,16.155 72.908,16.110 72.822,10.831" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:72.303%;top:9.575%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:40.750%;top:82.356%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:70.920%;top:11.305%" aria-hidden="true">3</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Gravesite</b><span>Play the Catalpa Bow at the gravesite to enter the Distortion World, and complete this quest.</span></li>
+        <li><b>No escape</b><span>You cannot exit this map. All exit points are guarded by Mutrid Officers.</span></li>
+        <li><b>The 4th Badge</b><span>Use the Catalpa Bow to travel deeper and deeper to obtain, the Distortion Badge. Use the Bow again to Teleport home to Clarkson&#x27;s Lab.  This is the point of no return, so collect what you&#x27;ll need from the area.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — Distortion World</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-9-9-distortion-world.png" alt="Map of 9 — Distortion World" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="46.888,80.770 46.767,65.828 43.430,65.885 43.517,55.446 29.893,55.523 30.031,37.833" class="gm-casing"></polyline>
+          <polyline points="46.888,80.770 46.767,65.828 43.430,65.885 43.517,55.446 29.893,55.523 30.031,37.833" class="gm-core"></polyline>
+          <polyline points="46.888,80.770 46.767,65.828 43.430,65.885 43.517,55.446 29.893,55.523 30.031,37.833" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:30.204%;top:33.730%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Gengar</b><span>Prof. Clarkson (deceased) has taken the form of Gengar and joins your party (or box if full).  This interaction collapses the Distortion World.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — Distortion World L1</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-9l1-9-distortion-world-l1.png" alt="Map of 9 — Distortion World L1" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="46.974,83.124 47.389,68.629 43.862,68.669 43.793,57.537 29.893,57.694 29.547,43.062 70.488,42.904 69.882,58.048 77.265,58.009 79.478,44.320 79.737,13.207" class="gm-casing"></polyline>
+          <polyline points="46.974,83.124 47.389,68.629 43.862,68.669 43.793,57.537 29.893,57.694 29.547,43.062 70.488,42.904 69.882,58.048 77.265,58.009 79.478,44.320 79.737,13.207" class="gm-core"></polyline>
+          <polyline points="46.974,83.124 47.389,68.629 43.862,68.669 43.793,57.537 29.893,57.694 29.547,43.062 70.488,42.904 69.882,58.048 77.265,58.009 79.478,44.320 79.737,13.207" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:79.651%;top:31.792%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:74.464%;top:76.732%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Stepping Stone</b><span>Re-entering the Distortion World takes us here, where a floating stepping stone has appeared.  Jump across it to enter the cave.</span></li>
+        <li><b>Rare Candy</b><span>Item - Rare Candy</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — Distortion World L2</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-9l2-9-distortion-world-l2.png" alt="Map of 9 — Distortion World L2" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="51.815,71.760 51.746,75.632 41.096,75.575 41.165,69.141 26.746,69.269 26.487,57.526 26.660,51.619 26.573,45.926 26.642,36.517 19.139,36.602 19.312,25.215 33.835,24.931" class="gm-casing"></polyline>
+          <polyline points="51.815,71.760 51.746,75.632 41.096,75.575 41.165,69.141 26.746,69.269 26.487,57.526 26.660,51.619 26.573,45.926 26.642,36.517 19.139,36.602 19.312,25.215 33.835,24.931" class="gm-core"></polyline>
+          <polyline points="51.815,71.760 51.746,75.632 41.096,75.575 41.165,69.141 26.746,69.269 26.487,57.526 26.660,51.619 26.573,45.926 26.642,36.517 19.139,36.602 19.312,25.215 33.835,24.931" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:65.819%;top:34.752%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:71.179%;top:23.365%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:32.019%;top:15.963%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:34.267%;top:25.713%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Item</b><span>Item - Max Revive</span></li>
+        <li><b>Mega Stone</b><span>Your starter&#x27;s Mega Stone. If you picked Axew, it&#x27;s Gyaradosite.</span></li>
+        <li><b>TM</b><span>TM26 - Earthquake</span></li>
+        <li><b>Rift Shard</b><span>Obtain this to collapse the Distortion World and gain passage to the next layer.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — Distortion World L3</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-9l3-9-distortion-world-l3.png" alt="Map of 9 — Distortion World L3" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="20.003,10.556 20.003,28.198 6.691,28.487 6.691,33.692 6.725,43.448 24.499,43.429 24.499,45.839 33.212,45.762 33.143,42.851 40.750,42.754 40.820,46.379 59.492,45.993 59.423,39.766" class="gm-casing"></polyline>
+          <polyline points="20.003,10.556 20.003,28.198 6.691,28.487 6.691,33.692 6.725,43.448 24.499,43.429 24.499,45.839 33.212,45.762 33.143,42.851 40.750,42.754 40.820,46.379 59.492,45.993 59.423,39.766" class="gm-core"></polyline>
+          <polyline points="20.003,10.556 20.003,28.198 6.691,28.487 6.691,33.692 6.725,43.448 24.499,43.429 24.499,45.839 33.212,45.762 33.143,42.851 40.750,42.754 40.820,46.379 59.492,45.993 59.423,39.766" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:80.342%;top:10.460%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:33.057%;top:74.567%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:63.140%;top:38.050%" aria-hidden="true">3</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Mega stone</b><span>Baxcalibrite</span></li>
+        <li><b>TM</b><span>TM25 Thunder</span></li>
+        <li><b>Rift Core</b><span>Grab this to collapse the Distortion World and go even deeper into the realm on your next run.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — Distortion World L4</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-9l4-9-distortion-world-l4.png" alt="Map of 9 — Distortion World L4" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="43.430,63.788 43.447,67.699 54.927,67.420 54.927,43.361 37.552,43.535 37.707,29.009 72.770,28.660 72.424,6.731" class="gm-casing"></polyline>
+          <polyline points="43.430,63.788 43.447,67.699 54.927,67.420 54.927,43.361 37.552,43.535 37.707,29.009 72.770,28.660 72.424,6.731" class="gm-core"></polyline>
+          <polyline points="43.430,63.788 43.447,67.699 54.927,67.420 54.927,43.361 37.552,43.535 37.707,29.009 72.770,28.660 72.424,6.731" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:21.387%;top:87.795%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:79.564%;top:54.622%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:93.914%;top:15.862%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:82.503%;top:3.553%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Item</b><span>PP Up</span></li>
+        <li><b>Item</b><span>Full Restore</span></li>
+        <li><b>Mega Stone</b><span>Garchompite</span></li>
+        <li><b>Rift Heart</b><span>Defeat Vesper to earn, the Distortion Badge, badge 4. </span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">10 — Munen Lab (Annexed)</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-10-10-munen-lab-annexed.png" alt="Map of 10 — Munen Lab (Annexed)" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.692,95.725 50.432,17.385" class="gm-casing"></polyline>
+          <polyline points="50.692,95.725 50.432,17.385" class="gm-core"></polyline>
+          <polyline points="50.692,95.725 50.432,17.385" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:50.000%;top:11.302%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Research</b><span>Defeat Draco, then pick up Prof. Clarkson&#x27;s research on Shadow Pokemon and Celebi&#x27;s Purification ability.  Choose whether to Keep or Destroy it.  Keeping it allows you to Destroy it from the bag later.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">11 — Munen Village (Annexed)</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-11-11-munen-village-annexed.png" alt="Map of 11 — Munen Village (Annexed)" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="85.131,67.345 85.131,82.011 64.990,82.449 64.817,92.968 39.678,93.238 39.748,66.839 16.719,67.345 16.580,48.128" class="gm-casing"></polyline>
+          <polyline points="85.131,67.345 85.131,82.011 64.990,82.449 64.817,92.968 39.678,93.238 39.748,66.839 16.719,67.345 16.580,48.128" class="gm-core"></polyline>
+          <polyline points="85.131,67.345 85.131,82.011 64.990,82.449 64.817,92.968 39.678,93.238 39.748,66.839 16.719,67.345 16.580,48.128" class="gm-dash"></polyline>
+        </svg>
+      </figure>
+      <p class="gm-none">Route only — no marked stops on this map.</p>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">12 — Rebel Base</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-12-12-rebel-base.png" alt="Map of 12 — Rebel Base" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="52.853,91.478 51.262,64.863 46.283,61.243 50.432,61.243 56.051,61.757 61.324,61.243 54.651,65.603 53.198,94.152" class="gm-casing"></polyline>
+          <polyline points="52.853,91.478 51.262,64.863 46.283,61.243 50.432,61.243 56.051,61.757 61.324,61.243 54.651,65.603 53.198,94.152" class="gm-core"></polyline>
+          <polyline points="52.853,91.478 51.262,64.863 46.283,61.243 50.432,61.243 56.051,61.757 61.324,61.243 54.651,65.603 53.198,94.152" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:45.539%;top:57.540%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:46.369%;top:65.459%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Minister</b><span>He gives you the Shinkansen Key - you&#x27;ll need it to board the train to Shin-Tokyo.</span></li>
+        <li><b>The Battle for Sennen</b><span>The plan is to take a Final Stand at the train station and fight back against the Mutrid Officers, while creating a distraction for you to board the train.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">13 — Sennen (Annexed)</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-13-13-sennen-annexed.png" alt="Map of 13 — Sennen (Annexed)" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="47.493,95.997 47.701,82.942 58.074,58.137 58.247,36.106" class="gm-casing"></polyline>
+          <polyline points="47.493,95.997 47.701,82.942 58.074,58.137 58.247,36.106" class="gm-core"></polyline>
+          <polyline points="47.493,95.997 47.701,82.942 58.074,58.137 58.247,36.106" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:47.095%;top:81.391%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:58.074%;top:35.834%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Face the Apprentice</b><span>Master Gen&#x27;s former student, Ryoko has turned to the darkside and he stands between us and Shin-Tokyo. Close his storyline.</span></li>
+        <li><b>Boss Fight</b><span>General Edwards deploys from a fighter jet straight down to the ground and flashes his Boss card.  Defeat his Mega Tyranitar to board the Shinkansen.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">14 — Shinkansen Interior (Annexed)</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act2/a2-14-14-shinkansen-interior-annexed.png" alt="Map of 14 — Shinkansen Interior (Annexed)" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="61.100,95.037 60.927,51.872 89.886,51.872 89.886,76.888" class="gm-casing"></polyline>
+          <polyline points="61.100,95.037 60.927,51.872 89.886,51.872 89.886,76.888" class="gm-core"></polyline>
+          <polyline points="61.100,95.037 60.927,51.872 89.886,51.872 89.886,76.888" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:89.972%;top:77.133%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The next station is</b><span>Shin-Tokyo.  Fade to black, Act III: The Infiltration.</span></li>
+      </ol>
+    </article>
+  </section>
+  <section id="act3" class="wrap section">
+    <div class="kicker" data-reveal>ACT THREE</div>
+    <h2 class="h-sm" data-reveal>Act Three</h2>
+    <p class="act-blurb" data-reveal>Shin-Tokyo, the islands, and the climb up Mutrid Tower.</p>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">1 — Shin-Tokyo Station</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-1-1-shin-tokyo-station.png" alt="Map of 1 — Shin-Tokyo Station" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="62.137,40.881 62.154,53.746 50.536,53.746 50.380,97.061" class="gm-casing"></polyline>
+          <polyline points="62.137,40.881 62.154,53.746 50.536,53.746 50.380,97.061" class="gm-core"></polyline>
+          <polyline points="62.137,40.881 62.154,53.746 50.536,53.746 50.380,97.061" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:37.932%;top:40.046%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>No escape</b><span>Cannot return to prior areas via train.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">2 — Shin-Tokyo</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-2-2-shin-tokyo.png" alt="Map of 2 — Shin-Tokyo" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="36.203,32.764 33.178,32.641 33.351,41.032 28.683,41.106 28.683,71.513 18.828,71.513 36.981,78.424 36.981,73.241 37.050,82.669" class="gm-casing"></polyline>
+          <polyline points="36.203,32.764 33.178,32.641 33.351,41.032 28.683,41.106 28.683,71.513 18.828,71.513 36.981,78.424 36.981,73.241 37.050,82.669" class="gm-core"></polyline>
+          <polyline points="36.203,32.764 33.178,32.641 33.351,41.032 28.683,41.106 28.683,71.513 18.828,71.513 36.981,78.424 36.981,73.241 37.050,82.669" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:18.655%;top:71.513%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:36.601%;top:72.501%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:37.293%;top:82.620%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:18.793%;top:12.649%" aria-hidden="true">4</span>
+        <span class="gm-pin" style="left:17.410%;top:39.527%" aria-hidden="true">5</span>
+        <span class="gm-pin" style="left:33.143%;top:40.020%" aria-hidden="true">6</span>
+        <span class="gm-pin" style="left:37.552%;top:98.021%" aria-hidden="true">7</span>
+        <span class="gm-pin" style="left:9.803%;top:69.761%" aria-hidden="true">8</span>
+        <span class="gm-pin" style="left:94.865%;top:63.591%" aria-hidden="true">9</span>
+        <span class="gm-pin" style="left:49.222%;top:52.855%" aria-hidden="true">10</span>
+        <span class="gm-pin" style="left:59.077%;top:62.357%" aria-hidden="true">11</span>
+        <span class="gm-pin" style="left:44.554%;top:75.931%" aria-hidden="true">12</span>
+        <span class="gm-pin" style="left:62.794%;top:75.931%" aria-hidden="true">13</span>
+        <span class="gm-pin" style="left:76.366%;top:36.071%" aria-hidden="true">14</span>
+        <span class="gm-pin" style="left:75.328%;top:69.662%" aria-hidden="true">15</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Quest Trigger</b><span>Receive a call from The Minister. Mikmanc has been captured.</span></li>
+        <li><b>Quest Update</b><span>The guards leave the site and leave the jail entrance open for you to enter.</span></li>
+        <li><b>Captured</b><span>Post-jailbreak you are surrounded by Mutrid Goons and The Oni himself escorts you personally.</span></li>
+        <li><b>Rebel Hideout</b><span>Nessa and Zoroark reveal their disguise as The Oni and take you to their Rebel HQ. This is your home base for Act III and you will respawn here.</span></li>
+        <li><b>Harness Darkness</b><span>You are Wanted for treason against The Oni for breaking out Mikmanc.  Mutrid Officers will challenge you to battle using Shadow Pokemon.  Capture one using the Snag Machine.</span></li>
+        <li><b>The Shadow Research</b><span>The pool of Shadow species varies depending on if you Kept or Destroyed the Research.  If the Research was taken upon entry to Shin-Tokyo, The Oni has accelerated Shadow production and Pokemon found will be much stronger.</span></li>
+        <li><b>Tides Run Low</b><span>After Quest: Jailbreak is completed, the areas around Shin-Tokyo are unlocked.  Surf south to find Celebi Island and purify the Shadow Pokemon you&#x27;ve caught.</span></li>
+        <li><b>The Tower</b><span>The Tower is the &quot;Elite Four&quot;.  The door is locked until you purify a Shadow Pokemon.</span></li>
+        <li><b>The docks</b><span>The Minister remains at the docks and gives the reward for Jailbreaker.  He also runs the Mega Stone exchange. 10,000 for the stone of your lead Pokemon.</span></li>
+        <li><b>Tokyo Underground</b><span>Underground gym in Shin-Tokyo. Earn the 5th badge here.</span></li>
+        <li><b>Street Vendors</b><span>Purchase items from Tradewind Dept. Store: Ability Machines (AMs), Paws, and every type of Poke Ball including Snag Balls.  You can snag Shadows once the Snag Machine is obtained in the Jail, but Snag Balls have increased Shadow catch rates.</span></li>
+        <li><b>Casino</b><span>Standard gambling games with custom prizes. Coin Case can be found in a trash can here.</span></li>
+        <li><b>East Entrance</b><span>Enter the station from here. Quick access back to West entrance.</span></li>
+        <li><b>PC</b><span>Standard Pokemon Center.</span></li>
+        <li><b>Armored Mewtwo</b><span>After the credits roll, you get a call to meet Draco by the docks. He waits here with Armored Mewtwo as a reward for defeating him.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">3 — Shin-Tokyo Jail</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-3-3-shin-tokyo-jail.png" alt="Map of 3 — Shin-Tokyo Jail" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="51.677,97.753 51.850,91.999 26.608,92.164 26.677,37.262 52.196,37.344 52.127,9.482 60.149,9.482 60.356,23.208 68.309,23.290 68.309,7.757 13.676,7.674 13.900,44.125 9.837,53.371 10.010,92.308 14.229,92.246 14.073,97.547" class="gm-casing"></polyline>
+          <polyline points="51.677,97.753 51.850,91.999 26.608,92.164 26.677,37.262 52.196,37.344 52.127,9.482 60.149,9.482 60.356,23.208 68.309,23.290 68.309,7.757 13.676,7.674 13.900,44.125 9.837,53.371 10.010,92.308 14.229,92.246 14.073,97.547" class="gm-core"></polyline>
+          <polyline points="51.677,97.753 51.850,91.999 26.608,92.164 26.677,37.262 52.196,37.344 52.127,9.482 60.149,9.482 60.356,23.208 68.309,23.290 68.309,7.757 13.676,7.674 13.900,44.125 9.837,53.371 10.010,92.308 14.229,92.246 14.073,97.547" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:51.763%;top:97.342%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:64.263%;top:20.393%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:83.887%;top:17.516%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:14.125%;top:97.136%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Stealth</b><span>Make your way to the cells to break out Mikmanc with the lights out.  Tip: if you wear the Carved Mask, the first 3 Mutrid Officers won&#x27;t challenge you to battle.</span></li>
+        <li><b>Rescue Mikmanc</b><span>The character from Gym 1 returns, and rescuing him rewards, The Snag Machine, giving the ability to catch Shadow Pokemon.</span></li>
+        <li><b>Item</b><span>Break out the other prisoner to receive Quick Claw.</span></li>
+        <li><b>escort Mikmanc</b><span>Escape out the West exit, facing two Shadow trainers on your way out.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">4 — Rebel Hideout</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-4-4-rebel-hideout.png" alt="Map of 4 — Rebel Hideout" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.086,96.042 26.435,42.233 3.752,42.211 3.821,2.367 96.836,2.454 96.836,9.285" class="gm-casing"></polyline>
+          <polyline points="50.086,96.042 26.435,42.233 3.752,42.211 3.821,2.367 96.836,2.454 96.836,9.285" class="gm-core"></polyline>
+          <polyline points="50.086,96.042 26.435,42.233 3.752,42.211 3.821,2.367 96.836,2.454 96.836,9.285" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:52.109%;top:62.965%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:86.999%;top:42.211%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:25.363%;top:71.937%" aria-hidden="true">3</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Nessa</b><span>This is your Home Base in Shin-Tokyo.  Nessa and Zoroark, disguised as The Oni reveals their true form.</span></li>
+        <li><b>Chansey / Porygon</b><span>Heal &amp; box</span></li>
+        <li><b>Prof. Assistant</b><span>He worked for The Oni and tells details about the Shadow Generator he was building to brainwash Pokemon and people.  Show him a Purified Pokemon to redeem this Quest. Then show him 5 in total.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">5 — Surf Route 1</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-5-5-surf-route-1.png" alt="Map of 5 — Surf Route 1" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="27.213,2.564 35.858,61.461 99.308,60.875" class="gm-casing"></polyline>
+          <polyline points="27.213,2.564 35.858,61.461 99.308,60.875" class="gm-core"></polyline>
+          <polyline points="27.213,2.564 35.858,61.461 99.308,60.875" class="gm-dash"></polyline>
+        </svg>
+      </figure>
+      <p class="gm-none">Route only — no marked stops on this map.</p>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">6 — Celebi Island</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-6-6-celebi-island.png" alt="Map of 6 — Celebi Island" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="14.990,98.442 22.286,72.338 45.591,72.126 49.741,72.478 54.236,72.214 71.006,71.774 71.041,50.440 81.293,50.387 81.293,27.064 61.151,31.200 60.667,56.214 49.257,56.495 49.568,45.547" class="gm-casing"></polyline>
+          <polyline points="14.990,98.442 22.286,72.338 45.591,72.126 49.741,72.478 54.236,72.214 71.006,71.774 71.041,50.440 81.293,50.387 81.293,27.064 61.151,31.200 60.667,56.214 49.257,56.495 49.568,45.547" class="gm-core"></polyline>
+          <polyline points="14.990,98.442 22.286,72.338 45.591,72.126 49.741,72.478 54.236,72.214 71.006,71.774 71.041,50.440 81.293,50.387 81.293,27.064 61.151,31.200 60.667,56.214 49.257,56.495 49.568,45.547" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:45.591%;top:72.214%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:49.481%;top:56.143%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:49.654%;top:39.861%" aria-hidden="true">3</span>
+        <span class="gm-pin" style="left:50.346%;top:1.399%" aria-hidden="true">4</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The keepers</b><span>Defeat the three trainers to unlock access to Celebi&#x27;s Purification Chamber.</span></li>
+        <li><b>The guardians</b><span>Azelf, Uxie &amp; Mesprit guard the chamber until they deem you worthy by defeating The Keepers.</span></li>
+        <li><b>celebi</b><span>Unlocking allows you to present any Shadow Pokemon in your party to Celebi.  To Purify, you must first &quot;open their heart&quot; by bringing them into battle. Their shadow icon will turn purple when they are ready to purify.</span></li>
+        <li><b>to prototype island</b><span>Surf North to reach Prototype Island. The &#x27;Archipelago Map&#x27; outlines the locations of the 3 islands.  Once received, open Region Map &gt; Press R.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">7a — Prototype Island</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-7a-7a-prototype-island.png" alt="Map of 7a — Prototype Island" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="52.784,97.497 52.576,3.828" class="gm-casing"></polyline>
+          <polyline points="52.784,97.497 52.576,3.828" class="gm-core"></polyline>
+          <polyline points="52.784,97.497 52.576,3.828" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:21.732%;top:36.528%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:52.593%;top:3.425%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>To Prototype Lab</b><span>Go downstairs to The Oni&#x27;s original Lab where the failed prototype for the Shadow Generator still remains.</span></li>
+        <li><b>To Ryuden Island</b><span>Surf north to reach Ryuden Island</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">7b — Prototype Lab</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-7b-7b-prototype-lab.png" alt="Map of 7b — Prototype Lab" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="53.804,5.795 16.632,90.525 53.631,90.453" class="gm-casing"></polyline>
+          <polyline points="53.804,5.795 16.632,90.525 53.631,90.453" class="gm-core"></polyline>
+          <polyline points="53.804,5.795 16.632,90.525 53.631,90.453" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:53.285%;top:85.485%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Shadow Deoxys</b><span>Battle Shadow Deoxys Lvl50. Run from battle or KO, and it stays here until captured.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">8 — Surf Route 2</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-8-8-surf-route-2.png" alt="Map of 8 — Surf Route 2" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="98.444,39.481 39.402,69.741 14.851,4.334" class="gm-casing"></polyline>
+          <polyline points="98.444,39.481 39.402,69.741 14.851,4.334" class="gm-core"></polyline>
+          <polyline points="98.444,39.481 39.402,69.741 14.851,4.334" class="gm-dash"></polyline>
+        </svg>
+      </figure>
+      <p class="gm-none">Route only — no marked stops on this map.</p>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">9 — Ryuden Island</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-9-9-ryuden-island.png" alt="Map of 9 — Ryuden Island" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="71.525,96.402 56.224,76.241 56.034,34.465" class="gm-casing"></polyline>
+          <polyline points="71.525,96.402 56.224,76.241 56.034,34.465" class="gm-core"></polyline>
+          <polyline points="71.525,96.402 56.224,76.241 56.034,34.465" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:55.965%;top:33.920%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:58.212%;top:29.289%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Dragon keepers</b><span>Interact with the eggs to initiate a challenging double battle featuring high level Dragon-type Pokemon.</span></li>
+        <li><b>Reward</b><span>Defeat the Dragon Keepers to earn an egg containing one of 12 random dragons.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">10 — Shin-Tokyo Underground</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-10-10-shin-tokyo-underground.png" alt="Map of 10 — Shin-Tokyo Underground" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="12.950,5.385 12.846,46.945 23.081,46.803 23.012,66.577" class="gm-casing"></polyline>
+          <polyline points="12.950,5.385 12.846,46.945 23.081,46.803 23.012,66.577" class="gm-core"></polyline>
+          <polyline points="12.950,5.385 12.846,46.945 23.081,46.803 23.012,66.577" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:27.213%;top:44.932%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:22.718%;top:66.824%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Announcer</b><span>Speak to the announcer to enter into the Gauntlet consisting of back to back battles without healing breaks. </span></li>
+        <li><b>Gym 5</b><span>Step onto the platform to initiate the Gauntlet. Three battles including Leader Raiden, and his Lvl50 Electric types. </span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">11 — Tokyo Tower Street</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-11-11-tokyo-tower-street.png" alt="Map of 11 — Tokyo Tower Street" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="49.395,95.022 49.654,17.719" class="gm-casing"></polyline>
+          <polyline points="49.395,95.022 49.654,17.719" class="gm-core"></polyline>
+          <polyline points="49.395,95.022 49.654,17.719" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:49.395%;top:44.146%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Street Level</b><span>White Tiger (Byakko): Incineroar, Chien Pao, Mega Absol, Landorus Therian, Meowscarada, Shadow Raikou</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">12 — Tokyo Tower Mid</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-12-12-tokyo-tower-mid.png" alt="Map of 12 — Tokyo Tower Mid" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.086,95.631 50.086,15.005" class="gm-casing"></polyline>
+          <polyline points="50.086,95.631 50.086,15.005" class="gm-core"></polyline>
+          <polyline points="50.086,95.631 50.086,15.005" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:49.914%;top:35.321%" aria-hidden="true">1</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Tower Mid</b><span>Vermillion Bird (Suzaku): Talonflame, Mega Altaria, Fezandipiti, Blaziken, Galarian Moltres, Shadow Ho-Oh</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">13 — Tower Command</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-13-13-tower-command.png" alt="Map of 13 — Tower Command" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.086,97.565 50.086,32.061" class="gm-casing"></polyline>
+          <polyline points="50.086,97.565 50.086,32.061" class="gm-core"></polyline>
+          <polyline points="50.086,97.565 50.086,32.061" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:49.741%;top:46.638%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:53.198%;top:45.531%" aria-hidden="true">2</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Tower Command</b><span>Azure Dragon (Seiryu): Mega Gyarados, Dragonaire (With Eviolite), Dragapult, Walking Wake, Latios, Miraidon</span></li>
+        <li><b>Final Badge</b><span>Defeat the commander to receive, the Tower badge, and the Master Ball.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">14 — Tower Final Boss</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-14-14-tower-final-boss.png" alt="Map of 14 — Tower Final Boss" loading="lazy" decoding="async">
+        <svg class="gm-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <polyline points="50.086,90.293 50.086,66.865" class="gm-casing"></polyline>
+          <polyline points="50.086,90.293 50.086,66.865" class="gm-core"></polyline>
+          <polyline points="50.086,90.293 50.086,66.865" class="gm-dash"></polyline>
+        </svg>
+        <span class="gm-pin" style="left:53.544%;top:46.326%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:45.764%;top:42.670%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:51.815%;top:21.261%" aria-hidden="true">3</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>The Oni</b><span>The final encounter of the Main Story and first time seeing The Oni since he KO&#x27;d the Professor on Star Summit.  Defeat him and Destroy the Shadow Generator.</span></li>
+        <li><b>Shadow Jirachi</b><span>After The Oni dolphin-dives off the tower into his plane, Shadow Jirachi is the only thing keeping the Shadow Generator running.  Capture it to destroy the machine. Catch rate is low, recommend Master ball.</span></li>
+        <li><b>The Shadow Generator</b><span>The machine used to corrupt Pokemon explodes and all trapped Shadow Legendary Pokemon are scattered across the region.</span></li>
+      </ol>
+    </article>
+    <article class="gm" data-reveal>
+      <h3 class="gm-title">15 — Post Game Base</h3>
+      <figure class="gm-fig">
+        <img src="assets/guide/act3/a3-15-15-post-game-base.png" alt="Map of 15 — Post Game Base" loading="lazy" decoding="async">
+        <span class="gm-pin" style="left:76.746%;top:38.160%" aria-hidden="true">1</span>
+        <span class="gm-pin" style="left:57.780%;top:16.739%" aria-hidden="true">2</span>
+        <span class="gm-pin" style="left:50.605%;top:96.072%" aria-hidden="true">3</span>
+      </figure>
+      <ol class="gm-stops">
+        <li><b>Post-Game</b><span>After the credits roll, continuing the story brings you back to the Rebel Hideout, along with some familiar faces from throughout the game.</span></li>
+        <li><b>PJ</b><span>As a reward, Nessa gives the Private Jet, and essentially, HM Fly, to navigate to any visited area of the region.</span></li>
+        <li><b>What now</b><span>Finish the plot with Rival Draco, Sail from Shin-Tokyo to the Battle Frontier, Complete the Shadow Log.</span></li>
+      </ol>
+    </article>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span class="foot-brand">Wishes of Tomorrow &middot; a Flatfoot Games release</span>
+  <a href="index.html">Wishes of Tomorrow</a>
+  <a href="labs.html">Flatfoot Labs</a>
+  <a href="https://github.com/jmaloney95/Wishes-Game">GitHub</a>
+  <a href="#top">Back to top</a>
+</footer>
+
+<script src="assets/site.js?v=20260909a" defer></script>
+</body>
+</html>
