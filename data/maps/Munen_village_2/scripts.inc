@@ -124,22 +124,26 @@ Munen_village_2_EventScript_IceTyrunt::
 	faceplayer
 	setvar VAR_0x8004, 0
 	special WotSetStarterSpecies
-	showmonpic VAR_0x8005, 10, 3
+	special WotGetStarterShiny
+	showmonpic VAR_0x8005, 10, 3, isShiny=VAR_0x8006
 	msgbox MunenText_IceTyrunt, MSGBOX_YESNO
 	hidemonpic
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 1
 	setvar VAR_STARTER_MON, 0
+	@ Re-read the roll so VAR_0x8007 is still the ShinyMode the portrait
+	@ above was drawn with; both give paths below read it.
+	special WotGetStarterShiny
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_GIBLE and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceTyruntRandom
-	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_DRAGON_BREATH, move4=MOVE_THOUSAND_ARROWS
+	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_DRAGON_BREATH, move4=MOVE_THOUSAND_ARROWS, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, SPECIES_GIBLE
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_GiveIceTyruntRandom::
-	givemon VAR_0x8005, 5
+	givemon VAR_0x8005, 5, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, VAR_0x8005
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -148,22 +152,26 @@ Munen_village_2_EventScript_IceAmaura::
 	faceplayer
 	setvar VAR_0x8004, 1
 	special WotSetStarterSpecies
-	showmonpic VAR_0x8005, 10, 3
+	special WotGetStarterShiny
+	showmonpic VAR_0x8005, 10, 3, isShiny=VAR_0x8006
 	msgbox MunenText_IceAmaura, MSGBOX_YESNO
 	hidemonpic
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 2
 	setvar VAR_STARTER_MON, 1
+	@ Re-read the roll so VAR_0x8007 is still the ShinyMode the portrait
+	@ above was drawn with; both give paths below read it.
+	special WotGetStarterShiny
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_FRIGIBAX and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceAmauraRandom
-	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_GLACIATE
+	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_GLACIATE, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, SPECIES_FRIGIBAX
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_GiveIceAmauraRandom::
-	givemon VAR_0x8005, 5
+	givemon VAR_0x8005, 5, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, VAR_0x8005
 	goto Munen_village_2_EventScript_StarterReceived
 
@@ -172,22 +180,26 @@ Munen_village_2_EventScript_IceAnorith::
 	faceplayer
 	setvar VAR_0x8004, 2
 	special WotSetStarterSpecies
-	showmonpic VAR_0x8005, 10, 3
+	special WotGetStarterShiny
+	showmonpic VAR_0x8005, 10, 3, isShiny=VAR_0x8006
 	msgbox MunenText_IceAnorith, MSGBOX_YESNO
 	hidemonpic
 	compare VAR_RESULT, NO
 	goto_if_eq Munen_village_2_EventScript_StarterRefuse
 	setvar VAR_STARTER_CHOICE, 3
 	setvar VAR_STARTER_MON, 2
+	@ Re-read the roll so VAR_0x8007 is still the ShinyMode the portrait
+	@ above was drawn with; both give paths below read it.
+	special WotGetStarterShiny
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_AXEW and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, Munen_village_2_EventScript_GiveIceAnorithRandom
-	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_DRAGON_DARTS
+	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_DRAGON_DARTS, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, SPECIES_AXEW
 	goto Munen_village_2_EventScript_StarterReceived
 
 Munen_village_2_EventScript_GiveIceAnorithRandom::
-	givemon VAR_0x8005, 5
+	givemon VAR_0x8005, 5, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, VAR_0x8005
 	goto Munen_village_2_EventScript_StarterReceived
 

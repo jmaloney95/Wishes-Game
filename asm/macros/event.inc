@@ -999,11 +999,14 @@
 	.endm
 
 	@ Displays a box containing the front sprite for the specified Pokemon species.
-	.macro showmonpic species:req, x:req, y:req
+	@ isShiny may be a var, so a script can decide shininess at runtime; it is
+	@ always emitted, since the command reads a fixed-width operand list.
+	.macro showmonpic species:req, x:req, y:req, isShiny=0
 	.byte SCR_OP_SHOWMONPIC
 	.2byte \species
 	.byte \x
 	.byte \y
+	.2byte \isShiny
 	.endm
 
 	@ Hides the box displayed by showmonpic.

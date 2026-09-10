@@ -31,6 +31,7 @@
 #include "menu.h"
 #include "fldeff_misc.h"
 #include "trainer_pokemon_sprites.h"
+#include "wot_shadow_art.h"
 #include "data.h"
 #include "confetti_util.h"
 #include "constants/rgb.h"
@@ -87,6 +88,7 @@ static void Task_HofPC_ExitOnButtonPress(u8 taskId);
 static void SpriteCB_GetOnScreenAndAnimate(struct Sprite *sprite);
 static void HallOfFame_PrintMonInfo(struct HallofFameMon *currMon, u8 unused1, u8 unused2);
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2);
+static void WotHofApplyShadowArt(const struct HallofFameMon *currMon, u16 spriteId, u8 paletteSlot);
 static void HallOfFame_PrintPlayerInfo(u8 unused1, u8 unused2);
 static void Task_DoDomeConfetti(u8 taskId);
 static void SpriteCB_HofConfetti(struct Sprite *sprite);
@@ -133,6 +135,11 @@ static const struct WindowTemplate sHof_WindowTemplate = {
 };
 
 static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHITE, TEXT_COLOR_DARK_GRAY};
+
+// WoT: the only place the build number appears in the ROM. BUMP AT RELEASE.
+// It has to be a literal here rather than a #define in a header, because
+// _() is expanded by tools/preproc over the .c file, not by the C compiler.
+static const u8 sText_WotHofVersion[] = _("WISHES OF TOMORROW  v1.2.3");
 static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
 
@@ -325,6 +332,7 @@ static const struct HallofFameMon sDummyFameMon =
     .isShiny = FALSE,
     .species = SPECIES_NONE,
     .lvl = 0,
+    .isShadow = FALSE,
     .nickname = {0}
 };
 
@@ -444,6 +452,9 @@ static void Task_Hof_InitMonData(u8 taskId)
             sHofMonPtr->mon[i].isShiny = GetMonData(&gPlayerParty[i], MON_DATA_IS_SHINY);
             sHofMonPtr->mon[i].personality = GetMonData(&gPlayerParty[i], MON_DATA_PERSONALITY);
             sHofMonPtr->mon[i].lvl = GetMonData(&gPlayerParty[i], MON_DATA_LEVEL);
+            // Recorded, not looked up later: by the time this team is
+            // viewed again the Pokemon may have been purified or gone.
+            sHofMonPtr->mon[i].isShadow = GetMonData(&gPlayerParty[i], MON_DATA_IS_SHADOW);
             GetMonData(&gPlayerParty[i], MON_DATA_NICKNAME, nickname);
             for (j = 0; j < POKEMON_NAME_LENGTH; j++)
                 sHofMonPtr->mon[i].nickname[j] = nickname[j];
@@ -456,6 +467,7 @@ static void Task_Hof_InitMonData(u8 taskId)
             sHofMonPtr->mon[i].isShiny = FALSE;
             sHofMonPtr->mon[i].personality = 0;
             sHofMonPtr->mon[i].lvl = 0;
+            sHofMonPtr->mon[i].isShadow = FALSE;
             sHofMonPtr->mon[i].nickname[0] = EOS;
         }
     }
@@ -586,6 +598,7 @@ static void Task_Hof_DisplayMon(u8 taskId)
         destY += 10;
 
     spriteId = CreateMonPicSprite_Affine(currMon->species, currMon->isShiny, currMon->personality, MON_PIC_AFFINE_FRONT, startX, startY, currMonId, TAG_NONE);
+    WotHofApplyShadowArt(currMon, spriteId, currMonId);
     gSprites[spriteId].tDestinationX = destX;
     gSprites[spriteId].tDestinationY = destY;
     gSprites[spriteId].data[0] = 0;
@@ -928,6 +941,7 @@ static void Task_HofPC_DrawSpritesPrintText(u8 taskId)
                 posY += 10;
 
             spriteId = CreateMonPicSprite(currMon->species, currMon->isShiny, currMon->personality, TRUE, posX, posY, i, TAG_NONE);
+            WotHofApplyShadowArt(currMon, spriteId, i);
             gSprites[spriteId].oam.priority = 1;
             gTasks[taskId].tMonSpriteId(i) = spriteId;
         }
@@ -1100,11 +1114,28 @@ static void Task_HofPC_ExitOnButtonPress(u8 taskId)
 #undef tMonNo
 #undef tMonSpriteId
 
+// WoT: a Shadow Pokemon is enshrined in its shadow art. Species with no
+// entry in the table keep their ordinary sprite.
+static void WotHofApplyShadowArt(const struct HallofFameMon *currMon, u16 spriteId, u8 paletteSlot)
+{
+    const struct WotShadowPic *art;
+
+    if (!currMon->isShadow || spriteId == 0xFFFF)
+        return;
+    art = WotFindShadowPic(currMon->species);
+    if (art != NULL)
+        WotRepaintPicSprite(spriteId, art->pic, art->pal, paletteSlot);
+}
+
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)
 {
     FillWindowPixelBuffer(0, PIXEL_FILL(0));
     PutWindowTilemap(0);
     AddTextPrinterParameterized3(0, FONT_NORMAL, GetStringCenterAlignXOffset(FONT_NORMAL, gText_WelcomeToHOF, 0xD0), 1, sMonInfoTextColors, 0, gText_WelcomeToHOF);
+    // Second row of the standard text box. FONT_SMALL, not FONT_NORMAL:
+    // the window is 32px tall and normal ink runs the full 15px of its
+    // cell, which would sit flush against the bottom edge at y=17.
+    AddTextPrinterParameterized3(0, FONT_SMALL, GetStringCenterAlignXOffset(FONT_SMALL, sText_WotHofVersion, 0xD0), 17, sMonInfoTextColors, 0, sText_WotHofVersion);
     CopyWindowToVram(0, COPYWIN_FULL);
 }
 

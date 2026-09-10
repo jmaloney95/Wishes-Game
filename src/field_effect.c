@@ -1015,9 +1015,9 @@ u8 AddNewGameBirchObject(s16 x, s16 y, u8 subpriority)
     return CreateSprite(&sSpriteTemplate_NewGameBirch, x, y, subpriority);
 }
 
-u8 CreateMonSprite_PicBox(u16 species, s16 x, s16 y, u8 subpriority)
+u8 CreateMonSprite_PicBox(u16 species, bool8 isShiny, s16 x, s16 y, u8 subpriority)
 {
-    s32 spriteId = CreateMonPicSprite(species, FALSE, 0x8000, TRUE, x, y, 0, species);
+    s32 spriteId = CreateMonPicSprite(species, isShiny, 0x8000, TRUE, x, y, 0, species);
     PreservePaletteInWeather(IndexOfSpritePaletteTag(species) + 0x10);
     if (spriteId == 0xFFFF)
         return MAX_SPRITES;

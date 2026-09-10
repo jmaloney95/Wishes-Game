@@ -671,3 +671,4 @@ gSpecials::
 	def_special WotOpenRandomizerMenu
 	def_special WotGetPartyLeaderMegaStone
 	def_special WotBuyLeaderMegaStone
+	def_special WotGetStarterShiny

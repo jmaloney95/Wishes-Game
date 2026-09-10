@@ -7,7 +7,13 @@ struct HallofFameMon
     u32 personality;
     u16 isShiny:1;
     u16 species:15;
-    u8 lvl;
+    // WoT: bit 7 of lvl carries shadow-ness. MAX_LEVEL is 100, so the
+    // level itself needs 7 bits, and stealing the spare keeps the struct
+    // the same size -- growing it would change how many teams fit in the
+    // save sectors and invalidate every record already stored. Records
+    // written before this have the bit clear, which reads as "not shadow".
+    u8 lvl:7;
+    u8 isShadow:1;
     u8 nickname[POKEMON_NAME_LENGTH];
 };
 
