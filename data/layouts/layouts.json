@@ -598,10 +598,10 @@
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F",
       "name": "LittlerootTown_BrendansHouse_2F_Layout",
-      "width": 9,
-      "height": 8,
+      "width": 7,
+      "height": 12,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_BrendansMaysHouse",
+      "secondary_tileset": "gTileset_Office",
       "border_filepath": "data/layouts/LittlerootTown_BrendansHouse_2F/border.bin",
       "blockdata_filepath": "data/layouts/LittlerootTown_BrendansHouse_2F/map.bin",
       "layout_version": "emerald"
@@ -9362,7 +9362,7 @@
       "width": 30,
       "height": 25,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_SootopolisGym",
+      "secondary_tileset": "gTileset_Droid779Snow",
       "border_filepath": "data/layouts/MeltingMile/border.bin",
       "blockdata_filepath": "data/layouts/MeltingMile/map.bin",
       "layout_version": "emerald"

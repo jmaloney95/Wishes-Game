@@ -495,3 +495,6 @@ const u16 gMetatileAttributes_MiddleDistrict[] = INCBIN_U16("data/tilesets/secon
 
 const u16 gMetatiles_MiddleDistrictGround[] = INCBIN_U16("data/tilesets/primary/middle_district/metatiles.bin");
 const u16 gMetatileAttributes_MiddleDistrictGround[] = INCBIN_U16("data/tilesets/primary/middle_district/metatile_attributes.bin");
+
+const u16 gMetatiles_Office[] = INCBIN_U16("data/tilesets/secondary/office/metatiles.bin");
+const u16 gMetatileAttributes_Office[] = INCBIN_U16("data/tilesets/secondary/office/metatile_attributes.bin");

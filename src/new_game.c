@@ -142,9 +142,17 @@ static void WarpToTruck(void)
     if (IS_FRLG)
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
     else
-        // Pokémon Wishes of Tomorrow: spawn on the doorstep of the player's house in Munen.
-        // (9,14) lines up with the door warp tile and the painted doorway after the border resize.
-        SetWarpDestination(MAP_GROUP(MAP_MUNEN_VILLAGE_2), MAP_NUM(MAP_MUNEN_VILLAGE_2), WARP_ID_NONE, 9, 14);
+        // Pokémon Wishes of Tomorrow: the game opens in the player's bedroom --
+        // vanilla's BrendansHouse_2F slot, remapped, whose stairs lead down to
+        // 1F and out into Munen Village.
+        //
+        // (3,4) is this map's heal location, so waking up and whiting out land
+        // on the same tile. The opening cutscene needs nothing here: Munen's
+        // OnFrame table gates it on VAR_MUNEN_INTRO_STATE, not on where the
+        // player is standing, so it still fires the first time they step
+        // outside and it warps them to the doorstep itself when it ends.
+        SetWarpDestination(MAP_GROUP(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F),
+                           MAP_NUM(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F), WARP_ID_NONE, 3, 4);
     WarpIntoMap();
 }
 

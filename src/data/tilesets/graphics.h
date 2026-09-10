@@ -3584,3 +3584,22 @@ const u16 gTilesetPalettes_MiddleDistrictGround[][16] =
 };
 
 const u32 gTilesetTiles_MiddleDistrictGround[] = INCBIN_U32("data/tilesets/primary/middle_district/tiles.4bpp.lz");
+
+const u16 gTilesetPalettes_Office[][16] =
+{
+    INCBIN_U16("data/tilesets/secondary/office/palettes/00.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/01.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/02.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/03.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/04.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/05.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/06.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/07.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/08.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/09.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/10.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/11.gbapal"),
+    INCBIN_U16("data/tilesets/secondary/office/palettes/12.gbapal"),
+};
+
+const u32 gTilesetTiles_Office[] = INCBIN_U32("data/tilesets/secondary/office/tiles.4bpp.lz");

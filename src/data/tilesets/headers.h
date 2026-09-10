@@ -1877,3 +1877,14 @@ const struct Tileset gTileset_MiddleDistrictGround =
     .metatileAttributes = gMetatileAttributes_MiddleDistrictGround,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_Office =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_Office,
+    .palettes = gTilesetPalettes_Office,
+    .metatiles = gMetatiles_Office,
+    .metatileAttributes = gMetatileAttributes_Office,
+    .callback = NULL,
+};
