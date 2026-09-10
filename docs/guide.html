@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css?v=20260909b">
+<link rel="stylesheet" href="assets/styles.css?v=20260910c">
 <style>
 /* The design's neutral-300/400/600/700 are not tokens in this stylesheet, so
    they are written out at the same weight instead of resolving to nothing. */
@@ -36,9 +36,6 @@
           border:1px solid rgba(233,233,237,.16); border-radius:var(--radius-sm); }
 .gd-nav:hover:not(:disabled) { border-color:var(--color-accent-600); color:var(--color-text); }
 .gd-nav:disabled { opacity:.35; cursor:default; }
-.gd-count { margin-left:auto; font-family:var(--font-pixel); font-size:9px;
-            letter-spacing:.05em; color:rgba(233,233,237,.45); }
-
 .gd-fig { position:relative; margin:0; border-radius:var(--radius-md); overflow:hidden;
           background:var(--color-surface); box-shadow:var(--shadow-sm); line-height:0; }
 .gd-fig img { display:block; width:100%; height:auto; image-rendering:pixelated; }
@@ -61,7 +58,16 @@
              color:rgba(233,233,237,.55); }
 .gd-legend span { display:flex; align-items:center; gap:8px; }
 
-.gd-h2 { font-family:var(--font-pixel); font-weight:400; font-size:14px; margin:30px 0 14px; }
+/* The header, in the design's proportions. The design sets Silkscreen 12/38px;
+   Press Start 2P is full-width and far heavier, so the same optical size lands
+   lower on the scale and the map label still fits a line. */
+.gd-kicker { font-family:var(--font-pixel); font-size:10px; line-height:1.7;
+             letter-spacing:.08em; color:var(--color-accent-300); }
+.gd-h1 { font-family:var(--font-pixel); font-weight:400; text-transform:uppercase;
+         font-size:clamp(15px,2.6vw,24px); line-height:1.45; letter-spacing:.02em;
+         margin:16px 0 14px; }
+.gd-lede { max-width:60ch; font-size:14px; line-height:1.6;
+           color:rgba(233,233,237,.55); margin:0; }
 .gd-grid { margin-top:30px; display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr)); gap:16px; }
 .gd-tile { border:2px dashed rgba(233,233,237,.18); border-radius:var(--radius-md); padding:16px;
            background:var(--color-neutral-900); display:flex; flex-direction:column; gap:10px; }
@@ -69,8 +75,15 @@
 .gd-badge { font-family:var(--font-pixel); font-size:11px; color:var(--color-bg);
             background:var(--color-accent); width:26px; height:26px; display:grid;
             place-items:center; border-radius:6px; flex:0 0 auto; }
-.gd-tile h3 { font-family:var(--font-pixel); font-size:10px; letter-spacing:.03em;
-              line-height:1.5; margin:0; font-weight:400; }
+/* Uppercase: the markers were authored in mixed case (126 of 132), and the
+   design's plate is uniform caps. No title runs past 21 characters, so they
+   still set on one line at this size. */
+.gd-tile h3 { font-family:var(--font-pixel); font-size:11px; letter-spacing:.04em;
+              line-height:1.5; margin:0; font-weight:400; text-transform:uppercase; }
+.gd-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.gd-tag { font-family:var(--font-pixel); font-size:8px; letter-spacing:.04em;
+          padding:5px 8px; border:1px solid var(--color-accent-600);
+          border-radius:999px; color:var(--color-accent-300); white-space:nowrap; }
 .gd-tile p { margin:0; font-size:13px; line-height:1.6; color:rgba(233,233,237,.7); text-wrap:pretty; }
 .gd-empty { font-size:14px; color:rgba(233,233,237,.45); margin:0; }
 @media (prefers-reduced-motion: reduce) { .gd-dash { animation:none; } }
@@ -92,9 +105,9 @@
 
 <main>
   <section id="top" class="wrap section">
-    <div class="kicker"><span id="gd-act">ACT 1</span> &nbsp;/&nbsp; FIELD GUIDE</div>
-    <h1 class="h-sm" id="gd-title">Munen Village</h1>
-    <p class="gd-empty" style="max-width:60ch;margin:0 0 4px">Pick a map. The line is the route through it; the numbers are what is worth stopping for. Spoilers throughout.</p>
+    <div class="gd-kicker">WISHES OF TOMORROW &nbsp;/&nbsp; FIELD GUIDE &nbsp;/&nbsp; <span id="gd-act">ACT 1</span></div>
+    <h1 class="gd-h1" id="gd-title">1 &mdash; Munen Village</h1>
+    <p class="gd-lede">Pick a map. The line is the route through it; the numbers are what is worth stopping for. Spoilers throughout.</p>
 
     <div class="gd-bar">
       <label class="sr-only" for="gd-select">Choose a map</label>
@@ -158,7 +171,6 @@
       <span class="gd-sep" aria-hidden="true"></span>
       <button class="gd-nav" id="gd-prev" type="button">&#8592; Prev</button>
       <button class="gd-nav" id="gd-next" type="button">Next &#8594;</button>
-      <span class="gd-count" id="gd-counts"></span>
     </div>
 
     <figure class="gd-fig" id="gd-fig">
@@ -166,7 +178,8 @@
       <svg class="gd-route" id="gd-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
     </figure>
     <div class="gd-legend">
-      <span><svg width="34" height="8" aria-hidden="true"><line x1="0" y1="4" x2="34" y2="4" stroke="currentColor" stroke-width="6" stroke-dasharray="8 8" style="color:var(--color-accent)"></line></svg>ROUTE</span>
+      <span id="gd-legend-route"><svg width="34" height="8" aria-hidden="true"><line x1="0" y1="4" x2="34" y2="4" stroke="currentColor" stroke-width="6" stroke-dasharray="8 8" style="color:var(--color-accent)"></line></svg>ROUTE</span>
+      <span id="gd-counts"></span>
     </div>
 
     <p class="gd-empty" id="gd-empty" hidden>Route only &mdash; no marked stops on this map.</p>
@@ -192,6 +205,7 @@
   var route = document.getElementById('gd-route'), grid = document.getElementById('gd-grid');
   var title = document.getElementById('gd-title'), counts = document.getElementById('gd-counts');
   var empty = document.getElementById('gd-empty'), act = document.getElementById('gd-act');
+  var legendRoute = document.getElementById('gd-legend-route');
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
@@ -222,16 +236,27 @@
     });
 
     grid.innerHTML = m.stops.map(function (s, n) {
+      // s.g is the marker's tag list. Every authored marker carries an empty
+      // one today, so this stays silent until they are actually tagged.
+      var tags = (s.g && s.g.length)
+        ? '<div class="gd-tags">' + s.g.map(function (t) {
+            return '<span class="gd-tag">' + esc(t) + '</span>';
+          }).join('') + '</div>'
+        : '';
       return '<article class="gd-tile">' +
                '<div class="gd-tile-head"><span class="gd-badge">' + (n + 1) + '</span>' +
                '<h3>' + esc(s.t || ('Stop ' + (n + 1))) + '</h3></div>' +
-               (s.d ? '<p>' + esc(s.d) + '</p>' : '') +
+               (s.d ? '<p>' + esc(s.d) + '</p>' : '') + tags +
              '</article>';
     }).join('');
 
     empty.hidden = m.stops.length > 0;
-    counts.textContent = m.stops.length + (m.stops.length === 1 ? ' STOP' : ' STOPS') +
-                         (m.path ? '' : ' / NO ROUTE');
+    // The design's own figcaption line: markers, then route vertices.
+    var pts = m.path ? m.path.trim().split(/ +/).length : 0;
+    counts.textContent =
+      m.stops.length + (m.stops.length === 1 ? ' MARKER / ' : ' MARKERS / ') +
+      pts + (pts === 1 ? ' ROUTE POINT' : ' ROUTE POINTS');
+    legendRoute.hidden = !m.path;
     prev.disabled = i === 0;
     next.disabled = i === MAPS.length - 1;
     if (sel.selectedIndex !== -1 && sel.value !== String(i)) sel.value = String(i);

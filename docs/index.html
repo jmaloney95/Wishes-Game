@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260909b">
+<link rel="stylesheet" href="assets/styles.css?v=20260910c">
 </head>
 <body>
 
@@ -66,7 +66,15 @@
 
         <h1 data-reveal>Wishes of<br><span class="accent">Tomorrow</span></h1>
 
-        <p class="lede" data-reveal>A handmade pixel-art adventure for the Game Boy Advance. Cross the forests, lake towns and shrine paths beneath Mt. Fuji, raise a team of creatures, and find out what the mountain has been waiting for.</p>
+        <p class="lede" data-reveal>When Jirachi, the Undying Wish, awakens from its thousand-year slumber to grant a single wish, you're not the only one racing toward its promised power.</p>
+
+        <p class="lede" data-reveal>A mysterious faction led by a gold-masked Oni emerges from the shadows, determined to seize Jirachi's wish for their own sinister ambitions.</p>
+
+        <p class="hero-beats" data-reveal>Witness Mega Power. Capture Darkness. Seek the promised land of Shin-Tokyo.</p>
+
+        <p class="hero-close" data-reveal>The wish is waiting. Will you be the one to claim it?</p>
+
+        <p class="hero-tagline" data-reveal>EVERY WISH HAS A PRICE.</p>
 
         <div class="hero-actions" data-reveal>
           <a class="btn-start" href="#download">
@@ -268,15 +276,32 @@
           <h2>Download <span data-version>v1.2.2</span></h2>
           <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
 
-          <div class="version-chip" data-counter>
-            <!-- Seeded so the chip never renders empty if scripts are slow,
-                 blocked, or briefly stale from cache. -->
-            <span class="digits" data-count-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
-            <span class="version-label">
-              <span class="sr-only" data-count-sr></span>
-              <span data-count-title>Downloads</span><br>
-              <span data-count-sub>since 12 August 2026</span>
-            </span>
+          <!-- Two SEPARATE tallies, and each says whose it is. The first is
+               GitHub's count of release-asset downloads, which is what this
+               site's download button points at; the second is Hackdex's own.
+               Neither contains the other, so they are never summed. -->
+          <div class="counter-stack">
+            <div class="version-chip" data-counter>
+              <!-- Seeded so the chip never renders empty if scripts are slow,
+                   blocked, or briefly stale from cache. -->
+              <span class="digits" data-count-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
+              <span class="version-label">
+                <span class="sr-only" data-count-sr></span>
+                <span data-count-title>Downloads from here</span><br>
+                <span data-count-sub>since 12 August 2026</span>
+              </span>
+            </div>
+
+            <!-- Hidden until a real figure loads, so a missing or malformed
+                 file shows nothing rather than a chip reading zero. -->
+            <div class="version-chip" data-hd-counter hidden>
+              <span class="digits" data-hd-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
+              <span class="version-label">
+                <span class="sr-only" data-hd-sr></span>
+                <span>Downloads on Hackdex</span><br>
+                <span data-hd-sub></span>
+              </span>
+            </div>
           </div>
 
           <div class="build-line">BUILT ON POKEEMERALD-EXPANSION<span class="caret">_</span></div>
@@ -295,6 +320,21 @@
           </a>
           <a class="dl" href="https://github.com/jmaloney95/Wishes-Game">
             <span>Source &amp; issues on GitHub</span><span class="dl-meta">↗</span>
+          </a>
+
+          <!-- Hackdex's own colours. The mark is optional: their origin answers
+               429 to anything that is not a browser, so it can neither be
+               fetched by a build step nor hotlinked. Save their logo to
+               assets/hackdex-logo.png and it appears; until then onerror
+               drops the tag and the card reads as a wordmark. -->
+          <a class="hackdex-card" href="https://www.hackdex.app/hack/wishes-of-tomorrow">
+            <img class="hackdex-mark" src="assets/hackdex-logo.png" width="36" height="36"
+                 alt="" aria-hidden="true" onerror="this.remove()">
+            <span class="hackdex-copy">
+              <span class="hackdex-kicker">ALSO LISTED ON</span>
+              <span class="hackdex-name">Hackdex</span>
+            </span>
+            <span class="hackdex-go">View the listing <span aria-hidden="true">↗</span></span>
           </a>
         </div>
       </div>
@@ -520,7 +560,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260909b" defer></script>
-<script src="assets/patcher.js?v=20260909b" defer></script>
+<script src="assets/site.js?v=20260910c" defer></script>
+<script src="assets/patcher.js?v=20260910c" defer></script>
 </body>
 </html>

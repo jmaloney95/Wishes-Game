@@ -53,10 +53,11 @@
     return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  function padded(n) {
+  function padded(n, minDigits) {
     var s = group(n);
     var digits = s.replace(/,/g, "").length;
-    while (digits < COUNTER.minDigits) { s = "0" + s; digits++; }
+    var min = minDigits || COUNTER.minDigits;
+    while (digits < min) { s = "0" + s; digits++; }
     return s;
   }
 
@@ -111,10 +112,12 @@
       });
   }
 
-  function countUp(host, sr, target) {
+  // srSuffix names the source in the screen-reader text, so the two chips
+  // are not both read out as a bare "N downloads".
+  function countUp(host, sr, target, srSuffix) {
     var paint = function (n) {
       renderDigits(host, padded(n));
-      if (sr) sr.textContent = group(target) + (target === 1 ? " download" : " downloads");
+      if (sr) sr.textContent = group(target) + (target === 1 ? " download" : " downloads") + (srSuffix || "");
     };
     if (reduced || !target || !window.requestAnimationFrame) { paint(target); return; }
 
@@ -147,7 +150,7 @@
       var run = function () {
         if (started) return;
         started = true;
-        countUp(host, sr, total);
+        countUp(host, sr, total, " from flatfootlabs.com");
       };
 
       if (!reduced && "IntersectionObserver" in window) {
@@ -162,6 +165,65 @@
         run();
       }
     }).catch(showVersionInstead);
+  }
+
+  /* -- Hackdex counter --
+     Hackdex's own tally. A DIFFERENT number from the GitHub one above it, not
+     a subset and not a superset, so the two are shown side by side and are
+     never added together.
+
+     It is READ FROM A FILE HERE, not scraped, because it cannot be scraped.
+     hackdex.app sends no Access-Control-Allow-Origin, so a browser fetch is
+     refused outright; and every path on that origin answers 429 with
+     `x-vercel-mitigated: challenge` to anything that is not a real browser, so
+     a scheduled server-side fetch gets the challenge page instead of the
+     count. Both were tested against the live host. Update data/hackdex.json by
+     hand.
+
+     Deliberately NOT requested through the ?v= token: this figure changes far
+     more often than the assets do, and coupling it to the token would mean
+     bumping the token just to publish a number. */
+  function wireHackdexCounter() {
+    var chip = $("[data-hd-counter]");
+    var host = $("[data-hd-digits]");
+    if (!chip || !host || !window.fetch) return;
+
+    // Cache-buster rather than the shared token, so the figure can be edited on
+    // its own; no-store keeps a proxy from pinning yesterday's number.
+    fetch("data/hackdex.json?t=" + Date.now(), { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then(function (data) {
+        var n = data && data.downloads;
+        if (typeof n !== "number" || !(n > 0)) throw new Error("no count");
+
+        var sub = $("[data-hd-sub]"), sr = $("[data-hd-sr]");
+        if (sub) sub.textContent = data.asOf ? "as of " + data.asOf : "";
+        chip.hidden = false;
+
+        var started = false;
+        var run = function () {
+          if (started) return;
+          started = true;
+          countUp(host, sr, n, " on Hackdex");
+        };
+
+        if (!reduced && "IntersectionObserver" in window) {
+          var io = new IntersectionObserver(function (entries) {
+            if (entries.some(function (e) { return e.isIntersecting; })) { io.disconnect(); run(); }
+          }, { threshold: 0.25 });
+          io.observe(chip);
+          setTimeout(run, 3000);
+        } else {
+          run();
+        }
+      })
+      .catch(function () {
+        // No file, no number: leave the chip hidden rather than show a zero.
+        chip.hidden = true;
+      });
   }
 
   /* ── starfield ──────────────────────────────────────────────────── */
@@ -249,6 +311,7 @@
 
   paintRelease();
   wireCounter();
+  wireHackdexCounter();
   paintStars();
   wireCastRail();
   wireReveal();

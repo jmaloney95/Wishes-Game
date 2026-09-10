@@ -1,0 +1,6 @@
+{
+  "_comment": "Hackdex's own tally for this hack, which is a DIFFERENT number from the GitHub one on the chip above it -- do not add them together. Their site sends no CORS header and answers 429 to any non-browser client, so it cannot be read live or by a scheduled fetch. Update `downloads` and `asOf` by hand from https://www.hackdex.app/hack/wishes-of-tomorrow -- the page rounds to 2.4K, the exact figure is `initialCount` in its page source. Nothing else needs touching: this file is fetched with a cache-buster, NOT through the ?v= token.",
+  "downloads": 2367,
+  "asOf": "10 September 2026",
+  "url": "https://www.hackdex.app/hack/wishes-of-tomorrow"
+}
