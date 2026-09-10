@@ -338,6 +338,14 @@
 - **`release_notes_v1.1.0.md`** at workspace root — paste-ready for the GitHub release.
 - REMAINING (Joe / gh window): tag + publish the release with the bps attached; Pages redeploys the site on push.
 
+### 2026-09-10 (round 51) — counter restored alongside the card; both rounds committed and live
+- **Joe asked for the counter back and for the site's own number kept distinct**, so both chips now name their source: **"Downloads from here"** (GitHub's release-asset tally, which is what this site's download button points at) and **"Downloads on Hackdex"** (their separate tally). **Neither contains the other and they are never summed**; the screen-reader text names the source in both, so two chips are not read out as a bare "N downloads" twice.
+- The branded card stays. Card and counter are complementary, not alternatives.
+- **A 0-byte `docs/assets/hackdex-logo.png` had been left behind** by an aborted transfer and was caught at `git add` time, not by any test. Deleted before staging — an empty file still answers 200, so it would have suppressed the `onerror` fallback the card depends on. **Check `git status` for stray artefacts before committing a round that wrote files experimentally.**
+- Committed and pushed: game **`2afaf5630b`** (master), site **`34cd06e6dd`** (main).
+- **Verified on the live domain**, not just locally: token `20260910c` served, `data/hackdex.json` 200, both chips rendering 570 and 2,367, the card present, the absent logo removing itself.
+- `.claude/launch.json` is committed now — `python -m http.server 8777 --directory docs`, so the site can be previewed live at **http://localhost:8777** while it is being edited.
+
 ### 2026-09-10 (round 50) — HALL OF FAME CRASH FIXED; Hackdex card replaces the counter; hero copy
 - **THE ROUND-48 HALL OF FAME SHADOW ART CRASHED THE GAME, AND IT WAS A 4KB HEAP OVERRUN I WROTE.** `WotRepaintPicSprite` walked the frame buffer as `MAX_PIC_FRAMES` frames at `PIC_SPRITE_SIZE` stride. **`MAX_TRAINER_PIC_FRAMES` is 4, so `MAX_PIC_FRAMES` is 4** — but `CreateMonPicSprite_Affine`, which the induction parade uses, allocates only `MON_PIC_SIZE * MAX_MON_PIC_FRAMES` = **2** frames. So it wrote 8 KB into a 4 KB allocation and took the heap with it, exactly when a Shadow tried to display. The still team shot survived because `CreatePicSprite` really does allocate the full four.
 - **The fix is to stop assuming either number.** It now copies through the creator's own `sSpritePics[i].images[j].data` pointers, bounded by `MAX_MON_PIC_FRAMES`. Both creators allocate at least that many images of at least `MON_PIC_SIZE`, so it is in bounds on either path whichever one ran.
