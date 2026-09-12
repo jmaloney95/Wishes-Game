@@ -1888,3 +1888,127 @@ const struct Tileset gTileset_Office =
     .metatileAttributes = gMetatileAttributes_Office,
     .callback = NULL,
 };
+
+const struct Tileset gTileset_SnowVillageHomes =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_SnowVillageHomes,
+    .palettes = gTilesetPalettes_SnowVillageHomes,
+    .metatiles = gMetatiles_SnowVillageHomes,
+    .metatileAttributes = gMetatileAttributes_SnowVillageHomes,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SnowVillage =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SnowVillage,
+    .palettes = gTilesetPalettes_SnowVillage,
+    .metatiles = gMetatiles_SnowVillage,
+    .metatileAttributes = gMetatileAttributes_SnowVillage,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_FrostwoodPC =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FrostwoodPC,
+    .palettes = gTilesetPalettes_FrostwoodPC,
+    .metatiles = gMetatiles_FrostwoodPC,
+    .metatileAttributes = gMetatileAttributes_FrostwoodPC,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DeoxysLab =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DeoxysLab,
+    .palettes = gTilesetPalettes_DeoxysLab,
+    .metatiles = gMetatiles_DeoxysLab,
+    .metatileAttributes = gMetatileAttributes_DeoxysLab,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_FrostwoodBar =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FrostwoodBar,
+    .palettes = gTilesetPalettes_FrostwoodBar,
+    .metatiles = gMetatiles_FrostwoodBar,
+    .metatileAttributes = gMetatileAttributes_FrostwoodBar,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_PompeiiHouse =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_PompeiiHouse,
+    .palettes = gTilesetPalettes_PompeiiHouse,
+    .metatiles = gMetatiles_PompeiiHouse,
+    .metatileAttributes = gMetatileAttributes_PompeiiHouse,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_FrostwoodCabin =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_FrostwoodCabin,
+    .palettes = gTilesetPalettes_FrostwoodCabin,
+    .metatiles = gMetatiles_FrostwoodCabin,
+    .metatileAttributes = gMetatileAttributes_FrostwoodCabin,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_DojoOversized =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_DojoOversized,
+    .palettes = gTilesetPalettes_DojoOversized,
+    .metatiles = gMetatiles_DojoOversized,
+    .metatileAttributes = gMetatileAttributes_DojoOversized,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SnowyCherries =
+{
+    .isCompressed = TRUE,
+    .isSecondary = FALSE,
+    .tiles = gTilesetTiles_SnowyCherries,
+    .palettes = gTilesetPalettes_SnowyCherries,
+    .metatiles = gMetatiles_SnowyCherries,
+    .metatileAttributes = gMetatileAttributes_SnowyCherries,
+    .callback = NULL,
+};
+
+const struct Tileset gTileset_SnowyCherries2 =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SnowyCherries2,
+    .palettes = gTilesetPalettes_SnowyCherries2,
+    .metatiles = gMetatiles_SnowyCherries2,
+    .metatileAttributes = gMetatileAttributes_SnowyCherries2,
+    .callback = NULL,
+};
+
+// snow_and_stone's buildings + droid779_snow's scenery in one set, with the
+// source checkerboard keyed out. The two originals are kept because four
+// painted maps still reference them.
+const struct Tileset gTileset_SnowStone =
+{
+    .isCompressed = TRUE,
+    .isSecondary = TRUE,
+    .tiles = gTilesetTiles_SnowStone,
+    .palettes = gTilesetPalettes_SnowStone,
+    .metatiles = gMetatiles_SnowStone,
+    .metatileAttributes = gMetatileAttributes_SnowStone,
+    .callback = NULL,
+};

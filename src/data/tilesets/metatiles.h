@@ -498,3 +498,36 @@ const u16 gMetatileAttributes_MiddleDistrictGround[] = INCBIN_U16("data/tilesets
 
 const u16 gMetatiles_Office[] = INCBIN_U16("data/tilesets/secondary/office/metatiles.bin");
 const u16 gMetatileAttributes_Office[] = INCBIN_U16("data/tilesets/secondary/office/metatile_attributes.bin");
+
+const u16 gMetatiles_SnowVillageHomes[] = INCBIN_U16("data/tilesets/primary/snow_village_homes/metatiles.bin");
+const u16 gMetatileAttributes_SnowVillageHomes[] = INCBIN_U16("data/tilesets/primary/snow_village_homes/metatile_attributes.bin");
+
+const u16 gMetatiles_SnowVillage[] = INCBIN_U16("data/tilesets/secondary/snow_village/metatiles.bin");
+const u16 gMetatileAttributes_SnowVillage[] = INCBIN_U16("data/tilesets/secondary/snow_village/metatile_attributes.bin");
+
+const u16 gMetatiles_FrostwoodPC[] = INCBIN_U16("data/tilesets/secondary/frostwood_pc/metatiles.bin");
+const u16 gMetatileAttributes_FrostwoodPC[] = INCBIN_U16("data/tilesets/secondary/frostwood_pc/metatile_attributes.bin");
+
+const u16 gMetatiles_DeoxysLab[] = INCBIN_U16("data/tilesets/secondary/deoxys_lab/metatiles.bin");
+const u16 gMetatileAttributes_DeoxysLab[] = INCBIN_U16("data/tilesets/secondary/deoxys_lab/metatile_attributes.bin");
+
+const u16 gMetatiles_FrostwoodBar[] = INCBIN_U16("data/tilesets/secondary/frostwood_bar/metatiles.bin");
+const u16 gMetatileAttributes_FrostwoodBar[] = INCBIN_U16("data/tilesets/secondary/frostwood_bar/metatile_attributes.bin");
+
+const u16 gMetatiles_PompeiiHouse[] = INCBIN_U16("data/tilesets/secondary/pompeii_house/metatiles.bin");
+const u16 gMetatileAttributes_PompeiiHouse[] = INCBIN_U16("data/tilesets/secondary/pompeii_house/metatile_attributes.bin");
+
+const u16 gMetatiles_FrostwoodCabin[] = INCBIN_U16("data/tilesets/secondary/frostwood_cabin/metatiles.bin");
+const u16 gMetatileAttributes_FrostwoodCabin[] = INCBIN_U16("data/tilesets/secondary/frostwood_cabin/metatile_attributes.bin");
+
+const u16 gMetatiles_DojoOversized[] = INCBIN_U16("data/tilesets/secondary/dojo_oversized/metatiles.bin");
+const u16 gMetatileAttributes_DojoOversized[] = INCBIN_U16("data/tilesets/secondary/dojo_oversized/metatile_attributes.bin");
+
+const u16 gMetatiles_SnowyCherries[] = INCBIN_U16("data/tilesets/primary/snowy_cherries/metatiles.bin");
+const u16 gMetatileAttributes_SnowyCherries[] = INCBIN_U16("data/tilesets/primary/snowy_cherries/metatile_attributes.bin");
+
+const u16 gMetatiles_SnowyCherries2[] = INCBIN_U16("data/tilesets/secondary/snowy_cherries_2/metatiles.bin");
+const u16 gMetatileAttributes_SnowyCherries2[] = INCBIN_U16("data/tilesets/secondary/snowy_cherries_2/metatile_attributes.bin");
+
+const u16 gMetatiles_SnowStone[] = INCBIN_U16("data/tilesets/secondary/snow_stone/metatiles.bin");
+const u16 gMetatileAttributes_SnowStone[] = INCBIN_U16("data/tilesets/secondary/snow_stone/metatile_attributes.bin");

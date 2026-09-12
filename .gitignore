@@ -66,3 +66,10 @@ tools/aif2pcm/aif2pcm
 *.smolTM
 __pycache__
 .map_version
+
+# tilesetgen's hand-edit guard stores each file's local size and MTIME, which
+# differ in every clone -- committing it would make a fresh checkout look
+# hand-edited and refuse to rebuild. Absent, the guard permits the build, which
+# is the right default. The .ridge marker IS committed: it records content, not
+# timestamps.
+data/tilesets/**/.generated
