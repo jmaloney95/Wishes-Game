@@ -9327,8 +9327,8 @@
     {
       "id": "LAYOUT_MUNEN_VILLAGE",
       "name": "MunenVillage_Layout",
-      "width": 50,
-      "height": 30,
+      "width": 59,
+      "height": 34,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_SnowStone",
       "border_filepath": "data/layouts/MunenVillage/border.bin",

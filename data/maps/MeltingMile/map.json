@@ -14,8 +14,8 @@
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
   "connections": [
     {
-      "map": "MAP_MUNEN_VILLAGE_2",
-      "offset": -16,
+      "map": "MAP_MUNEN_VILLAGE",
+      "offset": -27,
       "direction": "down"
     }
   ],

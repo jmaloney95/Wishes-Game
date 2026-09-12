@@ -9,7 +9,7 @@ Torii_MapScripts::
 @ -- just inside Munen's north gap, one row BELOW the ExitNorth trigger (y=1) so
 @ the player doesn't immediately bounce back to Torii.
 Torii_EventScript_ReturnToMunen::
-	warp MAP_MUNEN_VILLAGE_2, 24, 2
+	warp MAP_MUNEN_VILLAGE, 35, 5
 	waitstate
 	end
 

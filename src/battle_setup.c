@@ -734,8 +734,8 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
 
     // Wishes of Tomorrow: the frozen south (Munen, Melting Mile, Frostwood) battles on the
     // snowy mountain field (time-of-day variants).
-    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MUNEN_VILLAGE_2)
-      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MUNEN_VILLAGE_2))
+    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MUNEN_VILLAGE)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MUNEN_VILLAGE))
      || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_MELTING_MILE)
       && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_MELTING_MILE))
      || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FROSTWOOD_TOWN)
