@@ -1712,6 +1712,8 @@ void PurifyPartyMon(void)
     SetMonData(mon, MON_DATA_NATIONAL_RIBBON, &one);
     CalculateMonStats(mon);
     WotShadowLog_MarkPurifiedSpecies(GetMonData(mon, MON_DATA_SPECIES));
+    // The follower is drawn as a silhouette while it is a Shadow, so repaint it.
+    UpdateFollowingPokemon();
 }
 
 // -- WoT: the HMs start-menu submenu ----------------------------------------

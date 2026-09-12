@@ -211,7 +211,7 @@ static u8 DoJumpSpriteMovement(struct Sprite *);
 static u8 DoJumpSpecialSpriteMovement(struct Sprite *);
 static void CreateLevitateMovementTask(struct ObjectEvent *);
 static void DestroyLevitateMovementTask(u8);
-static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female);
+static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female, bool32 shadow);
 const struct ObjectEventGraphicsInfo *SpeciesToGraphicsInfo(u32 species, bool32 shiny, bool32 female);
 static bool8 NpcTakeStep(struct Sprite *);
 static bool8 AreElevationsCompatible(u8, u8);
@@ -1906,6 +1906,11 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     if (objectEvent->graphicsId & OBJ_EVENT_MON && objectEvent->graphicsId & OBJ_EVENT_MON_SHINY)
         objectEvent->shiny = TRUE;
 
+    // WoT: set before the palette below is chosen. Only the follower can be a
+    // Shadow -- a static OW mon of the same species must stay its own colour.
+    if (IS_OW_MON_OBJ(objectEvent) && objectEvent->localId == OBJ_EVENT_ID_FOLLOWER)
+        objectEvent->shadow = WotFollowerMonIsShadow();
+
     spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
     {
@@ -1916,7 +1921,7 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     sprite = &gSprites[spriteId];
     // Use palette from species palette table
     if (spriteTemplate->paletteTag == OBJ_EVENT_PAL_TAG_DYNAMIC)
-        sprite->oam.paletteNum = LoadDynamicFollowerPalette(OW_SPECIES(objectEvent), OW_SHINY(objectEvent), OW_FEMALE(objectEvent));
+        sprite->oam.paletteNum = LoadDynamicFollowerPalette(OW_SPECIES(objectEvent), OW_SHINY(objectEvent), OW_FEMALE(objectEvent), objectEvent->shadow);
     if (OW_GFX_COMPRESS && sprite->usingSheet)
         sprite->sheetSpan = GetSpanPerImage(sprite->oam.shape, sprite->oam.size);
     GetMapCoordsFromSpritePos(objectEvent->currentCoords.x + cameraX, objectEvent->currentCoords.y + cameraY, &sprite->x, &sprite->y);
@@ -2033,7 +2038,9 @@ static u32 LoadDynamicFollowerPaletteFromGraphicsId(u16 graphicsId, struct Sprit
     u16 species = graphicsId & OBJ_EVENT_MON_SPECIES_MASK;
     bool32 shiny = graphicsId & OBJ_EVENT_MON_SHINY;
     bool32 female = graphicsId & OBJ_EVENT_MON_FEMALE;
-    u8 paletteNum = LoadDynamicFollowerPalette(species, shiny, female);
+    // No object event here (standalone sprites and virtual objects), so this is
+    // never the follower and never a silhouette.
+    u8 paletteNum = LoadDynamicFollowerPalette(species, shiny, female, FALSE);
     if (template)
     {
         template->paletteTag = species + OBJ_EVENT_MON;
@@ -2222,10 +2229,73 @@ const struct ObjectEventGraphicsInfo *SpeciesToGraphicsInfo(u32 species, bool32 
     return graphicsInfo;
 }
 
+// WoT: TRUE when the mon the follower mirrors is a Shadow Pokemon.
+// Read from the party rather than from graphicsId: that is a u16 whose bits
+// 12/13/14 are already FEMALE/SHINY/MON and whose bit 15 is reserved against
+// BLEND_IMMUNE_FLAG, so unlike shininess there is no spare bit to carry it.
+// The follower is always GetFirstLiveMon(), so the party is the source.
+bool32 WotFollowerMonIsShadow(void)
+{
+    struct Pokemon *mon = GetFirstLiveMon();
+
+    return mon != NULL && GetMonData(mon, MON_DATA_IS_SHADOW);
+}
+
+// WoT: build a Shadow Pokemon silhouette from its ordinary palette.
+// Each colour keeps its RELATIVE brightness but is compressed into a dark
+// violet ramp, so the shape stays readable -- flat black turns Absol and
+// Clefable into identical blobs -- and it matches the violet the engine
+// already tints Shadow Pokemon with in battle. Index 0 is the object layer
+// transparency and must be left alone.
+// Everything here is in the GBA's 5 bits per channel, 0-31 -- GET_R and
+// friends do not return 8-bit values. Turn these two knobs to restyle:
+// CEILING is how bright the silhouette may get, TINT_* its hue.
+#define SHADOW_OW_CEILING  12   // of 31
+#define SHADOW_OW_TINT_R   159  // violet, as 8-bit weights of the luminance
+#define SHADOW_OW_TINT_G   128
+#define SHADOW_OW_TINT_B   255
+#define SHADOW_OW_TINT(v, w)  (((v) * (w) + 128) >> 8)   // rounded, not floored
+static void BuildShadowFollowerPalette(const u16 *src, u16 *dest)
+{
+    u32 i;
+
+    dest[0] = src[0];   // index 0 is the object layer's transparency
+    for (i = 1; i < 16; i++)
+    {
+        // The usual luma weights over 256, so v lands back in 0-31.
+        u32 v = (GET_R(src[i]) * 77 + GET_G(src[i]) * 150 + GET_B(src[i]) * 29) >> 8;
+
+        v = (v * SHADOW_OW_CEILING) / 31;
+        dest[i] = RGB(SHADOW_OW_TINT(v, SHADOW_OW_TINT_R),
+                      SHADOW_OW_TINT(v, SHADOW_OW_TINT_G),
+                      SHADOW_OW_TINT(v, SHADOW_OW_TINT_B));
+    }
+}
+
 // Find, or load, the palette for the specified pokemon info
-static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female)
+static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female, bool32 shadow)
 {
     u32 paletteNum;
+
+    // WoT: a Shadow Pokemon silhouette, built from its ordinary (non-shiny)
+    // palette. Keyed on species alone: the ramp discards hue, so the shiny and
+    // female variants would come out the same anyway, and only one object can
+    // ever hold this palette because only the follower is ever a Shadow.
+    if (shadow)
+    {
+        u16 silhouette[16];
+        u16 palTag = species + OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON;
+        struct SpritePalette spritePalette = {.tag = palTag, .data = silhouette};
+        const u16 *src = gSpeciesInfo[species].overworldPalette;
+
+        if ((paletteNum = IndexOfSpritePaletteTag(palTag)) < 16)
+            return paletteNum;
+        if (src == NULL)
+            src = GetMonSpritePalFromSpecies(species, FALSE, female);
+        BuildShadowFollowerPalette(src, silhouette);
+        paletteNum = LoadSpritePalette(&spritePalette);
+    }
+    else
     // Use standalone palette, unless entry is OOB or NULL (fallback to front-sprite-based)
 #if OW_POKEMON_OBJECT_EVENTS == TRUE && OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
     if ((shiny && gSpeciesInfo[species].overworldPalette)
@@ -2293,7 +2363,7 @@ static void FollowerSetGraphics(struct ObjectEvent *objEvent, u32 species, bool3
         sprite->inUse = FALSE;
         FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
         sprite->inUse = TRUE;
-        sprite->oam.paletteNum = LoadDynamicFollowerPalette(species, shiny, female);
+        sprite->oam.paletteNum = LoadDynamicFollowerPalette(species, shiny, female, objEvent->shadow);
     }
 }
 
@@ -2333,7 +2403,7 @@ static void RefreshFollowerGraphics(struct ObjectEvent *objEvent)
         sprite->inUse = FALSE;
         FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
         sprite->inUse = TRUE;
-        sprite->oam.paletteNum = LoadDynamicFollowerPalette(species, shiny, female);
+        sprite->oam.paletteNum = LoadDynamicFollowerPalette(species, shiny, female, objEvent->shadow);
     }
     else if (i != 0xFF)
     {
@@ -2447,11 +2517,20 @@ void UpdateFollowingPokemon(void)
     // Follower appearance changed; move to player and set invisible
     if (species != OW_SPECIES(objEvent) || shiny != OW_SHINY(objEvent) || female != OW_FEMALE(objEvent))
     {
+        objEvent->shadow = WotFollowerMonIsShadow();
         MoveObjectEventToMapCoords(objEvent,
                                    gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.x,
                                    gObjectEvents[gPlayerAvatar.objectEventId].currentCoords.y);
         FollowerSetGraphics(objEvent, species, shiny, female);
         objEvent->invisible = TRUE;
+    }
+    else if (WotFollowerMonIsShadow() != objEvent->shadow)
+    {
+        // WoT: purified (or corrupted) in place. Same mon, so only the palette
+        // changes -- refresh WITHOUT recentring on the player or hiding it,
+        // which is exactly what RefreshFollowerGraphics is for.
+        objEvent->shadow = WotFollowerMonIsShadow();
+        RefreshFollowerGraphics(objEvent);
     }
     sprite->data[6] = 0; // set animation data
 }
@@ -3050,7 +3129,7 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
 
     if (spriteTemplate.paletteTag == OBJ_EVENT_PAL_TAG_DYNAMIC)
     {
-        u32 paletteNum = LoadDynamicFollowerPalette(OW_SPECIES(objectEvent), OW_SHINY(objectEvent), OW_FEMALE(objectEvent));
+        u32 paletteNum = LoadDynamicFollowerPalette(OW_SPECIES(objectEvent), OW_SHINY(objectEvent), OW_FEMALE(objectEvent), objectEvent->shadow);
         spriteTemplate.paletteTag = GetSpritePaletteTagByPaletteNum(paletteNum);
     }
     else if (spriteTemplate.paletteTag != TAG_NONE)

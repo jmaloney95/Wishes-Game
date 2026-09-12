@@ -692,6 +692,15 @@
 #define OBJ_EVENT_PAL_TAG_ITEM_BAXCALIBRITE       0x8007
 #define OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE        0x8008
 // Not a real OW palette tag; used for the white flash applied to followers
+// Wishes of Tomorrow: a Shadow Pokemon follower is drawn as a dark violet
+// silhouette built at runtime from its ordinary palette, so it needs a tag of
+// its own -- reusing the species tag would serve the silhouette from cache to
+// every ordinary sprite of that species. 0x9000 is free: followers occupy
+// 0x4000-0x75DC, SUBSTITUTE is 0x7611, lights/emotes 0x8001-0x8008 and
+// FLDEFF_PAL_TAG_FIELD_MOVE_MON 0x8400. Reflections are the tag + 0x800, so
+// these land at 0x9800-0x9DDC, also free.
+#define OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON          0x9000
+
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 

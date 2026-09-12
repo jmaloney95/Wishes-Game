@@ -36,6 +36,7 @@
 #include "text_window.h"
 #include "trig.h"
 #include "walda_phrase.h"
+#include "wot_shadow_art.h"
 #include "window.h"
 #include "constants/form_change_types.h"
 #include "constants/items.h"
@@ -479,6 +480,7 @@ struct PokemonStorageSystemData
     u8 cursorFlipTimer;
     u8 cursorPalNums[2];
     const u16 *displayMonPalette;
+    const struct WotShadowPic *displayMonShadow;
     u32 displayMonPersonality;
     u16 displayMonSpecies;
     u16 displayMonItemId;
@@ -4002,8 +4004,15 @@ static void LoadDisplayMonGfx(u16 species, u32 pid, bool32 isEgg)
     if (species != SPECIES_NONE)
     {
         LoadSpecialPokePicIsEgg(sStorage->tileBuffer, species, pid, TRUE, isEgg);
+        // WoT: shadow art replaces the stock pic in the buffer on its way to
+        // VRAM. One frame only -- the box portrait does not animate, unlike the
+        // summary screen, which has to fill all MAX_MON_PIC_FRAMES.
+        if (sStorage->displayMonShadow != NULL)
+            CpuCopy32(sStorage->displayMonShadow->pic, sStorage->tileBuffer, MON_PIC_SIZE);
         CpuCopy32(sStorage->tileBuffer, sStorage->displayMonTilePtr, MON_PIC_SIZE);
-        LoadPalette(sStorage->displayMonPalette, sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
+        LoadPalette(sStorage->displayMonShadow != NULL ? sStorage->displayMonShadow->pal
+                                                       : sStorage->displayMonPalette,
+                    sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
         sStorage->displayMonSprite->invisible = FALSE;
     }
     else
@@ -6950,6 +6959,18 @@ void SetMonFormPSS_ItemHold(struct BoxPokemon *boxMon)
     UpdateSpeciesSpritePSS(boxMon);
 }
 
+// WoT: a Shadow Pokemon shows its shadow art in the box portrait, as it
+// already does in the summary screen and the Hall of Fame. Purifying one
+// clears MON_DATA_IS_SHADOW, so it returns to its ordinary art on its own.
+// Species with no entry in the art table fall through to the stock sprite.
+// Reads sStorage->displayMonSpecies/IsEgg, so call it after both are set.
+static const struct WotShadowPic *WotDisplayMonShadowArt(bool32 isShadow)
+{
+    if (!isShadow || sStorage->displayMonIsEgg)
+        return NULL;
+    return WotFindShadowPic(sStorage->displayMonSpecies);
+}
+
 static void SetDisplayMonData(void *pokemon, u8 mode)
 {
     u8 *txtPtr;
@@ -6957,6 +6978,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
     bool8 sanityIsBadEgg;
 
     sStorage->displayMonItemId = ITEM_NONE;
+    sStorage->displayMonShadow = NULL;
     gender = MON_MALE;
     sanityIsBadEgg = FALSE;
     if (mode == MODE_PARTY)
@@ -6980,6 +7002,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             sStorage->displayMonPalette = GetMonFrontSpritePal(mon);
             gender = GetMonGender(mon);
             sStorage->displayMonItemId = GetMonData(mon, MON_DATA_HELD_ITEM);
+            sStorage->displayMonShadow = WotDisplayMonShadowArt(GetMonData(mon, MON_DATA_IS_SHADOW));
         }
     }
     else if (mode == MODE_BOX)
@@ -7005,6 +7028,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             sStorage->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonalityIsEgg(sStorage->displayMonSpecies, isShiny, sStorage->displayMonPersonality, sStorage->displayMonIsEgg);
             gender = GetGenderFromSpeciesAndPersonality(sStorage->displayMonSpecies, sStorage->displayMonPersonality);
             sStorage->displayMonItemId = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
+            sStorage->displayMonShadow = WotDisplayMonShadowArt(GetBoxMonData(boxMon, MON_DATA_IS_SHADOW));
         }
     }
     else
@@ -10066,6 +10090,7 @@ void UpdateSpeciesSpritePSS(struct BoxPokemon *boxMon)
     sStorage->displayMonSpecies = species;
     sStorage->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonalityIsEgg(species, isShiny, pid, isEgg);
     sStorage->displayMonIsEgg = isEgg;
+    sStorage->displayMonShadow = WotDisplayMonShadowArt(GetBoxMonData(boxMon, MON_DATA_IS_SHADOW));
     if (!sJustOpenedBag)
     {
         if (sRefreshDisplayMonGfx)
