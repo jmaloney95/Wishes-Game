@@ -587,7 +587,7 @@
     {
       "id": "LAYOUT_LITTLEROOT_TOWN_BRENDANS_HOUSE_1F",
       "name": "LittlerootTown_BrendansHouse_1F_Layout",
-      "width": 11,
+      "width": 7,
       "height": 9,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_BrendansMaysHouse",
@@ -653,10 +653,10 @@
     {
       "id": "LAYOUT_HOUSE2",
       "name": "House2_Layout",
-      "width": 10,
-      "height": 8,
+      "width": 11,
+      "height": 10,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_GenericBuilding",
+      "secondary_tileset": "gTileset_FrostwoodPC",
       "border_filepath": "data/layouts/House2/border.bin",
       "blockdata_filepath": "data/layouts/House2/map.bin",
       "layout_version": "emerald"
@@ -664,10 +664,10 @@
     {
       "id": "LAYOUT_POKEMON_CENTER_1F",
       "name": "PokemonCenter_1F_Layout",
-      "width": 14,
-      "height": 9,
+      "width": 13,
+      "height": 11,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_PokemonCenter",
+      "secondary_tileset": "gTileset_FrostwoodPC",
       "border_filepath": "data/layouts/PokemonCenter_1F/border.bin",
       "blockdata_filepath": "data/layouts/PokemonCenter_1F/map.bin",
       "layout_version": "emerald"
@@ -686,10 +686,10 @@
     {
       "id": "LAYOUT_MART",
       "name": "Mart_Layout",
-      "width": 11,
+      "width": 13,
       "height": 8,
       "primary_tileset": "gTileset_Building",
-      "secondary_tileset": "gTileset_Shop",
+      "secondary_tileset": "gTileset_FrostwoodBar",
       "border_filepath": "data/layouts/Mart/border.bin",
       "blockdata_filepath": "data/layouts/Mart/map.bin",
       "layout_version": "emerald"
@@ -9329,8 +9329,8 @@
       "name": "MunenVillage_Layout",
       "width": 50,
       "height": 30,
-      "primary_tileset": "gTileset_SnowCinna",
-      "secondary_tileset": "gTileset_SakuraPressGarden",
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_SnowStone",
       "border_filepath": "data/layouts/MunenVillage/border.bin",
       "blockdata_filepath": "data/layouts/MunenVillage/map.bin",
       "layout_version": "emerald"
@@ -9382,8 +9382,8 @@
       "name": "FrostwoodTown_Layout",
       "width": 62,
       "height": 36,
-      "primary_tileset": "gTileset_SnowCinna",
-      "secondary_tileset": "gTileset_FrostwoodBuildings",
+      "primary_tileset": "gTileset_SnowVillageHomes",
+      "secondary_tileset": "gTileset_SnowVillage",
       "border_filepath": "data/layouts/FrostwoodTown/border.bin",
       "blockdata_filepath": "data/layouts/FrostwoodTown/map.bin",
       "layout_version": "emerald"
@@ -9491,8 +9491,8 @@
     {
       "id": "LAYOUT_DOJO",
       "name": "Dojo_Layout",
-      "width": 41,
-      "height": 41,
+      "width": 24,
+      "height": 28,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Dojo",
       "border_filepath": "data/layouts/Dojo/border.bin",
@@ -9782,10 +9782,10 @@
     {
       "id": "LAYOUT_PROTOTYPE_LAB",
       "name": "PrototypeLab_Layout",
-      "width": 18,
-      "height": 22,
+      "width": 26,
+      "height": 27,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Lab",
+      "secondary_tileset": "gTileset_DeoxysLab",
       "border_filepath": "data/layouts/PrototypeLab/border.bin",
       "blockdata_filepath": "data/layouts/PrototypeLab/map.bin"
     },
