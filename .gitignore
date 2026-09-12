@@ -22,3 +22,11 @@ docs/_test/
 # Local reference checkouts (removed from the public submodule set).
 pokefirered/
 pokemonHnS/
+
+# The base ROM is a commercial game file. Never in project history.
+FlatfootLabs/*.gba
+
+# Screenshot and capture folders: large, binary, and not source.
+custom ui/Website Screenshots/
+custom ui/*.jpg
+Game Guide/

@@ -594,7 +594,70 @@ class Builder:
         return (tid + self.tile_base, xf, yf, self.pal_slots[pi])
 
     # ---------------- output ----------------
-    def write(self, outdir, tiles_per_row=16):
+    STAMP = ".generated"
+
+    def _stamp_paths(self, outdir):
+        out = [os.path.join(outdir, f) for f in
+               ("tiles.png", "metatiles.bin", "metatile_attributes.bin")]
+        pd = os.path.join(outdir, "palettes")
+        if os.path.isdir(pd):
+            out += [os.path.join(pd, f) for f in sorted(os.listdir(pd))
+                    if f.endswith(".pal")]
+        return out
+
+    def _check_not_edited(self, outdir, force):
+        stamp = os.path.join(outdir, self.STAMP)
+        if force or not os.path.exists(stamp):
+            return                      # brand new, or the caller insists
+        try:
+            recorded = dict(ln.split("	", 1) for ln in
+                            open(stamp).read().splitlines() if "	" in ln)
+        except OSError:
+            return
+        changed = []
+        for p in self._stamp_paths(outdir):
+            key = os.path.relpath(p, outdir).replace("\\", "/")
+            if key not in recorded:
+                continue
+            st = os.stat(p)
+            if recorded[key] != "%d %d" % (st.st_size, int(st.st_mtime)):
+                changed.append(key)
+        if changed:
+            raise SystemExit(
+                "REFUSING to overwrite %s: %d file(s) changed since this script "
+                "last generated it -- %s.%s"
+                "Something (porymap's tileset editor, most likely) has edited "
+                "this tileset by hand. Re-running would destroy that work.%s"
+                "Back the directory up, then pass force=True to write() if the "
+                "edits really are meant to go."
+                % (outdir, len(changed), ", ".join(changed[:6]),
+                   os.linesep, os.linesep))
+
+    def _write_stamp(self, outdir):
+        lines = []
+        for p in self._stamp_paths(outdir):
+            if not os.path.exists(p):
+                continue
+            st = os.stat(p)
+            key = os.path.relpath(p, outdir).replace("\\", "/")
+            lines.append("%s	%d %d" % (key, st.st_size, int(st.st_mtime)))
+        with open(os.path.join(outdir, self.STAMP), "w") as f:
+            f.write("# written by tilesetgen; delete to allow an unchecked rebuild\n")
+            f.write("\n".join(lines) + "\n")
+
+    def write(self, outdir, tiles_per_row=16, force=False):
+        """Write the tileset, REFUSING to clobber hand edits.
+
+        Porymap's tileset editor writes to exactly these files, so re-running a
+        build script over a tileset someone has since edited destroys that work
+        silently -- which is what happened to the snow village on 2026-09-11.
+
+        A .generated stamp records the size and mtime of every file this wrote.
+        If any of them has changed since, the tileset has been edited outside
+        the build and the write is refused. Pass force=True only when the edits
+        are genuinely meant to be discarded.
+        """
+        self._check_not_edited(outdir, force)
         os.makedirs(os.path.join(outdir, "palettes"), exist_ok=True)
         n = len(self.tiles)
         rows = (n + tiles_per_row - 1) // tiles_per_row
@@ -640,6 +703,9 @@ class Builder:
             p = os.path.join(outdir, f"palettes/{slot:02d}.gbapal")
             if os.path.exists(p):
                 os.remove(p)
+        # Record what was written, so a later run can tell whether these files
+        # have been edited by hand since.
+        self._write_stamp(outdir)
         print(f"  wrote {outdir}: {n} tiles, {len(self.metas)} metatiles")
         return n, len(self.metas)
 
