@@ -8,26 +8,31 @@ WALNUT_WOODS_OnLoad::
 	call_if_set FLAG_ITEM_WALNUT_WOODS_TM_PROTECT, WALNUT_WOODS_EventScript_SetProtectSnow
 	call_if_set FLAG_WALNUT_WOODS_CUT_BUSH_1, WALNUT_WOODS_EventScript_SetBush1Snow
 	call_if_set FLAG_WALNUT_WOODS_CUT_BUSH_2, WALNUT_WOODS_EventScript_SetBush2Snow
+	call_if_set FLAG_ITEM_WALNUT_WOODS_HM06, WALNUT_WOODS_EventScript_SetHM06Snow
 	end
 
-@ setmetatile helpers (snow ground that matches each spot's surroundings).
-@ NOTE: the map was widened 4 columns on the west after these were first
-@ written -- every x here was stale by -4, so cutting a bush or grabbing a
-@ tile-item cleared the WRONG tile (the Rock Smash pocket stayed sealed).
+@ setmetatile helpers. Coordinates re-read off the map after the 2026-09-13
+@ repaint: the previous set was four ROWS stale (27,21 for a ball now at
+@ 27,25), so every swap would have landed on the wrong tile. All five sit
+@ on the same snow layer, 0x05E.
 WALNUT_WOODS_EventScript_SetBlizzardSnow::
-	setmetatile 27, 21, 94, FALSE
+	setmetatile 27, 25, 0x05E, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetProtectSnow::
-	setmetatile 18, 13, 537, FALSE
+	setmetatile 18, 17, 0x05E, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetBush1Snow::
-	setmetatile 20, 24, 94, FALSE
+	setmetatile 20, 28, 0x05E, FALSE
 	return
 
 WALNUT_WOODS_EventScript_SetBush2Snow::
-	setmetatile 44, 26, 94, FALSE
+	setmetatile 43, 28, 0x05E, FALSE
+	return
+
+WALNUT_WOODS_EventScript_SetHM06Snow::
+	setmetatile 45, 28, 0x05E, FALSE
 	return
 
 @ ===========================================================================
@@ -101,6 +106,18 @@ WALNUT_WOODS_EventScript_TMProtect::
 	giveitem ITEM_TM_PROTECT
 	setflag FLAG_ITEM_WALNUT_WOODS_TM_PROTECT
 	call WALNUT_WOODS_EventScript_SetProtectSnow
+	special DrawWholeMapView
+	releaseall
+	end
+
+@ Was a red ITEM_BALL object sitting on top of the painted ball; now a tile
+@ pickup like the two TMs.
+WALNUT_WOODS_EventScript_HM06::
+	lockall
+	goto_if_set FLAG_ITEM_WALNUT_WOODS_HM06, WALNUT_WOODS_EventScript_NothingHere
+	giveitem ITEM_HM06
+	setflag FLAG_ITEM_WALNUT_WOODS_HM06
+	call WALNUT_WOODS_EventScript_SetHM06Snow
 	special DrawWholeMapView
 	releaseall
 	end

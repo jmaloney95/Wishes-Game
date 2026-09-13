@@ -9359,10 +9359,10 @@
     {
       "id": "LAYOUT_MELTING_MILE",
       "name": "MeltingMile_Layout",
-      "width": 30,
-      "height": 25,
+      "width": 39,
+      "height": 27,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Droid779Snow",
+      "secondary_tileset": "gTileset_SnowStone",
       "border_filepath": "data/layouts/MeltingMile/border.bin",
       "blockdata_filepath": "data/layouts/MeltingMile/map.bin",
       "layout_version": "emerald"
@@ -9482,9 +9482,9 @@
       "id": "LAYOUT_WALNUT_WOODS",
       "name": "WALNUT_WOODS_Layout",
       "width": 59,
-      "height": 34,
+      "height": 38,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Droid779Snow",
+      "secondary_tileset": "gTileset_SnowStone",
       "border_filepath": "data/layouts/WALNUT_WOODS/border.bin",
       "blockdata_filepath": "data/layouts/WALNUT_WOODS/map.bin"
     },
