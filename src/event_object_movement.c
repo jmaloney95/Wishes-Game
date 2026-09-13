@@ -10362,7 +10362,13 @@ static void DoTracksGroundEffect_Footprints(struct ObjectEvent *objEvent, struct
     gFieldEffectArguments[2] = 149;
     gFieldEffectArguments[3] = 2;
     gFieldEffectArguments[4] = objEvent->facingDirection;
-    FieldEffectStart(sandFootprints_FieldEffectData[isDeepSand]);
+    // WoT: MB_FOOTPRINTS is unused by vanilla data, so the snow tiles claim
+    // it -- and get a white print instead of the sand one. Deep sand still
+    // wins if both somehow apply.
+    if (!isDeepSand && MetatileBehavior_IsFootprints(objEvent->previousMetatileBehavior))
+        FieldEffectStart(FLDEFF_SNOW_FOOTPRINTS);
+    else
+        FieldEffectStart(sandFootprints_FieldEffectData[isDeepSand]);
 }
 
 static void DoTracksGroundEffect_FootprintsB(struct ObjectEvent *objEvent, struct Sprite *sprite, bool8 isDeepSand)

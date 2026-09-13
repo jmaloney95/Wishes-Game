@@ -357,6 +357,8 @@ const u32 gFieldEffectObjectPic_LongGrass[] = INCGFX_U32("graphics/field_effects
 const u32 gFieldEffectObjectPic_TallGrass[] = INCGFX_U32("graphics/field_effects/pics/tall_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_ShortGrass[] = INCGFX_U32("graphics/field_effects/pics/short_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_SandFootprints[] = INCGFX_U32("graphics/field_effects/pics/sand_footprints.png", ".4bpp", "-mwidth 2 -mheight 2");
+// Snow prints reuse the sand PIC unchanged -- only the palette differs.
+const u16 gFieldEffectObjectPalette_SnowFootprints[] = INCGFX_U16("graphics/field_effects/palettes/snow_footprints.pal", ".gbapal");
 const u32 gFieldEffectObjectPic_DeepSandFootprints[] = INCGFX_U32("graphics/field_effects/pics/deep_sand_footprints.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_BikeTireTracks[] = INCGFX_U32("graphics/field_effects/pics/bike_tire_tracks.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_SlitherTracks[] = INCGFX_U32("graphics/field_effects/pics/slither_tracks.png", ".4bpp", "-mwidth 2 -mheight 2");

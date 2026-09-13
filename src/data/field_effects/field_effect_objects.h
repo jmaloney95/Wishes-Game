@@ -1,4 +1,5 @@
 const struct SpritePalette gSpritePalette_GeneralFieldEffect0 = {gFieldEffectObjectPalette0, FLDEFF_PAL_TAG_GENERAL_0};
+const struct SpritePalette gSpritePalette_SnowFootprints = {gFieldEffectObjectPalette_SnowFootprints, FLDEFF_PAL_TAG_SNOW_FOOTPRINTS};
 const struct SpritePalette gSpritePalette_GeneralFieldEffect1 = {gFieldEffectObjectPalette1, FLDEFF_PAL_TAG_GENERAL_1};
 const struct SpritePalette gSpritePalette_DistortionGrass = {gFieldEffectObjectPalette_DistortionGrass, FLDEFF_PAL_TAG_DISTORTION_GRASS};
 
@@ -410,6 +411,17 @@ static const union AnimCmd *const sAnimTable_SandFootprints[] =
 const struct SpriteTemplate gFieldEffectObjectTemplate_SandFootprints = {
     .tileTag = TAG_NONE,
     .paletteTag = FLDEFF_PAL_TAG_GENERAL_0,
+    .oam = &gObjectEventBaseOam_16x16,
+    .anims = sAnimTable_SandFootprints,
+    .images = sPicTable_SandFootprints,
+    .callback = UpdateFootprintsTireTracksFieldEffect,
+};
+
+// Same pic and anims as the sand print; only the palette differs, which is
+// all it takes -- the pic is index data and indices 13/14 are the print.
+const struct SpriteTemplate gFieldEffectObjectTemplate_SnowFootprints = {
+    .tileTag = TAG_NONE,
+    .paletteTag = FLDEFF_PAL_TAG_SNOW_FOOTPRINTS,
     .oam = &gObjectEventBaseOam_16x16,
     .anims = sAnimTable_SandFootprints,
     .images = sPicTable_SandFootprints,

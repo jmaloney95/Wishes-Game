@@ -87,6 +87,7 @@ gFieldEffectScriptPointers::
 	.4byte gFldEffScript_SmileyFaceIcon    		        @ FLDEFF_SMILEY_FACE_ICON
 	.4byte gFieldEffectScript_HallOfFameRecordFrlg      @ FLDEFF_HALL_OF_FAME_RECORD_FRLG
 	.4byte gFldEffScript_PhotoFlash      		        @ FLDEFF_PHOTO_FLASH
+	.4byte gFieldEffectScript_SnowFootprints            @ FLDEFF_SNOW_FOOTPRINTS
 
 gFieldEffectScript_ExclamationMarkIcon1::
 	field_eff_callnative FldEff_ExclamationMarkIcon
@@ -142,6 +143,10 @@ gFieldEffectScript_JumpTallGrass::
 
 gFieldEffectScript_SandFootprints::
 	field_eff_loadfadedpal_callnative gSpritePalette_GeneralFieldEffect0, FldEff_SandFootprints
+	field_eff_end
+
+gFieldEffectScript_SnowFootprints::
+	field_eff_loadfadedpal_callnative gSpritePalette_SnowFootprints, FldEff_SnowFootprints
 	field_eff_end
 
 gFieldEffectScript_JumpBigSplash::
