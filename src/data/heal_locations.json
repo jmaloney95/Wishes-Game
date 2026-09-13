@@ -353,7 +353,7 @@
     {
       "id": "HEAL_LOCATION_MUNEN_VILLAGE",
       "map": "MAP_MUNEN_VILLAGE",
-      "x": 16,
+      "x": 17,
       "y": 19,
       "respawn_map": "MAP_MUNEN_VILLAGE",
       "respawn_x": 16,
@@ -390,7 +390,7 @@
       "id": "HEAL_LOCATION_WALNUT_WOODS",
       "map": "MAP_WALNUT_WOODS",
       "x": 23,
-      "y": 3
+      "y": 7
     },
     {
       "id": "HEAL_LOCATION_FROSTWOOD_TOWN",

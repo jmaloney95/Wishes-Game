@@ -23,7 +23,7 @@ MunenVillage_OnTransition::
 @ OnResume (not OnLoad): the "!" sprite must be created after ResumeMap's
 @ ResetSpriteData, which OnLoad runs before.
 MunenVillage_OnResume::
-	questindicator 7, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
+	questindicator LOCALID_MUNEN_SOPHOCLES, SIDE_QUEST_ONE_THAT_GOT_AWAY  @ Fisherman's son
 	end
 
 @ Runs every time the map loads, before player can see anything.
@@ -31,6 +31,16 @@ MunenVillage_OnResume::
 @ Their respective scripts clearflag + addobject to spawn them when their
 @ trigger fires, then setflag + removeobject again when they leave.
 MunenVillage_OnLoad::
+	@ Painted balls already collected stay collected across map loads.
+	@ Same for boulders already smashed.
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_1, MunenVillage_EventScript_ClearBoulder1
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_2, MunenVillage_EventScript_ClearBoulder2
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_3, MunenVillage_EventScript_ClearBoulder3
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_4, MunenVillage_EventScript_ClearBoulder4
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_5, MunenVillage_EventScript_ClearBoulder5
+	call_if_set FLAG_ITEM_MUNEN_VILLAGE_TM_DIG, MunenVillage_EventScript_ClearItemTMDig
+	call_if_set FLAG_ITEM_MUNEN_VILLAGE_SACRED_ASH, MunenVillage_EventScript_ClearItemSacredAsh
+	call_if_set FLAG_ITEM_MUNEN_VILLAGE_LIGHT_BALL, MunenVillage_EventScript_ClearItemLightBall
 	setflag FLAG_HIDE_RIVAL_HARU
 	setflag FLAG_HIDE_PROFESSOR
 	@ TEMP (testing): give the Town Map so the region map is viewable from the
@@ -125,6 +135,10 @@ MunenVillage_EventScript_ClarksonAfterStarter::
 MunenVillage_EventScript_IceTyrunt::
 	lock
 	faceplayer
+	@ setspeaker is sticky; without this the plate from whoever spoke
+	@ last (Clarkson in the intro, Draco after the rival scene) sits
+	@ over what is really narration.
+	setspeaker SP_NAME_NONE
 	setvar VAR_0x8004, 0
 	special WotSetStarterSpecies
 	special WotGetStarterShiny
@@ -141,7 +155,7 @@ MunenVillage_EventScript_IceTyrunt::
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_GIBLE and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, MunenVillage_EventScript_GiveIceTyruntRandom
-	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_DRAGON_BREATH, move4=MOVE_THOUSAND_ARROWS, shinyMode=VAR_0x8007
+	givemon SPECIES_GIBLE, 5, move1=MOVE_TACKLE, move2=MOVE_SAND_ATTACK, move3=MOVE_BITE, move4=MOVE_THOUSAND_ARROWS, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, SPECIES_GIBLE
 	goto MunenVillage_EventScript_StarterReceived
 
@@ -153,6 +167,10 @@ MunenVillage_EventScript_GiveIceTyruntRandom::
 MunenVillage_EventScript_IceAmaura::
 	lock
 	faceplayer
+	@ setspeaker is sticky; without this the plate from whoever spoke
+	@ last (Clarkson in the intro, Draco after the rival scene) sits
+	@ over what is really narration.
+	setspeaker SP_NAME_NONE
 	setvar VAR_0x8004, 1
 	special WotSetStarterSpecies
 	special WotGetStarterShiny
@@ -169,7 +187,7 @@ MunenVillage_EventScript_IceAmaura::
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_FRIGIBAX and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, MunenVillage_EventScript_GiveIceAmauraRandom
-	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_GLACIATE, shinyMode=VAR_0x8007
+	givemon SPECIES_FRIGIBAX, 5, move1=MOVE_TACKLE, move2=MOVE_LEER, move3=MOVE_ICY_WIND, move4=MOVE_GLACIATE, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, SPECIES_FRIGIBAX
 	goto MunenVillage_EventScript_StarterReceived
 
@@ -181,6 +199,10 @@ MunenVillage_EventScript_GiveIceAmauraRandom::
 MunenVillage_EventScript_IceAnorith::
 	lock
 	faceplayer
+	@ setspeaker is sticky; without this the plate from whoever spoke
+	@ last (Clarkson in the intro, Draco after the rival scene) sits
+	@ over what is really narration.
+	setspeaker SP_NAME_NONE
 	setvar VAR_0x8004, 2
 	special WotSetStarterSpecies
 	special WotGetStarterShiny
@@ -197,7 +219,7 @@ MunenVillage_EventScript_IceAnorith::
 	@ A randomized starter gets its own level-up moves; the authored
 	@ set belongs to SPECIES_AXEW and would be nonsense on anything else.
 	goto_if_set FLAG_WOT_RAND_STARTERS, MunenVillage_EventScript_GiveIceAnorithRandom
-	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_DRAGON_BREATH, move4=MOVE_DRAGON_DARTS, shinyMode=VAR_0x8007
+	givemon SPECIES_AXEW, 5, move1=MOVE_SCRATCH, move2=MOVE_LEER, move3=MOVE_ASSURANCE, move4=MOVE_DRAGON_DARTS, shinyMode=VAR_0x8007
 	bufferspeciesname STR_VAR_1, SPECIES_AXEW
 	goto MunenVillage_EventScript_StarterReceived
 
@@ -213,9 +235,11 @@ MunenVillage_EventScript_StarterRefuse::
 @ Visible "received the X!" feedback + flavor text, then chains into the
 @ rival battle. Items (Poke Balls / Potions) are handled by the Professor
 @ when the player visits the lab later, NOT here.
-@ NOTE: LOCALIDs are 1-indexed by position in map.json object_events:
-@   1 Mom, 2 IceTyrunt, 3 IceAmaura, 4 IceAnorith, 5 VillageKid,
-@   6 OldLady, 7 Fisherman, 8 Caretaker, 9 Haru.
+@ Object ids are LOCALID_MUNEN_* constants, generated from the local_id
+@ fields in map.json. They were bare numbers taken from Munen_village_2's
+@ ordering, which broke the moment this map was built with a different set
+@ of objects -- Mom and VillageKid never came across, so everything after
+@ them shifted. Do not put a bare number back.
 MunenVillage_EventScript_StarterReceived::
 	setflag FLAG_RECEIVED_STARTER
 	setflag FLAG_SYS_POKEMON_GET     @ unlocks the POKEMON option in the start menu
@@ -224,9 +248,9 @@ MunenVillage_EventScript_StarterReceived::
 	waitfanfare
 	msgbox MunenText_GotStarter, MSGBOX_DEFAULT
 	msgbox MunenText_StarterChosen, MSGBOX_DEFAULT
-	removeobject 2                   @ ice block Tyrunt
-	removeobject 3                   @ ice block Amaura
-	removeobject 4                   @ ice block Anorith
+	@ Only the ball the player took. Draco claims a second one when he
+	@ makes his choice, and the last goes before he leaves.
+	call MunenVillage_EventScript_RemoveChosenBall
 	@ Chain straight into the rival cutscene -- still under lock.
 	goto MunenVillage_EventScript_HaruIntro
 	end
@@ -284,7 +308,15 @@ MunenVillage_EventScript_OldLady::
 	msgbox MunenText_OldLady, MSGBOX_DEFAULT
 	closemessage
 	setflag FLAG_OLD_LADY_SPOKE
-	removeobject 6
+	@ Spin on the spot and go. walk_in_place_faster_* is the quickest
+	@ in-place turn the engine has, so "faster" here means fewer frames
+	@ around it: the sound starts with the spin and she is gone the moment
+	@ it ends, rather than holding a pose first.
+	playse SE_WARP_OUT
+	applymovement LOCALID_MUNEN_OLD_LADY, MunenVillage_Movement_OldLadySpin
+	waitmovement 0
+	removeobject LOCALID_MUNEN_OLD_LADY
+	delay 8
 	release
 	end
 
@@ -413,10 +445,10 @@ MunenVillage_EventScript_ProfessorScene::
 	waitmovement 0
 	@ Spawn Clarkson at his template position (24, 0) -- the top edge.
 	clearflag FLAG_HIDE_PROFESSOR
-	addobject 10
+	addobject LOCALID_MUNEN_CLARKSON
 	delay 15
 	@ Clarkson walks down to meet the player.
-	applymovement 10, MunenVillage_Movement_ProfessorApproach
+	applymovement LOCALID_MUNEN_CLARKSON, MunenVillage_Movement_ProfessorApproach
 	waitmovement 0
 	setspeaker SP_NAME_CLARKSON
 	showportrait PORTRAIT_CLARKSON_GENGAR
@@ -435,12 +467,12 @@ MunenVillage_EventScript_ProfessorScene::
 	hideportrait
 	startquest QUEST_WAKING_MOUNTAIN
 	@ Clarkson walks back north and exits the camera view.
-	applymovement 10, MunenVillage_Movement_ProfessorLeave
+	applymovement LOCALID_MUNEN_CLARKSON, MunenVillage_Movement_ProfessorLeave
 	waitmovement 0
 	@ Cleanup: mark complete, re-hide, remove from active list.
 	setflag FLAG_PROFESSOR_GAVE_ITEMS
 	setflag FLAG_HIDE_PROFESSOR
-	removeobject 10
+	removeobject LOCALID_MUNEN_CLARKSON
 	releaseall
 	end
 
@@ -458,7 +490,7 @@ MunenVillage_EventScript_HaruIntro::
 	@ of the ice blocks, comfortably inside the player's visible camera
 	@ window so he renders as soon as addobject runs.
 	clearflag FLAG_HIDE_RIVAL_HARU
-	addobject 9
+	addobject LOCALID_MUNEN_DRACO
 	setflag FLAG_MET_RIVAL_HARU
 	@ Mark the rival as "faced" up front so LOSING the battle (which whites the
 	@ player out before EventScript_HaruAfterBattle can run) doesn't permanently
@@ -470,7 +502,9 @@ MunenVillage_EventScript_HaruIntro::
 	msgbox MunenText_HaruShout, MSGBOX_DEFAULT
 	closemessage
 	@ Haru runs up to the player (4 fast steps north from (25,9) to (25,5)).
-	applymovement 9, MunenVillage_Movement_HaruApproach
+	@ Come up in front of whichever ball the player took, not always the
+	@ middle -- the player is standing below the one they chose.
+	call MunenVillage_EventScript_HaruApproachRoute
 	waitmovement 0
 	@ Player turns to face Haru (south).
 	applymovement OBJ_EVENT_ID_PLAYER, MunenVillage_Movement_PlayerFaceDown
@@ -478,6 +512,11 @@ MunenVillage_EventScript_HaruIntro::
 	setspeaker SP_NAME_DRACO
 	msgbox MunenText_HaruIntro, MSGBOX_DEFAULT
 	closemessage
+	@ He takes the counter-pick as he says it. SE_BALL is the Poke Ball
+	@ handling sound; SE_EXIT was the leaving-a-room stinger.
+	playse SE_BALL
+	call MunenVillage_EventScript_RemoveDracoBall
+	delay 20
 	@ Keep his plate red through the battle-start / defeat text too.
 	setspeaker SP_NAME_DRACO
 	@ Branch into the correct counter-pick battle based on player's starter.
@@ -514,12 +553,15 @@ MunenVillage_EventScript_HaruAfterBattle::
 	msgbox MunenText_HaruFarewell, MSGBOX_DEFAULT
 	closemessage
 	@ Haru walks back the way he came, then off-stage.
-	applymovement 9, MunenVillage_Movement_HaruLeave
+	@ Clear the last ball first, then leave up a column the player is not
+	@ standing in -- object events block movement.
+	call MunenVillage_EventScript_RemoveLastBall
+	call MunenVillage_EventScript_HaruLeaveRoute
 	waitmovement 0
 	@ Mark him battled and re-hide; on next map load he stays gone.
 	setflag FLAG_BATTLED_HARU
 	setflag FLAG_HIDE_RIVAL_HARU
-	removeobject 9
+	removeobject LOCALID_MUNEN_DRACO
 	releaseall
 	end
 
@@ -704,3 +746,292 @@ MunenVillage_Text_DadLastMon:
 
 MunenVillage_Text_DadAfter:
 	.string "Every morning I watch the water and\nthink about that day.\pThank you, {PLAYER}. Truly.$"
+
+@==============================
+@ Painted item balls
+@ The ball is a METATILE, not an object, so picking it up has to swap
+@ the tile for plain snow and redraw. map.bin is static, so OnLoad puts
+@ the snow back for anything already taken -- otherwise the ball would
+@ reappear on every map load.
+@==============================
+MunenVillage_EventScript_ItemTMDig::
+	goto_if_set FLAG_ITEM_MUNEN_VILLAGE_TM_DIG, MunenVillage_EventScript_ItemAlreadyTaken
+	finditem ITEM_TM_DIG
+	@ Std_FindItem CLOBBERS VAR_RESULT; its own success flag is VAR_0x8007,
+	@ copied from checkitemspace before the pickup. Guarding on VAR_RESULT
+	@ meant the flag and the tile swap were skipped, so the ball could be
+	@ taken over and over.
+	goto_if_eq VAR_0x8007, FALSE, MunenVillage_EventScript_ItemAlreadyTaken
+	setflag FLAG_ITEM_MUNEN_VILLAGE_TM_DIG
+	setmetatile 10, 20, 0x2F9, FALSE
+	special DrawWholeMapView
+	end
+
+MunenVillage_EventScript_ItemSacredAsh::
+	goto_if_set FLAG_ITEM_MUNEN_VILLAGE_SACRED_ASH, MunenVillage_EventScript_ItemAlreadyTaken
+	finditem ITEM_SACRED_ASH
+	@ Std_FindItem CLOBBERS VAR_RESULT; its own success flag is VAR_0x8007,
+	@ copied from checkitemspace before the pickup. Guarding on VAR_RESULT
+	@ meant the flag and the tile swap were skipped, so the ball could be
+	@ taken over and over.
+	goto_if_eq VAR_0x8007, FALSE, MunenVillage_EventScript_ItemAlreadyTaken
+	setflag FLAG_ITEM_MUNEN_VILLAGE_SACRED_ASH
+	setmetatile 28, 9, 0x225, FALSE
+	special DrawWholeMapView
+	end
+
+MunenVillage_EventScript_ItemLightBall::
+	goto_if_set FLAG_ITEM_MUNEN_VILLAGE_LIGHT_BALL, MunenVillage_EventScript_ItemAlreadyTaken
+	finditem ITEM_LIGHT_BALL
+	@ Std_FindItem CLOBBERS VAR_RESULT; its own success flag is VAR_0x8007,
+	@ copied from checkitemspace before the pickup. Guarding on VAR_RESULT
+	@ meant the flag and the tile swap were skipped, so the ball could be
+	@ taken over and over.
+	goto_if_eq VAR_0x8007, FALSE, MunenVillage_EventScript_ItemAlreadyTaken
+	setflag FLAG_ITEM_MUNEN_VILLAGE_LIGHT_BALL
+	setmetatile 18, 5, 0x108, FALSE
+	special DrawWholeMapView
+	end
+
+MunenVillage_EventScript_ItemAlreadyTaken::
+	end
+
+MunenVillage_EventScript_ClearItemTMDig::
+	setmetatile 10, 20, 0x2F9, FALSE
+	return
+
+MunenVillage_EventScript_ClearItemSacredAsh::
+	setmetatile 28, 9, 0x225, FALSE
+	return
+
+MunenVillage_EventScript_ClearItemLightBall::
+	setmetatile 18, 5, 0x108, FALSE
+	return
+
+@==============================
+@ Starter ball bookkeeping
+@ VAR_STARTER_CHOICE is 1/2/3 = left/middle/right. Draco counter-picks the
+@ NEXT one round-robin, which is what the battle branches already assume.
+@==============================
+MunenVillage_EventScript_RemoveChosenBall::
+	goto_if_eq VAR_STARTER_CHOICE, 1, MunenVillage_EventScript_RemoveBall1
+	goto_if_eq VAR_STARTER_CHOICE, 2, MunenVillage_EventScript_RemoveBall2
+	goto_if_eq VAR_STARTER_CHOICE, 3, MunenVillage_EventScript_RemoveBall3
+	return
+
+MunenVillage_EventScript_RemoveDracoBall::
+	goto_if_eq VAR_STARTER_CHOICE, 1, MunenVillage_EventScript_RemoveBall2
+	goto_if_eq VAR_STARTER_CHOICE, 2, MunenVillage_EventScript_RemoveBall3
+	goto_if_eq VAR_STARTER_CHOICE, 3, MunenVillage_EventScript_RemoveBall1
+	return
+
+MunenVillage_EventScript_RemoveLastBall::
+	goto_if_eq VAR_STARTER_CHOICE, 1, MunenVillage_EventScript_RemoveBall3
+	goto_if_eq VAR_STARTER_CHOICE, 2, MunenVillage_EventScript_RemoveBall1
+	goto_if_eq VAR_STARTER_CHOICE, 3, MunenVillage_EventScript_RemoveBall2
+	return
+
+MunenVillage_EventScript_RemoveBall1::
+	removeobject LOCALID_MUNEN_ICE_TYRUNT
+	return
+
+MunenVillage_EventScript_RemoveBall2::
+	removeobject LOCALID_MUNEN_ICE_AMAURA
+	return
+
+MunenVillage_EventScript_RemoveBall3::
+	removeobject LOCALID_MUNEN_ICE_ANORITH
+	return
+
+@==============================
+@ Draco's routes
+@ The balls sit at (34,10) (35,10) (36,10) and the player stands directly
+@ below the one they took. Draco starts at (35,15).
+@==============================
+MunenVillage_EventScript_HaruApproachRoute::
+	goto_if_eq VAR_STARTER_CHOICE, 1, MunenVillage_EventScript_HaruApproachLeft
+	goto_if_eq VAR_STARTER_CHOICE, 3, MunenVillage_EventScript_HaruApproachRight
+	applymovement LOCALID_MUNEN_DRACO, MunenVillage_Movement_HaruApproach
+	waitmovement 0
+	return
+
+MunenVillage_EventScript_HaruApproachLeft::
+	applymovement LOCALID_MUNEN_DRACO, MunenVillage_Movement_HaruApproachLeft
+	waitmovement 0
+	return
+
+MunenVillage_EventScript_HaruApproachRight::
+	applymovement LOCALID_MUNEN_DRACO, MunenVillage_Movement_HaruApproachRight
+	waitmovement 0
+	return
+
+@ Leave up a column the player is NOT standing in. Chose left -> go up the
+@ right; otherwise the left is clear.
+MunenVillage_EventScript_HaruLeaveRoute::
+	goto_if_eq VAR_STARTER_CHOICE, 1, MunenVillage_EventScript_HaruLeaveRight
+	applymovement LOCALID_MUNEN_DRACO, MunenVillage_Movement_HaruLeaveLeft
+	waitmovement 0
+	return
+
+MunenVillage_EventScript_HaruLeaveRight::
+	applymovement LOCALID_MUNEN_DRACO, MunenVillage_Movement_HaruLeaveRight
+	waitmovement 0
+	return
+
+MunenVillage_Movement_HaruApproachLeft:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_left
+	face_up
+	step_end
+
+MunenVillage_Movement_HaruApproachRight:
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_right
+	face_up
+	step_end
+
+@ From wherever he stopped, step into the left column then straight north.
+MunenVillage_Movement_HaruLeaveLeft:
+	walk_fast_left
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+MunenVillage_Movement_HaruLeaveRight:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	walk_fast_up
+	step_end
+
+MunenVillage_Movement_OldLadySpin:
+	walk_in_place_faster_left
+	walk_in_place_faster_up
+	walk_in_place_faster_right
+	walk_in_place_faster_down
+	walk_in_place_faster_left
+	walk_in_place_faster_up
+	walk_in_place_faster_right
+	walk_in_place_faster_down
+	walk_in_place_faster_left
+	walk_in_place_faster_up
+	walk_in_place_faster_right
+	walk_in_place_faster_down
+	step_end
+
+@==============================
+@ Rock Smash boulders (the five 0x2C3 rocks)
+@ Painted tiles, not objects, so the stock EventScript_RockSmash can't be
+@ used as-is: it ends with applymovement/removeobject on VAR_LAST_TALKED,
+@ which assumes an object. This keeps its check, prompt and field-move
+@ animation, then swaps the tile instead. The field effect plays the
+@ smash sound and resumes the script itself. In WoT, checkfieldmove waives
+@ the party-move requirement once the badge is earned (Badge 3 here).
+@==============================
+MunenVillage_EventScript_Boulder1::
+	lockall
+	goto_if_set FLAG_MUNEN_VILLAGE_BOULDER_1, MunenVillage_EventScript_BoulderGone
+	@ Can't / cancel end the script inside the call, so reaching the
+	@ next line means it was smashed.
+	call MunenVillage_EventScript_TrySmashBoulder
+	setflag FLAG_MUNEN_VILLAGE_BOULDER_1
+	setmetatile 55, 23, 0x108, FALSE
+	goto MunenVillage_EventScript_BoulderSmashed
+
+MunenVillage_EventScript_Boulder2::
+	lockall
+	goto_if_set FLAG_MUNEN_VILLAGE_BOULDER_2, MunenVillage_EventScript_BoulderGone
+	@ Can't / cancel end the script inside the call, so reaching the
+	@ next line means it was smashed.
+	call MunenVillage_EventScript_TrySmashBoulder
+	setflag FLAG_MUNEN_VILLAGE_BOULDER_2
+	setmetatile 53, 24, 0x108, FALSE
+	goto MunenVillage_EventScript_BoulderSmashed
+
+MunenVillage_EventScript_Boulder3::
+	lockall
+	goto_if_set FLAG_MUNEN_VILLAGE_BOULDER_3, MunenVillage_EventScript_BoulderGone
+	@ Can't / cancel end the script inside the call, so reaching the
+	@ next line means it was smashed.
+	call MunenVillage_EventScript_TrySmashBoulder
+	setflag FLAG_MUNEN_VILLAGE_BOULDER_3
+	setmetatile 54, 24, 0x108, FALSE
+	goto MunenVillage_EventScript_BoulderSmashed
+
+MunenVillage_EventScript_Boulder4::
+	lockall
+	goto_if_set FLAG_MUNEN_VILLAGE_BOULDER_4, MunenVillage_EventScript_BoulderGone
+	@ Can't / cancel end the script inside the call, so reaching the
+	@ next line means it was smashed.
+	call MunenVillage_EventScript_TrySmashBoulder
+	setflag FLAG_MUNEN_VILLAGE_BOULDER_4
+	setmetatile 55, 24, 0x108, FALSE
+	goto MunenVillage_EventScript_BoulderSmashed
+
+MunenVillage_EventScript_Boulder5::
+	lockall
+	goto_if_set FLAG_MUNEN_VILLAGE_BOULDER_5, MunenVillage_EventScript_BoulderGone
+	@ Can't / cancel end the script inside the call, so reaching the
+	@ next line means it was smashed.
+	call MunenVillage_EventScript_TrySmashBoulder
+	setflag FLAG_MUNEN_VILLAGE_BOULDER_5
+	setmetatile 53, 25, 0x108, FALSE
+	goto MunenVillage_EventScript_BoulderSmashed
+
+MunenVillage_EventScript_TrySmashBoulder::
+	checkfieldmove FIELD_MOVE_ROCK_SMASH, TRUE
+	goto_if_eq VAR_RESULT, PARTY_SIZE, EventScript_CantSmashRock
+	setfieldeffectargument 0, VAR_RESULT
+	bufferpartymonnick STR_VAR_1, VAR_RESULT
+	buffermovename STR_VAR_2, MOVE_ROCK_SMASH
+	msgbox Text_WantToSmash, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_CancelSmash
+	closemessage
+	setfieldeffectargument 3, FALSE
+	dofieldeffect FLDEFF_USE_ROCK_SMASH
+	waitstate
+	return
+
+MunenVillage_EventScript_BoulderSmashed::
+	special DrawWholeMapView
+	releaseall
+	end
+
+MunenVillage_EventScript_BoulderGone::
+	releaseall
+	end
+
+MunenVillage_EventScript_ClearBoulder1::
+	setmetatile 55, 23, 0x108, FALSE
+	return
+
+MunenVillage_EventScript_ClearBoulder2::
+	setmetatile 53, 24, 0x108, FALSE
+	return
+
+MunenVillage_EventScript_ClearBoulder3::
+	setmetatile 54, 24, 0x108, FALSE
+	return
+
+MunenVillage_EventScript_ClearBoulder4::
+	setmetatile 55, 24, 0x108, FALSE
+	return
+
+MunenVillage_EventScript_ClearBoulder5::
+	setmetatile 53, 25, 0x108, FALSE
+	return
+

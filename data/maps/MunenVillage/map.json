@@ -15,12 +15,13 @@
   "connections": [
     {
       "map": "MAP_MELTING_MILE",
-      "offset": 27,
+      "offset": 23,
       "direction": "up"
     }
   ],
   "object_events": [
     {
+      "local_id": "LOCALID_MUNEN_ICE_TYRUNT",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 34,
       "y": 10,
@@ -34,6 +35,7 @@
       "flag": "FLAG_RECEIVED_STARTER"
     },
     {
+      "local_id": "LOCALID_MUNEN_ICE_AMAURA",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 35,
       "y": 10,
@@ -47,6 +49,7 @@
       "flag": "FLAG_RECEIVED_STARTER"
     },
     {
+      "local_id": "LOCALID_MUNEN_ICE_ANORITH",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 36,
       "y": 10,
@@ -60,6 +63,7 @@
       "flag": "FLAG_RECEIVED_STARTER"
     },
     {
+      "local_id": "LOCALID_MUNEN_DRACO",
       "graphics_id": "OBJ_EVENT_GFX_WOT_DRACO",
       "x": 35,
       "y": 15,
@@ -73,6 +77,7 @@
       "flag": "FLAG_HIDE_RIVAL_HARU"
     },
     {
+      "local_id": "LOCALID_MUNEN_CLARKSON",
       "graphics_id": "OBJ_EVENT_GFX_PROF_BIRCH",
       "x": 35,
       "y": 3,
@@ -86,6 +91,7 @@
       "flag": "FLAG_HIDE_PROFESSOR"
     },
     {
+      "local_id": "LOCALID_MUNEN_TAILLOW",
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(TAILLOW)",
       "x": 17,
       "y": 15,
@@ -99,6 +105,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_MUNEN_OLD_LADY",
       "graphics_id": "OBJ_EVENT_GFX_EXPERT_F",
       "x": 22,
       "y": 21,
@@ -112,6 +119,7 @@
       "flag": "FLAG_OLD_LADY_SPOKE"
     },
     {
+      "local_id": "LOCALID_MUNEN_SOPHOCLES",
       "graphics_id": "OBJ_EVENT_GFX_SOPHOCLES",
       "x": 23,
       "y": 12,
@@ -125,6 +133,7 @@
       "flag": "0"
     },
     {
+      "local_id": "LOCALID_MUNEN_FISHERMAN_DAD",
       "graphics_id": "OBJ_EVENT_GFX_FISHERMAN",
       "x": 22,
       "y": 12,
@@ -138,11 +147,12 @@
       "flag": "FLAG_HIDE_MUNEN_FISHERMAN_DAD"
     },
     {
+      "local_id": "LOCALID_MUNEN_CARETAKER",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
-      "x": 8,
-      "y": 12,
+      "x": 12,
+      "y": 11,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_type": "MOVEMENT_TYPE_WANDER_RIGHT_AND_LEFT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -165,23 +175,21 @@
       "elevation": 0,
       "dest_map": "MAP_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 31,
+      "y": 19,
+      "elevation": 0,
+      "dest_map": "MAP_LITTLEROOT_TOWN_MAYS_HOUSE_1F",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
     {
       "type": "trigger",
-      "x": 33,
-      "y": 4,
-      "elevation": 3,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "MunenVillage_EventScript_ExitNorth"
-    },
-    {
-      "type": "trigger",
       "x": 34,
       "y": 4,
-      "elevation": 3,
+      "elevation": 0,
       "var": "VAR_TEMP_1",
       "var_value": "0",
       "script": "MunenVillage_EventScript_ExitNorth"
@@ -190,7 +198,7 @@
       "type": "trigger",
       "x": 35,
       "y": 4,
-      "elevation": 3,
+      "elevation": 0,
       "var": "VAR_TEMP_1",
       "var_value": "0",
       "script": "MunenVillage_EventScript_ExitNorth"
@@ -199,16 +207,7 @@
       "type": "trigger",
       "x": 36,
       "y": 4,
-      "elevation": 3,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "MunenVillage_EventScript_ExitNorth"
-    },
-    {
-      "type": "trigger",
-      "x": 37,
-      "y": 4,
-      "elevation": 3,
+      "elevation": 0,
       "var": "VAR_TEMP_1",
       "var_value": "0",
       "script": "MunenVillage_EventScript_ExitNorth"
@@ -217,16 +216,16 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 18,
-      "y": 21,
+      "x": 19,
+      "y": 20,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "MunenVillage_EventScript_JoeHouseSign"
     },
     {
       "type": "sign",
-      "x": 29,
-      "y": 21,
+      "x": 34,
+      "y": 20,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "MunenVillage_EventScript_RivalHouseSign"
@@ -238,6 +237,70 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "MunenVillage_EventScript_LabSign"
+    },
+    {
+      "type": "sign",
+      "x": 10,
+      "y": 20,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_ItemTMDig"
+    },
+    {
+      "type": "sign",
+      "x": 28,
+      "y": 9,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_ItemSacredAsh"
+    },
+    {
+      "type": "sign",
+      "x": 18,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_ItemLightBall"
+    },
+    {
+      "type": "sign",
+      "x": 55,
+      "y": 23,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_Boulder1"
+    },
+    {
+      "type": "sign",
+      "x": 53,
+      "y": 24,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_Boulder2"
+    },
+    {
+      "type": "sign",
+      "x": 54,
+      "y": 24,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_Boulder3"
+    },
+    {
+      "type": "sign",
+      "x": 55,
+      "y": 24,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_Boulder4"
+    },
+    {
+      "type": "sign",
+      "x": 53,
+      "y": 25,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "MunenVillage_EventScript_Boulder5"
     }
   ],
   "region": "REGION_HOENN"

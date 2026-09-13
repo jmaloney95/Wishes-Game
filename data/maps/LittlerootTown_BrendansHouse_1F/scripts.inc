@@ -5,7 +5,8 @@ LittlerootTown_BrendansHouse_1F_MapScripts::
 	.byte 0
 
 LittlerootTown_BrendansHouse_1F_OnLoad:
-	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
+	@ WoT: no moving-in scene here, so no packing boxes. The vanilla Emerald
+	@ intro that placed them does not run in this game.
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
 	end
 

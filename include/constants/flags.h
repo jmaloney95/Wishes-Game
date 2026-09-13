@@ -2615,4 +2615,16 @@
 #define FLAG_ITEM_DISTORTION_WORLD_4_RIFT_CORE  FLAG_UNUSED_0x283 // relic ball in layer 4 (placeholder spot 23,18)
 #define FLAG_ITEM_DISTORTION_WORLD_5_RIFT_HEART FLAG_UNUSED_0x284 // relic ball in layer 5 (placeholder spot 26,19)
 
+// === Munen Village item balls (2026-09-12) ===
+#define FLAG_ITEM_MUNEN_VILLAGE_TM_DIG          FLAG_UNUSED_0x468 // item ball at (10,20)
+#define FLAG_ITEM_MUNEN_VILLAGE_SACRED_ASH      FLAG_UNUSED_0x470 // item ball at (28,9)
+#define FLAG_ITEM_MUNEN_VILLAGE_LIGHT_BALL      FLAG_UNUSED_0x472 // item ball at (18,5)
+
+// === Munen Village Rock Smash boulders (2026-09-13) ===
+#define FLAG_MUNEN_VILLAGE_BOULDER_1        FLAG_UNUSED_0x479 // 0x2C3 rock at (55,23)
+#define FLAG_MUNEN_VILLAGE_BOULDER_2        FLAG_UNUSED_0x4A8 // 0x2C3 rock at (53,24)
+#define FLAG_MUNEN_VILLAGE_BOULDER_3        FLAG_UNUSED_0x4A9 // 0x2C3 rock at (54,24)
+#define FLAG_MUNEN_VILLAGE_BOULDER_4        FLAG_UNUSED_0x4AA // 0x2C3 rock at (55,24)
+#define FLAG_MUNEN_VILLAGE_BOULDER_5        FLAG_UNUSED_0x4AB // 0x2C3 rock at (53,25)
+
 #endif // GUARD_CONSTANTS_FLAGS_H

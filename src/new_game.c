@@ -151,8 +151,11 @@ static void WarpToTruck(void)
         // OnFrame table gates it on VAR_MUNEN_INTRO_STATE, not on where the
         // player is standing, so it still fires the first time they step
         // outside and it warps them to the doorstep itself when it ends.
-        SetWarpDestination(MAP_GROUP(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F),
-                           MAP_NUM(MAP_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F), WARP_ID_NONE, 3, 4);
+        // Start on the doorstep of the player's house in Munen Village, one tile
+        // below its warp at (16,19). The intro is an ON_FRAME_TABLE script gated
+        // on VAR_MUNEN_INTRO_STATE, not on position, so it fires immediately.
+        SetWarpDestination(MAP_GROUP(MAP_MUNEN_VILLAGE),
+                           MAP_NUM(MAP_MUNEN_VILLAGE), WARP_ID_NONE, 16, 20);
     WarpIntoMap();
 }
 
