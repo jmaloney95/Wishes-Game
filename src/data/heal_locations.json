@@ -390,13 +390,13 @@
       "id": "HEAL_LOCATION_WALNUT_WOODS",
       "map": "MAP_WALNUT_WOODS",
       "x": 23,
-      "y": 7
+      "y": 9
     },
     {
       "id": "HEAL_LOCATION_FROSTWOOD_TOWN",
       "map": "MAP_FROSTWOOD_TOWN",
-      "x": 16,
-      "y": 26
+      "x": 22,
+      "y": 17
     },
     {
       "id": "HEAL_LOCATION_TRADEWIND_TOWN",

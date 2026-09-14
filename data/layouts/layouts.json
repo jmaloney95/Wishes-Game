@@ -9481,7 +9481,7 @@
     {
       "id": "LAYOUT_WALNUT_WOODS",
       "name": "WALNUT_WOODS_Layout",
-      "width": 59,
+      "width": 73,
       "height": 38,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_SnowStone",
