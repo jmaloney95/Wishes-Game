@@ -1120,6 +1120,11 @@ enum __attribute__((packed)) Item
     ITEM_SNAG_BALL = 918,
     // Wishes of Tomorrow: the fisherman's thanks -- starts the Route 2 yacht.
     ITEM_YACHT_KEY = 919,
+    // Wishes of Tomorrow: RedFatality's lift ticket -- unlocks the Frostwood Gym once he has it.
+    ITEM_EPIC_PASS = 920,
+    // Wishes of Tomorrow: the Frostwood bar's drinks (OldaleTown_Mart)
+    ITEM_DOMESTIC = 921,       // works and costs like a Potion
+    ITEM_CRAFT = 922,          // works and costs like a Super Potion
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };
