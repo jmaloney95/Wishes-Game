@@ -353,7 +353,7 @@
     {
       "id": "HEAL_LOCATION_MUNEN_VILLAGE",
       "map": "MAP_MUNEN_VILLAGE",
-      "x": 17,
+      "x": 16,
       "y": 19,
       "respawn_map": "MAP_MUNEN_VILLAGE",
       "respawn_x": 16,
@@ -383,7 +383,7 @@
     {
       "id": "HEAL_LOCATION_SENNEN_VILLAGE",
       "map": "MAP_SENNEN_VILLAGE",
-      "x": 7,
+      "x": 10,
       "y": 21
     },
     {

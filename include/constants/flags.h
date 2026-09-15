@@ -2621,10 +2621,21 @@
 #define FLAG_ITEM_MUNEN_VILLAGE_LIGHT_BALL      FLAG_UNUSED_0x472 // item ball at (18,5)
 
 // === Munen Village Rock Smash boulders (2026-09-13) ===
+// Boulders 2-5 were 0x4A8-0x4AB until 2026-09-14. 0x4A8 is FLAG_WOT_EXP_SHARE_ON,
+// defined as a raw value above while FLAG_UNUSED_0x4A8 still reads "unused", so
+// smashing boulder 2 switched the Exp Share. Moved clear of the raw WoT run (0x499+).
 #define FLAG_MUNEN_VILLAGE_BOULDER_1        FLAG_UNUSED_0x479 // 0x2C3 rock at (55,23)
-#define FLAG_MUNEN_VILLAGE_BOULDER_2        FLAG_UNUSED_0x4A8 // 0x2C3 rock at (53,24)
-#define FLAG_MUNEN_VILLAGE_BOULDER_3        FLAG_UNUSED_0x4A9 // 0x2C3 rock at (54,24)
-#define FLAG_MUNEN_VILLAGE_BOULDER_4        FLAG_UNUSED_0x4AA // 0x2C3 rock at (55,24)
-#define FLAG_MUNEN_VILLAGE_BOULDER_5        FLAG_UNUSED_0x4AB // 0x2C3 rock at (53,25)
+#define FLAG_MUNEN_VILLAGE_BOULDER_2        FLAG_UNUSED_0x4C0 // 0x2C3 rock at (53,24)
+#define FLAG_MUNEN_VILLAGE_BOULDER_3        FLAG_UNUSED_0x4C1 // 0x2C3 rock at (54,24)
+#define FLAG_MUNEN_VILLAGE_BOULDER_4        FLAG_UNUSED_0x4C2 // 0x2C3 rock at (55,24)
+#define FLAG_MUNEN_VILLAGE_BOULDER_5        FLAG_UNUSED_0x4C3 // 0x2C3 rock at (53,25)
+
+// === Frostwood bar (OldaleTown_Mart) (2026-09-14) ===
+// Hidden items encode (flag - FLAG_HIDDEN_ITEMS_START), so the flag must be >= 0x1F4.
+#define FLAG_HIDDEN_ITEM_FROSTWOOD_BAR_SODA_POP  FLAG_UNUSED_0x4C4 // bottle on the bar at (5,4)
+
+// === RedFatality's Epic Pass (2026-09-14) ===
+#define FLAG_ITEM_SENNEN_EPIC_PASS          FLAG_UNUSED_0x4C5 // Poke Ball object 1 in Sennen Village (placeholder spot)
+#define FLAG_REDFATALITY_HAS_EPIC_PASS      FLAG_UNUSED_0x4C6 // gave him the pass: hides him on Route 2 AND unlocks the Frostwood Gym door
 
 #endif // GUARD_CONSTANTS_FLAGS_H

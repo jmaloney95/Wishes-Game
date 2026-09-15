@@ -672,3 +672,4 @@ gSpecials::
 	def_special WotGetPartyLeaderMegaStone
 	def_special WotBuyLeaderMegaStone
 	def_special WotGetStarterShiny
+	def_special WotGondolaDepart, waitstate=1

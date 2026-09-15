@@ -12,8 +12,28 @@
   "allow_running": false,
   "show_map_name": true,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": null,
-  "object_events": [],
+  "connections": [
+    {
+      "map": "MAP_ROUTE_2",
+      "offset": -15,
+      "direction": "down"
+    }
+  ],
+  "object_events": [
+    {
+      "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
+      "x": 33,
+      "y": 20,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "ITEM_EPIC_PASS",
+      "script": "Common_EventScript_FindItem",
+      "flag": "FLAG_ITEM_SENNEN_EPIC_PASS"
+    }
+  ],
   "warp_events": [
     {
       "x": 32,
@@ -23,25 +43,11 @@
       "dest_warp_id": "0"
     },
     {
-      "x": 5,
-      "y": 25,
+      "x": 15,
+      "y": 4,
       "elevation": 0,
-      "dest_map": "MAP_FROSTWOOD_TOWN",
-      "dest_warp_id": "10"
-    },
-    {
-      "x": 6,
-      "y": 25,
-      "elevation": 0,
-      "dest_map": "MAP_FROSTWOOD_TOWN",
-      "dest_warp_id": "10"
-    },
-    {
-      "x": 7,
-      "y": 25,
-      "elevation": 0,
-      "dest_map": "MAP_FROSTWOOD_TOWN",
-      "dest_warp_id": "11"
+      "dest_map": "MAP_ROUTE_2_2",
+      "dest_warp_id": "3"
     },
     {
       "x": 14,
@@ -49,20 +55,13 @@
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2_2",
       "dest_warp_id": "2"
-    },
-    {
-      "x": 15,
-      "y": 4,
-      "elevation": 0,
-      "dest_map": "MAP_ROUTE_2_2",
-      "dest_warp_id": "3"
     }
   ],
   "coord_events": [],
   "bg_events": [
     {
       "type": "sign",
-      "x": 6,
+      "x": 7,
       "y": 21,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_NORTH",

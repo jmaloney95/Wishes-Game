@@ -1080,6 +1080,26 @@ static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPositi
     }
 }
 
+// WoT: doors that stay shut until the story opens them. Returns the script to run in
+// place of the door warp, or NULL to warp normally. Matched on the warp's DESTINATION,
+// not its index, because porymap renumbers warps whenever one is deleted.
+extern const u8 FrostwoodTown_EventScript_GymLocked[];
+
+static const u8 *WotGetLockedDoorScript(s8 warpEventId)
+{
+    const struct WarpEvent *warp = &gMapHeader.events->warps[warpEventId];
+
+    // Frostwood Gym: RedFatality is on Route 2 until he gets his Epic Pass.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_FROSTWOOD_TOWN)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_FROSTWOOD_TOWN)
+     && warp->mapGroup == MAP_GROUP(MAP_RUSTBORO_CITY_GYM)
+     && warp->mapNum == MAP_NUM(MAP_RUSTBORO_CITY_GYM)
+     && !FlagGet(FLAG_REDFATALITY_HAS_EPIC_PASS))
+        return FrostwoodTown_EventScript_GymLocked;
+
+    return NULL;
+}
+
 static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enum Direction direction)
 {
     s8 warpEventId;
@@ -1097,6 +1117,12 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, enu
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
             {
+                const u8 *lockedScript = WotGetLockedDoorScript(warpEventId);
+                if (lockedScript != NULL)
+                {
+                    ScriptContext_SetupScript(lockedScript);
+                    return TRUE;
+                }
                 StoreInitialPlayerAvatarState();
                 SetupWarp(&gMapHeader, warpEventId, position);
                 DoDoorWarp();

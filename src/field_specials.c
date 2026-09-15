@@ -1594,6 +1594,49 @@ void WotShakeCameraSilent(void)
     SetCameraPanningCallback(NULL);
 }
 
+// WoT: Frostwood's gondola leaves down its cable. The cable drops one tile for
+// every two across, so the car's sprite slides 1px right every frame and 1px
+// down every other frame until it is past the right edge of the screen. Only
+// the sprite moves; the object stays on its tile, so nothing despawns it.
+// VAR_0x8004 = the car's local id. Declared waitstate=1, so `special` waits for it.
+#define tGondolaLocalId data[0]
+#define tGondolaFrame   data[1]
+
+static void Task_WotGondolaDepart(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u8 objectEventId = GetObjectEventIdByLocalIdAndMap(tGondolaLocalId,
+                                                       gSaveBlock1Ptr->location.mapNum,
+                                                       gSaveBlock1Ptr->location.mapGroup);
+    bool32 done = (objectEventId == OBJECT_EVENTS_COUNT);
+
+    if (!done)
+    {
+        struct Sprite *sprite = &gSprites[gObjectEvents[objectEventId].spriteId];
+
+        sprite->x2++;
+        if (tGondolaFrame & 1)
+            sprite->y2++;
+        done = (sprite->x + sprite->x2 + sprite->centerToCornerVecX + gSpriteCoordOffsetX >= DISPLAY_WIDTH);
+    }
+    // 600 frames is a backstop; the car clears the screen in about 130.
+    if (done || ++tGondolaFrame > 600)
+    {
+        DestroyTask(taskId);
+        ScriptContext_Enable();
+    }
+}
+
+void WotGondolaDepart(void)
+{
+    u8 taskId = CreateTask(Task_WotGondolaDepart, 80);
+    gTasks[taskId].tGondolaLocalId = gSpecialVar_0x8004;
+    gTasks[taskId].tGondolaFrame = 0;
+}
+
+#undef tGondolaLocalId
+#undef tGondolaFrame
+
 static void Task_ShakeCamera(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;

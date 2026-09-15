@@ -438,3 +438,126 @@ Route_2_Text_TwinsNotEnough::
 Route_2_Text_TwinsPost::
 	.string "Matching partners, matching\n"
 	.string "losses... Still cute though!$"
+
+@ Outside the gondola station: rode down expecting Frostwood's slopes.
+Route_2_EventScript_LostSnowboarder::
+	lock
+	faceplayer
+	msgbox Route_2_Text_LostSnowboarder, MSGBOX_DEFAULT
+	release
+	end
+
+Route_2_Text_LostSnowboarder::
+	.string "Where the hell am I?\p"
+	.string "I thought this was where the\n"
+	.string "slopes were!$"
+
+@ RedFatality, Frostwood's GYM LEADER, stuck at the bottom of the lift with no ticket.
+@ Giving him the EPIC PASS (Sennen Village item ball, placeholder) sends him bolting
+@ back up north and sets FLAG_REDFATALITY_HAS_EPIC_PASS, which hides this object and
+@ unlocks the Frostwood Gym door (WotGetLockedDoorScript in field_control_avatar.c).
+Route_2_EventScript_RedFatality::
+	lock
+	faceplayer
+	setspeaker SP_NAME_RED_FATALITY
+	msgbox Route_2_Text_RedFatalityIntro, MSGBOX_DEFAULT
+	checkitem ITEM_EPIC_PASS
+	goto_if_eq VAR_RESULT, FALSE, Route_2_EventScript_RedFatalityDone
+	setspeaker SP_NAME_NONE
+	msgbox Route_2_Text_GiveEpicPass, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route_2_EventScript_RedFatalityKeepPass
+	removeitem ITEM_EPIC_PASS
+	msgbox Route_2_Text_HandedOverEpicPass, MSGBOX_DEFAULT
+	setspeaker SP_NAME_RED_FATALITY
+	msgbox Route_2_Text_RedFatalitySick, MSGBOX_DEFAULT
+	closemessage
+	setflag FLAG_REDFATALITY_HAS_EPIC_PASS
+	@ Up column 28 is clear to the top of the beach; if the player is standing
+	@ right above him he sidesteps into column 29 instead of running through them.
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_ne VAR_0x8004, 28, Route_2_EventScript_RedFatalityBoltStraight
+	goto_if_ne VAR_0x8005, 31, Route_2_EventScript_RedFatalityBoltStraight
+	applymovement LOCALID_ROUTE2_REDFATALITY, Route_2_Movement_RedFatalityBoltAround
+	goto Route_2_EventScript_RedFatalityGone
+
+Route_2_EventScript_RedFatalityBoltStraight::
+	applymovement LOCALID_ROUTE2_REDFATALITY, Route_2_Movement_RedFatalityBolt
+Route_2_EventScript_RedFatalityGone::
+	waitmovement 0
+	removeobject LOCALID_ROUTE2_REDFATALITY
+	release
+	end
+
+Route_2_EventScript_RedFatalityKeepPass::
+	setspeaker SP_NAME_RED_FATALITY
+	msgbox Route_2_Text_RedFatalityNoWorries, MSGBOX_DEFAULT
+Route_2_EventScript_RedFatalityDone::
+	release
+	end
+
+Route_2_Movement_RedFatalityBolt:
+	jump_in_place_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	step_end
+
+Route_2_Movement_RedFatalityBoltAround:
+	jump_in_place_up
+	walk_faster_right
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	walk_faster_up
+	step_end
+
+Route_2_Text_RedFatalityIntro::
+	.string "Yo! I'm RedFatality, FROSTWOOD's\n"
+	.string "GYM LEADER.\p"
+	.string "I can't ride the lift back up to\n"
+	.string "the peak without a lift ticket.\p"
+	.string "Kind of a bummer, but can't really\n"
+	.string "complain. I mean, look where we are.$"
+
+Route_2_Text_GiveEpicPass::
+	.string "Give RedFatality the EPIC PASS?$"
+
+Route_2_Text_HandedOverEpicPass::
+	.string "{PLAYER} handed over the EPIC PASS.$"
+
+Route_2_Text_RedFatalitySick::
+	.string "Sick!$"
+
+Route_2_Text_RedFatalityNoWorries::
+	.string "All good. I'll just be down here,\n"
+	.string "soaking it in.$"
+
+Route_2_EventScript_SennenStationSign::
+	msgbox Route_2_Text_SennenStationSign, MSGBOX_SIGN
+	end
+
+Route_2_Text_SennenStationSign::
+	.string "{UP_ARROW} NORTH TO SENNEN STATION$"

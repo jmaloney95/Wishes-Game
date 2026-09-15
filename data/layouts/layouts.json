@@ -9431,8 +9431,8 @@
     {
       "id": "LAYOUT_ROUTE_2",
       "name": "Route_2_Layout",
-      "width": 43,
-      "height": 53,
+      "width": 49,
+      "height": 42,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_Slateport",
       "border_filepath": "data/layouts/Route_2/border.bin",
