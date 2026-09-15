@@ -470,7 +470,17 @@
 #define OBJ_EVENT_GFX_ITEM_GARCHOMPITE              420
 #define OBJ_EVENT_GFX_ITEM_BAXCALIBRITE             421
 #define OBJ_EVENT_GFX_ITEM_GYARADOSITE              422
-#define NUM_OBJ_EVENT_GFX                        423
+// Wishes of Tomorrow: walking sprites from custom sprites/Trainer Sprites/WoT sprites
+#define OBJ_EVENT_GFX_WOT_GLORIA                     423 // Cyberstryke7
+#define OBJ_EVENT_GFX_WOT_IONO                       424 // Cyberstryke7
+#define OBJ_EVENT_GFX_WOT_ALDO                       425 // Wergan
+#define OBJ_EVENT_GFX_WOT_LEON                       426 // aveontrainer
+#define OBJ_EVENT_GFX_WOT_MELONY                     427 // Cyberstryke7
+#define OBJ_EVENT_GFX_WOT_MISTY                      428 // fersure4
+#define OBJ_EVENT_GFX_WOT_OLEANA                     429 // aveontrainer
+#define OBJ_EVENT_GFX_WOT_JACINTHE                   430 // DiegoWT
+#define OBJ_EVENT_GFX_WOT_VICTOR                     431 // Cyberstryke7
+#define NUM_OBJ_EVENT_GFX                        432
 
 
 // These are dynamic object gfx ids.
@@ -610,6 +620,15 @@
 #define OBJ_EVENT_PAL_TAG_WOT_YIFFER                            0x114C
 #define OBJ_EVENT_PAL_TAG_WOT_JET                               0x114D
 #define OBJ_EVENT_PAL_TAG_WOT_EDWARDS_IMPACT                    0x114E
+#define OBJ_EVENT_PAL_TAG_WOT_GLORIA                            0x116B
+#define OBJ_EVENT_PAL_TAG_WOT_IONO                              0x116C
+#define OBJ_EVENT_PAL_TAG_WOT_ALDO                              0x116D
+#define OBJ_EVENT_PAL_TAG_WOT_LEON                              0x116E
+#define OBJ_EVENT_PAL_TAG_WOT_MELONY                            0x116F
+#define OBJ_EVENT_PAL_TAG_WOT_MISTY                             0x1170
+#define OBJ_EVENT_PAL_TAG_WOT_OLEANA                            0x1171
+#define OBJ_EVENT_PAL_TAG_WOT_JACINTHE                          0x1172
+#define OBJ_EVENT_PAL_TAG_WOT_VICTOR                            0x1173
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116

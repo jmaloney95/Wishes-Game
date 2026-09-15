@@ -56,6 +56,15 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBeachBea
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotYiffer;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJet;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwardsImpact;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotGloria;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotIono;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotAldo;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotLeon;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMelony;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMisty;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotOleana;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJacinthe;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotVictor;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerF;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BlackBelt;
@@ -496,6 +505,15 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOT_YIFFER] =                 &gObjectEventGraphicsInfo_WotYiffer,
     [OBJ_EVENT_GFX_WOT_JET] =                    &gObjectEventGraphicsInfo_WotJet,
     [OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT] =         &gObjectEventGraphicsInfo_WotEdwardsImpact,
+    [OBJ_EVENT_GFX_WOT_GLORIA] =                 &gObjectEventGraphicsInfo_WotGloria,
+    [OBJ_EVENT_GFX_WOT_IONO] =                   &gObjectEventGraphicsInfo_WotIono,
+    [OBJ_EVENT_GFX_WOT_ALDO] =                   &gObjectEventGraphicsInfo_WotAldo,
+    [OBJ_EVENT_GFX_WOT_LEON] =                   &gObjectEventGraphicsInfo_WotLeon,
+    [OBJ_EVENT_GFX_WOT_MELONY] =                 &gObjectEventGraphicsInfo_WotMelony,
+    [OBJ_EVENT_GFX_WOT_MISTY] =                  &gObjectEventGraphicsInfo_WotMisty,
+    [OBJ_EVENT_GFX_WOT_OLEANA] =                 &gObjectEventGraphicsInfo_WotOleana,
+    [OBJ_EVENT_GFX_WOT_JACINTHE] =               &gObjectEventGraphicsInfo_WotJacinthe,
+    [OBJ_EVENT_GFX_WOT_VICTOR] =                 &gObjectEventGraphicsInfo_WotVictor,
     [OBJ_EVENT_GFX_SWIMMER_M] =                &gObjectEventGraphicsInfo_SwimmerM,
     [OBJ_EVENT_GFX_SWIMMER_F] =                &gObjectEventGraphicsInfo_SwimmerF,
     [OBJ_EVENT_GFX_BLACK_BELT] =               &gObjectEventGraphicsInfo_BlackBelt,
