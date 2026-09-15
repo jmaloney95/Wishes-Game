@@ -38105,7 +38105,7 @@
               },
               {
                 "min_level": 15,
-                "max_level": 20,
+                "max_level": 18,
                 "species": "SPECIES_GOLBAT"
               },
               {
@@ -38116,12 +38116,12 @@
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_NACLSTACK"
               },
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_MINIOR"
               },
               {
                 "min_level": 12,
@@ -38129,19 +38129,19 @@
                 "species": "SPECIES_GRAVELER"
               },
               {
-                "min_level": 20,
-                "max_level": 29,
-                "species": "SPECIES_CROBAT"
+                "min_level": 13,
+                "max_level": 17,
+                "species": "SPECIES_NOIBAT"
               },
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_GLIMMORA"
               },
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_CARBINK"
               },
               {
                 "min_level": 12,

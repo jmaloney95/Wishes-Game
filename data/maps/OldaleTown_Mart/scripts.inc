@@ -63,6 +63,23 @@ OldaleTown_Mart_EventScript_BoardOrSki::
 	msgbox OldaleTown_Mart_Text_BoardOrSki, MSGBOX_NPC
 	end
 
+OldaleTown_Mart_EventScript_Draco::
+	lock
+	faceplayer
+	setspeaker SP_NAME_DRACO
+	msgbox OldaleTown_Mart_Text_Draco, MSGBOX_DEFAULT
+	release
+	end
+
+OldaleTown_Mart_Text_Draco:
+	.string "{PLAYER}? Of course you found this\n"
+	.string "place.\p"
+	.string "Don't get comfortable. I'm just\n"
+	.string "thawing out before I take that\l"
+	.string "GYM BADGE.\p"
+	.string "…And no, I'm not buying you\n"
+	.string "a drink.$"
+
 OldaleTown_Mart_Text_TwigsSkier:
 	.string "I was riding pipe when I caught an\n"
 	.string "edge on some nasty moguls…\p"

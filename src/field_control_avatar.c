@@ -53,6 +53,8 @@ static u16 GetPlayerCurMetatileBehavior(int);
 static bool8 TryStartInteractionScript(struct MapPosition *, u16, enum Direction);
 static const u8 *GetInteractionScript(struct MapPosition *, u8, enum Direction);
 static const u8 *GetInteractedObjectEventScript(struct MapPosition *, u8, enum Direction);
+static u16 WotGetObjectEventSpecies(u16 graphicsId);
+extern const u8 Common_EventScript_WotPokemonCry[];
 static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *, u8, enum Direction);
 static const u8 *GetInteractedMetatileScript(struct MapPosition *, u8, enum Direction);
 static const u8 *GetInteractedWaterScript(struct MapPosition *, u8, enum Direction);
@@ -409,8 +411,69 @@ static const u8 *GetInteractedObjectEventScript(struct MapPosition *position, u8
     else
         script = GetObjectEventScriptPointerByObjectEventId(objectEventId);
 
+    // WoT: an overworld Pokemon with no script of its own just cries.
+    if (script == NULL && WotGetObjectEventSpecies(gObjectEvents[objectEventId].graphicsId) != SPECIES_NONE)
+        script = Common_EventScript_WotPokemonCry;
+
     script = GetRamScript(gSpecialVar_LastTalked, script);
     return script;
+}
+
+// The species an overworld object shows: OBJ_EVENT_GFX_SPECIES() ids carry it,
+// and the handful of vanilla Pokemon sprites that have ids of their own are
+// listed. Dolls, statues and sleeping legendaries are deliberately absent.
+static const u16 sWotVanillaMonGfxSpecies[][2] = {
+    {OBJ_EVENT_GFX_AZURILL,      SPECIES_AZURILL},
+    {OBJ_EVENT_GFX_SKITTY,       SPECIES_SKITTY},
+    {OBJ_EVENT_GFX_KECLEON,      SPECIES_KECLEON},
+    {OBJ_EVENT_GFX_POOCHYENA,    SPECIES_POOCHYENA},
+    {OBJ_EVENT_GFX_ZIGZAGOON_1,  SPECIES_ZIGZAGOON},
+    {OBJ_EVENT_GFX_ZIGZAGOON_2,  SPECIES_ZIGZAGOON},
+    {OBJ_EVENT_GFX_PIKACHU,      SPECIES_PIKACHU},
+    {OBJ_EVENT_GFX_WINGULL,      SPECIES_WINGULL},
+    {OBJ_EVENT_GFX_PIKACHU_FRLG, SPECIES_PIKACHU},
+    {OBJ_EVENT_GFX_PSYDUCK,      SPECIES_PSYDUCK},
+    {OBJ_EVENT_GFX_SLOWPOKE,     SPECIES_SLOWPOKE},
+    {OBJ_EVENT_GFX_CLEFAIRY,     SPECIES_CLEFAIRY},
+    {OBJ_EVENT_GFX_JIGGLYPUFF,   SPECIES_JIGGLYPUFF},
+    {OBJ_EVENT_GFX_CHANSEY,      SPECIES_CHANSEY},
+    {OBJ_EVENT_GFX_MEOWTH,       SPECIES_MEOWTH},
+    {OBJ_EVENT_GFX_SEEL,         SPECIES_SEEL},
+    {OBJ_EVENT_GFX_MACHOP,       SPECIES_MACHOP},
+    {OBJ_EVENT_GFX_DODUO,        SPECIES_DODUO},
+    {OBJ_EVENT_GFX_SPEAROW,      SPECIES_SPEAROW},
+    {OBJ_EVENT_GFX_CUBONE,       SPECIES_CUBONE},
+    {OBJ_EVENT_GFX_NIDORAN_F,    SPECIES_NIDORAN_F},
+    {OBJ_EVENT_GFX_NIDORAN_M,    SPECIES_NIDORAN_M},
+    {OBJ_EVENT_GFX_VOLTORB,      SPECIES_VOLTORB},
+    {OBJ_EVENT_GFX_LAPRAS,       SPECIES_LAPRAS},
+    {OBJ_EVENT_GFX_SNORLAX,      SPECIES_SNORLAX},
+};
+
+static u16 WotGetObjectEventSpecies(u16 graphicsId)
+{
+    u32 i;
+
+    if (graphicsId & OBJ_EVENT_MON)
+        return graphicsId & OBJ_EVENT_MON_SPECIES_MASK;
+    for (i = 0; i < ARRAY_COUNT(sWotVanillaMonGfxSpecies); i++)
+    {
+        if (sWotVanillaMonGfxSpecies[i][0] == graphicsId)
+            return sWotVanillaMonGfxSpecies[i][1];
+    }
+    return SPECIES_NONE;
+}
+
+// special: VAR_0x8004 = species of the object just talked to (for its cry).
+void WotBufferLastTalkedSpecies(void)
+{
+    u8 objectEventId = GetObjectEventIdByLocalIdAndMap(gSpecialVar_LastTalked,
+                                                       gSaveBlock1Ptr->location.mapNum,
+                                                       gSaveBlock1Ptr->location.mapGroup);
+
+    gSpecialVar_0x8004 = SPECIES_NONE;
+    if (objectEventId != OBJECT_EVENTS_COUNT)
+        gSpecialVar_0x8004 = WotGetObjectEventSpecies(gObjectEvents[objectEventId].graphicsId);
 }
 
 static const u8 *GetInteractedBackgroundEventScript(struct MapPosition *position, u8 metatileBehavior, enum Direction direction)
@@ -1035,6 +1098,23 @@ static s8 GetWarpEventAtMapPosition(struct MapHeader *mapHeader, struct MapPosit
     return GetWarpEventAtPosition(mapHeader, position->x - MAP_OFFSET, position->y - MAP_OFFSET, position->elevation);
 }
 
+// WoT: maps that get swapped for a different map once the story moves on. Every
+// tile warp goes through SetupWarp, so redirecting the destination here covers
+// doors and walk-in warps alike without touching the warps themselves.
+static void WotRedirectWarp(u8 *mapGroup, u8 *mapNum, u8 *warpId)
+{
+    // Frostwood: the gym leader's family home after Toasty Time -- the girls are
+    // home (FLAG_MELTINGMILE_PATH_CLEARED is set as the quest completes).
+    // Frostwood_House2's single warp is warp 0, like OldaleTown_House2's.
+    if (*mapGroup == MAP_GROUP(MAP_OLDALE_TOWN_HOUSE2) && *mapNum == MAP_NUM(MAP_OLDALE_TOWN_HOUSE2)
+     && FlagGet(FLAG_MELTINGMILE_PATH_CLEARED))
+    {
+        *mapGroup = MAP_GROUP(MAP_FROSTWOOD_HOUSE2);
+        *mapNum = MAP_NUM(MAP_FROSTWOOD_HOUSE2);
+        *warpId = 0;
+    }
+}
+
 static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPosition *position)
 {
     const struct WarpEvent *warpEvent;
@@ -1071,11 +1151,15 @@ static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPositi
     else
     {
         const struct MapHeader *mapHeader;
+        u8 mapGroup = warpEvent->mapGroup;
+        u8 mapNum = warpEvent->mapNum;
+        u8 warpId = warpEvent->warpId;
 
-        SetWarpDestinationToMapWarp(warpEvent->mapGroup, warpEvent->mapNum, warpEvent->warpId);
+        WotRedirectWarp(&mapGroup, &mapNum, &warpId);
+        SetWarpDestinationToMapWarp(mapGroup, mapNum, warpId);
         UpdateEscapeWarp(position->x, position->y);
-        mapHeader = Overworld_GetMapHeaderByGroupAndId(warpEvent->mapGroup, warpEvent->mapNum);
-        if (mapHeader->events->warps[warpEvent->warpId].mapNum == MAP_NUM(MAP_DYNAMIC))
+        mapHeader = Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum);
+        if (mapHeader->events->warps[warpId].mapNum == MAP_NUM(MAP_DYNAMIC))
             SetDynamicWarp(mapHeader->events->warps[warpEventId].warpId, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, warpEventId);
     }
 }

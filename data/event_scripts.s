@@ -1841,6 +1841,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wot_hms.inc"
 	.include "data/scripts/wot_shadow_log.inc"
 	.include "data/scripts/wot_snag_progress.inc"
+	.include "data/scripts/wot_pokemon_cry.inc"
 	.include "data/maps/TowerStreet/scripts.inc"
 	.include "data/maps/TowerMid/scripts.inc"
 	.include "data/maps/TowerCommand/scripts.inc"
@@ -1860,3 +1861,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/MewtwoPostGame/scripts.inc"
 	.include "data/maps/YachtInterior/scripts.inc"
+
+	.include "data/maps/Frostwood_House2/scripts.inc"

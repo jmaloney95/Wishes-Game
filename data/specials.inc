@@ -673,3 +673,5 @@ gSpecials::
 	def_special WotBuyLeaderMegaStone
 	def_special WotGetStarterShiny
 	def_special WotGondolaDepart, waitstate=1
+	def_special WotBufferLastTalkedSpecies
+	def_special WotStartFamilyHearts

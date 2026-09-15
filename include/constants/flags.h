@@ -2638,4 +2638,7 @@
 #define FLAG_ITEM_SENNEN_EPIC_PASS          FLAG_UNUSED_0x4C5 // Poke Ball object 1 in Sennen Village (placeholder spot)
 #define FLAG_REDFATALITY_HAS_EPIC_PASS      FLAG_UNUSED_0x4C6 // gave him the pass: hides him on Route 2 AND unlocks the Frostwood Gym door
 
+// === Toasty Time aftermath (2026-09-15) ===
+#define FLAG_TOASTY_TIME_RARE_CANDY         FLAG_UNUSED_0x4C7 // the gym leader's dad thanked the player with a Rare Candy (Frostwood_House2)
+
 #endif // GUARD_CONSTANTS_FLAGS_H

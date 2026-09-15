@@ -315,3 +315,43 @@ MunenTunnel_Text_Shuppet::
 	.string "ceiling, trailing cold air.\p"
 	.string "It turns to face you without\n"
 	.string "turning at all.$"
+
+@ --------------------------------------------------------------------------
+@  Yiffer (WOT_ALDO sprite) -- Frostwood Gym trainer, out plugging his dojo.
+@  Gives HM STRENGTH once.
+@ --------------------------------------------------------------------------
+MunenTunnel_EventScript_Yiffer::
+	lock
+	faceplayer
+	setspeaker SP_NAME_YIFFER
+	goto_if_set FLAG_RECEIVED_HM_STRENGTH, MunenTunnel_EventScript_YifferAfter
+	msgbox MunenTunnel_Text_YifferPlug, MSGBOX_DEFAULT
+	setspeaker SP_NAME_NONE
+	giveitem ITEM_HM_STRENGTH
+	setflag FLAG_RECEIVED_HM_STRENGTH
+	setspeaker SP_NAME_YIFFER
+	msgbox MunenTunnel_Text_YifferStrength, MSGBOX_DEFAULT
+	release
+	end
+
+MunenTunnel_EventScript_YifferAfter::
+	msgbox MunenTunnel_Text_YifferAfter, MSGBOX_DEFAULT
+	release
+	end
+
+MunenTunnel_Text_YifferPlug:
+	.string "Shameless plug: stop in at\n"
+	.string "BK KICKBOXING for a lesson in\l"
+	.string "ass-kicking…\p"
+	.string "…or your money back.\n"
+	.string "Guaranteed!\p"
+	.string "Hiii-YAAA!\p"
+	.string "Here, a free sample.$"
+
+MunenTunnel_Text_YifferStrength:
+	.string "That's STRENGTH. Shove the boulders\n"
+	.string "around down here like you mean it!$"
+
+MunenTunnel_Text_YifferAfter:
+	.string "BK KICKBOXING. First lesson's on me.\n"
+	.string "Hiii-YAAA!$"

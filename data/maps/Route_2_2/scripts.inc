@@ -3,9 +3,11 @@ Route_2_2_MapScripts::
 	.byte 0
 
 Route_2_2_OnResume::
-	questindicator 12, SIDE_QUEST_EIGHT_WAYS  @ Eevee breeder
-	questindicator 20, SIDE_QUEST_HEAVY_METAL @ Scyther collector
-	flagindicator 21, FLAG_NATIONAL_PARK_CUT_GIVEN @ Cut tutor
+	@ Named ids, not object numbers: the numbers drifted when objects were added
+	@ and put the "!" on Gible, Porygon and Blissey. The Eevee breeder is no
+	@ longer on the map, so SIDE_QUEST_EIGHT_WAYS has no indicator here.
+	questindicator LOCALID_PARK_METAL_COAT_GUY, SIDE_QUEST_HEAVY_METAL @ Scyther collector
+	flagindicator LOCALID_PARK_CUT_TUTOR, FLAG_NATIONAL_PARK_CUT_GIVEN @ Cut tutor
 	end
 
 @ ===========================================================================

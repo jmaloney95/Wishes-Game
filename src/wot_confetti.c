@@ -10,6 +10,9 @@
 #include "event_object_movement.h"
 #include "overworld.h"
 #include "wot_confetti.h"
+#include "field_effect.h"
+#include "script.h"
+#include "constants/field_effects.h"
 
 // Field confetti for the endgame celebration on TowerTop: the Hall of Fame's
 // confetti sheet (17 coloured 8x8 chips) rained over the overworld instead of
@@ -178,3 +181,88 @@ void WotStartObjectBob(void)
 
 #undef tLocalId
 #undef tSine
+
+// --- A happy household: hearts over some objects, others hop in place ---
+// VAR_0x8004 = bitmask of local ids that get hearts (one heart at a time,
+// rotating through them), VAR_0x8005 = bitmask of local ids that hop. Pauses
+// while a script or menu holds the player, so it never fights a conversation,
+// and dies with the task pool on map change (re-armed from ON_RESUME).
+#define tHeartMask data[0]
+#define tHopMask   data[1]
+#define tTimer     data[2]
+#define tNextHeart data[3]
+
+#define HOP_PERIOD   40
+#define HEART_PERIOD 45
+
+static struct ObjectEvent *WotGetMapObjectByLocalId(u32 localId)
+{
+    u8 objectEventId;
+
+    if (TryGetObjectEventIdByLocalIdAndMap(localId, gSaveBlock1Ptr->location.mapNum,
+                                           gSaveBlock1Ptr->location.mapGroup, &objectEventId))
+        return NULL; // TRUE means not found
+    return &gObjectEvents[objectEventId];
+}
+
+static void Task_WotFamilyHearts(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u32 i;
+
+    if (ArePlayerFieldControlsLocked())
+        return;
+    tTimer++;
+
+    if (tTimer % HOP_PERIOD == 0)
+    {
+        for (i = 1; i < 16; i++)
+        {
+            struct ObjectEvent *obj;
+
+            if (!((u16)tHopMask & (1 << i)) || (obj = WotGetMapObjectByLocalId(i)) == NULL)
+                continue;
+            ObjectEventClearHeldMovementIfFinished(obj);
+            if (!ObjectEventIsHeldMovementActive(obj))
+                ObjectEventSetHeldMovement(obj, GetJumpInPlaceMovementAction(obj->facingDirection));
+        }
+    }
+
+    if (tTimer % HEART_PERIOD == 0 && (u16)tHeartMask != 0)
+    {
+        for (i = 0; i < 16; i++)
+        {
+            u32 id = (tNextHeart + i) % 16;
+            struct ObjectEvent *obj;
+
+            if (!((u16)tHeartMask & (1 << id)) || (obj = WotGetMapObjectByLocalId(id)) == NULL)
+                continue;
+            gFieldEffectArguments[0] = id;
+            gFieldEffectArguments[1] = gSaveBlock1Ptr->location.mapNum;
+            gFieldEffectArguments[2] = gSaveBlock1Ptr->location.mapGroup;
+            FieldEffectStart(FLDEFF_HEART_ICON);
+            tNextHeart = id + 1;
+            break;
+        }
+    }
+}
+
+void WotStartFamilyHearts(void)
+{
+    u8 taskId;
+
+    if (FuncIsActiveTask(Task_WotFamilyHearts))
+        return;
+    taskId = CreateTask(Task_WotFamilyHearts, 90);
+    gTasks[taskId].tHeartMask = gSpecialVar_0x8004;
+    gTasks[taskId].tHopMask = gSpecialVar_0x8005;
+    gTasks[taskId].tTimer = 0;
+    gTasks[taskId].tNextHeart = 0;
+}
+
+#undef tHeartMask
+#undef tHopMask
+#undef tTimer
+#undef tNextHeart
+#undef HOP_PERIOD
+#undef HEART_PERIOD

@@ -144,10 +144,7 @@ RustboroCity_Gym_Text_JoshDefeat:
 	.string "more sun…$"
 
 RustboroCity_Gym_Text_JoshPostBattle:
-	.string "RedFatality scouts rare POKéMON from\n"
-	.string "all over the region.\p"
-	.string "You're about to find out what\n"
-	.string "I mean.$"
+	.string "Did I just get mogged?$"
 
 RustboroCity_Gym_Text_TommyIntro:
 	.string "The big thaw's been turning up\n"

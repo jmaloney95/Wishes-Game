@@ -349,7 +349,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShinTokyo_EventScript_MonWeezing",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "0"
     },
     {
@@ -388,7 +388,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShinTokyo_EventScript_MonKoffing",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "0"
     },
     {
@@ -401,7 +401,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShinTokyo_EventScript_MonGrimer",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "0"
     },
     {
@@ -414,11 +414,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "ShinTokyo_EventScript_MonRevavroom",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_2",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_LEON",
       "x": 68,
       "y": 37,
       "elevation": 0,

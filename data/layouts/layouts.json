@@ -1028,7 +1028,7 @@
       "id": "LAYOUT_RUSTBORO_CITY_GYM",
       "name": "RustboroCity_Gym_Layout",
       "width": 11,
-      "height": 20,
+      "height": 30,
       "primary_tileset": "gTileset_Building",
       "secondary_tileset": "gTileset_RustboroGym",
       "border_filepath": "data/layouts/RustboroCity_Gym/border.bin",
@@ -9411,8 +9411,8 @@
     {
       "id": "LAYOUT_SENNEN_VILLAGE",
       "name": "SennenVillage_Layout",
-      "width": 35,
-      "height": 26,
+      "width": 40,
+      "height": 27,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenVillage/border.bin",
@@ -9421,8 +9421,8 @@
     {
       "id": "LAYOUT_SENNEN_VILLAGE_2",
       "name": "SennenVillage_2_Layout",
-      "width": 35,
-      "height": 26,
+      "width": 40,
+      "height": 27,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
       "border_filepath": "data/layouts/SennenVillage_2/border.bin",
@@ -9904,11 +9904,22 @@
       "id": "LAYOUT_YACHT_INTERIOR",
       "name": "YachtInterior_Layout",
       "width": 12,
-      "height": 10,
+      "height": 8,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_Lab",
+      "secondary_tileset": "gTileset_OceanicMuseum",
       "border_filepath": "data/layouts/YachtInterior/border.bin",
       "blockdata_filepath": "data/layouts/YachtInterior/map.bin"
+    },
+    {
+      "id": "LAYOUT_FROSTWOOD_HOUSE2",
+      "name": "Frostwood_House2_Layout",
+      "width": 11,
+      "height": 10,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_FrostwoodPC",
+      "border_filepath": "data/layouts/Frostwood_House2/border.bin",
+      "blockdata_filepath": "data/layouts/Frostwood_House2/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }
