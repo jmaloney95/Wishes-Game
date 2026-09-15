@@ -672,6 +672,18 @@ static u32 UpdateHardwarePaletteFade(void)
     if (!gPaletteFade.active)
         return PALETTE_FADE_STATUS_DONE;
 
+    // WoT: once the last step has run, wait for TransferPlttBuffer (VBlank) to end
+    // the fade. hardwareFadeFinishing is a 1-bit field that the steps below
+    // increment, and a fade with shouldResetBlendRegisters clears the blend count,
+    // which also clears sPlttBufferTransferPending -- so nothing gates this on a
+    // VBlank any more. With 3x fast forward a battle runs 4 logic frames per VBlank:
+    // each extra call flipped the bit, VBlank saw it clear every time, and the fade
+    // never ended. Everything waiting on !gPaletteFade.active hung -- the battle
+    // screen reshown after the bag or party menu (CompleteWhenChoseItem).
+    // Reproduced headless and verified fixed: 0/1 vs 25/25 bag+switch cycles.
+    if (gPaletteFade.hardwareFadeFinishing)
+        return PALETTE_FADE_STATUS_ACTIVE;
+
     if (gPaletteFade.delayCounter < gPaletteFadeDelay)
     {
         gPaletteFade.delayCounter++;

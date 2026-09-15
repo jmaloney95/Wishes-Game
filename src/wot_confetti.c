@@ -150,10 +150,11 @@ static void Task_WotObjectBob(u8 taskId)
 {
     u8 objectEventId;
 
-    if (!TryGetObjectEventIdByLocalIdAndMap(gTasks[taskId].tLocalId,
-                                            gSaveBlock1Ptr->location.mapNum,
-                                            gSaveBlock1Ptr->location.mapGroup,
-                                            &objectEventId))
+    // TRUE means the object was NOT found.
+    if (TryGetObjectEventIdByLocalIdAndMap(gTasks[taskId].tLocalId,
+                                           gSaveBlock1Ptr->location.mapNum,
+                                           gSaveBlock1Ptr->location.mapGroup,
+                                           &objectEventId))
     {
         DestroyTask(taskId);
         return;

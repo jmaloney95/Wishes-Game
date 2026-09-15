@@ -102,6 +102,9 @@ EWRAM_DATA static const u8 *sBattleAnimScriptRetAddr = NULL;
 EWRAM_DATA void (*gAnimScriptCallback)(void) = NULL;
 EWRAM_DATA static s8 sAnimFramesToWait = 0;
 EWRAM_DATA bool8 gAnimScriptActive = FALSE;
+// WoT: the animation last launched is a Poke Ball throw. Fast forward keeps
+// running through it (throw, roll and shakes) instead of dropping to 1x.
+EWRAM_DATA bool8 gWotBallThrowAnimActive = FALSE;
 EWRAM_DATA u8 gAnimVisualTaskCount = 0;
 EWRAM_DATA u8 gAnimSoundTaskCount = 0;
 EWRAM_DATA struct LinkBattleAnim *gAnimDisableStructPtr = NULL;
@@ -350,6 +353,8 @@ void LaunchBattleAnimation(u32 animType, u32 animId)
         }
     }
 
+    gWotBallThrowAnimActive = (animType == ANIM_TYPE_SPECIAL
+                            && (animId == B_ANIM_BALL_THROW || animId == B_ANIM_BALL_THROW_WITH_TRAINER));
     sAnimHideHpBoxes = !(animType == ANIM_TYPE_MOVE && animId == MOVE_TRANSFORM);
     if (animType != ANIM_TYPE_MOVE)
     {

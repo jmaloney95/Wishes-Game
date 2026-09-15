@@ -879,6 +879,8 @@ bool8 SetDiveWarpDive(u16 x, u16 y)
 
 void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
 {
+    bool32 wasNaturallyLit = MapHasNaturalLight(gMapHeader.mapType);
+
     SetWarpDestination(mapGroup, mapNum, WARP_ID_NONE, -1, -1);
 
     // Dont transition map music between BF Outside West/East
@@ -911,6 +913,12 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     LoadSecondaryTilesetPalette(gMapHeader.mapLayout, TRUE); // skip copying to Faded, gamma shift will take care of it
 
     ApplyWeatherColorMapToPals(GetNumPalsInPrimary(gMapHeader.mapLayout), NUM_PALS_TOTAL - GetNumPalsInPrimary(gMapHeader.mapLayout)); // palettes [6,12]
+    // WoT: only the secondary palettes are re-tinted above, so crossing a connection
+    // between a naturally lit map and an unlit one left [0,5] in the old map's
+    // day/night state -- at night, General-tileset ground stayed bright under
+    // tinted SnowStone trees (Melting Mile <-> Walnut Woods). Re-tint them too.
+    if (wasNaturallyLit != MapHasNaturalLight(gMapHeader.mapType))
+        ApplyWeatherColorMapToPals(0, GetNumPalsInPrimary(gMapHeader.mapLayout));
 
     InitSecondaryTilesetAnimation();
     UpdateLocationHistoryForRoamer();
