@@ -50,7 +50,10 @@ def read_behaviour_enum():
     body = s[s.index("{") + 1:s.index("}")]
     out, val = {}, 0
     for line in body.splitlines():
-        line = line.strip().rstrip(",")
+        # 2026-09-14: strip trailing comments first. Without this the line
+        # "MB_INTERIOR_DEEP_WATER, // ..." was skipped and every later value
+        # came out one low (ice 31, snow 36). See correct_snow_behaviours_off_by_one.py.
+        line = line.split("//")[0].strip().rstrip(",").strip()
         if not line or line.startswith("//"):
             continue
         m = re.match(r"^(MB_[A-Z0-9_]+)\s*(?:=\s*(\S+))?$", line)

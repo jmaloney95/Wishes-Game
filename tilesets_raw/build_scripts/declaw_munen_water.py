@@ -26,7 +26,7 @@ SNOW = os.path.join(ROOT, "data", "tilesets", "secondary", "snow_stone")
 GEN = os.path.join(ROOT, "data", "tilesets", "primary", "general")
 LAYOUTS = os.path.join(ROOT, "data", "layouts", "layouts.json")
 
-MB_FOOTPRINTS = 36
+MB_FOOTPRINTS = 37  # was 36 (= MB_ASHGRASS, an encounter tile) until 2026-09-14; corrected in place
 BEHAVIOR_MASK = 0x00FF
 LAYER_MASK = 0xF000
 MARKER = ".declawed"
