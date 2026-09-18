@@ -1,0 +1,20 @@
+GIMP Palette
+Name: WoT edwards portrait
+Columns: 16
+#
+255   0 255	index 0 - TRANSPARENT
+112  72  56	index 1
+ 80  56  48	index 2
+  8   8  24	index 3
+176 168 128	index 4
+112 112  80	index 5
+ 72  72  64	index 6
+ 88  88  72	index 7
+128 128  96	index 8
+184  80 112	index 9
+ 32  32  40	index 10
+ 56  32  40	index 11
+ 48  56  48	index 12
+152 144 112	index 13
+ 32   8  40	index 14
+224 192 184	index 15
