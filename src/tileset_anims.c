@@ -709,6 +709,53 @@ static void QueueAnimTiles_General_Flower(u16 timer)
     AppendTilesetAnimToBuffer(gTilesetAnims_General_Flower[i], (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(508)), 4 * TILE_SIZE_4BPP);
 }
 
+// WoT: Route 224 secondary -- the National Park pond (12 tiles, locals 70-81),
+// shared by Route_2_2 and NationalParkAct2. Frames are the tileset's own art
+// scrolled a pixel along the wave streaks per frame (tools/build_np_water_anim.py),
+// so the eighth frame wraps back onto the first.
+const u16 gTilesetAnims_Route224_Water_Frame0[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/0.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame1[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/1.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame2[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/2.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame3[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/3.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame4[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/4.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame5[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/5.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame6[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/6.png", ".4bpp");
+const u16 gTilesetAnims_Route224_Water_Frame7[] = INCGFX_U16("data/tilesets/secondary/route_224/anim/water/7.png", ".4bpp");
+
+static const u16 *const gTilesetAnims_Route224_Water[] = {
+    gTilesetAnims_Route224_Water_Frame0,
+    gTilesetAnims_Route224_Water_Frame1,
+    gTilesetAnims_Route224_Water_Frame2,
+    gTilesetAnims_Route224_Water_Frame3,
+    gTilesetAnims_Route224_Water_Frame4,
+    gTilesetAnims_Route224_Water_Frame5,
+    gTilesetAnims_Route224_Water_Frame6,
+    gTilesetAnims_Route224_Water_Frame7,
+};
+
+static void QueueAnimTiles_Route224_Water(u16 timer)
+{
+    u8 i = timer % ARRAY_COUNT(gTilesetAnims_Route224_Water);
+    AppendTilesetAnimToBuffer(gTilesetAnims_Route224_Water[i],
+                              (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 70)),
+                              12 * TILE_SIZE_4BPP);
+}
+
+static void TilesetAnim_Route224(u16 timer)
+{
+    if (timer % 16 == 1)
+        QueueAnimTiles_Route224_Water(timer / 16);
+}
+
+void InitTilesetAnim_Route224(void)
+{
+    // Its primary has no anims, so (like MiddleDistrict) this runs its own
+    // counter: 8 frames at one every 16 ticks wraps exactly at 128.
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = 128;
+    sSecondaryTilesetAnimCallback = TilesetAnim_Route224;
+}
+
 // WoT: MiddleDistrict secondary -- plain ocean water (2 tiles, locals 496-497),
 // frames re-indexed from General's water anim into palette slot 12.
 const u16 gTilesetAnims_MiddleDistrict_Water_Frame0[] = INCGFX_U16("data/tilesets/secondary/middle_district/anim/water/0.png", ".4bpp");

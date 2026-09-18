@@ -618,6 +618,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPaletteLight2,             OBJ_EVENT_PAL_TAG_LIGHT_2},
     {gObjectEventPaletteEmotes,             OBJ_EVENT_PAL_TAG_EMOTES},
     {gObjectEventPaletteNeonLight,          OBJ_EVENT_PAL_TAG_NEON_LIGHT},
+    {gObjectEventPaletteWotRedLight,        OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT},
 #ifdef BUGFIX
     {NULL,                                  OBJ_EVENT_PAL_TAG_NONE},
 #else
@@ -2422,6 +2423,24 @@ static void RefreshFollowerGraphics(struct ObjectEvent *objEvent)
     }
 }
 
+// WoT: wear the Shadow silhouette on a map's OW Pokemon object, not just on
+// the follower -- the harbour's Shadow Lugia is an ordinary object event.
+// special; local id in VAR_0x8004, on the current map.
+void WotMakeObjectEventShadow(void)
+{
+    u8 objId;
+
+    if (TryGetObjectEventIdByLocalIdAndMap(gSpecialVar_0x8004,
+                                           gSaveBlock1Ptr->location.mapNum,
+                                           gSaveBlock1Ptr->location.mapGroup, &objId)
+        && objId < OBJECT_EVENTS_COUNT)   // the helper's out-param is only valid on TRUE
+    {
+        gObjectEvents[objId].shadow = TRUE;
+        RefreshFollowerGraphics(&gObjectEvents[objId]);
+    }
+}
+
+
 u16 GetOverworldWeatherSpecies(u16 species)
 {
     u32 i;
@@ -2972,6 +2991,19 @@ static void SpawnLightSprite(s16 x, s16 y, s16 camX, s16 camY, u32 lightType)
         sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
         sprite->x += 8;
         sprite->y += 22 + sprite->centerToCornerVecY;
+        break;
+    case LIGHT_TYPE_WOT_RED_SIGN:
+        // Hung from the object's tile rather than pooled under it: the top of
+        // the sheet sits on the top of that tile (a sprite is drawn from
+        // x/y + centerToCornerVec), so the bright bar covers the sign board
+        // and the fall-off covers the three tile rows underneath.
+        sprite->centerToCornerVecX = -(64 >> 1);
+        sprite->centerToCornerVecY = -(64 >> 1);
+        sprite->oam.priority = 1;
+        sprite->oam.objMode = ST_OAM_OBJ_BLEND;
+        sprite->oam.affineMode = ST_OAM_AFFINE_NORMAL;
+        sprite->x += 8;
+        sprite->y += 32;
         break;
     case LIGHT_TYPE_PKMN_CENTER_SIGN:
     case LIGHT_TYPE_POKE_MART_SIGN:

@@ -2604,11 +2604,24 @@
 #define FLAG_HIDE_WOT_LEADER_SCREEN             FLAG_UNUSED_0x2B9 // jumbotron: leader face (hidden at red alert)
 #define FLAG_HIDE_WOT_WANTED_POSTER             FLAG_UNUSED_0x2BA // jumbotron: wanted poster (shown at red alert)
 #define FLAG_HIDE_WOT_CELEBI                    FLAG_UNUSED_0x2BB // Celebi hides until the lake trio yields the shrine
-#define FLAG_WOT_DRAGON_WARDENS_BEATEN          FLAG_UNUSED_0x02B // Ryuden Island: the double battle is won
-#define FLAG_WOT_RYUDEN_EGG_TAKEN               FLAG_UNUSED_0x02C // one dragon egg claimed from the incubator
-#define FLAG_HIDE_RYUDEN_WARDENS                FLAG_UNUSED_0x02D // wardens hidden until they emerge (or after victory: shown)
+// These three used to sit on 0x02B-0x02D, which are FLAG_HIDDEN_ITEM_MUNEN_MASTER_BALL,
+// FLAG_MUNEN_LAKE_GOT_SUPER_ROD and FLAG_MELTINGMILE_PATH_CLEARED. Moved to the free
+// run at 0x4C8+; a compiled probe of every flag name is the only safe way to check this.
+#define FLAG_WOT_DRAGON_WARDENS_BEATEN          FLAG_UNUSED_0x4C9 // Ryuden Island: the double battle is won
+#define FLAG_WOT_RYUDEN_EGG_TAKEN               FLAG_UNUSED_0x4CA // one dragon egg claimed from the incubator
+#define FLAG_HIDE_RYUDEN_WARDENS                FLAG_UNUSED_0x4CB // wardens hidden until they emerge (or after victory: shown)
 #define FLAG_WOT_SNAG_STAGE1                    FLAG_UNUSED_0x035 // Harness Darkness: first snag rewarded
 #define FLAG_WOT_SNAG_STAGE2                    FLAG_UNUSED_0x054 // Harness Darkness: five snags -- complete
+
+// B_FLAG_NO_WHITEOUT (config/battle.h) used to be FLAG_UNUSED_0x035, the same
+// slot as FLAG_WOT_SNAG_STAGE1 above: once the first snag paid out, losing a
+// trainer battle stopped whiting the player out and handed control back to the
+// script instead. It gets a flag of its own here.
+#define FLAG_WOT_NO_WHITEOUT                    FLAG_UNUSED_0x4C8 // set around a battle the player is meant to lose
+
+// === Shadow Lugia off the Shin Tokyo pier (post-credits) ===
+#define FLAG_HIDE_SHINTOKYO_LUGIA               FLAG_UNUSED_0x4CC // re-set on every map load; the scene shows it
+#define FLAG_WOT_LUGIA_CAUGHT                   FLAG_UNUSED_0x4CD // only a capture ends the encounter
 
 // === Distortion World rift layers (2026-07-10) ===
 #define FLAG_ITEM_DISTORTION_WORLD_3_RIFT_SHARD FLAG_UNUSED_0x282 // relic ball in layer 3 (placeholder spot 29,15)

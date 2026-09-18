@@ -66,6 +66,10 @@ const u32 gBattleEnvironmentTilemap_WotLab[] = INCBIN_U32("graphics/battle_envir
 const u32 gBattleEnvironmentTiles_WotSpace[] = INCGFX_U32("graphics/battle_environment/space/tiles.png", ".4bpp.smol");
 const u16 gBattleEnvironmentPalette_WotSpace[] = INCGFX_U16("graphics/battle_environment/space/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_WotSpace[] = INCBIN_U32("graphics/battle_environment/space/map.bin.smolTM");
+const u32 gBattleEnvironmentTiles_WotGraveyard[] = INCGFX_U32("graphics/battle_environment/graveyard/tiles.png", ".4bpp.smol");
+const u16 gBattleEnvironmentPalette_WotGraveyard[] = INCGFX_U16("graphics/battle_environment/graveyard/palette.pal", ".gbapal");
+const u32 gBattleEnvironmentTilemap_WotGraveyard[] = INCBIN_U32("graphics/battle_environment/graveyard/map.bin.smolTM");
+
 const u32 gBattleEnvironmentTiles_WotTown[] = INCGFX_U32("graphics/battle_environment/town/tiles.png", ".4bpp.smol");
 const u16 gBattleEnvironmentPalette_WotTown[] = INCGFX_U16("graphics/battle_environment/town/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_WotTown[] = INCBIN_U32("graphics/battle_environment/town/map.bin.smolTM");

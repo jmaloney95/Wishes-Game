@@ -9411,7 +9411,7 @@
     {
       "id": "LAYOUT_SENNEN_VILLAGE",
       "name": "SennenVillage_Layout",
-      "width": 40,
+      "width": 50,
       "height": 27,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",
@@ -9421,7 +9421,7 @@
     {
       "id": "LAYOUT_SENNEN_VILLAGE_2",
       "name": "SennenVillage_2_Layout",
-      "width": 40,
+      "width": 50,
       "height": 27,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_MagnetTrain",

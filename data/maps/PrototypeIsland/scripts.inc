@@ -25,7 +25,7 @@ PrototypeIsland_EventScript_EnterLab::
 	msgbox PrototypeIsland_Text_Doorway, MSGBOX_DEFAULT
 	closemessage
 	playse SE_DOOR
-	warp MAP_PROTOTYPE_LAB, 9, 2
+	warp MAP_PROTOTYPE_LAB, 13, 3
 	waitstate
 	releaseall
 	end
@@ -44,7 +44,9 @@ PrototypeIsland_EventScript_SurfToCelebi::
 
 PrototypeIsland_EventScript_SurfToRoute130::
 	lockall
-	warp MAP_ROUTE130, 42, 31
+	@ the open channel; (42,31) fell outside the water after Route 130 was
+	@ repainted, which put the player off the map
+	warp MAP_ROUTE130, 54, 12
 	waitstate
 	releaseall
 	end

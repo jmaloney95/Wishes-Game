@@ -952,6 +952,15 @@ static u8 GetBattleEnvironmentOverride(void)
       || TRAINER_BATTLE_PARAM.opponentA == TRAINER_WALLY_VR_4))
         return BATTLE_ENVIRONMENT_WOT_LAB;
 
+    // Shin Tokyo and its jail: aveontrainer's graveyard. Everything fought on
+    // those two maps is a Shadow (the patrols, the squads, the goons), so the
+    // backdrop is by map rather than by opponent. The tower has its own.
+    if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SHIN_TOKYO)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SHIN_TOKYO))
+     || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SHIN_TOKYO_JAIL)
+      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SHIN_TOKYO_JAIL)))
+        return BATTLE_ENVIRONMENT_WOT_GRAVEYARD;
+
     // The DragonKeeper warden duo on Ryuden Island fight under the stars.
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
      && TRAINER_BATTLE_PARAM.opponentA == TRAINER_AMY_AND_LIV_3)

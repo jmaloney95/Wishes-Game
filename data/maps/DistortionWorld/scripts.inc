@@ -182,7 +182,7 @@ DistortionWorld_Text_GengarClarkson3::
 	.string "Take us with you, {PLAYER}.$"
 
 DistortionWorld_Text_GengarJoined::
-	.string "GENGAR: and everything riding\n"
+	.string "GENGAR and everything riding\n"
 	.string "within it, joined your party!$"
 
 DistortionWorld_Text_GengarJoinedPC::

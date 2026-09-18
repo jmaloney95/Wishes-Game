@@ -2,7 +2,7 @@
   "id": "MAP_PROTOTYPE_LAB",
   "name": "PrototypeLab",
   "layout": "LAYOUT_PROTOTYPE_LAB",
-  "music": "MUS_ABANDONED_SHIP",
+  "music": "MUS_WEATHER_GROUDON",
   "region_map_section": "MAPSEC_PROTOTYPE_ISLAND",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -59,6 +59,22 @@
     }
   ],
   "bg_events": [
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "PrototypeLab_EventScript_LogD"
+    },
+    {
+      "type": "sign",
+      "x": 20,
+      "y": 14,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "PrototypeLab_EventScript_LogE"
+    },
     {
       "type": "sign",
       "x": 17,

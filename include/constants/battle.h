@@ -659,6 +659,7 @@ enum BattleEnvironments
     BATTLE_ENVIRONMENT_WOT_LAB,      // Prototype Lab / tower machine floor / dockhouse
     BATTLE_ENVIRONMENT_WOT_TOWN,     // Celebi Island village
     BATTLE_ENVIRONMENT_WOT_INDOORS,  // Tradewind Gym
+    BATTLE_ENVIRONMENT_WOT_GRAVEYARD,// Shin Tokyo + its jail: every fight there is a Shadow fight
     BATTLE_ENVIRONMENT_COUNT,
 };
 

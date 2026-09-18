@@ -17172,13 +17172,26 @@ Music: Swimmer
 Double Battle: No
 AI: Check Bad Move / Try To Faint
 
+Chansey
+Level: 20
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Glaceon
+Level: 23
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
+Azumarill
+Level: 25
+Shiny: Yes
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
 Cinderace
-Level: 40
-IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+Level: 24
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 Lopunny @ Lopunnite
-Level: 42
-IVs: 26 HP / 26 Atk / 26 Def / 26 SpA / 26 SpD / 26 Spe
+Level: 25
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
 === TRAINER_ROUTE2_SWIMMER_SKYE ===
 Name: Skye

@@ -192,20 +192,20 @@
       "movement_range_x": 0,
       "movement_range_y": 4,
       "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "3",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinTokyo_EventScript_Patrol1",
       "flag": "FLAG_HIDE_ACT3_PATROLS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
-      "x": 24,
-      "y": 36,
+      "x": 18,
+      "y": 46,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
       "movement_range_x": 2,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "3",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinTokyo_EventScript_Patrol2",
       "flag": "FLAG_HIDE_ACT3_PATROLS"
     },
@@ -218,7 +218,7 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
-      "trainer_sight_or_berry_tree_id": "4",
+      "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinTokyo_EventScript_Patrol3",
       "flag": "FLAG_HIDE_ACT3_PATROLS"
     },
@@ -420,9 +420,9 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_WOT_LEON",
       "x": 68,
-      "y": 37,
+      "y": 36,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -510,8 +510,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SS_TIDAL",
-      "x": 13,
-      "y": 47,
+      "x": 17,
+      "y": 52,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_NONE",
       "movement_range_x": 0,
@@ -520,6 +520,84 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinTokyo_EventScript_FrontierFerry",
       "flag": "FLAG_WOT_HIDE_FRONTIER_FERRY"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 29,
+      "y": 50,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinTokyo_EventScript_Patrol3",
+      "flag": "FLAG_HIDE_ACT3_PATROLS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
+      "x": 46,
+      "y": 48,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NORMAL",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinTokyo_EventScript_Patrol3",
+      "flag": "FLAG_HIDE_ACT3_PATROLS"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LIGHT_SPRITE",
+      "x": 12,
+      "y": 38,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LIGHT_SPRITE",
+      "x": 8,
+      "y": 38,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "3",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_LIGHT_SPRITE",
+      "x": 22,
+      "y": 19,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "4",
+      "script": "NULL",
+      "flag": "FLAG_HIDE_WOT_WANTED_POSTER"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(LUGIA)",
+      "x": 68,
+      "y": 46,
+      "elevation": 1,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "ShinTokyo_EventScript_LugiaLook",
+      "flag": "FLAG_HIDE_SHINTOKYO_LUGIA"
     }
   ],
   "warp_events": [
@@ -602,6 +680,33 @@
     }
   ],
   "coord_events": [
+    {
+      "type": "trigger",
+      "x": 67,
+      "y": 39,
+      "elevation": 0,
+      "var": "VAR_TEMP_B",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_LugiaRise"
+    },
+    {
+      "type": "trigger",
+      "x": 68,
+      "y": 39,
+      "elevation": 0,
+      "var": "VAR_TEMP_B",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_LugiaRise"
+    },
+    {
+      "type": "trigger",
+      "x": 69,
+      "y": 39,
+      "elevation": 0,
+      "var": "VAR_TEMP_B",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_LugiaRise"
+    },
     {
       "type": "trigger",
       "x": 25,
@@ -907,16 +1012,142 @@
       "var": "VAR_TEMP_2",
       "var_value": "0",
       "script": "ShinTokyo_EventScript_MinisterCall"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 57,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 57,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 57,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 42,
+      "y": 54,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 43,
+      "y": 54,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 44,
+      "y": 54,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 45,
+      "y": 54,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 46,
+      "y": 54,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 47,
+      "y": 54,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 15,
+      "y": 55,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 16,
+      "y": 55,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 17,
+      "y": 55,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 18,
+      "y": 55,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 19,
+      "y": 55,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
+    },
+    {
+      "type": "trigger",
+      "x": 20,
+      "y": 55,
+      "elevation": 0,
+      "var": "VAR_TEMP_7",
+      "var_value": "0",
+      "script": "ShinTokyo_EventScript_SurfToIsland"
     }
   ],
-  "bg_events": [
-    {
-      "type": "sign",
-      "x": 27,
-      "y": 49,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "ShinTokyo_EventScript_TideSign"
-    }
-  ]
+  "bg_events": []
 }

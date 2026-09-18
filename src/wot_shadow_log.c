@@ -114,9 +114,32 @@ static const u16 sWotShadowLogSpecies[] =
     SPECIES_VENUSAUR,    // patrol pools
     SPECIES_BLASTOISE,   // Celebi Island super rod
     SPECIES_AZURILL,     // Celebi Island rods, common
+    // Wave 4 (2026-09-17) -- the shadow legendaries the post-Oni Shin Tokyo
+    // patrols can field. Their art was already imported and unused.
+    SPECIES_SUICUNE,
+    SPECIES_CRESSELIA,
+    SPECIES_GIRATINA,
+    SPECIES_ARCEUS,
+    SPECIES_LUGIA,       // the harbour, post-credits
 };
 
 #define WOT_SHADOW_LOG_COUNT ARRAY_COUNT(sWotShadowLogSpecies)
+
+// The log is 4 snag vars + 4 purified vars, 16 bits each. Adding a 65th
+// species needs a fifth var in BOTH tables below (and in vars.h) first.
+STATIC_ASSERT(WOT_SHADOW_LOG_COUNT <= 64, WotShadowLogOutOfBits);
+
+u32 WotShadowLog_SpeciesCount(void)
+{
+    return WOT_SHADOW_LOG_COUNT;
+}
+
+u16 WotShadowLog_SpeciesAt(u32 index)
+{
+    if (index >= WOT_SHADOW_LOG_COUNT)
+        return SPECIES_NONE;
+    return sWotShadowLogSpecies[index];
+}
 
 static const u16 sSnagBitVars[] =
 {

@@ -543,6 +543,12 @@
 #define LIGHT_TYPE_BALL             0
 #define LIGHT_TYPE_PKMN_CENTER_SIGN 1
 #define LIGHT_TYPE_POKE_MART_SIGN   2
+// Wishes of Tomorrow: a red 32x32 glow for Shin Tokyo. Put the light type
+// in the object's "sight radius / berry tree id" field in porymap.
+#define LIGHT_TYPE_WOT_RED          3
+// ... and a 64x64 rectangle that hangs on a sign board and spills onto the
+// pavement below it (Shin Tokyo's METRO entrance).
+#define LIGHT_TYPE_WOT_RED_SIGN     4
 
 #define FIRST_DECORATION_SPRITE_GFX OBJ_EVENT_GFX_PICHU_DOLL
 
@@ -710,6 +716,8 @@
 #define OBJ_EVENT_PAL_TAG_ITEM_GARCHOMPITE        0x8006
 #define OBJ_EVENT_PAL_TAG_ITEM_BAXCALIBRITE       0x8007
 #define OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE        0x8008
+// Wishes of Tomorrow: the red street light (LIGHT_TYPE_WOT_RED).
+#define OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT           0x8009
 // Not a real OW palette tag; used for the white flash applied to followers
 // Wishes of Tomorrow: a Shadow Pokemon follower is drawn as a dark violet
 // silhouette built at runtime from its ordinary palette, so it needs a tag of

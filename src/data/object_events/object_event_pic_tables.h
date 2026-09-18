@@ -1525,6 +1525,20 @@ static const struct SpriteFrameImage sPicTable_ApricornTree[] = {
     overworld_frame(gObjectEventPic_ApricornTree, 2, 2, 0),
 };
 
+// WoT: used on an Emerald map (the dying old man in the Ashlands), so it lives
+// outside the IS_FRLG block along with its NpcPink palette.
+static const struct SpriteFrameImage sPicTable_OldManLyingDown[] = {
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+};
+
 #if IS_FRLG
 
 static const struct SpriteFrameImage sPicTable_RedNormal[] = {
@@ -1938,17 +1952,6 @@ static const struct SpriteFrameImage sPicTable_OldMan2[] = {
     overworld_frame(gObjectEventPic_OldWoman, 2, 4, 0),
 };
 
-static const struct SpriteFrameImage sPicTable_OldManLyingDown[] = {
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-};
 
 static const struct SpriteFrameImage sPicTable_OldWomanFrlg[] = {
     overworld_frame(gObjectEventPic_OldWomanFrlg, 2, 4, 0),

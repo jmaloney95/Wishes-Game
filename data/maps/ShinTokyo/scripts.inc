@@ -10,6 +10,8 @@
 	.equ LOCALID_ARREST_GOON_A, 11
 	.equ LOCALID_ARREST_GOON_B, 12
 	.equ LOCALID_ARREST_GOON_C, 13
+	@ appended last in map.json, so local id = object count
+	.equ LOCALID_SHINTOKYO_LUGIA, 45
 
 ShinTokyo_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ShinTokyo_OnTransition
@@ -91,6 +93,9 @@ ShinTokyo_OnLoad_RedAlert::
 @ tide beat is gated in script instead (see ShinTokyo_EventScript_SurfToIsland).
 ShinTokyo_OnTransition::
 	setflag FLAG_HIDE_ACT3_CAPTAIN
+	@ Lugia is only ever on the water during its own scene (hide-flags default
+	@ CLEAR, so this has to be re-set on every load, ferry-style).
+	setflag FLAG_HIDE_SHINTOKYO_LUGIA
 	setflag FLAG_HIDE_ACT3_ARREST_NPCS
 	@ Hide-flags default CLEAR, so the ferry must be hidden explicitly on every
 	@ pre-clear load (see the round-6 jet bug for why this matters).
@@ -109,11 +114,19 @@ ShinTokyo_OnTransition_PostGame::
 	setweather WEATHER_SUNNY
 	@ the trade lanes reopen: the Frontier ferry starts calling at the docks
 	clearflag FLAG_WOT_HIDE_FRONTIER_FERRY
-	setflag FLAG_HIDE_ACT3_PATROLS
 	setflag FLAG_HIDE_ACT3_JAIL_GUARDS
 	setflag FLAG_WOT_HIDE_POSTGAME_MUTRIDS
 	setflag FLAG_HIDE_WOT_LEADER_SCREEN
 	setflag FLAG_HIDE_WOT_WANTED_POSTER
+	@ The patrols are the exception to the empty streets: three hold-outs who
+	@ never got the memo, left standing as the post-game Shadow hunting ground.
+	@ They only fight when spoken to (sight 0) and their teams re-roll from the
+	@ whole Shadow roster now that the Oni is gone, so the defeat flags clear
+	@ on every visit exactly as they do under red alert.
+	clearflag FLAG_HIDE_ACT3_PATROLS
+	cleartrainerflag TRAINER_NATE
+	cleartrainerflag TRAINER_MACEY
+	cleartrainerflag TRAINER_CLIFFORD
 	end
 ShinTokyo_OnTransition_RedAlert::
 	@ Any red-alert street whiteout comes back to the hideout cots -- never
@@ -196,22 +209,187 @@ ShinTokyo_EventScript_StreetGoonHostile::
 @ Sight trainers fielding snaggable Shadow mons; they appear the moment the
 @ red alert is up (FLAG_HIDE_ACT3_PATROLS cleared in ON_TRANSITION).
 ShinTokyo_EventScript_Patrol1::
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_PatrolHoldout1
 	trainerbattle_single TRAINER_NATE, ShinTokyo_Text_Patrol1Intro, ShinTokyo_Text_Patrol1Defeat
 	msgbox ShinTokyo_Text_PatrolPost, MSGBOX_AUTOCLOSE
 	call Wot_EventScript_SnagProgress
 	end
 
 ShinTokyo_EventScript_Patrol2::
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_PatrolHoldout2
 	trainerbattle_single TRAINER_MACEY, ShinTokyo_Text_Patrol2Intro, ShinTokyo_Text_Patrol2Defeat
 	msgbox ShinTokyo_Text_PatrolPost, MSGBOX_AUTOCLOSE
 	call Wot_EventScript_SnagProgress
 	end
 
 ShinTokyo_EventScript_Patrol3::
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_PatrolHoldout3
 	trainerbattle_single TRAINER_CLIFFORD, ShinTokyo_Text_Patrol3Intro, ShinTokyo_Text_Patrol3Defeat
 	msgbox ShinTokyo_Text_PatrolPost, MSGBOX_AUTOCLOSE
 	call Wot_EventScript_SnagProgress
 	end
+
+@ ---------------------------------------------------------------------------
+@  POST-CREDITS: the hold-outs. The uniforms lost, the Leader is gone and
+@  nobody has told them what to do next -- so they stand on their corners
+@  with whatever the program left them and fight anyone who asks. Beating
+@  one is not final: trainerbattle_no_intro ignores the defeat flag, so the
+@  team re-rolls from the whole Shadow roster every single time.
+@ ---------------------------------------------------------------------------
+ShinTokyo_EventScript_PatrolHoldout1::
+	lock
+	faceplayer
+	msgbox ShinTokyo_Text_Holdout1, MSGBOX_DEFAULT
+	goto ShinTokyo_EventScript_HoldoutBattle1
+	end
+
+ShinTokyo_EventScript_HoldoutBattle1::
+	closemessage
+	trainerbattle_no_intro TRAINER_NATE, ShinTokyo_Text_Patrol1Defeat
+	msgbox ShinTokyo_Text_HoldoutPost, MSGBOX_DEFAULT
+	call Wot_EventScript_SnagProgress
+	release
+	end
+
+ShinTokyo_EventScript_PatrolHoldout2::
+	lock
+	faceplayer
+	msgbox ShinTokyo_Text_Holdout2, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_no_intro TRAINER_MACEY, ShinTokyo_Text_Patrol2Defeat
+	msgbox ShinTokyo_Text_HoldoutPost, MSGBOX_DEFAULT
+	call Wot_EventScript_SnagProgress
+	release
+	end
+
+ShinTokyo_EventScript_PatrolHoldout3::
+	lock
+	faceplayer
+	msgbox ShinTokyo_Text_Holdout3, MSGBOX_DEFAULT
+	closemessage
+	trainerbattle_no_intro TRAINER_CLIFFORD, ShinTokyo_Text_Patrol3Defeat
+	msgbox ShinTokyo_Text_HoldoutPost, MSGBOX_DEFAULT
+	call Wot_EventScript_SnagProgress
+	release
+	end
+
+@ ===========================================================================
+@  SHADOW LUGIA -- the harbour.
+@  The last thing the program made, still down there. Walk to the seaward end
+@  of the Minister's jetty and it comes up under the pier -- at any point in
+@  the story, not just after the credits.
+@  Repeatable on purpose: only a capture sets FLAG_WOT_LUGIA_CAUGHT, and
+@  VAR_TEMP_B (a temp var, cleared on every map load) keeps it to one rise
+@  per visit so a lost fight cannot loop straight back into itself.
+@  NOT VAR_TEMP_4: the ON_FRAME table above watches that one for the Draco
+@  call, which sets it on every map load -- a trigger gated on it is dead.
+@ ===========================================================================
+ShinTokyo_EventScript_LugiaRise::
+	setvar VAR_TEMP_B, 1
+	goto_if_set FLAG_WOT_LUGIA_CAUGHT, ShinTokyo_EventScript_LugiaRiseEnd
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyo_Movement_LugiaFaceSea
+	waitmovement 0
+	delay 20
+	playse SE_M_WHIRLPOOL
+	msgbox ShinTokyo_Text_LugiaWater, MSGBOX_DEFAULT
+	closemessage
+	@ Spawn it while (68,46) is still off the bottom of the screen -- the
+	@ camera pan below brings it into frame instead of popping it in.
+	clearflag FLAG_HIDE_SHINTOKYO_LUGIA
+	addobject LOCALID_SHINTOKYO_LUGIA
+	@ the violet silhouette the Shadow follower wears, on the map object too
+	setvar VAR_0x8004, LOCALID_SHINTOKYO_LUGIA
+	special WotMakeObjectEventShadow
+	@ out over the open water, or the rise happens below the frame
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, ShinTokyo_Movement_LugiaCameraOut
+	waitmovement 0
+	playse SE_M_DIVE
+	applymovement LOCALID_SHINTOKYO_LUGIA, ShinTokyo_Movement_LugiaSurfaces
+	waitmovement 0
+	delay 24
+	waitse
+	playmoncry SPECIES_LUGIA, CRY_MODE_ENCOUNTER
+	waitmoncry
+	delay 30
+	applymovement LOCALID_CAMERA, ShinTokyo_Movement_LugiaCameraBack
+	waitmovement 0
+	special RemoveCameraObject
+	setwildbattle SPECIES_LUGIA, 70
+	special WotMakeEventMonShadow
+	setflag FLAG_SYS_CTRL_OBJ_DELETE
+	special BattleSetup_StartLegendaryBattle
+	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	specialvar VAR_RESULT, GetBattleOutcome
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, ShinTokyo_EventScript_LugiaCaught
+	removeobject LOCALID_SHINTOKYO_LUGIA
+	setflag FLAG_HIDE_SHINTOKYO_LUGIA
+	msgbox ShinTokyo_Text_LugiaSinks, MSGBOX_DEFAULT
+	releaseall
+	end
+
+ShinTokyo_EventScript_LugiaCaught::
+	setflag FLAG_WOT_LUGIA_CAUGHT
+	removeobject LOCALID_SHINTOKYO_LUGIA
+	setflag FLAG_HIDE_SHINTOKYO_LUGIA
+	msgbox ShinTokyo_Text_LugiaCaught, MSGBOX_DEFAULT
+	releaseall
+	end
+
+ShinTokyo_EventScript_LugiaRiseEnd::
+	end
+
+@ Talking to it mid-scene is not possible, but the object needs a script.
+ShinTokyo_EventScript_LugiaLook::
+	lockall
+	waitse
+	playmoncry SPECIES_LUGIA, CRY_MODE_WEAK
+	waitmoncry
+	releaseall
+	end
+
+ShinTokyo_Movement_LugiaFaceSea:
+	face_down
+	step_end
+
+@ four tiles out over the harbour and back
+ShinTokyo_Movement_LugiaCameraOut:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+ShinTokyo_Movement_LugiaCameraBack:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ (68,46) -> (68,42): up out of the dark water, slowly.
+ShinTokyo_Movement_LugiaSurfaces:
+	walk_slow_up
+	walk_slow_up
+	walk_slow_up
+	walk_slow_up
+	step_end
+
+ShinTokyo_Text_LugiaWater::
+	.string "The harbour goes flat.\p"
+	.string "Something under the pier is\n"
+	.string "pushing the water aside.$"
+
+ShinTokyo_Text_LugiaSinks::
+	.string "It slides back under the water,\n"
+	.string "and the harbour closes over it.\p"
+	.string "It is still down there.$"
+
+ShinTokyo_Text_LugiaCaught::
+	.string "The last thing the program ever\n"
+	.string "made is yours now.\p"
+	.string "The harbour is quiet.$"
 
 @ Surf route: crossing the southern edge carries the player to Celebi Island
 @ (trigger row -- plain warps don't fire on ordinary water tiles). The TIDE
@@ -679,6 +857,32 @@ ShinTokyo_Text_GoonRedAlert::
 	.string "That's… the face from the\n"
 	.string "bounty screens!\p"
 	.string "All units! ALL UNITS!$"
+
+ShinTokyo_Text_Holdout1::
+	.string "We lost. I know we lost.\p"
+	.string "The bounty board is down, the\n"
+	.string "Leader is gone, and this corner\l"
+	.string "is all I ever had.\p"
+	.string "One more. For the uniform.$"
+
+ShinTokyo_Text_Holdout2::
+	.string "Don't look at me like that.\p"
+	.string "You won. You get to be the one\n"
+	.string "who won.\p"
+	.string "I still have THESE. Come on.$"
+
+ShinTokyo_Text_Holdout3::
+	.string "Everyone else turned in their\n"
+	.string "badge and went home.\p"
+	.string "Home to what? These are the only\n"
+	.string "POKéMON who still answer me.\p"
+	.string "Take them from me, then.$"
+
+ShinTokyo_Text_HoldoutPost::
+	.string "Take them. Snag every one.\p"
+	.string "They were never mine.\p"
+	.string "I'll be here tomorrow. There will\n"
+	.string "be more of them. There always are.$"
 
 ShinTokyo_Text_Patrol1Intro::
 	.string "Prison breaker spotted!\p"

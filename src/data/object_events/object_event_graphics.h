@@ -338,6 +338,8 @@ const u32 gFieldEffectObjectPic_ShadowExtraLarge[] = INCGFX_U32("graphics/field_
 const u32 gFieldEffectObjectPic_BallLight[] = INCGFX_U32("graphics/object_events/pics/misc/light.png", ".4bpp");
 const u32 gFieldEffectObjectPic_PokeCenterLight[] = INCGFX_U32("graphics/object_events/pics/misc/poke_center_light.png", ".4bpp");
 const u32 gFieldEffectObjectPic_MartLight[] = INCGFX_U32("graphics/object_events/pics/misc/mart_light.png", ".4bpp");
+const u32 gFieldEffectObjectPic_WotRedLight[] = INCGFX_U32("graphics/object_events/pics/misc/wot_red_light.png", ".4bpp");
+const u32 gFieldEffectObjectPic_WotRedSignLight[] = INCGFX_U32("graphics/object_events/pics/misc/wot_red_light_sign.png", ".4bpp");
 const u8 gFieldEffectPic_CutGrass[] = INCGFX_U8("graphics/field_effects/pics/cut_grass.png", ".4bpp");
 const u32 gFieldEffectPic_CutGrass_Copy[] = INCGFX_U32("graphics/field_effects/pics/cut_grass.png", ".4bpp");
 const u16 gFieldEffectPal_CutGrass[] = INCGFX_U16("graphics/field_effects/palettes/cut_grass.pal", ".gbapal");
@@ -434,6 +436,8 @@ const u16 gObjectEventPal_Substitute[] = INCGFX_U16("graphics/object_events/pics
 
 const u16 gObjectEventPaletteEmotes[] = INCGFX_U16("graphics/misc/emotes.pal", ".gbapal");
 const u16 gObjectEventPaletteNeonLight[] = INCGFX_U16("graphics/object_events/palettes/neon_light.pal", ".gbapal");
+// Wishes of Tomorrow: Shin Tokyo's red street light (tools/build_wot_red_light.py).
+const u16 gObjectEventPaletteWotRedLight[] = INCGFX_U16("graphics/object_events/palettes/wot_red_light.pal", ".gbapal");
 
 #if OW_FOLLOWERS_POKEBALLS
 const u32 gObjectEventPic_MasterBall[] = INCGFX_U32("graphics/object_events/pics/misc/ball_master.png", ".4bpp", "-mwidth 2 -mheight 4");
@@ -516,6 +520,10 @@ const u32 gObjectEventPic_ApricornTree[] = INCGFX_U32("graphics/object_events/pi
 const u16 gObjectEventPal_NpcPink[] = INCGFX_U16("graphics/object_events/palettes/npc_pink.pal", ".gbapal");
 const u16 gObjectEventPal_NpcPinkReflection[] = INCGFX_U16("graphics/object_events/palettes/npc_pink_reflection.pal", ".gbapal");
 
+// WoT: used on an Emerald map (the dying old man in the Ashlands), so it lives
+// outside the IS_FRLG block along with its NpcPink palette.
+const u16 gObjectEventPic_OldManLyingDown[] = INCGFX_U16("graphics/object_events/pics/people/old_man_lying_down.png", ".4bpp");
+
 #if IS_FRLG
 
 const u16 gObjectEventPic_RedNormal[] = INCGFX_U16("graphics/object_events/pics/people/red/red_normal.png", ".4bpp", "-mwidth 2 -mheight 4");
@@ -568,7 +576,6 @@ const u16 gObjectEventPic_FatManFrlg[] = INCGFX_U16("graphics/object_events/pics
 const u16 gObjectEventPic_BaldingMan[] = INCGFX_U16("graphics/object_events/pics/people/balding_man.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_Woman2Frlg[] = INCGFX_U16("graphics/object_events/pics/people/woman_2_frlg.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_OldMan1[] = INCGFX_U16("graphics/object_events/pics/people/old_man_1.png", ".4bpp", "-mwidth 2 -mheight 4");
-const u16 gObjectEventPic_OldManLyingDown[] = INCGFX_U16("graphics/object_events/pics/people/old_man_lying_down.png", ".4bpp");
 const u16 gObjectEventPic_WorkerM[] = INCGFX_U16("graphics/object_events/pics/people/worker_m.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_WorkerF[] = INCGFX_U16("graphics/object_events/pics/people/worker_f.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_BeautyFrlg[] = INCGFX_U16("graphics/object_events/pics/people/beauty_frlg.png", ".4bpp", "-mwidth 2 -mheight 4");

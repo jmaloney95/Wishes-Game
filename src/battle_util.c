@@ -3095,6 +3095,15 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
          && WotMonIsShadow(GetBattlerMon(battler)))
         {
             gBattleStruct->wotAuraAnnounced |= 1u << battler;
+            gBattleStruct->wotHyperMode &= ~(1u << battler);
+            // The aura is not just an announcement: a Shadow comes in with
+            // its Attack and Sp. Atk already up a stage (once per battler,
+            // same latch as the message). Set directly rather than through a
+            // stat-change script so it cannot be stopped, mirrored or copied.
+            if (gBattleMons[battler].statStages[STAT_ATK] < MAX_STAT_STAGE)
+                gBattleMons[battler].statStages[STAT_ATK]++;
+            if (gBattleMons[battler].statStages[STAT_SPATK] < MAX_STAT_STAGE)
+                gBattleMons[battler].statStages[STAT_SPATK]++;
             BattleScriptCall(BattleScript_WotShadowAuraRet);
             effect++;
             break;
@@ -5729,6 +5738,53 @@ u32 GetBattleMoveTarget(enum Move move, enum MoveTarget moveTarget)
     return targetBattler;
 }
 
+// WoT Shadow system: Hyper Mode. A Shadow the player is using can stop
+// listening -- more readily the more hurt it is -- and then lash out with
+// whatever move it likes or turn on itself, until it settles again. It is
+// checked before obedience proper: badges and levels have nothing to do with
+// a sealed heart, and a purified mon never rages (the Defector says as much).
+static enum Obedience WotCheckHyperMode(void)
+{
+    u32 bit = 1u << gBattlerAttacker;
+    u32 usableMoves;
+
+    if (!IsOnPlayerSide(gBattlerAttacker)
+     || !GetMonData(GetBattlerMon(gBattlerAttacker), MON_DATA_IS_SHADOW))
+    {
+        gBattleStruct->wotHyperMode &= ~bit;
+        return OBEYS;
+    }
+
+    if (gBattleStruct->wotHyperMode & bit)
+    {
+        if (MOD(Random(), 100) < WOT_HYPER_MODE_SETTLE_CHANCE)
+        {
+            gBattleStruct->wotHyperMode &= ~bit;
+            return WOT_HYPER_MODE_SETTLES;
+        }
+    }
+    else
+    {
+        u32 chance = (gBattleMons[gBattlerAttacker].hp * 2 <= gBattleMons[gBattlerAttacker].maxHP)
+                   ? WOT_HYPER_MODE_CHANCE_HURT : WOT_HYPER_MODE_CHANCE;
+        if (MOD(Random(), 100) >= chance)
+            return OBEYS;
+        gBattleStruct->wotHyperMode |= bit;
+    }
+
+    if (MOD(Random(), 100) < WOT_HYPER_MODE_SELF_CHANCE)
+        return WOT_HYPER_MODE_HITS_SELF;
+
+    // Pick the move it lashes out with, the way the disobedience path does.
+    usableMoves = CheckMoveLimitations(gBattlerAttacker, 1u << gCurrMovePos, MOVE_LIMITATIONS_ALL);
+    if (usableMoves == ALL_MOVES_MASK)
+        return WOT_HYPER_MODE_HITS_SELF;
+    do
+        gCurrMovePos = gChosenMovePos = MOD(Random(), MAX_MON_MOVES);
+    while ((1u << gCurrMovePos) & usableMoves);
+    return WOT_HYPER_MODE_RAMPAGE;
+}
+
 enum Obedience GetAttackerObedienceForAction(void)
 {
     s32 rnd;
@@ -5747,6 +5803,14 @@ enum Obedience GetAttackerObedienceForAction(void)
         return OBEYS;
     if (gBattleTypeFlags & BATTLE_TYPE_RECORDED)
         return OBEYS;
+
+    {
+        enum Obedience hyper = WotCheckHyperMode();
+
+        if (hyper != OBEYS)
+            return hyper;
+    }
+
     if (B_OBEDIENCE_MECHANICS < GEN_8 && !IsOtherTrainer(gBattleMons[gBattlerAttacker].otId, gBattleMons[gBattlerAttacker].otName))
         return OBEYS;
     if (FlagGet(FLAG_BADGE08_GET)) // Rain Badge, ignore obedience altogether
@@ -7816,10 +7880,12 @@ s32 ApplyModifiersAfterDmgRoll(struct BattleContext *ctx, s32 dmg)
     DAMAGE_APPLY_MODIFIER(GetZMaxMoveAgainstProtectionModifier(ctx));
     DAMAGE_APPLY_MODIFIER(GetOtherModifiers(ctx));
     // WoT Shadow system: the canon power tier ("Shadow ≈ 20% stronger than
-    // Mega") -- a sealed heart hits without restraint. Any Shadow attacker,
-    // either side, until purified.
+    // Mega") -- a sealed heart hits without restraint, and shrugs off what
+    // comes back. Any Shadow battler, either side, until purified.
     if (GetMonData(GetBattlerMon(ctx->battlerAtk), MON_DATA_IS_SHADOW))
         DAMAGE_APPLY_MODIFIER(UQ_4_12(1.2));
+    if (GetMonData(GetBattlerMon(ctx->battlerDef), MON_DATA_IS_SHADOW))
+        DAMAGE_APPLY_MODIFIER(UQ_4_12(0.85));
 
     return dmg;
 }

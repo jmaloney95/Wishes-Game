@@ -1,3 +1,11 @@
+	.equ LOCALID_DOJO_MOM, 2
+
+@ The arrival walk. DOJO_ARRIVAL_Y is where MunenHomeAct2 warps the player in
+@ (keep the two in step); Mom waits one tile ahead of them.
+	.equ DOJO_PATH_X,      14
+	.equ DOJO_ARRIVAL_Y,   25
+	.equ DOJO_MOM_START_Y, DOJO_ARRIVAL_Y - 1
+
 Dojo_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Dojo_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, Dojo_OnFrame
@@ -8,11 +16,78 @@ Dojo_MapScripts::
 @ beside the Blissey healer.
 Dojo_OnTransition::
 	setrespawn HEAL_LOCATION_DOJO
+	@ On the walk-in from Munen, Mom starts at the garden gate instead of at
+	@ her post so she can lead the player up; the walk puts her template back.
+	@ FLAG_ACT2_SAFEHOUSE_INTRO_DONE covers both halves of that first visit.
+	goto_if_set FLAG_ACT2_SAFEHOUSE_INTRO_DONE, Dojo_OnTransition_End
+	goto_if_set FLAG_HIDE_DOJO_REBELS, Dojo_OnTransition_End
+	goto_if_unset FLAG_ACT2_HOME_CUTSCENE_DONE, Dojo_OnTransition_End
+	setobjectxyperm LOCALID_DOJO_MOM, DOJO_PATH_X, DOJO_MOM_START_Y
+	setvar VAR_TEMP_1, 1
+Dojo_OnTransition_End::
 	end
 
 Dojo_OnFrame:
+	map_script_2 VAR_TEMP_1, 1, Dojo_EventScript_Arrival
 	map_script_2 VAR_TEMP_0, 0, Dojo_EventScript_RebellionIntro
 	.2byte 0
+
+@ ============================================================================
+@  ARRIVAL (once): Mom walks the player up the garden path from the gate to
+@  the temple steps, then takes her post, and the Rebellion intro follows on.
+@  Both walks are the same 13 steps, so Mom stays exactly one tile ahead.
+@ ============================================================================
+Dojo_EventScript_Arrival::
+	setvar VAR_TEMP_1, 0
+	lockall
+	applymovement OBJ_EVENT_ID_PLAYER, Dojo_Movement_PlayerLookUp
+	waitmovement 0
+	setspeaker SP_NAME_MOM
+	msgbox Dojo_Text_MomThisWay, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_DOJO_MOM, Dojo_Movement_UpThePath
+	applymovement OBJ_EVENT_ID_PLAYER, Dojo_Movement_UpThePath
+	waitmovement 0
+	applymovement LOCALID_DOJO_MOM, Dojo_Movement_MomToPost
+	waitmovement 0
+	@ put her template back, or she would respawn at the gate on every visit
+	setobjectxyperm LOCALID_DOJO_MOM, 12, 10
+	delay 20
+	goto Dojo_EventScript_RebellionIntro
+	end
+
+Dojo_Movement_PlayerLookUp:
+	face_up
+	step_end
+
+Dojo_Movement_UpThePath:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ (14,11) -> her post at (12,10), facing the room
+Dojo_Movement_MomToPost:
+	walk_left
+	walk_left
+	walk_up
+	face_down
+	step_end
+
+Dojo_Text_MomThisWay:
+	.string "This way. Up the path, past the\n"
+	.string "blossoms.\p"
+	.string "Stay close to me.$"
 
 @ ============================================================================
 @  THE SAFEHOUSE (Act 2) -- the old dojo, where the Rebellion gathers.
@@ -56,15 +131,9 @@ Dojo_EventScript_RebellionIntro::
 Dojo_EventScript_RebellionIntroEnd::
 	end
 
+@ The pan was written for an entrance that no longer exists: from the temple
+@ steps the group is four tiles up, and twelve would run off the top.
 Dojo_Movement_CameraPanUp:
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
-	walk_up
 	walk_up
 	walk_up
 	walk_up
@@ -72,14 +141,6 @@ Dojo_Movement_CameraPanUp:
 	step_end
 
 Dojo_Movement_CameraPanDown:
-	walk_down
-	walk_down
-	walk_down
-	walk_down
-	walk_down
-	walk_down
-	walk_down
-	walk_down
 	walk_down
 	walk_down
 	walk_down

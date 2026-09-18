@@ -901,7 +901,11 @@ enum BattleTransition GetTrainerBattleTransition(void)
     enum TrainerClassID trainerClass = GetTrainerClassFromId(TRAINER_BATTLE_PARAM.opponentA);
 
     // Star Summit boss: force the red Groudon lava-crack transition (overrides the map's blue water transition).
-    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+    // THE ONI closes the story the way it opened, so he takes the same one --
+    // above the boss-card check below, which would otherwise cut in with the
+    // quick white bars.
+    if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS
+     || TRAINER_BATTLE_PARAM.opponentA == TRAINER_WALLY_VR_5)
         return B_TRANSITION_GROUDON;
 
     // Boss intro card battles: the card was the spectacle -- cut in fast with

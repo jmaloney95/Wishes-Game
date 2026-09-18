@@ -735,6 +735,10 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_ITEM_GARCHOMPITE] = &gObjectEventGraphicsInfo_ItemGarchompite,
     [OBJ_EVENT_GFX_ITEM_BAXCALIBRITE] = &gObjectEventGraphicsInfo_ItemBaxcalibrite,
     [OBJ_EVENT_GFX_ITEM_GYARADOSITE] = &gObjectEventGraphicsInfo_ItemGyaradosite,
+    // WoT: used on an Emerald map (the dying old man in the Ashlands), so it
+    // lives outside the IS_FRLG block along with its NpcPink palette.
+    [OBJ_EVENT_GFX_OLD_MAN_LYING_DOWN]       = &gObjectEventGraphicsInfo_OldManLyingDown,
+
 #if IS_FRLG
     [OBJ_EVENT_GFX_RED_NORMAL] =               &gObjectEventGraphicsInfo_RedNormal,
     [OBJ_EVENT_GFX_RED_BIKE] =                 &gObjectEventGraphicsInfo_RedBike,
@@ -767,7 +771,6 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOMAN_3_FRLG]             = &gObjectEventGraphicsInfo_Woman3Frlg,
     [OBJ_EVENT_GFX_OLD_MAN_1]                = &gObjectEventGraphicsInfo_OldMan1,
     [OBJ_EVENT_GFX_OLD_MAN_2]                = &gObjectEventGraphicsInfo_OldMan2,
-    [OBJ_EVENT_GFX_OLD_MAN_LYING_DOWN]       = &gObjectEventGraphicsInfo_OldManLyingDown,
     [OBJ_EVENT_GFX_OLD_WOMAN_FRLG]           = &gObjectEventGraphicsInfo_OldWomanFrlg,
     [OBJ_EVENT_GFX_TUBER_M_WATER]            = &gObjectEventGraphicsInfo_TuberMWater,
     [OBJ_EVENT_GFX_TUBER_F_FRLG]             = &gObjectEventGraphicsInfo_TuberFFrlg,

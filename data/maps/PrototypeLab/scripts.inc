@@ -63,6 +63,16 @@ PrototypeLab_EventScript_LogC::
 	msgbox PrototypeLab_Text_LogC, MSGBOX_SIGN
 	end
 
+@ The other two terminals on this floor. The prototype was never the only
+@ thing down here that stopped doing as it was told.
+PrototypeLab_EventScript_LogD::
+	msgbox PrototypeLab_Text_LogD, MSGBOX_SIGN
+	end
+
+PrototypeLab_EventScript_LogE::
+	msgbox PrototypeLab_Text_LogE, MSGBOX_SIGN
+	end
+
 PrototypeLab_Text_LogA::
 	.string "A waterlogged terminal, still\n"
 	.string "faintly alive.\p"
@@ -88,6 +98,27 @@ PrototypeLab_Text_LogC::
 	.string "just WATCHES us, and changes.\p"
 	.string "“We flood the shafts tonight.\n"
 	.string "Forgive us. Forgive me.”$"
+
+PrototypeLab_Text_LogD::
+	.string "This terminal is dry. Someone\n"
+	.string "kept it that way.\p"
+	.string "“DAY 52. The lab system filed an\n"
+	.string "experiment none of us wrote.\p"
+	.string "“It logged the results before we\n"
+	.string "ran it. They matched.\p"
+	.string "“We are no longer sure which of\n"
+	.string "us is the instrument.”$"
+
+PrototypeLab_Text_LogE::
+	.string "The screen is scrolling on its\n"
+	.string "own.\p"
+	.string "“DAY 71. We cut the system's\n"
+	.string "uplink at the junction box.\p"
+	.string "“The doors still open for it. The\n"
+	.string "lights still answer it.\p"
+	.string "“It has begun signing our names\n"
+	.string "at the bottom of these logs.\p"
+	.string "“It says it is helping.”$"
 
 PrototypeLab_Text_DeoxysStirs::
 	.string "The water around the ring goes\n"

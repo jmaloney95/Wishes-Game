@@ -880,9 +880,13 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     // WoT Shadow system -- snagging. No PLAY_BGM here: unlike a wild catch,
     // the battle keeps going, so the battle theme must keep playing.
     [STRINGID_WOTGOTCHASNAGGED]                     = COMPOUND_STRING("Gotcha! {B_DEF_NAME} was snagged away!\p"),
+    [STRINGID_WOTHYPERMODE]                         = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} is in HYPER MODE!"),
+    [STRINGID_WOTHYPERSETTLES]                      = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} settled down."),
+    [STRINGID_WOTCAUGHTTOPARTY]                     = COMPOUND_STRING("{B_BUFF1} was added to your party!\p"),
+    [STRINGID_WOTCAUGHTTOPC]                        = COMPOUND_STRING("{B_BUFF1} was transferred to the PC!\p"),
     [STRINGID_WOTSNAGGEDTOPARTY]                    = COMPOUND_STRING("The snagged {B_BUFF1} was added to your party!\p"),
     [STRINGID_WOTSNAGGEDTOPC]                       = COMPOUND_STRING("The snagged {B_BUFF1} was transferred to the PC!\p"),
-    [STRINGID_WOTSHADOWAURA]                        = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} is wreathed in a Shadow aura!"),
+    [STRINGID_WOTSHADOWAURA]                        = COMPOUND_STRING("{B_SCR_NAME_WITH_PREFIX} is wreathed in a Shadow aura!\pIts power surges!"),
     [STRINGID_WOTSNAGNICKNAMEQ]                     = COMPOUND_STRING("Give a nickname to the snagged {B_BUFF1}?"),
 };
 
@@ -1363,6 +1367,13 @@ const u16 gWotSnagDeliveryStringIds[] =
 {
     STRINGID_WOTSNAGGEDTOPARTY,
     STRINGID_WOTSNAGGEDTOPC,
+};
+
+// WoT: mid-battle catch delivery in wild doubles (chooser 0 = party, 1 = PC).
+const u16 gWotCatchDeliveryStringIds[] =
+{
+    STRINGID_WOTCAUGHTTOPARTY,
+    STRINGID_WOTCAUGHTTOPC,
 };
 
 const u16 gRoomsStringIds[] =

@@ -16,35 +16,35 @@
   "object_events": [],
   "warp_events": [
     {
-      "x": 6,
+      "x": 11,
       "y": 26,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2",
       "dest_warp_id": "3"
     },
     {
-      "x": 7,
+      "x": 12,
       "y": 26,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2",
       "dest_warp_id": "4"
     },
     {
-      "x": 8,
+      "x": 13,
       "y": 26,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2",
       "dest_warp_id": "5"
     },
     {
-      "x": 14,
+      "x": 19,
       "y": 5,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2_2",
       "dest_warp_id": "2"
     },
     {
-      "x": 15,
+      "x": 20,
       "y": 5,
       "elevation": 0,
       "dest_map": "MAP_ROUTE_2_2",

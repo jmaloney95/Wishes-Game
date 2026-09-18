@@ -24,6 +24,16 @@ void FakeRtc_Reset(void)
 struct SiiRtcInfo *FakeRtc_GetCurrentTime(void)
 {
 #if OW_USE_FAKE_RTC
+    // WoT: a save written before the fake clock was switched on has this
+    // struct zeroed, and month 0 walks off the front of the month-length
+    // table. Start such a save at the epoch instead.
+    if (gSaveBlock3Ptr->fakeRTC.month == 0)
+    {
+        FakeRtc_Reset();
+        // That save also carries a local-time offset taken against the
+        // console clock; subtracted from this one it would read as nonsense.
+        memset(&gSaveBlock2Ptr->localTimeOffset, 0, sizeof(gSaveBlock2Ptr->localTimeOffset));
+    }
     return &gSaveBlock3Ptr->fakeRTC;
 #else
     return NULL;

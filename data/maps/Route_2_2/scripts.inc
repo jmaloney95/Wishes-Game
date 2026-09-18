@@ -586,7 +586,8 @@ Route_2_2_EventScript_SwimmerFinn::
 
 @ Repeatable: he takes any Scyther brought to him, every time. The starter is
 @ given BEFORE the Scyther is taken so a full party+boxes can never eat the
-@ player's Scyther without a reward.
+@ player's Scyther without a reward. Every one of the three is a GUARANTEED
+@ shiny -- a Scyther is a steep price, and the little buddy should show it.
 Route_2_2_EventScript_MetalCoatGuy::
 	lock
 	faceplayer
@@ -605,21 +606,21 @@ Route_2_2_EventScript_MetalCoatGuy::
 	goto Route_2_2_EventScript_MetalCoatSquirtle
 
 Route_2_2_EventScript_MetalCoatBulbasaur::
-	givemon SPECIES_BULBASAUR, 5
+	givemon SPECIES_BULBASAUR, 5, shinyMode=SHINY_MODE_ALWAYS
 	compare VAR_RESULT, MON_CANT_GIVE
 	goto_if_eq Route_2_2_EventScript_MetalCoatNoRoom
 	bufferspeciesname STR_VAR_1, SPECIES_BULBASAUR
 	goto Route_2_2_EventScript_MetalCoatGrant
 
 Route_2_2_EventScript_MetalCoatCharmander::
-	givemon SPECIES_CHARMANDER, 5
+	givemon SPECIES_CHARMANDER, 5, shinyMode=SHINY_MODE_ALWAYS
 	compare VAR_RESULT, MON_CANT_GIVE
 	goto_if_eq Route_2_2_EventScript_MetalCoatNoRoom
 	bufferspeciesname STR_VAR_1, SPECIES_CHARMANDER
 	goto Route_2_2_EventScript_MetalCoatGrant
 
 Route_2_2_EventScript_MetalCoatSquirtle::
-	givemon SPECIES_SQUIRTLE, 5
+	givemon SPECIES_SQUIRTLE, 5, shinyMode=SHINY_MODE_ALWAYS
 	compare VAR_RESULT, MON_CANT_GIVE
 	goto_if_eq Route_2_2_EventScript_MetalCoatNoRoom
 	bufferspeciesname STR_VAR_1, SPECIES_SQUIRTLE

@@ -664,6 +664,8 @@ gSpecials::
 	def_special WotStartFieldConfetti
 	def_special WotStopFieldConfetti
 	def_special WotStartObjectBob
+	@ WoT: give a map's OW Pokemon object the Shadow silhouette (VAR_0x8004 = local id)
+	def_special WotMakeObjectEventShadow
 	def_special WotShowShadowLog
 	def_special WotShadowLogSnaggedCount
 	def_special WotShadowLogPurifiedCount

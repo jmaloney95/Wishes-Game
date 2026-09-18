@@ -219,6 +219,25 @@ BattleScript_SuccessBallThrowEnd::
 	setbyte gBattleOutcome, B_OUTCOME_CAUGHT
 	finishturn
 
+@ WoT: a successful catch in a wild DOUBLE battle while the other foe is still
+@ out. Same shape as the snag below -- announce, hand over, walk the mon off
+@ the field through the faint flow -- except the mon is delivered right here
+@ rather than at the end of the battle, and there is no nickname prompt (the
+@ vanilla naming flow expects the battle-ending CAUGHT path and black-screens
+@ mid-battle; it can be renamed from the party menu).
+BattleScript_WotSuccessCatchNoEnd::
+	setbyte sMON_CAUGHT, TRUE
+	incrementgamestat GAME_STAT_POKEMON_CAPTURES
+	printstring STRINGID_GOTCHAPKMNCAUGHTPLAYER
+	waitmessage B_WAIT_TIME_LONG
+	wotgivecaughtnoend
+	printfromtable gWotCatchDeliveryStringIds
+	waitmessage B_WAIT_TIME_LONG
+	tryfaintmon BS_TARGET
+	@ see the snag script: a stale TRUE hides the remaining foe's sprite
+	setbyte sMON_CAUGHT, FALSE
+	goto BattleScript_MoveEnd
+
 @ WoT Shadow system: a successful SNAG in a trainer battle. The battle does
 @ NOT end -- the snagged mon leaves the field through the normal faint flow
 @ (FinalizeCapture zeroed its HP) and is delivered after the battle by

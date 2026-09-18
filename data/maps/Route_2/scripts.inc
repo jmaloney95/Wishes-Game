@@ -1,4 +1,7 @@
 	.equ LOCALID_ROUTE2_ALLISON, 6
+	.equ ALLISON_SEA_X, 10
+	.equ ALLISON_SEA_Y, 27
+	.equ ALLISON_SURF_X, 13
 
 Route_2_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, Route_2_OnTransition
@@ -14,7 +17,7 @@ Route_2_OnTransition::
 	@ on the walking sprite. Templates live in the save block, so put her back
 	@ out at sea here rather than letting her creep towards the beach a little
 	@ further with every encounter.
-	setobjectxyperm LOCALID_ROUTE2_ALLISON, 6, 38
+	setobjectxyperm LOCALID_ROUTE2_ALLISON, ALLISON_SEA_X, ALLISON_SEA_Y
 	end
 
 @ -- Route 2 grinding trainers (weak, pre-Gym-1) --
@@ -126,9 +129,6 @@ Route_2_Text_WildPsyduck:
 	.string "Psyyyyy\n"
 	.string "duckkkk$"
 
-@ SIREN ALLISON: one-liner through the plate/portrait, boss card, battle.
-@ The trainer flag is shared across acts, so the card fires exactly once --
-@ at whichever of her encounters the player reaches first.
 @ ===========================================================================
 @ SIREN ALLISON -- the approach.
 @
@@ -136,17 +136,28 @@ Route_2_Text_WildPsyduck:
 @ structural rather than a mistake: CheckPathBetweenTrainerAndPlayer walks
 @ every tile between trainer and player and refuses the sighting on the first
 @ collision, and a water-bound object is blocked the moment that path steps up
-@ onto the sand. So sight still handles players out on the water, and these
-@ shore triggers handle players on the beach -- she notices, swims in, comes
-@ out of the surf and challenges them on dry land.
+@ onto the sand. So sight still handles players out on the water, and the
+@ shore trigger at (16,27) handles players wading in from the beach -- she
+@ notices, swims in, stands up in the surf and walks the last two tiles.
 @
-@ Scripted applymovement never collision-checks, which is what lets her cross
-@ the waterline at all.
+@ Geometry of row 27: x<=15 is OCEAN_WATER, x>=16 is the SHALLOW_WATER band
+@ the player is standing in when the trigger fires. So she swims 10 -> 13,
+@ changes to her walking sprite there, and wades 13 -> 15, finishing right in
+@ front of the player. Scripted applymovement never collision-checks, which is
+@ what lets her cross the waterline at all.
+@
+@ ALLISON_SEA_X/Y must match her object in map.json, because OnTransition
+@ stamps them back onto her (save-block) template every time the map loads.
 @ ===========================================================================
+
 Route_2_EventScript_AllisonNotice::
 	goto_if_defeated TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_EventScript_AllisonNoticeDone
 	setvar VAR_TEMP_1, 1
 	lockall
+	@ The trigger can be walked onto from the beach or from either side, so
+	@ point the player out to sea before she is worth looking at.
+	applymovement OBJ_EVENT_ID_PLAYER, Route_2_Movement_PlayerLooksOut
+	waitmovement 0
 	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonSpot
 	waitmovement 0
 	delay 20
@@ -162,17 +173,20 @@ Route_2_EventScript_AllisonNotice::
 	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonStroke
 	waitmovement 0
 	@ Out of the water. An object cannot be handed a new graphic in place, so
-	@ she is respawned: remove -> setobjectxyperm (the template, not the live
-	@ object) -> add. She reappears in the shallows on the walking sprite and
-	@ then takes a real step up onto the sand.
+	@ she is respawned on the tile she swam to: remove -> setobjectxyperm (the
+	@ template, not the live object) -> add. She stands up in the surf on the
+	@ walking sprite and then wades the last two tiles up to the player.
 	playse SE_M_DIVE
 	removeobject LOCALID_ROUTE2_ALLISON
 	setvar VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_WOT_ALLISON_LAND
-	setobjectxyperm LOCALID_ROUTE2_ALLISON, 9, 38
+	setobjectxyperm LOCALID_ROUTE2_ALLISON, ALLISON_SURF_X, ALLISON_SEA_Y
 	addobject LOCALID_ROUTE2_ALLISON
-	delay 12
+	delay 20
 	playse SE_PUDDLE
-	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonAshore
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonWade
+	waitmovement 0
+	playse SE_PUDDLE
+	applymovement LOCALID_ROUTE2_ALLISON, Route_2_Movement_AllisonWade
 	waitmovement 0
 	delay 16
 	goto Route_2_EventScript_AllisonChallenge
@@ -181,9 +195,16 @@ Route_2_EventScript_AllisonNotice::
 Route_2_EventScript_AllisonNoticeDone::
 	end
 
+@ She has four openers, three taunts on the way down and three parting lines,
+@ rolled independently, so the fight does not read the same way twice.
 Route_2_EventScript_AllisonChallenge::
 	setspeaker SP_NAME_ALLISON
-	msgbox Route_2_Text_AllisonIntro, MSGBOX_DEFAULT
+	random 4
+	copyvar VAR_0x8008, VAR_RESULT
+	call_if_eq VAR_0x8008, 0, Route_2_EventScript_AllisonIntro0
+	call_if_eq VAR_0x8008, 1, Route_2_EventScript_AllisonIntro1
+	call_if_eq VAR_0x8008, 2, Route_2_EventScript_AllisonIntro2
+	call_if_eq VAR_0x8008, 3, Route_2_EventScript_AllisonIntro3
 	closemessage
 	@ Flush every SE player before the card. Her banner's shimmer (SE_M_DETECT)
 	@ shares the SE channels with the splashes that just played, and the same
@@ -192,11 +213,68 @@ Route_2_EventScript_AllisonChallenge::
 	special WotSuppressWeatherSE
 	special WotStopSceneSE
 	bossintro BOSS_INTRO_ALLISON
-	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat
+	@ The defeat line belongs to the battle command, so each variant is its own
+	@ trainerbattle_no_intro.
+	random 3
+	copyvar VAR_0x8008, VAR_RESULT
+	goto_if_eq VAR_0x8008, 1, Route_2_EventScript_AllisonBattle1
+	goto_if_eq VAR_0x8008, 2, Route_2_EventScript_AllisonBattle2
+	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat0
+	goto Route_2_EventScript_AllisonBeaten
+
+Route_2_EventScript_AllisonBattle1::
+	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat1
+	goto Route_2_EventScript_AllisonBeaten
+
+Route_2_EventScript_AllisonBattle2::
+	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat2
+	goto Route_2_EventScript_AllisonBeaten
+
+Route_2_EventScript_AllisonBeaten::
 	setspeaker SP_NAME_ALLISON
-	msgbox Route_2_Text_AllisonPost, MSGBOX_DEFAULT
+	call Route_2_EventScript_AllisonSayPost
 	releaseall
 	end
+
+Route_2_EventScript_AllisonSayPost::
+	random 3
+	copyvar VAR_0x8008, VAR_RESULT
+	call_if_eq VAR_0x8008, 0, Route_2_EventScript_AllisonPost0
+	call_if_eq VAR_0x8008, 1, Route_2_EventScript_AllisonPost1
+	call_if_eq VAR_0x8008, 2, Route_2_EventScript_AllisonPost2
+	return
+
+Route_2_EventScript_AllisonIntro0::
+	msgbox Route_2_Text_AllisonIntro0, MSGBOX_DEFAULT
+	return
+
+Route_2_EventScript_AllisonIntro1::
+	msgbox Route_2_Text_AllisonIntro1, MSGBOX_DEFAULT
+	return
+
+Route_2_EventScript_AllisonIntro2::
+	msgbox Route_2_Text_AllisonIntro2, MSGBOX_DEFAULT
+	return
+
+Route_2_EventScript_AllisonIntro3::
+	msgbox Route_2_Text_AllisonIntro3, MSGBOX_DEFAULT
+	return
+
+Route_2_EventScript_AllisonPost0::
+	msgbox Route_2_Text_AllisonPost0, MSGBOX_DEFAULT
+	return
+
+Route_2_EventScript_AllisonPost1::
+	msgbox Route_2_Text_AllisonPost1, MSGBOX_DEFAULT
+	return
+
+Route_2_EventScript_AllisonPost2::
+	msgbox Route_2_Text_AllisonPost2, MSGBOX_DEFAULT
+	return
+
+Route_2_Movement_PlayerLooksOut:
+	face_left
+	step_end
 
 Route_2_Movement_AllisonSpot:
 	emote_exclamation_mark
@@ -207,34 +285,71 @@ Route_2_Movement_AllisonStroke:
 	walk_right
 	step_end
 
-Route_2_Movement_AllisonAshore:
-	walk_right
-	face_right
+Route_2_Movement_AllisonWade:
+	walk_slow_right
 	step_end
 
+@ Talking to her out on the water (her trainer sight, or a surfing player)
+@ skips the approach and goes straight to the challenge.
 Route_2_EventScript_SwimmerAllison::
 	goto_if_defeated TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_EventScript_AllisonAfter
 	lockall
-	setspeaker SP_NAME_ALLISON
-	msgbox Route_2_Text_AllisonIntro, MSGBOX_DEFAULT
-	closemessage
-	@ Clear the SE bed so the banner shimmer is not fighting the surf.
-	special WotSuppressWeatherSE
-	special WotStopSceneSE
-	bossintro BOSS_INTRO_ALLISON
-	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_Text_AllisonDefeat
-	setspeaker SP_NAME_ALLISON
-	msgbox Route_2_Text_AllisonPost, MSGBOX_DEFAULT
-	releaseall
+	goto Route_2_EventScript_AllisonChallenge
 	end
 
 Route_2_EventScript_AllisonAfter::
 	lock
 	faceplayer
 	setspeaker SP_NAME_ALLISON
-	msgbox Route_2_Text_AllisonPost, MSGBOX_DEFAULT
+	call Route_2_EventScript_AllisonSayPost
 	release
 	end
+
+Route_2_Text_AllisonIntro0:
+	.string "It's UV 9…\n"
+	.string "and you're blocking my rays.$"
+
+Route_2_Text_AllisonIntro1:
+	.string "Oh, you came all the way down\n"
+	.string "to the water for me?\p"
+	.string "That's adorable.\n"
+	.string "Wrong, but adorable.$"
+
+Route_2_Text_AllisonIntro2:
+	.string "Careful, sweetie.\p"
+	.string "Everything pretty on this beach\n"
+	.string "stings.$"
+
+Route_2_Text_AllisonIntro3:
+	.string "I could let you win…\p"
+	.string "No. No, I couldn't.$"
+
+Route_2_Text_AllisonDefeat0:
+	.string "Swept off my feet… and I'm not\n"
+	.string "even standing!$"
+
+Route_2_Text_AllisonDefeat1:
+	.string "Fine! You win!\p"
+	.string "It's just the salt water in my\n"
+	.string "eyes. That's all this is.$"
+
+Route_2_Text_AllisonDefeat2:
+	.string "Ugh… you're so much less charming\n"
+	.string "when you're winning.$"
+
+Route_2_Text_AllisonPost0:
+	.string "My LUVDISC took one look at you and\n"
+	.string "forgot how to swim. Same, honestly.$"
+
+Route_2_Text_AllisonPost1:
+	.string "Rematch? Sure.\p"
+	.string "Right after my tan, my nap and\n"
+	.string "my revenge plan.$"
+
+Route_2_Text_AllisonPost2:
+	.string "Tell the boys at the shack that\n"
+	.string "a SIREN let you pass.\p"
+	.string "They'll never believe you.$"
 
 Route_2_EventScript_SwimmerSkye::
 	trainerbattle_single TRAINER_ROUTE2_SWIMMER_SKYE, Route_2_Text_SkyeIntro, Route_2_Text_SkyeDefeat
@@ -250,18 +365,6 @@ Route_2_EventScript_SwimmerMarina::
 	trainerbattle_single TRAINER_ROUTE2_SWIMMER_MARINA, Route_2_Text_MarinaIntro, Route_2_Text_MarinaDefeat
 	msgbox Route_2_Text_MarinaPost, MSGBOX_AUTOCLOSE
 	end
-
-Route_2_Text_AllisonIntro:
-	.string "Its UV 9…\n"
-	.string "and you're blocking my rays.$"
-
-Route_2_Text_AllisonDefeat:
-	.string "Swept off my feet… and I'm not\n"
-	.string "even standing!$"
-
-Route_2_Text_AllisonPost:
-	.string "My LUVDISC took one look at you and\n"
-	.string "forgot how to swim. Same, honestly.$"
 
 Route_2_Text_SkyeIntro:
 	.string "I was floating here waiting for a\n"

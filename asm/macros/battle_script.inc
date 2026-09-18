@@ -2270,6 +2270,12 @@
 	.4byte \doneInstr
 	.endm
 
+	@ WoT: hand over the mon just caught in a wild double battle and set the
+	@ party/PC message chooser for gWotCatchDeliveryStringIds.
+	.macro wotgivecaughtnoend
+	callnative BS_WotGiveCaughtWildNoEnd
+	.endm
+
 	@ WoT Shadow system: give the snagged mon selected by wotcollectsnagged to
 	@ the player (party, or PC in partner multis / when full) and set the
 	@ party/PC message chooser for gWotSnagDeliveryStringIds.

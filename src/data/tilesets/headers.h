@@ -1765,7 +1765,7 @@ const struct Tileset gTileset_Route224 =
     .palettes = gTilesetPalettes_Route224,
     .metatiles = gMetatiles_Route224,
     .metatileAttributes = gMetatileAttributes_Route224,
-    .callback = NULL,
+    .callback = InitTilesetAnim_Route224,
 };
 
 const struct Tileset gTileset_Route224Primary =

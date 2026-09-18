@@ -5857,8 +5857,10 @@ u16 GetBattleBGM(void)
     {
         enum TrainerClassID trainerClass;
 
-        // Star Summit boss: force the FRLG champion battle theme.
-        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS)
+        // Star Summit boss: force the FRLG champion battle theme. THE ONI, the
+        // other half of that scene, fights to the same music.
+        if (TRAINER_BATTLE_PARAM.opponentA == TRAINER_STARSUMMIT_BOSS
+         || TRAINER_BATTLE_PARAM.opponentA == TRAINER_WALLY_VR_5)
             return MUS_RG_VS_CHAMPION;
 
         // Vesper keeps the rift's heart -- his battle plays Giratina's theme.

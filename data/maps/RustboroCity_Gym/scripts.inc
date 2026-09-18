@@ -1,8 +1,26 @@
 RustboroCity_Gym_MapScripts::
 	.byte 0
 
+@ The Ember Badge fight. Split out of trainerbattle_single so the boss card
+@ can sit between his challenge and the battle; the badge ceremony that the
+@ old form ran as its "defeated" script is reached by goto instead.
 RustboroCity_Gym_EventScript_Roxanne::
-	trainerbattle_single TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneIntro, RustboroCity_Gym_Text_RoxanneDefeat, RustboroCity_Gym_EventScript_RoxanneDefeated, NO_MUSIC
+	goto_if_defeated TRAINER_ROXANNE_1, RustboroCity_Gym_EventScript_RoxanneAfter
+	lockall
+	setspeaker SP_NAME_RED_FATALITY
+	msgbox RustboroCity_Gym_Text_RoxanneIntro, MSGBOX_DEFAULT
+	closemessage
+	@ clear the SE bed first, or the card's shimmer loses its channel
+	special WotSuppressWeatherSE
+	special WotStopSceneSE
+	bossintro BOSS_INTRO_RED_FATALITY
+	trainerbattle_no_intro TRAINER_ROXANNE_1, RustboroCity_Gym_Text_RoxanneDefeat
+	goto RustboroCity_Gym_EventScript_RoxanneDefeated
+	end
+
+RustboroCity_Gym_EventScript_RoxanneAfter::
+	lock
+	faceplayer
 	setspeaker SP_NAME_RED_FATALITY
 	goto_if_set FLAG_HIDE_SHINKANSEN_GOON, RustboroCity_Gym_EventScript_PostBattleKnowsTrain
 	msgbox RustboroCity_Gym_Text_PostBattleNorth, MSGBOX_DEFAULT

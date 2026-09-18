@@ -13,10 +13,14 @@
 @ ============================================================================
 
 @ --- Notifications (expect STR_VAR_1 = quest title) ------------------------
+@ These pre-date the quest-toast system and are only still used by the Ashlands
+@ old man, whose beats run before his quest unlocks its menu entry. They play
+@ the SEs quest_toast.c plays (SE_PIN to open or advance, SE_SUCCESS to finish)
+@ instead of the item/badge fanfares, which made his quest sound like a pickup
+@ and blocked the script while the jingle ran.
 Quest_EventScript_NotifyStarted::
 	special ShowQuestPopup
-	playfanfare MUS_OBTAIN_ITEM
-	waitfanfare
+	playse SE_PIN
 	return
 
 Quest_EventScript_NotifyUpdated::
@@ -26,8 +30,7 @@ Quest_EventScript_NotifyUpdated::
 
 Quest_EventScript_NotifyCompleted::
 	special ShowQuestPopup
-	playfanfare MUS_OBTAIN_BADGE
-	waitfanfare
+	playse SE_SUCCESS
 	return
 
 @ --- The Quest Log (opened by using the QUEST LOG key item) ----------------

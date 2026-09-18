@@ -266,6 +266,7 @@ bool8 GetFollowerInfo(u32 *species, bool32 *shiny, bool32 *female);
 // WoT: whether the mon the follower mirrors is a Shadow Pokemon. Declared
 // here because TrySetupObjectEventSprite needs it well above its definition.
 bool32 WotFollowerMonIsShadow(void);
+void WotMakeObjectEventShadow(void); // special: VAR_0x8004 = local id
 const struct ObjectEventGraphicsInfo *SpeciesToGraphicsInfo(u32 species, bool32 shiny, bool32 female);
 u16 GetObjectEventFlagIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup);
 void CopyObjectGraphicsInfoToSpriteTemplate(u16 graphicsId, void (*callback)(struct Sprite *), struct SpriteTemplate *spriteTemplate, const struct SubspriteTable **subspriteTables);

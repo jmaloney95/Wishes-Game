@@ -42,6 +42,14 @@ const struct SpriteFrameImage gFieldEffectObjectPicTable_MartLight[] = {
     obj_frame_tiles(gFieldEffectObjectPic_MartLight),
 };
 
+const struct SpriteFrameImage gFieldEffectObjectPicTable_WotRedLight[] = {
+    obj_frame_tiles(gFieldEffectObjectPic_WotRedLight),
+};
+
+const struct SpriteFrameImage gFieldEffectObjectPicTable_WotRedSignLight[] = {
+    obj_frame_tiles(gFieldEffectObjectPic_WotRedSignLight),
+};
+
 const struct SpriteTemplate gFieldEffectObjectTemplate_BallLight = {
     .tileTag = OBJ_EVENT_PAL_TAG_LIGHT,
     .paletteTag = OBJ_EVENT_PAL_TAG_LIGHT,
@@ -69,10 +77,36 @@ const struct SpriteTemplate gFieldEffectObjectTemplate_MartLight = {
     .callback = UpdateLightSprite,
 };
 
+// Wishes of Tomorrow: Shin Tokyo's red lamp glow. Same 32x32 geometry as the
+// ball light (SpawnLightSprite's default case centres it the same way), but a
+// palette and a sheet of its own, and it burns steady instead of flickering.
+const struct SpriteTemplate gFieldEffectObjectTemplate_WotRedLight = {
+    .tileTag = FLDEFF_TILE_TAG_WOT_RED_LIGHT,
+    .paletteTag = OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .anims = sAnimTable_Inanimate,
+    .images = gFieldEffectObjectPicTable_WotRedLight,
+    .callback = UpdateLightSprite,
+};
+
+// The METRO sign board: a bar of light on the sign's own tile row with three
+// rows of spill under it. Shares the red pool's palette, sheet of its own.
+const struct SpriteTemplate gFieldEffectObjectTemplate_WotRedSignLight = {
+    .tileTag = FLDEFF_TILE_TAG_WOT_RED_SIGN,
+    .paletteTag = OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT,
+    .oam = &gObjectEventBaseOam_64x64,
+    .anims = sAnimTable_Inanimate,
+    .images = gFieldEffectObjectPicTable_WotRedSignLight,
+    .callback = UpdateLightSprite,
+};
+
+// Indexed by LIGHT_TYPE_*.
 const struct SpriteTemplate *const gFieldEffectLightTemplates[] = {
     &gFieldEffectObjectTemplate_BallLight,
     &gFieldEffectObjectTemplate_PokeCenterLight,
     &gFieldEffectObjectTemplate_MartLight,
+    &gFieldEffectObjectTemplate_WotRedLight,
+    &gFieldEffectObjectTemplate_WotRedSignLight,
 };
 
 const struct SpriteTemplate gFieldEffectObjectTemplate_ShadowSmall = {

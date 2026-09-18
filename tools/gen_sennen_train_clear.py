@@ -23,7 +23,7 @@ import re
 import struct
 import sys
 
-TRAIN_ROWS = range(10, 18)   # rows 10-17 of the 40x27 layout (was 9-15 at 35x26)
+TRAIN_ROWS = range(10, 18)   # rows 10-17 of the 50x27 layout (was 9-15 at 35x26)
 SCRIPT = "data/maps/SennenVillage/scripts.inc"
 LABEL = "SennenVillage_EventScript_ClearTrain::\n"
 
@@ -47,7 +47,12 @@ def main():
     for y in TRAIN_ROWS:
         for x in range(w1):
             a, b = train[y * w1 + x], clear[y * w1 + x]
-            if a != b:
+            # Only a different metatile is worth repainting. Tiles that match
+            # but for their collision bit are the out-of-bounds void columns
+            # added by a resize, which SennenVillage walls off and
+            # SennenVillage_2 (never entered) does not -- copying that across
+            # would open the map edge up once the train leaves.
+            if (a & 0x3FF) != (b & 0x3FF):
                 lines.append("\tsetmetatile %d, %d, %d, %d\n" % (x, y, b & 0x3FF, (b >> 10) & 3 and 1))
 
     s = open(SCRIPT, encoding="utf-8", newline="").read()

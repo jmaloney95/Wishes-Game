@@ -383,7 +383,7 @@
     {
       "id": "HEAL_LOCATION_SENNEN_VILLAGE",
       "map": "MAP_SENNEN_VILLAGE",
-      "x": 10,
+      "x": 15,
       "y": 22
     },
     {
@@ -426,7 +426,7 @@
       "id": "HEAL_LOCATION_DOJO",
       "map": "MAP_DOJO",
       "x": 7,
-      "y": 15
+      "y": 11
     }
   ]
 }

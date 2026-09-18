@@ -21,6 +21,9 @@ TowerTop_OnResume::
 @ The jet + released legendaries only ever exist mid-cutscene.
 TowerTop_OnTransition::
 	setflag FLAG_WOT_TOWER_LEGENDS_AWAY
+	@ Any loss inside the tower sends the player back to the Rebel Hideout: the
+	@ tower has no healing of its own and the district below it is hostile.
+	setrespawn HEAL_LOCATION_REBEL_HIDEOUT
 	end
 
 @ Once Shadow Jirachi is caught the machine stays broken forever.
@@ -51,8 +54,17 @@ TowerTop_OnFrame:
 TowerTop_EventScript_OniScene::
 	lockall
 	setvar VAR_TEMP_1, 1
+	@ The stairs put the player in at (8,9) facing down, with the machine at
+	@ their back. Turn them to it on every arrival, scene or not.
+	applymovement OBJ_EVENT_ID_PLAYER, TowerTop_Movement_PlayerFaceCore
+	waitmovement 0
 	goto_if_set FLAG_WOT_ONI_MET, TowerTop_EventScript_OniSceneDone
 	setflag FLAG_WOT_ONI_MET
+	@ Ride the camera three tiles up so THE ONI (8,6) and Shadow Jirachi
+	@ (7,6) hold the frame for the whole speech.
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, TowerTop_Movement_CameraToCore
+	waitmovement 0
 	delay 60
 	@ The machine's hum; JIRACHI's faint, exhausted cry inside the glass.
 	waitse
@@ -73,6 +85,11 @@ TowerTop_EventScript_OniScene::
 	msgbox TowerTop_Text_Oni4, MSGBOX_DEFAULT
 	msgbox TowerTop_Text_Oni5, MSGBOX_DEFAULT
 	closemessage
+	@ back to the player before the battle -- a camera object must never
+	@ survive into one
+	applymovement LOCALID_CAMERA, TowerTop_Movement_CameraBackDownToPlayer
+	waitmovement 0
+	special RemoveCameraObject
 	@ "...or prepare to die." -- the final battle, right here.
 	call TowerTop_EventScript_OniBattle
 TowerTop_EventScript_OniSceneDone::
@@ -82,6 +99,9 @@ TowerTop_EventScript_OniSceneDone::
 @ Shared by the intro scene and the rematch talk (after a whiteout). Returns
 @ only on victory -- then the whole escape beat plays.
 TowerTop_EventScript_OniBattle::
+	special WotSuppressWeatherSE
+	special WotStopSceneSE
+	bossintro BOSS_INTRO_THE_ONI
 	trainerbattle_no_intro TRAINER_WALLY_VR_5, TowerTop_Text_OniDefeat
 	@ the storm's ambient SE would fight the scene audio (12ch or not)
 	special WotSuppressWeatherSE
@@ -95,7 +115,8 @@ TowerTop_EventScript_OniBattle::
 	applymovement LOCALID_CAMERA, TowerTop_Movement_CameraUpToRoof
 	waitmovement 0
 	delay 12
-	@ out the back: right 5, up 4 -> (13,2)
+	@ out the back along the repainted floor: right 5 to the east wall, then
+	@ straight up the gap to the roofline at (13,2)
 	applymovement LOCALID_TOWER_ONI, TowerTop_Movement_OniRunOut
 	waitmovement LOCALID_TOWER_ONI
 	delay 16
@@ -241,6 +262,22 @@ TowerTop_EventScript_Overload::
 	releaseall
 	end
 
+TowerTop_Movement_PlayerFaceCore:
+	face_up
+	step_end
+
+TowerTop_Movement_CameraToCore:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+TowerTop_Movement_CameraBackDownToPlayer:
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
 TowerTop_Movement_OniFacePlayer:
 	face_down
 	step_end
@@ -255,15 +292,11 @@ TowerTop_Movement_OniFaceMachine:
 @ Row 8 is open the full width, and column 14 climbs cleanly from there to the
 @ top -- same destination, a route that exists.
 TowerTop_Movement_OniRunOut:
-	walk_fast_down
-	walk_fast_down
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
 	walk_fast_right
-	walk_fast_right
-	walk_fast_up
 	walk_fast_up
 	walk_fast_up
 	walk_fast_up

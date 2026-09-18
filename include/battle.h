@@ -559,6 +559,8 @@ struct BattleStruct
     u32 expValue;
     u8 weatherDuration;
     u8 wotSnaggedMons; // WoT Shadow system: bitmask of enemy party slots snagged this battle (delivered at battle end)
+    u8 wotCaughtMons; // WoT: enemy party slots caught mid-battle and already handed over (wild doubles) -- only marks the faint as silent
+    u8 wotHyperMode; // WoT Shadow system: bitmask of battlers currently in Hyper Mode
     u8 wotAuraAnnounced; // WoT Shadow system: per-battler latch for the switch-in "Shadow aura" announce
     u8 wotBallTarget; // WoT Shadow system: manually chosen ball target, stored +1 (0 = none chosen, so the zeroed struct means "auto")
     u8 wotDeliverSlot; // WoT Shadow system: enemy party slot currently going through snag delivery/nicknaming

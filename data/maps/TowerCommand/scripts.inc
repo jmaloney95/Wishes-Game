@@ -1,7 +1,14 @@
 	.equ LOCALID_TOWER_CAPTAIN, 1
 
 TowerCommand_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, TowerCommand_OnTransition
 	.byte 0
+
+@ Any loss inside the tower sends the player back to the Rebel Hideout: the
+@ tower has no healing of its own and the district below it is hostile.
+TowerCommand_OnTransition::
+	setrespawn HEAL_LOCATION_REBEL_HIDEOUT
+	end
 
 @ ============================================================================
 @  MUTRID TOWER -- COMMAND FLOOR: the final badge, held by THE CAPTAIN who
