@@ -50,6 +50,11 @@ static const u8 sPortraitNessaGfx[] = INCGFX_U8("graphics/portraits/nessa.png", 
 static const u16 sPortraitNessaPal[] = INCGFX_U16("graphics/portraits/nessa.png", ".gbapal");
 static const u8 sPortraitDracoGfx[] = INCGFX_U8("graphics/portraits/draco.png", ".4bpp");
 static const u16 sPortraitDracoPal[] = INCGFX_U16("graphics/portraits/draco.png", ".gbapal");
+// THE ONI has no drawn portrait: his card and his dialogue use his battle
+// sprite, which is already a 64x64 16-colour indexed PNG with index 0 as the
+// background -- exactly the portrait format.
+static const u8 sPortraitTheOniGfx[] = INCGFX_U8("graphics/portraits/the_oni.png", ".4bpp");
+static const u16 sPortraitTheOniPal[] = INCGFX_U16("graphics/portraits/the_oni.png", ".gbapal");
 
 // Real art later = add the PNG, repoint that id's row. Nothing else changes.
 // PORTRAIT_COBRA intentionally points at the second placeholder to prove the
@@ -59,7 +64,7 @@ static const struct NpcPortrait sNpcPortraits[PORTRAIT_COUNT] =
     [PORTRAIT_PLACEHOLDER]     = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
     [PORTRAIT_CLARKSON_GENGAR] = {sPortraitClarksonGfx,     sPortraitClarksonPal},
     [PORTRAIT_MADAM_TSUJI]     = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
-    [PORTRAIT_MUTRID_LEADER]   = {sPortraitPlaceholderGfx,  sPortraitPlaceholderPal},
+    [PORTRAIT_MUTRID_LEADER]   = {sPortraitTheOniGfx,       sPortraitTheOniPal},
     [PORTRAIT_RED_FATALITY]    = {sPortraitRedFatalityGfx,  sPortraitRedFatalityPal},
     [PORTRAIT_DRACO]           = {sPortraitDracoGfx,        sPortraitDracoPal},
     [PORTRAIT_COBRA]           = {sPortraitPlaceholder2Gfx, sPortraitPlaceholder2Pal},

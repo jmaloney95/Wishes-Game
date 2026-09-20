@@ -92,59 +92,6 @@ static const u32 sTitleScreenWotGfx[] = INCGFX_U32("graphics/title_screen/wot_ti
 static const u32 sTitleScreenWotTilemap[] = INCBIN_U32("graphics/title_screen/wot_title.bin.smolTM");
 static const u16 sTitleScreenWotPal[] = INCGFX_U16("graphics/title_screen/wot_title.pal", ".gbapal");
 
-// Pokemon Wishes of Tomorrow: Jirachi as a bobbing OBJ sprite over the title BG.
-#define TAG_WOT_JIRACHI 2000
-static const u32 sJirachiGfx[] = INCGFX_U32("graphics/title_screen/jirachi.png", ".4bpp.smol");
-static const u16 sJirachiPal[] = INCGFX_U16("graphics/title_screen/jirachi.pal", ".gbapal");
-
-static const struct OamData sJirachiOamData =
-{
-    .y = 0,
-    .affineMode = ST_OAM_AFFINE_OFF,
-    .objMode = ST_OAM_OBJ_NORMAL,
-    .mosaic = FALSE,
-    .bpp = ST_OAM_4BPP,
-    .shape = SPRITE_SHAPE(64x64),
-    .x = 0,
-    .matrixNum = 0,
-    .size = SPRITE_SIZE(64x64),
-    .tileNum = 0,
-    .priority = 1,
-    .paletteNum = 0,
-    .affineParam = 0,
-};
-
-static const union AnimCmd sJirachiAnim[] =
-{
-    ANIMCMD_FRAME(0, 30),
-    ANIMCMD_END,
-};
-static const union AnimCmd *const sJirachiAnimTable[] = { sJirachiAnim };
-
-static void SpriteCB_Jirachi(struct Sprite *sprite);
-
-static const struct SpriteTemplate sJirachiSpriteTemplate =
-{
-    .tileTag = TAG_WOT_JIRACHI,
-    .paletteTag = TAG_WOT_JIRACHI,
-    .oam = &sJirachiOamData,
-    .anims = sJirachiAnimTable,
-    .images = NULL,
-    .affineAnims = gDummySpriteAffineAnimTable,
-    .callback = SpriteCB_Jirachi,
-};
-
-static const struct CompressedSpriteSheet sJirachiSpriteSheet[] =
-{
-    { .data = sJirachiGfx, .size = 64 * 32, .tag = TAG_WOT_JIRACHI },
-    {},
-};
-static const struct SpritePalette sJirachiSpritePalette[] =
-{
-    { .data = sJirachiPal, .tag = TAG_WOT_JIRACHI },
-    {},
-};
-
 // ---- PRESS START / version: four 32x16 frames, three of them PRESS START ----
 #define TAG_WOT_TITLE_TEXT 2001
 #define WOT_TEXT_FRAMES 4
@@ -223,17 +170,6 @@ static void CreateWotTitleText(void)
         StartSpriteAnim(&gSprites[spriteId], i);
     }
 }
-
-// Slow vertical bob: ~2px amplitude, ~3s period. Base y keeps Jirachi where it sat in the art.
-#define JIRACHI_BASE_X 120   // sprite center x (64-wide sprite, top-left 88)
-#define JIRACHI_BASE_Y 95    // sprite center y (top-left ~63)
-static void SpriteCB_Jirachi(struct Sprite *sprite)
-{
-    sprite->data[0] += 1;                       // phase (full bob ~256 frames, ~4s)
-    sprite->y2 = Sin(sprite->data[0] & 0xFF, 2);
-}
-
-
 
 // Used to blend "Emerald Version" as it passes over over the Pokémon banner.
 // Also used by the intro to blend the Game Freak name/logo in and out as they appear and disappear
@@ -791,9 +727,8 @@ void CB2_InitTitleScreen(void)
         // LoadCompressedSpriteSheet(&sPokemonLogoShineSpriteSheet[0]);
         LoadPalette(gTitleScreenEmeraldVersionPal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
         LoadSpritePalette(&sSpritePalette_PressStart[0]);
-        // Pokemon Wishes of Tomorrow: load + create the bobbing Jirachi sprite.
-        // Pokemon Wishes of Tomorrow: Jirachi is drawn into the new title art, so
-        // the bobbing sprite is not created any more -- two of it would show.
+        // Pokemon Wishes of Tomorrow: Jirachi is painted into the title BG art,
+        // so there is no Jirachi sprite. The only OBJ art here is the title text.
         LoadCompressedSpriteSheet(&sWotTitleTextSheet[0]);
         LoadSpritePalette(&sWotTitleTextPalette[0]);
         gMain.state = 2;
@@ -836,8 +771,8 @@ void CB2_InitTitleScreen(void)
         SetGpuReg(REG_OFFSET_BG1CNT, BGCNT_PRIORITY(2) | BGCNT_CHARBASE(3) | BGCNT_SCREENBASE(27) | BGCNT_16COLOR | BGCNT_TXT256x256);
         SetGpuReg(REG_OFFSET_BG2CNT, BGCNT_PRIORITY(1) | BGCNT_CHARBASE(0) | BGCNT_SCREENBASE(9) | BGCNT_256COLOR | BGCNT_AFF256x256);
         EnableInterrupts(INTR_FLAG_VBLANK);
-        // Pokemon Wishes of Tomorrow: BG0 (custom title) + OBJ (bobbing Jirachi). Stock title
-        // sprites stay offscreen at y=DISPLAY_HEIGHT so only Jirachi is visible.
+        // Pokemon Wishes of Tomorrow: BG0 (custom title) + OBJ (title text). Stock title
+        // sprites stay offscreen at y=DISPLAY_HEIGHT so only the title text is visible.
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1
                                     | DISPCNT_OBJ_1D_MAP
@@ -957,8 +892,8 @@ static void Task_TitleScreenPhase1(u8 taskId)
     {
         u8 spriteId;
 
-        // Pokemon Wishes of Tomorrow: BG0 + OBJ (Jirachi). Version-banner sprites below spawn at
-        // y=DISPLAY_HEIGHT (offscreen) and aren't moved on, so only Jirachi shows.
+        // Pokemon Wishes of Tomorrow: BG0 + OBJ (title text). Version-banner sprites below spawn
+        // at y=DISPLAY_HEIGHT (offscreen) and aren't moved on, so only the title text shows.
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1 | DISPCNT_OBJ_1D_MAP | DISPCNT_BG0_ON | DISPCNT_OBJ_ON);
         SetGpuReg(REG_OFFSET_WININ, 0);
         SetGpuReg(REG_OFFSET_WINOUT, 0);
@@ -1007,16 +942,16 @@ static void Task_TitleScreenPhase2(u8 taskId)
         SetGpuReg(REG_OFFSET_BLDCNT, 0);
         SetGpuReg(REG_OFFSET_BLDALPHA, 0);
         SetGpuReg(REG_OFFSET_BLDY, 0);
-        // Pokemon Wishes of Tomorrow: BG0 + OBJ (Jirachi). Press-start/copyright banners created
-        // below sit offscreen (y 108/148 but PRESS START is baked into the BG, these stay hidden
-        // because their sprites are at x off the visible art); keep OBJ on for Jirachi.
+        // Pokemon Wishes of Tomorrow: BG0 + OBJ (title text). Press-start/copyright banners
+        // created below sit offscreen (PRESS START is baked into the BG, so these stay hidden);
+        // keep OBJ on for the title text.
         SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_MODE_1
                                     | DISPCNT_OBJ_1D_MAP
                                     | DISPCNT_BG0_ON
                                     | DISPCNT_OBJ_ON);
         // Pokemon Wishes of Tomorrow: PRESS START + copyright are baked into the BG art, so spawn
         // the stock banner sprites offscreen (y = DISPLAY_HEIGHT) to avoid doubling them while
-        // keeping these functions referenced. Only the bobbing Jirachi OBJ is visible.
+        // keeping these functions referenced. Only the title text OBJ is visible.
         CreatePressStartBanner(START_BANNER_X, DISPLAY_HEIGHT);
         CreateCopyrightBanner(START_BANNER_X, DISPLAY_HEIGHT);
         // Pokemon Wishes of Tomorrow: PRESS START blinks, so it is a sprite and

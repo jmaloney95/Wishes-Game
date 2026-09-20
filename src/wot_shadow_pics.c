@@ -7,6 +7,18 @@
 // hall_of_fame.c all reach it through WotFindShadowPic().
 #include "data/wot_shadow_pics.h"
 
+u32 WotShadowPicCount(void)
+{
+    return ARRAY_COUNT(sWotShadowPics);
+}
+
+u16 WotShadowPicSpeciesAt(u32 index)
+{
+    if (index >= ARRAY_COUNT(sWotShadowPics))
+        return SPECIES_NONE;
+    return sWotShadowPics[index].species;
+}
+
 const struct WotShadowPic *WotFindShadowPic(u16 species)
 {
     u32 i;

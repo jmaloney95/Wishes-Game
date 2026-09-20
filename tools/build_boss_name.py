@@ -26,6 +26,28 @@ from PIL import Image, ImageDraw, ImageFont
 
 W, H = 192, 32
 SPLIT = 19          # first grey row, measured off name_allison.png
+
+# The hand-made plates are SLANTED, and leaving that out is why THE ONI and RED
+# FATALITY read as a different typeface from SIREN ALLISON and GENERAL EDWARDS.
+# Both shipped plates measure the same slant: each row sits 0.19px further right
+# than the one above it -- a backslant of about 10.8 degrees, not a forward
+# italic. Measured by finding the shear that makes their stems stack into
+# columns, and confirmed by reading the two L stems of ALLISON directly (their
+# left edge runs x=15 at the top to x=18 at the bottom over 19 rows).
+SHEAR = 0.19
+
+# The shipped plates are set very tight -- adjacent letters all but touch, which
+# is most of why they read as heavier than a default Impact string. Measured as
+# ink inside the text's own bounding box: SIREN ALLISON 83%, GENERAL EDWARDS
+# 92%, against 60% for an untracked render. This pulls each letter back toward
+# the one before it to close that gap.
+TRACK = -2
+
+# Cap height. The script used to allow H-6, but SIREN ALLISON is 29 rows tall in
+# a 32-row plate, so that cap alone kept generated plates visibly smaller than
+# the hand-made ones. One row is left for the drop shadow.
+MAX_GLYPH_H = H - 3
+
 TRANSPARENT, BLACK, GOLD, GOLD_DARK, WHITE, GREY = 0, 1, 7, 8, 9, 10
 
 FONTS = ["C:/Windows/Fonts/impact.ttf", "/mnt/c/Windows/Fonts/impact.ttf",
@@ -41,18 +63,58 @@ def load_palette():
     return flat + [0] * (768 - len(flat))
 
 
+def build_mask(text, font):
+    """Upright text, sheared, then centred in the plate.
+
+    The shear is applied to the glyph mask BEFORE the bevel and shadow passes,
+    so the one-pixel edges follow the slanted outline the way they do on the
+    hand-made plates. Shearing the finished plate instead would tear the bevel
+    into steps.
+
+    Rows pivot about the middle of the plate rather than the top, which keeps
+    the text centred and costs half as much width as pivoting on an edge.
+    """
+    pad = 64
+    wide = Image.new("1", (W + 2 * pad, H), 0)
+    d = ImageDraw.Draw(wide)
+    box = font.getbbox(text)
+
+    # Drawn letter by letter so TRACK can pull them together; PIL's text() would
+    # lay the string out at the font's own spacing.
+    x = pad + (W - (box[2] - box[0])) // 2 - box[0]
+    y = (H - 2 - (box[3] - box[1])) // 2 - box[1]
+    for ch in text:
+        d.text((x, y), ch, font=font, fill=1)
+        x += font.getlength(ch) + (TRACK if ch != " " else 0)
+
+    sheared = Image.new("1", wide.size, 0)
+    pivot = (H - 1) / 2.0
+    for y in range(H):
+        dx = int(round(SHEAR * (y - pivot)))
+        sheared.paste(wide.crop((0, y, wide.size[0], y + 1)), (dx, y))
+
+    bbox = sheared.getbbox()
+    if bbox is None:
+        sys.exit("nothing rendered for: " + text)
+    glyphs = sheared.crop(bbox)
+
+    mask = Image.new("1", (W, H), 0)
+    mask.paste(glyphs, ((W - glyphs.width) // 2, bbox[1]))
+    return mask, glyphs.size
+
+
 def pick_font(text):
     path = next((f for f in FONTS if os.path.exists(f)), None)
     if path is None:
         sys.exit("no heavy font found; point FONTS at one")
-    # grow until the text fills the plate, leaving room for bevel + shadow
+    # Grow until it fills the plate. The fit is tested on the SHEARED mask --
+    # slanting widens the text, so sizing on the upright box overflows.
     best = None
     for size in range(12, 48):
         font = ImageFont.truetype(path, size)
-        box = font.getbbox(text)
-        w, h = box[2] - box[0], box[3] - box[1]
-        if w <= W - 8 and h <= H - 6:
-            best = (font, box)
+        _, (w, h) = build_mask(text, font)
+        if w <= W - 8 and h <= MAX_GLYPH_H:
+            best = font
         else:
             break
     if best is None:
@@ -62,12 +124,8 @@ def pick_font(text):
 
 def main():
     text, out = sys.argv[1].upper(), sys.argv[2]
-    font, box = pick_font(text)
-
-    mask = Image.new("1", (W, H), 0)
-    d = ImageDraw.Draw(mask)
-    d.text(((W - (box[2] - box[0])) // 2 - box[0],
-            (H - 2 - (box[3] - box[1])) // 2 - box[1]), text, font=font, fill=1)
+    font = pick_font(text)
+    mask, _ = build_mask(text, font)
     m = mask.load()
 
     def on(x, y):

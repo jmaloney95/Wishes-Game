@@ -331,6 +331,8 @@ MunenTunnel_EventScript_Yiffer::
 	setflag FLAG_RECEIVED_HM_STRENGTH
 	setspeaker SP_NAME_YIFFER
 	msgbox MunenTunnel_Text_YifferStrength, MSGBOX_DEFAULT
+	setspeaker SP_NAME_NONE
+	msgbox MunenTunnel_Text_CanUseStrength, MSGBOX_DEFAULT
 	release
 	end
 
@@ -347,6 +349,10 @@ MunenTunnel_Text_YifferPlug:
 	.string "Guaranteed!\p"
 	.string "Hiii-YAAA!\p"
 	.string "Here, a free sample.$"
+
+MunenTunnel_Text_CanUseStrength:
+	.string "{PLAYER} can now use STRENGTH\n"
+	.string "outside of battle!$"
 
 MunenTunnel_Text_YifferStrength:
 	.string "That's STRENGTH. Shove the boulders\n"

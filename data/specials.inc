@@ -675,5 +675,7 @@ gSpecials::
 	def_special WotBuyLeaderMegaStone
 	def_special WotGetStarterShiny
 	def_special WotGondolaDepart, waitstate=1
+	@ WoT: the Frontier ferry leaving the Shin Tokyo docks (VAR_0x8004 = local id)
+	def_special WotShipDepart, waitstate=1
 	def_special WotBufferLastTalkedSpecies
 	def_special WotStartFamilyHearts

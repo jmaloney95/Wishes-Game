@@ -10,8 +10,11 @@
 	.equ LOCALID_ARREST_GOON_A, 11
 	.equ LOCALID_ARREST_GOON_B, 12
 	.equ LOCALID_ARREST_GOON_C, 13
-	@ appended last in map.json, so local id = object count
-	.equ LOCALID_SHINTOKYO_LUGIA, 45
+	@ Local ids are map.json order, so a porymap pass that adds or deletes an
+	@ object shifts them -- deleting the billboard light moved Lugia 45 -> 44.
+	@ Re-check these two against the object list after any porymap edit.
+	.equ LOCALID_SHINTOKYO_LUGIA, 44
+	.equ LOCALID_SHINTOKYO_FERRY, 39
 
 ShinTokyo_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, ShinTokyo_OnTransition
@@ -37,19 +40,33 @@ ShinTokyo_EventScript_HideFerry::
 @  and runs to the Battle Frontier, arriving at the same harbour tile the
 @  vanilla SS Tidal uses (BattleFrontier_OutsideWest 19,67).
 @ ============================================================================
-ShinTokyo_EventScript_FrontierFerry::
+@ The deckhand on the quay (and the ship herself) run the crossing. The
+@ departure is the gondola trick: WotShipDepart slides the ship's SPRITE out
+@ east while the object stays on its tile, so nothing despawns mid-animation.
+ShinTokyo_EventScript_FerryHand::
 	lock
 	faceplayer
 	msgbox ShinTokyo_Text_FerryAsk, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, ShinTokyo_EventScript_FerryDeclined
 	msgbox ShinTokyo_Text_FerryBoard, MSGBOX_DEFAULT
 	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyo_Movement_WatchFerry
+	waitmovement 0
+	delay 20
 	playse SE_SHIP
+	setvar VAR_0x8004, LOCALID_SHINTOKYO_FERRY
+	special WotShipDepart
+	waitstate
+	delay 40
 	fadescreen FADE_TO_BLACK
 	warp MAP_BATTLE_FRONTIER_OUTSIDE_WEST, 19, 67
 	waitstate
 	release
 	end
+
+ShinTokyo_Movement_WatchFerry:
+	face_down
+	step_end
 
 ShinTokyo_EventScript_FerryDeclined::
 	msgbox ShinTokyo_Text_FerryDeclined, MSGBOX_DEFAULT

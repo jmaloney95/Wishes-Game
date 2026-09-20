@@ -4886,6 +4886,10 @@ Sealeo
 Level: 16
 IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
+Snover
+Level: 16
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
 Froslass
 Level: 17
 IVs: 24 HP / 24 Atk / 24 Def / 24 SpA / 24 SpD / 24 Spe
@@ -6048,39 +6052,51 @@ IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_JOSH ===
 Name: MikManc
-Class: Youngster
-Pic: Youngster
+Class: Guitarist
+Pic: Guitarist
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Deerling
+Snover
 Level: 13
 
-Swadloon
+Vanillite
 Level: 14
 
-Leavanny
+Deerling
+Level: 14
+
+Sneasel
+Level: 15
+
+Leavanny @ Oran Berry
 Level: 16
 
 === TRAINER_TOMMY ===
 Name: Minister
-Class: Youngster
-Pic: Youngster
+Class: Cooltrainer
+Pic: Cooltrainer M
 Gender: Male
 Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Check Viability
 
 Oddish
-Level: 14
-
-Claydol
 Level: 15
 
-Noivern
+Delibird
+Level: 14
+
+Spheal
+Level: 15
+
+Claydol
 Level: 16
+
+Noivern
+Level: 17
 
 === TRAINER_JOEY ===
 Name: JOEY
@@ -10654,18 +10670,27 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 
 === TRAINER_MARC ===
 Name: Yiffer
-Class: Hiker
-Pic: Hiker
+Class: Black Belt
+Pic: Black Belt
 Gender: Male
-Music: Hiker
+Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Snorunt
-Level: 11
+Meditite
+Level: 13
 
-Spheal
-Level: 12
+Cubchoo
+Level: 14
+
+Machop
+Level: 15
+
+Makuhita
+Level: 15
+
+Crabrawler @ Oran Berry
+Level: 16
 
 === TRAINER_BRENDEN ===
 Name: BRENDEN

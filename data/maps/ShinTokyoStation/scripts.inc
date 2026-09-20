@@ -8,7 +8,9 @@ ShinTokyoStation_MapScripts::
 @  MUS_NONE) -- only train sounds. No welcoming NPCs. The player remembers the
 @  allies lost at Sennen station, steps off, and the city feels wrong.
 @  The player is warped here from the Act-2 seat cutscene
-@  (ShinkansenInterior_EventScript_TakeSeat) onto the platform at (9,4).
+@  (ShinkansenInterior_EventScript_TakeSeat) into the WEST gate at (6,5) and
+@  steps down onto the concourse. Rows 0-4 are solid track band; row 5 has
+@  exactly two gaps, x=6 and x=10, and those are the gates.
 @  All dialogue PLACEHOLDER (Joe).
 @ ============================================================================
 ShinTokyoStation_OnFrame:
@@ -50,6 +52,26 @@ ShinTokyoStation_EventScript_DepartureBoard::
 	msgbox ShinTokyoStation_Text_DepartureBoard, MSGBOX_SIGN
 	end
 
+@ Both gates (6,5) and (10,5) run this. A walk-on trigger rather than a sign:
+@ the point is to turn the player around when they head back up, and a sign
+@ would only talk to someone who chose to press A at it.
+@ Guarded on the arrival flag because the player is warped in ONTO (6,5), and
+@ the trigger would otherwise fire underneath the arrival cutscene.
+ShinTokyoStation_EventScript_NoTurningBack::
+	goto_if_unset FLAG_ACT3_ARRIVED_SHIN_TOKYO, ShinTokyoStation_EventScript_NoTurningBackEnd
+	lockall
+	msgbox ShinTokyoStation_Text_NoTurningBack, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyoStation_Movement_BackToConcourse
+	waitmovement 0
+	releaseall
+ShinTokyoStation_EventScript_NoTurningBackEnd::
+	end
+
+ShinTokyoStation_Movement_BackToConcourse:
+	walk_down
+	step_end
+
 @ --- Text (all PLACEHOLDER (Joe)) -------------------------------------------
 ShinTokyoStation_Text_Arrival1::
 	.string "The doors hiss open.\p"
@@ -65,6 +87,9 @@ ShinTokyoStation_Text_Arrival3::
 	.string "Shin-Tokyo.\p"
 	.string "The city of tomorrow.\n"
 	.string "It doesn't look back at you.$"
+
+ShinTokyoStation_Text_NoTurningBack::
+	.string "There is no turning back.$"
 
 ShinTokyoStation_Text_DepartureBoard::
 	.string "DEPARTURES:\p"

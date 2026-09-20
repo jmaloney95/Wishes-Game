@@ -19,4 +19,9 @@ struct WotShadowPic
 
 const struct WotShadowPic *WotFindShadowPic(u16 species);
 
+// The table as a list, for anything that wants "every species with custom
+// Shadow art" (the debug menu's box filler does).
+u32 WotShadowPicCount(void);
+u16 WotShadowPicSpeciesAt(u32 index);
+
 #endif // GUARD_WOT_SHADOW_ART_H

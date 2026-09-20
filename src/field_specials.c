@@ -1637,6 +1637,49 @@ void WotGondolaDepart(void)
 #undef tGondolaLocalId
 #undef tGondolaFrame
 
+// WoT: the Frontier ferry pulls out of the Shin Tokyo docks. Same shape as
+// the gondola above -- only the SPRITE moves, so the object stays on its tile
+// and nothing despawns it -- but she runs straight out east, and gathers way
+// once she is clear of the quay. VAR_0x8004 = the ship's local id.
+// Declared waitstate=1, so `special` waits for it.
+#define tShipLocalId data[0]
+#define tShipFrame   data[1]
+
+static void Task_WotShipDepart(u8 taskId)
+{
+    s16 *data = gTasks[taskId].data;
+    u8 objectEventId = GetObjectEventIdByLocalIdAndMap(tShipLocalId,
+                                                       gSaveBlock1Ptr->location.mapNum,
+                                                       gSaveBlock1Ptr->location.mapGroup);
+    bool32 done = (objectEventId == OBJECT_EVENTS_COUNT);
+
+    if (!done)
+    {
+        struct Sprite *sprite = &gSprites[gObjectEvents[objectEventId].spriteId];
+
+        sprite->x2++;
+        if (tShipFrame > 48)
+            sprite->x2++;
+        done = (sprite->x + sprite->x2 + sprite->centerToCornerVecX + gSpriteCoordOffsetX >= DISPLAY_WIDTH);
+    }
+    // 600 frames is a backstop; she clears the screen in about 130.
+    if (done || ++tShipFrame > 600)
+    {
+        DestroyTask(taskId);
+        ScriptContext_Enable();
+    }
+}
+
+void WotShipDepart(void)
+{
+    u8 taskId = CreateTask(Task_WotShipDepart, 80);
+    gTasks[taskId].tShipLocalId = gSpecialVar_0x8004;
+    gTasks[taskId].tShipFrame = 0;
+}
+
+#undef tShipLocalId
+#undef tShipFrame
+
 static void Task_ShakeCamera(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;

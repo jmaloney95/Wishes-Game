@@ -38,7 +38,7 @@ import struct
 import sys
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageFilter
 
 ART = os.path.join("..", "custom ui")
 
@@ -165,6 +165,50 @@ def premultiplied_resize(rgba, size):
     return Image.fromarray(out)
 
 
+def salient_resize(rgba, size, strength=0.85, pct=88):
+    """Downscale, then put back the small features that averaging destroys.
+
+    Jirachi comes down from 49x52 to 32x34. A resampling filter is an averaging
+    filter, and at 0.65x it averages away exactly the things that make the
+    drawing read: the dark contour inside the head, the one-pixel red eyes, the
+    sparkles on the streamers. What is left is a pale silver blob -- the sprite
+    stops looking drawn and starts looking blurred.
+
+    So the features are carried down separately. A pixel counts as a feature
+    when its colour is far from its own neighbourhood's, which is what an eye,
+    a contour line or a sparkle is and what a smooth shading ramp is not. Their
+    coverage per output cell is resampled on its own and re-applied on top of
+    the filtered result, so a feature that lands in a cell still colours it.
+
+    Alpha is left alone -- it comes from `premultiplied_resize`, which keeps the
+    rim soft so the layer does not look cut out against the nebula.
+    """
+    base = np.asarray(premultiplied_resize(rgba, size)).astype(np.float32)
+    a = np.asarray(rgba).astype(np.float32)
+    rgb, opaque = a[..., :3], a[..., 3] > 40
+    if not opaque.any():
+        return Image.fromarray(base.astype(np.uint8))
+
+    blur = np.asarray(Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8))
+                      .filter(ImageFilter.BoxBlur(2))).astype(np.float32)
+    dist = np.sqrt(((rgb - blur) ** 2).sum(-1))
+    feat = (dist > np.percentile(dist[opaque], pct)) & opaque
+    if not feat.any():
+        return Image.fromarray(base.astype(np.uint8))
+
+    cov = np.asarray(Image.fromarray((feat * 255).astype(np.uint8))
+                     .resize(size, Image.BOX)).astype(np.float32) / 255.0
+    masked = np.zeros_like(rgb)
+    masked[feat] = rgb[feat]
+    chans = [np.asarray(Image.fromarray(masked[..., c]).resize(size, Image.BOX)
+                        ).astype(np.float32) for c in range(3)]
+    cols = np.stack([chans[c] / np.maximum(cov, 1e-6) for c in range(3)], -1)
+
+    w = (np.clip((cov - 0.30) / 0.35, 0, 1) * strength)[..., None]
+    base[..., :3] = base[..., :3] * (1 - w) + cols * w
+    return Image.fromarray(np.clip(base, 0, 255).astype(np.uint8))
+
+
 def paste_rgba(base, layer, ox, oy, label):
     """Alpha-composite one layer onto the frame at a top-left offset.
 
@@ -239,7 +283,7 @@ def compose():
 
     jir = content_crop(Image.open(JIRACHI_SRC).convert("RGBA"))
     jw = max(1, round(jir.width * JIRACHI_HEIGHT / jir.height))
-    jir = premultiplied_resize(jir, (jw, JIRACHI_HEIGHT))
+    jir = salient_resize(jir, (jw, JIRACHI_HEIGHT))
     cx, cy = JIRACHI_CENTRE
     frame = paste_rgba(frame, jir, cx - jw // 2, cy - JIRACHI_HEIGHT // 2,
                        "jirachi")

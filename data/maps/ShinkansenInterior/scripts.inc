@@ -163,7 +163,7 @@ ShinkansenInterior_EventScript_TakeSeat::
 	@ lives in ShinTokyoStation/scripts.inc).
 	playse SE_TRUCK_MOVE
 	delay 60
-	warp MAP_SHIN_TOKYO_STATION, 9, 3
+	warp MAP_SHIN_TOKYO_STATION, 6, 5
 	waitstate
 	releaseall
 	end
