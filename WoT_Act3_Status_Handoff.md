@@ -338,6 +338,27 @@
 - **`release_notes_v1.1.0.md`** at workspace root — paste-ready for the GitHub release.
 - REMAINING (Joe / gh window): tag + publish the release with the bps attached; Pages redeploys the site on push.
 
+### 2026-09-20 (round 93) — THE FROSTWOOD GYM ROSTER; THE FRONTIER FERRY SAILS
+- **Three different adult men in the gym.** Both under-trainers fought as the Youngster pic, which matched nobody: MikManc's overworld sprite is a light-haired man, the "Minister" object is the caped WOT_LEON sprite and Yiffer's is a bare-chested brawler. Closest vanilla adult males, one each: **Guitarist** (MikManc), **Cooltrainer M** (Minister), **Black Belt** (Yiffer — he runs a kickboxing dojo). RedFatality keeps Leader Brawly: already an adult male, and the **Leader class is what gives him the gym-leader battle and victory music**, so it is not free to change.
+- **Teams: five each, nothing outside 12-18, one idea apiece.** MikManc is fast offence (Snover 13, Vanillite 14, Deerling 14, Sneasel 15, Leavanny 16 @ Oran Berry); the Minister is control (Oddish 15 for Sleep Powder, Delibird 14, Spheal 15, Claydol 16, Noivern 17); Yiffer is five physical attackers (Meditite 13, Cubchoo 14, Machop 15, Makuhita 15, Crabrawler 16 @ Oran Berry); RedFatality is the ice line proper (Snorunt 15, Sealeo 16, **Snover 16 added**, Froslass 17) with **Arcanine 18 @ Sitrus Berry** still the ace. AI flags differ per trainer so they play to those shapes.
+- **The Frontier ferry now leaves the dock.** A **deckhand** stands on the quay at (18,50) beside her — same `FLAG_WOT_HIDE_FRONTIER_FERRY` as the ship, so they appear together post-game — and taking his offer turns the player to the water, sounds SE_SHIP and runs **`WotShipDepart`**: the gondola trick, sliding the ship's SPRITE east (accelerating once clear of the quay) while the object stays on its tile so nothing despawns it. Then the fade and the crossing to BATTLE_FRONTIER_OUTSIDE_WEST. Talking to the ship herself runs the same scene. The dialogue already read as a deckhand speaking, so the texts were reused as-is.
+- **Caught a local-id drift:** Joe's porymap pass **deleted the billboard light object**, which shifted Shadow Lugia from local id 45 to 44 — the scene would have animated the new deckhand instead. Corrected, with a note above the `.equ`s. **The red billboard light on the jumbotron is gone from the map**; the light type and its art are still in the build if it should come back.
+- **Build clean (exit 0).** Not play-tested (Joe). **Uncommitted.**
+
+### 2026-09-19 (round 92c) — A BOX OF EVERY SHADOW WITH CUSTOM ART
+- **Debug menu → PC/Bag → Fill → "Fill PC Shadow Art Mons"**: one level-50 Shadow of every species that has custom battle art, straight into the PC. It **enumerates the art table** (new `WotShadowPicCount`/`WotShadowPicSpeciesAt` beside `WotFindShadowPic`) rather than repeating the names, so a species added to `src/data/wot_shadow_pics.h` turns up in the box on the next build — 46 of them today. Stops early rather than dropping mons silently if the boxes fill.
+- They are deliberately **not** marked SHADOW_OPENED and **not** written to the Shadow Log: a test box should not look like a played save. Say the word if the log should count them.
+- **Build clean (exit 0). Uncommitted.**
+
+### 2026-09-19 (round 92b) — STRENGTH COMES WITH THE HM
+- **STRENGTH is usable the moment Yiffer hands the HM over.** `IsFieldMoveUnlocked_Strength` was `FlagGet(FLAG_BADGE04_GET)` (the Lantern badge); it is now `FLAG_RECEIVED_HM_STRENGTH || FLAG_BADGE04_GET`, so the Munen Tunnel boulders are pushable on the spot and nobody who got there by the badge loses anything. One function covers every path — the HM menu (`WotIsHMUnlocked`), the party menu, the script commands and the overworld triggers all funnel through `IsFieldMoveUnlocked`.
+- Yiffer's gift now announces itself the way the FLY grant does: "{PLAYER} can now use STRENGTH outside of battle!"
+- **Build clean (exit 0).** Not play-tested (Joe). **Uncommitted.**
+
+### 2026-09-19 (round 92) — THE ONI'S FACE
+- **THE ONI's portrait is his battle sprite.** `PORTRAIT_MUTRID_LEADER` was still pointing at `sPortraitPlaceholderGfx` — the card was showing the placeholder box. `graphics/trainers/front_pics/mutrid_leader.png` is already exactly the portrait format (64x64, 15 colours, index 0 the background), so it is copied to `graphics/portraits/the_oni.png` and that row repointed — the workflow the file's own comment describes. This is the shared portrait id, so his **dialogue portrait gets the same art**, which beats the placeholder it had; splitting them again would mean a second PORTRAIT_ id.
+- **Build clean (exit 0).** Not play-tested (Joe). **Uncommitted.**
+
 ### 2026-09-18 (round 91) — TWO BOSS CARDS; PARK WATER MOVES; THE ONI'S EXIT; LUGIA'S DEAD TRIGGER
 - **Siren Allison** is five again: Chansey 20, Glaceon 23, shiny Azumarill 25, Cinderace 24, **Lopunny @ Lopunnite 25** as the ace. Nothing over the cap.
 - **The Heavy Metal starter rewards are guaranteed shinies** — `givemon … shinyMode=SHINY_MODE_ALWAYS` on all three branches. A Scyther is a steep price and the little buddy should show it.
