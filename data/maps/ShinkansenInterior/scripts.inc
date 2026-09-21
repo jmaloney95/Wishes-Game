@@ -163,7 +163,7 @@ ShinkansenInterior_EventScript_TakeSeat::
 	@ lives in ShinTokyoStation/scripts.inc).
 	playse SE_TRUCK_MOVE
 	delay 60
-	warp MAP_SHIN_TOKYO_STATION, 9, 3
+	warp MAP_SHIN_TOKYO_STATION, 6, 5
 	waitstate
 	releaseall
 	end
@@ -189,10 +189,10 @@ ShinkansenInterior_Text_Passenger2::
 	.string "is not laughter, laughs.$"
 
 ShinkansenInterior_Text_Passenger3::
-	.string "“Ticket? Kekeke. Nobody checks\n"
+	.string "Ticket? Kekeke. Nobody checks\n"
 	.string "tickets anymore.\p"
-	.string "“The train knows who it's\n"
-	.string "carrying.”$"
+	.string "The train knows who it's\n"
+	.string "carrying.$"
 
 ShinkansenInterior_Text_TakeSeat::
 	.string "{PLAYER} sank into the last seat\n"

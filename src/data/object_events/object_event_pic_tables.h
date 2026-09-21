@@ -284,6 +284,42 @@ static const struct SpriteFrameImage sPicTable_WotEdwardsImpact[] = {
     obj_frame_tiles(gObjectEventPic_WotEdwardsImpact),
 };
 
+static const struct SpriteFrameImage sPicTable_WotGloria[] = {
+    overworld_ascending_frames(gObjectEventPic_WotGloria, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotIono[] = {
+    overworld_ascending_frames(gObjectEventPic_WotIono, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotAldo[] = {
+    overworld_ascending_frames(gObjectEventPic_WotAldo, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotLeon[] = {
+    overworld_ascending_frames(gObjectEventPic_WotLeon, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotMelony[] = {
+    overworld_ascending_frames(gObjectEventPic_WotMelony, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotMisty[] = {
+    overworld_ascending_frames(gObjectEventPic_WotMisty, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotOleana[] = {
+    overworld_ascending_frames(gObjectEventPic_WotOleana, 2, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotJacinthe[] = {
+    overworld_ascending_frames(gObjectEventPic_WotJacinthe, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotVictor[] = {
+    overworld_ascending_frames(gObjectEventPic_WotVictor, 2, 4),
+};
+
 static const struct SpriteFrameImage sPicTable_WotEdwards[] = {
     overworld_ascending_frames(gObjectEventPic_WotEdwards, 2, 4),
 };
@@ -1489,6 +1525,20 @@ static const struct SpriteFrameImage sPicTable_ApricornTree[] = {
     overworld_frame(gObjectEventPic_ApricornTree, 2, 2, 0),
 };
 
+// WoT: used on an Emerald map (the dying old man in the Ashlands), so it lives
+// outside the IS_FRLG block along with its NpcPink palette.
+static const struct SpriteFrameImage sPicTable_OldManLyingDown[] = {
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
+};
+
 #if IS_FRLG
 
 static const struct SpriteFrameImage sPicTable_RedNormal[] = {
@@ -1902,17 +1952,6 @@ static const struct SpriteFrameImage sPicTable_OldMan2[] = {
     overworld_frame(gObjectEventPic_OldWoman, 2, 4, 0),
 };
 
-static const struct SpriteFrameImage sPicTable_OldManLyingDown[] = {
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-    overworld_frame(gObjectEventPic_OldManLyingDown, 4, 4, 0),
-};
 
 static const struct SpriteFrameImage sPicTable_OldWomanFrlg[] = {
     overworld_frame(gObjectEventPic_OldWomanFrlg, 2, 4, 0),

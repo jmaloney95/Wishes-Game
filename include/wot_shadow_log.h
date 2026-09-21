@@ -9,6 +9,11 @@ u32 WotShadowLog_CountPurified(void);
 void WotShadowLog_Backfill(void);
 void WotShowShadowLog(void);
 
+// The Shadow roster itself, for anything that wants to draw from "every
+// Shadow in the game" (the post-Oni Shin Tokyo patrols do).
+u32 WotShadowLog_SpeciesCount(void);
+u16 WotShadowLog_SpeciesAt(u32 index);
+
 // TRUE for the story Shadow species, which are Shadow by their very identity
 // rather than by the MON_DATA_IS_SHADOW flag.
 bool32 WotSpeciesIsShadow(u16 species);

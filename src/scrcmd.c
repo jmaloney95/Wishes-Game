@@ -2006,10 +2006,11 @@ bool8 ScrCmd_showmonpic(struct ScriptContext *ctx)
     u16 species = VarGet(ScriptReadHalfword(ctx));
     u8 x = ScriptReadByte(ctx);
     u8 y = ScriptReadByte(ctx);
+    bool8 isShiny = VarGet(ScriptReadHalfword(ctx)) != 0;
 
     Script_RequestEffects(SCREFF_V1 | SCREFF_HARDWARE);
 
-    ScriptMenu_ShowPokemonPic(species, x, y);
+    ScriptMenu_ShowPokemonPic(species, x, y, isShiny);
     return FALSE;
 }
 

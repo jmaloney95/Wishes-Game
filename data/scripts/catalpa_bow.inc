@@ -128,43 +128,43 @@ EventScript_CatalpaBowNoGengar::
 Text_GengarTravelMenu::
 	.string "GENGAR pours out of its Poke Ball\n"
 	.string "like smoke.\p"
-	.string "“The ghost-roads are open,\n"
-	.string "{PLAYER}. Where to?”$"
+	.string "The ghost-roads are open,\n"
+	.string "{PLAYER}. Where to?$"
 
 Text_GengarLabPointOfNoReturn::
-	.string "“One thing, {PLAYER}.\p"
-	.string "“This ghost-road runs one way.\n"
+	.string "One thing, {PLAYER}.\p"
+	.string "This ghost-road runs one way.\n"
 	.string "Once we cross into occupied\l"
 	.string "Munen, there is no coming back.\p"
-	.string "“This is the point of no return.\n"
-	.string "Continue?”$"
+	.string "This is the point of no return.\n"
+	.string "Continue?$"
 
 Text_GengarLabLocked::
-	.string "“Not yet, {PLAYER}.\p"
-	.string "“The road to my lab runs through\n"
+	.string "Not yet, {PLAYER}.\p"
+	.string "The road to my lab runs through\n"
 	.string "everything this region asks of\l"
 	.string "you first.\p"
-	.string "“EMBER. FLINT. LANTERN.\n"
+	.string "EMBER. FLINT. LANTERN.\n"
 	.string "DISTORTION.\p"
-	.string "“Bring me all four badges, and\n"
-	.string "the ghost-road will carry you.”$"
+	.string "Bring me all four badges, and\n"
+	.string "the ghost-road will carry you.$"
 
 Text_GengarLeaveRift::
-	.string "“The roads twist strangely in\n"
+	.string "The roads twist strangely in\n"
 	.string "here, {PLAYER}.\p"
-	.string "“From inside the rift, they only\n"
+	.string "From inside the rift, they only\n"
 	.string "lead OUT.\p"
-	.string "“Shall I carry you back to the\n"
-	.string "living world?”$"
+	.string "Shall I carry you back to the\n"
+	.string "living world?$"
 
 Text_GengarStayInRift::
-	.string "“Kekeke. Then mind the drop.”$"
+	.string "Kekeke. Then mind the drop.$"
 
 Text_GengarFerryDecline::
-	.string "“Kekeke. Wise. Sharpen everything\n"
+	.string "Kekeke. Wise. Sharpen everything\n"
 	.string "first.\p"
-	.string "“The bow knows where I am.\n"
-	.string "Call when you're ready.”\p"
+	.string "The bow knows where I am.\n"
+	.string "Call when you're ready.\p"
 	.string "GENGAR seeps back into its\n"
 	.string "Poke Ball.$"
 

@@ -1,12 +1,8 @@
 // WoT Shadow system: per-species SHADOW battle art (64x64 front sprites,
 // uncompressed 4bpp + raw palette). Species without an entry keep the violet
 // engine tint. Player-side (back) sprites always keep the tint.
-struct WotShadowPic
-{
-    u16 species;
-    const u32 *pic;
-    const u16 *pal;
-};
+// struct WotShadowPic now lives in include/wot_shadow_art.h; this file is
+// included by src/wot_shadow_pics.c only, which includes that first.
 
 static const u32 sWotShadowPic_Absol[] = INCGFX_U32("graphics/pokemon_shadow/absol.png", ".4bpp");
 static const u16 sWotShadowPal_Absol[] = INCBIN_U16("graphics/pokemon_shadow/absol.gbapal");

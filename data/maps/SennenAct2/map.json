@@ -63,7 +63,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_RebelMon1",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "FLAG_SENNEN_ACT2_B2_FALLEN"
     },
     {
@@ -76,7 +76,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_GoonMon1",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "FLAG_SENNEN_ACT2_GOONS_CLEARED"
     },
     {
@@ -115,7 +115,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_RebelMon2",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "0"
     },
     {
@@ -128,7 +128,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_GoonMon2",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "FLAG_SENNEN_ACT2_B1_FALLEN"
     },
     {
@@ -167,7 +167,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_RebelMon3",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "FLAG_SENNEN_ACT2_B3_FALLEN"
     },
     {
@@ -180,7 +180,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "SennenAct2_EventScript_GoonMon3",
+      "script": "Common_EventScript_WotPokemonCry",
       "flag": "FLAG_WOT_SA2_GARCHOMP_AWAY"
     },
     {

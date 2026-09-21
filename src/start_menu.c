@@ -25,6 +25,8 @@
 #include "load_save.h"
 #include "main.h"
 #include "menu.h"
+#include "money.h"
+#include "rtc.h"
 #include "new_game.h"
 #include "option_menu.h"
 #include "overworld.h"
@@ -267,6 +269,114 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {
 
 // ---------------------------------------------------------------------------
 // Graphical start menu (USE_GRAPHICAL_START_MENU): horizontal icon bar.
+// ---------------------------------------------------------------------------
+// WoT pause panel. While the start menu is up, a window in the top-left corner
+// shows the in-game day and clock, the player's name and their money. The
+// clock is the fake RTC (OW_USE_FAKE_RTC): it runs off play time rather than
+// the console's clock, one in-game minute per real second, so it keeps moving
+// while the menu is open -- hence the redraw when the minute changes.
+// ---------------------------------------------------------------------------
+static EWRAM_INIT u8 sStartMenuInfoWindowId = WINDOW_NONE;
+static EWRAM_DATA u8 sStartMenuInfoMinute = 0;
+
+#define INFO_PANEL_WIDTH 13
+
+static const u8 sText_ClockAM[] = _("AM");
+static const u8 sText_ClockPM[] = _("PM");
+
+static const u8 *const sWotDayNames[WEEKDAY_COUNT] = {
+    [WEEKDAY_SUN] = COMPOUND_STRING("Sunday"),
+    [WEEKDAY_MON] = COMPOUND_STRING("Monday"),
+    [WEEKDAY_TUE] = COMPOUND_STRING("Tuesday"),
+    [WEEKDAY_WED] = COMPOUND_STRING("Wednesday"),
+    [WEEKDAY_THU] = COMPOUND_STRING("Thursday"),
+    [WEEKDAY_FRI] = COMPOUND_STRING("Friday"),
+    [WEEKDAY_SAT] = COMPOUND_STRING("Saturday"),
+};
+
+// baseBlock 8 is the top-left corner's block, shared with the Safari ball
+// counter, the Pyramid floor counter and the save info window. The first two
+// own this corner in their modes, so the panel steps aside there; the save
+// window only appears after a menu action, by which point the panel is gone.
+static const struct WindowTemplate sStartMenuInfoWindowTemplate = {
+    .bg = 0,
+    .tilemapLeft = 1,
+    .tilemapTop = 1,
+    .width = INFO_PANEL_WIDTH,
+    .height = 6,
+    .paletteNum = 15,
+    .baseBlock = 8
+};
+
+// "9:59 AM" -- no leading zero on the hour, unlike FormatDecimalTimeWithoutSeconds.
+static void FormatStartMenuClock(u8 *dest, s32 hour, s32 minute)
+{
+    u32 hour12 = hour % 12;
+
+    if (hour12 == 0)
+        hour12 = 12;
+    dest = ConvertIntToDecimalStringN(dest, hour12, STR_CONV_MODE_LEFT_ALIGN, 2);
+    *dest++ = CHAR_COLON;
+    dest = ConvertIntToDecimalStringN(dest, minute, STR_CONV_MODE_LEADING_ZEROS, 2);
+    *dest++ = CHAR_SPACE;
+    StringCopy(dest, (hour < 12) ? sText_ClockAM : sText_ClockPM);
+}
+
+static void PrintStartMenuInfo(void)
+{
+    u8 clock[12];
+    u8 money[MAX_MONEY_DIGITS + 4];
+
+    if (sStartMenuInfoWindowId == WINDOW_NONE)
+        return;
+
+    RtcCalcLocalTime();
+    sStartMenuInfoMinute = gLocalTime.minutes;
+    FormatStartMenuClock(clock, gLocalTime.hours, gLocalTime.minutes);
+
+    FillWindowPixelBuffer(sStartMenuInfoWindowId, PIXEL_FILL(1));
+    AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_SMALL, sWotDayNames[GetDayOfWeek()], 2, 1, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_SMALL, clock,
+                                GetStringRightAlignXOffset(FONT_SMALL, clock, INFO_PANEL_WIDTH * 8 - 3), 1, TEXT_SKIP_DRAW, NULL);
+    AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_NORMAL, gSaveBlock2Ptr->playerName, 2, 14, TEXT_SKIP_DRAW, NULL);
+    ConvertIntToDecimalStringN(gStringVar1, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, MAX_MONEY_DIGITS);
+    StringExpandPlaceholders(money, gText_PokedollarVar1);
+    AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_NORMAL, money, 2, 30, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sStartMenuInfoWindowId, COPYWIN_FULL);
+}
+
+static void CreateStartMenuInfoWindow(void)
+{
+    if (GetSafariZoneFlag() || CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
+        return;
+    if (sStartMenuInfoWindowId == WINDOW_NONE)
+    {
+        sStartMenuInfoWindowId = AddWindow(&sStartMenuInfoWindowTemplate);
+        PutWindowTilemap(sStartMenuInfoWindowId);
+        DrawStdWindowFrame(sStartMenuInfoWindowId, FALSE);
+        PrintStartMenuInfo();
+    }
+}
+
+static void DestroyStartMenuInfoWindow(void)
+{
+    if (sStartMenuInfoWindowId != WINDOW_NONE)
+    {
+        ClearStdWindowAndFrameToTransparent(sStartMenuInfoWindowId, TRUE);
+        RemoveWindow(sStartMenuInfoWindowId);
+        sStartMenuInfoWindowId = WINDOW_NONE;
+    }
+}
+
+static void UpdateStartMenuInfoClock(void)
+{
+    if (sStartMenuInfoWindowId == WINDOW_NONE)
+        return;
+    RtcCalcLocalTime();
+    if (gLocalTime.minutes != sStartMenuInfoMinute)
+        PrintStartMenuInfo();
+}
+
 // Presentation only - the action list, Build* variants, and callbacks above
 // are untouched. Icon sheet frame order MUST match the MENU_ACTION enum;
 // frame 16 is the cursor ring. Placeholder art:
@@ -443,6 +553,7 @@ void ResetStartMenuIconBar(void)
 {
     sStartMenuIconBarActive = FALSE;
     sStartMenuLabelWindowId = WINDOW_NONE;
+    sStartMenuInfoWindowId = WINDOW_NONE;
 }
 
 // Local functions
@@ -479,6 +590,9 @@ static void ShowSaveInfoWindow(void);
 static void RemoveSaveInfoWindow(void);
 static void HideStartMenuWindow(void);
 static void HideStartMenuDebug(void);
+static void CreateStartMenuInfoWindow(void);
+static void DestroyStartMenuInfoWindow(void);
+static void UpdateStartMenuInfoClock(void);
 
 void SetDexPokemonPokenavFlags(void) // unused
 {
@@ -680,6 +794,7 @@ static void ShowPyramidFloorWindow(void)
 
 static void RemoveExtraStartMenuWindows(void)
 {
+    DestroyStartMenuInfoWindow();
     if (GetSafariZoneFlag())
     {
         ClearStdWindowAndFrameToTransparent(sSafariBallsWindowId, FALSE);
@@ -751,6 +866,7 @@ static bool32 InitStartMenuStep(void)
             ShowSafariBallsWindow();
         if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
             ShowPyramidFloorWindow();
+        CreateStartMenuInfoWindow();
         sInitStartMenuData[0]++;
         break;
     case 4:
@@ -859,6 +975,8 @@ void ShowStartMenu(void)
 
 static bool8 HandleStartMenuInput(void)
 {
+    UpdateStartMenuInfoClock();
+
     if (USE_GRAPHICAL_START_MENU)
     {
         // Left/Right with wraparound (Up/Down aliased for comfort).
@@ -905,6 +1023,7 @@ static bool8 HandleStartMenuInput(void)
           && MapHasNoEncounterData())
             return FALSE;
 
+        DestroyStartMenuInfoWindow();
         gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void;
 
         // These callbacks stay on the field (they run a script or a prompt in
@@ -1762,6 +1881,7 @@ void SaveForBattleTowerLink(void)
 
 static void HideStartMenuWindow(void)
 {
+    DestroyStartMenuInfoWindow();
     if (USE_GRAPHICAL_START_MENU)
     {
         DestroyStartMenuIconBar();

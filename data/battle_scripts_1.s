@@ -7035,6 +7035,22 @@ BattleScript_IgnoresWhileAsleep::
 	moveendto MOVEEND_NEXT_TARGET
 	end
 
+@ WoT Shadow system: Hyper Mode, layered on the disobedience scripts below.
+BattleScript_WotHyperModeRampage::
+	printstring STRINGID_WOTHYPERMODE
+	waitmessage B_WAIT_TIME_LONG
+	return
+
+BattleScript_WotHyperModeHitsSelf::
+	printstring STRINGID_WOTHYPERMODE
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_DoSelfConfusionDmg
+
+BattleScript_WotHyperModeSettles::
+	printstring STRINGID_WOTHYPERSETTLES
+	waitmessage B_WAIT_TIME_LONG
+	return
+
 BattleScript_IgnoresAndUsesRandomMove::
 	printstring STRINGID_PKMNIGNOREDORDERS
 	waitmessage B_WAIT_TIME_LONG

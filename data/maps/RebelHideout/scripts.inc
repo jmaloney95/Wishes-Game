@@ -471,18 +471,18 @@ RebelHideout_Text_PreReveal::
 	.string "Out of every camera's reach.$"
 
 RebelHideout_Text_IllusionDrops::
-	.string "The ONI's outline RIPPLES --\n"
+	.string "The ONI's outline RIPPLES\n"
 	.string "and pours away like rainwater.\p"
 	.string "A hooded woman. A ZOROARK at\n"
 	.string "her shoulder, grinning.$"
 
 RebelHideout_Text_OperativeReveal::
-	.string "“Kekeke. Sorry about the\n"
+	.string "Kekeke. Sorry about the\n"
 	.string "handcuffs routine.\p"
-	.string "“Welcome to the rebellion,\n"
+	.string "Welcome to the rebellion,\n"
 	.string "prison breaker.\p"
-	.string "“Some people need to meet\n"
-	.string "you.”$"
+	.string "Some people need to meet\n"
+	.string "you.$"
 
 RebelHideout_Text_Briefing1::
 	.string "The man on every screen calls\n"
@@ -526,7 +526,7 @@ RebelHideout_Text_BriefingMission::
 	.string "The tides run low tonight.\p"
 	.string "SURF south off Shin-Tokyo.\n"
 	.string "Find the island the fairies\l"
-	.string "keep -- learn to PURIFY what\l"
+	.string "keep. Learn to PURIFY what\l"
 	.string "he has corrupted.\p"
 	.string "Then climb the tower...\p"
 	.string "...and rip that machine's\n"
@@ -558,7 +558,7 @@ RebelHideout_Text_DefectorAnalysis::
 	.string "people's partners once.$"
 
 RebelHideout_Text_DefectorPurified::
-	.string "Your purified POKéMON --\n"
+	.string "Your purified POKéMON,\n"
 	.string "I ran the numbers three times.\p"
 	.string "It KEPT the 20 percent attack\n"
 	.string "boost. No defense loss. No\l"
@@ -608,11 +608,8 @@ RebelHideout_Text_DefectorAfterFive::
 	.string "Go and turn that machine off.$"
 
 RebelHideout_Text_NessaMapGift::
-	.string "Kekeke. One more thing, before\n"
-	.string "the science starts.\p"
-	.string "Every chart they print stops at\n"
-	.string "the city limits. On purpose.\p"
-	.string "This one doesn't.$"
+	.string "One more thing before\n"
+	.string "the science starts.$"
 
 RebelHideout_Text_ReceivedPostgameMap::
 	.string "{PLAYER} received the\n"
@@ -639,14 +636,14 @@ RebelHideout_Text_Zoroark::
 	.string "the handcuffs routine.$"
 
 RebelHideout_Text_BlisseyOffer::
-	.string "BLISSEY beams -- the only warm\n"
+	.string "BLISSEY beams the only warm\n"
 	.string "light in Shin-Tokyo.$"
 
 RebelHideout_Text_BlisseyDone::
 	.string "Your POKEMON are fully rested!$"
 
 RebelHideout_Text_Porygon::
-	.string "PORYGON hums -- a stolen uplink\n"
+	.string "PORYGON hums a stolen uplink\n"
 	.string "to the Box network.$"
 
 @ --- post-game text ----------------------------------------------------------

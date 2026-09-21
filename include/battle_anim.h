@@ -64,6 +64,7 @@ struct LinkBattleAnim
 
 extern void (*gAnimScriptCallback)(void);
 extern bool8 gAnimScriptActive;
+extern bool8 gWotBallThrowAnimActive;
 extern u8 gAnimVisualTaskCount;
 extern u8 gAnimSoundTaskCount;
 extern struct LinkBattleAnim *gAnimDisableStructPtr;

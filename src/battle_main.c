@@ -64,6 +64,7 @@
 #include "tv.h"
 #include "util.h"
 #include "wild_encounter.h"
+#include "wot_shadow_log.h"
 #include "window.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
@@ -2157,17 +2158,50 @@ static const u16 sWotPatrolPoolBase[] =
     SPECIES_LUXRAY, SPECIES_FLYGON, SPECIES_VENUSAUR,
 };
 
+// With the Oni beaten there is nothing left holding the program back, so the
+// patrols stop drawing from a curated pool and take anything: the Shadow Log
+// roster is the list, legendaries and all, at the Oni's own level band.
+// Skipped: the two scripted legendaries, which have their own set pieces, and
+// anything that can still evolve -- the roster carries the rod and starter
+// Shadows too, and a level 56 Azurill on patrol is not the intended note.
+static u16 WotPickFromShadowRoster(void)
+{
+    u32 count = WotShadowLog_SpeciesCount();
+    u32 tries;
+    u16 species;
+
+    for (tries = 0; tries < 64; tries++)
+    {
+        species = WotShadowLog_SpeciesAt(Random() % count);
+        if (species == SPECIES_NONE || species == SPECIES_DEOXYS || species == SPECIES_JIRACHI)
+            continue;
+        if (GetSpeciesEvolutions(species) != NULL)
+            continue;
+        return species;
+    }
+    return SPECIES_WEAVILE; // the roster is full of finals; this cannot be reached
+}
+
 static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
 {
     static const u8 sLevels[] = { 43, 43, 44 };
+    static const u8 sLevelsPostOni[] = { 55, 56, 57 };
+    const u8 *levels = sLevels;
     const u16 *pool;
     u32 poolSize, i, count;
     u16 chosen[ARRAY_COUNT(sLevels)];
+    bool32 wholeRoster = FlagGet(FLAG_WOT_ONI_DEFEATED);
 
     if (trainerNum != TRAINER_NATE && trainerNum != TRAINER_MACEY && trainerNum != TRAINER_CLIFFORD)
         return FALSE;
 
-    if (FlagGet(FLAG_ACT3_RESEARCH_STOLEN))
+    if (wholeRoster)
+    {
+        pool = NULL;
+        poolSize = 0;
+        levels = sLevelsPostOni;
+    }
+    else if (FlagGet(FLAG_ACT3_RESEARCH_STOLEN))
     {
         pool = sWotPatrolPoolStolen;
         poolSize = ARRAY_COUNT(sWotPatrolPoolStolen);
@@ -2183,7 +2217,7 @@ static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
     {
         u32 j, pick;
     retry:
-        pick = pool[Random() % poolSize];
+        pick = wholeRoster ? WotPickFromShadowRoster() : pool[Random() % poolSize];
         for (j = 0; j < i; j++)
         {
             if (chosen[j] == pick)
@@ -2198,7 +2232,7 @@ static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
         bool32 isShadow = TRUE;
         struct OriginalTrainerId otId = OTID_STRUCT_RANDOM_NO_SHINY;
 
-        CreateMon(&party[i], chosen[i], sLevels[i], Random32(), otId);
+        CreateMon(&party[i], chosen[i], levels[i], Random32(), otId);
         GiveMonInitialMoveset(&party[i]);
         SetMonData(&party[i], MON_DATA_IS_SHADOW, &isShadow);
         CalculateMonStats(&party[i]);

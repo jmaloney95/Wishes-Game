@@ -4251,13 +4251,10 @@ static void Cmd_getexp(void)
                 gBattleScripting.getexpState = 5;
                 gBattleStruct->battlerExpReward = 0;
             }
-            else if (GetMonData(&gPlayerParty[*expMonId], MON_DATA_IS_SHADOW))
-            {
-                // WoT Shadow system: a sealed heart cannot grow -- Shadow
-                // mons gain no EXP until purified (the XD rule).
-                gBattleScripting.getexpState = 5;
-                gBattleStruct->battlerExpReward = 0;
-            }
+            // WoT Shadow system: Shadows used to be barred from EXP here (the
+            // XD rule). They now level like any other mon; purification is
+            // gated on MON_DATA_SHADOW_OPENED (set when the mon is sent out),
+            // so "battle with it first" still holds either way.
             else if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && *expMonId >= 3)
                   || GetMonData(&gPlayerParty[*expMonId], MON_DATA_LEVEL) == MAX_LEVEL)
             {
@@ -10638,6 +10635,15 @@ static void FinalizeCapture(void)
         SetMonData(caughtMon, MON_DATA_HP, &zero);
         gBattlescriptCurrInstr = BattleScript_WotSuccessSnag;
     }
+    // WoT: in a wild DOUBLE battle with the other foe still standing, the
+    // catch must not end the fight. The mon is handed over immediately (not
+    // held back like a snag: the player can still run, or catch the second
+    // one, and either of those ends the battle without the delivery step) and
+    // then leaves the field through the snag faint path.
+    else if (IsDoubleBattle() && IsBattlerAlive(BATTLE_PARTNER(gBattlerTarget)))
+    {
+        gBattlescriptCurrInstr = BattleScript_WotSuccessCatchNoEnd;
+    }
 }
 
 struct BallData
@@ -11195,13 +11201,16 @@ static void Cmd_givecaughtmon(void)
         break;
     case GIVECAUGHTMON_GIVE_AND_SHOW_MSG:
     {
-        struct Pokemon *caughtMon = GetBattlerMon(GetCatchingBattler());
+        // The ball's own target, not GetCatchingBattler() -- that always
+        // answers the left slot, which handed over the wrong mon whenever
+        // the player aimed at the right one.
+        struct Pokemon *caughtMon = GetBattlerMon(gBattlerTarget);
         // WoT: wild Shadow catches (the plume routes, Deoxys, Jirachi) enter
         // the Shadow Log here; trainer snags log in BS_WotGiveSnaggedMon.
         WotShadowLog_MarkMon(caughtMon);
         if (B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9)
         {
-            u16 lostItem = gBattleStruct->itemLost[B_SIDE_OPPONENT][gBattlerPartyIndexes[GetCatchingBattler()]].originalItem;
+            u16 lostItem = gBattleStruct->itemLost[B_SIDE_OPPONENT][gBattlerPartyIndexes[gBattlerTarget]].originalItem;
             if (lostItem != ITEM_NONE && GetItemPocket(lostItem) != POCKET_BERRIES)
                 SetMonData(caughtMon, MON_DATA_HELD_ITEM, &lostItem);  // Restore non-berry items
         }
@@ -11785,6 +11794,31 @@ void BS_WotGiveSnaggedMon(void)
     gBattlescriptCurrInstr = cmd->nextInstr;
 }
 
+// WoT: hand over a mon caught in a wild double battle while the other foe is
+// still out, then zero the field copy so tryfaintmon walks it off silently.
+void BS_WotGiveCaughtWildNoEnd(void)
+{
+    NATIVE_ARGS();
+    u32 i = gBattlerPartyIndexes[gBattlerTarget];
+    struct Pokemon *mon = &gEnemyParty[i];
+    enum NationalDexOrder natDexNo = SpeciesToNationalPokedexNum(GetMonData(mon, MON_DATA_SPECIES));
+    u32 zero = 0;
+
+    GetSetPokedexFlag(natDexNo, FLAG_SET_SEEN);
+    GetSetPokedexFlag(natDexNo, FLAG_SET_CAUGHT);
+    WotShadowLog_MarkMon(mon);
+    PREPARE_MON_NICK_BUFFER(gBattleTextBuff1, gBattlerTarget, i);
+    if (GiveCapturedMonToPlayer(mon) == MON_GIVEN_TO_PARTY)
+        gBattleCommunication[MULTISTRING_CHOOSER] = 0;
+    else
+        gBattleCommunication[MULTISTRING_CHOOSER] = 1;
+
+    gBattleStruct->wotCaughtMons |= 1u << i;
+    gBattleMons[gBattlerTarget].hp = 0;
+    SetMonData(mon, MON_DATA_HP, &zero);
+    gBattlescriptCurrInstr = cmd->nextInstr;
+}
+
 // WoT Shadow system: TRUE for an enemy battler that was snagged this battle.
 // Used by the faint script to swap the faint presentation for a silent exit
 // (the snag message already announced the departure).
@@ -11793,7 +11827,7 @@ void BS_WotJumpIfSnaggedFaint(void)
     NATIVE_ARGS(const u8 *jumpInstr);
 
     if (!IsOnPlayerSide(gBattlerFainted)
-     && (gBattleStruct->wotSnaggedMons & (1u << gBattlerPartyIndexes[gBattlerFainted])))
+     && ((gBattleStruct->wotSnaggedMons | gBattleStruct->wotCaughtMons) & (1u << gBattlerPartyIndexes[gBattlerFainted])))
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;

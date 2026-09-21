@@ -38,7 +38,9 @@ static const u8 sTileBitAttributes[NUM_METATILE_BEHAVIORS] =
     [MB_SEAWEED]                            = TILE_FLAG_UNUSED | TILE_FLAG_SURFABLE | TILE_FLAG_HAS_ENCOUNTERS,
     [MB_STRENGTH_BUTTON]                    = TILE_FLAG_UNUSED,
     [MB_ASHGRASS]                           = TILE_FLAG_UNUSED | TILE_FLAG_HAS_ENCOUNTERS,
-    [MB_FOOTPRINTS]                         = TILE_FLAG_UNUSED | TILE_FLAG_HAS_ENCOUNTERS,
+    // WoT: no encounters. Vanilla paints no MB_FOOTPRINTS tiles; WoT uses it for
+    // snow ground (snow tracks), which must not start wild battles.
+    [MB_FOOTPRINTS]                         = TILE_FLAG_UNUSED,
     [MB_THIN_ICE]                           = TILE_FLAG_UNUSED,
     [MB_CRACKED_ICE]                        = TILE_FLAG_UNUSED,
     [MB_HOT_SPRINGS]                        = TILE_FLAG_UNUSED,

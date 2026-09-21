@@ -3,7 +3,6 @@
   "name": "ViridianCity_Gym_Frlg",
   "layout": "LAYOUT_VIRIDIAN_CITY_GYM",
   "music": "MUS_RG_GYM",
-  "region": "REGION_KANTO",
   "region_map_section": "MAPSEC_VIRIDIAN_CITY",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -12,12 +11,10 @@
   "allow_escaping": false,
   "allow_running": false,
   "show_map_name": false,
-  "floor_number": 0,
   "battle_scene": "MAP_BATTLE_SCENE_GYM",
   "connections": null,
   "object_events": [
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BLACKBELT",
       "x": 10,
       "y": 2,
@@ -31,7 +28,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 12,
       "y": 10,
@@ -45,7 +41,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BLACKBELT",
       "x": 11,
       "y": 14,
@@ -59,7 +54,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_MAN",
       "x": 10,
       "y": 10,
@@ -73,7 +67,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_MAN",
       "x": 2,
       "y": 21,
@@ -87,7 +80,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_BLACKBELT",
       "x": 3,
       "y": 11,
@@ -101,7 +93,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 6,
       "y": 8,
@@ -116,7 +107,6 @@
     },
     {
       "local_id": "LOCALID_VIRIDIAN_GIOVANNI",
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_GIOVANNI",
       "x": 2,
       "y": 2,
@@ -130,7 +120,6 @@
       "flag": "FLAG_HIDE_VIRIDIAN_GIOVANNI"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_COOLTRAINER_M",
       "x": 13,
       "y": 7,
@@ -144,7 +133,6 @@
       "flag": "0"
     },
     {
-      "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_GYM_GUY",
       "x": 16,
       "y": 20,
@@ -209,5 +197,7 @@
       "quantity": 1,
       "underfoot": true
     }
-  ]
+  ],
+  "floor_number": 0,
+  "region": "REGION_KANTO"
 }

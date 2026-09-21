@@ -5,7 +5,8 @@ LittlerootTown_BrendansHouse_1F_MapScripts::
 	.byte 0
 
 LittlerootTown_BrendansHouse_1F_OnLoad:
-	call_if_lt VAR_LITTLEROOT_INTRO_STATE, 6, LittlerootTown_BrendansHouse_1F_EventScript_SetMovingBoxes
+	@ WoT: no moving-in scene here, so no packing boxes. The vanilla Emerald
+	@ intro that placed them does not run in this game.
 	call_if_set FLAG_RECEIVED_RUNNING_SHOES, LittlerootTown_BrendansHouse_1F_EventScript_CheckShowShoesManual
 	end
 
@@ -87,12 +88,12 @@ LittlerootTown_BrendansHouse_1F_EventScript_PetalburgGymReport::
 LittlerootTown_BrendansHouse_1F_EventScript_YoureNewNeighbor::
 	lockall
 	playse SE_PIN
-	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_ExclamationMark
+	applymovement LOCALID_BRENDANS_HOUSE_1F_MOM, Common_Movement_ExclamationMark
 	waitmovement 0
-	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, Common_Movement_Delay48
+	applymovement LOCALID_BRENDANS_HOUSE_1F_MOM, Common_Movement_Delay48
 	waitmovement 0
 	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterLeft
-	applymovement LOCALID_RIVALS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach
+	applymovement LOCALID_BRENDANS_HOUSE_1F_MOM, LittlerootTown_BrendansHouse_1F_Movement_RivalMomApproach
 	waitmovement 0
 	special GetRivalSonDaughterString
 	msgbox RivalsHouse_1F_Text_OhYoureTheNewNeighbor, MSGBOX_DEFAULT

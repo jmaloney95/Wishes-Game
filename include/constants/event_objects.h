@@ -470,7 +470,17 @@
 #define OBJ_EVENT_GFX_ITEM_GARCHOMPITE              420
 #define OBJ_EVENT_GFX_ITEM_BAXCALIBRITE             421
 #define OBJ_EVENT_GFX_ITEM_GYARADOSITE              422
-#define NUM_OBJ_EVENT_GFX                        423
+// Wishes of Tomorrow: walking sprites
+#define OBJ_EVENT_GFX_WOT_GLORIA                     423 // Cyberstryke7
+#define OBJ_EVENT_GFX_WOT_IONO                       424 // Cyberstryke7
+#define OBJ_EVENT_GFX_WOT_ALDO                       425 // Wergan
+#define OBJ_EVENT_GFX_WOT_LEON                       426 // aveontrainer
+#define OBJ_EVENT_GFX_WOT_MELONY                     427 // Cyberstryke7
+#define OBJ_EVENT_GFX_WOT_MISTY                      428 // fersure4
+#define OBJ_EVENT_GFX_WOT_OLEANA                     429 // aveontrainer
+#define OBJ_EVENT_GFX_WOT_JACINTHE                   430 // DiegoWT
+#define OBJ_EVENT_GFX_WOT_VICTOR                     431 // Cyberstryke7
+#define NUM_OBJ_EVENT_GFX                        432
 
 
 // These are dynamic object gfx ids.
@@ -533,6 +543,12 @@
 #define LIGHT_TYPE_BALL             0
 #define LIGHT_TYPE_PKMN_CENTER_SIGN 1
 #define LIGHT_TYPE_POKE_MART_SIGN   2
+// Wishes of Tomorrow: a red 32x32 glow for Shin Tokyo. Put the light type
+// in the object's "sight radius / berry tree id" field in porymap.
+#define LIGHT_TYPE_WOT_RED          3
+// ... and a 64x64 rectangle that hangs on a sign board and spills onto the
+// pavement below it (Shin Tokyo's METRO entrance).
+#define LIGHT_TYPE_WOT_RED_SIGN     4
 
 #define FIRST_DECORATION_SPRITE_GFX OBJ_EVENT_GFX_PICHU_DOLL
 
@@ -610,6 +626,15 @@
 #define OBJ_EVENT_PAL_TAG_WOT_YIFFER                            0x114C
 #define OBJ_EVENT_PAL_TAG_WOT_JET                               0x114D
 #define OBJ_EVENT_PAL_TAG_WOT_EDWARDS_IMPACT                    0x114E
+#define OBJ_EVENT_PAL_TAG_WOT_GLORIA                            0x116B
+#define OBJ_EVENT_PAL_TAG_WOT_IONO                              0x116C
+#define OBJ_EVENT_PAL_TAG_WOT_ALDO                              0x116D
+#define OBJ_EVENT_PAL_TAG_WOT_LEON                              0x116E
+#define OBJ_EVENT_PAL_TAG_WOT_MELONY                            0x116F
+#define OBJ_EVENT_PAL_TAG_WOT_MISTY                             0x1170
+#define OBJ_EVENT_PAL_TAG_WOT_OLEANA                            0x1171
+#define OBJ_EVENT_PAL_TAG_WOT_JACINTHE                          0x1172
+#define OBJ_EVENT_PAL_TAG_WOT_VICTOR                            0x1173
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116
@@ -691,7 +716,18 @@
 #define OBJ_EVENT_PAL_TAG_ITEM_GARCHOMPITE        0x8006
 #define OBJ_EVENT_PAL_TAG_ITEM_BAXCALIBRITE       0x8007
 #define OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE        0x8008
+// Wishes of Tomorrow: the red street light (LIGHT_TYPE_WOT_RED).
+#define OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT           0x8009
 // Not a real OW palette tag; used for the white flash applied to followers
+// Wishes of Tomorrow: a Shadow Pokemon follower is drawn as a dark violet
+// silhouette built at runtime from its ordinary palette, so it needs a tag of
+// its own -- reusing the species tag would serve the silhouette from cache to
+// every ordinary sprite of that species. 0x9000 is free: followers occupy
+// 0x4000-0x75DC, SUBSTITUTE is 0x7611, lights/emotes 0x8001-0x8008 and
+// FLDEFF_PAL_TAG_FIELD_MOVE_MON 0x8400. Reflections are the tag + 0x800, so
+// these land at 0x9800-0x9DDC, also free.
+#define OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON          0x9000
+
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF
 

@@ -38,6 +38,7 @@
 #include "scanline_effect.h"
 #include "sound.h"
 #include "sprite.h"
+#include "wot_shadow_art.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"
@@ -4565,46 +4566,61 @@ static void SwapMovesTypeSprites(u8 moveIndex1, u8 moveIndex2)
     sprite2->animEnded = FALSE;
 }
 
+// WoT: a Shadow Pokemon shows its shadow art in the portrait rather than the
+// stock sprite. Purifying one clears MON_DATA_IS_SHADOW, so it returns to its
+// ordinary art on its own -- which is rather the point of purifying it.
+// Species with no shadow art in the table fall through to the stock sprite.
+static const struct WotShadowPic *WotSummaryShadowArt(struct Pokemon *mon, struct PokeSummary *summary)
+{
+    if (summary->isEgg || !GetMonData(mon, MON_DATA_IS_SHADOW))
+        return NULL;
+    return WotFindShadowPic(summary->species);
+}
+
 static u8 LoadMonGfxAndSprite(struct Pokemon *mon, s16 *state)
 {
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
+    const struct WotShadowPic *shadowArt = WotSummaryShadowArt(mon, summary);
 
     switch (*state)
     {
     default:
         return CreateMonSprite(mon);
     case 0:
-        if (gMain.inBattle)
-        {
-            HandleLoadSpecialPokePicIsEgg(TRUE,
-                                     gMonSpritesGfxPtr->spritesGfx[B_POSITION_OPPONENT_LEFT],
-                                     summary->species,
-                                     summary->pid,
-                                     summary->isEgg);
-        }
+    {
+        // Naming the destination collapses the three inline branches into one
+        // call without changing which buffer any of them picked.
+        void *dest;
+        u32 f;
+
+        if (gMain.inBattle || gMonSpritesGfxPtr != NULL)
+            dest = gMonSpritesGfxPtr->spritesGfx[B_POSITION_OPPONENT_LEFT];
         else
+            dest = MonSpritesGfxManager_GetSpritePtr(MON_SPR_GFX_MANAGER_A, B_POSITION_OPPONENT_LEFT);
+
+        HandleLoadSpecialPokePicIsEgg(TRUE, dest, summary->species, summary->pid, summary->isEgg);
+
+        // Every frame, not just the first: the portrait animates.
+        if (shadowArt != NULL)
         {
-            if (gMonSpritesGfxPtr != NULL)
-            {
-                HandleLoadSpecialPokePicIsEgg(TRUE,
-                                         gMonSpritesGfxPtr->spritesGfx[B_POSITION_OPPONENT_LEFT],
-                                         summary->species,
-                                         summary->pid,
-                                         summary->isEgg);
-            }
-            else
-            {
-                HandleLoadSpecialPokePicIsEgg(TRUE,
-                                         MonSpritesGfxManager_GetSpritePtr(MON_SPR_GFX_MANAGER_A, B_POSITION_OPPONENT_LEFT),
-                                         summary->species,
-                                         summary->pid,
-                                         summary->isEgg);
-            }
+            for (f = 0; f < MAX_MON_PIC_FRAMES; f++)
+                CpuCopy32(shadowArt->pic, (u8 *)dest + f * MON_PIC_SIZE, MON_PIC_SIZE);
         }
         (*state)++;
         return 0xFF;
+    }
     case 1:
         LoadSpritePaletteWithTag(GetMonSpritePalFromSpeciesAndPersonalityIsEgg(summary->species, summary->isShiny, summary->pid, summary->isEgg), summary->species2);
+        if (shadowArt != NULL)
+        {
+            // Overwrite the slot the tag was just loaded into. IndexOf...
+            // answers 0xFF when the tag is absent, which would index a palette
+            // that does not exist.
+            u32 slot = IndexOfSpritePaletteTag(summary->species2);
+
+            if (slot != 0xFF)
+                LoadPalette(shadowArt->pal, OBJ_PLTT_ID(slot), PLTT_SIZE_4BPP);
+        }
         SetMultiuseSpriteTemplateToPokemon(summary->species2, B_POSITION_OPPONENT_LEFT);
         (*state)++;
         return 0xFF;

@@ -175,3 +175,24 @@ MeltingMileText_NoPP:
 
 MeltingMileText_GirlsLeave:
 	.string "Wait... is that HOT COCOA?\pDad sent you, didn't he. Ugh, fiiine,\nwe're coming!\pCome on, AZURILL -- last one home's\na slowpoke!$"
+
+@==============================
+@ Signs, on the two painted signboards. (30,17) sits beside the Munen Lake
+@ warp at (31,18); (9,11) is on the path north toward Walnut Woods, the way
+@ to Frostwood Town.
+@==============================
+MeltingMile_EventScript_SignFrostwood::
+	msgbox MeltingMileText_SignFrostwood, MSGBOX_SIGN
+	end
+
+MeltingMile_EventScript_SignMunenLake::
+	msgbox MeltingMileText_SignMunenLake, MSGBOX_SIGN
+	end
+
+MeltingMileText_SignFrostwood:
+	.string "MELTING MILE\n"
+	.string "{RIGHT_ARROW} FROSTWOOD TOWN$"
+
+MeltingMileText_SignMunenLake:
+	.string "MELTING MILE\n"
+	.string "{RIGHT_ARROW} MUNEN LAKE$"

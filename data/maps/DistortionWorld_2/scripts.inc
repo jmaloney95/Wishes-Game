@@ -277,7 +277,7 @@ DistortionRift_EventScript_GengarCollapse::
 DistortionWorld_2_Text_SeamRemembers::
 	.string "GENGAR pours out of its Poke Ball\n"
 	.string "like smoke.\p"
-	.string "“Kekeke. Welcome back, {PLAYER}.\n"
+	.string "Kekeke. Welcome back, {PLAYER}.\n"
 	.string "The seam remembers you.\p"
 	.string "But look, it is not\n"
 	.string "quite as we left it…$"
@@ -388,5 +388,5 @@ DistortionWorld_2_Text_SeamHint::
 	.string "sealed tight.\p"
 	.string "GENGAR taps the CATALPA BOW at\n"
 	.string "your hip.\p"
-	.string "“When you want out, call the\n"
-	.string "ghost-road. Kekeke.”$"
+	.string "When you want out, call the\n"
+	.string "ghost-road. Kekeke.$"

@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_RIVALS_HOUSE_1F_MOM",
+      "local_id": "LOCALID_MAYS_HOUSE_1F_MOM",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
       "x": 8,
       "y": 7,
@@ -47,15 +47,15 @@
       "x": 1,
       "y": 8,
       "elevation": 0,
-      "dest_map": "MAP_MUNEN_VILLAGE_2",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_MUNEN_VILLAGE",
+      "dest_warp_id": "2"
     },
     {
       "x": 2,
       "y": 8,
       "elevation": 0,
-      "dest_map": "MAP_MUNEN_VILLAGE_2",
-      "dest_warp_id": "1"
+      "dest_map": "MAP_MUNEN_VILLAGE",
+      "dest_warp_id": "2"
     },
     {
       "x": 2,

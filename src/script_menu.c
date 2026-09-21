@@ -17,6 +17,10 @@
 #include "malloc.h"
 #include "util.h"
 #include "item_icon.h"
+#include "decompress.h"
+#include "graphics.h"
+#include "sprite.h"
+#include "trig.h"
 #include "constants/field_specials.h"
 #include "constants/items.h"
 #include "constants/script_menu.h"
@@ -943,6 +947,134 @@ void GetLilycoveSSTidalSelection(void)
 #define tWindowY     data[4]
 #define tWindowId    data[5]
 
+// ── WoT: a shiny mon's portrait twinkles ────────────────────────────────────
+// Six 8x8 stars ring the 64x64 pic, each keeping its own phase so they come
+// and go in turn instead of flashing in unison. Offsets stay inside +/-26 of
+// the sprite centre, which is the box interior; further out would spill over
+// the window border onto the field.
+#define TAG_WOT_PICBOX_SPARKLE  0x4B60
+#define WOT_PICBOX_STARS        6
+
+static const s8 sWotPicBoxStarOffsets[WOT_PICBOX_STARS][2] =
+{
+    {-26, -24}, { 26, -20}, {-26,   4},
+    { 26,   8}, {-14,  25}, { 18,  26},
+};
+
+static const struct CompressedSpriteSheet sWotPicBoxSparkleSheet[] =
+{
+    { .data = gBattleAnimSpriteGfx_GoldStars, .size = 0xC0, .tag = TAG_WOT_PICBOX_SPARKLE },
+    {},
+};
+static const struct SpritePalette sWotPicBoxSparklePalette[] =
+{
+    { .data = gBattleAnimSpritePal_GoldStars, .tag = TAG_WOT_PICBOX_SPARKLE },
+    {},
+};
+
+static const struct OamData sWotPicBoxStarOam =
+{
+    .affineMode = ST_OAM_AFFINE_OFF,
+    .objMode = ST_OAM_OBJ_NORMAL,
+    .bpp = ST_OAM_4BPP,
+    .shape = SPRITE_SHAPE(8x8),
+    .size = SPRITE_SIZE(8x8),
+    .priority = 0,
+};
+
+static void SpriteCB_WotPicBoxStar(struct Sprite *sprite);
+
+static const struct SpriteTemplate sWotPicBoxStarTemplate =
+{
+    .tileTag = TAG_WOT_PICBOX_SPARKLE,
+    .paletteTag = TAG_WOT_PICBOX_SPARKLE,
+    .oam = &sWotPicBoxStarOam,
+    .anims = gDummySpriteAnimTable,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCB_WotPicBoxStar,
+};
+
+#define sPhase     data[0]
+#define sBaseTile  data[1]
+
+static u8 sWotPicBoxStarIds[WOT_PICBOX_STARS];
+static bool8 sWotPicBoxStarsActive;
+
+// Up for the first 40 frames of a 96-frame cycle, so with the phases spread
+// evenly two or three of the six are showing at any moment.
+static void SpriteCB_WotPicBoxStar(struct Sprite *sprite)
+{
+    s16 t = sprite->sPhase;
+
+    if (++sprite->sPhase >= 96)
+        sprite->sPhase = 0;
+
+    if (t >= 40)
+    {
+        sprite->invisible = TRUE;
+        return;
+    }
+    sprite->invisible = FALSE;
+    // Tiles 0..3 of the sheet are the big 16x16 star; 4 and 5 are the two mini
+    // stars, and alternating between them is the twinkle.
+    sprite->oam.tileNum = sprite->sBaseTile + 4 + ((t >> 3) & 1);
+    sprite->y2 = Sin((t * 4) & 0xFF, 2);
+}
+
+static void WotPicBoxSparkle_Create(s16 cx, s16 cy)
+{
+    u32 i;
+    u16 baseTile;
+
+    sWotPicBoxStarsActive = FALSE;
+    LoadCompressedSpriteSheet(sWotPicBoxSparkleSheet);
+    LoadSpritePalettes(sWotPicBoxSparklePalette);
+    // The field can already be out of OBJ palettes; show nothing rather than
+    // draw the stars in someone else's colours.
+    if (IndexOfSpritePaletteTag(TAG_WOT_PICBOX_SPARKLE) == 0xFF)
+    {
+        FreeSpriteTilesByTag(TAG_WOT_PICBOX_SPARKLE);
+        return;
+    }
+
+    baseTile = GetSpriteTileStartByTag(TAG_WOT_PICBOX_SPARKLE);
+    for (i = 0; i < WOT_PICBOX_STARS; i++)
+    {
+        u8 spriteId = CreateSprite(&sWotPicBoxStarTemplate,
+                                   cx + sWotPicBoxStarOffsets[i][0],
+                                   cy + sWotPicBoxStarOffsets[i][1], 0);
+
+        sWotPicBoxStarIds[i] = spriteId;
+        if (spriteId == MAX_SPRITES)
+            continue;
+        gSprites[spriteId].sBaseTile = baseTile;
+        gSprites[spriteId].sPhase = i * 16;
+        gSprites[spriteId].invisible = TRUE;
+    }
+    sWotPicBoxStarsActive = TRUE;
+    PlaySE(SE_SHINY);
+}
+
+static void WotPicBoxSparkle_Destroy(void)
+{
+    u32 i;
+
+    if (!sWotPicBoxStarsActive)
+        return;
+    for (i = 0; i < WOT_PICBOX_STARS; i++)
+    {
+        if (sWotPicBoxStarIds[i] != MAX_SPRITES)
+            DestroySprite(&gSprites[sWotPicBoxStarIds[i]]);
+    }
+    FreeSpriteTilesByTag(TAG_WOT_PICBOX_SPARKLE);
+    FreeSpritePaletteByTag(TAG_WOT_PICBOX_SPARKLE);
+    sWotPicBoxStarsActive = FALSE;
+}
+
+#undef sPhase
+#undef sBaseTile
+
 static void Task_PokemonPicWindow(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
@@ -956,6 +1088,7 @@ static void Task_PokemonPicWindow(u8 taskId)
         // Wait until state is advanced by ScriptMenu_HidePokemonPic
         break;
     case 2:
+        WotPicBoxSparkle_Destroy();
         FreeResourcesAndDestroySprite(&gSprites[task->tMonSpriteId], task->tMonSpriteId);
         task->tState++;
         break;
@@ -966,7 +1099,7 @@ static void Task_PokemonPicWindow(u8 taskId)
     }
 }
 
-bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
+bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y, bool8 isShiny)
 {
     u8 taskId;
     u8 spriteId;
@@ -977,7 +1110,9 @@ bool8 ScriptMenu_ShowPokemonPic(u16 species, u8 x, u8 y)
     }
     else
     {
-        spriteId = CreateMonSprite_PicBox(species, x * 8 + 40, y * 8 + 40, 0);
+        spriteId = CreateMonSprite_PicBox(species, isShiny, x * 8 + 40, y * 8 + 40, 0);
+        if (isShiny)
+            WotPicBoxSparkle_Create(x * 8 + 40, y * 8 + 40);
         taskId = CreateTask(Task_PokemonPicWindow, 0x50);
         gTasks[taskId].tWindowId = CreateWindowFromRect(x, y, 8, 8);
         gTasks[taskId].tState = 0;

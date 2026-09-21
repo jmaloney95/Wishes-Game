@@ -15,8 +15,25 @@
 
 #define RTC_ERR_FLAG_MASK      0x0FF0
 
+// Wishes of Tomorrow runs on the fake RTC at 60x (one in-game minute per
+// real second), so a whole day is 24 real minutes. These boundaries split
+// that into 14 minutes of daylight and 10 minutes of night, with the hour
+// either side of dawn and dusk spent blending. Move NIGHT_HOUR_BEGIN to 21
+// for a 15/9 split instead.
+#if WOT_TIMES_OF_DAY
+    #define MORNING_HOUR_BEGIN 6
+    #define MORNING_HOUR_END   10
+
+    #define DAY_HOUR_BEGIN     10
+    #define DAY_HOUR_END       17
+
+    #define EVENING_HOUR_BEGIN 17
+    #define EVENING_HOUR_END   20
+
+    #define NIGHT_HOUR_BEGIN   20
+    #define NIGHT_HOUR_END     6
 //Evening doesn't exist in Gen 2
-#if OW_TIMES_OF_DAY == GEN_2
+#elif OW_TIMES_OF_DAY == GEN_2
     #define MORNING_HOUR_BEGIN 4
     #define MORNING_HOUR_END   10
 

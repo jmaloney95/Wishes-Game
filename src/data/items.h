@@ -14831,16 +14831,78 @@ const struct ItemInfo gItemsInfo[] =
         .price = 0,
         .importance = 1,
         .description = COMPOUND_STRING(
-            "Starts the yacht
-"
-            "moored at the
-"
+            "Starts the yacht\n"
+            "moored at the\n"
             "Route 2 pier."),
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
         .iconPic = gItemIcon_YachtKey,
         .iconPalette = gItemIconPalette_YachtKey,
+    },
+
+    // Wishes of Tomorrow: RedFatality's lift ticket (Route 2). Generic ticket icon
+    // (the S.S. Ticket's) until there's art.
+    [ITEM_EPIC_PASS] =
+    {
+        .name = ITEM_NAME("Epic Pass"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "A season pass for\n"
+            "the lift up to the\n"
+            "peak. Unlimited runs."),
+        .pocket = POCKET_KEY_ITEMS,
+        .type = ITEM_USE_BAG_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
+        .iconPic = gItemIcon_SSTicket,
+        .iconPalette = gItemIconPalette_SSTicket,
+    },
+
+    // Wishes of Tomorrow: the Frostwood bar's drinks. Same effect, price and
+    // battle use as the Potion / Super Potion they stand in for.
+    [ITEM_DOMESTIC] =
+    {
+        .name = ITEM_NAME("Domestic"),
+        .price = (I_PRICE >= GEN_7) ? 200 : 300,
+        .holdEffectParam = 20,
+        .description = COMPOUND_STRING(
+            "An ice-cold lager.\n"
+            "Restores the HP of\n"
+            "a Pokémon by 20."),
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_RESTORE_HP,
+        .effect = gItemEffect_Potion,
+        .flingPower = 30,
+        .iconPic = gItemIcon_Domestic,
+        .iconPalette = gItemIconPalette_Domestic,
+    },
+
+    [ITEM_CRAFT] =
+    {
+        .name = ITEM_NAME("Craft"),
+        .price = 700,
+        .holdEffectParam = 60,
+        .description = COMPOUND_STRING(
+            "A local microbrew.\n"
+            "Restores the HP of\n"
+        #if I_HEALTH_RECOVERY >= GEN_7
+            "a Pokémon by 60."),
+        #else
+            "a Pokémon by 50."),
+        #endif
+        .pocket = POCKET_ITEMS,
+        .sortType = ITEM_TYPE_HEALTH_RECOVERY,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_Medicine,
+        .battleUsage = EFFECT_ITEM_RESTORE_HP,
+        .effect = gItemEffect_SuperPotion,
+        .flingPower = 30,
+        .iconPic = gItemIcon_Craft,
+        .iconPalette = gItemIconPalette_Craft,
     },
 
     [ITEM_SNAG_MACHINE] =

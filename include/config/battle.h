@@ -258,7 +258,16 @@
 #define B_FLAG_TERA_ORB_CHARGED     0     // If this flag is set, the Tera Orb is charged. It is automatically set upon healing and cleared upon Terastallizing once configured.
 #define B_FLAG_TERA_ORB_NO_COST     0     // If this flag is set, the Tera Orb does not use up its charge upon Terastallization. In S/V, this occurs after an event with Terapagos.
 #define B_FLAG_SLEEP_CLAUSE         0     // If this flag is set, sleep clause is enabled; if the player / AI has already put a Pokémon on the opponent's side to sleep and it is still sleeping, another one can't be put to sleep. AI requires AI_FLAG_CHECK_BAD_MOVE to understand.
-#define B_FLAG_NO_WHITEOUT          FLAG_UNUSED_0x035 // If this flag is set, the player can not white out against Trainers. Please note that the party is not healed automatically! (Used by the StarSummit "impossible battle" so the script keeps control on a loss.)
+// Wishes of Tomorrow -- Hyper Mode (a Shadow in the player's party losing its
+// head): the per-action chance of it starting, the same when the mon is below
+// half HP, the chance of it settling again, and the chance that a raging mon
+// turns on itself instead of lashing out with a move.
+#define WOT_HYPER_MODE_CHANCE           10
+#define WOT_HYPER_MODE_CHANCE_HURT      25
+#define WOT_HYPER_MODE_SETTLE_CHANCE    34
+#define WOT_HYPER_MODE_SELF_CHANCE      20
+
+#define B_FLAG_NO_WHITEOUT          FLAG_WOT_NO_WHITEOUT // If this flag is set, the player can not white out against Trainers. Please note that the party is not healed automatically! (Used by the StarSummit "impossible battle" so the script keeps control on a loss.)
 
 // Var Settings
 // To use the following features, change the 0 for a var present in include/constants/vars.h, preferably an unused one.

@@ -3,7 +3,7 @@
   "name": "Munen_village_2",
   "layout": "LAYOUT_MUNEN_VILLAGE_2",
   "music": "MUS_LITTLEROOT",
-  "region_map_section": "MAPSEC_MUNEN_VILLAGE",
+  "region_map_section": "MAPSEC_NONE",
   "requires_flash": false,
   "weather": "WEATHER_SUNNY",
   "map_type": "MAP_TYPE_TOWN",
@@ -12,13 +12,7 @@
   "allow_running": true,
   "show_map_name": false,
   "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
-  "connections": [
-    {
-      "map": "MAP_MELTING_MILE",
-      "offset": 16,
-      "direction": "up"
-    }
-  ],
+  "connections": null,
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_MOM",
@@ -30,7 +24,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_Mom",
+      "script": "MunenVillage_EventScript_Mom",
       "flag": "0"
     },
     {
@@ -43,7 +37,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_IceTyrunt",
+      "script": "MunenVillage_EventScript_IceTyrunt",
       "flag": "FLAG_RECEIVED_STARTER"
     },
     {
@@ -56,7 +50,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_IceAmaura",
+      "script": "MunenVillage_EventScript_IceAmaura",
       "flag": "FLAG_RECEIVED_STARTER"
     },
     {
@@ -69,7 +63,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_IceAnorith",
+      "script": "MunenVillage_EventScript_IceAnorith",
       "flag": "FLAG_RECEIVED_STARTER"
     },
     {
@@ -82,7 +76,7 @@
       "movement_range_y": 2,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_VillageKid",
+      "script": "MunenVillage_EventScript_VillageKid",
       "flag": "0"
     },
     {
@@ -95,7 +89,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_OldLady",
+      "script": "MunenVillage_EventScript_OldLady",
       "flag": "FLAG_OLD_LADY_SPOKE"
     },
     {
@@ -108,7 +102,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_Fisherman",
+      "script": "MunenVillage_EventScript_Fisherman",
       "flag": "0"
     },
     {
@@ -121,7 +115,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_Caretaker",
+      "script": "MunenVillage_EventScript_Caretaker",
       "flag": "0"
     },
     {
@@ -134,7 +128,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_HaruDummy",
+      "script": "MunenVillage_EventScript_HaruDummy",
       "flag": "FLAG_HIDE_RIVAL_HARU"
     },
     {
@@ -147,7 +141,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_ProfessorDummy",
+      "script": "MunenVillage_EventScript_ProfessorDummy",
       "flag": "FLAG_HIDE_PROFESSOR"
     },
     {
@@ -173,7 +167,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "Munen_village_2_EventScript_FishermanDad",
+      "script": "MunenVillage_EventScript_FishermanDad",
       "flag": "FLAG_HIDE_MUNEN_FISHERMAN_DAD"
     }
   ],
@@ -208,7 +202,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "Munen_village_2_EventScript_ExitNorth"
+      "script": "MunenVillage_EventScript_ExitNorth"
     },
     {
       "type": "trigger",
@@ -217,7 +211,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "Munen_village_2_EventScript_ExitNorth"
+      "script": "MunenVillage_EventScript_ExitNorth"
     },
     {
       "type": "trigger",
@@ -226,7 +220,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "Munen_village_2_EventScript_ExitNorth"
+      "script": "MunenVillage_EventScript_ExitNorth"
     },
     {
       "type": "trigger",
@@ -235,7 +229,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "Munen_village_2_EventScript_ExitNorth"
+      "script": "MunenVillage_EventScript_ExitNorth"
     },
     {
       "type": "trigger",
@@ -244,7 +238,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "Munen_village_2_EventScript_ExitNorth"
+      "script": "MunenVillage_EventScript_ExitNorth"
     },
     {
       "type": "trigger",
@@ -253,7 +247,7 @@
       "elevation": 3,
       "var": "VAR_TEMP_1",
       "var_value": "0",
-      "script": "Munen_village_2_EventScript_ExitNorth"
+      "script": "MunenVillage_EventScript_ExitNorth"
     }
   ],
   "bg_events": [
@@ -263,7 +257,7 @@
       "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Munen_village_2_EventScript_JoeHouseSign"
+      "script": "MunenVillage_EventScript_JoeHouseSign"
     },
     {
       "type": "sign",
@@ -271,7 +265,7 @@
       "y": 21,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Munen_village_2_EventScript_MaysHouseSign"
+      "script": "MunenVillage_EventScript_MaysHouseSign"
     },
     {
       "type": "sign",
@@ -279,7 +273,7 @@
       "y": 19,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Munen_village_2_EventScript_LabSign"
+      "script": "MunenVillage_EventScript_LabSign"
     },
     {
       "type": "sign",
@@ -287,7 +281,7 @@
       "y": 9,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Munen_village_2_EventScript_ForeclosureSign"
+      "script": "MunenVillage_EventScript_ForeclosureSign"
     },
     {
       "type": "sign",
@@ -295,7 +289,7 @@
       "y": 11,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Munen_village_2_EventScript_RivalHouseSign"
+      "script": "MunenVillage_EventScript_RivalHouseSign"
     }
   ]
 }

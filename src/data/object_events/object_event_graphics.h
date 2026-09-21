@@ -338,6 +338,8 @@ const u32 gFieldEffectObjectPic_ShadowExtraLarge[] = INCGFX_U32("graphics/field_
 const u32 gFieldEffectObjectPic_BallLight[] = INCGFX_U32("graphics/object_events/pics/misc/light.png", ".4bpp");
 const u32 gFieldEffectObjectPic_PokeCenterLight[] = INCGFX_U32("graphics/object_events/pics/misc/poke_center_light.png", ".4bpp");
 const u32 gFieldEffectObjectPic_MartLight[] = INCGFX_U32("graphics/object_events/pics/misc/mart_light.png", ".4bpp");
+const u32 gFieldEffectObjectPic_WotRedLight[] = INCGFX_U32("graphics/object_events/pics/misc/wot_red_light.png", ".4bpp");
+const u32 gFieldEffectObjectPic_WotRedSignLight[] = INCGFX_U32("graphics/object_events/pics/misc/wot_red_light_sign.png", ".4bpp");
 const u8 gFieldEffectPic_CutGrass[] = INCGFX_U8("graphics/field_effects/pics/cut_grass.png", ".4bpp");
 const u32 gFieldEffectPic_CutGrass_Copy[] = INCGFX_U32("graphics/field_effects/pics/cut_grass.png", ".4bpp");
 const u16 gFieldEffectPal_CutGrass[] = INCGFX_U16("graphics/field_effects/palettes/cut_grass.pal", ".gbapal");
@@ -357,6 +359,8 @@ const u32 gFieldEffectObjectPic_LongGrass[] = INCGFX_U32("graphics/field_effects
 const u32 gFieldEffectObjectPic_TallGrass[] = INCGFX_U32("graphics/field_effects/pics/tall_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_ShortGrass[] = INCGFX_U32("graphics/field_effects/pics/short_grass.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_SandFootprints[] = INCGFX_U32("graphics/field_effects/pics/sand_footprints.png", ".4bpp", "-mwidth 2 -mheight 2");
+// Snow prints reuse the sand PIC unchanged -- only the palette differs.
+const u16 gFieldEffectObjectPalette_SnowFootprints[] = INCGFX_U16("graphics/field_effects/palettes/snow_footprints.pal", ".gbapal");
 const u32 gFieldEffectObjectPic_DeepSandFootprints[] = INCGFX_U32("graphics/field_effects/pics/deep_sand_footprints.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_BikeTireTracks[] = INCGFX_U32("graphics/field_effects/pics/bike_tire_tracks.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gFieldEffectObjectPic_SlitherTracks[] = INCGFX_U32("graphics/field_effects/pics/slither_tracks.png", ".4bpp", "-mwidth 2 -mheight 2");
@@ -432,6 +436,8 @@ const u16 gObjectEventPal_Substitute[] = INCGFX_U16("graphics/object_events/pics
 
 const u16 gObjectEventPaletteEmotes[] = INCGFX_U16("graphics/misc/emotes.pal", ".gbapal");
 const u16 gObjectEventPaletteNeonLight[] = INCGFX_U16("graphics/object_events/palettes/neon_light.pal", ".gbapal");
+// Wishes of Tomorrow: Shin Tokyo's red street light.
+const u16 gObjectEventPaletteWotRedLight[] = INCGFX_U16("graphics/object_events/palettes/wot_red_light.pal", ".gbapal");
 
 #if OW_FOLLOWERS_POKEBALLS
 const u32 gObjectEventPic_MasterBall[] = INCGFX_U32("graphics/object_events/pics/misc/ball_master.png", ".4bpp", "-mwidth 2 -mheight 4");
@@ -514,6 +520,10 @@ const u32 gObjectEventPic_ApricornTree[] = INCGFX_U32("graphics/object_events/pi
 const u16 gObjectEventPal_NpcPink[] = INCGFX_U16("graphics/object_events/palettes/npc_pink.pal", ".gbapal");
 const u16 gObjectEventPal_NpcPinkReflection[] = INCGFX_U16("graphics/object_events/palettes/npc_pink_reflection.pal", ".gbapal");
 
+// WoT: used on an Emerald map (the dying old man in the Ashlands), so it lives
+// outside the IS_FRLG block along with its NpcPink palette.
+const u16 gObjectEventPic_OldManLyingDown[] = INCGFX_U16("graphics/object_events/pics/people/old_man_lying_down.png", ".4bpp");
+
 #if IS_FRLG
 
 const u16 gObjectEventPic_RedNormal[] = INCGFX_U16("graphics/object_events/pics/people/red/red_normal.png", ".4bpp", "-mwidth 2 -mheight 4");
@@ -566,7 +576,6 @@ const u16 gObjectEventPic_FatManFrlg[] = INCGFX_U16("graphics/object_events/pics
 const u16 gObjectEventPic_BaldingMan[] = INCGFX_U16("graphics/object_events/pics/people/balding_man.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_Woman2Frlg[] = INCGFX_U16("graphics/object_events/pics/people/woman_2_frlg.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_OldMan1[] = INCGFX_U16("graphics/object_events/pics/people/old_man_1.png", ".4bpp", "-mwidth 2 -mheight 4");
-const u16 gObjectEventPic_OldManLyingDown[] = INCGFX_U16("graphics/object_events/pics/people/old_man_lying_down.png", ".4bpp");
 const u16 gObjectEventPic_WorkerM[] = INCGFX_U16("graphics/object_events/pics/people/worker_m.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_WorkerF[] = INCGFX_U16("graphics/object_events/pics/people/worker_f.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPic_BeautyFrlg[] = INCGFX_U16("graphics/object_events/pics/people/beauty_frlg.png", ".4bpp", "-mwidth 2 -mheight 4");
@@ -709,5 +718,23 @@ const u32 gObjectEventPic_WotJet[] = INCGFX_U32("graphics/object_events/pics/peo
 const u16 gObjectEventPal_WotJet[] = INCGFX_U16("graphics/object_events/palettes/wot_jet.pal", ".gbapal");
 const u32 gObjectEventPic_WotEdwardsImpact[] = INCGFX_U32("graphics/object_events/pics/people/wot_edwards_impact.png", ".4bpp", "-mwidth 4 -mheight 4");
 const u16 gObjectEventPal_WotEdwardsImpact[] = INCGFX_U16("graphics/object_events/palettes/wot_edwards_impact.pal", ".gbapal");
+const u32 gObjectEventPic_WotGloria[] = INCGFX_U32("graphics/object_events/pics/people/wot_gloria.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotGloria[] = INCGFX_U16("graphics/object_events/palettes/wot_gloria.pal", ".gbapal");
+const u32 gObjectEventPic_WotIono[] = INCGFX_U32("graphics/object_events/pics/people/wot_iono.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotIono[] = INCGFX_U16("graphics/object_events/palettes/wot_iono.pal", ".gbapal");
+const u32 gObjectEventPic_WotAldo[] = INCGFX_U32("graphics/object_events/pics/people/wot_aldo.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotAldo[] = INCGFX_U16("graphics/object_events/palettes/wot_aldo.pal", ".gbapal");
+const u32 gObjectEventPic_WotLeon[] = INCGFX_U32("graphics/object_events/pics/people/wot_leon.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotLeon[] = INCGFX_U16("graphics/object_events/palettes/wot_leon.pal", ".gbapal");
+const u32 gObjectEventPic_WotMelony[] = INCGFX_U32("graphics/object_events/pics/people/wot_melony.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotMelony[] = INCGFX_U16("graphics/object_events/palettes/wot_melony.pal", ".gbapal");
+const u32 gObjectEventPic_WotMisty[] = INCGFX_U32("graphics/object_events/pics/people/wot_misty.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotMisty[] = INCGFX_U16("graphics/object_events/palettes/wot_misty.pal", ".gbapal");
+const u32 gObjectEventPic_WotOleana[] = INCGFX_U32("graphics/object_events/pics/people/wot_oleana.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotOleana[] = INCGFX_U16("graphics/object_events/palettes/wot_oleana.pal", ".gbapal");
+const u32 gObjectEventPic_WotJacinthe[] = INCGFX_U32("graphics/object_events/pics/people/wot_jacinthe.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_WotJacinthe[] = INCGFX_U16("graphics/object_events/palettes/wot_jacinthe.pal", ".gbapal");
+const u32 gObjectEventPic_WotVictor[] = INCGFX_U32("graphics/object_events/pics/people/wot_victor.png", ".4bpp", "-mwidth 2 -mheight 4");
+const u16 gObjectEventPal_WotVictor[] = INCGFX_U16("graphics/object_events/palettes/wot_victor.pal", ".gbapal");
 
 const u32 gObjectEventPic_WotWantedSmall[] = INCGFX_U32("graphics/object_events/pics/misc/wot_wanted_small.png", ".4bpp");

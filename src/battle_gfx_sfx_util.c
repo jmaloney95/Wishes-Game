@@ -614,31 +614,28 @@ bool8 IsBattleSEPlaying(enum BattlerId battler)
     return TRUE;
 }
 
-#include "data/wot_shadow_pics.h"
+#include "wot_shadow_art.h"
 #include "wot_shadow_log.h"
 
 // Returns TRUE if custom shadow art was applied (gfx + palette overwritten).
 static bool32 WotTryLoadShadowMonGfx(u32 species, enum BattlerId battler, u32 paletteOffset)
 {
-    u32 i, f;
+    const struct WotShadowPic *art;
     enum BattlerPosition position = GetBattlerPosition(battler);
+    u32 f;
 
     if (IsOnPlayerSide(battler))
         return FALSE;
-    for (i = 0; i < ARRAY_COUNT(sWotShadowPics); i++)
-    {
-        if (sWotShadowPics[i].species == species)
-        {
-            for (f = 0; f < MAX_MON_PIC_FRAMES; f++)
-                CpuCopy32(sWotShadowPics[i].pic,
-                          gMonSpritesGfxPtr->spritesGfx[position] + f * MON_PIC_SIZE,
-                          MON_PIC_SIZE);
-            LoadPalette(sWotShadowPics[i].pal, paletteOffset, PLTT_SIZE_4BPP);
-            LoadPalette(sWotShadowPics[i].pal, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);
-            return TRUE;
-        }
-    }
-    return FALSE;
+
+    art = WotFindShadowPic(species);
+    if (art == NULL)
+        return FALSE;
+
+    for (f = 0; f < MAX_MON_PIC_FRAMES; f++)
+        CpuCopy32(art->pic, gMonSpritesGfxPtr->spritesGfx[position] + f * MON_PIC_SIZE, MON_PIC_SIZE);
+    LoadPalette(art->pal, paletteOffset, PLTT_SIZE_4BPP);
+    LoadPalette(art->pal, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);
+    return TRUE;
 }
 
 void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)

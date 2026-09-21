@@ -17,12 +17,9 @@ LittlerootTown_BrendansHouse_2F_EventScript_CheckShouldUpdateBrendanPos::
 	goto LittlerootTown_BrendansHouse_2F_EventScript_TryUpdateBrendanPos
 
 LittlerootTown_BrendansHouse_2F_EventScript_TryUpdateBrendanPos::
-	checkplayergender
-	goto_if_eq VAR_RESULT, MALE, LittlerootTown_BrendansHouse_2F_EventScript_Ret
-	@ Odd that the MaysHouse equivalent was used below instead
-	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2, LittlerootTown_MaysHouse_2F_EventScript_Ret
-	setobjectxyperm LOCALID_RIVALS_HOUSE_2F_RIVAL, 0, 2
-	setobjectmovementtype LOCALID_RIVALS_HOUSE_2F_RIVAL, MOVEMENT_TYPE_FACE_UP
+	@ WoT: the bedroom was remapped and its rival object removed, so this
+	@ cutscene has no actor and LOCALID_RIVALS_HOUSE_2F_RIVAL no longer
+	@ exists. Unreachable -- kept as a stub so every label still resolves.
 	return
 
 LittlerootTown_BrendansHouse_2F_EventScript_Ret::
@@ -54,75 +51,34 @@ LittlerootTown_BrendansHouse_2F_EventScript_RivalsPokeBall::
 	end
 
 LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendan::
-	delay 10
-	addobject LOCALID_RIVALS_HOUSE_2F_RIVAL
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanEnters
-	waitmovement 0
-	playse SE_PIN
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, Common_Movement_ExclamationMark
-	waitmovement 0
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, Common_Movement_Delay48
-	waitmovement 0
-	delay 10
-	playbgm MUS_ENCOUNTER_BRENDAN, TRUE
-	call_if_eq VAR_FACING, DIR_NORTH, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanNorth
-	call_if_eq VAR_FACING, DIR_SOUTH, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanSouth
-	call_if_eq VAR_FACING, DIR_WEST, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanWest
-	call_if_eq VAR_FACING, DIR_EAST, LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanEast
-	setvar VAR_LITTLEROOT_RIVAL_STATE, 3
-	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_2F_POKE_BALL
-	clearflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
-	setvar VAR_LITTLEROOT_TOWN_STATE, 1
-	savebgm MUS_DUMMY
-	fadedefaultbgm
+	@ WoT: the bedroom was remapped and its rival object removed, so this
+	@ cutscene has no actor and LOCALID_RIVALS_HOUSE_2F_RIVAL no longer
+	@ exists. Unreachable -- kept as a stub so every label still resolves.
 	releaseall
 	end
 
 LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanNorth::
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerNorth
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	msgbox RivalsHouse_2F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanNorth
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCNorth
-	waitmovement 0
+	@ WoT: the bedroom was remapped and its rival object removed, so this
+	@ cutscene has no actor and LOCALID_RIVALS_HOUSE_2F_RIVAL no longer
+	@ exists. Unreachable -- kept as a stub so every label still resolves.
 	return
 
 LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanSouth::
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerSouth
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	msgbox RivalsHouse_2F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanSouth
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCSouth
-	waitmovement 0
+	@ WoT: the bedroom was remapped and its rival object removed, so this
+	@ cutscene has no actor and LOCALID_RIVALS_HOUSE_2F_RIVAL no longer
+	@ exists. Unreachable -- kept as a stub so every label still resolves.
 	return
 
 LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanWest::
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerWest
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterRight
-	waitmovement 0
-	msgbox RivalsHouse_2F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_PLAYER, LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanWest
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCWest
-	waitmovement 0
+	@ WoT: the bedroom was remapped and its rival object removed, so this
+	@ cutscene has no actor and LOCALID_RIVALS_HOUSE_2F_RIVAL no longer
+	@ exists. Unreachable -- kept as a stub so every label still resolves.
 	return
 
 LittlerootTown_BrendansHouse_2F_EventScript_MeetBrendanEast::
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanApproachPlayerEast
-	waitmovement 0
-	applymovement LOCALID_PLAYER, Common_Movement_WalkInPlaceFasterUp
-	waitmovement 0
-	msgbox RivalsHouse_2F_Text_BrendanWhoAreYou, MSGBOX_DEFAULT
-	closemessage
-	applymovement LOCALID_RIVALS_HOUSE_2F_RIVAL, LittlerootTown_BrendansHouse_2F_Movement_BrendanWalkToPCEast
-	waitmovement 0
+	@ WoT: the bedroom was remapped and its rival object removed, so this
+	@ cutscene has no actor and LOCALID_RIVALS_HOUSE_2F_RIVAL no longer
+	@ exists. Unreachable -- kept as a stub so every label still resolves.
 	return
 
 LittlerootTown_BrendansHouse_2F_Movement_BrendanEnters:

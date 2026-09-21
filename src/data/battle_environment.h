@@ -580,6 +580,22 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .battleIntroSlide = BattleIntroSlide3,
     },
 
+    [BATTLE_ENVIRONMENT_WOT_GRAVEYARD] =
+    {
+        // aveontrainer's graveyard: Shin Tokyo's streets and the jail, where
+        // everything you fight is already dead inside.
+        .name = _("Graveyard"),
+        .naturePower = MOVE_SHADOW_BALL,
+        .secretPowerAnimation = gBattleAnimMove_Pound,
+        .secretPowerEffect = MOVE_EFFECT_FLINCH,
+        .camouflageType = TYPE_GHOST,
+        .camouflageBlend = RGB(12, 15, 8),
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(WotGraveyard),
+        .palette = gBattleEnvironmentPalette_WotGraveyard,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
     [BATTLE_ENVIRONMENT_WOT_TOWN] =
     {
         // carchagui's FR-patch town (Celebi Island).

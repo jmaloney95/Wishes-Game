@@ -664,6 +664,8 @@ gSpecials::
 	def_special WotStartFieldConfetti
 	def_special WotStopFieldConfetti
 	def_special WotStartObjectBob
+	@ WoT: give a map's OW Pokemon object the Shadow silhouette (VAR_0x8004 = local id)
+	def_special WotMakeObjectEventShadow
 	def_special WotShowShadowLog
 	def_special WotShadowLogSnaggedCount
 	def_special WotShadowLogPurifiedCount
@@ -671,3 +673,9 @@ gSpecials::
 	def_special WotOpenRandomizerMenu
 	def_special WotGetPartyLeaderMegaStone
 	def_special WotBuyLeaderMegaStone
+	def_special WotGetStarterShiny
+	def_special WotGondolaDepart, waitstate=1
+	@ WoT: the Frontier ferry leaving the Shin Tokyo docks (VAR_0x8004 = local id)
+	def_special WotShipDepart, waitstate=1
+	def_special WotBufferLastTalkedSpecies
+	def_special WotStartFamilyHearts

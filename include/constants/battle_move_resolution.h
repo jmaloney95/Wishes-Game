@@ -9,6 +9,12 @@ enum Obedience
     DISOBEYS_FALL_ASLEEP,
     DISOBEYS_WHILE_ASLEEP,
     DISOBEYS_RANDOM_MOVE,
+    // WoT Shadow system: Hyper Mode. A Shadow in the player's party can lose
+    // its head mid-battle; these reuse the disobedience handling below with
+    // their own messages.
+    WOT_HYPER_MODE_RAMPAGE,   // lashes out with a move of its own choosing
+    WOT_HYPER_MODE_HITS_SELF,
+    WOT_HYPER_MODE_SETTLES,   // message only; the chosen move then runs
 };
 
 enum CancelerResult

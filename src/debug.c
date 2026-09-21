@@ -52,6 +52,7 @@
 #include "tv.h"
 #include "pokemon_summary_screen.h"
 #include "wild_encounter.h"
+#include "wot_shadow_art.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_frontier.h"
@@ -283,6 +284,7 @@ static void DebugAction_PCBag_Fill_PocketPokeBalls(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketTMHM(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketBerries(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketKeyItems(u8 taskId);
+static void DebugAction_PCBag_Fill_ShadowArtMons(u8 taskId);
 static void DebugAction_PCBag_ClearBag(u8 taskId);
 static void DebugAction_PCBag_ClearBoxes(u8 taskId);
 
@@ -587,6 +589,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
     { COMPOUND_STRING("Fill Pocket TMHM"),          DebugAction_PCBag_Fill_PocketTMHM },
     { COMPOUND_STRING("Fill Pocket Berries"),       DebugAction_PCBag_Fill_PocketBerries },
     { COMPOUND_STRING("Fill Pocket Key Items"),     DebugAction_PCBag_Fill_PocketKeyItems },
+    { COMPOUND_STRING("Fill PC Shadow Art Mons"),   DebugAction_PCBag_Fill_ShadowArtMons },
     { NULL }
 };
 
@@ -3881,6 +3884,38 @@ static void DebugAction_PCBag_Fill_PocketKeyItems(u8 taskId)
         if (GetItemPocket(itemId) == POCKET_KEY_ITEMS && CheckBagHasSpace(itemId, 1))
             AddBagItem(itemId, 1);
     }
+}
+
+// WoT: one of every Shadow Pokemon that has custom battle art, boxed, so the
+// art can be looked at without hunting the region for each one. The art table
+// is the list, so a species added to it turns up here on the next build.
+// They are NOT marked as "opened" and NOT written to the Shadow Log: a test
+// box should not look like a played save.
+#define DEBUG_SHADOW_ART_LEVEL 50
+static void DebugAction_PCBag_Fill_ShadowArtMons(u8 taskId)
+{
+    u32 i;
+    u32 count = WotShadowPicCount();
+
+    for (i = 0; i < count; i++)
+    {
+        struct Pokemon mon;
+        u32 isShadow = TRUE;
+        u16 species = WotShadowPicSpeciesAt(i);
+
+        if (species == SPECIES_NONE)
+            continue;
+
+        CreateMon(&mon, species, DEBUG_SHADOW_ART_LEVEL, Random32(), OTID_STRUCT_PLAYER_ID);
+        SetMonData(&mon, MON_DATA_IS_SHADOW, &isShadow);
+        CalculateMonStats(&mon);   // CreateMon leaves HP at 0 until this runs
+        if (CopyMonToPC(&mon) == MON_CANT_GIVE)
+            break;                 // boxes full; stop rather than drop silently
+    }
+
+    FlagSet(FLAG_SYS_POKEMON_GET);
+    Debug_DestroyMenu_Full(taskId);
+    ScriptContext_Enable();
 }
 
 static void DebugAction_PCBag_ClearBag(u8 taskId)

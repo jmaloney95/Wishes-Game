@@ -716,6 +716,23 @@ u32 FldEff_SandFootprints(void)
     return 0;
 }
 
+u32 FldEff_SnowFootprints(void)
+{
+    u8 spriteId;
+
+    SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
+    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SNOW_FOOTPRINTS], gFieldEffectArguments[0], gFieldEffectArguments[1], gFieldEffectArguments[2]);
+    if (spriteId != MAX_SPRITES)
+    {
+        struct Sprite *sprite = &gSprites[spriteId];
+        sprite->coordOffsetEnabled = TRUE;
+        sprite->oam.priority = gFieldEffectArguments[3];
+        sprite->sFldEff = FLDEFF_SNOW_FOOTPRINTS;
+        StartSpriteAnim(sprite, gFieldEffectArguments[4]);
+    }
+    return 0;
+}
+
 u32 FldEff_DeepSandFootprints(void)
 {
     u8 spriteId;

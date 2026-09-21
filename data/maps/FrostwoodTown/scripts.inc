@@ -128,3 +128,93 @@ FrostwoodTown_Text_ClarksonReminder:
 	.string "the summit of MOUNT MUNEN.\p"
 	.string "Check the REGION MAP to work out how\n"
 	.string "to climb up there.$"
+
+@ ---------------------------------------------------------------------------
+@ Gondola down to the valley station (Route112_CableCarStation, whose door opens
+@ onto Route_2). The station's two door tiles (45,9)/(46,9) are coord triggers,
+@ not warps, so walking in asks first; the ride back from the valley warps onto
+@ (45,9), and the non-animated door steps the player out onto (45,10).
+FrostwoodTown_EventScript_GondolaDoor::
+	lockall
+	msgbox FrostwoodTown_Text_TakeGondola, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, FrostwoodTown_EventScript_GondolaDecline
+	closemessage
+	hidefollower
+	playse SE_EXIT
+	applymovement LOCALID_PLAYER, FrostwoodTown_Movement_BoardGondola
+	waitmovement 0
+	delay 16
+	@ From the door the car hangs half off the right edge of the screen, so pan over.
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, FrostwoodTown_Movement_CameraToGondola
+	waitmovement 0
+	playbgm MUS_CABLE_CAR, FALSE
+	delay 30
+	@ Slides down the cable until it is off screen (waits for it).
+	setvar VAR_0x8004, LOCALID_FROSTWOOD_GONDOLA
+	special WotGondolaDepart
+	delay 20
+	fadescreen FADE_TO_BLACK
+	special RemoveCameraObject
+	setvar VAR_CABLE_CAR_STATION_STATE, 2
+	incrementgamestat GAME_STAT_RODE_CABLE_CAR
+	warpsilent MAP_ROUTE112_CABLE_CAR_STATION, 6, 4
+	waitstate
+	releaseall
+	end
+
+FrostwoodTown_EventScript_GondolaDecline::
+	closemessage
+	applymovement LOCALID_PLAYER, FrostwoodTown_Movement_StepOffGondolaDoor
+	waitmovement 0
+	releaseall
+	end
+
+FrostwoodTown_Movement_BoardGondola:
+	set_invisible
+	step_end
+
+FrostwoodTown_Movement_CameraToGondola:
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	walk_right
+	step_end
+
+FrostwoodTown_Movement_StepOffGondolaDoor:
+	walk_down
+	step_end
+
+FrostwoodTown_Text_TakeGondola:
+	.string "Would you like to take the GONDOLA?$"
+
+@ ---------------------------------------------------------------------------
+@ Frostwood Gym is locked until RedFatality gets his EPIC PASS on Route 2
+@ (FLAG_REDFATALITY_HAS_EPIC_PASS). The door is an animated door, so there is no
+@ tile event to catch: WotGetLockedDoorScript (field_control_avatar.c) runs
+@ GymLocked in place of the door warp. The note itself is a bg_event on (41,9).
+FrostwoodTown_EventScript_GymLocked::
+	lockall
+	playse SE_WALL_HIT
+	msgbox FrostwoodTown_Text_GymNote, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_PLAYER, FrostwoodTown_Movement_StepBackFromGym
+	waitmovement 0
+	releaseall
+	end
+
+FrostwoodTown_EventScript_GymNote::
+	goto_if_set FLAG_REDFATALITY_HAS_EPIC_PASS, FrostwoodTown_EventScript_GymNoteGone
+	msgbox FrostwoodTown_Text_GymNote, MSGBOX_SIGN
+FrostwoodTown_EventScript_GymNoteGone::
+	end
+
+FrostwoodTown_Movement_StepBackFromGym:
+	walk_down
+	step_end
+
+FrostwoodTown_Text_GymNote:
+	.string "There's a note posted on the door.\p"
+	.string "“FROSTWOOD's GYM LEADER\n"
+	.string "is out on PTO.”$"

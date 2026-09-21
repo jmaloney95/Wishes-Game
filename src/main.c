@@ -176,7 +176,8 @@ static bool32 WotSkipThisVBlank(void)
     // DMA and sprite updates in the game, and it is the thing that actually got
     // stuck. Everything around it -- text, menus, waits, switch-ins, the intro
     // -- still runs at speed, which is where most of a battle's dead time is.
-    if (gAnimScriptActive)
+    // Ball throws are the exception: throw, roll and shakes run at speed.
+    if (gAnimScriptActive && !gWotBallThrowAnimActive)
     {
         sSubFrame = 0;
         return FALSE;

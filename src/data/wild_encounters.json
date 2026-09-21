@@ -36717,63 +36717,63 @@
             "encounter_rate": 20,
             "mons": [
               {
-                "min_level": 9,
-                "max_level": 10,
+                "min_level": 5,
+                "max_level": 5,
                 "species": "SPECIES_POOCHYENA"
               },
               {
-                "min_level": 9,
-                "max_level": 11,
+                "min_level": 8,
+                "max_level": 8,
                 "species": "SPECIES_ZIGZAGOON"
               },
               {
-                "min_level": 10,
-                "max_level": 11,
+                "min_level": 8,
+                "max_level": 8,
                 "species": "SPECIES_PSYDUCK"
               },
               {
-                "min_level": 9,
-                "max_level": 12,
+                "min_level": 8,
+                "max_level": 8,
                 "species": "SPECIES_SNOVER"
               },
               {
-                "min_level": 9,
-                "max_level": 10,
+                "min_level": 7,
+                "max_level": 7,
                 "species": "SPECIES_TEDDIURSA"
               },
               {
-                "min_level": 8,
-                "max_level": 10,
+                "min_level": 7,
+                "max_level": 7,
                 "species": "SPECIES_WINGULL"
               },
               {
-                "min_level": 8,
-                "max_level": 10,
+                "min_level": 6,
+                "max_level": 6,
                 "species": "SPECIES_SWINUB"
               },
               {
-                "min_level": 8,
-                "max_level": 10,
+                "min_level": 6,
+                "max_level": 6,
                 "species": "SPECIES_ROCKRUFF"
               },
               {
-                "min_level": 10,
-                "max_level": 12,
+                "min_level": 7,
+                "max_level": 7,
                 "species": "SPECIES_LARVITAR"
               },
               {
-                "min_level": 10,
-                "max_level": 12,
+                "min_level": 8,
+                "max_level": 8,
                 "species": "SPECIES_SWANNA"
               },
               {
-                "min_level": 9,
-                "max_level": 12,
+                "min_level": 8,
+                "max_level": 8,
                 "species": "SPECIES_CRAMORANT_GULPING"
               },
               {
-                "min_level": 9,
-                "max_level": 12,
+                "min_level": 8,
+                "max_level": 8,
                 "species": "SPECIES_LARVITAR"
               }
             ]
@@ -38105,7 +38105,7 @@
               },
               {
                 "min_level": 15,
-                "max_level": 20,
+                "max_level": 18,
                 "species": "SPECIES_GOLBAT"
               },
               {
@@ -38116,12 +38116,12 @@
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_NACLSTACK"
               },
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_MINIOR"
               },
               {
                 "min_level": 12,
@@ -38129,19 +38129,19 @@
                 "species": "SPECIES_GRAVELER"
               },
               {
-                "min_level": 20,
-                "max_level": 29,
-                "species": "SPECIES_CROBAT"
+                "min_level": 13,
+                "max_level": 17,
+                "species": "SPECIES_NOIBAT"
               },
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_GLIMMORA"
               },
               {
                 "min_level": 8,
                 "max_level": 15,
-                "species": "SPECIES_ZUBAT"
+                "species": "SPECIES_CARBINK"
               },
               {
                 "min_level": 12,

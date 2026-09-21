@@ -66,10 +66,14 @@ static const u32 sBiBannerGfx[] = INCGFX_U32("graphics/boss_intro/banner.png", "
 static const u16 sBiBannerPal[] = INCGFX_U16("graphics/boss_intro/banner.pal", ".gbapal");
 static const u32 sBiNameGfx_Edwards[] = INCGFX_U32("graphics/boss_intro/name_edwards.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
 static const u32 sBiNameGfx_Allison[] = INCGFX_U32("graphics/boss_intro/name_allison.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
+static const u32 sBiNameGfx_RedFatality[] = INCGFX_U32("graphics/boss_intro/name_redfatality.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
+static const u32 sBiNameGfx_Oni[] = INCGFX_U32("graphics/boss_intro/name_oni.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
 
 static const struct CompressedSpriteSheet sBiBannerSheet = { sBiBannerGfx, 0x1000, TAG_BI_BANNER };
 static const struct CompressedSpriteSheet sBiNameSheet_Edwards = { sBiNameGfx_Edwards, 0xC00, TAG_BI_NAME };
 static const struct CompressedSpriteSheet sBiNameSheet_Allison = { sBiNameGfx_Allison, 0xC00, TAG_BI_NAME };
+static const struct CompressedSpriteSheet sBiNameSheet_RedFatality = { sBiNameGfx_RedFatality, 0xC00, TAG_BI_NAME };
+static const struct CompressedSpriteSheet sBiNameSheet_Oni = { sBiNameGfx_Oni, 0xC00, TAG_BI_NAME };
 static const struct SpritePalette sBiBannerPalette = { sBiBannerPal, TAG_BI_BANNER };
 
 static const struct BossIntroData sBossIntroData[BOSS_INTRO_COUNT] =
@@ -95,6 +99,28 @@ static const struct BossIntroData sBossIntroData[BOSS_INTRO_COUNT] =
         .tintColor = RGB(2, 6, 14),   // deep sea-blue for the siren
         .cutMusic = TRUE,
         .battleBGM = 0,               // normal battle music/transition
+    },
+    [BOSS_INTRO_RED_FATALITY] =
+    {
+        .portraitId = PORTRAIT_RED_FATALITY,
+        .nameSheet = &sBiNameSheet_RedFatality,
+        .seCue = SE_M_DETECT,
+        .seSlam = 0,
+        .holdFrames = 180,
+        .tintColor = RGB(4, 10, 16),  // lift-line blue, the Ember Badge aside
+        .cutMusic = TRUE,
+        .battleBGM = 0,               // the gym leader theme, as before
+    },
+    [BOSS_INTRO_THE_ONI] =
+    {
+        .portraitId = PORTRAIT_MUTRID_LEADER,
+        .nameSheet = &sBiNameSheet_Oni,
+        .seCue = SE_M_DETECT,
+        .seSlam = 0,
+        .holdFrames = 200,            // he gets the long hold
+        .tintColor = RGB(14, 2, 4),   // the red of every screen in his city
+        .cutMusic = TRUE,
+        .battleBGM = MUS_RG_VS_CHAMPION, // the Star Summit fight's theme
     },
 };
 

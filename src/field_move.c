@@ -34,7 +34,11 @@ static bool32 IsFieldMoveUnlocked_RockSmash(void)
 
 static bool32 IsFieldMoveUnlocked_Strength(void)
 {
-    return FlagGet(FLAG_BADGE04_GET);
+    // Wishes of Tomorrow: Yiffer hands HM STRENGTH over in Munen Tunnel, and
+    // the boulders down there are the whole point of the detour -- holding the
+    // HM unlocks the field move there and then, badge or no badge. The badge
+    // still counts, so nobody who reached it another way loses the move.
+    return FlagGet(FLAG_RECEIVED_HM_STRENGTH) || FlagGet(FLAG_BADGE04_GET);
 }
 
 static bool32 IsFieldMoveUnlocked_Surf(void)

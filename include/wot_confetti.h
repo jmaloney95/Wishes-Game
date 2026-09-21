@@ -4,5 +4,6 @@
 void WotStartFieldConfetti(void);
 void WotStopFieldConfetti(void);
 void WotStartObjectBob(void);
+void WotStartFamilyHearts(void);
 
 #endif // GUARD_WOT_CONFETTI_H

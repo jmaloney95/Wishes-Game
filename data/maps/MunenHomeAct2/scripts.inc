@@ -83,7 +83,8 @@ MunenHomeAct2_EventScript_Cutscene::
 	clearflag FLAG_HIDE_DOJO_REBELS
 	fadescreen FADE_TO_BLACK
 	delay 20
-	warp MAP_DOJO, 21, 33
+	@ the foot of the Dojo path; Dojo_EventScript_Arrival takes it from here
+	warp MAP_DOJO, 14, 25
 	waitstate
 	releaseall
 	end

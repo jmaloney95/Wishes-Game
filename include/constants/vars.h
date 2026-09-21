@@ -361,4 +361,10 @@
 // 4 = Rift Heart taken (all layers cleared; cave keeps leading to layer 5).
 #define VAR_DISTORTION_RIFT_DEPTH      VAR_UNUSED_0x40F7
 
+// === Pokemon Wishes of Tomorrow - shiny starters (2026-09-09) ===
+// Bits 0/1/2 = starter pedestal 0/1/2 came up shiny; bit 3 = the roll has
+// happened. Saved, not temp: the preview portrait shows the result, so it
+// must not reshuffle when the player leaves the map and comes back.
+#define VAR_STARTER_SHINY_ROLL         VAR_UNUSED_0x40F9
+
 #endif // GUARD_CONSTANTS_VARS_H

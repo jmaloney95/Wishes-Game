@@ -197,6 +197,10 @@ static enum CancelerResult CancelerObedience(struct BattleContext *ctx)
             gBattlescriptCurrInstr = BattleScript_MoveUsedLoafingAround;
             gBattleStruct->moveResultFlags[ctx->battlerDef] |= MOVE_RESULT_MISSED;
             return CANCELER_RESULT_FAILURE;
+        case WOT_HYPER_MODE_SETTLES:
+            BattleScriptCall(BattleScript_WotHyperModeSettles);
+            return CANCELER_RESULT_BREAK;
+        case WOT_HYPER_MODE_HITS_SELF:
         case DISOBEYS_HITS_SELF:
             gBattlerTarget = ctx->battlerAtk;
             struct BattleContext dmgCtx = {0};
@@ -209,7 +213,9 @@ static enum CancelerResult CancelerObedience(struct BattleContext *ctx)
             dmgCtx.isSelfInflicted = TRUE;
             dmgCtx.fixedBasePower = 40;
             gBattleStruct->moveDamage[ctx->battlerAtk] = CalculateMoveDamage(&dmgCtx);
-            gBattlescriptCurrInstr = BattleScript_IgnoresAndHitsItself;
+            gBattlescriptCurrInstr = (obedienceResult == DISOBEYS_HITS_SELF)
+                                   ? BattleScript_IgnoresAndHitsItself
+                                   : BattleScript_WotHyperModeHitsSelf;
             return CANCELER_RESULT_FAILURE; // Move doesn't fail but mon hits itself
         case DISOBEYS_FALL_ASLEEP:
             if (IsSleepClauseEnabled())
@@ -222,9 +228,12 @@ static enum CancelerResult CancelerObedience(struct BattleContext *ctx)
             gBattlescriptCurrInstr = BattleScript_IgnoresWhileAsleep;
             gBattleStruct->moveResultFlags[ctx->battlerDef] |= MOVE_RESULT_MISSED;
             return CANCELER_RESULT_FAILURE;
+        case WOT_HYPER_MODE_RAMPAGE:
         case DISOBEYS_RANDOM_MOVE:
             gCurrentMove = gCalledMove = gBattleMons[ctx->battlerAtk].moves[gCurrMovePos];
-            BattleScriptCall(BattleScript_IgnoresAndUsesRandomMove);
+            BattleScriptCall(obedienceResult == DISOBEYS_RANDOM_MOVE
+                             ? BattleScript_IgnoresAndUsesRandomMove
+                             : BattleScript_WotHyperModeRampage);
             gBattlerTarget = GetBattleMoveTarget(gCalledMove, TARGET_NONE);
             return CANCELER_RESULT_BREAK;
         }

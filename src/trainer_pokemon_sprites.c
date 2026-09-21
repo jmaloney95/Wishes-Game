@@ -362,6 +362,45 @@ u16 WotCreateRawPicSprite(const u32 *gfx, const u16 *pal, s16 x, s16 y, u8 palet
     return spriteId;
 }
 
+// WoT: repaint an already-created pic sprite with raw art. Only the pixels
+// and the palette change -- the species' anim and affine tables, and
+// everything sSpritePics tracks for the eventual free, stay exactly as
+// CreateMonPicSprite* left them. That is what makes this safe for the Hall
+// of Fame's affine parade as well as its still team shot.
+bool32 WotRepaintPicSprite(u16 spriteId, const u32 *gfx, const u16 *pal, u8 paletteSlot)
+{
+    u8 i;
+    int j;
+
+    if (spriteId >= MAX_SPRITES)
+        return FALSE;
+    for (i = 0; i < PICS_COUNT; i++)
+    {
+        if (sSpritePics[i].active && sSpritePics[i].spriteId == spriteId)
+            break;
+    }
+    if (i == PICS_COUNT)
+        return FALSE;
+
+    // NEITHER the frame count NOR the stride can be assumed here, because the
+    // two creators disagree: CreatePicSprite allocates PIC_SPRITE_SIZE *
+    // MAX_PIC_FRAMES (4 frames, trainer-sized), while CreateMonPicSprite_Affine
+    // allocates MON_PIC_SIZE * MAX_MON_PIC_FRAMES (2 frames, mon-sized) -- half
+    // as much. Walking the buffer with the larger pair overran the affine one by
+    // 4KB and took the Hall of Fame's parade down with it.
+    //
+    // So use the creator's own per-frame pointers, and copy only the frames a
+    // mon actually animates. Both creators allocate at least MAX_MON_PIC_FRAMES
+    // images of at least MON_PIC_SIZE, so this is in bounds on either path.
+    for (j = 0; j < MAX_MON_PIC_FRAMES; j++)
+        CpuCopy32(gfx, (void *)sSpritePics[i].images[j].data, MON_PIC_SIZE);
+    LoadPalette(pal, OBJ_PLTT_ID(paletteSlot), PLTT_SIZE_4BPP);
+    // The frame image reaches VRAM through the copy queue on the next
+    // sprite update, so re-arm the anim to be sure it is re-requested.
+    gSprites[spriteId].animBeginning = TRUE;
+    return TRUE;
+}
+
 u16 FreeAndDestroyMonPicSprite(u16 spriteId)
 {
     return FreeAndDestroyPicSpriteInternal(spriteId, TRUE);
