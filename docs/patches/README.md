@@ -5,7 +5,7 @@ in-browser patcher works without the player leaving the page.
 
 ## Current patch
 
-`wishes-of-tomorrow-1.2.2.bps` — 22,739,460 bytes.
+`wishes-of-tomorrow-1.2.3.bps` — 22,888,682 bytes.
 
 | | CRC32 |
 | --- | --- |
@@ -33,7 +33,7 @@ base ROM nor the built ROM is in this repo.
 `assets/patcher.js` looks for exactly one path:
 
 ```js
-url: "patches/wishes-of-tomorrow-1.2.2.bps"
+url: "patches/wishes-of-tomorrow-1.2.3.bps"
 ```
 
 Name the file to match, or change that line. If the file is absent the page

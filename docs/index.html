@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260910c">
+<link rel="stylesheet" href="assets/styles.css?v=20260921a">
 </head>
 <body>
 
@@ -85,7 +85,7 @@
         </div>
 
         <div class="hero-meta" data-reveal>
-          <span>v1.2.2</span><span>Free</span><span>English</span><span>Game Boy Advance</span>
+          <span>v1.2.3</span><span>Free</span><span>English</span><span>Game Boy Advance</span>
         </div>
       </div>
 
@@ -176,7 +176,7 @@
   <!-- ── features ───────────────────────────────────────────────────── -->
   <section id="features" class="wrap section">
     <div class="kicker" data-reveal>WHAT'S INSIDE</div>
-    <h2 data-reveal>Sixty-four maps, ten generations, battles rebuilt.</h2>
+    <h2 data-reveal>Quality of Life Changes</h2>
 
     <div class="feature-grid">
       <article class="feature" data-reveal>
@@ -223,6 +223,14 @@
       <figure class="shot" data-reveal>
         <img src="assets/media/title-screen.webp" width="240" height="160" loading="lazy" alt="The animated title screen: a nebula over a snow-capped peak, the Pokémon logo, and Shadow Jirachi hovering above the summit.">
         <figcaption><b>TITLE SCREEN</b><span>NEW IN 1.2.1</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/frostwood.webp" width="960" height="640" loading="lazy" alt="Frostwood Town under snow: a log lodge strung with lights, a yellow cable-car gondola, a footbridge and a row of pines, with the player and their follower out front.">
+        <figcaption><b>FROSTWOOD TOWN</b><span>NEW IN 1.2.3</span></figcaption>
+      </figure>
+      <figure class="shot" data-reveal>
+        <img src="assets/media/hall-of-fame.webp" width="960" height="640" loading="lazy" alt="The Hall of Fame: six Pokémon including a white shiny Gengar and several Shadow Pokémon, under &quot;Welcome to the HALL OF FAME!&quot; and the Wishes of Tomorrow v1.2.3 stamp.">
+        <figcaption><b>HALL OF FAME</b><span>NEW IN 1.2.3</span></figcaption>
       </figure>
       <figure class="shot" data-reveal>
         <img src="assets/media/siren-allison.webp" width="240" height="160" loading="lazy" alt="Siren Allison's name banner sweeping across the screen as she swims in toward the beach.">
@@ -273,7 +281,7 @@
       <div class="download-grid" aria-hidden="true"></div>
       <div class="download-inner">
         <div>
-          <h2>Download <span data-version>v1.2.2</span></h2>
+          <h2>Download <span data-version>v1.2.3</span></h2>
           <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
 
           <!-- Two SEPARATE tallies, and each says whose it is. The first is
@@ -312,7 +320,7 @@
                GitHub records the download and the counter above has something
                real to read. Works without JS. -->
           <a class="dl dl-primary" data-patch-link
-             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.2.2/wishes-of-tomorrow-1.2.2.bps">
+             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.2.3/wishes-of-tomorrow-1.2.3.bps">
             <span>Patch file (.bps)</span><span class="dl-meta">↓</span>
           </a>
           <a class="dl" href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
@@ -432,6 +440,20 @@
       <div data-changelog>
         <div class="change" data-reveal>
           <span class="change-dot"></span>
+          <div class="change-head"><span class="change-v">v1.2.3</span><span class="change-date">21 September 2026</span></div>
+          <ul>
+            <li>The early game is redrawn: your bedroom, Munen Village, Munen Lake, Walnut Woods and Frostwood Town, on new snow tilesets with ice you slide on and snow that keeps your footprints.</li>
+            <li>Losing to a trainer whites you out again. It had stopped after the first Snag, which is why Ryoko kept re-challenging and the Oni handed over his badge anyway.</li>
+            <li>Fast forward no longer freezes a battle when you close the Bag or the Pokémon menu.</li>
+            <li>Ryuden Island's Dragon Wardens and egg no longer vanish because you picked up the Munen Master Ball or the Super Rod first.</li>
+            <li>Shadow Jirachi's battle sprite is back in one piece, and the title screen and character portraits got a proper clean-up.</li>
+            <li>Each starter pedestal rolls its own 1-in-10 shiny, and the preview shows it before you choose.</li>
+            <li>The clock runs on play time now, and the Start menu shows the day, the time and your money.</li>
+            <li>Shiny Gengar follows you in white, matching its battle sprite. Follower art by CloneBtw.</li>
+          </ul>
+        </div>
+        <div class="change" data-reveal>
+          <span class="change-dot"></span>
           <div class="change-head"><span class="change-v">v1.2.2</span><span class="change-date">9 September 2026</span></div>
           <ul>
             <li>Wild double battles turn up now, and you can aim a Poké Ball at whichever one you actually want.</li>
@@ -538,7 +560,7 @@
     </details>
     <details data-reveal>
       <summary><span>Will saves carry over between versions?</span><span class="plus">+</span></summary>
-      <p>Yes — v1.2.2 is fully save-compatible with v1.2.1, v1.2.0, v1.1.0 and v1.0.0. Patch a fresh ROM with the new version and keep using your existing save. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p>
+      <p>Yes — v1.2.3 loads saves from every earlier version. Patch a fresh ROM with the new version and keep using your existing save. Two things change on an older save: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p>
     </details>
     <details data-reveal>
       <summary><span>How do I report a bug?</span><span class="plus">+</span></summary>
@@ -560,7 +582,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260910c" defer></script>
-<script src="assets/patcher.js?v=20260910c" defer></script>
+<script src="assets/site.js?v=20260921a" defer></script>
+<script src="assets/patcher.js?v=20260921a" defer></script>
 </body>
 </html>
