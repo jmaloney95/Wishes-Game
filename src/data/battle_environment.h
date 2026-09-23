@@ -644,7 +644,7 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .secretPowerEffect = MOVE_EFFECT_FLINCH,
         .camouflageType = TYPE_DRAGON,
         .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
-        // Wishes of Tomorrow: carchagui's FR-patch starfield (DragonKeeper duo).
+        // Wishes of Tomorrow: LibertyTwins' FR-patch starfield (DragonKeeper duo).
         .entry = ENVIRONMENT_ENTRY(Rock),
         .background = ENVIRONMENT_BACKGROUND(WotSpace),
         .palette = gBattleEnvironmentPalette_WotSpace,

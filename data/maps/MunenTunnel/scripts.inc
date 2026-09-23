@@ -318,14 +318,34 @@ MunenTunnel_Text_Shuppet::
 
 @ --------------------------------------------------------------------------
 @  Yiffer (WOT_ALDO sprite) -- Frostwood Gym trainer, out plugging his dojo.
-@  Gives HM STRENGTH once.
+@  A boss fight with a card (same treatment as Siren Allison), then HM
+@  STRENGTH once. The HM is also what lets Strength work outside battle:
+@  FieldMove_Strength (src/field_move.c) accepts FLAG_RECEIVED_HM_STRENGTH
+@  as well as the badge.
+@
+@  Trainer id: TRAINER_GRUNT_SEAFLOOR_CAVERN_5 (567), REPURPOSED. Raising
+@  MAX_TRAINERS_COUNT would shift SYSTEM_FLAGS and break saves, so a new
+@  trainer has to reuse an id. This one's only placement is Seafloor Cavern
+@  Room 3, which nothing reaches: the cavern's entrance is now the dead-end
+@  cave off Munen Lake and has no warp into the rooms. If those rooms are
+@  ever wired back up, that grunt will field Yiffer's team.
+@
+@  Guarded on the HM flag, so a save that already has STRENGTH never fights
+@  him, and a loss (normal whiteout) lets the player come back and retry.
 @ --------------------------------------------------------------------------
 MunenTunnel_EventScript_Yiffer::
-	lock
+	lockall
 	faceplayer
 	setspeaker SP_NAME_YIFFER
 	goto_if_set FLAG_RECEIVED_HM_STRENGTH, MunenTunnel_EventScript_YifferAfter
 	msgbox MunenTunnel_Text_YifferPlug, MSGBOX_DEFAULT
+	closemessage
+	@ Flush the SE bed first, or the card's shimmer can cut out (Edwards).
+	special WotStopSceneSE
+	bossintro BOSS_INTRO_YIFFER
+	trainerbattle_no_intro TRAINER_GRUNT_SEAFLOOR_CAVERN_5, MunenTunnel_Text_YifferDefeat
+	setspeaker SP_NAME_YIFFER
+	msgbox MunenTunnel_Text_YifferSample, MSGBOX_DEFAULT
 	setspeaker SP_NAME_NONE
 	giveitem ITEM_HM_STRENGTH
 	setflag FLAG_RECEIVED_HM_STRENGTH
@@ -333,12 +353,12 @@ MunenTunnel_EventScript_Yiffer::
 	msgbox MunenTunnel_Text_YifferStrength, MSGBOX_DEFAULT
 	setspeaker SP_NAME_NONE
 	msgbox MunenTunnel_Text_CanUseStrength, MSGBOX_DEFAULT
-	release
+	releaseall
 	end
 
 MunenTunnel_EventScript_YifferAfter::
 	msgbox MunenTunnel_Text_YifferAfter, MSGBOX_DEFAULT
-	release
+	releaseall
 	end
 
 MunenTunnel_Text_YifferPlug:
@@ -348,7 +368,16 @@ MunenTunnel_Text_YifferPlug:
 	.string "…or your money back.\n"
 	.string "Guaranteed!\p"
 	.string "Hiii-YAAA!\p"
-	.string "Here, a free sample.$"
+	.string "Free trial lesson, right now.\n"
+	.string "Survive it and the sample's yours!$"
+
+MunenTunnel_Text_YifferDefeat:
+	.string "Oof! You hit like a paying\n"
+	.string "customer!$"
+
+MunenTunnel_Text_YifferSample:
+	.string "A deal's a deal.\n"
+	.string "Here's your free sample.$"
 
 MunenTunnel_Text_CanUseStrength:
 	.string "{PLAYER} can now use STRENGTH\n"
