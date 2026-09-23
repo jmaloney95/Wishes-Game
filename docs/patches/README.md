@@ -5,18 +5,24 @@ in-browser patcher works without the player leaving the page.
 
 ## Current patch
 
-`wishes-of-tomorrow-1.2.3.bps` — 22,888,682 bytes.
+`wishes-of-tomorrow-1.2.4.bps` — 22,890,899 bytes.
 
 | | CRC32 |
 | --- | --- |
 | Base ROM — Pokémon Emerald (U), 16 MB, `BPEE` | `1F1C08FB` |
-| Patched output — 32 MB | `52866AB5` |
+| Patched output — 32 MB | `A8AA31E3` |
 
+`wishes-of-tomorrow-1.2.3.bps` (output CRC32 `E5FDE65B`),
+`wishes-of-tomorrow-1.2.2.bps` (output CRC32 `52866AB5`),
 `wishes-of-tomorrow-1.2.1.bps` (output CRC32 `81AF35BA`),
 `wishes-of-tomorrow-1.2.0.bps` (output CRC32 `8AA8F352`),
 `wishes-of-tomorrow-1.1.0.bps` (output CRC32 `47253C41`) and
 `wishes-of-tomorrow-1.0.0.bps` (output CRC32 `4056030C`) stay in this folder as
 archived releases; their GitHub release assets keep working.
+
+Every CRC above is read out of the patch's own 12-byte footer rather than
+copied forward from the last release. The 1.2.3 bump copied 1.2.2's output
+CRC into this table by hand and nobody noticed.
 
 Both checksums are embedded in the patch, so the patcher rejects a wrong base
 ROM before doing any work. Verified byte-exact against the built ROM.
@@ -33,7 +39,7 @@ base ROM nor the built ROM is in this repo.
 `assets/patcher.js` looks for exactly one path:
 
 ```js
-url: "patches/wishes-of-tomorrow-1.2.3.bps"
+url: "patches/wishes-of-tomorrow-1.2.4.bps"
 ```
 
 Name the file to match, or change that line. If the file is absent the page

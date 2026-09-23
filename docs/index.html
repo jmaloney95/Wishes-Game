@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260921a">
+<link rel="stylesheet" href="assets/styles.css?v=20260923a">
 </head>
 <body>
 
@@ -85,7 +85,7 @@
         </div>
 
         <div class="hero-meta" data-reveal>
-          <span>v1.2.3</span><span>Free</span><span>English</span><span>Game Boy Advance</span>
+          <span>v1.2.4</span><span>Free</span><span>English</span><span>Game Boy Advance</span>
         </div>
       </div>
 
@@ -210,10 +210,18 @@
   <!-- ── media ──────────────────────────────────────────────────────── -->
   <section id="media" class="wrap section">
     <div class="kicker" data-reveal>TRAILER</div>
-    <div class="trailer" data-reveal>
+    <!-- Click to load. Nothing is requested from YouTube until somebody
+         presses play: the poster comes from i.ytimg.com, which sets no
+         cookies, and site.js builds the nocookie iframe on the click.
+         With JS off this is simply a link to the video. -->
+    <a class="trailer" data-reveal data-trailer="UbLpkAqa8mI"
+       href="https://www.youtube.com/watch?v=UbLpkAqa8mI"
+       target="_blank" rel="noopener">
+      <img class="trailer-poster" src="https://i.ytimg.com/vi/UbLpkAqa8mI/maxresdefault.jpg"
+           width="1280" height="720" loading="lazy" alt="">
       <span class="trailer-play" aria-hidden="true">▶</span>
-      <span class="trailer-label">TRAILER<br><span>COMING SOON</span></span>
-    </div>
+      <span class="trailer-label">OFFICIAL TRAILER<br><span>PRESS PLAY</span></span>
+    </a>
 
     <div class="rail-head mt" data-reveal>
       <div class="kicker">SCREENSHOTS</div>
@@ -281,7 +289,7 @@
       <div class="download-grid" aria-hidden="true"></div>
       <div class="download-inner">
         <div>
-          <h2>Download <span data-version>v1.2.3</span></h2>
+          <h2>Download <span data-version>v1.2.4</span></h2>
           <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
 
           <!-- Two SEPARATE tallies, and each says whose it is. The first is
@@ -320,7 +328,7 @@
                GitHub records the download and the counter above has something
                real to read. Works without JS. -->
           <a class="dl dl-primary" data-patch-link
-             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.2.3/wishes-of-tomorrow-1.2.3.bps">
+             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.2.4/wishes-of-tomorrow-1.2.4.bps">
             <span>Patch file (.bps)</span><span class="dl-meta">↓</span>
           </a>
           <a class="dl" href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
@@ -440,6 +448,16 @@
       <div data-changelog>
         <div class="change" data-reveal>
           <span class="change-dot"></span>
+          <div class="change-head"><span class="change-v">v1.2.4</span><span class="change-date">23 September 2026</span></div>
+          <ul>
+            <li>You can get off the Shinkansen again. The door tile had never been marked as a door, so the exit the map declared never fired and the carriage was a dead end. Fixed on both trains.</li>
+            <li>Yiffer makes you earn the free sample. The Strength HM in Munen Tunnel now comes after a fight, with a boss card, Zangoose, Zeraora and a Machamp.</li>
+            <li>Walnut Woods is redrawn on the snow set, with Munen Village touched up alongside it.</li>
+            <li>The space battle backdrop is credited to LibertyTwins, who drew it.</li>
+          </ul>
+        </div>
+        <div class="change" data-reveal>
+          <span class="change-dot"></span>
           <div class="change-head"><span class="change-v">v1.2.3</span><span class="change-date">21 September 2026</span></div>
           <ul>
             <li>The early game is redrawn: your bedroom, Munen Village, Munen Lake, Walnut Woods and Frostwood Town, on new snow tilesets with ice you slide on and snow that keeps your footprints.</li>
@@ -524,7 +542,7 @@
       <div data-reveal><dt>Shadow sprites</dt><dd>pogokitten · WeeGeeDude · Quanyails</dd></div>
       <div data-reveal><dt>Tileset art</dt><dd>pinkscales · Phyromatical · MagiScarf · PeekyChew · Elinthind · lo8jd · Dark Slayer</dd></div>
       <div data-reveal><dt>Shin-Tokyo art</dt><dd>Emeiry · Odisea by ekat99</dd></div>
-      <div data-reveal><dt>Battle backdrops</dt><dd>carchagui · aveontrainer</dd></div>
+      <div data-reveal><dt>Battle backdrops</dt><dd>carchagui · LibertyTwins · aveontrainer</dd></div>
     </dl>
     <p class="change-note" data-reveal>The full roll — engine, music, playtesting — plays at the end of the game.</p>
   </section>
@@ -560,7 +578,7 @@
     </details>
     <details data-reveal>
       <summary><span>Will saves carry over between versions?</span><span class="plus">+</span></summary>
-      <p>Yes — v1.2.3 loads saves from every earlier version. Patch a fresh ROM with the new version and keep using your existing save. Two things change on an older save: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p>
+      <p>Yes — v1.2.4 loads saves from every earlier version, and nothing in it touches a save slot. Patch a fresh ROM with the new version and keep using your existing save. Two things change on a save from v1.2.2 or earlier: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p>
     </details>
     <details data-reveal>
       <summary><span>How do I report a bug?</span><span class="plus">+</span></summary>
@@ -582,7 +600,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260921a" defer></script>
-<script src="assets/patcher.js?v=20260921a" defer></script>
+<script src="assets/site.js?v=20260923a" defer></script>
+<script src="assets/patcher.js?v=20260923a" defer></script>
 </body>
 </html>

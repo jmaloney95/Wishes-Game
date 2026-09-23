@@ -121,7 +121,7 @@ Freeing what's in the tower scattered Shadow legendaries across the region, and 
 **Shadow Sprites:** pogokitten, WeeGeeDude, Quanyails
 **Tileset Art:** pinkscales, Phyromatical, MagiScarf, PeekyChew, Elinthind, lo8jd, Dark Slayer
 **Shin-Tokyo Art:** Emeiry; *Odisea* by ekat99 (CC BY-NC-SA)
-**Battle Backdrops:** carchagui (open sea, cave, laboratory, space, town, interior); aveontrainer (Ashlands savanna, molten summit)
+**Battle Backdrops:** carchagui (open sea, cave, laboratory, town, interior); LibertyTwins (space); aveontrainer (Ashlands savanna, molten summit)
 **Music:** arranged from official Pokémon soundtracks
 **Playtesting:** Luke Devereux, Mike Mancuso, Kyle Clarkson
 

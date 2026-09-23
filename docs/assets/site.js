@@ -6,7 +6,7 @@
 
   /* ── the one thing to edit per release ──────────────────────────── */
   var RELEASE = {
-    version: "1.2.3",
+    version: "1.2.4",
     date: "12 August 2026"
   };
 
@@ -293,6 +293,34 @@
     });
   }
 
+  /* ── trailer: load YouTube only when asked ────────────────
+     The markup is a link to the video wrapped round a poster, so it works
+     with JS off and with the embed blocked. Here we intercept the click and
+     swap the link for a nocookie iframe, which is the first moment anything
+     is requested from YouTube. Modified and middle clicks fall through to
+     the link, because that is what they are for. */
+  function wireTrailer() {
+    var link = $("[data-trailer]");
+    if (!link) return;
+    link.addEventListener("click", function (ev) {
+      if (ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return;
+      ev.preventDefault();
+
+      var frame = document.createElement("iframe");
+      frame.src = "https://www.youtube-nocookie.com/embed/" +
+                  link.getAttribute("data-trailer") +
+                  "?autoplay=1&rel=0&modestbranding=1";
+      frame.title = "Wishes of Tomorrow \u2014 official trailer";
+      frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+      frame.allowFullscreen = true;
+
+      var stage = document.createElement("div");
+      stage.className = "trailer";
+      stage.appendChild(frame);
+      link.parentNode.replaceChild(stage, link);
+    });
+  }
+
   /* ── pointer tilt on the hero art ───────────────────────────────── */
   function wireTilt() {
     if (reduced) return;
@@ -316,4 +344,5 @@
   wireCastRail();
   wireReveal();
   wireTilt();
+  wireTrailer();
 })();
