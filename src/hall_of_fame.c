@@ -139,7 +139,7 @@ static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHIT
 // WoT: the only place the build number appears in the ROM. BUMP AT RELEASE.
 // It has to be a literal here rather than a #define in a header, because
 // _() is expanded by tools/preproc over the .c file, not by the C compiler.
-static const u8 sText_WotHofVersion[] = _("WISHES OF TOMORROW  v1.2.3");
+static const u8 sText_WotHofVersion[] = _("WISHES OF TOMORROW  v1.2.4");
 static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
 

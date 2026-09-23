@@ -10597,26 +10597,26 @@ Level: 21
 IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
 
 === TRAINER_GRUNT_SEAFLOOR_CAVERN_5 ===
-Name: GRUNT
-Class: Team Aqua
-Pic: Aqua Grunt M
+Name: Yiffer
+Class: Black Belt
+Pic: Black Belt
 Gender: Male
-Music: Aqua
+Music: Male
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint
 
-Mightyena
-Level: 35
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Zangoose
+Level: 19
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
-Golbat
-Level: 35
-IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+Zeraora
+Level: 19
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 
-/*
-REPURPOSED dead vanilla id (was unused filler) -- Act 3 Shin-Tokyo jail
-patrol guard A (WoT_Act3_Canon.md Step 4). Levels/teams PLACEHOLDER (Joe).
-*/
+Machamp @ Black Belt
+Level: 20
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
+
 === TRAINER_GRUNT_UNUSED ===
 Name: HOSHI
 Class: Mutrid

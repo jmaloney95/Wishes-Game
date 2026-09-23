@@ -68,12 +68,14 @@ static const u32 sBiNameGfx_Edwards[] = INCGFX_U32("graphics/boss_intro/name_edw
 static const u32 sBiNameGfx_Allison[] = INCGFX_U32("graphics/boss_intro/name_allison.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
 static const u32 sBiNameGfx_RedFatality[] = INCGFX_U32("graphics/boss_intro/name_redfatality.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
 static const u32 sBiNameGfx_Oni[] = INCGFX_U32("graphics/boss_intro/name_oni.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
+static const u32 sBiNameGfx_Yiffer[] = INCGFX_U32("graphics/boss_intro/name_yiffer.png", ".4bpp.smol", "-mwidth 8 -mheight 4");
 
 static const struct CompressedSpriteSheet sBiBannerSheet = { sBiBannerGfx, 0x1000, TAG_BI_BANNER };
 static const struct CompressedSpriteSheet sBiNameSheet_Edwards = { sBiNameGfx_Edwards, 0xC00, TAG_BI_NAME };
 static const struct CompressedSpriteSheet sBiNameSheet_Allison = { sBiNameGfx_Allison, 0xC00, TAG_BI_NAME };
 static const struct CompressedSpriteSheet sBiNameSheet_RedFatality = { sBiNameGfx_RedFatality, 0xC00, TAG_BI_NAME };
 static const struct CompressedSpriteSheet sBiNameSheet_Oni = { sBiNameGfx_Oni, 0xC00, TAG_BI_NAME };
+static const struct CompressedSpriteSheet sBiNameSheet_Yiffer = { sBiNameGfx_Yiffer, 0xC00, TAG_BI_NAME };
 static const struct SpritePalette sBiBannerPalette = { sBiBannerPal, TAG_BI_BANNER };
 
 static const struct BossIntroData sBossIntroData[BOSS_INTRO_COUNT] =
@@ -121,6 +123,17 @@ static const struct BossIntroData sBossIntroData[BOSS_INTRO_COUNT] =
         .tintColor = RGB(14, 2, 4),   // the red of every screen in his city
         .cutMusic = TRUE,
         .battleBGM = MUS_RG_VS_CHAMPION, // the Star Summit fight's theme
+    },
+    [BOSS_INTRO_YIFFER] =
+    {
+        .portraitId = PORTRAIT_YIFFER,
+        .nameSheet = &sBiNameSheet_Yiffer,
+        .seCue = SE_M_DETECT,
+        .seSlam = 0,
+        .holdFrames = 180,
+        .tintColor = RGB(12, 5, 2),   // tunnel-lamp amber for the kickboxer
+        .cutMusic = TRUE,
+        .battleBGM = 0,               // normal battle music, as Allison's
     },
 };
 

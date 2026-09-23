@@ -70,6 +70,7 @@ static const u8 sCreditsText_Emeiry[]             = _("Emeiry");
 static const u8 sCreditsText_OdiseaByEkat99[]     = _("Odisea by ekat99");
 static const u8 sCreditsText_BattleBackdrops[]    = _("Battle Backdrops");
 static const u8 sCreditsText_Carchagui[]          = _("carchagui");
+static const u8 sCreditsText_LibertyTwins[]       = _("LibertyTwins");
 
 static const u8 sCreditsText_MapDesign[]          = _("Map Design");
 static const u8 sCreditsText_EventScripting[]     = _("Event Scripting");
@@ -135,6 +136,7 @@ static const struct CreditsEntry sCreditsEntry_Emeiry             = {11, FALSE, 
 static const struct CreditsEntry sCreditsEntry_OdiseaByEkat99     = { 8, FALSE, sCreditsText_OdiseaByEkat99};
 static const struct CreditsEntry sCreditsEntry_BattleBackdrops    = { 8,  TRUE, sCreditsText_BattleBackdrops};
 static const struct CreditsEntry sCreditsEntry_Carchagui          = {10, FALSE, sCreditsText_Carchagui};
+static const struct CreditsEntry sCreditsEntry_LibertyTwins       = { 9, FALSE, sCreditsText_LibertyTwins};
 static const struct CreditsEntry sCreditsEntry_MapDesign          = {10,  TRUE, sCreditsText_MapDesign};
 static const struct CreditsEntry sCreditsEntry_EventScripting     = { 8,  TRUE, sCreditsText_EventScripting};
 static const struct CreditsEntry sCreditsEntry_Music              = {12,  TRUE, sCreditsText_Music};
@@ -232,7 +234,7 @@ static const struct CreditsEntry *const sCreditsEntryPointerTable[PAGE_COUNT][EN
         &sCreditsEntry_BattleBackdrops,
         &sCreditsEntry_Carchagui,
         &sCreditsEntry_Aveontrainer,
-        _
+        &sCreditsEntry_LibertyTwins
     },
     [PAGE_MUSIC] = {
         _,
