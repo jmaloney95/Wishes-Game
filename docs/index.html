@@ -30,7 +30,7 @@
 <!-- Assets carry a version query. GitHub Pages serves them with a four-hour
      max-age, so without this a visitor can get new HTML alongside cached old
      JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20260923a">
+<link rel="stylesheet" href="assets/styles.css?v=20260928a">
 </head>
 <body>
 
@@ -214,14 +214,26 @@
          presses play: the poster comes from i.ytimg.com, which sets no
          cookies, and site.js builds the nocookie iframe on the click.
          With JS off this is simply a link to the video. -->
-    <a class="trailer" data-reveal data-trailer="UbLpkAqa8mI"
-       href="https://www.youtube.com/watch?v=UbLpkAqa8mI"
-       target="_blank" rel="noopener">
-      <img class="trailer-poster" src="https://i.ytimg.com/vi/UbLpkAqa8mI/maxresdefault.jpg"
-           width="1280" height="720" loading="lazy" alt="">
-      <span class="trailer-play" aria-hidden="true">▶</span>
-      <span class="trailer-label">OFFICIAL TRAILER<br><span>PRESS PLAY</span></span>
-    </a>
+    <div data-reveal>
+      <a class="trailer" data-trailer="UbLpkAqa8mI"
+         href="https://www.youtube.com/watch?v=UbLpkAqa8mI"
+         target="_blank" rel="noopener">
+        <img class="trailer-poster" src="https://i.ytimg.com/vi/UbLpkAqa8mI/maxresdefault.jpg"
+             width="1280" height="720" loading="lazy" alt="">
+        <span class="trailer-play" aria-hidden="true">▶</span>
+        <span class="trailer-label">OFFICIAL TRAILER<br><span>PRESS PLAY</span></span>
+      </a>
+      <!-- View count, filled from data/youtube.json by site.js and shown
+           only once a real figure loads. It is copied over by hand, so
+           this still asks nothing of YouTube until someone presses play. -->
+      <div class="trailer-stats" data-yt-views hidden>
+        <span class="views" data-tip="Views">
+          <svg class="views-eye" viewBox="0 0 11 7" width="22" height="14" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM7 0h1v1h-1zM1 1h1v1h-1zM2 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM7 3h1v1h-1zM10 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM10 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM7 6h1v1h-1z"/></svg>
+          <span data-yt-count aria-hidden="true"></span>
+          <span class="sr-only" data-yt-sr></span>
+        </span>
+      </div>
+    </div>
 
     <div class="rail-head mt" data-reveal>
       <div class="kicker">SCREENSHOTS</div>
@@ -445,20 +457,20 @@
     <div>
       <div class="kicker" data-reveal>CHANGELOG</div>
       <h2 class="h-sm" data-reveal>Recent versions</h2>
+      <!-- Each version folds; the newest ships open. The dot sits inside
+           the summary because a closed <details> renders nothing else. -->
       <div data-changelog>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.2.4</span><span class="change-date">23 September 2026</span></div>
+        <details class="change" data-reveal open>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.4</span><span class="change-date">23 September 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>You can get off the Shinkansen again. The door tile had never been marked as a door, so the exit the map declared never fired and the carriage was a dead end. Fixed on both trains.</li>
             <li>Yiffer makes you earn the free sample. The Strength HM in Munen Tunnel now comes after a fight, with a boss card, Zangoose, Zeraora and a Machamp.</li>
             <li>Walnut Woods is redrawn on the snow set, with Munen Village touched up alongside it.</li>
             <li>The space battle backdrop is credited to LibertyTwins, who drew it.</li>
           </ul>
-        </div>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.2.3</span><span class="change-date">21 September 2026</span></div>
+        </details>
+        <details class="change" data-reveal>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.3</span><span class="change-date">21 September 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>The early game is redrawn: your bedroom, Munen Village, Munen Lake, Walnut Woods and Frostwood Town, on new snow tilesets with ice you slide on and snow that keeps your footprints.</li>
             <li>Losing to a trainer whites you out again. It had stopped after the first Snag, which is why Ryoko kept re-challenging and the Oni handed over his badge anyway.</li>
@@ -469,10 +481,9 @@
             <li>The clock runs on play time now, and the Start menu shows the day, the time and your money.</li>
             <li>Shiny Gengar follows you in white, matching its battle sprite. Follower art by CloneBtw.</li>
           </ul>
-        </div>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.2.2</span><span class="change-date">9 September 2026</span></div>
+        </details>
+        <details class="change" data-reveal>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.2</span><span class="change-date">9 September 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>Wild double battles turn up now, and you can aim a Poké Ball at whichever one you actually want.</li>
             <li>Shinies at 1 in 256, with a gold HP box so you cannot scroll past one by accident.</li>
@@ -483,10 +494,9 @@
             <li>The Minister will sell you a Mega Stone without taking the game down with him.</li>
             <li>NPCs stopped walking out through the walls. Clarkson in particular.</li>
           </ul>
-        </div>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.2.1</span><span class="change-date">28 August 2026</span></div>
+        </details>
+        <details class="change" data-reveal>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.1</span><span class="change-date">28 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>Defragmented Siren Allison. She swims now.</li>
             <li>Restored Shadow Jirachi's aura — the wrong Jirachi had been turning up to its own boss fight.</li>
@@ -495,10 +505,9 @@
             <li>Shadow Pokémon remembered how to Mega Evolve.</li>
             <li>Megas now turn up for the Hall of Fame photo instead of reverting.</li>
           </ul>
-        </div>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.2.0</span><span class="change-date">27 August 2026</span></div>
+        </details>
+        <details class="change" data-reveal>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.0</span><span class="change-date">27 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>Randomizer Mode. Reroll starters, wilds and Trainers — levels stay exactly where they were.</li>
             <li>A dragon starter trio: Gible, Frigibax and Axew.</li>
@@ -506,10 +515,9 @@
             <li>A Game Corner that finally sells things worth the coins.</li>
             <li>The yacht questline pays out.</li>
           </ul>
-        </div>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.1.0</span><span class="change-date">13 August 2026</span></div>
+        </details>
+        <details class="change" data-reveal>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.1.0</span><span class="change-date">13 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>Name your own character.</li>
             <li>Custom battle backdrops region-wide, including sea battles that know what time it is.</li>
@@ -517,16 +525,15 @@
             <li>Post-game FLY reaches everywhere.</li>
             <li>Save-compatible with v1.0.0 — keep your run.</li>
           </ul>
-        </div>
-        <div class="change" data-reveal>
-          <span class="change-dot"></span>
-          <div class="change-head"><span class="change-v">v1.0.0</span><span class="change-date">12 August 2026</span></div>
+        </details>
+        <details class="change" data-reveal>
+          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.0.0</span><span class="change-date">12 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
           <ul>
             <li>The whole three-act campaign.</li>
             <li>An original region.</li>
             <li>Shadow Pokémon: snag them, purify them.</li>
           </ul>
-        </div>
+        </details>
       </div>
       <p class="change-note" data-reveal>Every release is listed on the <a href="https://github.com/jmaloney95/Wishes-Game/releases">releases page</a>.</p>
     </div>
@@ -600,7 +607,7 @@
   <a href="#top">Back to top</a>
 </footer>
 
-<script src="assets/site.js?v=20260923a" defer></script>
-<script src="assets/patcher.js?v=20260923a" defer></script>
+<script src="assets/site.js?v=20260928a" defer></script>
+<script src="assets/patcher.js?v=20260928a" defer></script>
 </body>
 </html>

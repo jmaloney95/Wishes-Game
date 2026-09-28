@@ -328,8 +328,29 @@ p { margin: 0; }
 }
 .trailer-label span { color: rgba(233, 233, 237, .5); }
 .trailer iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* The view count under the trailer: a pixel eyeball and "1.2M", with a
+   small "Views" tooltip on hover -- to the right, since above would sit on
+   the trailer's bottom edge. */
+.trailer-stats { margin-top: 12px; display: flex; }
+.views {
+  position: relative; display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-pixel); font-size: 10px; line-height: 1;
+  color: rgba(233, 233, 237, .62);
+}
+.views-eye { flex: 0 0 auto; width: 22px; height: 14px; color: var(--color-accent); }
+.views::after {
+  content: attr(data-tip);
+  position: absolute; left: calc(100% + 10px); top: 50%;
+  padding: 6px 9px; border-radius: var(--radius-sm);
+  background: #10111a; border: 1px solid rgba(233, 233, 237, .16);
+  font-family: var(--font-body); font-size: 12px; line-height: 1; color: var(--color-text);
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transform: translate(-3px, -50%);
+  transition: opacity .15s ease, transform .15s ease;
+}
+.views:hover::after { opacity: 1; transform: translate(0, -50%); }
 @media (prefers-reduced-motion: reduce) {
-  .trailer-poster, .trailer-play { transition: none; }
+  .trailer-poster, .trailer-play, .views::after, .change .plus { transition: none; }
   .trailer:hover .trailer-poster { transform: none; }
 }
 
@@ -451,6 +472,10 @@ p { margin: 0; }
 
 .rail-head { display: flex; align-items: baseline; gap: 16px; }
 .rail-hint { font-size: 12.5px; white-space: nowrap; color: rgba(233, 233, 237, .4); }
+/* The gap above the SCREENSHOTS head. It was `.kicker.mt { margin-top: 56px }`
+   until that head became a .rail-head and the rule stopped matching, which left
+   it flush under the trailer. A little under 56 now the view count sits between. */
+.rail-head.mt { margin-top: 44px; }
 
 .cast-rail,
 .shot-rail {
@@ -826,6 +851,18 @@ html.has-fs-player, html.has-fs-player body { overflow: hidden; }
 }
 .change li::marker { color: var(--color-accent); }
 .change-note { font-size: 13.5px; color: rgba(233, 233, 237, .45); }
+/* Each entry is a <details>: the summary is the head row, with the timeline
+   dot inside it (a closed <details> hides everything but its summary) and
+   the FAQ's + on the right, turned to an x while open. */
+.change summary { cursor: pointer; list-style: none; }
+.change summary::-webkit-details-marker { display: none; }
+.change summary:hover .change-v { color: var(--color-accent-300); }
+.change .plus {
+  margin-left: auto; color: var(--color-accent); font-size: 16px; line-height: 1;
+  transition: transform .2s ease;
+}
+.change[open] .plus { transform: rotate(45deg); }
+.change:not([open]) { padding-bottom: 14px; }
 
 /* — faq ────────────────────────────────────────────────────────────── */
 .faq { max-width: 820px; padding-bottom: 100px; }
@@ -1067,6 +1104,16 @@ html.has-fs-player, html.has-fs-player body { overflow: hidden; }
   .badge { font-size: 8px; padding: 7px 11px; }
   .marquee-track { font-size: 9px; }
   .req > div { flex-direction: column; gap: 4px; }
+
+  /* Five-digit counts (Hackdex passed 10,000) made the chip wider than a
+     phone's panel, and it clipped. Tighter tiles fit it on one line; the
+     label may still wrap as a fallback rather than run off the edge. */
+  .version-chip { max-width: 100%; padding: 12px 14px; gap: 12px; }
+  .version-label { min-width: 0; }
+  .version-label span { white-space: normal; }
+  .digits { gap: 3px; }
+  .digits span { min-width: 18px; padding: 6px 3px; font-size: 12px; }
+  .digits span.dot { min-width: 10px; }
 }
 
 /* Reveal-on-scroll is applied by site.js; without JS everything stays visible. */

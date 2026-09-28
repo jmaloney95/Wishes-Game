@@ -321,6 +321,47 @@
     });
   }
 
+  /* ── trailer view count ──────────────────────────────────────────────
+     Copied over by hand, like the Hackdex figure (see data/youtube.json):
+     reading it live would mean asking Google on every page load, which is
+     what the click-to-load trailer is there to avoid. */
+
+  // YouTube's own style: one decimal below ten of a unit (1.2M, 12M, 123K),
+  // always rounded down, so this never claims more than YouTube shows.
+  function abbreviate(n) {
+    var units = [[1e9, "B"], [1e6, "M"], [1e3, "K"]];
+    for (var i = 0; i < units.length; i++) {
+      var size = units[i][0];
+      if (n >= size) {
+        var tenths = Math.floor(n * 10 / size);  // integer maths, no 4.3499999
+        return (tenths < 100 ? String(tenths / 10) : String(Math.floor(tenths / 10))) + units[i][1];
+      }
+    }
+    return String(n);
+  }
+
+  function wireTrailerViews() {
+    var row = $("[data-yt-views]"), out = $("[data-yt-count]"), sr = $("[data-yt-sr]");
+    if (!row || !out || !window.fetch) return;
+
+    fetch("data/youtube.json?t=" + Date.now(), { cache: "no-store" })
+      .then(function (res) {
+        if (!res.ok) throw new Error(String(res.status));
+        return res.json();
+      })
+      .then(function (data) {
+        var n = data && data.views;
+        if (typeof n !== "number" || !(n > 0)) throw new Error("no count");
+        out.textContent = abbreviate(n);
+        if (sr) sr.textContent = group(n) + " views on YouTube";
+        row.hidden = false;
+      })
+      .catch(function () {
+        // No file, no number: stay hidden rather than show a zero.
+        row.hidden = true;
+      });
+  }
+
   /* ── pointer tilt on the hero art ───────────────────────────────── */
   function wireTilt() {
     if (reduced) return;
@@ -345,4 +386,5 @@
   wireReveal();
   wireTilt();
   wireTrailer();
+  wireTrailerViews();
 })();

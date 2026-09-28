@@ -1,0 +1,6 @@
+{
+  "_comment": "The trailer's view count, shown under it as e.g. 1.2M (site.js abbreviates). Copied by hand, like data/hackdex.json: reading it live would mean contacting Google on every page load, which the click-to-load trailer exists to avoid. Update `views` and `asOf` from the watch page -- the exact figure is videoDetails.viewCount in its source, or the WatchAction userInteractionCount (NOT the LikeAction one). Fetched with a cache-buster, not through the ?v= token.",
+  "views": 1214011,
+  "asOf": "28 September 2026",
+  "videoId": "UbLpkAqa8mI"
+}
