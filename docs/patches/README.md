@@ -5,13 +5,14 @@ in-browser patcher works without the player leaving the page.
 
 ## Current patch
 
-`wishes-of-tomorrow-1.2.4.bps` — 22,890,899 bytes.
+`wishes-of-tomorrow-1.2.6.bps` — 22,864,704 bytes.
 
 | | CRC32 |
 | --- | --- |
 | Base ROM — Pokémon Emerald (U), 16 MB, `BPEE` | `1F1C08FB` |
-| Patched output — 32 MB | `A8AA31E3` |
+| Patched output — 32 MB | `F1EEEA17` |
 
+`wishes-of-tomorrow-1.2.4.bps` (output CRC32 `A8AA31E3`),
 `wishes-of-tomorrow-1.2.3.bps` (output CRC32 `E5FDE65B`),
 `wishes-of-tomorrow-1.2.2.bps` (output CRC32 `52866AB5`),
 `wishes-of-tomorrow-1.2.1.bps` (output CRC32 `81AF35BA`),
@@ -39,7 +40,7 @@ base ROM nor the built ROM is in this repo.
 `assets/patcher.js` looks for exactly one path:
 
 ```js
-url: "patches/wishes-of-tomorrow-1.2.4.bps"
+url: "patches/wishes-of-tomorrow-1.2.6.bps"
 ```
 
 Name the file to match, or change that line. If the file is absent the page

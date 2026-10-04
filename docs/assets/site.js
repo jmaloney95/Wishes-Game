@@ -6,7 +6,7 @@
 
   /* ── the one thing to edit per release ──────────────────────────── */
   var RELEASE = {
-    version: "1.2.4",
+    version: "1.2.6",
     date: "12 August 2026"
   };
 
