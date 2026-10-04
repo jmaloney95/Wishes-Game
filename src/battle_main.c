@@ -2046,11 +2046,16 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
 
             // A scripted moveset belongs to the ORIGINAL species; on a
-            // randomized mon it would be nonsense, so let CreateMon's
-            // level-appropriate moveset stand instead. Mons that were NOT
-            // swapped keep their authored moves.
+            // randomized mon it would be nonsense, so a swapped mon gets its
+            // NEW species' level-up moves for its level instead. That has to
+            // be done here: CreateMon leaves every move slot empty (callers
+            // assign the moveset themselves), and relying on it is why
+            // randomized trainer teams could only use Struggle. Mons that were
+            // NOT swapped keep their authored moves.
             if (monSpecies == partyData[monIndex].species)
                 CustomTrainerPartyAssignMoves(&party[i], &partyData[monIndex]);
+            else
+                GiveMonInitialMoveset(&party[i]);
             SetMonData(&party[i], MON_DATA_IVS, &(partyData[monIndex].iv));
             if (partyData[monIndex].ev != NULL)
             {

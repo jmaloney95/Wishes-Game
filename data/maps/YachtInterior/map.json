@@ -2,7 +2,7 @@
   "id": "MAP_YACHT_INTERIOR",
   "name": "YachtInterior",
   "layout": "LAYOUT_YACHT_INTERIOR",
-  "music": "MUS_SURF",
+  "music": "MUS_SAILING",
   "region_map_section": "MAPSEC_ROUTE_2",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
@@ -15,6 +15,7 @@
   "connections": null,
   "object_events": [
     {
+      "local_id": "LOCALID_YACHT_BALL_BROWT",
       "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
       "x": 8,
       "y": 3,
@@ -24,10 +25,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "YachtInterior_EventScript_BallTreecko",
+      "script": "YachtInterior_EventScript_BallBrowt",
       "flag": "FLAG_WOT_YACHT_STARTER_TAKEN"
     },
     {
+      "local_id": "LOCALID_YACHT_BALL_POMBON",
       "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
       "x": 9,
       "y": 3,
@@ -37,10 +39,11 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "YachtInterior_EventScript_BallTorchic",
+      "script": "YachtInterior_EventScript_BallPombon",
       "flag": "FLAG_WOT_YACHT_STARTER_TAKEN"
     },
     {
+      "local_id": "LOCALID_YACHT_BALL_GECQUA",
       "graphics_id": "OBJ_EVENT_GFX_POKE_BALL",
       "x": 10,
       "y": 3,
@@ -50,30 +53,35 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "YachtInterior_EventScript_BallMudkip",
+      "script": "YachtInterior_EventScript_BallGecqua",
       "flag": "FLAG_WOT_YACHT_STARTER_TAKEN"
     }
   ],
-  "warp_events": [],
-  "coord_events": [
+  "warp_events": [
     {
-      "type": "trigger",
       "x": 5,
       "y": 7,
       "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "YachtInterior_EventScript_Disembark"
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "2"
     },
     {
-      "type": "trigger",
       "x": 6,
       "y": 7,
       "elevation": 0,
-      "var": "VAR_TEMP_1",
-      "var_value": "0",
-      "script": "YachtInterior_EventScript_Disembark"
+      "dest_map": "MAP_ROUTE_2",
+      "dest_warp_id": "2"
     }
   ],
-  "bg_events": []
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 1,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "YachtInterior_EventScript_DeskNotes"
+    }
+  ]
 }

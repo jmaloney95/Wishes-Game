@@ -280,9 +280,6 @@ static const struct SpriteFrameImage sPicTable_WotJet[] = {
     obj_frame_tiles(gObjectEventPic_WotJet),
 };
 
-static const struct SpriteFrameImage sPicTable_WotEdwardsImpact[] = {
-    obj_frame_tiles(gObjectEventPic_WotEdwardsImpact),
-};
 
 static const struct SpriteFrameImage sPicTable_WotGloria[] = {
     overworld_ascending_frames(gObjectEventPic_WotGloria, 2, 4),
@@ -320,9 +317,6 @@ static const struct SpriteFrameImage sPicTable_WotVictor[] = {
     overworld_ascending_frames(gObjectEventPic_WotVictor, 2, 4),
 };
 
-static const struct SpriteFrameImage sPicTable_WotEdwards[] = {
-    overworld_ascending_frames(gObjectEventPic_WotEdwards, 2, 4),
-};
 
 static const struct SpriteFrameImage sPicTable_WotShadowJirachi[] = {
     overworld_frame(gObjectEventPic_WotShadowJirachi, 4, 4, 0),

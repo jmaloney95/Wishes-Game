@@ -603,9 +603,9 @@ struct SaveBlock2
              u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
              u16 optionsBattleSceneOff:1; // whether battle animations are disabled
              u16 regionMapZoom:1; // whether the map is zoomed in
-             u16 optionsPortraitsOff:1; // Wishes of Tomorrow: hide dialogue portraits
-             u16 optionsFastForward:1;  // Wishes of Tomorrow: run the game at 3x
-             //u16 padding1:2;
+             u16 optionsPortraitsOff:1; // Wishes of Tomorrow: hide dialogue portraits (moot while USE_NPC_PORTRAITS is FALSE)
+             u16 optionsFastForward:2;  // Wishes of Tomorrow: OPTIONS_FAST_FORWARD_[OFF/3X/2X]. Grew from 1 bit into the old padding, so 1 is still 3x
+             u16 optionsAutoSprint:1;   // Wishes of Tomorrow: OPTIONS_AUTO_SPRINT_[TOGGLE/HOLD_B]. The last spare bit: this u16 is now full
              //u16 padding2;
     /*0x18*/ struct Pokedex pokedex;
     /*0x90*/ u8 filler_90[0x8];

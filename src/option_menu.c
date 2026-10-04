@@ -13,6 +13,7 @@
 #include "text.h"
 #include "text_window.h"
 #include "window.h"
+#include "config/ui.h"
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
 
@@ -24,8 +25,9 @@
 #define tButtonMode data[5]
 #define tWindowFrameType data[6]
 #define tPortraitsOff data[7]
-#define tFastForward data[8]
+#define tFastForward data[8]   // menu index 0-2 (OFF 2x 3x), NOT the save value
 #define tScroll data[9]
+#define tAutoSprint data[10]
 
 enum
 {
@@ -35,7 +37,10 @@ enum
     MENUITEM_SOUND,
     MENUITEM_BUTTONMODE,
     MENUITEM_FRAMETYPE,
+#if USE_NPC_PORTRAITS
     MENUITEM_PORTRAITS,
+#endif
+    MENUITEM_AUTOSPRINT,
     MENUITEM_FASTFORWARD,
     MENUITEM_CANCEL,
     MENUITEM_COUNT,
@@ -60,7 +65,10 @@ static u8 sScroll;
 #define YPOS_SOUND        ROW_Y(MENUITEM_SOUND)
 #define YPOS_BUTTONMODE   ROW_Y(MENUITEM_BUTTONMODE)
 #define YPOS_FRAMETYPE    ROW_Y(MENUITEM_FRAMETYPE)
+#if USE_NPC_PORTRAITS
 #define YPOS_PORTRAITS    ROW_Y(MENUITEM_PORTRAITS)
+#endif
+#define YPOS_AUTOSPRINT   ROW_Y(MENUITEM_AUTOSPRINT)
 #define YPOS_FASTFORWARD  ROW_Y(MENUITEM_FASTFORWARD)
 
 // The frame graphics live in the same BG tile space as the windows, so they
@@ -99,10 +107,16 @@ static u8 FrameType_ProcessInput(u8 selection);
 static void FrameType_DrawChoices(u8 selection);
 static u8 ButtonMode_ProcessInput(u8 selection);
 static void ButtonMode_DrawChoices(u8 selection);
+#if USE_NPC_PORTRAITS
 static u8 Portraits_ProcessInput(u8 selection);
 static void Portraits_DrawChoices(u8 selection);
+#endif
+static u8 AutoSprint_ProcessInput(u8 selection);
+static void AutoSprint_DrawChoices(u8 selection);
 static u8 FastForward_ProcessInput(u8 selection);
 static void FastForward_DrawChoices(u8 selection);
+static u8 FastForward_SaveToMenu(u8 saved);
+static u8 FastForward_MenuToSave(u8 index);
 static void RedrawVisibleRows(u8 taskId);
 static void ScrollToSelection(u8 taskId);
 static void DrawHeaderText(void);
@@ -117,10 +131,15 @@ static const u8 gText_TextSpeedMid[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_TextSpeedFast[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}FAST");
 static const u8 gText_BattleSceneOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 static const u8 gText_BattleSceneOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+#if USE_NPC_PORTRAITS
 static const u8 gText_PortraitsOn[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 static const u8 gText_PortraitsOff[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+#endif
 static const u8 gText_FastForwardOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
-static const u8 gText_FastForwardOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
+static const u8 gText_FastForward2x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
+static const u8 gText_FastForward3x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
+static const u8 gText_AutoSprintToggle[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}TOGGLE");
+static const u8 gText_AutoSprintHoldB[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}HOLD B");
 static const u8 gText_BattleStyleShift[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
 static const u8 gText_BattleStyleSet[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
 static const u8 gText_SoundMono[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");
@@ -143,7 +162,10 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
     [MENUITEM_SOUND]       = COMPOUND_STRING("SOUND"),
     [MENUITEM_BUTTONMODE]  = COMPOUND_STRING("BUTTON MODE"),
     [MENUITEM_FRAMETYPE]   = COMPOUND_STRING("FRAME"),
+#if USE_NPC_PORTRAITS
     [MENUITEM_PORTRAITS]   = COMPOUND_STRING("PORTRAITS"),
+#endif
+    [MENUITEM_AUTOSPRINT]  = COMPOUND_STRING("AUTO SPRINT"),
     [MENUITEM_FASTFORWARD] = COMPOUND_STRING("FAST FORWARD"),
     [MENUITEM_CANCEL]      = COMPOUND_STRING("CANCEL"),
 };
@@ -295,8 +317,11 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tSound = gSaveBlock2Ptr->optionsSound;
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
         gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
+#if USE_NPC_PORTRAITS
         gTasks[taskId].tPortraitsOff = gSaveBlock2Ptr->optionsPortraitsOff;
-        gTasks[taskId].tFastForward = gSaveBlock2Ptr->optionsFastForward;
+#endif
+        gTasks[taskId].tFastForward = FastForward_SaveToMenu(gSaveBlock2Ptr->optionsFastForward);
+        gTasks[taskId].tAutoSprint = gSaveBlock2Ptr->optionsAutoSprint;
         gTasks[taskId].tScroll = 0;
         sScroll = 0;
 
@@ -306,7 +331,10 @@ void CB2_InitOptionMenu(void)
         Sound_DrawChoices(gTasks[taskId].tSound);
         ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
         FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+#if USE_NPC_PORTRAITS
         Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
+#endif
+        AutoSprint_DrawChoices(gTasks[taskId].tAutoSprint);
         FastForward_DrawChoices(gTasks[taskId].tFastForward);
         HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
 
@@ -396,12 +424,21 @@ static void Task_OptionMenuProcessInput(u8 taskId)
             if (previousOption != gTasks[taskId].tFastForward)
                 FastForward_DrawChoices(gTasks[taskId].tFastForward);
             break;
+#if USE_NPC_PORTRAITS
         case MENUITEM_PORTRAITS:
             previousOption = gTasks[taskId].tPortraitsOff;
             gTasks[taskId].tPortraitsOff = Portraits_ProcessInput(gTasks[taskId].tPortraitsOff);
 
             if (previousOption != gTasks[taskId].tPortraitsOff)
                 Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
+            break;
+#endif
+        case MENUITEM_AUTOSPRINT:
+            previousOption = gTasks[taskId].tAutoSprint;
+            gTasks[taskId].tAutoSprint = AutoSprint_ProcessInput(gTasks[taskId].tAutoSprint);
+
+            if (previousOption != gTasks[taskId].tAutoSprint)
+                AutoSprint_DrawChoices(gTasks[taskId].tAutoSprint);
             break;
         case MENUITEM_BUTTONMODE:
             previousOption = gTasks[taskId].tButtonMode;
@@ -437,8 +474,11 @@ static void Task_OptionMenuSave(u8 taskId)
     gSaveBlock2Ptr->optionsSound = gTasks[taskId].tSound;
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
+#if USE_NPC_PORTRAITS
     gSaveBlock2Ptr->optionsPortraitsOff = gTasks[taskId].tPortraitsOff;
-    gSaveBlock2Ptr->optionsFastForward = gTasks[taskId].tFastForward;
+#endif
+    gSaveBlock2Ptr->optionsFastForward = FastForward_MenuToSave(gTasks[taskId].tFastForward);
+    gSaveBlock2Ptr->optionsAutoSprint = gTasks[taskId].tAutoSprint;
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -542,7 +582,10 @@ static void RedrawVisibleRows(u8 taskId)
     Sound_DrawChoices(gTasks[taskId].tSound);
     ButtonMode_DrawChoices(gTasks[taskId].tButtonMode);
     FrameType_DrawChoices(gTasks[taskId].tWindowFrameType);
+#if USE_NPC_PORTRAITS
     Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
+#endif
+    AutoSprint_DrawChoices(gTasks[taskId].tAutoSprint);
     FastForward_DrawChoices(gTasks[taskId].tFastForward);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_GFX);
 }
@@ -567,9 +610,70 @@ static void ScrollToSelection(u8 taskId)
     HighlightOptionMenuItem(sel);
 }
 
-// OFF or 3x. Stored as a plain on/off; the multiplier itself lives in main.c,
-// which is the only place that knows what a frame is.
+// OFF, 2x or 3x. The row shows them left to right as menu index 0-2, but the
+// save keeps the numbering from before 2x existed -- 1 is 3x -- so these two
+// translate. The multipliers live in main.c, the only place that knows what
+// a frame is. An out-of-range save value reads as OFF.
+static u8 FastForward_SaveToMenu(u8 saved)
+{
+    switch (saved)
+    {
+    case OPTIONS_FAST_FORWARD_2X:
+        return 1;
+    case OPTIONS_FAST_FORWARD_3X:
+        return 2;
+    default:
+        return 0;
+    }
+}
+
+static u8 FastForward_MenuToSave(u8 index)
+{
+    switch (index)
+    {
+    case 1:
+        return OPTIONS_FAST_FORWARD_2X;
+    case 2:
+        return OPTIONS_FAST_FORWARD_3X;
+    default:
+        return OPTIONS_FAST_FORWARD_OFF;
+    }
+}
+
 static u8 FastForward_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_RIGHT))
+    {
+        selection = (selection < 2) ? selection + 1 : 0;
+        sArrowPressed = TRUE;
+    }
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        selection = (selection > 0) ? selection - 1 : 2;
+        sArrowPressed = TRUE;
+    }
+    return selection;
+}
+
+// Laid out like TEXT SPEED: OFF at the left, 3x at the right, 2x centred in
+// the space between them.
+static void FastForward_DrawChoices(u8 selection)
+{
+    u8 styles[3] = {0};
+    s32 widthOff, width2x, width3x;
+
+    styles[selection] = 1;
+    widthOff = GetStringWidth(FONT_NORMAL, gText_FastForwardOff, 0);
+    width2x = GetStringWidth(FONT_NORMAL, gText_FastForward2x, 0);
+    width3x = GetStringWidth(FONT_NORMAL, gText_FastForward3x, 0);
+
+    DrawOptionMenuChoice(gText_FastForwardOff, 104, YPOS_FASTFORWARD, styles[0]);
+    DrawOptionMenuChoice(gText_FastForward2x, (104 + widthOff + 198 - width3x - width2x) / 2, YPOS_FASTFORWARD, styles[1]);
+    DrawOptionMenuChoice(gText_FastForward3x, 198 - width3x, YPOS_FASTFORWARD, styles[2]);
+}
+
+// TOGGLE or HOLD B; the running itself is in field_player_avatar.c.
+static u8 AutoSprint_ProcessInput(u8 selection)
 {
     if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
     {
@@ -580,18 +684,16 @@ static u8 FastForward_ProcessInput(u8 selection)
     return selection;
 }
 
-static void FastForward_DrawChoices(u8 selection)
+static void AutoSprint_DrawChoices(u8 selection)
 {
-    u8 styles[2];
+    u8 styles[2] = {0};
 
-    styles[0] = 0;
-    styles[1] = 0;
     styles[selection] = 1;
-
-    DrawOptionMenuChoice(gText_FastForwardOff, 104, YPOS_FASTFORWARD, styles[0]);
-    DrawOptionMenuChoice(gText_FastForwardOn, GetStringRightAlignXOffset(FONT_NORMAL, gText_FastForwardOn, 198), YPOS_FASTFORWARD, styles[1]);
+    DrawOptionMenuChoice(gText_AutoSprintToggle, 104, YPOS_AUTOSPRINT, styles[0]);
+    DrawOptionMenuChoice(gText_AutoSprintHoldB, GetStringRightAlignXOffset(FONT_NORMAL, gText_AutoSprintHoldB, 198), YPOS_AUTOSPRINT, styles[1]);
 }
 
+#if USE_NPC_PORTRAITS
 // Stored as "off" so that a zero -- which is what every existing save has in
 // this newly claimed bit -- means portraits are on.
 static u8 Portraits_ProcessInput(u8 selection)
@@ -616,6 +718,7 @@ static void Portraits_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_PortraitsOn, 104, YPOS_PORTRAITS, styles[0]);
     DrawOptionMenuChoice(gText_PortraitsOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_PortraitsOff, 198), YPOS_PORTRAITS, styles[1]);
 }
+#endif
 
 static u8 BattleScene_ProcessInput(u8 selection)
 {
@@ -696,7 +799,7 @@ static u8 FrameType_ProcessInput(u8 selection)
         else
             selection = 0;
 
-        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, 0x1A2);
+        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, TILE_FRAME_BASE);
         LoadPalette(GetWindowFrameTilesPal(selection)->pal, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
         sArrowPressed = TRUE;
     }
@@ -707,7 +810,7 @@ static u8 FrameType_ProcessInput(u8 selection)
         else
             selection = WINDOW_FRAMES_COUNT - 1;
 
-        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, 0x1A2);
+        LoadBgTiles(1, GetWindowFrameTilesPal(selection)->tiles, 0x120, TILE_FRAME_BASE);
         LoadPalette(GetWindowFrameTilesPal(selection)->pal, BG_PLTT_ID(7), PLTT_SIZE_4BPP);
         sArrowPressed = TRUE;
     }

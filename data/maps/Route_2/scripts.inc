@@ -419,10 +419,30 @@ Route_2_EventScript_YachtBoard::
 	closemessage
 	playse SE_DOOR
 	fadescreen FADE_TO_BLACK
-	warp MAP_YACHT_INTERIOR, 6, 7
+	warp MAP_YACHT_INTERIOR, 0
 	waitstate
 	releaseall
 	end
+
+@ Walking up the gangway at (40,17) without the key. The gangway is an arrow
+@ warp; WotGetLockedDoorScript (field_control_avatar.c) runs this in place of
+@ it, as the Frostwood Gym door does. Same exchange as reading the sign, then
+@ a step back so a held UP doesn't run it again.
+Route_2_EventScript_YachtLocked::
+	lockall
+	msgbox Route_2_Text_YachtSign, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, Route_2_EventScript_YachtStepBack
+	msgbox Route_2_Text_YachtFailed, MSGBOX_DEFAULT
+Route_2_EventScript_YachtStepBack::
+	closemessage
+	applymovement LOCALID_PLAYER, Route_2_Movement_StepBackFromYacht
+	waitmovement 0
+	releaseall
+	end
+
+Route_2_Movement_StepBackFromYacht:
+	walk_down
+	step_end
 
 Route_2_EventScript_TuberSandy::
 	trainerbattle_single TRAINER_CINDY_2, Route_2_Text_SandyIntro, Route_2_Text_SandyDefeat

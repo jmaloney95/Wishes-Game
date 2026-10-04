@@ -223,7 +223,7 @@
       "flag": "FLAG_WOT_HIDE_POSTGAME_REBELS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS",
+      "graphics_id": "OBJ_EVENT_GFX_DRAKE",
       "x": 12,
       "y": 10,
       "elevation": 3,

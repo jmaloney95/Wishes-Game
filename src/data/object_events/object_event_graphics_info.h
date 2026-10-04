@@ -1097,24 +1097,6 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotNessa = {
     .images = sPicTable_WotNessa,
 };
 
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwards = {
-    .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_WOT_EDWARDS,
-    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
-    .size = 256,
-    .width = 16,
-    .height = 32,
-    .paletteSlot = PALSLOT_NPC_SPECIAL,
-    .shadowSize = SHADOW_SIZE_M,
-    .inanimate = FALSE,
-    .compressed = FALSE,
-    .tracks = TRACKS_FOOT,
-    .oam = &gObjectEventBaseOam_16x32,
-    .subspriteTables = sOamTables_16x32,
-    .anims = sAnimTable_Standard,
-    .images = sPicTable_WotEdwards,
-};
-
 // The fighter jet for the Edwards airshow ambush. Placed at elevation 4 in
 // map.json so ElevationToPriority gives it OAM priority 1 -- it renders OVER
 // the station roof's layer-0 top tiles (the bridge trick).
@@ -1134,24 +1116,6 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJet = {
     .subspriteTables = sOamTables_64x64,
     .anims = sAnimTable_Inanimate,
     .images = sPicTable_WotJet,
-};
-
-const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwardsImpact = {
-    .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_WOT_EDWARDS_IMPACT,
-    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
-    .size = 512,
-    .width = 32,
-    .height = 32,
-    .paletteSlot = PALSLOT_NPC_SPECIAL,
-    .shadowSize = SHADOW_SIZE_M,
-    .inanimate = TRUE,
-    .compressed = FALSE,
-    .tracks = TRACKS_NONE,
-    .oam = &gObjectEventBaseOam_32x32,
-    .subspriteTables = sOamTables_32x32,
-    .anims = sAnimTable_Inanimate,
-    .images = sPicTable_WotEdwardsImpact,
 };
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotGloria = {

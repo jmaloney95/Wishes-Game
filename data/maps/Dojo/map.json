@@ -3,7 +3,7 @@
   "name": "Dojo",
   "layout": "LAYOUT_DOJO",
   "music": "MUS_DESERT",
-  "region_map_section": "MAPSEC_TREASURE_BEACH",
+  "region_map_section": "MAPSEC_SENNEN_LINE",
   "requires_flash": false,
   "weather": "WEATHER_SANDSTORM",
   "map_type": "MAP_TYPE_NONE",
@@ -41,7 +41,7 @@
       "flag": "FLAG_HIDE_DOJO_REBELS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_SCOTT",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_LEON",
       "x": 11,
       "y": 8,
       "elevation": 0,
@@ -67,7 +67,7 @@
       "flag": "FLAG_HIDE_DOJO_REBELS"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_HIKER",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_ALDO",
       "x": 15,
       "y": 8,
       "elevation": 0,

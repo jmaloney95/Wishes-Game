@@ -368,9 +368,9 @@ SennenAct2_Movement_RyokoExclaim:
 @  WOT_JET screams in from the right (elevation 4 = OAM priority 1, so it
 @  draws OVER the station roof's layer-0 top tiles -- the bridge trick) ->
 @  Edwards bails out (elevation-4 FALLER actor, visible the whole drop) ->
-@  lands as the crouched WOT_EDWARDS_IMPACT frame, screen shakes -> camera
+@  lands (the impact actor, his own sprite now), screen shakes -> camera
 @  home -> boss card slams (battle theme starts THERE via the primed
-@  boss-intro path) -> he rises as his normal sprite, walks up, one line,
+@  boss-intro path) -> he hops two tiles to the player, one line,
 @  battle. Losing leaves the trainer flag unset, so the whole flyby replays
 @  on the rematch approach.
 @ ============================================================================
@@ -508,9 +508,10 @@ SennenAct2_Movement_CameraBackDown:
 	walk_down
 	step_end
 
+@ Edwards wears Drake's sprite, which has only standing frames -- walked, he
+@ would glide. Two tiles in one hop off the landing instead.
 SennenAct2_Movement_EdwardsAdvance:
-	walk_down
-	walk_down
+	jump_2_down
 	face_player
 	step_end
 

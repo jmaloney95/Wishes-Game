@@ -471,6 +471,7 @@ extern const u32 gItemIcon_SnagBall[];
 extern const u16 gItemIconPalette_SnagBall[];
 extern const u32 gItemIcon_YachtKey[];
 extern const u16 gItemIconPalette_YachtKey[];
+extern const u16 gItemIconPalette_InfiniteCandy[];
 extern const u32 gItemIcon_Domestic[];
 extern const u16 gItemIconPalette_Domestic[];
 extern const u32 gItemIcon_Craft[];

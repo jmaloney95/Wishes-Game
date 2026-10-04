@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS",
+      "graphics_id": "OBJ_EVENT_GFX_DRAKE",
       "x": 21,
       "y": 5,
       "elevation": 3,
@@ -41,7 +41,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOT_YIFFER",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_ALDO",
       "x": 12,
       "y": 12,
       "elevation": 3,
@@ -210,7 +210,7 @@
       "flag": "FLAG_WOT_SA2_AIRSHOW"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT",
+      "graphics_id": "OBJ_EVENT_GFX_DRAKE",
       "x": 21,
       "y": 7,
       "elevation": 3,
@@ -223,7 +223,7 @@
       "flag": "FLAG_WOT_SA2_AIRSHOW"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_WOT_EDWARDS",
+      "graphics_id": "OBJ_EVENT_GFX_DRAKE",
       "x": 21,
       "y": 3,
       "elevation": 4,

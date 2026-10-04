@@ -21,6 +21,7 @@
 #include "field_specials.h"
 #include "fldeff_misc.h"
 #include "follower_npc.h"
+#include "item.h"
 #include "item_menu.h"
 #include "link.h"
 #include "match_call.h"
@@ -67,6 +68,7 @@ static bool8 IsArrowWarpMetatileBehavior(u16, enum Direction);
 static s8 GetWarpEventAtMapPosition(struct MapHeader *, struct MapPosition *);
 static void SetupWarp(struct MapHeader *, s8, struct MapPosition *);
 static bool8 TryDoorWarp(struct MapPosition *, u16, enum Direction);
+static const u8 *WotGetLockedDoorScript(s8 warpEventId);
 static s8 GetWarpEventAtPosition(struct MapHeader *, u16, u16, u8);
 static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *, u16, u16, u8);
 static const struct BgEvent *GetBackgroundEventAtPosition(struct MapHeader *, u16, u16, u8);
@@ -991,6 +993,14 @@ static bool8 TryArrowWarp(struct MapPosition *position, u16 metatileBehavior, en
 
     if (IsArrowWarpMetatileBehavior(metatileBehavior, direction) == TRUE)
     {
+        // WoT: a locked arrow warp (the Route 2 yacht's gangway) runs its
+        // script instead, exactly as a locked door does in TryDoorWarp.
+        const u8 *lockedScript = WotGetLockedDoorScript(warpEventId);
+        if (lockedScript != NULL)
+        {
+            ScriptContext_SetupScript(lockedScript);
+            return TRUE;
+        }
         StorePlayerStateAndSetupWarp(position, warpEventId);
         DoWarp();
         return TRUE;
@@ -1164,10 +1174,12 @@ static void SetupWarp(struct MapHeader *unused, s8 warpEventId, struct MapPositi
     }
 }
 
-// WoT: doors that stay shut until the story opens them. Returns the script to run in
-// place of the door warp, or NULL to warp normally. Matched on the warp's DESTINATION,
-// not its index, because porymap renumbers warps whenever one is deleted.
+// WoT: doors (and gangways) that stay shut until the story opens them. Returns the
+// script to run in place of the warp, or NULL to warp normally. Asked by TryDoorWarp
+// and TryArrowWarp. Matched on the warp's DESTINATION, not its index, because
+// porymap renumbers warps whenever one is deleted.
 extern const u8 FrostwoodTown_EventScript_GymLocked[];
+extern const u8 Route_2_EventScript_YachtLocked[];
 
 static const u8 *WotGetLockedDoorScript(s8 warpEventId)
 {
@@ -1180,6 +1192,15 @@ static const u8 *WotGetLockedDoorScript(s8 warpEventId)
      && warp->mapNum == MAP_NUM(MAP_RUSTBORO_CITY_GYM)
      && !FlagGet(FLAG_REDFATALITY_HAS_EPIC_PASS))
         return FrostwoodTown_EventScript_GymLocked;
+
+    // The Route 2 yacht: boarded up its gangway (an arrow warp), and only
+    // once the fisherman's Yacht Key is in the bag.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE_2)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE_2)
+     && warp->mapGroup == MAP_GROUP(MAP_YACHT_INTERIOR)
+     && warp->mapNum == MAP_NUM(MAP_YACHT_INTERIOR)
+     && !CheckBagHasItem(ITEM_YACHT_KEY, 1))
+        return Route_2_EventScript_YachtLocked;
 
     return NULL;
 }

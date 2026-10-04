@@ -191,16 +191,21 @@ void HideNpcPortrait(void)
     sPortraitSpriteId = SPRITE_NONE;
 }
 
+// Portraits are hidden when they are switched off for everyone at build time
+// (USE_NPC_PORTRAITS) or by the player in Options. Dialogue and the boss intro
+// cards both ask here. Read live rather than cached, so switching the option
+// off takes effect on the very next line instead of at the next map load.
+bool32 WotPortraitsHidden(void)
+{
+    return !USE_NPC_PORTRAITS || gSaveBlock2Ptr->optionsPortraitsOff;
+}
+
 void ShowNpcPortrait(u8 portraitId, u8 side)
 {
     struct SpritePalette palette = { .tag = PORTRAIT_PAL_TAG };
     s16 x;
 
-    if (!USE_NPC_PORTRAITS)
-        return;
-    // Read live rather than cached, so switching the option off takes effect on
-    // the very next line of dialogue instead of at the next map load.
-    if (gSaveBlock2Ptr->optionsPortraitsOff)
+    if (WotPortraitsHidden())
         return;
     if (portraitId >= PORTRAIT_COUNT)
         portraitId = PORTRAIT_PLACEHOLDER;

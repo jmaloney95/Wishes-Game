@@ -3,7 +3,7 @@
   "name": "HotSpring",
   "layout": "LAYOUT_HOT_SPRING",
   "music": "MUS_CAVE_OF_ORIGIN",
-  "region_map_section": "MAPSEC_EMBER_SPA",
+  "region_map_section": "MAPSEC_ASHLANDS",
   "requires_flash": false,
   "weather": "WEATHER_NONE",
   "map_type": "MAP_TYPE_NONE",

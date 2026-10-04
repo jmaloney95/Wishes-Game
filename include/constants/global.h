@@ -195,6 +195,19 @@ enum Gender
 #define OPTIONS_TEXT_SPEED_FAST 2
 #define OPTIONS_TEXT_SPEED_INSTANT 3
 
+// Wishes of Tomorrow: optionsFastForward. 1 was the original ON, which was
+// 3x, so it stays 3x and saves from 1.2.2 on keep their setting; 2x took the
+// next value. The multipliers themselves live in main.c.
+#define OPTIONS_FAST_FORWARD_OFF 0
+#define OPTIONS_FAST_FORWARD_3X  1
+#define OPTIONS_FAST_FORWARD_2X  2
+
+// Wishes of Tomorrow: optionsAutoSprint. TOGGLE is 0, so every existing save
+// gets it: you run, and a tap of B switches to walking and back. HOLD_B is
+// vanilla: you run only while B is held.
+#define OPTIONS_AUTO_SPRINT_TOGGLE 0
+#define OPTIONS_AUTO_SPRINT_HOLD_B 1
+
 #define OPTIONS_SOUND_MONO 0
 #define OPTIONS_SOUND_STEREO 1
 
