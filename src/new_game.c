@@ -107,7 +107,8 @@ static void SetDefaultOptions(void)
     gSaveBlock2Ptr->optionsBattleStyle = OPTIONS_BATTLE_STYLE_SHIFT;
     gSaveBlock2Ptr->optionsBattleSceneOff = FALSE;
     gSaveBlock2Ptr->optionsPortraitsOff = FALSE;
-    gSaveBlock2Ptr->optionsFastForward = FALSE;
+    gSaveBlock2Ptr->optionsFastForward = OPTIONS_FAST_FORWARD_OFF;
+    gSaveBlock2Ptr->optionsAutoSprint = OPTIONS_AUTO_SPRINT_TOGGLE;
     gSaveBlock2Ptr->regionMapZoom = FALSE;
 }
 
@@ -230,6 +231,7 @@ void NewGameInitData(void)
     AddBagItem(ITEM_QUEST_LOG, 1);   // Quest journal -- always in the bag from the start.
     AddBagItem(ITEM_EXP_SHARE, 1);   // Exp. Share, in the bag from the start...
     FlagSet(I_EXP_SHARE_FLAG);       // ...and switched ON; using it in the bag toggles it off.
+    AddBagItem(ITEM_INFINITE_CANDY, 1); // A Rare Candy that is never used up.
     NewGameInitPCItems();
     ClearPokeblocks();
     ClearDecorationInventories();

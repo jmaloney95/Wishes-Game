@@ -132,7 +132,7 @@ void AgbMain(void)
     AgbMainLoop();
 }
 
-// ── Wishes of Tomorrow: 3x fast forward ─────────────────────────────────────
+// ── Wishes of Tomorrow: fast forward (Options: OFF / 2x / 3x) ────────────────
 // One pass of AgbMainLoop is one LOGIC frame, and the audio is not driven from
 // it at all: m4aSoundMain() runs in VBlankIntr and m4aSoundVSync() in
 // VCountIntr, both on the hardware's own interrupt schedule. So running the
@@ -148,6 +148,12 @@ void AgbMain(void)
 // Never active in a link session: two linked games must agree on how many
 // frames have passed, and one running triple would desync them immediately.
 #define WOT_FAST_FORWARD_SPEED 3
+// The 2x setting, for players who found running round the map at 3x too
+// quick. It slows only the FIELD; battles keep WOT_FAST_FORWARD_BATTLE_SPEED,
+// the same as at 3x. An even field multiplier is safe: the one parity bug
+// there ever was, the 1-bit hardware-fade finisher, is fixed at its source in
+// palette.c, and battles have run at an even 4 since round 35.
+#define WOT_FAST_FORWARD_SPEED_2X 2
 // Battles get a bigger multiplier than the field, but a much smaller one than
 // the 8x this started at. 8x got battles STUCK MID-ANIMATION, and the reason is
 // the DMA queue: graphics requests are serviced once per VBlank by
@@ -164,7 +170,7 @@ static bool32 WotSkipThisVBlank(void)
     u32 speed;
 
     if (gSaveBlock2Ptr == NULL
-     || !gSaveBlock2Ptr->optionsFastForward
+     || gSaveBlock2Ptr->optionsFastForward == OPTIONS_FAST_FORWARD_OFF
      || gReceivedRemoteLinkPlayers
      || gLinkTransferringData)
     {
@@ -183,7 +189,12 @@ static bool32 WotSkipThisVBlank(void)
         return FALSE;
     }
 
-    speed = gMain.inBattle ? WOT_FAST_FORWARD_BATTLE_SPEED : WOT_FAST_FORWARD_SPEED;
+    if (gMain.inBattle)
+        speed = WOT_FAST_FORWARD_BATTLE_SPEED;
+    else if (gSaveBlock2Ptr->optionsFastForward == OPTIONS_FAST_FORWARD_2X)
+        speed = WOT_FAST_FORWARD_SPEED_2X;
+    else
+        speed = WOT_FAST_FORWARD_SPEED;
 
     if (++sSubFrame >= speed)
     {

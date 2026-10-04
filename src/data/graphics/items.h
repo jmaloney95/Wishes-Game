@@ -88,6 +88,8 @@ const u32 gItemIcon_SnagBall[] = INCGFX_U32("graphics/items/icons/snag_ball.png"
 const u16 gItemIconPalette_SnagBall[] = INCGFX_U16("graphics/items/icon_palettes/snag_ball.pal", ".gbapal");
 const u32 gItemIcon_YachtKey[] = INCGFX_U32("graphics/items/icons/yacht_key.png", ".4bpp.smol");
 const u16 gItemIconPalette_YachtKey[] = INCGFX_U16("graphics/items/icon_palettes/yacht_key.pal", ".gbapal");
+// Wishes of Tomorrow: the Infinite Candy is the Rare Candy icon in gold.
+const u16 gItemIconPalette_InfiniteCandy[] = INCGFX_U16("graphics/items/icon_palettes/infinite_candy.pal", ".gbapal");
 // Wishes of Tomorrow: the Frostwood bar's drinks, cut from gTileset_FrostwoodBar
 // (tilesets_raw/build_scripts/make_bar_item_icons.py).
 const u32 gItemIcon_Domestic[] = INCGFX_U32("graphics/items/icons/domestic.png", ".4bpp.smol");

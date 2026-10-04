@@ -46,7 +46,6 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotWantedSm
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotDraco;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMikmanc;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotNessa;
-extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwards;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotShadowJirachi;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotAllisonLand;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotSkyeLand;
@@ -55,7 +54,6 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMarinaLa
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBeachBeauty;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotYiffer;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJet;
-extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotEdwardsImpact;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotGloria;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotIono;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotAldo;
@@ -495,7 +493,9 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOT_DRACO] =                &gObjectEventGraphicsInfo_WotDraco,
     [OBJ_EVENT_GFX_WOT_MIKMANC] =              &gObjectEventGraphicsInfo_WotMikmanc,
     [OBJ_EVENT_GFX_WOT_NESSA] =                &gObjectEventGraphicsInfo_WotNessa,
-    [OBJ_EVENT_GFX_WOT_EDWARDS] =              &gObjectEventGraphicsInfo_WotEdwards,
+    // WoT: Edwards' own sprites were AI art and are gone; the maps use DRAKE.
+    // Both ids stay valid, aliased to Drake, so nothing can index a hole.
+    [OBJ_EVENT_GFX_WOT_EDWARDS] =              &gObjectEventGraphicsInfo_Drake,
     [OBJ_EVENT_GFX_WOT_SHADOW_JIRACHI] =       &gObjectEventGraphicsInfo_WotShadowJirachi,
     [OBJ_EVENT_GFX_WOT_ALLISON_LAND] =           &gObjectEventGraphicsInfo_WotAllisonLand,
     [OBJ_EVENT_GFX_WOT_SKYE_LAND] =              &gObjectEventGraphicsInfo_WotSkyeLand,
@@ -504,7 +504,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOT_BEACH_BEAUTY] =           &gObjectEventGraphicsInfo_WotBeachBeauty,
     [OBJ_EVENT_GFX_WOT_YIFFER] =                 &gObjectEventGraphicsInfo_WotYiffer,
     [OBJ_EVENT_GFX_WOT_JET] =                    &gObjectEventGraphicsInfo_WotJet,
-    [OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT] =         &gObjectEventGraphicsInfo_WotEdwardsImpact,
+    [OBJ_EVENT_GFX_WOT_EDWARDS_IMPACT] =         &gObjectEventGraphicsInfo_Drake,
     [OBJ_EVENT_GFX_WOT_GLORIA] =                 &gObjectEventGraphicsInfo_WotGloria,
     [OBJ_EVENT_GFX_WOT_IONO] =                   &gObjectEventGraphicsInfo_WotIono,
     [OBJ_EVENT_GFX_WOT_ALDO] =                   &gObjectEventGraphicsInfo_WotAldo,

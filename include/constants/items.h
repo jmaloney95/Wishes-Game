@@ -1125,6 +1125,8 @@ enum __attribute__((packed)) Item
     // Wishes of Tomorrow: the Frostwood bar's drinks (OldaleTown_Mart)
     ITEM_DOMESTIC = 921,       // works and costs like a Potion
     ITEM_CRAFT = 922,          // works and costs like a Super Potion
+    // Wishes of Tomorrow: a Rare Candy that is never used up (key item).
+    ITEM_INFINITE_CANDY = 923,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

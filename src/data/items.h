@@ -14905,6 +14905,28 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_Craft,
     },
 
+    // Wishes of Tomorrow: a Rare Candy that is never used up. Same field
+    // use and effect table as the Rare Candy; ItemUseCB_RareCandy simply
+    // doesn't take it out of the bag. A key item, so it can't be tossed,
+    // sold or held, and it can be registered to SELECT.
+    [ITEM_INFINITE_CANDY] =
+    {
+        .name = ITEM_NAME("Infinite Candy"),
+        .price = 0,
+        .importance = 1,
+        .description = COMPOUND_STRING(
+            "Raises a Pokémon's\n"
+            "level by one, and\n"
+            "never runs out."),
+        .pocket = POCKET_KEY_ITEMS,
+        .sortType = ITEM_TYPE_LEVEL_UP_ITEM,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_RareCandy,
+        .effect = gItemEffect_RareCandy,
+        .iconPic = gItemIcon_RareCandy,
+        .iconPalette = gItemIconPalette_InfiniteCandy,
+    },
+
     [ITEM_SNAG_MACHINE] =
     {
         .name = ITEM_NAME("Snag Machine"),

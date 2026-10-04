@@ -4,6 +4,7 @@
 #include "config/ui.h"
 #include "constants/portraits.h"
 
+bool32 WotPortraitsHidden(void);
 void ShowNpcPortrait(u8 portraitId, u8 side);
 void HideNpcPortrait(void);
 void WotShowSpeakerPortrait(u32 speakerId);

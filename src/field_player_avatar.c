@@ -356,9 +356,30 @@ static u8 ObjectEventCB2_NoMovement2(void)
     return 0;
 }
 
+// WoT: AUTO SPRINT (Options). TOGGLE, the default: you run, and a tap of B
+// switches to walking and back. HOLD_B: vanilla, running only while B is held.
+// The walk latch lives in RAM, not the save, so every session starts running.
+static EWRAM_DATA bool8 sWotWalkLatched = FALSE;
+
+static bool32 WotShouldRun(u16 heldKeys)
+{
+    if (gSaveBlock2Ptr->optionsAutoSprint == OPTIONS_AUTO_SPRINT_HOLD_B)
+        return (heldKeys & B_BUTTON) != 0;
+    return !sWotWalkLatched;
+}
+
 void PlayerStep(enum Direction direction, u16 newKeys, u16 heldKeys)
 {
     struct ObjectEvent *playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
+
+    // WoT: the AUTO SPRINT toggle. Checked here, every frame the player has
+    // control, so a tap registers while standing still too. On foot only:
+    // B is the Acro Bike's hop, and underwater it is Dive's way back up.
+    if ((newKeys & B_BUTTON)
+     && gSaveBlock2Ptr->optionsAutoSprint == OPTIONS_AUTO_SPRINT_TOGGLE
+     && !(gPlayerAvatar.flags & (PLAYER_AVATAR_FLAG_MACH_BIKE | PLAYER_AVATAR_FLAG_ACRO_BIKE
+                                | PLAYER_AVATAR_FLAG_SURFING | PLAYER_AVATAR_FLAG_UNDERWATER)))
+        sWotWalkLatched = !sWotWalkLatched;
 
     HideShowWarpArrow(playerObjEvent);
     if (gPlayerAvatar.preventStep == FALSE && !TryUpdatePlayerSpinDirection())
@@ -919,7 +940,7 @@ static void PlayerNotOnBikeMoving(enum Direction direction, u16 heldKeys)
     }
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER)
-     && !(heldKeys & B_BUTTON) // Auto-run: run by default, hold B to walk (Pokémon Wishes of Tomorrow)
+     && WotShouldRun(heldKeys) // AUTO SPRINT option (Pokémon Wishes of Tomorrow)
      && FlagGet(FLAG_SYS_B_DASH)
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0
      && !FollowerNPCComingThroughDoor()

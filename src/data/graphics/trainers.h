@@ -43,8 +43,6 @@ const u32 gTrainerFrontPic_MutridGruntWhite[] = INCGFX_U32("graphics/trainers/fr
 const u16 gTrainerPalette_MutridGruntWhite[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt_white.png", ".gbapal");
 const u32 gTrainerFrontPic_MutridGruntF[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_grunt_f.png", ".4bpp.smol");
 const u16 gTrainerPalette_MutridGruntF[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_grunt_f.png", ".gbapal");
-const u32 gTrainerFrontPic_GeneralEdwards[] = INCGFX_U32("graphics/trainers/front_pics/general_edwards.png", ".4bpp.smol");
-const u16 gTrainerPalette_GeneralEdwards[] = INCGFX_U16("graphics/trainers/front_pics/general_edwards.png", ".gbapal");
 const u32 gTrainerFrontPic_WotAllisonLand[] = INCGFX_U32("graphics/trainers/front_pics/wot_allison_land.png", ".4bpp.smol");
 const u16 gTrainerPalette_WotAllisonLand[] = INCGFX_U16("graphics/trainers/front_pics/wot_allison_land.png", ".gbapal");
 const u32 gTrainerFrontPic_WotSkyeLand[] = INCGFX_U32("graphics/trainers/front_pics/wot_skye_land.png", ".4bpp.smol");
@@ -556,7 +554,9 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT_WHITE, gTrainerFrontPic_MutridGruntWhite, gTrainerPalette_MutridGruntWhite),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GRUNT_F, gTrainerFrontPic_MutridGruntF, gTrainerPalette_MutridGruntF),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_MUTRID_GOON, gTrainerFrontPic_MutridGoon, gTrainerPalette_MutridGoon),
-    TRAINER_SPRITE(TRAINER_PIC_FRONT_GENERAL_EDWARDS, gTrainerFrontPic_GeneralEdwards, gTrainerPalette_GeneralEdwards),
+    // WoT: Edwards' own pic was AI art and is gone; he fights as Drake. The id
+    // stays and points at Drake so nothing that still names it shows garbage.
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_GENERAL_EDWARDS, gTrainerFrontPic_EliteFourDrake, gTrainerPalette_EliteFourDrake),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_ALLISON_LAND, gTrainerFrontPic_WotAllisonLand, gTrainerPalette_WotAllisonLand),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_SKYE_LAND, gTrainerFrontPic_WotSkyeLand, gTrainerPalette_WotSkyeLand),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_ROSA_LAND, gTrainerFrontPic_WotRosaLand, gTrainerPalette_WotRosaLand),
