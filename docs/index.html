@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wishes of Tomorrow — a Flatfoot Games release</title>
 <meta name="description" content="Wishes of Tomorrow is a handmade pixel-art adventure for the Game Boy Advance: an original region beneath Mt. Fuji, a three-act campaign, and a team to raise along the way. Free.">
+<meta name="theme-color" content="#f5ecda">
 <link rel="icon" href="assets/art/battle-sprite.png" type="image/png">
 <link rel="canonical" href="https://flatfootlabs.com/">
 
 <!-- Link previews. These URLs must be absolute — most scrapers (iMessage,
-     Facebook, Slack) will not resolve a relative og:image. Update the host
-     here if the site moves to a custom domain. -->
+     Facebook, Slack) will not resolve a relative og:image. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Flatfoot Games">
 <meta property="og:url" content="https://flatfootlabs.com/">
@@ -24,602 +24,420 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://flatfootlabs.com/assets/og-wishes.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Press+Start+2P&display=swap" rel="stylesheet">
-<!-- Assets carry a version query. GitHub Pages serves them with a four-hour
-     max-age, so without this a visitor can get new HTML alongside cached old
-     JS. Bump the stamp whenever anything in assets/ changes. -->
-<link rel="stylesheet" href="assets/styles.css?v=20261003a">
+<!-- Fonts are self-hosted (assets/fonts), so a page view asks nothing of
+     Google. Assets carry a version query: GitHub Pages serves them with a
+     four-hour max-age, so bump the stamp whenever anything in assets/ changes. -->
+<link rel="preload" href="assets/fonts/Anton-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/wot.css?v=20261004a">
 </head>
 <body>
 
-<a class="skip" href="#top">Skip to content</a>
-
-<header class="site-header">
-  <a class="back-link" href="labs"><span aria-hidden="true">←</span> Flatfoot Labs</a>
-  <nav class="site-nav">
-    <a href="#features">Features</a>
-    <a href="#media">Media</a>
-    <a href="guide">Guide</a>
-    <a href="#requirements">Requirements</a>
-    <a href="#credits">Credits</a>
-    <a href="#faq">FAQ</a>
-  </nav>
-  <a class="btn-nav" href="#download">Download</a>
-</header>
+<a class="ff-skip" href="#hero-title">Skip to content</a>
 
 <main>
+<div class="ff-paper" id="top">
+  <header class="ff-header">
+    <a class="ff-logo" href="#top">
+      <img src="assets/art/shadow-jirachi-logo.png" width="49" height="52" alt="">
+      <span class="ff-logo-word">Wishes of Tomorrow<small>A FLATFOOT GAMES RELEASE</small></span>
+    </a>
+    <nav class="ff-nav" aria-label="Sections">
+      <a href="#trailer">Trailer</a>
+      <a href="#media">Screenshots</a>
+      <a href="#downloads">Downloads</a>
+      <a href="guide">Field guide</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="ff-header-actions">
+      <a class="ff-iconbtn" href="labs" title="Flatfoot Labs"><i class="ff-i ff-i-flask" aria-hidden="true"></i><span class="ff-sr">Flatfoot Labs</span></a>
+      <a class="ff-btn ff-btn--violet ff-btn--sm" href="#downloads">Download<i class="ff-i ff-i-arrow" aria-hidden="true"></i></a>
+    </div>
+  </header>
 
-  <!-- ── hero ───────────────────────────────────────────────────────── -->
-  <section id="top" class="hero">
-    <div id="stars" class="stars" aria-hidden="true"></div>
-    <div class="hero-bloom" aria-hidden="true"></div>
-    <div class="scanlines" aria-hidden="true"></div>
+  <section class="ff-hero" aria-labelledby="hero-title">
+    <div class="ff-siderail" aria-label="Elsewhere">
+      <a href="https://github.com/jmaloney95/Wishes-Game" title="Source on GitHub"><i class="ff-i ff-i-external ff-i--1x" aria-hidden="true"></i><span class="ff-sr">Source on GitHub</span></a>
+      <a href="#trailer" title="Trailer"><i class="ff-i ff-i-play ff-i--1x" aria-hidden="true"></i><span class="ff-sr">Trailer</span></a>
+      <a href="guide" title="Field guide"><i class="ff-i ff-i-pin ff-i--1x" aria-hidden="true"></i><span class="ff-sr">Field guide</span></a>
+      <span class="ff-siderail-rule"></span>
+      <span class="ff-siderail-text">Every wish has a price</span>
+    </div>
 
-    <div class="hero-inner">
-      <div class="hero-copy">
-        <div class="badge" data-reveal>
-          <span class="badge-dot"></span>
-          A FLATFOOT GAMES RELEASE
-        </div>
-
-        <h1 data-reveal>Wishes of<br><span class="accent">Tomorrow</span></h1>
-
-        <p class="lede" data-reveal>When Jirachi, the Undying Wish, awakens from its thousand-year slumber to grant a single wish, you're not the only one racing toward its promised power.</p>
-
-        <p class="lede" data-reveal>A mysterious faction led by a gold-masked Oni emerges from the shadows, determined to seize Jirachi's wish for their own sinister ambitions.</p>
-
-        <p class="hero-beats" data-reveal>Witness Mega Power. Capture Darkness. Seek the promised land of Shin-Tokyo.</p>
-
-        <p class="hero-close" data-reveal>The wish is waiting. Will you be the one to claim it?</p>
-
-        <p class="hero-tagline" data-reveal>EVERY WISH HAS A PRICE.</p>
-
-        <div class="hero-actions" data-reveal>
-          <a class="btn-start" href="#download">
-            <span class="btn-start-label">PRESS START</span>
-            <span class="btn-start-sweep" aria-hidden="true"></span>
-          </a>
-          <a class="btn-quiet" href="#media">See screenshots</a>
-        </div>
-
-        <div class="hero-meta" data-reveal>
-          <span>v1.2.6</span><span>Free</span><span>English</span><span>Game Boy Advance</span>
-        </div>
+    <div class="ff-hero-copy">
+      <span class="ff-kicker">Free · Game Boy Advance · v1.2.6</span>
+      <h1 class="ff-display ff-h1" id="hero-title">Wishes of <em class="ff-line">Tomorrow.</em></h1>
+      <p class="ff-lede">When Jirachi, the Undying Wish, awakens from its thousand-year slumber to grant a single wish, you're not the only one racing toward its promised power.</p>
+      <div class="ff-hero-ctas">
+        <a class="ff-btn ff-btn--violet" href="#downloads">Press start<i class="ff-i ff-i-arrow" aria-hidden="true"></i></a>
+        <a class="ff-btn ff-btn--outline" href="#trailer">Watch trailer<i class="ff-i ff-i-play" aria-hidden="true"></i></a>
       </div>
+      <div class="ff-facts">
+        <div class="ff-fact"><span class="ff-fact-icon"><i class="ff-i ff-i-pin" aria-hidden="true"></i></span><div><b>64 new maps</b><span>drawn tile by tile</span></div></div>
+        <div class="ff-fact"><span class="ff-fact-icon"><i class="ff-i ff-i-mask" aria-hidden="true"></i></span><div><b>Gens I–X</b><span>50+ new sprites</span></div></div>
+        <div class="ff-fact"><span class="ff-fact-icon"><i class="ff-i ff-i-list" aria-hidden="true"></i></span><div><b>12 quests</b><span>tracked in the menu</span></div></div>
+        <div class="ff-fact"><span class="ff-fact-icon"><i class="ff-i ff-i-play" aria-hidden="true"></i></span><div><b>Play in browser</b><span>no emulator needed</span></div></div>
+      </div>
+    </div>
 
-      <figure class="hero-art" data-reveal data-tilt>
-        <div class="hero-art-stage">
-          <img src="assets/art/battle-sprite.png" width="64" height="64"
-               alt="A masked oni in a purple robe, holding a ball.">
-        </div>
-        <figcaption>WISHES OF TOMORROW</figcaption>
-      </figure>
+    <div class="ff-hero-art" aria-hidden="true">
+      <span class="ff-halftone" style="left: -10%; top: -4%; width: 520px; height: 420px;"></span>
+      <img class="ff-brush" src="assets/textures/brush-slash-violet.webp" alt="" style="left: -14%; top: 4%; width: 940px;">
+      <img class="ff-brush" src="assets/textures/brush-streak-violet.webp" alt="" style="left: 18%; top: 34%; width: 640px; transform: rotate(8deg);">
+      <img class="ff-hero-oni" src="assets/art/battle-sprite.png" width="512" height="512" alt="">
+      <div class="ff-hud">
+        <img src="assets/art/shadow-jirachi-logo.png" width="49" height="52" alt="">
+        <span class="ff-hud-label">Patch<br>ready</span>
+        <span class="ff-hud-hazard"></span>
+        <span class="ff-hud-small">VER.</span>
+        <span class="ff-hud-ver">1.2.6</span>
+        <span class="ff-hud-date">3 OCT 2026</span>
+      </div>
     </div>
   </section>
+</div>
 
-  <!-- ── marquee ────────────────────────────────────────────────────── -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>GENS I–X</span><span class="d">◆</span><span>RANDOMIZER MODE</span><span class="d">◆</span><span>64 NEW MAPS</span><span class="d">◆</span><span>12 TRACKED QUESTS</span><span class="d">◆</span><span>4 SECRET BOSS FIGHTS</span><span class="d">◆</span><span>PLAY IT NOW IN BROWSER</span><span class="d">◆</span><span>NEW QOL AND BATTLE MECHANICS</span><span class="d">◆</span>
-      <span>GENS I–X</span><span class="d">◆</span><span>RANDOMIZER MODE</span><span class="d">◆</span><span>64 NEW MAPS</span><span class="d">◆</span><span>12 TRACKED QUESTS</span><span class="d">◆</span><span>4 SECRET BOSS FIGHTS</span><span class="d">◆</span><span>PLAY IT NOW IN BROWSER</span><span class="d">◆</span><span>NEW QOL AND BATTLE MECHANICS</span><span class="d">◆</span>
+<section class="ff-night ff-band ff-torn-top ff-torn-bottom" id="trailer" aria-labelledby="trailer-title">
+  <img class="ff-brush" src="assets/textures/brush-slash-glow.webp" alt="" aria-hidden="true" style="left: -6%; top: 300px; width: 760px; opacity: .9;">
+  <img class="ff-brush" src="assets/textures/brush-streak-violet.webp" alt="" aria-hidden="true" style="right: -4%; top: 60px; width: 620px; transform: scaleX(-1) rotate(-6deg);">
+  <span class="ff-halftone" aria-hidden="true" style="right: 4%; top: 30px; width: 460px; height: 320px;"></span>
+  <div class="ff-trailer-head">
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <span class="ff-kicker">Official trailer</span>
+      <h2 class="ff-display ff-h2" id="trailer-title">The wish <em class="ff-line">is waiting.</em></h2>
+      <p class="ff-lede">Witness Mega Power. Capture Darkness. Seek the promised land of Shin-Tokyo.</p>
     </div>
   </div>
+  <div class="ff-trailer-wrap">
+    <a class="ff-trailer" data-trailer="UbLpkAqa8mI" href="https://www.youtube.com/watch?v=UbLpkAqa8mI" target="_blank" rel="noopener" aria-label="Play the official trailer">
+      <img src="assets/media/trailer-poster.webp" width="1280" height="720" alt="">
+      <span class="ff-trailer-play" aria-hidden="true"><i class="ff-i ff-i-play"></i></span>
+    </a>
+  </div>
+  <div class="ff-views" data-yt-views hidden><i class="ff-i ff-i-eye" aria-hidden="true"></i><span aria-hidden="true"><span data-yt-count></span> views on YouTube</span><span class="ff-sr" data-yt-sr></span></div>
 
-  <!-- ── cast ─────────────────────────────────────────────────────── -->
-  <section id="cast" class="wrap section">
-    <div class="rail-head" data-reveal>
-      <div class="kicker">WHO YOU'LL MEET</div>
-      <div class="rail-hint">scroll →</div>
+  <div class="ff-media" id="media">
+    <div class="ff-tabs" role="tablist" aria-label="Screenshots and cast">
+      <button class="ff-tab" role="tab" type="button" aria-selected="true" aria-controls="panel-shots" id="tab-shots" data-tab="shots">Screenshots<small>13</small></button>
+      <button class="ff-tab" role="tab" type="button" aria-selected="false" aria-controls="panel-cast" id="tab-cast" data-tab="cast">Who you'll meet<small>7</small></button>
     </div>
-    <div class="cast-rail" data-rail>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/clarkson.webp" width="560" height="560" loading="lazy" alt="Professor Clarkson"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">Prof. Clarkson</div>
-          <div class="cast-role">Regional researcher</div>
-          <p>Hands you your first partner, then follows you around the region asking questions he already knows the answer to.</p>
-        </div>
-      </article>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/edwards.webp" width="560" height="560" loading="lazy" alt="Edwards"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">Edwards</div>
-          <div class="cast-role">Rival</div>
-          <p>Army specialist and jumpmaster. Wants the same thing you do and is not remotely subtle about it.</p>
-        </div>
-      </article>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/redfatality.webp" width="560" height="560" loading="lazy" alt="Red Fatality"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">Red Fatality</div>
-          <div class="cast-role">Antagonist</div>
-          <p>Runs the outfit digging under the mountain. Believes he's the reasonable one, which is the problem.</p>
-        </div>
-      </article>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/minister.webp" width="560" height="560" loading="lazy" alt="The Minister"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">The Minister</div>
-          <div class="cast-role">Edgerunner</div>
-          <p>Knows every wire under the city and who paid for it. Trades information for favours you'd rather not owe.</p>
-        </div>
-      </article>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/allison.webp" width="560" height="560" loading="lazy" alt="Allison"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">Allison</div>
-          <div class="cast-role">Siren</div>
-          <p>Holds the lake route and won't let you pass until your team can handle deep water.</p>
-        </div>
-      </article>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/mikmanc.webp" width="560" height="560" loading="lazy" alt="Mikmanc"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">Mikmanc</div>
-          <div class="cast-role">Lab technician</div>
-          <p>Runs the storage system and the healing machines. Complains about both, fixes neither.</p>
-        </div>
-      </article>
-      <article class="cast" data-reveal>
-        <div class="cast-art"><img src="assets/art/yiffer.webp" width="560" height="560" loading="lazy" alt="Yiffer"><span class="scanlines"></span></div>
-        <div class="cast-body">
-          <div class="cast-name">Yiffer</div>
-          <div class="cast-role">Dojo leader</div>
-          <p>Third badge, and the first fight that actually asks you to think about turn order.</p>
-        </div>
-      </article>
+    <div class="ff-shots" role="tabpanel" id="panel-shots" aria-labelledby="tab-shots" data-panel="shots" data-rail>
+      <figure class="ff-shot"><img src="assets/media/frostwood.webp" width="960" height="640" alt="Frostwood Town under snow: a log lodge strung with lights and a yellow cable-car gondola."><figcaption><b>FROSTWOOD TOWN</b><span>NEW IN 1.2.3</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/shin-tokyo.webp" width="240" height="160" alt="A rain-lit Shin-Tokyo street at night, with a cycling ALL HAIL billboard and patrolling guards."><figcaption><b>SHIN-TOKYO</b><span>OVERWORLD</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/siren-allison.webp" width="240" height="160" alt="Siren Allison's name banner sweeping across the screen as she swims in toward the beach."><figcaption><b>SIREN ALLISON</b><span>BOSS FIGHT</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/shadow-jirachi.webp" width="960" height="640" alt="A battle against a Shadow Jirachi, its move list showing Meteor Mash, Healing Wish, Rest and Future Sight."><figcaption><b>SHADOW JIRACHI</b><span>BATTLE</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/hall-of-fame.webp" width="960" height="640" alt="The Hall of Fame: six Pokémon including a white shiny Gengar and several Shadow Pokémon."><figcaption><b>HALL OF FAME</b><span>NEW IN 1.2.3</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/doubles.webp" width="960" height="640" alt="A double battle: Baxcalibur and Armor Mewtwo facing Rayquaza and Dracovish."><figcaption><b>DOUBLE BATTLE</b><span>BATTLE</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/ryuden-island.webp" width="960" height="640" alt="Arriving on Ryuden Island, its name card across the top of a palm-lined shore."><figcaption><b>RYUDEN ISLAND</b><span>OVERWORLD</span></figcaption></figure>
+      <figure class="ff-shot"><img src="assets/media/summit-reveal.webp" width="960" height="640" alt="Two figures facing each other on a rock above molten ground, mid-confrontation."><figcaption><b>THE SUMMIT REVEAL</b><span>STORY</span></figcaption></figure>
     </div>
-  </section>
-
-  <!-- ── features ───────────────────────────────────────────────────── -->
-  <section id="features" class="wrap section">
-    <div class="kicker" data-reveal>WHAT'S INSIDE</div>
-    <h2 data-reveal>Quality of Life Changes</h2>
-
-    <div class="feature-grid">
-      <article class="feature" data-reveal>
-        <div class="feature-num">01</div>
-        <h3>64 new maps</h3>
-        <p>Towns, a lake, a shrine road and a mountain you can actually climb — sixty-four maps drawn tile by tile.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">02</div>
-        <h3>Gens I–X, 50+ new sprites</h3>
-        <p>Ten generations of creatures in one region, plus over fifty custom sprite designs drawn for this game alone.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">03</div>
-        <h3>Battles that respect you</h3>
-        <p>Reworked type balance, faster animations, and a difficulty curve tuned by people who beat the original blindfolded.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">04</div>
-        <h3>New QoL and battle mechanics</h3>
-        <p>Fast travel, a searchable bag, run by default, reusable balls, and a reworked battle system. The tedium is gone; the game isn't.</p>
-      </article>
-      <article class="feature" data-reveal>
-        <div class="feature-num">05</div>
-        <h3>Download and play it right here</h3>
-        <p>Patch your own copy <a href="#download">in this tab</a> and press play — the game runs in your browser, no emulator to install. Keep the patched file too, if you'd rather play it on something else.</p>
-      </article>
+    <div class="ff-cast-row" role="tabpanel" id="panel-cast" aria-labelledby="tab-cast" data-panel="cast" data-rail>
+      <article class="ff-cast"><img src="assets/art/clarkson.webp" alt="Prof. Clarkson"><div class="ff-cast-body"><div class="ff-cast-name">Prof. Clarkson</div><span class="ff-tag">Researcher</span></div></article>
+      <article class="ff-cast"><img src="assets/art/edwards.webp" alt="Edwards"><div class="ff-cast-body"><div class="ff-cast-name">Edwards</div><span class="ff-tag ff-tag--paper">Rival</span></div></article>
+      <article class="ff-cast"><img src="assets/art/redfatality.webp" alt="Red Fatality"><div class="ff-cast-body"><div class="ff-cast-name">Red Fatality</div><span class="ff-tag ff-tag--gold">Antagonist</span></div></article>
+      <article class="ff-cast"><img src="assets/art/minister.webp" alt="The Minister"><div class="ff-cast-body"><div class="ff-cast-name">The Minister</div><span class="ff-tag">Edgerunner</span></div></article>
+      <article class="ff-cast"><img src="assets/art/allison.webp" alt="Allison"><div class="ff-cast-body"><div class="ff-cast-name">Allison</div><span class="ff-tag">Siren</span></div></article>
+      <article class="ff-cast"><img src="assets/art/mikmanc.webp" alt="Mikmanc"><div class="ff-cast-body"><div class="ff-cast-name">Mikmanc</div><span class="ff-tag">Lab tech</span></div></article>
+      <article class="ff-cast"><img src="assets/art/yiffer.webp" alt="Yiffer"><div class="ff-cast-body"><div class="ff-cast-name">Yiffer</div><span class="ff-tag">Dojo leader</span></div></article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ── media ──────────────────────────────────────────────────────── -->
-  <section id="media" class="wrap section">
-    <div class="kicker" data-reveal>TRAILER</div>
-    <!-- Click to load. Nothing is requested from YouTube until somebody
-         presses play: the poster comes from i.ytimg.com, which sets no
-         cookies, and site.js builds the nocookie iframe on the click.
-         With JS off this is simply a link to the video. -->
-    <div data-reveal>
-      <a class="trailer" data-trailer="UbLpkAqa8mI"
-         href="https://www.youtube.com/watch?v=UbLpkAqa8mI"
-         target="_blank" rel="noopener">
-        <img class="trailer-poster" src="https://i.ytimg.com/vi/UbLpkAqa8mI/maxresdefault.jpg"
-             width="1280" height="720" loading="lazy" alt="">
-        <span class="trailer-play" aria-hidden="true">▶</span>
-        <span class="trailer-label">OFFICIAL TRAILER<br><span>PRESS PLAY</span></span>
+<section class="ff-paper ff-band" id="downloads" aria-labelledby="dl-title" data-patcher>
+  <img class="ff-brush" src="assets/textures/brush-swipe-violet.webp" alt="" aria-hidden="true" style="left: -8%; top: 40px; width: 900px; opacity: .14;">
+  <div class="ff-wrap ff-downloads">
+    <div class="ff-downloads-copy">
+      <span class="ff-kicker">Free · no account · no launcher</span>
+      <h2 class="ff-display ff-h2" id="dl-title">Download <em class="ff-line"><span data-version>v1.2.6</span>.</em></h2>
+      <p class="ff-lede">Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
+      <div class="ff-counters">
+        <!-- Two SEPARATE tallies, and each says whose it is. The first is
+             GitHub's count of release-asset downloads, which is what the
+             Patch file button points at; the second is Hackdex's own. Neither
+             contains the other, so they are never summed. -->
+        <div class="ff-counter" data-counter>
+          <span class="ff-digits" data-count-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
+          <span class="ff-counter-label"><span class="ff-sr" data-count-sr></span><span class="ff-counter-title" data-count-title>Downloads from here</span><span class="ff-counter-sub" data-count-sub>since 12 August 2026</span></span>
+        </div>
+        <!-- Hidden until data/hackdex.json loads, so a missing file shows
+             nothing rather than a chip reading zero. -->
+        <div class="ff-counter" data-hd-counter hidden>
+          <span class="ff-digits" data-hd-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
+          <span class="ff-counter-label"><span class="ff-sr" data-hd-sr></span><span class="ff-counter-title">Downloads on Hackdex</span><span class="ff-counter-sub" data-hd-sub></span></span>
+        </div>
+      </div>
+      <div class="ff-links">
+        <a class="ff-btn ff-btn--violet" data-patch-link href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.2.6/wishes-of-tomorrow-1.2.6.bps">Patch file (.bps)<i class="ff-i ff-i-download" aria-hidden="true"></i></a>
+        <a class="ff-btn ff-btn--outline" href="https://github.com/jmaloney95/Wishes-Game/releases/latest">Release notes<i class="ff-i ff-i-external" aria-hidden="true"></i></a>
+      </div>
+      <a class="ff-hackdex" href="https://www.hackdex.app/hack/wishes-of-tomorrow" style="align-self: stretch; max-width: 460px;">
+        <span><span class="ff-hackdex-kicker">ALSO LISTED ON</span><span class="ff-hackdex-name">Hackdex</span></span>
+        <i class="ff-i ff-i-external" aria-hidden="true"></i>
       </a>
-      <!-- View count, filled from data/youtube.json by site.js and shown
-           only once a real figure loads. It is copied over by hand, so
-           this still asks nothing of YouTube until someone presses play. -->
-      <div class="trailer-stats" data-yt-views hidden>
-        <span class="views" data-tip="Views">
-          <svg class="views-eye" viewBox="0 0 11 7" width="22" height="14" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM7 0h1v1h-1zM1 1h1v1h-1zM2 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM0 2h1v1h-1zM4 2h1v1h-1zM5 2h1v1h-1zM6 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM5 3h1v1h-1zM6 3h1v1h-1zM7 3h1v1h-1zM10 3h1v1h-1zM0 4h1v1h-1zM4 4h1v1h-1zM5 4h1v1h-1zM6 4h1v1h-1zM10 4h1v1h-1zM1 5h1v1h-1zM2 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM7 6h1v1h-1z"/></svg>
-          <span data-yt-count aria-hidden="true"></span>
-          <span class="sr-only" data-yt-sr></span>
-        </span>
-      </div>
+      <p class="ff-note">Two separate counts. Neither includes the other, so they are never added together.</p>
     </div>
 
-    <div class="rail-head mt" data-reveal>
-      <div class="kicker">SCREENSHOTS</div>
-      <div class="rail-hint">scroll →</div>
+    <div class="ff-quest" id="patch" aria-labelledby="patch-title">
+      <div class="ff-quest-head">
+        <h3 class="ff-quest-title" id="patch-title">Patch &amp; play</h3>
+        <span class="ff-lock"><i class="ff-i ff-i-lock ff-i--1x" aria-hidden="true"></i>100% local · no upload</span>
+      </div>
+      <ol class="ff-quest-list">
+        <li class="ff-quest-row" data-slot="rom">
+          <span class="ff-quest-num">1</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Your base ROM</div><div class="ff-quest-sub"><span data-slot-name>No file chosen</span> <span data-slot-note></span></div><div class="ff-quest-bar"><i></i></div></div>
+          <div class="ff-quest-end"><label class="ff-btn ff-btn--light ff-btn--sm ff-quest-file" for="rom-file">Choose<input id="rom-file" type="file" accept=".gba,.zip,.bin"></label></div>
+        </li>
+        <li class="ff-quest-row" data-slot="patch">
+          <span class="ff-quest-num">2</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">The patch</div><div class="ff-quest-sub"><span data-slot-name>Loading…</span> <span data-slot-note></span></div><div class="ff-quest-bar"><i></i></div></div>
+          <div class="ff-quest-end"><label class="ff-btn ff-btn--light ff-btn--sm ff-quest-file" for="patch-file" title="Use a different patch file">Other<input id="patch-file" type="file" accept=".bps,.ups,.ips"></label></div>
+        </li>
+        <li class="ff-quest-row">
+          <span class="ff-quest-num">3</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Apply the patch</div><div class="ff-quest-sub">Checks your ROM against the patch first.</div><div class="ff-quest-bar"><i></i></div></div>
+          <div class="ff-quest-end"><button class="ff-btn ff-btn--violet ff-btn--sm" type="button" data-patch-apply disabled>Apply</button><a class="ff-btn ff-btn--light ff-btn--sm" data-patch-result hidden>Save</a></div>
+        </li>
+        <li class="ff-quest-row">
+          <span class="ff-quest-num">4</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Play in browser</div><div class="ff-quest-sub">Keyboard on desktop, a touch pad on phones.</div></div>
+          <!-- Shown from the start, disabled, so it's obvious that patching
+               leads somewhere. Enabled once a patch succeeds. -->
+          <div class="ff-quest-end"><button class="ff-btn ff-btn--violet ff-btn--sm" type="button" data-patch-play disabled title="Apply the patch first">Play in browser</button></div>
+        </li>
+      </ol>
+      <p class="patch-status is-idle" data-patch-status role="status" aria-live="polite"><strong>Loading the patcher…</strong></p>
+      <p class="ff-legal">We share a patch, not a game. Bring your own legally obtained ROM; it never leaves your device.</p>
     </div>
-    <div class="shot-rail" data-rail>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/title-screen.webp" width="240" height="160" loading="lazy" alt="The animated title screen: a nebula over a snow-capped peak, the Pokémon logo, and Shadow Jirachi hovering above the summit.">
-        <figcaption><b>TITLE SCREEN</b><span>NEW IN 1.2.1</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/frostwood.webp" width="960" height="640" loading="lazy" alt="Frostwood Town under snow: a log lodge strung with lights, a yellow cable-car gondola, a footbridge and a row of pines, with the player and their follower out front.">
-        <figcaption><b>FROSTWOOD TOWN</b><span>NEW IN 1.2.3</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/hall-of-fame.webp" width="960" height="640" loading="lazy" alt="The Hall of Fame: six Pokémon including a white shiny Gengar and several Shadow Pokémon, under &quot;Welcome to the HALL OF FAME!&quot; and the Wishes of Tomorrow v1.2.3 stamp.">
-        <figcaption><b>HALL OF FAME</b><span>NEW IN 1.2.3</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/siren-allison.webp" width="240" height="160" loading="lazy" alt="Siren Allison's name banner sweeping across the screen as she swims in toward the beach.">
-        <figcaption><b>SIREN ALLISON</b><span>BOSS FIGHT</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/shin-tokyo.webp" width="240" height="160" loading="lazy" alt="A rain-lit Shin-Tokyo street at night, with a cycling ALL HAIL billboard and patrolling guards.">
-        <figcaption><b>SHIN-TOKYO</b><span>OVERWORLD</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/doubles.webp" width="960" height="640" loading="lazy" alt="A double battle: Baxcalibur and Armor Mewtwo facing Rayquaza and Dracovish, with the battle menu open.">
-        <figcaption><b>DOUBLE BATTLE</b><span>BATTLE</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/shadow-jirachi.webp" width="960" height="640" loading="lazy" alt="A battle against a Shadow Jirachi, its move list showing Meteor Mash, Healing Wish, Rest and Future Sight.">
-        <figcaption><b>SHADOW JIRACHI</b><span>BATTLE</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/summit-reveal.webp" width="960" height="640" loading="lazy" alt="Two figures facing each other on a rock above molten ground, mid-confrontation.">
-        <figcaption><b>THE SUMMIT REVEAL</b><span>STORY</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/edwards.webp" width="960" height="640" loading="lazy" alt="General Edwards on a rain-lashed dock, telling the player that use of deadly force is authorized.">
-        <figcaption><b>GENERAL EDWARDS</b><span>STORY</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/ryuden-island.webp" width="960" height="640" loading="lazy" alt="Arriving on Ryuden Island, its name card shown across the top of a palm-lined shore.">
-        <figcaption><b>RYUDEN ISLAND</b><span>OVERWORLD</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/snag-ball.webp" width="960" height="640" loading="lazy" alt="An underwater battle against a shadow Lanturn, with the message &quot;You used Snag Ball!&quot;">
-        <figcaption><b>LAKE ENCOUNTER</b><span>BATTLE</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/region-map.webp" width="960" height="640" loading="lazy" alt="The region map open on the FLY screen with Shin-Tokyo selected.">
-        <figcaption><b>THE REGION MAP</b><span>POST-GAME</span></figcaption>
-      </figure>
-      <figure class="shot" data-reveal>
-        <img src="assets/media/private-jet.webp" width="960" height="640" loading="lazy" alt="Nessa beside a parked jet, telling the player that FLY and the PJ will take them anywhere.">
-        <figcaption><b>THE PRIVATE JET</b><span>POST-GAME</span></figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ── download ───────────────────────────────────────────────────── -->
-  <section id="download" class="wrap section">
-    <div class="download-panel" data-reveal>
-      <div class="download-grid" aria-hidden="true"></div>
-      <div class="download-inner">
-        <div>
-          <h2>Download <span data-version>v1.2.6</span></h2>
-          <p>Free, no account, no launcher. Grab the patch from the latest release and apply it to your own legally obtained base ROM.</p>
-
-          <!-- Two SEPARATE tallies, and each says whose it is. The first is
-               GitHub's count of release-asset downloads, which is what this
-               site's download button points at; the second is Hackdex's own.
-               Neither contains the other, so they are never summed. -->
-          <div class="counter-stack">
-            <div class="version-chip" data-counter>
-              <!-- Seeded so the chip never renders empty if scripts are slow,
-                   blocked, or briefly stale from cache. -->
-              <span class="digits" data-count-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
-              <span class="version-label">
-                <span class="sr-only" data-count-sr></span>
-                <span data-count-title>Downloads from here</span><br>
-                <span data-count-sub>since 12 August 2026</span>
-              </span>
-            </div>
-
-            <!-- Hidden until a real figure loads, so a missing or malformed
-                 file shows nothing rather than a chip reading zero. -->
-            <div class="version-chip" data-hd-counter hidden>
-              <span class="digits" data-hd-digits aria-hidden="true"><span>0</span><span>0</span><span>0</span><span>0</span></span>
-              <span class="version-label">
-                <span class="sr-only" data-hd-sr></span>
-                <span>Downloads on Hackdex</span><br>
-                <span data-hd-sub></span>
-              </span>
-            </div>
-          </div>
-
-          <div class="build-line">BUILT ON POKEEMERALD-EXPANSION<span class="caret">_</span></div>
-        </div>
-
-        <div class="download-links">
-          <!-- Points at the release asset, not the copy this site serves, so
-               GitHub records the download and the counter above has something
-               real to read. Works without JS. -->
-          <a class="dl dl-primary" data-patch-link
-             href="https://github.com/jmaloney95/Wishes-Game/releases/download/v1.2.6/wishes-of-tomorrow-1.2.6.bps">
-            <span>Patch file (.bps)</span><span class="dl-meta">↓</span>
-          </a>
-          <a class="dl" href="https://github.com/jmaloney95/Wishes-Game/releases/latest">
-            <span>Release notes</span><span class="dl-meta">↗</span>
-          </a>
-          <a class="dl" href="https://github.com/jmaloney95/Wishes-Game">
-            <span>Source &amp; issues on GitHub</span><span class="dl-meta">↗</span>
-          </a>
-
-          <!-- Hackdex's own colours. The mark is optional: their origin answers
-               429 to anything that is not a browser, so it can neither be
-               fetched by a build step nor hotlinked. Save their logo to
-               assets/hackdex-logo.png and it appears; until then onerror
-               drops the tag and the card reads as a wordmark. -->
-          <a class="hackdex-card" href="https://www.hackdex.app/hack/wishes-of-tomorrow">
-            <img class="hackdex-mark" src="assets/hackdex-logo.png" width="36" height="36"
-                 alt="" aria-hidden="true" onerror="this.remove()">
-            <span class="hackdex-copy">
-              <span class="hackdex-kicker">ALSO LISTED ON</span>
-              <span class="hackdex-name">Hackdex</span>
-            </span>
-            <span class="hackdex-go">View the listing <span aria-hidden="true">↗</span></span>
-          </a>
-        </div>
+  </div>
+  <!-- Built only when the player asks for it: the emulator is about a
+       megabyte and a half, and most visitors just want the patch. -->
+  <div class="ff-wrap ff-player" data-player hidden>
+    <div class="ff-player-head">
+      <span class="ff-player-plate">Now playing</span>
+      <div class="ff-player-actions">
+        <button class="ff-btn ff-btn--outline ff-btn--sm" type="button" data-player-fs>Fullscreen</button>
+        <button class="ff-btn ff-btn--outline ff-btn--sm" type="button" data-player-close>Close player</button>
       </div>
     </div>
+    <div class="ff-player-stage"><div id="game"></div></div>
+    <p class="ff-player-note">Desktop: arrows + <b>Z</b>/<b>X</b>, <b>Enter</b> for Start. Phone: the pad appears on its own; <b>Fast</b> toggles fast-forward and <b>Fullscreen</b> goes big. Saves live in this browser; export from the emulator's menu to keep one.</p>
+  </div>
+</section>
 
-    <!-- ── in-browser patcher ──────────────────────────────────────── -->
-    <div class="patcher" data-patcher data-reveal>
-      <div class="patcher-head">
-        <div>
-          <div class="kicker">APPLY THE PATCH</div>
-          <h3>Patch it here, in this tab.</h3>
-          <p>Pick your copy of <b>Pokémon Emerald (U)</b>, hit Apply, and play — right here in your browser.</p>
-        </div>
-        <div class="patcher-privacy" aria-hidden="true">
-          <span class="lock">▣</span>
-          <span>100% local<br>no upload</span>
-        </div>
+<section class="ff-paper ff-band" aria-labelledby="inside-title" style="padding-top: 24px;">
+  <div class="ff-wrap">
+    <div class="ff-section-head">
+      <div style="display: flex; flex-direction: column; gap: 16px;">
+        <span class="ff-kicker">Quality of life changes</span>
+        <h2 class="ff-display ff-h2" id="inside-title">What's <em>inside.</em></h2>
       </div>
-
-      <div class="patch-steps">
-        <div class="patch-slot" data-slot="rom">
-          <div class="patch-step">1</div>
-          <div class="patch-slot-body">
-            <div class="patch-slot-label">Your base ROM</div>
-            <div class="patch-slot-name" data-slot-name>No file chosen</div>
-            <div class="patch-slot-note" data-slot-note></div>
-          </div>
-          <label class="patch-pick" for="rom-file">Choose…<input id="rom-file" type="file"></label>
-        </div>
-
-        <div class="patch-slot" data-slot="patch">
-          <div class="patch-step">2</div>
-          <div class="patch-slot-body">
-            <div class="patch-slot-label">The patch</div>
-            <div class="patch-slot-name" data-slot-name>Loading…</div>
-            <div class="patch-slot-note" data-slot-note></div>
-          </div>
-          <label class="patch-pick" for="patch-file">Choose…<input id="patch-file" type="file"></label>
-        </div>
-      </div>
-
-      <div class="patch-actions">
-        <button class="patch-apply" type="button" data-patch-apply disabled>Apply patch</button>
-        <a class="patch-result" data-patch-result hidden>Save patched ROM</a>
-        <!-- Shown from the start, disabled, so it's obvious that patching
-             leads somewhere. Enabled once a patch succeeds. -->
-        <button class="patch-play" type="button" data-patch-play disabled
-                title="Apply the patch first">▶ Play in browser</button>
-      </div>
-
-      <p class="patch-status is-idle" data-patch-status role="status" aria-live="polite">
-        <strong>Loading the patcher…</strong>
-      </p>
-
-      <!-- Built only when the player asks for it: the emulator is about a
-           megabyte and a half, and most visitors just want the patch. -->
-      <div class="player" data-player hidden>
-        <div class="player-head">
-          <div class="kicker">NOW PLAYING</div>
-          <div class="player-head-actions">
-            <button class="player-close" type="button" data-player-fs>⛶ Fullscreen</button>
-            <button class="player-close" type="button" data-player-close>Close player</button>
-          </div>
-        </div>
-        <div class="player-stage"><div id="game"></div></div>
-        <p class="player-note">
-          Desktop: arrows + <b>Z</b>/<b>X</b>, <b>Enter</b> for Start. Phone: the pad
-          appears on its own — <b>Fast</b> toggles fast-forward, <b>⛶ Fullscreen</b>
-          goes big. Saves live in this browser; export from the emulator's menu
-          to keep one.
-        </p>
-      </div>
-
-      <p class="patch-legal">We share a patch, not a game — bring your own legally obtained ROM. It never leaves your device.</p>
+      <p class="ff-lede" style="max-width: 40ch;">Ten generations, an original region beneath Mt. Fuji and a reworked battle system. The tedium is gone; the game isn't.</p>
     </div>
-  </section>
-
-  <!-- ── requirements + changelog ───────────────────────────────────── -->
-  <section id="requirements" class="wrap section two-col">
-    <div>
-      <div class="kicker" data-reveal>REQUIREMENTS</div>
-      <h2 class="h-sm" data-reveal>What you need</h2>
-      <dl class="req">
-        <div data-reveal><dt>Base ROM</dt><dd>Your own legally obtained dump of <b>Pokémon Emerald (U)</b> — 16 MB unzipped, header code BPEE. A zipped copy (about 6 MB) is fine too: <a href="#download">the patcher on this page</a> unzips it for you. Not included, not linked.</dd></div>
-        <div data-reveal><dt>Patcher</dt><dd>None needed — <a href="#download">the patcher on this page</a> runs in your browser. Flips works too if you'd rather do it offline.</dd></div>
-        <div data-reveal><dt>Emulator</dt><dd>mGBA 0.10+ recommended. VBA-M and Delta on iOS also tested.</dd></div>
-        <div data-reveal><dt>Hardware</dt><dd>Runs on original GBA hardware via flash cart, and on Analogue Pocket.</dd></div>
-        <div data-reveal><dt>Save files</dt><dd>128KB flash save. Set your emulator's save type to Flash 128K if it doesn't detect it.</dd></div>
-        <div data-reveal><dt>Or none of it</dt><dd>You can skip every line above and <a href="#download">play in this tab</a> — patch your ROM here and press play. Keyboard on desktop, on-screen pad on phones, saves kept in your browser.</dd></div>
-      </dl>
+    <div class="ff-features">
+      <article class="ff-feature">
+        <div class="ff-feature-art"><img src="assets/art/sprites/browt.png" width="64" height="78" alt="Browt"><img src="assets/art/sprites/pombon.png" width="72" height="90" alt="Pombon"><img src="assets/art/sprites/gecqua.png" width="80" height="66" alt="Gecqua"></div>
+        <h3>Gens I–X, 50+ new sprites</h3>
+        <p>Ten generations in one region, plus over fifty sprite designs drawn for this game alone.</p>
+      </article>
+      <article class="ff-feature">
+        <div class="ff-feature-art"><img src="assets/art/sprites/shadow-jirachi-fire.png" width="102" height="128" alt="Shadow Jirachi"></div>
+        <h3>Shadow Pokémon</h3>
+        <p>The Snag Machine from XD: Gale of Darkness is back. Shadow Pokémon are stronger but take more damage, and may disobey or go into Hyper Mode.</p>
+      </article>
+      <article class="ff-feature">
+        <div class="ff-feature-art"><img src="assets/art/sprites/armored-mewtwo.png" width="116" height="128" alt="Armored Mewtwo"></div>
+        <h3>Randomizer mode</h3>
+        <p>Play the game with random spawns, starters, or trainers.</p>
+      </article>
+      <article class="ff-feature">
+        <div class="ff-feature-art" style="padding: 0;"><img src="assets/media/munen-village-map.webp" alt="Munen Village from above" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 38% 40%;"></div>
+        <h3>64 new maps</h3>
+        <p>Towns, a lake, a shrine road and a mountain you can actually climb.</p>
+      </article>
     </div>
-    <div>
-      <div class="kicker" data-reveal>CHANGELOG</div>
-      <h2 class="h-sm" data-reveal>Recent versions</h2>
-      <!-- Each version folds; the newest ships open. The dot sits inside
-           the summary because a closed <details> renders nothing else. -->
+  </div>
+</section>
+
+<section class="ff-violet ff-band ff-torn-top ff-torn-bottom" aria-labelledby="guide-title">
+  <span class="ff-halftone" aria-hidden="true" style="left: 2%; top: 20px; width: 480px; height: 360px;"></span>
+  <img class="ff-brush" src="assets/textures/brush-swipe-night.webp" alt="" aria-hidden="true" style="right: -6%; bottom: 10px; width: 820px; opacity: .55;">
+  <div class="ff-wrap ff-guideband">
+    <div class="ff-guideband-copy">
+      <span class="ff-jp" lang="ja" style="color: var(--gold);">道しるべ</span>
+      <h2 class="ff-display ff-h2" id="guide-title">Field <em>guide.</em></h2>
+      <p class="ff-lede">Pick a map. The line is the route through it; the numbers are what is worth stopping for. Spoilers throughout.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px;"><span class="ff-tag ff-tag--gold">49 maps</span><span class="ff-tag ff-tag--paper">All three acts</span></div>
+      <a class="ff-btn ff-btn--light" href="guide">Open the guide<i class="ff-i ff-i-arrow" aria-hidden="true"></i></a>
+    </div>
+    <div class="ff-prints" aria-hidden="true">
+      <figure class="ff-print" style="left: 4%; top: 30px; transform: rotate(-5deg);"><img src="assets/media/munen-village-map.webp" alt="" style="width: 330px; height: 180px;"><figcaption>ACT 1 · MUNEN VILLAGE</figcaption></figure>
+      <figure class="ff-print" style="left: 42%; top: 0; transform: rotate(4deg);"><img src="assets/media/region-map.webp" alt="" style="width: 300px; height: 200px;"><figcaption>THE REGION MAP</figcaption></figure>
+      <figure class="ff-print" style="left: 30%; top: 150px; transform: rotate(-1.5deg);"><img src="assets/media/frostwood.webp" alt="" style="width: 270px; height: 180px;"><figcaption>FROSTWOOD TOWN</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="ff-paper ff-band" aria-label="Changelog, requirements and questions">
+  <div class="ff-wrap ff-ref">
+    <div class="ff-ref-col ff-log" id="changelog">
+      <h2 class="ff-display ff-h3">Change<em>log</em></h2>
       <div data-changelog>
-        <details class="change" data-reveal open>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.6</span><span class="change-date">3 October 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>No more crash after leaving the beach lifeguard shack or the yacht. One beach trainer was drawn with a FireRed sprite whose colours this game doesn't have, and opening the Bag or another menu afterwards could freeze it. She's gone.</li>
-            <li>The yacht lets you aboard once you have the Yacht Key. Below deck are three prototypes, Browt, Pombon and Gecqua, and you get to keep one.</li>
-            <li>Randomized trainers fight with real movesets. Every swapped Pokémon used to be stuck on Struggle.</li>
-            <li>The map shows this region around Sennen instead of Kanto, and Fly works from the Sennen beach.</li>
-            <li>New in Options: fast forward at 2x for an easier pace on the overworld (battles still run as fast as 3x), and AUTO SPRINT, either a tap of B to switch between running and walking or the classic hold B to run.</li>
-            <li>An Infinite Candy for new games: a Rare Candy that never runs out.</li>
-            <li>A new title screen, a new look for General Edwards, and character portraits switched off until they're redrawn by hand.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.4</span><span class="change-date">23 September 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>You can get off the Shinkansen again. The door tile had never been marked as a door, so the exit the map declared never fired and the carriage was a dead end. Fixed on both trains.</li>
-            <li>Yiffer makes you earn the free sample. The Strength HM in Munen Tunnel now comes after a fight, with a boss card, Zangoose, Zeraora and a Machamp.</li>
-            <li>Walnut Woods is redrawn on the snow set, with Munen Village touched up alongside it.</li>
-            <li>The space battle backdrop is credited to LibertyTwins, who drew it.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.3</span><span class="change-date">21 September 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>The early game is redrawn: your bedroom, Munen Village, Munen Lake, Walnut Woods and Frostwood Town, on new snow tilesets with ice you slide on and snow that keeps your footprints.</li>
-            <li>Losing to a trainer whites you out again. It had stopped after the first Snag, which is why Ryoko kept re-challenging and the Oni handed over his badge anyway.</li>
-            <li>Fast forward no longer freezes a battle when you close the Bag or the Pokémon menu.</li>
-            <li>Ryuden Island's Dragon Wardens and egg no longer vanish because you picked up the Munen Master Ball or the Super Rod first.</li>
-            <li>Shadow Jirachi's battle sprite is back in one piece, and the title screen and character portraits got a proper clean-up.</li>
-            <li>Each starter pedestal rolls its own 1-in-10 shiny, and the preview shows it before you choose.</li>
-            <li>The clock runs on play time now, and the Start menu shows the day, the time and your money.</li>
-            <li>Shiny Gengar follows you in white, matching its battle sprite. Follower art by CloneBtw.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.2</span><span class="change-date">9 September 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>Wild double battles turn up now, and you can aim a Poké Ball at whichever one you actually want.</li>
-            <li>Shinies at 1 in 256, with a gold HP box so you cannot scroll past one by accident.</li>
-            <li>An Exp. Share in your bag from the first step. Switch it off any time by using it.</li>
-            <li>3x fast forward in Options. The music keeps its own time, so nothing sounds like a chipmunk.</li>
-            <li>Each starter learned something with a bit of personality to it.</li>
-            <li>The tower guards no longer crash the game on sight, which they had been doing rather reliably.</li>
-            <li>The Minister will sell you a Mega Stone without taking the game down with him.</li>
-            <li>NPCs stopped walking out through the walls. Clarkson in particular.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.1</span><span class="change-date">28 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>Defragmented Siren Allison. She swims now.</li>
-            <li>Restored Shadow Jirachi's aura — the wrong Jirachi had been turning up to its own boss fight.</li>
-            <li>Upgraded the title screen art.</li>
-            <li>Added post-game Battle Frontier access. The ship accepts passengers at last.</li>
-            <li>Shadow Pokémon remembered how to Mega Evolve.</li>
-            <li>Megas now turn up for the Hall of Fame photo instead of reverting.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.2.0</span><span class="change-date">27 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>Randomizer Mode. Reroll starters, wilds and Trainers — levels stay exactly where they were.</li>
-            <li>A dragon starter trio: Gible, Frigibax and Axew.</li>
-            <li>Mega Stones, three of them lying around the Distortion World.</li>
-            <li>A Game Corner that finally sells things worth the coins.</li>
-            <li>The yacht questline pays out.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.1.0</span><span class="change-date">13 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>Name your own character.</li>
-            <li>Custom battle backdrops region-wide, including sea battles that know what time it is.</li>
-            <li>Shadow sprites that sit right.</li>
-            <li>Post-game FLY reaches everywhere.</li>
-            <li>Save-compatible with v1.0.0 — keep your run.</li>
-          </ul>
-        </details>
-        <details class="change" data-reveal>
-          <summary class="change-head"><span class="change-dot" aria-hidden="true"></span><span class="change-v">v1.0.0</span><span class="change-date">12 August 2026</span><span class="plus" aria-hidden="true">+</span></summary>
-          <ul>
-            <li>The whole three-act campaign.</li>
-            <li>An original region.</li>
-            <li>Shadow Pokémon: snag them, purify them.</li>
-          </ul>
-        </details>
+          <details open>
+            <summary><span class="ff-log-v">v1.2.6</span><span class="ff-tag">New</span><span class="ff-log-date">3 October 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>No more crash after leaving the beach lifeguard shack or the yacht. One beach trainer was drawn with a FireRed sprite whose colours this game doesn't have, and opening the Bag or another menu afterwards could freeze it. She's gone.</li>
+              <li>The yacht lets you aboard once you have the Yacht Key. Below deck are three prototypes, Browt, Pombon and Gecqua, and you get to keep one.</li>
+              <li>Randomized trainers fight with real movesets. Every swapped Pokémon used to be stuck on Struggle.</li>
+              <li>The map shows this region around Sennen instead of Kanto, and Fly works from the Sennen beach.</li>
+              <li>New in Options: fast forward at 2x for an easier pace on the overworld (battles still run as fast as 3x), and AUTO SPRINT, either a tap of B to switch between running and walking or the classic hold B to run.</li>
+              <li>An Infinite Candy for new games: a Rare Candy that never runs out.</li>
+              <li>A new title screen, a new look for General Edwards, and character portraits switched off until they're redrawn by hand.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.2.4</span><span class="ff-log-date">23 September 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>You can get off the Shinkansen again. The door tile had never been marked as a door, so the exit the map declared never fired and the carriage was a dead end. Fixed on both trains.</li>
+              <li>Yiffer makes you earn the free sample. The Strength HM in Munen Tunnel now comes after a fight, with a boss card, Zangoose, Zeraora and a Machamp.</li>
+              <li>Walnut Woods is redrawn on the snow set, with Munen Village touched up alongside it.</li>
+              <li>The space battle backdrop is credited to LibertyTwins, who drew it.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.2.3</span><span class="ff-log-date">21 September 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>The early game is redrawn: your bedroom, Munen Village, Munen Lake, Walnut Woods and Frostwood Town, on new snow tilesets with ice you slide on and snow that keeps your footprints.</li>
+              <li>Losing to a trainer whites you out again. It had stopped after the first Snag, which is why Ryoko kept re-challenging and the Oni handed over his badge anyway.</li>
+              <li>Fast forward no longer freezes a battle when you close the Bag or the Pokémon menu.</li>
+              <li>Ryuden Island's Dragon Wardens and egg no longer vanish because you picked up the Munen Master Ball or the Super Rod first.</li>
+              <li>Shadow Jirachi's battle sprite is back in one piece, and the title screen and character portraits got a proper clean-up.</li>
+              <li>Each starter pedestal rolls its own 1-in-10 shiny, and the preview shows it before you choose.</li>
+              <li>The clock runs on play time now, and the Start menu shows the day, the time and your money.</li>
+              <li>Shiny Gengar follows you in white, matching its battle sprite. Follower art by CloneBtw.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.2.2</span><span class="ff-log-date">9 September 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>Wild double battles turn up now, and you can aim a Poké Ball at whichever one you actually want.</li>
+              <li>Shinies at 1 in 256, with a gold HP box so you cannot scroll past one by accident.</li>
+              <li>An Exp. Share in your bag from the first step. Switch it off any time by using it.</li>
+              <li>3x fast forward in Options. The music keeps its own time, so nothing sounds like a chipmunk.</li>
+              <li>Each starter learned something with a bit of personality to it.</li>
+              <li>The tower guards no longer crash the game on sight, which they had been doing rather reliably.</li>
+              <li>The Minister will sell you a Mega Stone without taking the game down with him.</li>
+              <li>NPCs stopped walking out through the walls. Clarkson in particular.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.2.1</span><span class="ff-log-date">28 August 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>Defragmented Siren Allison. She swims now.</li>
+              <li>Restored Shadow Jirachi's aura — the wrong Jirachi had been turning up to its own boss fight.</li>
+              <li>Upgraded the title screen art.</li>
+              <li>Added post-game Battle Frontier access. The ship accepts passengers at last.</li>
+              <li>Shadow Pokémon remembered how to Mega Evolve.</li>
+              <li>Megas now turn up for the Hall of Fame photo instead of reverting.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.2.0</span><span class="ff-log-date">27 August 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>Randomizer Mode. Reroll starters, wilds and Trainers — levels stay exactly where they were.</li>
+              <li>A dragon starter trio: Gible, Frigibax and Axew.</li>
+              <li>Mega Stones, three of them lying around the Distortion World.</li>
+              <li>A Game Corner that finally sells things worth the coins.</li>
+              <li>The yacht questline pays out.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.1.0</span><span class="ff-log-date">13 August 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>Name your own character.</li>
+              <li>Custom battle backdrops region-wide, including sea battles that know what time it is.</li>
+              <li>Shadow sprites that sit right.</li>
+              <li>Post-game FLY reaches everywhere.</li>
+              <li>Save-compatible with v1.0.0 — keep your run.</li>
+            </ul>
+          </details>
+          <details>
+            <summary><span class="ff-log-v">v1.0.0</span><span class="ff-log-date">12 August 2026</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary>
+            <ul>
+              <li>The whole three-act campaign.</li>
+              <li>An original region.</li>
+              <li>Shadow Pokémon: snag them, purify them.</li>
+            </ul>
+          </details>
       </div>
-      <p class="change-note" data-reveal>Every release is listed on the <a href="https://github.com/jmaloney95/Wishes-Game/releases">releases page</a>.</p>
+      <p class="ff-note">Every release is listed on the <a class="ff-link" href="https://github.com/jmaloney95/Wishes-Game/releases">releases page</a>.</p>
     </div>
-  </section>
-
-  <!-- ── credits ────────────────────────────────────────────────────── -->
-  <section id="credits" class="wrap section">
-    <div class="kicker" data-reveal>CREDITS</div>
-    <h2 class="h-sm" data-reveal>Who drew it.</h2>
-    <dl class="req">
-      <div data-reveal><dt>Sprite design</dt><dd>Rafael Sanna · aveontrainer · baylorhernandez · biadoxaf · DarkusShadow · jaov46</dd></div>
-      <div data-reveal><dt>Character art</dt><dd>ToxShadows642</dd></div>
-      <div data-reveal><dt>Shadow sprites</dt><dd>pogokitten · WeeGeeDude · Quanyails</dd></div>
-      <div data-reveal><dt>Tileset art</dt><dd>pinkscales · Phyromatical · MagiScarf · PeekyChew · Elinthind · lo8jd · Dark Slayer</dd></div>
-      <div data-reveal><dt>Shin-Tokyo art</dt><dd>Emeiry · Odisea by ekat99</dd></div>
-      <div data-reveal><dt>Battle backdrops</dt><dd>carchagui · LibertyTwins · aveontrainer</dd></div>
-    </dl>
-    <p class="change-note" data-reveal>The full roll — engine, music, playtesting — plays at the end of the game.</p>
-  </section>
-
-  <!-- ── faq ────────────────────────────────────────────────────────── -->
-  <section id="faq" class="wrap section faq">
-    <div class="kicker" data-reveal>FAQ</div>
-    <h2 data-reveal>Questions people actually ask</h2>
-
-    <details data-reveal>
-      <summary><span>Is it free?</span><span class="plus">+</span></summary>
-      <p>Yes, and it stays that way. There is no paid tier, no cosmetics, and no donation nag inside the game.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>Do I need the original cartridge?</span><span class="plus">+</span></summary>
-      <p>You need your own legally obtained dump of Pokémon Emerald (U) to apply the patch to. We distribute a patch, not a game — we don't provide the base ROM and can't help you find one.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>How do I apply the patch?</span><span class="plus">+</span></summary>
-      <p>Use <a href="#download">the patcher further up this page</a>: choose your base ROM, press Apply, save the result. It all happens inside your browser — the ROM is never uploaded anywhere, and this site has no server that could receive it. If you'd rather patch offline, the file is a standard BPS and works with Flips or any other patcher.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>Can I play it without installing an emulator?</span><span class="plus">+</span></summary>
-      <p>Yes. Patch your ROM <a href="#download">on this page</a>, then press <b>Play in browser</b> — the emulator loads on demand and boots the ROM you just built, with keyboard controls on desktop and an on-screen pad on phones. Nothing is uploaded; the game runs on your own machine. Saves are kept in your browser, so export them from the emulator's menu if you want to move them to a real emulator or a flash cart.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>The patcher says my ROM is wrong. Now what?</span><span class="plus">+</span></summary>
-      <p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE. A .zip of that file also works — the patcher unzips it before checking.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>Can I play it on my phone?</span><span class="plus">+</span></summary>
-      <p>Yes — any modern GBA emulator works. Delta on iOS and mGBA on Android are the two we test against each release.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>Will saves carry over between versions?</span><span class="plus">+</span></summary>
-      <p>Yes — v1.2.6 loads saves from every earlier version, and nothing in it touches a save slot. Patch a fresh ROM with the new version and keep using your existing save. One control works differently on any older save: B is now a tap that switches between running and walking, where it used to be held to walk. Choose HOLD B under AUTO SPRINT in Options for hold-to-run. Two things change on a save from v1.2.2 or earlier: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>How do I report a bug?</span><span class="plus">+</span></summary>
-      <p>Open an issue on <a href="https://github.com/jmaloney95/Wishes-Game/issues">GitHub</a>, or email <a href="mailto:joe@flatfootlabs.com">joe@flatfootlabs.com</a> with your version number and the save file if you have it.</p>
-    </details>
-    <details data-reveal>
-      <summary><span>Is there a sequel?</span><span class="plus">+</span></summary>
-      <p>Something is in prototype. It's smaller, and it's not set near the mountain.</p>
-    </details>
-  </section>
+    <div class="ff-ref-col" id="requirements">
+      <h2 class="ff-display ff-h3">What you <em>need</em></h2>
+      <dl class="ff-spec">
+        <div><dt>Base ROM</dt><dd>Your own legally obtained dump of <b>Pokémon Emerald (U)</b> — 16 MB unzipped, header code BPEE. A zipped copy (about 6 MB) is fine too: <a href="#patch">the patcher on this page</a> unzips it for you. Not included, not linked.</dd></div>
+        <div><dt>Patcher</dt><dd>None needed — <a href="#patch">the patcher on this page</a> runs in your browser. Flips works too if you'd rather do it offline.</dd></div>
+        <div><dt>Emulator</dt><dd>mGBA 0.10+ recommended. VBA-M and Delta on iOS also tested.</dd></div>
+        <div><dt>Hardware</dt><dd>Runs on original GBA hardware via flash cart, and on Analogue Pocket.</dd></div>
+        <div><dt>Save files</dt><dd>128KB flash save. Set your emulator's save type to Flash 128K if it doesn't detect it.</dd></div>
+        <div><dt>Or none of it</dt><dd>You can skip every line above and <a href="#patch">play in this tab</a> — patch your ROM here and press play. Keyboard on desktop, on-screen pad on phones, saves kept in your browser.</dd></div>
+      </dl>
+      <h2 class="ff-display ff-h3" id="credits" style="margin-top: 18px;">Who <em>drew it</em></h2>
+      <dl class="ff-spec">
+        <div><dt>Sprite design</dt><dd>Rafael Sanna · aveontrainer · baylorhernandez · biadoxaf · DarkusShadow · jaov46</dd></div>
+        <div><dt>Character art</dt><dd>ToxShadows642</dd></div>
+        <div><dt>Shadow sprites</dt><dd>pogokitten · WeeGeeDude · Quanyails</dd></div>
+        <div><dt>Tileset art</dt><dd>pinkscales · Phyromatical · MagiScarf · PeekyChew · Elinthind · lo8jd · Dark Slayer</dd></div>
+        <div><dt>Shin-Tokyo art</dt><dd>Emeiry · Odisea by ekat99</dd></div>
+        <div><dt>Battle backdrops</dt><dd>carchagui · LibertyTwins · aveontrainer</dd></div>
+      </dl>
+      <p class="ff-note">The full roll — engine, music, playtesting — plays at the end of the game.</p>
+    </div>
+    <div class="ff-ref-col ff-faq" id="faq">
+      <h2 class="ff-display ff-h3">Questions people <em>actually ask</em></h2>
+      <div>
+        <details open><summary><span>Is it free?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes, and it stays that way. There is no paid tier, no cosmetics, and no donation nag inside the game.</p></details>
+        <details><summary><span>Do I need the original cartridge?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>You need your own legally obtained dump of Pokémon Emerald (U) to apply the patch to. We distribute a patch, not a game — we don't provide the base ROM and can't help you find one.</p></details>
+        <details><summary><span>How do I apply the patch?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Use <a href="#patch">the patcher further up this page</a>: choose your base ROM, press Apply, save the result. It all happens inside your browser — the ROM is never uploaded anywhere, and this site has no server that could receive it. If you'd rather patch offline, the file is a standard BPS and works with Flips or any other patcher.</p></details>
+        <details><summary><span>Can I play it without installing an emulator?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes. Patch your ROM <a href="#patch">on this page</a>, then press <b>Play in browser</b> — the emulator loads on demand and boots the ROM you just built, with keyboard controls on desktop and an on-screen pad on phones. Nothing is uploaded; the game runs on your own machine. Saves are kept in your browser, so export them from the emulator's menu if you want to move them to a real emulator or a flash cart.</p></details>
+        <details><summary><span>The patcher says my ROM is wrong. Now what?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE. A .zip of that file also works — the patcher unzips it before checking.</p></details>
+        <details><summary><span>Can I play it on my phone?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes — any modern GBA emulator works. Delta on iOS and mGBA on Android are the two we test against each release.</p></details>
+        <details><summary><span>Will saves carry over between versions?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes — v1.2.6 loads saves from every earlier version, and nothing in it touches a save slot. Patch a fresh ROM with the new version and keep using your existing save. One control works differently on any older save: B is now a tap that switches between running and walking, where it used to be held to walk. Choose HOLD B under AUTO SPRINT in Options for hold-to-run. Two things change on a save from v1.2.2 or earlier: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p></details>
+        <details><summary><span>How do I report a bug?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Open an issue on <a href="https://github.com/jmaloney95/Wishes-Game/issues">GitHub</a>, or email <a href="mailto:joe@flatfootlabs.com">joe@flatfootlabs.com</a> with your version number and the save file if you have it.</p></details>
+        <details><summary><span>Is there a sequel?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Something is in prototype. It's smaller, and it's not set near the mountain.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
 
 </main>
-
-<footer class="site-footer">
-  <span class="foot-brand">Wishes of Tomorrow · a Flatfoot Games release</span>
-  <a href="labs">Flatfoot Labs</a>
-  <a href="https://github.com/jmaloney95/Wishes-Game">GitHub</a>
-  <a href="mailto:joe@flatfootlabs.com">Email</a>
-  <a href="#top">Back to top</a>
+<footer class="ff-night ff-footer ff-torn-top">
+  <img class="ff-footer-oni" src="assets/art/battle-sprite.png" width="192" height="192" alt="" aria-hidden="true">
+  <img class="ff-brush" src="assets/textures/brush-slash-glow.webp" alt="" aria-hidden="true" style="right: -10%; bottom: -60px; width: 700px; opacity: .35;">
+  <div class="ff-wrap ff-footer-top">
+    <div style="display: flex; flex-direction: column; gap: 18px;">
+      <span class="ff-kicker">Flatfoot Labs</span>
+      <h2 class="ff-display ff-h2">Say hello. <em class="ff-line">Send a bug.</em></h2>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+      <div class="ff-mailbox"><span>joe@flatfootlabs.com</span><a class="ff-btn ff-btn--violet" href="mailto:joe@flatfootlabs.com">Email<i class="ff-i ff-i-mail" aria-hidden="true"></i></a></div>
+      <a class="ff-btn ff-btn--outline" href="https://github.com/jmaloney95/Wishes-Game/issues" style="align-self: flex-start;">Report a bug on GitHub<i class="ff-i ff-i-external" aria-hidden="true"></i></a>
+      <p lang="ja" style="margin: 10px 0 0; font-family: var(--font-jp); font-size: 22px; line-height: 1.2; color: var(--gold);">すべての願いには代償がある。</p>
+      <p style="margin: 0; font-size: 13px; color: var(--on-night-faint);">Every wish has a price.</p>
+    </div>
+  </div>
+  <div class="ff-wrap ff-footer-bottom">
+    <a class="ff-logo" href="#top"><img src="assets/art/shadow-jirachi-logo.png" width="49" height="52" alt=""><span class="ff-logo-word" style="font-size: 20px;">Wishes of Tomorrow<small>A FLATFOOT GAMES RELEASE</small></span></a>
+    <span>© 2026 Flatfoot Labs</span>
+    <nav class="ff-footer-links" aria-label="Footer">
+      <a href="labs">Flatfoot Labs</a>
+      <a href="https://github.com/jmaloney95/Wishes-Game">GitHub</a>
+      <a href="mailto:joe@flatfootlabs.com">Email</a>
+      <a href="#top">Back to top</a>
+    </nav>
+  </div>
 </footer>
 
-<script src="assets/site.js?v=20261003a" defer></script>
-<script src="assets/patcher.js?v=20261003a" defer></script>
+<script src="assets/site.js?v=20261004a" defer></script>
+<script src="assets/patcher.js?v=20261004a" defer></script>
 </body>
 </html>

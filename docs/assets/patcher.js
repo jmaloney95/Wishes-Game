@@ -460,7 +460,9 @@
       ui.result.href = resultUrl;
       ui.result.download = PATCH.outputName;
       ui.result.hidden = false;
-      ui.result.textContent = "Save " + PATCH.outputName + " (" + fmtBytes(out.length) + ")";
+      // Short label for the quest row's button; the full name goes in the title.
+      ui.result.textContent = "Save (" + fmtBytes(out.length) + ")";
+      ui.result.title = "Save " + PATCH.outputName;
 
       patchedRom = out;
       if (ui.play) {
@@ -531,7 +533,7 @@
     fsActive = on;
     ui.player.classList.toggle("is-fs", on);
     document.documentElement.classList.toggle("has-fs-player", on);
-    if (ui.fs) ui.fs.textContent = on ? "✕ Exit fullscreen" : "⛶ Fullscreen";
+    if (ui.fs) ui.fs.textContent = on ? "Exit fullscreen" : "Fullscreen";
     // Nudge the emulator to re-measure its canvas.
     window.dispatchEvent(new Event("resize"));
   }
@@ -562,8 +564,8 @@
     window.EJS_pathtodata = PLAYER.data;
     window.EJS_gameUrl = URL.createObjectURL(new Blob([patchedRom], { type: "application/octet-stream" }));
     window.EJS_gameName = "Wishes of Tomorrow";
-    window.EJS_color = "#9184d9";
-    window.EJS_backgroundColor = "#161826";
+    window.EJS_color = "#7614d8";
+    window.EJS_backgroundColor = "#100d14";
     window.EJS_startButtonName = "PRESS START";
     window.EJS_alignStartButton = "center";
     // Menu entries we have no use for: cheats, the download cache manager,
@@ -573,7 +575,7 @@
     window.EJS_startOnLoaded = true;
     window.EJS_onGameStart = function () {
       ui.play.disabled = false;
-      ui.play.textContent = "▶ Playing";
+      ui.play.textContent = "Playing";
       makeFastForwardToggle();
       restrictMenuToButton();
     };
@@ -583,7 +585,7 @@
     s.onerror = function () {
       playerBooted = false;
       ui.play.disabled = false;
-      ui.play.textContent = "▶ Play in browser";
+      ui.play.textContent = "Play in browser";
       say("bad", "Couldn't load the emulator.",
         "The player is fetched from the EmulatorJS CDN — check your connection or any blockers. Your patched ROM is still ready to save.");
     };

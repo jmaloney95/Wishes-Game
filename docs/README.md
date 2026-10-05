@@ -4,20 +4,31 @@ Static site, no build step, no dependencies. GitHub Pages serves this folder.
 
 ```
 docs/
-├── index.html                Wishes of Tomorrow — the landing page
+├── index.html                Wishes of Tomorrow — the landing page (paper & purple)
 ├── labs.html                 Flatfoot Labs — the studio hub
+├── guide.html                the field guide
 ├── .nojekyll                 stops Pages running Jekyll over it
 ├── patches/                  release patch files (see patches/README.md)
+├── data/                     hand-copied Hackdex and YouTube figures
 └── assets/
-    ├── styles.css            Nocturne tokens + both pages' styles
-    ├── site.js               starfield, reveal-on-scroll, tilt, cast rail
+    ├── wot.css               the game page: Flatfoot Labs design system tokens + components
+    ├── styles.css            Nocturne styles for labs.html and guide.html
+    ├── site.js               counters, click-to-load trailer, tabs, starfield, rails
     ├── patcher.js            in-browser BPS/UPS/IPS patcher
-    ├── art/                  cast portraits + favicon
-    └── media/                title screen, town map, battle backdrops
+    ├── fonts/                Anton, Barlow, Press Start 2P, a Dela Gothic One subset
+    ├── art/                  cast portraits, the Shadow Jirachi logo, favicon, sprites/
+    ├── textures/             brush strokes for the game page
+    └── media/                screenshots, trailer poster, the Munen Village map
 ```
 
 `index.html` is the entry point — visitors land on the game. `labs.html` is the
-studio hub; the "← Flatfoot Labs" link in the header goes back to it.
+studio hub; the Labs button in the header goes to it.
+
+The game page is built from the **Flatfoot Labs** design system in Claude
+Design (paper & purple): `wot.css` is its `tokens.json` as CSS variables, the
+`@font-face` rules for the self-hosted fonts, then its `components/bundle.css`
+unchanged. Classes are all `ff-`. Labs and the field guide have not moved to it
+yet and still load `styles.css`.
 
 ## Publishing
 
@@ -71,11 +82,11 @@ Four places:
 
 | What | Where |
 | --- | --- |
-| Version + date on the page | `RELEASE` at the top of `assets/site.js` |
+| Version + date on the page | `RELEASE` at the top of `assets/site.js`, plus the hero kicker and the HUD tag (version and date) in `index.html`: search `1.2.6` |
 | Patch filename the patcher loads | `PATCH.url` at the top of `assets/patcher.js` |
 | Patch download button | `data-patch-link` in `index.html` — **version-pinned**, see below |
 | Changelog entry | `index.html`, search `data-changelog` |
-| Asset cache stamp | `?v=` on the css/js tags in both HTML files — bump on any `assets/` change |
+| Asset cache stamp | `?v=` on the css/js tags in all three HTML files — bump on any `assets/` change |
 
 That last one matters: Pages serves `assets/` with a four-hour `max-age`, so
 without a fresh stamp a returning visitor can load new HTML against cached old

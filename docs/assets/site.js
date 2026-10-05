@@ -314,8 +314,9 @@
       frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
       frame.allowFullscreen = true;
 
+      // The stage takes the link's classes, so the frame keeps its shape.
       var stage = document.createElement("div");
-      stage.className = "trailer";
+      stage.className = link.className || "trailer";
       stage.appendChild(frame);
       link.parentNode.replaceChild(stage, link);
     });
@@ -362,6 +363,36 @@
       });
   }
 
+  /* ── tabs: screenshots and the cast under the trailer ────────────────
+     Without JS both panels show, one after the other; with it, only the
+     selected one. Arrow keys move between tabs. */
+  function wireTabs() {
+    Array.prototype.forEach.call(document.querySelectorAll("[role=tablist]"), function (list) {
+      var tabs = list.querySelectorAll("[data-tab]");
+      if (!tabs.length) return;
+      var show = function (tab) {
+        Array.prototype.forEach.call(tabs, function (t) {
+          var on = t === tab;
+          t.setAttribute("aria-selected", on ? "true" : "false");
+          t.tabIndex = on ? 0 : -1;
+          var panel = document.querySelector('[data-panel="' + t.getAttribute("data-tab") + '"]');
+          if (panel) panel.hidden = !on;
+        });
+      };
+      Array.prototype.forEach.call(tabs, function (t, i) {
+        t.addEventListener("click", function () { show(t); });
+        t.addEventListener("keydown", function (e) {
+          if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+          e.preventDefault();
+          var next = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+          next.focus();
+          show(next);
+        });
+      });
+      show(list.querySelector('[data-tab][aria-selected="true"]') || tabs[0]);
+    });
+  }
+
   /* ── pointer tilt on the hero art ───────────────────────────────── */
   function wireTilt() {
     if (reduced) return;
@@ -387,4 +418,5 @@
   wireTilt();
   wireTrailer();
   wireTrailerViews();
+  wireTabs();
 })();
