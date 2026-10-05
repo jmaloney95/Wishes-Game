@@ -6,15 +6,18 @@ Static site, no build step, no dependencies. GitHub Pages serves this folder.
 docs/
 ├── index.html                Wishes of Tomorrow — the landing page (paper & purple)
 ├── labs.html                 Flatfoot Labs — the studio hub
-├── guide.html                the field guide
+├── guide.html                the field guide (paper & purple; its map data is the JSON at the bottom)
 ├── .nojekyll                 stops Pages running Jekyll over it
 ├── patches/                  release patch files (see patches/README.md)
 ├── data/                     hand-copied Hackdex and YouTube figures
 └── assets/
-    ├── wot.css               the game page: Flatfoot Labs design system tokens + components
-    ├── styles.css            Nocturne styles for labs.html and guide.html
+    ├── wot.css               game page + field guide: Flatfoot Labs design system tokens + components
+    ├── styles.css            Nocturne styles for labs.html
     ├── site.js               counters, click-to-load trailer, tabs, starfield, rails
     ├── patcher.js            in-browser BPS/UPS/IPS patcher
+    ├── guide.js              the field guide: draws the map the address hash names (#m1 … #a3_15)
+    ├── guide/                the field guide's 49 maps, lossless WebP, by act
+    ├── og-wishes-v2.jpg      the link preview (1280x640) for the game page and the guide
     ├── fonts/                Anton, Barlow, Press Start 2P, a Dela Gothic One subset
     ├── art/                  cast portraits, the Shadow Jirachi logo, favicon, sprites/
     ├── textures/             brush strokes for the game page
@@ -27,8 +30,13 @@ studio hub; the Labs button in the header goes to it.
 The game page is built from the **Flatfoot Labs** design system in Claude
 Design (paper & purple): `wot.css` is its `tokens.json` as CSS variables, the
 `@font-face` rules for the self-hosted fonts, then its `components/bundle.css`
-unchanged. Classes are all `ff-`. Labs and the field guide have not moved to it
-yet and still load `styles.css`.
+unchanged. Classes are all `ff-`. The field guide uses it too; Labs has not
+moved to it yet and still loads `styles.css`.
+
+The field guide's routes and stops are drawn in the guide editor (on the Claude
+Design canvas, or locally from `Game Guide/editor`), which keeps them in
+`Game Guide/guide-layout.json`; they are baked into the `#guide-data` JSON at the
+bottom of `guide.html`, with x/y as percentages of each map image.
 
 ## Publishing
 

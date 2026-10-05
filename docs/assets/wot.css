@@ -1,6 +1,6 @@
 /* Wishes of Tomorrow: the game page, paper & purple.
    Built from the Flatfoot Labs design system: its tokens, then its
-   components/bundle.css. Labs and the field guide still use styles.css. */
+   components/bundle.css. The game page and the field guide use it; Labs still uses styles.css. */
 
 :root {
   --paper: #f5ecda;
@@ -611,6 +611,88 @@ html.has-fs-player, html.has-fs-player body { overflow: hidden; }
 .ff-stop h3 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.1; letter-spacing: .03em; text-transform: uppercase; }
 .ff-stop p { margin: 4px 0 0; font-size: 14px; line-height: 20px; color: var(--ink-soft); white-space: pre-line; }
 
+/* ── field guide: the page around the viewer ─────────────────────────── */
+/* ── guide head: where you are, the map's name, how to read the page ── */
+.ff-guidehead {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 48px;
+  max-width: 1440px; margin: 0 auto; padding: 18px 40px 44px;
+}
+.ff-guidehead-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; min-width: 0; }
+.ff-guidehead-title { font-size: clamp(52px, 6.6vw, 104px); }
+.ff-guidehead-jp {
+  writing-mode: vertical-rl; align-self: stretch; display: flex; align-items: center; justify-content: flex-end;
+  font-family: var(--font-jp); font-size: 60px; line-height: 1; letter-spacing: .08em; color: var(--violet);
+}
+
+/* ── the guide: the map log beside the viewer ─────────────────────── */
+.ff-guide {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 300px minmax(0, 1fr); align-items: start; gap: 40px;
+  max-width: 1440px; margin: 0 auto; padding: 8px 40px 104px;
+}
+.ff-guide-main { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+
+/* The map log: every map, an act at a time, kept like the patcher's quest log. */
+.ff-maplog { --n: var(--notch-lg); padding: 22px 16px 18px; background: var(--night); color: var(--on-night); }
+.ff-maplog-title { margin: 0 0 16px 4px; font-family: var(--font-display); font-weight: 400; font-size: 30px; line-height: .95; text-transform: uppercase; }
+.ff-maplog .ff-tabs { flex-wrap: nowrap; gap: 6px; margin-bottom: 14px; }
+.ff-maplog .ff-tab { flex: 1 1 0; min-width: 0; height: 40px; padding: 0 6px; font-size: 15px; }
+.ff-maplog .ff-tab small { margin-left: 6px; }
+.ff-maplog .ff-tab[aria-pressed="true"] { background: var(--violet); color: var(--white); }
+.ff-maplog-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.ff-maplog-item {
+  --n: 8px;
+  width: 100%; min-height: 44px; display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: center; gap: 12px;
+  padding: 6px 12px 6px 6px; border: 0; cursor: pointer; text-align: left;
+  background: var(--night-raised); color: var(--on-night);
+  clip-path: polygon(var(--n) 0, 100% 0, 100% calc(100% - var(--n)), calc(100% - var(--n)) 100%, 0 100%, 0 var(--n));
+  transition: background-color .15s ease;
+}
+.ff-maplog-item:hover { background: color-mix(in srgb, var(--violet) 18%, var(--night-raised)); }
+.ff-maplog-item[aria-current="true"] { background: color-mix(in srgb, var(--violet) 34%, var(--night-raised)); }
+.ff-maplog-num {
+  width: 32px; height: 32px; display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 16px; line-height: 1;
+  background: var(--night); box-shadow: inset 0 0 0 2px var(--night-line);
+}
+.ff-maplog-item[aria-current="true"] .ff-maplog-num { background: var(--violet); color: var(--white); box-shadow: none; }
+.ff-maplog-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--font-display); font-size: 15px; line-height: 1.1; letter-spacing: .04em; text-transform: uppercase; }
+.ff-maplog-count { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-pixel); font-size: 8px; line-height: 1; color: var(--gold); white-space: nowrap; }
+.ff-maplog-count .ff-i { width: 11px; height: 11px; }
+
+/* Under the map: the key, and how many stops. */
+.ff-mapkey {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px;
+  font-family: var(--font-display); font-size: 14px; line-height: 1; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft);
+}
+.ff-mapkey > span { display: inline-flex; align-items: center; gap: 10px; }
+.ff-mapkey svg { display: block; overflow: visible; }
+.ff-mapkey-pin { width: 18px; height: 18px; background: var(--violet); box-shadow: 0 0 0 2px var(--paper), 2px 2px 0 2px var(--ink); }
+
+/* Stops as a grid of stickers under the map, numbered like the pins. */
+.ff-stops--grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.ff-guide-empty { margin: 0; padding: 18px 20px; border: 2px dashed var(--ink); font-size: 15px; line-height: 22px; color: var(--ink-soft); }
+
+/* Previous and next map, named. */
+.ff-mapnav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 8px; }
+.ff-mapnav-link {
+  --n: var(--notch-md);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  padding: 18px 22px 20px; border: 0; cursor: pointer; text-align: left;
+  background: var(--ink); color: var(--paper);
+  clip-path: polygon(var(--n) 0, 100% 0, 100% calc(100% - var(--n)), calc(100% - var(--n)) 100%, 0 100%, 0 var(--n));
+  transition: background-color .15s ease, transform .15s ease;
+}
+.ff-mapnav-link:hover { background: var(--violet); color: var(--white); transform: translateY(-2px); }
+.ff-mapnav-link--next { grid-column: 2; align-items: flex-end; text-align: right; }
+.ff-mapnav-dir { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-pixel); font-size: 8px; line-height: 1; color: var(--gold); }
+.ff-mapnav-dir .ff-i { width: 11px; height: 11px; }
+.ff-mapnav-name { font-family: var(--font-display); font-size: 28px; line-height: .95; letter-spacing: .02em; text-transform: uppercase; }
+
+/* Below 1180px the map log gives way to the select bar. */
+.ff-guide-compact { display: none; }
+
 /* ── responsive ──────────────────────────────────────────────────────── */
 @media (max-width: 1180px) {
   .ff-hero { grid-template-columns: minmax(0, 1fr); padding-left: 96px; }
@@ -620,6 +702,9 @@ html.has-fs-player, html.has-fs-player body { overflow: hidden; }
   .ff-downloads, .ff-guideband, .ff-footer-top { grid-template-columns: minmax(0, 1fr); }
   .ff-ref { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ff-shots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ff-guide { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .ff-maplog { display: none; }
+  .ff-guide-compact { display: flex; }
 }
 @media (max-width: 760px) {
   .ff-header { padding: 16px 18px 10px; }
@@ -653,6 +738,16 @@ html.has-fs-player, html.has-fs-player body { overflow: hidden; }
   .ff-project { grid-template-columns: minmax(0, 1fr); }
   .ff-project-art { border-left: 0; border-top: 2px solid var(--ink); }
   .ff-spec > div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .ff-guidehead { grid-template-columns: minmax(0, 1fr); padding: 6px 18px 30px; }
+  .ff-guidehead-jp { display: none; }
+  .ff-guide { padding: 0 18px 72px; }
+  .ff-mapfig { box-shadow: var(--shadow-hard); }
+  .ff-stops--grid, .ff-mapnav { grid-template-columns: minmax(0, 1fr); }
+  .ff-mapnav-link--next { grid-column: auto; }
+  .ff-mapnav-name { font-size: 22px; }
+  /* Rows that scroll sideways on a phone show no bar: the next item peeking in says there is more. */
+  .ff-nav, .ff-shots, .ff-cast-row { scrollbar-width: none; }
+  .ff-nav::-webkit-scrollbar, .ff-shots::-webkit-scrollbar, .ff-cast-row::-webkit-scrollbar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
