@@ -1127,6 +1127,26 @@ enum __attribute__((packed)) Item
     ITEM_CRAFT = 922,          // works and costs like a Super Potion
     // Wishes of Tomorrow: a Rare Candy that is never used up (key item).
     ITEM_INFINITE_CANDY = 923,
+    // Wishes of Tomorrow: Mega Stones for the custom Megas (round 112)
+    ITEM_AMOONGUSSITE = 924,
+    ITEM_AZUMARILLITE = 925,
+    ITEM_BUTTERFRITE = 926,
+    ITEM_CONKELDURRITE = 927,
+    ITEM_DUGTRIONITE = 928,
+    ITEM_ELECTIVIRITE = 929,
+    ITEM_FLYGONITE = 930,
+    ITEM_GOLEMITE = 931,
+    ITEM_JUMPLUFFITE = 932,
+    ITEM_KABUTOPSITE = 933,
+    ITEM_MAGMORTARITE = 934,
+    ITEM_MILOTICITE = 935,
+    ITEM_OMASTARITE = 936,
+    ITEM_POLIWRATHITE = 937,
+    ITEM_SHIFTRITE = 938,
+    ITEM_SNORLAXITE = 939,
+    ITEM_TORKOALITE = 940,
+    ITEM_TYPHLOSIONITE = 941,
+    ITEM_WHIMSICOTTITE = 942,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

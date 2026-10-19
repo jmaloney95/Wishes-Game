@@ -1497,13 +1497,24 @@ static enum CancelerResult CancelerExplosion(struct BattleContext *ctx)
     return CANCELER_RESULT_SUCCESS;
 }
 
-static bool32 CanTwoTurnMoveFireThisTurn(struct BattleContext *ctx)
+// Mega Sol (ported from expansion 1.16-1.17): a move that skips its charge turn in sun
+// (Solar Beam, Solar Blade) skips it for a Mega Sol user whatever the real weather.
+// *megaSolPopUp is set only when Mega Sol is the reason, so its pop-up can show.
+static bool32 CanTwoTurnMoveFireThisTurn(struct BattleContext *ctx, bool32 *megaSolPopUp)
 {
+    u32 moveWeather = GetMoveTwoTurnAttackWeather(ctx->move);
+
     if (gBattleMoveEffects[GetMoveEffect(ctx->move)].semiInvulnerableEffect
-     || GetMoveEffect(ctx->move) == EFFECT_GEOMANCY
-     || !IsBattlerWeatherAffected(ctx->battlerAtk, GetMoveTwoTurnAttackWeather(ctx->move)))
+     || GetMoveEffect(ctx->move) == EFFECT_GEOMANCY)
         return FALSE;
-    return TRUE;
+    if (IsBattlerWeatherAffected(ctx->battlerAtk, moveWeather))
+        return TRUE;
+    if (ctx->abilityAtk == ABILITY_MEGA_SOL && (moveWeather & B_WEATHER_SUN))
+    {
+        *megaSolPopUp = TRUE;
+        return TRUE;
+    }
+    return FALSE;
 }
 
 static enum CancelerResult HandleSkyDropResult(struct BattleContext *ctx)
@@ -1602,14 +1613,25 @@ static enum CancelerResult CancelerCharging(struct BattleContext *ctx)
     }
     else // Try move this turn. Otherwise use next turn
     {
-        if (CanTwoTurnMoveFireThisTurn(ctx))
+        bool32 megaSolPopUp = FALSE;
+        if (CanTwoTurnMoveFireThisTurn(ctx, &megaSolPopUp))
         {
             gBattleScripting.animTurn = 1;
             gBattleScripting.animTargetsHit = 0;
             gProtectStructs[ctx->battlerAtk].chargingTurn = FALSE;
             if (gBattleMoveEffects[GetMoveEffect(ctx->move)].semiInvulnerableEffect)
                 gBattleMons[ctx->battlerAtk].volatiles.semiInvulnerable = STATE_NONE;
-            result = CANCELER_RESULT_SUCCESS;
+            if (megaSolPopUp)
+            {
+                // Same shape as the Power Herb branch below: run the pop-up, then carry on.
+                gBattlerAbility = ctx->battlerAtk;
+                BattleScriptCall(BattleScript_MegaSolActivatesTwoTurnMove);
+                result = CANCELER_RESULT_BREAK;
+            }
+            else
+            {
+                result = CANCELER_RESULT_SUCCESS;
+            }
         }
         else if (ctx->holdEffectAtk == HOLD_EFFECT_POWER_HERB)
         {
@@ -2107,7 +2129,7 @@ static enum MoveEndResult MoveEndProtectLikeEffect(void)
     }
 
     if (method != PROTECT_MAX_GUARD
-     && abilityAtk == ABILITY_UNSEEN_FIST
+     && (abilityAtk == ABILITY_UNSEEN_FIST || abilityAtk == ABILITY_PIERCING_DRILL)
      && IsMoveMakingContact(gBattlerAttacker, gBattlerTarget, abilityAtk, holdEffectAtk, gCurrentMove))
     {
         gBattleScripting.moveendState++;

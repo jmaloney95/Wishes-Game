@@ -9503,12 +9503,35 @@ static void Cmd_recoverbasedonsunlight(void)
     if (gBattleMons[gBattlerAttacker].hp != gBattleMons[gBattlerAttacker].maxHP)
     {
         s32 recoverAmount = 0;
+        // Mega Sol (ported from expansion 1.16-1.17): heals as if in sun whatever the
+        // weather, and shows its pop-up when that is what made the difference.
+        bool32 megaSol = (GetBattlerAbility(gBattlerAttacker) == ABILITY_MEGA_SOL);
+        bool32 megaSolPopUp = FALSE;
         if (GetMoveEffect(gCurrentMove) == EFFECT_SHORE_UP)
         {
-            if (HasWeatherEffect() && gBattleWeather & B_WEATHER_SANDSTORM)
+            if (HasWeatherEffect() && gBattleWeather & B_WEATHER_SANDSTORM && !megaSol)
                 recoverAmount = 20 * GetNonDynamaxMaxHP(gBattlerAttacker) / 30;
             else
                 recoverAmount = GetNonDynamaxMaxHP(gBattlerAttacker) / 2;
+        }
+        else if (megaSol)
+        {
+            if (GetConfig(B_TIME_OF_DAY_HEALING_MOVES) != GEN_2)
+            {
+                recoverAmount = 20 * GetNonDynamaxMaxHP(gBattlerAttacker) / 30;
+            }
+            else
+            {
+                u32 time = GetTimeOfDay();
+                u32 healingModifier = 1;
+                if ((GetMoveEffect(gCurrentMove) == EFFECT_MOONLIGHT && (time == TIME_NIGHT || time == TIME_EVENING))
+                 || (GetMoveEffect(gCurrentMove) == EFFECT_MORNING_SUN
+                     && ((OW_TIMES_OF_DAY == GEN_3 && time == TIME_DAY) || (OW_TIMES_OF_DAY != GEN_3 && time == TIME_MORNING)))
+                 || (GetMoveEffect(gCurrentMove) == EFFECT_SYNTHESIS && time == TIME_DAY))
+                    healingModifier = 2;
+                recoverAmount = healingModifier * GetNonDynamaxMaxHP(gBattlerAttacker) / 2;
+            }
+            megaSolPopUp = !IsBattlerWeatherAffected(gBattlerAttacker, B_WEATHER_SUN);
         }
         else if (GetConfig(B_TIME_OF_DAY_HEALING_MOVES) != GEN_2)
         {
@@ -9554,7 +9577,15 @@ static void Cmd_recoverbasedonsunlight(void)
         }
 
         SetHealAmount(gBattlerAttacker, recoverAmount);
-        gBattlescriptCurrInstr = cmd->nextInstr;
+        if (megaSolPopUp)
+        {
+            gBattlerAbility = gBattlerAttacker;
+            gBattlescriptCurrInstr = BattleScript_MegaSolActivatesHealing;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
     }
     else
     {
@@ -15065,7 +15096,9 @@ void BS_JumpIfWeatherAffected(void)
 {
     NATIVE_ARGS(u16 flags, const u8 *jumpInstr);
     u32 weather = cmd->flags;
-    if (IsBattlerWeatherAffected(gBattlerAttacker, weather))
+    // The attacker's weather (expansion 1.16): Growth's sun bonus counts for a Mega Sol user.
+    if (IsBattlerWeatherAffected(gBattlerAttacker, weather)
+     || (GetBattlerAbility(gBattlerAttacker) == ABILITY_MEGA_SOL && (weather & B_WEATHER_SUN)))
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;

@@ -1084,6 +1084,17 @@ ShinTokyo_Pokemart_BlackMarketAMs:
 	.2byte ITEM_AM_REGENERATOR
 	.2byte ITEM_AM_SPEED_BOOST
 	.2byte ITEM_AM_MAGIC_BOUNCE
+	@ Round 115: evolution goods for lines that otherwise need a trade or a stone
+	@ WoT never places (Golem, Conkeldurr, Electivire, Magmortar, Milotic,
+	@ Poliwrath, Shiftry, Whimsicott). The held ones work from the bag because
+	@ I_USE_EVO_HELD_ITEMS_FROM_BAG is TRUE.
+	.2byte ITEM_LINKING_CORD
+	.2byte ITEM_ELECTIRIZER
+	.2byte ITEM_MAGMARIZER
+	.2byte ITEM_PRISM_SCALE
+	.2byte ITEM_WATER_STONE
+	.2byte ITEM_LEAF_STONE
+	.2byte ITEM_SUN_STONE
 	pokemartlistend
 
 ShinTokyo_EventScript_BlackMarketPaw::

@@ -515,6 +515,8 @@ extern const u8 BattleScript_PokemonCantUseTheMove[];
 extern const u8 BattleScript_TwoTurnMoveCharging[];
 extern const u8 BattleScript_SkyDropCharging[];
 extern const u8 BattleScript_PowerHerbActivation[];
+extern const u8 BattleScript_MegaSolActivatesTwoTurnMove[];
+extern const u8 BattleScript_MegaSolActivatesHealing[];
 extern const u8 BattleScript_Explosion[];
 extern const u8 BattleScript_ActivateSwitchInAbility[];
 extern const u8 BattleScript_BreakScreens[];

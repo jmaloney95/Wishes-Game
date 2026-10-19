@@ -1698,7 +1698,28 @@
 #define SPECIES_DODRIO_DELTA                            1579
 #define SPECIES_JIRACHI_SHADOW                          1580
 
-#define SPECIES_EGG                                     (SPECIES_JIRACHI_SHADOW + 1)
+// Wishes of Tomorrow custom Mega Evolutions (Joe's art; stats are a first pass)
+#define SPECIES_AMOONGUSS_MEGA                          1581
+#define SPECIES_AZUMARILL_MEGA                          1582
+#define SPECIES_BUTTERFREE_MEGA                         1583
+#define SPECIES_CONKELDURR_MEGA                         1584
+#define SPECIES_DUGTRIO_MEGA                            1585
+#define SPECIES_ELECTIVIRE_MEGA                         1586
+#define SPECIES_FLYGON_MEGA                             1587
+#define SPECIES_GOLEM_MEGA                              1588
+#define SPECIES_JUMPLUFF_MEGA                           1589
+#define SPECIES_KABUTOPS_MEGA                           1590
+#define SPECIES_MAGMORTAR_MEGA                          1591
+#define SPECIES_MILOTIC_MEGA                            1592
+#define SPECIES_OMASTAR_MEGA                            1593
+#define SPECIES_POLIWRATH_MEGA                          1594
+#define SPECIES_SHIFTRY_MEGA                            1595
+#define SPECIES_SNORLAX_MEGA                            1596
+#define SPECIES_TORKOAL_MEGA                            1597
+#define SPECIES_TYPHLOSION_MEGA                         1598
+#define SPECIES_WHIMSICOTT_MEGA                         1599
+
+#define SPECIES_EGG                                     (SPECIES_WHIMSICOTT_MEGA + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

@@ -3328,6 +3328,23 @@ BattleScript_EffectShoreUp::
 	recoverbasedonsunlight BattleScript_AlreadyAtFullHp
 	goto BattleScript_PresentHealTarget
 
+@ Mega Sol (ported from expansion 1.17): the sun-boosted heal shows the ability.
+@ recoverbasedonsunlight jumps here with gBattlerAbility set to the user.
+BattleScript_MegaSolActivatesHealing::
+	attackanimation
+	waitanimation
+	call BattleScript_AbilityPopUp
+	healthbarupdate BS_TARGET, PASSIVE_HP_UPDATE
+	datahpupdate BS_TARGET, PASSIVE_HP_UPDATE
+	printstring STRINGID_PKMNREGAINEDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+@ Mega Sol: Solar Beam / Solar Blade skip their charge turn (gBattlerAbility = user).
+BattleScript_MegaSolActivatesTwoTurnMove::
+	call BattleScript_AbilityPopUp
+	return
+
 BattleScript_EffectWeather::
 	attackcanceler
 BattleScript_EffectWeatherSetWeather:

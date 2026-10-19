@@ -36680,7 +36680,7 @@
               {
                 "min_level": 3,
                 "max_level": 6,
-                "species": "SPECIES_SHINX"
+                "species": "SPECIES_HOPPIP"
               },
               {
                 "min_level": 4,
@@ -36695,7 +36695,7 @@
               {
                 "min_level": 4,
                 "max_level": 6,
-                "species": "SPECIES_SEWADDLE"
+                "species": "SPECIES_COTTONEE"
               },
               {
                 "min_level": 7,
@@ -36978,7 +36978,7 @@
               {
                 "min_level": 5,
                 "max_level": 5,
-                "species": "SPECIES_MAGIKARP"
+                "species": "SPECIES_OMANYTE"
               },
               {
                 "min_level": 5,
@@ -36988,7 +36988,7 @@
               {
                 "min_level": 5,
                 "max_level": 5,
-                "species": "SPECIES_BASCULIN"
+                "species": "SPECIES_KABUTO"
               },
               {
                 "min_level": 18,
@@ -37062,7 +37062,7 @@
               {
                 "min_level": 23,
                 "max_level": 23,
-                "species": "SPECIES_LARVITAR"
+                "species": "SPECIES_LITLEO"
               },
               {
                 "min_level": 22,
@@ -37072,7 +37072,7 @@
               {
                 "min_level": 22,
                 "max_level": 25,
-                "species": "SPECIES_PAWNIARD"
+                "species": "SPECIES_TIMBURR"
               },
               {
                 "min_level": 22,
@@ -37141,7 +37141,7 @@
               {
                 "min_level": 3,
                 "max_level": 5,
-                "species": "SPECIES_RIOLU"
+                "species": "SPECIES_FOONGUS"
               },
               {
                 "min_level": 3,
@@ -37741,7 +37741,7 @@
               {
                 "min_level": 15,
                 "max_level": 20,
-                "species": "SPECIES_SIGILYPH"
+                "species": "SPECIES_MAGBY"
               },
               {
                 "min_level": 15,
@@ -37785,7 +37785,7 @@
               {
                 "min_level": 18,
                 "max_level": 24,
-                "species": "SPECIES_PHANTUMP"
+                "species": "SPECIES_ELEKID"
               },
               {
                 "min_level": 18,
@@ -38062,7 +38062,7 @@
               {
                 "min_level": 15,
                 "max_level": 20,
-                "species": "SPECIES_PHANTUMP"
+                "species": "SPECIES_MAGBY"
               },
               {
                 "min_level": 15,
@@ -38220,7 +38220,7 @@
               {
                 "min_level": 5,
                 "max_level": 12,
-                "species": "SPECIES_SOBBLE"
+                "species": "SPECIES_MUNCHLAX"
               }
             ]
           },
