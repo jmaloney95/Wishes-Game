@@ -16,7 +16,7 @@
   "object_events": [
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(DEOXYS)",
-      "x": 13,
+      "x": 16,
       "y": 23,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
@@ -32,7 +32,7 @@
   "coord_events": [
     {
       "type": "trigger",
-      "x": 13,
+      "x": 16,
       "y": 1,
       "elevation": 0,
       "var": "VAR_TEMP_6",
@@ -41,7 +41,7 @@
     },
     {
       "type": "trigger",
-      "x": 14,
+      "x": 17,
       "y": 1,
       "elevation": 0,
       "var": "VAR_TEMP_6",
@@ -50,7 +50,7 @@
     },
     {
       "type": "trigger",
-      "x": 12,
+      "x": 15,
       "y": 1,
       "elevation": 0,
       "var": "VAR_TEMP_6",
@@ -61,7 +61,7 @@
   "bg_events": [
     {
       "type": "sign",
-      "x": 2,
+      "x": 5,
       "y": 11,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -69,7 +69,7 @@
     },
     {
       "type": "sign",
-      "x": 20,
+      "x": 23,
       "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -77,7 +77,7 @@
     },
     {
       "type": "sign",
-      "x": 17,
+      "x": 20,
       "y": 11,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -85,7 +85,7 @@
     },
     {
       "type": "sign",
-      "x": 9,
+      "x": 12,
       "y": 7,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
@@ -93,7 +93,7 @@
     },
     {
       "type": "sign",
-      "x": 20,
+      "x": 23,
       "y": 22,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",

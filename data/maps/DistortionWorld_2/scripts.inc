@@ -164,6 +164,7 @@ DistortionRift_EventScript_InvertOff::
 @ arrival point tracks each layer's entrance warp wherever it is moved in
 @ Porymap -- no coordinates to keep in sync.
 DistortionWorld_2_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
 	clearflag FLAG_DW_INVERTED
 	clearflag FLAG_DW_INVERT_PENDING
 	goto_if_eq VAR_DISTORTION_RIFT_DEPTH, 2, DistortionWorld_2_OnTransition_CaveToLayer4

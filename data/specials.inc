@@ -679,3 +679,6 @@ gSpecials::
 	def_special WotShipDepart, waitstate=1
 	def_special WotBufferLastTalkedSpecies
 	def_special WotStartFamilyHearts
+	@ WoT: the team pose (src/wot_team_pose.c; L in the field)
+	def_special WotTeamPose_Plan
+	def_special WotTeamPose_Run, waitstate=1

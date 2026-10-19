@@ -40,6 +40,7 @@
 #include "trainer_hill.h"
 #include "util.h"
 #include "wild_encounter.h"
+#include "wot_team_pose.h"
 #include "constants/event_object_movement.h"
 #include "constants/abilities.h"
 #include "constants/battle.h"
@@ -1916,8 +1917,11 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
 
     // WoT: set before the palette below is chosen. Only the follower can be a
     // Shadow -- a static OW mon of the same species must stay its own colour.
+    // The team pose's party mons are the other exception: they ARE party mons.
     if (IS_OW_MON_OBJ(objectEvent) && objectEvent->localId == OBJ_EVENT_ID_FOLLOWER)
         objectEvent->shadow = WotFollowerMonIsShadow();
+    else if (IS_OW_MON_OBJ(objectEvent) && WotTeamPoseGetMon(objectEvent->localId) != NULL)
+        objectEvent->shadow = GetMonData(WotTeamPoseGetMon(objectEvent->localId), MON_DATA_IS_SHADOW);
 
     spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
@@ -2487,6 +2491,93 @@ static bool8 GetMonInfo(struct Pokemon *mon, u32 *species, bool32 *shiny, bool32
 bool8 GetFollowerInfo(u32 *species, bool32 *shiny, bool32 *female)
 {
     return GetMonInfo(GetFirstLiveMon(), species, shiny, female);
+}
+
+// WoT team pose: the object graphics id for any party mon, worked out the
+// way the follower's is (weather forms, Unown letters, shiny, female).
+u16 WotGetPartyMonObjectGraphicsId(struct Pokemon *mon)
+{
+    u32 species;
+    bool32 shiny, female;
+
+    GetMonInfo(mon, &species, &shiny, &female);
+    return GetGraphicsIdForMon(species, shiny, female);
+}
+
+// WoT team pose: the palette tag that mon's object will load, mirroring the
+// choice LoadDynamicFollowerPalette makes, so the pose can count the palette
+// slots it needs BEFORE spawning anything. A Shadow mon wears the silhouette.
+u16 WotGetPartyMonObjectPaletteTag(struct Pokemon *mon)
+{
+    u32 species;
+    bool32 shiny, female;
+
+    GetMonInfo(mon, &species, &shiny, &female);
+    if (GetMonData(mon, MON_DATA_IS_SHADOW))
+        return species + OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON;
+#if OW_POKEMON_OBJECT_EVENTS == TRUE && OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    if ((shiny && gSpeciesInfo[species].overworldPalette)
+    || (!shiny && gSpeciesInfo[species].overworldShinyPalette))
+    {
+        u16 palTag = species + OBJ_EVENT_MON + (shiny ? OBJ_EVENT_MON_SHINY : 0);
+    #if P_GENDER_DIFFERENCES
+        if (female && gSpeciesInfo[species].overworldShinyPaletteFemale != NULL)
+            palTag += OBJ_EVENT_MON_FEMALE;
+    #endif
+        return palTag;
+    }
+#endif
+    return species;
+}
+
+// The tile tag LoadSheetGraphicsInfo files this graphics id's sheet under,
+// or TAG_NONE when it doesn't use a sheet at all.
+static u16 WotGetObjectSheetTag(u16 graphicsId)
+{
+    const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(graphicsId);
+
+    if (!OW_GFX_COMPRESS || (info->tileTag == TAG_NONE && !info->compressed))
+        return TAG_NONE;
+    if (info->tileTag != TAG_NONE)
+        return info->tileTag;
+    return COMP_OW_TILE_TAG_BASE + graphicsId;
+}
+
+// WoT team pose: put the sheet an object with this graphics id will use into
+// OBJ VRAM BEFORE the object exists, and keep `headroom` tiles free after it.
+// An object whose sheet can't load is still created -- pointing at whatever
+// tiles are there -- and the Poke Ball animation then copies the ball's frames
+// over them, which at the start of OBJ VRAM is the PLAYER (a pose with several
+// 64x64 legendaries did exactly that). FALSE, with nothing left loaded, when
+// the sheet doesn't fit.
+bool32 WotReserveObjectSheet(u16 graphicsId, u16 headroom)
+{
+    u16 tag = WotGetObjectSheetTag(graphicsId);
+
+    if (tag == TAG_NONE)
+        return TRUE; // not a sheet: CreateSprite allocates, or fails cleanly
+    if (GetSpriteTileStartByTag(tag) != TAG_NONE)
+        return TRUE; // already resident, e.g. the follower's own species
+    LoadSheetGraphicsInfo(GetObjectEventGraphicsInfo(graphicsId), graphicsId, NULL);
+    if (GetSpriteTileStartByTag(tag) == TAG_NONE)
+        return FALSE;
+    if (!CanAllocSpriteTiles(headroom))
+    {
+        FreeSpriteTilesByTag(tag);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+// Undo WotReserveObjectSheet when the object then failed to spawn: frees the
+// sheet unless a sprite is already drawing from it.
+void WotReleaseObjectSheet(u16 graphicsId)
+{
+    u16 tag = WotGetObjectSheetTag(graphicsId);
+    u16 tileStart;
+
+    if (tag != TAG_NONE && (tileStart = GetSpriteTileStartByTag(tag)) != TAG_NONE)
+        FieldEffectFreeTilesIfUnused(tileStart);
 }
 
 // Update following pokemon if any
@@ -7944,6 +8035,11 @@ static void ObjectEventSetPokeballGfx(struct ObjectEvent *objEvent)
         struct Pokemon *mon = GetFirstLiveMon();
         if (mon)
             ball = GetMonData(mon, MON_DATA_POKEBALL);
+    }
+    else if (WotTeamPoseGetMon(objEvent->localId) != NULL)
+    {
+        // WoT: each mon in the team pose comes out of its own ball.
+        ball = GetMonData(WotTeamPoseGetMon(objEvent->localId), MON_DATA_POKEBALL);
     }
 
     if (ball != BALL_POKE && ball < POKEBALL_COUNT)

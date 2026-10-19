@@ -9782,8 +9782,8 @@
     {
       "id": "LAYOUT_PROTOTYPE_LAB",
       "name": "PrototypeLab_Layout",
-      "width": 26,
-      "height": 27,
+      "width": 32,
+      "height": 31,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_DeoxysLab",
       "border_filepath": "data/layouts/PrototypeLab/border.bin",

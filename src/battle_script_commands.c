@@ -10687,6 +10687,10 @@ struct BallData
 
 #define CAPTURE_GUARANTEED -1
 
+// WoT: minimum catch rates for Shadow Pokemon (see ComputeCaptureOdds).
+#define WOT_SHADOW_CATCH_RATE_FLOOR        90
+#define WOT_SHADOW_LEGEND_CATCH_RATE_FLOOR 45
+
 static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallData *ball)
 {
     u32 i;
@@ -10908,6 +10912,18 @@ static u32 ComputeCaptureOdds(u32 wildMonBattler, u32 playerBattler)
         catchRate = gBattleStruct->safariCatchFactor * 1275 / 100;
     else
         catchRate = gSpeciesInfo[battleMon->species].catchRate;
+
+    // WoT Shadow system: Shadows are weakened by the aura, so their catch
+    // rate never drops below a floor -- legends (Deoxys, Jirachi, Lugia...)
+    // get a lower one so they still take some work. Stacks with the Snag Ball.
+    if (GetMonData(GetBattlerMon(wildMonBattler), MON_DATA_IS_SHADOW))
+    {
+        const struct SpeciesInfo *info = &gSpeciesInfo[battleMon->species];
+        s32 floor = (info->isRestrictedLegendary || info->isSubLegendary || info->isMythical || info->isUltraBeast)
+                  ? WOT_SHADOW_LEGEND_CATCH_RATE_FLOOR : WOT_SHADOW_CATCH_RATE_FLOOR;
+        if (catchRate < floor)
+            catchRate = floor;
+    }
 
     catchRate += ball.flatBonus;
     if (catchRate <= 0)

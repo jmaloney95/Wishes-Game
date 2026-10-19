@@ -8,6 +8,7 @@ DistortionWorld_5_MapScripts::
 @ the Rift Heart ball behind him. setobjectxyperm keeps that position on
 @ every later visit.
 DistortionWorld_5_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
 	clearflag FLAG_DW_INVERTED
 	clearflag FLAG_DW_INVERT_PENDING
 	goto_if_unset FLAG_BADGE05_GET, DistortionWorld_5_OnTransition_End

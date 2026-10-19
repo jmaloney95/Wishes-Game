@@ -1552,6 +1552,22 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
     return cannotUse;
 }
 
+// WoT Shadow system: a ball thrown at a trainer's Shadow is a real snag
+// attempt, so it must be used up -- the Gen4+ rule that refunds balls in
+// trainer battles only fits throws the trainer blocks.
+static bool32 WotOpponentHasShadowOut(void)
+{
+    u32 battler;
+
+    for (battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (!IsOnPlayerSide(battler) && IsBattlerAlive(battler)
+         && GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW))
+            return TRUE;
+    }
+    return FALSE;
+}
+
 void ItemUseInBattle_BagMenu(u8 taskId)
 {
     gPartyMenu.slotId = gBattleStruct->itemPartyIndex[gBattlerInMenuId] = gBattlerPartyIndexes[gBattlerInMenuId];
@@ -1565,7 +1581,7 @@ void ItemUseInBattle_BagMenu(u8 taskId)
     else
     {
         PlaySE(SE_SELECT);
-        if (!GetItemImportance(gSpecialVar_ItemId) && !(B_TRY_CATCH_TRAINER_BALL >= GEN_4 && (GetItemBattleUsage(gSpecialVar_ItemId) == EFFECT_ITEM_THROW_BALL) && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)))
+        if (!GetItemImportance(gSpecialVar_ItemId) && !(B_TRY_CATCH_TRAINER_BALL >= GEN_4 && (GetItemBattleUsage(gSpecialVar_ItemId) == EFFECT_ITEM_THROW_BALL) && (gBattleTypeFlags & BATTLE_TYPE_TRAINER) && !WotOpponentHasShadowOut()))
             RemoveUsedItem();
         ScheduleBgCopyTilemapToVram(2);
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)

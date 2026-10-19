@@ -1,5 +1,12 @@
 DistortionWorld_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, DistortionWorld_OnTransition
 	.byte 0
+
+@ Whiting out anywhere in the Distortion World respawns at the National Park
+@ (Act 2) spawn point, 41,18. Every layer sets it on entry.
+DistortionWorld_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
+	end
 
 @ ============================================================================
 @  DISTORTION WORLD -- the far side of the gravesite seam.
@@ -7,7 +14,8 @@ DistortionWorld_MapScripts::
 @  CANON: Prof. Clarkson DIED at Star Summit. His spirit lives on inside a
 @  wild GENGAR ("ghosts collect ghosts"). The Catalpa Bow is the one string
 @  that sounds on both sides of the veil -- it lets the living hear him.
-@  The NPC here is the GENGAR (local ID 1), speaking as Clarkson.
+@  The NPC here is the GENGAR (local ID 1, drawn as a shiny Mega Gengar),
+@  speaking as Clarkson. The gift is a plain shiny Gengar: Megas only last a battle.
 @  Scene: full confession -> Gengar JOINS THE PARTY -> the Distortion World
 @  collapses (screen shake) -> player is thrown back in front of the
 @  gravesite (47,19). Afterward the seam is closed for good
@@ -20,7 +28,7 @@ DistortionWorld_EventScript_Clarkson::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_GENGAR, CRY_MODE_NORMAL
+	playmoncry SPECIES_GENGAR_MEGA, CRY_MODE_NORMAL
 	waitmoncry
 	setspeaker SP_NAME_GENGAR
 	showportrait PORTRAIT_CLARKSON_GENGAR

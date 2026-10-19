@@ -4,6 +4,7 @@ DistortionWorld_4_MapScripts::
 
 @ See DistortionWorld_3_OnTransition: PENDING carries inversion through warps.
 DistortionWorld_4_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
 	goto_if_set FLAG_DW_INVERT_PENDING, DistortionWorld_4_OnTransition_StayInverted
 	clearflag FLAG_DW_INVERTED
 	end

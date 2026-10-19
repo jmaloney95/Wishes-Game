@@ -1842,6 +1842,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wot_shadow_log.inc"
 	.include "data/scripts/wot_snag_progress.inc"
 	.include "data/scripts/wot_pokemon_cry.inc"
+	.include "data/scripts/wot_team_pose.inc"
 	.include "data/maps/TowerStreet/scripts.inc"
 	.include "data/maps/TowerMid/scripts.inc"
 	.include "data/maps/TowerCommand/scripts.inc"

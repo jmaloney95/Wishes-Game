@@ -6,6 +6,7 @@ DistortionWorld_3_MapScripts::
 @ through intra-map warps (a warp reloads the map, which would otherwise clear
 @ it here). Fresh entries from anywhere else always land right-side-up.
 DistortionWorld_3_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
 	goto_if_set FLAG_DW_INVERT_PENDING, DistortionWorld_3_OnTransition_StayInverted
 	clearflag FLAG_DW_INVERTED
 	end

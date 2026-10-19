@@ -427,6 +427,12 @@
       "map": "MAP_DOJO",
       "x": 7,
       "y": 11
+    },
+    {
+      "id": "HEAL_LOCATION_NATIONAL_PARK_ACT2",
+      "map": "MAP_NATIONAL_PARK_ACT2",
+      "x": 41,
+      "y": 18
     }
   ]
 }
