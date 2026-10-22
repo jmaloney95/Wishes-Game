@@ -570,6 +570,378 @@
 - **Rounds 106-115 are committed and pushed** to Wishes-Game; the "Uncommitted." lines in those entries are out of date. Game `master`: **`1d63984425`** (rounds 112-115, the Megas) and **`1b7708b844`** (rounds 106-111: Team Pose, Distortion World Gengar and respawn, Shadow catch rates/Snag Balls, plus Joe's map edits: Prototype Lab 32x31, Walnut Woods tiles, Delta Dodrio in Distortion World 3). Each was checked out alone and built from scratch in WSL before pushing. Wishes-Game `main` carries the matching submodule bumps, the Mega sprite pack and these handoff entries.
 - **Still uncommitted on purpose (not part of Joe's ask):** game — the `.github` issue-template swap (the bug-intake `bug_report.yml`/`feedback.yml`, deleting expansion's four templates) and an accidental executable-bit flip on `.github/docs_validate/inclusive_summary.py` (leave that one out); workspace — `.gitignore` (`bug-inbox/`), `.claude/launch.json` (adds the guide editor, plus an `anim` server pointing at another session's scratch folder), `.claude/skills/`, and personal media/asset folders (`Youtube/` is 7.2 GB, a `.sav`, `FlatfootLabs/Oni Bob.mp4`, `WoT_Video_Ideas.md`, `custom sprites/mods/`, the SIGIL template pack, `MEGA SPRITES.zip`). The repo is public, so those want Joe's call.
 
+### 2026-10-19 (round 117) — THE MEGA DIMENSION (Z-A-STYLE "DLC"), PILOT ON ROUTE 2
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass, including the 2 new ones in `test/wot_mega_dimension.c`. Not play-tested (Joe). Uncommitted.**
+- **What it is (Joe's spec):** once the player has the **Mega Ring**, one **portal** opens per in-game day. Talking to it warps the player into a **grayscale copy of that map** (same layout, player stays in colour) with **no trainers/NPCs/story events**, its own wild Pokémon, and **one fan Mega** standing in the overworld. The Mega cries, then battles and **Mega Evolves on turn 1**. **KO → its stone** (first time only); **catch → the Pokémon holding its stone**; **whiteout → back at the portal**, party healed. A **countdown HUD** (top-left, m:ss) runs while inside; at 0 the dimension **collapses** (Distortion World shake → rift → white fade) and puts the player back at the portal. The portal then stays shut until the next day.
+- **Joe's calls taken:** grayscale only · the Mega is a **random unclaimed** one; once all 19 are claimed, **rematches** (KO pays nothing) · **daily random spot** from a table · corner HUD · Mega level = **party's highest + 2** (cap 100) · **pilot = Route 2 only** · **placeholder portal art**.
+- **Code — `src/wot_mega_dimension.c` (+ `include/wot_mega_dimension.h`):** the roster (`sMegaRoster`, round-113 order = claim-flag order), the spot table `sPortalSpots` (`{srcMap, returnX/Y, dimMap, arriveX/Y}`; **one row: Route 2 (24,10) portal, return/arrive at (24,11)**), the daily roll, portal flag, timer tick, HUD task, whiteout redirect, wild-level scaling and the specials. **`MEGA_DIM_TIME_LIMIT` = 300 s** (header; tune freely).
+  - **Hooks:** `overworld.c` — `DoWhiteOut` (whiteout → portal, no `setrespawn`), `WotMegaDim_UpdatePortalFlag()` before `RunOnTransitionMapScript()` in both `LoadMapFromWarp` and `LoadMapFromCameraTransition`, `WotMegaDim_Tick()` in `OverworldBasic` (the clock only runs on the field, so **battles and the bag/party screens pause it**) · `clock.c UpdatePerDay` → `WotMegaDim_OnNewDay` (clears the state; **skipped while inside**, so the return spot can't change under the player) · `wild_encounter.c CreateWildMon` → dimension wilds are **party's highest −1..−4** · `battle_setup.c` → dimension maps (UNDERGROUND) battle on **outdoor backgrounds**; the Route 2 sand/pond split covers its copy · `event_object_movement.c` → **no follower** in the dimension (same as the Distortion World).
+  - **Grayscale:** `fieldmap.c ApplyGlobalTintToPaletteEntries` (the dummied FRLG Quest Log hook, now real; **added the missing call in the secondary-tileset branch**) grays tileset palettes at load; `field_weather.c UpdateSpritePaletteWithWeather` grays every field sprite palette **except the player's tags + reflections, blend-immune tags (emotes, item icons, the portal) and the weather palette**. Day/night is off for free (`MAP_TYPE_UNDERGROUND` has no natural light). Fades, weather, menus and battle returns all rebuild from the tinted unfaded buffer.
+  - **Wild Mega Evolution:** `B_SMART_WILD_AI_FLAG` → new `FLAG_WOT_SMART_WILD_AI` (0x4BD), set only around the Mega battle (cleared after it, on warp-out and by whiteout). The AI then picks `USE_GIMMICK`, so the stone-holding mon Mega Evolves. **New `STRINGID_WOTWILDMEGAREACTING`** ("{name} is overflowing with Mega energy!") replaces "reacting to {trainer}'s Mega Ring!" for wild opponents (`BattleScript_MegaEvolution` branch; the stock line printed a blank name). **No battle string may contain `\n`** — expansion wraps battle text itself; a `\n` also breaks test `MESSAGE()` matching.
+- **New ids:** flags **`FLAG_WOT_MEGA_CLAIMED_<SPECIES>` 0x4A9–0x4BB** (19), **`FLAG_HIDE_MEGA_PORTAL` 0x4BC**, **`FLAG_WOT_SMART_WILD_AI` 0x4BD** · vars **`VAR_WOT_MEGA_DIM_STATE` 0x40FA** (bit15 rolled, bit10 used, bits 9-5 spot, 4-0 Mega), **`VAR_WOT_MEGA_DIM_TIMER` 0x40FB** (4 free vars left: 0x40FC-0x40FF) · **`MAPSEC_MEGA_DIMENSION`** (pop-up "MEGA DIMENSION", not on the region map) · **`OBJ_EVENT_GFX_WOT_MEGA_PORTAL` 432** (`NUM_OBJ_EVENT_GFX` 433), pal tag **0x800A** (blend-immune on purpose: glows the same at night and stays in colour inside) · specials `WotMegaDim_*` at the END of `specials.inc` · HUD window on BG0 at **baseBlock 0x300** (4×2 tiles).
+  - The FRLG headers reuse 0x4B0/0x4BD and 0x40FA/0x40FB for their own flags/vars, but they're only compiled when `IS_FRLG` (WoT builds Emerald), so there's no clash.
+- **Maps:** new **`MegaDimension_Route2`** (end of `gMapGroup_TownsAndRoutes`, so no existing map number moves) **shares `LAYOUT_ROUTE_2`** — Joe's Route 2 repaints carry over — `connections: null`, `MAP_TYPE_UNDERGROUND`, no escaping, `MUS_PL_DISTORTION_WORLD` (placeholder music, Joe's call). Two objects: the **exit portal** at (24,10) ("Leave the Mega Dimension?") and the **Mega** at (30,27) (`OBJ_EVENT_GFX_VAR_1` = the base species' overworld sprite, since the fan Megas reuse it; hide flag `FLAG_TEMP_1`, so it's back every visit). Route 2 got **one object appended** (the portal at 24,10, `FLAG_HIDE_MEGA_PORTAL`). Its wild table (in `wild_encounters.json`, levels rewritten at runtime): land = Amoonguss, Conkeldurr, Electivire, Magmortar, Jumpluff, Whimsicott, Snorlax, Shiftry, Torkoal, Golem, Flygon, Typhlosion; surf = Omastar, Kabutops, Poliwrath, Azumarill, Milotic — **re-pick freely in porymap**.
+  - **Shared scripts:** `data/scripts/mega_dimension.inc` (portal, map scripts, Mega, collapse, exit, text). **A new location = one `sPortalSpots` row + a map that shares the source layout and uses the same 3-line `MapScripts` header + a portal object on the source map with `FLAG_HIDE_MEGA_PORTAL`.**
+- **Placeholder portal art:** `tools/build_mega_portal_placeholder.py` → `graphics/object_events/pics/misc/wot_mega_portal.png` (32×128 = 4 frames of 32×32 stacked vertically) + `palettes/wot_mega_portal.pal`; it swirls via the jumbotron unpause hook. To swap in real art, keep the layout and ≤16 colours (index 0 transparent), then delete the generated `.4bpp`/`.gbapal` so make rebuilds them. **If the portal moves in porymap, update `returnX/Y` in `sPortalSpots`** (the player is put back one tile south of it).
+- **Debug → Scripts:** **"Mega Dim: portal"** (gives a Mega Ring if missing, re-rolls, opens today's portal and warps you to Route 2 in front of it) and **"Mega Dim: 10s left"** (inside: cuts the countdown to see the collapse).
+- **Caveats / Joe's calls:** a **caught rematch Mega still holds its stone** (it needs it to Mega Evolve; the Minister sells stones anyway) · saving inside is allowed (the timer is saved) · if the clock passes midnight while inside, that day's re-roll is skipped · the Mega uses the default legendary battle music · **a plain wild Pokémon can never Mega Evolve** (the wild branch of `OpponentHandleChooseMove` never sends `RET_GIMMICK`); the smart-wild flag is what routes it through the AI branch, and the tests prove both sides of that. Whether the AI *chooses* to Mega Evolve is verified by reading the engine (`BattleAI_ChooseMoveIndex` sets `USE_GIMMICK`; only Z-Moves/Tera are reconsidered), not by a test, because the test runner forces the opponent's moves.
+- **Test checklist:**
+  - [ ] Without the Mega Ring: no portal on Route 2. With it (or Debug → "Mega Dim: portal"): the portal stands at (24,10), swirls, glows in colour at night.
+  - [ ] Step in: white rift transition → "MEGA DIMENSION" pop-up → map and NPC-free world gray, **player in colour**, no follower, HUD appears top-left after the pop-up and counts down; hides during messages/menus.
+  - [ ] Wild battles here: party-level foes from the dimension table; outdoor battle backgrounds; on return the map is still gray (also after the bag, start menu, save + reload inside, and surfing — the surf blob stays in colour).
+  - [ ] The Mega: cry → "radiating Mega energy" → battle → **it Mega Evolves on turn 1** with "is overflowing with Mega energy!". KO → stone + claimed; catch → mon holds the stone; run → it's still there.
+  - [ ] "10s left" → at 0, shake + "collapsing" + rift → back at Route 2 (24,11); portal gone until the next day. Exit portal inside does the same without the shake.
+  - [ ] Whiteout inside → back at the Route 2 portal (not a Pokémon Center), party healed.
+  - [ ] Next in-game day: the portal is back with a different unclaimed Mega.
+
+### 2026-10-19 (round 118) — MEGA DIMENSION PLAYTEST 1: GLITCH FIX, 2:00 TIMER, 3 MORE MAPS, BLACK-AND-WHITE BATTLES, GIRATINA MUSIC
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass. Not play-tested after these changes (Joe). Uncommitted.**
+- **Joe's playtest (screenshot):** a flat gray band over the top of the map, garbled map tiles lower down, and garbled timer digits. **Root cause: the HUD window's tiles (BG0 baseBlock 0x300) are VRAM 0xE000, which is BG2's tilemap (map base 28).** Every HUD redraw wrote over five rows of map, and every map scroll wrote over the HUD's digits. **On the field, BG0 tiles from 0x300 up collide with the map tilemaps (0xE000+); only 0x000-0x2FF are safe.** The HUD now uses **0x2E0-0x2E7** (clear of the dialog/std frames, pop-up edges, bag and match call).
+- **Timer is 2:00** (`MEGA_DIM_TIME_LIMIT` 120).
+- **Three more dimension maps, same recipe** (shared layout, no events, `MAP_TYPE_UNDERGROUND`, no connections, shared `MegaDim_*` map scripts, the Mega-line wild table): **`MegaDimension_NationalPark`** (Act 1 park, `LAYOUT_ROUTE_2_2`; portal **(50,38)**, Mega (40,51)) · **`MegaDimension_TradewindTown`** (portal **(46,13)**, Mega (38,43)) · **`MegaDimension_ShinTokyo`** (portal **(45,25)**, Mega (54,42)). Each source map got one portal object appended (`FLAG_HIDE_MEGA_PORTAL`); the player returns/arrives one tile south of it. All tiles checked walkable, elevation 3.
+- **Only visited maps are rolled.** `sPortalSpots` gained a `seenFlag`: a spot enters the daily roll once the player has been to its map (set on entry by `WotMegaDim_UpdatePortalFlag`). Route 2 needs none, so there's always a spot. This keeps Shin Tokyo (Act 3) out until the player gets there. Joe confirmed Route 2, the Act 1 park and Tradewind stay reachable all game. New flags **`FLAG_WOT_MEGA_DIM_SEEN_NATIONAL_PARK/TRADEWIND/SHIN_TOKYO` = 0x4CE/0x4CF/0x4D0**. Old saves pick these up on their next visit.
+- **Black-and-white battle background:** new **`BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION`**. It reuses the starfield's tiles and tilemap (`WotSpace`) with a new palette, `graphics/battle_environment/mega_dimension/palette.pal` (`tools/build_mega_dimension_battle_pal.py`: luma, contrast ×1.3, inverted). The result is a white void over a black floor; the Pokémon stay in colour. Every battle in the dimension uses it, both the graphics (`GetBattleEnvironmentOverride`) and the gameplay side (`BattleSetup_GetEnvironmentId`, so Nature Power, Secret Power and Camouflage match). Round 117's map-type workaround and Route 2 special case are gone.
+- **Giratina's theme (`MUS_PL_VS_GIRATINA`) for every battle in the dimension:** wild battles go through `GetBattleBGM` (pokemon.c), the Mega through `BattleSetup_StartLegendaryBattle` (battle_setup.c).
+- **Debug "Mega Dim: portal" now opens the portal on the source map you're standing on** (Route 2, the Act 1 park, Tradewind or Shin Tokyo; anywhere else falls back to Route 2), marks that map visited, and drops you in front of it.
+- **Test checklist:**
+  - [ ] The map is clean: no gray band, no garbled tiles, and the timer digits stay crisp while walking. Check all four dimension maps.
+  - [ ] The timer starts at 2:00.
+  - [ ] National Park, Tradewind and Shin Tokyo portals appear on days they're rolled, but only after you've visited that map once. Fastest check: stand on each map and use Debug "Mega Dim: portal".
+  - [ ] Wild battle and Mega battle in the dimension: white-void background, Giratina's theme, Pokémon sprites in colour.
+
+### 2026-10-19 (round 119) — MEGA DIMENSION PLAYTEST 2: LEVELS, BLACK-AND-WHITE BATTLE UI, WILD THEME, THE PORTAL COMES BACK
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass. Not play-tested (Joe). Uncommitted.**
+- **The portal never came back — real bug, now fixed.** The daily reset was hooked on `clock.c UpdatePerDay`, but **WoT never sets `FLAG_SYS_CLOCK_SET`**. Vanilla sets it at the wall clock in Brendan's house, which WoT's story never reaches, so `DoTimeBasedEvents` never runs (unless a save went through that wall clock). That means **every vanilla per-day event is also dead in WoT** (daily flags, berry growth, lottery, TV, Mirage Island). It's worth knowing, but I left it alone on purpose because turning it on would wake all of them. **The portal now keeps its own day:** `VAR_WOT_MEGA_DIM_STATE` bits 14-11 hold the in-game day it was rolled on (`gLocalTime.days` mod 16, after `RtcCalcLocalTime`, i.e. the WoT fake-RTC clock). Any map load on a different day re-rolls the spot and the Mega and reopens a used portal. It never re-rolls while you're inside. The `clock.c` hook is reverted.
+  - The new roll can land on any visited spot, so the next day's portal may be on another map.
+- **Levels:** dimension wild Pokémon are now **2-5 below** the party's highest level (`MEGA_DIM_WILD_BELOW_MIN/MAX`). The **Mega is the party's highest + 5 with perfect IVs** (was +2, random IVs; `MEGA_DIM_LEVEL_BONUS`).
+- **Black-and-white battle UI in the dimension:** `WotMegaDim_GrayBattleUi()` grays the textbox and message text (BG 0), the window border (BG 1), the menu text (BG 5), and the **healthbox + HP/EXP bar** sprite palettes. It's called right after each of those loads: `LoadBattleMenuWindowGfx`, the battle-screen reload's textbox step (`battle_bg.c`) and `BattleLoadAllHealthBoxesGfx` (`battle_gfx_sfx_util.c`). **The shiny gold box still comes out gold:** it's derived from the (now gray) healthbox palette when it's first needed.
+- **Music:** the Mega keeps **Giratina's theme**. **Dimension wild battles now play Dialga & Palkia's theme (`MUS_DP_VS_DIALGA_PALKIA`)**, which nothing else in WoT uses, picked to pair with Giratina. `GetBattleBGM` chooses by `BATTLE_TYPE_LEGENDARY`. To swap it, change that one line in `pokemon.c`.
+- **Test checklist:**
+  - [ ] Use a portal, leave, then let the in-game day roll over (or wait for the next day): on the next map load a portal is open again, possibly on another visited map.
+  - [ ] Dimension wild Pokémon are 2-5 under your best; the Mega is 5 over.
+  - [ ] Dimension battles: gray textbox, menus, healthboxes and HP bar; a shiny's box is gold; outside the dimension everything is in colour again.
+  - [ ] Wild battle in the dimension = Dialga & Palkia's theme; the Mega = Giratina's.
+
+### 2026-10-19 (round 120) — MEGA DIMENSION: THE PORTAL REOPENS AT 8:00 AM, LIVE
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass. Not play-tested (Joe). Uncommitted.**
+- **Joe:** WoT does track game time without the vanilla wall clock (the START menu shows the date and time); **a used portal should come back the following in-game day at 8:00 AM.** Round 119 already read that same clock (`RtcCalcLocalTime` → `gLocalTime`, exactly what the START menu panel uses); what was missing was the hour.
+- **A "portal day" now runs 8:00 AM to 7:59 AM** (`GetToday`: `gLocalTime.days`, minus one before `PORTAL_OPEN_HOUR` 8). Using a portal shuts it until the next 8:00 AM; an unused one also re-rolls at 8:00 instead of midnight.
+- **It appears live:** `WotMegaDim_Tick` (field, outside the dimension) checks once a second. If 8:00 comes round while you're standing on the rolled map, the portal spawns right there (`TrySpawnObjectEvent`), and an unused portal whose day rolls to another map despawns. It waits until the player is free (no script, controls unlocked), so it never pops in mid-cutscene. Map loads still set it as before.
+- **Test checklist:**
+  - [ ] Use a portal on Route 2 (Debug "Mega Dim: portal"), come back out: the portal is gone. Wait on Route 2 past 8:00 AM the next day (START menu clock): the portal appears without leaving the map, if the new roll picked Route 2; otherwise it's on another visited portal map.
+  - [ ] Before 8:00 AM of the next day nothing reopens, even after midnight.
+
+### 2026-10-20 (round 121) — MEGA DIMENSION: ASHLANDS AND STAR SUMMIT
+- **Build clean (exit 0, no errors or warnings).** I didn't rerun the tests: this round only adds maps and data, with no battle code. Not play-tested (Joe). Uncommitted.
+- **Two more dimension copies**, same recipe as round 118 (shared layout, no events, `MAP_TYPE_UNDERGROUND`, no connections, shared `MegaDim_*` map scripts, the Mega-line wild table):
+  - **`MegaDimension_Ashlands`** (`LAYOUT_ASHLANDS`): portal at **(19,15)** in the open middle band, Mega at (5,6) in the north-west pocket. No sandstorm inside.
+  - **`MegaDimension_StarSummit`** (`LAYOUT_STAR_SUMMIT_2`, the end-of-Act-1 summit): portal at **(10,17)** on the approach path (elevation 5), Mega at (15,15) on the summit platform, where the boss stands in the real map.
+  - Both source maps got one portal object appended (`FLAG_HIDE_MEGA_PORTAL`). The player returns and arrives one tile south of the portal.
+- **New seen flags:** `FLAG_WOT_MEGA_DIM_SEEN_ASHLANDS` **0x4D1** and `FLAG_WOT_MEGA_DIM_SEEN_STAR_SUMMIT` **0x4D2**. Like the others, each map only joins the daily roll after the player has been there once.
+- **Six portal maps now:** Route 2, National Park (Act 1), Tradewind Town, Shin Tokyo, Ashlands, Star Summit 2. Debug "Mega Dim: portal" works on all six.
+- **Test checklist:**
+  - [ ] On the Ashlands and on Star Summit 2, use Debug "Mega Dim: portal": the portal appears, and inside, the map is gray with no NPCs, the boss, sandstorm or story scenes.
+  - [ ] The Mega stands on the summit platform (15,15) / Ashlands pocket (5,6) and is reachable on foot.
+
+### 2026-10-20 (round 122) — MEGA DIMENSION: WALNUT WOODS, RANDOM DESTINATIONS, RANDOM SLOTS, BABY WILDS
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass. Not play-tested (Joe). Uncommitted.**
+- **Walnut Woods copy:** `MegaDimension_WalnutWoods` (`LAYOUT_WALNUT_WOODS`, no snow inside). Portal on the real Walnut Woods at **(30,20)**, return (30,21). New flag **`FLAG_WOT_MEGA_DIM_SEEN_WALNUT_WOODS` 0x4D3**. That makes 7 portal maps and 7 dimension copies.
+- **A portal no longer leads to its own map's copy.** Stepping through rolls a **random dimension map** from `sDimMaps`, among those whose real map you've visited (the Route 2 copy always counts). For example, Tradewind's portal can drop you in the Route 2 copy. Collapse, the exit portal and whiteout still return you to **the portal you came through** (`sPortalSpots`, `VAR_WOT_MEGA_DIM_STATE` spot bits, unchanged).
+- **Random slots:** every dimension map has **3 slots**. Each trip, the **exit portal takes one and the Mega another**, and you arrive one tile south of the exit portal. `WotMegaDim_SetMegaGfx` (ON_TRANSITION, before the objects spawn) moves the two object templates (`PlaceTemplate`, x/y/elevation). The templates live in the save block, so battles and save/reload inside keep them in place. Slots, with Route 2's being Joe's three:
+  - Route 2 (24,10) (28,28) (13,14)
+  - National Park (50,38) (40,51) (30,39)
+  - Tradewind (46,13) (38,43) (30,40)
+  - Shin Tokyo (45,25) (54,42) (10,41)
+  - Ashlands (19,15) (5,6) (9,20)
+  - Star Summit (10,17) (15,15) (25,9) (elevation 5)
+  - Walnut Woods (30,20) (9,15) (40,28)
+  - **Each slot was validated** (scratch `slots.py`): walkable, walkable ground south of it (for arrival), not on a source warp or trigger tile, and reachable on foot from the other two (BFS). The positions in the map.json files are now only defaults.
+- **New var `VAR_WOT_MEGA_DIM_VISIT` 0x40FC**: bits 4-0 = the dimension map, 6-5 = the exit portal's slot, 8-7 = the Mega's slot. Rolled in `WotMegaDim_EnterPortal`. Free vars left: 0x40FD-0x40FF.
+- **Wild Pokémon are now first stages:** land Foongus, Timburr, Elekid, Magby, Hoppip, Cottonee, Munchlax, Seedot, Torkoal, Geodude, Trapinch, Cyndaquil; water Omanyte, Kabuto, Poliwag, Azurill, Feebas. This applies to all 7 dimension tables. **Levels: half the party's highest, minus 0-2** (`MEGA_DIM_WILD_SPREAD`), minimum 1. The Mega is unchanged (highest + 5, perfect IVs).
+- **Test checklist:**
+  - [ ] Enter portals several times: you land in different copies (only of maps you've visited), and you always come back out at the portal you used.
+  - [ ] In a copy, the exit portal and the Mega are on two of its three slots and move around between trips; you arrive just south of the exit portal. Check the Route 2 copy's three: (24,10), (28,28), (13,14).
+  - [ ] After a battle inside, or a save and reload inside, the portal and Mega stay put.
+  - [ ] Wild Pokémon are the first-stage list at about half your best level.
+  - [ ] Walnut Woods: Debug "Mega Dim: portal" there opens its portal.
+
+### 2026-10-20 (round 123) — MEGA DOOMSDAY: TRADEWIND INTRO, Z-A RIVALS, VISIBLE WILD POKÉMON
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass. Not play-tested (Joe). Uncommitted.** Plan: `C:/Users/jmalo/.claude/plans/i-want-to-add-rosy-dolphin.md`.
+- **Joe's calls:** placeholder battle pics for Canari, Tulip, Taunie and Jacinthe; beating a rival gives the Mega Stone (KO rule: first time only, counts as claimed); random grass encounters stay on; Shin Tokyo and Star Summit put their Pokémon on open ground; **portals unlock with the Mega Doomsday intro and no longer need the Mega Ring**; **Madam Tsuji is now `OBJ_EVENT_GFX_ZA_VALERIE`** (`TradewindGym/map.json`), which frees Jacinthe's sprite for the rival; rival battles play Giratina's theme.
+- **Tradewind intro (`TradewindTown_EventScript_MegaDoomsdayIntro`):**
+  - A trigger row at **y=6, x28-32** across the arrival corridor (`VAR_TEMP_1`) steps the player to x=30. The camera pans 8 tiles down to **Joe's portal at (30,14)** with the rift effect. Lida and Canari step out of it to (29,14)/(31,14), and it collapses.
+  - Lida: "that's enough research for today… Hotel Z"; Canari: "battery's at two percent".
+  - Both get a `!`, the camera returns, and they walk up below the player. Lida asks "are you {PLAYER}?… Star Summit… some **guts** to take on The Oni" (Joe wrote "balls"; one word in `TradewindTown_Text_LidaAreYou` if he wants it back). Lida introduces herself and Canari; Canari: "Meet us at Hotel Z". They leave west along the open y=4 road.
+  - Then **`FLAG_WOT_MEGA_DOOMSDAY_INTRO` (0x4D4)**, `startquest QUEST_MEGA_DOOMSDAY`, and **today's portal is marked used** (`WotMegaDim_CloseTodaysPortal`): the first real portal opens the next 8:00 AM.
+  - Lida and Canari (Joe's objects) got local ids and **`FLAG_HIDE_TRADEWIND_LIDA_CANARI` (0x4D5)**, set on every ON_TRANSITION; they only exist inside the scene. The Tradewind `sPortalSpots` return tile moved to **(30,15)** for the new portal spot.
+- **Quest `QUEST_MEGA_DOOMSDAY` = 12** (`QUEST_COUNT` 13): "Mega Doomsday" — "Meet Lida and Canari in / Hotel Z.", label HOTEL Z, Lida icon. **Hotel Z doesn't exist yet,** so the quest stays active.
+- **Rivals:**
+  - **Ids:** `TRAINER_MEGADIM_CANARI/LIDA/EMMA/TAUNIE/TULIP/JACINTHE` are aliases in `opponents.h` for **`TRAINER_GABRIELLE_2..5` and `TRAINER_THALIA_2..3`**. These are vanilla rematch ids used only by the rematch table, which needs `FLAG_HAS_MATCH_CALL`, and only vanilla Hoenn sets that.
+  - **New classes:** Streamer, Team MZ, Detective, Socialite (Tulip uses Leader).
+  - **Pics:** Emma and Lida have their real ZA pics. Placeholders: Canari = Lass, Taunie = Pokémon Ranger F, Tulip = Psychic F, Jacinthe = Lady (one `Pic:` line each in `trainers.party`).
+  - **Teams** (4 + the rogue Mega):
+    - Canari: Eelektross, Rotom-Wash, Toxtricity, Pawmot
+    - Lida: Hawlucha, Lucario, Scrafty, Heracross
+    - Emma: Inteleon, Umbreon, Noctowl, Alakazam
+    - Taunie: Feraligatr, Dragonite, Talonflame, Sylveon
+    - Tulip: Farigiraf, Gardevoir, Espathra, Florges
+    - Jacinthe: Klefki, Aegislash, Mawile, Clefable
+  - **`WotMegaDim_AdjustRivalParty`** (called at the end of `CreateNPCTrainerParty`, only in the dimension) levels the four to the party's best −1..+1 and rewrites the **5th slot** as the day's Mega base species holding its stone, at best +3 with perfect IVs. The AI Mega Evolves it; trainers need no Ring. The six ids are Randomizer-exempt.
+  - **The roll:** `RollVisit` gives each trip a **1-in-5** rival (`VAR_WOT_MEGA_DIM_VISIT` bits 11-9). The rival stands on the Mega's slot (`OBJ_EVENT_GFX_VAR_2`, `FLAG_TEMP_2`) and the Mega object hides.
+  - **`MegaDim_EventScript_Rival`:** a speaker plate (new `SP_NAME_LIDA/CANARI/EMMA/TAUNIE/TULIP/JACINTHE`, linked in `sTrainerSpeakers`), a "beat ya to it" line, then `cleartrainerflag` + `trainerbattle_no_intro`, so they're fightable every time. A win hands over the stone the first time; a loss whites out to the portal.
+  - **Music:** `GetBattleBGM` plays Giratina's theme for trainer battles in the dimension.
+- **Visible wild Pokémon:**
+  - **`tools/build_mega_dim_spawns.py`** finds each dimension map's spawn areas: tall/long grass patches of 3+ tiles (behaviors 2/3/201/240 from a compiled probe), or 16×16 open-ground cells on Shin Tokyo and Star Summit. It takes at most 8 areas, 16 candidate tiles each. Candidates have 3+ walkable neighbours and stay off slots, arrival tiles and the real map's warps and triggers.
+  - **The tool writes** `src/data/wot_mega_dim_spawns.h` and **3 placeholder objects per area** into each `MegaDimension_*/map.json` (flags `FLAG_TEMP_3`+). **Re-run it** after changing a slot or layout, or adding a map.
+  - **Counts:** Ashlands 21, Shin Tokyo 24, Walnut Woods 18, Tradewind 12, Star Summit 12, National Park 9, Route 2 3.
+  - **`SetupWildMons` (ON_TRANSITION):**
+    - Picks **3 species per visit** from the map's land table (Randomizer-aware) and puts 3 Pokémon in each area on distinct tiles.
+    - **Shiny at normal odds** (1/256 rolls, plus Shiny Charm and Lure rolls), with **at most 2 distinct shiny sheets per visit**. The species cap and the shiny cap keep OW sheets well inside OBJ VRAM (memory: ow-sheet-vram-gotcha).
+    - Species and shininess go into the template's graphics id.
+  - **Shinies stay in colour** in the gray world (`WotMegaDim_GraySpritePalette` skips mon tags with the shiny bit).
+  - **`MegaDim_EventScript_WildMon`:** cry, then `WotMegaDim_StartOverworldMonBattle`, an ordinary wild battle against exactly that species and shininess at the dimension's wild level, with Dialga & Palkia music. Won or caught: it's gone for the visit. Ran: it stays.
+- **New debug entries** (Debug → Scripts): **"Mega Dim: rival"** (the next trip finds a rival; cycles 1 Canari … 6 Jacinthe) and **"Mega Dim: intro"** (clears the intro flag so the scene replays). "Mega Dim: portal" now also unlocks the DLC.
+- **Test checklist:**
+  - [ ] **Intro:** "Mega Dim: intro", then walk down from the Ashlands into Tradewind. The full scene plays, the quest toast shows, and the quest log reads "Meet Lida and Canari in Hotel Z." No portal until 8:00 AM the next day; no Mega Ring needed.
+  - [ ] **Rivals:** "Mega Dim: rival", then "Mega Dim: portal" and enter. The rival stands where the Mega would be, says their line, and battles with Giratina's theme. Their 5th Pokémon is the day's Mega and Mega Evolves. A win gives the stone (first time). Check all six, including placeholder pics and names/classes on the battle intro.
+  - [ ] **Wild Pokémon:** about 3 per grass patch (open ground on Shin Tokyo and Star Summit), only 3 species per visit. Talk → cry → battle with that same Pokémon. A shiny shows in colour. Beaten or caught = gone; ran = still there. Random grass encounters still happen.
+  - [ ] Many Pokémon on screen with no garbled sprites; walking around Shin Tokyo (24 placeholders) is fine.
+  - [ ] Madam Tsuji shows Valerie's sprite.
+
+### 2026-10-20 (round 124) — MEGA DOOMSDAY PLAYTEST: COLOURED POKÉMON, PORTAL REOPENS IN PLACE, SPECIES GROUPS, INTRO TWEAKS, HOTEL Z
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 6/6 pass. Not play-tested (Joe). Uncommitted.**
+- **"Overworld Pokémon have no colours":** the dimension grayed every field sprite except the player's. **Every overworld Pokémon (the visible wild ones and the rogue Mega) now keeps its colours**: `WotMegaDim_GraySpritePalette` skips any palette tag with `OBJ_EVENT_MON`. Portals keep their colour (blend-immune tag); the map and human NPC/rival sprites stay gray.
+- **"Portal didn't respawn at 8:00":** the clock was fine (the START menu and the portal both read `RtcCalcLocalTime`). The 8:00 re-roll moved the portal to a random visited map. **A used portal now reopens at the same spot the next morning** (`EnsureRolled` keeps the spot bits when yesterday's state was rolled + used). A new random spot is only picked after a day passes with the portal unused.
+- **Species groups:** each visit now picks **3 spawn areas, each with a group of 3 of one species** (3 species per visit, one per area), instead of mixing species across every patch. The other placeholders hide. Shiny odds are per Pokémon, as before.
+- **Intro changes:**
+  - **The trigger row moved to y=10** (x28-32; Joe's spot (30,10) is the centre). The camera pans only 4 tiles to the portal, and Lida and Canari come up to (30,11)/(31,11).
+  - **The portal lingers until Lida's "Let's head back to Hotel Z" line, then collapses**; Canari answers after.
+  - **They leave south down the corridor and west along y=18**, off-screen.
+- **Hotel Z (placeholder):**
+  - **New map `HotelZ`** shares **`LAYOUT_SLATEPORT_CITY_POKEMON_FAN_CLUB`**. The Celadon hotel was the first pick, but **Emerald builds don't link FRLG layouts** (`undefined reference to CeladonCity_Hotel_Layout`). Music `MUS_RG_CELADON` is a placeholder. It's added to the end of `gMapGroup_TownsAndRoutes`.
+  - **Door: Tradewind (26,12)**, a door tile that had no warp. It's Tradewind warp **5**, to Hotel Z warp 0; Hotel Z's (6,10)/(7,10) lead back. **The Masked Merchant moved from (26,12) to (25,13)** so the doorway is clear.
+  - **Objects:** Mable (6,5) behind the table, Lida (4,8) and Canari (9,8). They're hidden (`FLAG_HIDE_HOTEL_Z_TEAM` 0x4D7) until the Tradewind intro has played.
+  - **First entry (ON_FRAME, `FLAG_WOT_HOTEL_Z_MET` 0x4D6):** Lida's `!` and welcome ("officially a hotel, unofficially Team MZ's base"), then Canari. **Mable** (new `SP_NAME_MABLE`, green tier) explains the research: rogue Megas locked in Mega form with no Trainer, pulled through rifts from a gray mirror world. **Her offer:** she can hold a rift open for two minutes; bring back a rogue Mega's stone as a sample; rifts open at 8:00. Then Lida's "Two minutes is a long time… if you're fast!"
+  - **Then `completequest QUEST_MEGA_DOOMSDAY`** and **`startquest QUEST_TWO_MINUTES`**.
+- **Quest `QUEST_TWO_MINUTES` = 13** (`QUEST_COUNT` 14), "Two Minutes Is a Long Time": "Mable can hold a rift open / for 2:00. Bring back a / rogue Mega's Mega Stone." Label HOTEL Z, Mable icon.
+  - **Completion:** talk to Mable once any rogue Mega is claimed. That's the new specialvar `WotMegaDim_CountClaimed`, which counts the claim flags. A claim from before the quest also counts.
+  - The rest of Joe's quest list (Stone Ledger x/19, Primal pair, Mega Rayquaza at night, Mega Zygarde) isn't built.
+- **Test checklist:**
+  - [ ] Dimension: wild overworld Pokémon and the Mega are in full colour on the gray map.
+  - [ ] Use a portal, come back: next day after 8:00 it reopens on the same spot (stand there and it appears live).
+  - [ ] Visible wild Pokémon: 3 groups, each 3 of one species, in 3 different areas.
+  - [ ] Intro ("Mega Dim: intro"): it triggers at y=10, the portal stays open through Lida's Hotel Z line then closes, and they walk off south/west.
+  - [ ] Hotel Z: enter at Tradewind (26,12) (the Masked Merchant is beside the door now). The first visit after the intro plays the briefing, Mega Doomsday completes and Two Minutes starts. Before the intro the room is empty. Mable completes Two Minutes once you hold a claimed rogue Mega's stone.
+
+### 2026-10-20 (round 125) — MEGA DIMENSION PLAYTEST 3: HOTEL Z BLACK SCREEN (128-MAP GROUP LIMIT), LEVELS, GRASS, DIALOGUE
+- **Build clean (exit 0, no errors or warnings). `make check TESTS='(WoT)'`: 8/8 pass (2 new KO regression tests). Headless replays of the real scripts (below) agree. Not play-tested (Joe). Uncommitted.**
+- **Hotel Z black screen: root cause found and fixed.** `struct WarpData` stores `mapNum` as **`s8`**, but `gMapGroup_TownsAndRoutes` had grown to **130 maps**. HotelZ (129) and MegaDimension_WalnutWoods (128) wrapped negative, so warping into either **hung during map load**, and the Walnut Woods copy would have black-screened too.
+  - **Proven headless:** a new game started inside Hotel Z never reached its first frame, while the same layout as the Fan Club ran fine. With music and map scripts stripped it still hung; after the move it loads.
+  - **Fix:** a new group **`gMapGroup_WotMegaDimension` (group 75, appended last, so no existing map number moves)** holds all 7 `MegaDimension_*` maps and `HotelZ`. TownsAndRoutes is back to 122. **No group may exceed 128 maps.**
+- **Rivals in colour:** their overworld palettes are skipped by the grayscale (`WotMegaDim_IsRivalPaletteTag`), like the player and the Pokémon.
+- **Levels:**
+  - The **rogue Mega and the rivals' teams, ace included, are now 5-8 levels under the party's best** (`GetBossLevel`). The Mega keeps perfect IVs.
+  - **Wild Pokémon "at max level":** I couldn't reproduce it. A headless replay of the visible-Pokémon script with a Lv100 party gave **Lv50**, and the code is half of best minus 0-2. Random grass encounters (the other path) are now off. If Joe still sees it, note which Pokémon and how it started.
+- **Duplicate rogue Mega after a KO: not reproducible on today's build.**
+  - Battle tests (KO on the Mega turn, KO on a later turn) both end the battle as WON.
+  - A **headless replay of the real `MegaDim_EventScript_Mega`** (Lv100 Mewtwo, Psystrike, A-mashing) also gave one battle: the Mega Evolved, the KO came out WON, the object hid and the stone message played.
+  - If it happens again, note whether the second fight started on its own or after talking to the Mega, and whether a level-up or move-learn screen came in between.
+- **Grass:** the dimension's land encounter rate is now **0** in all 7 tables, so tall grass still animates but never starts a random battle. The land table still supplies the visible Pokémon's species. Water encounters are unchanged.
+- **Visible Pokémon use Joe's porymap placements:**
+  - `SetupWildMons` no longer moves anything. Each map's placeholder objects (script `MegaDim_EventScript_WildMon`), **every 3 in map order, form a group** (the last group may be smaller). Each visit fills **3 random groups, one species each**; the rest hide.
+  - `src/data/wot_mega_dim_spawns.h` was deleted. `tools/build_mega_dim_spawns.py` now only **seeds** a dimension map that has no placeholders yet and never touches porymap-placed ones.
+  - **Route 2 had two copied placeholders sharing `FLAG_TEMP_4`**, so beating one would hide all three. They were renumbered `FLAG_TEMP_3..7`. **Every wild placeholder needs its own `FLAG_TEMP_*`.**
+- **Catching the rogue Mega** now adds "{Mega} is holding its {stone}!".
+- **Rival dialogue:** each rival has **3 intro variants**, each with its own defeat line (chosen by `random 3`), plus a post-battle line. A rival who hands over a stone adds "Here. A deal's a deal." Canari's lines use **"Let's go DYN4MO!"** and the **Canatics**. Lida plugs Team MZ, Emma is detective-themed, Taunie is bubbly, Tulip says "darling", and Jacinthe is haughty.
+- **Emma's battle pic is now a placeholder:** `Expert F` (Joe found the ZA conversion sloppy; `TRAINER_PIC_FRONT_ZA_DETECTIVE_EMMA` still exists for a redo).
+- **Joe's porymap fixes kept:** the Hotel Z door tile at Tradewind (26,12), the moved spawns, warp 5 → Hotel Z warp 0, and the Masked Merchant at (25,13).
+- **Test checklist:**
+  - [ ] Enter Hotel Z through the Tradewind door and via debug warp: it loads, and after the intro the briefing plays.
+  - [ ] Walnut Woods copy: reachable through a portal (it was black-screen bait before).
+  - [ ] Rivals are in colour on the gray map; their teams and ace are 5-8 below your best; the dialogue varies across visits; Canari says "Let's go DYN4MO!".
+  - [ ] The rogue Mega is 5-8 below your best; catching it shows the stone line; a KO gives one battle and the stone.
+  - [ ] Walking through dimension grass: grass animation, no random battles. The visible Pokémon stand where you placed them, in 3 groups of one species each.
+
+### 2026-10-20 (round 126) — HOTEL Z CRASH (QUEST NAME OVERRAN THE POPUP), INTRO TIMING, NAMEPLATE COLOURS, WHO'S-TALKING CUES
+- **Build clean (exit 0, no errors or warnings). Battle tests not rerun (no battle code touched). Headless repro of the Hotel Z briefing now runs to completion. Not play-tested (Joe). Uncommitted.**
+- **Hotel Z crash after the briefing: root cause found and fixed.**
+  - **Reproduced headless:** a new game in Hotel Z with Mega Doomsday active, mashing A. The briefing finished, Mega Doomsday completed, Two Minutes started, then the game died a few seconds later, when the toasts played.
+  - **The cause:** `ShowMapNamePopUpWindow` (`map_name_popup.c`) builds the popup text in **`u8 mapDisplayHeader[27]`** and copies the name in at offset 6, which leaves room for **20 characters**. A quest toast copies the quest name there, and **"Two Minutes Is a Long Time" is 26**, so it overran the stack.
+  - **The fix:** the buffer is now `6 + sizeof(sQuestPopupText)` (36). Quest names up to 35 characters are safe in toasts.
+- **Intro timing:**
+  - **The rift shake (camera wobble + mosaic) now stops as soon as Lida and Canari have stepped out** (`EndRiftDistortion` moved up). The **portal object stays until Lida's "head back to Hotel Z" line**, then closes.
+  - **The closing sound is now `SE_WARP_IN`.** It was `SE_M_DETECT`, which sounded like a quest chime.
+- **Nameplate colours:**
+  - New tiers **`SPEAKER_TIER_YELLOW` (Canari)** and **`SPEAKER_TIER_BLUE` (Lida)**, on message-box palette slots **10 (yellow 248,216,64) and 15 (blue 104,168,248)**. The box art only draws with 0 and 11-14; both shade with slot 3.
+  - **Jacinthe uses the existing purple** (ghost tier). **Mable is green** (quest tier) and is renamed **"RESEARCHER MABLE"**, and her first line says to report back to her.
+- **Hotel Z "who's talking" cues:**
+  - **Mable moved to (6,8),** in front of the table, in line with Lida (4,8) and Canari (9,8). She **steps forward** to (6,9) for her lines, then steps back. The table at (5-8, 6-7) blocked her old spot.
+  - **Lida and Canari hop** (`jump_in_place_down`) before each of their lines.
+- **Test checklist:**
+  - [ ] Intro: the shake stops once both are out, the portal stays through Lida's line, then closes with a warp sound (no quest chime).
+  - [ ] Nameplates: Canari yellow, Lida blue, Jacinthe purple, RESEARCHER MABLE green. That includes the rivals' battle nameplates, and the plate is wide enough for "RESEARCHER MABLE".
+  - [ ] Hotel Z: Lida hops then talks, Canari hops then talks, Mable steps up then back, Lida hops again. Both toasts play (Mega Doomsday complete, then Two Minutes Is a Long Time) with no crash.
+
+### 2026-10-21 (round 127) — MEGA DIMENSION PORTALS V2: UP TO THREE AT ONCE, NO OVERLAPS, RE-ENTRY SHINY HUNTING
+- **Build clean (exit 0). `make check TESTS='(WoT)'`: 8/8 pass.** A headless replay of the real scripts covered the full loop (below). Not play-tested (Joe). Uncommitted.
+- **Why portals overlapped:** the old design rolled one portal a day with a single shared hide flag (`FLAG_HIDE_MEGA_PORTAL`), and the spot table didn't match where the objects stood in porymap. It's been replaced.
+- **Portal spots (Joe's list), each with its own hide flag `FLAG_HIDE_MEGA_PORTAL_0..6` (0x4D8-0x4DE):**
+  - Tradewind (61,24)
+  - National Park Act 2 (50,38) and (10,47)
+  - Ashlands (19,15)
+  - Shin Tokyo (46,24), (55,43) and (12,18) (the last at elevation 5)
+  - You come back out one tile south of the portal. A spot only takes portals once its map has been visited; Act 2 gets the new `FLAG_WOT_MEGA_DIM_SEEN_PARK_ACT2`.
+- **What moved off the maps:**
+  - **Route 2, Route 2-2, Star Summit 2 and Walnut Woods no longer host portals.** Their dimension copies are still destinations.
+  - **The Tradewind intro rift at (30,14)** is cutscene-only: `FLAG_HIDE_TRADEWIND_INTRO_PORTAL`, no script, hidden on every map load.
+- **Three portal records** (`VAR_WOT_MEGA_DIM_PORTAL_0..2`, layout in vars.h). Each record holds:
+  - its spot, dimension map, Mega and rival
+  - a 5-bit seed (`VAR_WOT_MEGA_DIM_SEEDS`)
+  - its own 120 s timer (`VAR_WOT_MEGA_DIM_TIMERS` + the low bits of `STATE`)
+  - 19 mask flags at **0x8E5-0x91D**: 9 gone, 9 shiny, 1 Mega shiny
+- **8:00 AM:** every free record opens a portal on a random free spot, so **up to 3 are open and never two on one spot**. An unentered portal stays until it collapses. If 8:00 comes while the player is on the map, new portals pop in live (not onto the player's tile).
+- **Same portal = same dimension:** the seed fixes the map, the exit/Mega slots, which wild groups appear and their species. **Only the shiny odds re-roll** on each trip in (wild Pokémon and the rogue Mega). A shiny found stays shiny, in place, while the portal lives. **A wild Pokémon beaten or caught stays gone** (`WotMegaDim_MarkWildGone`). A rival's ace takes the Mega's shininess.
+- **The timer:**
+  - It **only runs while you're inside.** The exit portal now says "You can come back while it lasts" and leaves the portal open.
+  - **Going back in costs 5 s.** The re-entry prompt shows the time left. With 5 s or less left, the portal "flickers and fizzles out" when touched.
+- **Collapse** (the portal disappears and you land in front of where it was): the timer runs out, a whiteout, the rogue Mega caught or KO'd, or the rival who holds it beaten. All four share the shake → "collapsing" → rift tail (`MegaDim_EventScript_MegaGoneCollapse` / `WotMegaDim_CollapseOut`).
+- **Old saves:** `FLAG_WOT_MEGA_DIM_V2` (0x4E1) marks the new layout. The first time through, the six vars and the masks are wiped, and a save that already unlocked the DLC gets its portals immediately.
+- **Debug → Scripts:**
+  - **"Mega Dim: portal"** opens a fresh portal on the current map's first spot (Tradewind's elsewhere).
+  - **"rival"** now applies to the next portal entered and sticks to it.
+  - **New "Mega Dim: shiny"** makes the next deal's first wild Pokémon shiny.
+- **Headless replay (scratchpad `hz_v7.sh`)**, starting from a new game in Tradewind with the Act 2 park visited:
+  - **Portals:** 3 records opened on spots 0/1/2.
+  - **First trip:** entered spot 0 and beat a wild Pokémon (gone bit set, object hidden), then left through the exit portal. The record stayed open, the timer paused at 109, and I was back at (61,25).
+  - **Re-entry:** the same map, Mega (Kabutops) and wild layout. The timer showed **102 (−5, plus about 2 s of ticking)**, the forced shiny was **still shiny**, and the beaten one was still gone.
+  - **Whiteout:** my Lv100 Mewtwo with only Psystrike *lost* to the Lv92 perfect-IV Mega Kabutops. That collapsed the portal: the record was freed, the portal object gone, and I was back at (61,25).
+  - **KO:** a rerun with the Mega at 1 HP **collapsed the portal on the KO and claimed the stone.**
+  - **Not covered headless:** the 8:00 AM refill on a later day, and the ≤5 s fizzle.
+  - **Harness note:** warps hang headlessly because the BGM fade never finishes, so the harness patches `BGMusicStopped` to TRUE. Yes/no menus disable the script context, so key mashing must also cover "field controls locked".
+- **Test checklist:**
+  - [ ] After the intro, the next 8:00 AM opens portals only at the listed spots. There are never two on one spot, and never more than 3.
+  - [ ] Leave an unentered portal and pass 8:00 again: it's still there, and new ones fill other free spots.
+  - [ ] Exit portal, then re-enter: the same dimension, the timer 5 s lower, shinies re-rolled. A shiny you saw stays shiny in its spot, and a beaten or caught Pokémon stays gone.
+  - [ ] Each of these collapses the portal and removes it: the timer running out, a whiteout, catching or KO-ing the Mega, and beating its rival.
+  - [ ] Touching a portal with 5 s or less left: it fizzles out.
+
+### 2026-10-21 (round 128) — MEGA DIMENSION PLAYTEST 6: LIDA'S ALERT, BALANCE, MUSIC, HOTEL Z DOORS, MABLE'S QUEST CHAIN
+- **Build clean (exit 0). `make check TESTS='(WoT)'`: 9/9 pass** (new: a wild Groudon holding the Red Orb reverts on its own). Headless replays of the real scripts are below. Not play-tested (Joe). Uncommitted.
+- **Bugs:**
+  - **Surf blob after a whiteout at National Park:** the (50,38) portal and its return tile (50,39) are pond water (behavior 0x10), so `GetAdjustedInitialTransitionFlags` put the player on a surf blob. Every Mega Dimension warp (in, out, collapse, whiteout, debug) now forces on-foot for that one arrival (`WotMegaDim_TakeForceOnFoot`). Proven headless: a plain spawn on (50,39) surfs, a whiteout back there lands on foot.
+  - **Shiny Trapinch drawn gray:** expansion's `graphics/pokemon/trapinch/overworld_shiny.pal` was literally gray. It's regenerated from the battle palettes by new `tools/build_ow_shiny_pal.py` (nearest battle-normal colour → same slot of battle-shiny), so it's the green battle shiny. Milcery is the only other all-gray overworld shiny, and its battle shiny is gray-white too, so it's correct.
+    - Separately fixed: species *without* overworld palettes loaded their fallback palette under the bare species tag (no `OBJ_EVENT_MON` bit → grayed in the dimension, and shiny/normal shared it). It now uses `species + OBJ_EVENT_MON (+shiny/female)` (`event_object_movement.c` `LoadDynamicFollowerPalette`).
+  - **Player drawn over a ZA NPC:** Hotel Z used the Fan Club layout, whose raised stage is elevation 4. A player who stepped off it kept elevation 4 on the transition tile (e.g. (4,7)) and drew over Lida at (4,8). Hotel Z now has its own copy, **`LAYOUT_HOTEL_Z`** (`data/layouts/HotelZ/`), with the walkable floor flattened to elevation 3; the vanilla Fan Club is untouched. A headless check of the Tradewind intro showed Lida correctly in front of the player there.
+- **Lida's 8:00 alert:** when the daily spawn opens portals, a ring, then Lida (nameplate) names the towns: Tradewind Town / National Park / Ashlands / Shin Tokyo, each once, one per line. It waits until the player is free (no script, menu, fade or name popup). New flags `FLAG_WOT_MEGA_DIM_NEW_0..2` (0x4E2-0x4E4). Headless: two National Park portals → "National Park" once.
+- **Lida's nameplate:** message-box palette slot 15 is now dark blue (40,72,184).
+- **Balance:**
+  - Rogue Mega: **12-16 under the party's best, perfect IVs** (Joe's pick).
+  - **Rivals field 3:** their first two + the Mega ace (`MEGA_DIM_RIVAL_ACE_SLOT` 2). The ace takes the Mega window; their own two sit **2-4 under the ace**. Headless (best Lv50): Eelektross 31, Rotom-Wash 32, Mega ace Azumarill 34.
+  - Mable's legends use the same window (Kyogre came out Lv87 against a Lv100).
+- **Music:**
+  - The intro plays `MUS_ENCOUNTER_SUSPICIOUS` from the moment it starts and fades back at the end.
+  - The 7 dimension maps play **`MUS_BW_BLACK_CITY`** (was Distortion World; alternates `MUS_DP_HALL_OF_ORIGIN`, `MUS_DP_GALACTIC_HQ`).
+  - **Rival themes:** Canari `MUS_HG_VS_RIVAL`, Lida `MUS_DP_VS_GALACTIC`, Emma `MUS_DP_VS_GALACTIC_BOSS`, Taunie `MUS_DP_VS_GYM_LEADER`, Tulip `MUS_VS_FRONTIER_BRAIN`, Jacinthe **`MUS_DP_VS_CHAMPION`** (`sRivals[].music`).
+  - The legends keep their own transitions and themes (Kyogre/Groudon, Rayquaza); rogue Megas keep Giratina's, wild ones Dialga/Palkia's.
+- **Hotel Z doors:**
+  - **New map `HotelZDistrict`** (group 75, 9 maps now): a 20x14 placeholder on General + FearTown with FearTown's 4x5 house as Hotel Z (door (8,5), WoT door behavior 100). **Joe to repaint.**
+  - **Tradewind's west wall** (the old "Dev only" coord triggers at x=3, y=17-22) now leads there once the Mega Doomsday intro has played. Before that it says "(This area is part of the Mega Dimension DLC.)" and steps you back. The district's east edge (x=19, rows 4-9) leads back to Tradewind (x=4, rows 17-22).
+  - **Tradewind's old Hotel Z door** (warp 5 at (26,12)) is gone; that tile is now a locked-door sign. Repaint it if it should stop looking like a door.
+  - **Rebel Hideout back door:** a coord trigger at **(9,0)** (placeholder: paint a door there). Once the intro has played it warps into Hotel Z; before that it shows the DLC line.
+  - **Hotel Z's exits are dynamic:** `WotHotelZ_SetExit` (ON_TRANSITION) points them back the way you came, using `gLastUsedWarp`.
+  - **Act 3:** per the handoff, Tradewind/the park/Ashlands stay reachable (Fly is granted in the hideout), so portal spots aren't gated by act.
+- **Mable's quest chain:**
+  - **Two Minutes Is a Long Time** is now the **19-stone tally.** Talk to her any time:
+    - "Recorded! That's N of 19" (with a quest-update toast), or "Your tally so far: N of 19".
+    - The player keeps the stones.
+    - Only the dimension's claim flags count, so stones from elsewhere don't.
+    - At 19: "I'll run the tests", and the quest completes.
+  - **The next portal day** (once free on the field), Mable calls: Primal signatures. **New quest 14, Primal Signatures**: catch Primal Groudon and Primal Kyogre.
+  - **Once both are caught** she calls again. **New quest 15, Sky-High Mega**: catch Mega Rayquaza; the catch completes it.
+  - **Legends ride the portals as the boss** (indices 19-21 in the record's boss field, `sLegends`):
+    - A quest's uncaught legends are put into portals the moment her call starts the quest (a free record, else an unentered portal re-rolled in place), and at each 8:00 spawn after that.
+    - No rival with a legend.
+    - With a legend boss only 2 wild species are dealt (its 64x64 overworld sprite).
+  - **Battle:** Groudon/Kyogre hold their orbs (Primal Reversion on switch-in needs no flag). Rayquaza gets Dragon Ascent in slot 1 plus the smart-wild flag, so it Mega Evolves.
+  - **Only a catch counts.** A KO: "retreated deeper into the rift…", the portal collapses, and it comes back in a later portal.
+  - **State is packed in flags** (no saved var was free):
+    - tally 0x4E8-0x4EC, stage 0x4ED-0x4EF, test day 0x882-0x885
+    - caught flags 0x4E5-0x4E7
+- **Debug → Scripts:** **"Mega Dim: Mable next"** jumps the chain to its next call. From collecting, it claims and reports all 19 and the Primal call rings; from the Primal quest, both Primals are caught and the Rayquaza call rings.
+- **Old saves:** a save where Two Minutes was completed under the old "first sample" rule shows it complete in the quest log. Mable still runs the tally, and her lines follow the tally.
+- **Headless replays** (scratchpad `hz_v9.sh` + `hz_quest.c` / `hz_rival.c` / `hz_hotelz.c`; `hz_intro.c` for the layering):
+  - **Quest chain:** Mable next → the Primal call rang → stage 2, Groudon and Kyogre placed in portals. Entered the spot-0 portal (Kyogre, Lv87, Blue Orb, perfect IVs, Kyogre/Groudon theme), KO'd it → it retreated, the portal collapsed, nothing claimed. Mable next → the Rayquaza call → stage 4, a Mega Rayquaza portal opened. Lida's alert rang after.
+  - **Rival:** forced Canari at the National Park pond portal. 3 mons as above, `MUS_HG_VS_RIVAL`. Lost → whiteout back at (50,39) on foot, portal collapsed.
+  - **Hotel Z routes:**
+    - Tradewind (5,18) → west wall → district (18,5) → the door → Hotel Z (exit pointed at the district door) → out at the district door (8,5) → east edge → Tradewind (4,19).
+    - Rebel Hideout (9,1) → back door → Hotel Z (exit pointed at the hideout (9,1)) → out at (9,1).
+    - **Caught on the way:** a script `warp` needs a following `waitstate`. I'd dropped them over an assembler warning that really came from ShinTokyo/scripts.inc:62, and the script then ended mid-warp and hung on `StopScript`'s assert. Restored.
+- **Test checklist:**
+  - [ ] 8:00 rolls over: Lida rings and names the towns. Her nameplate is dark blue and readable.
+  - [ ] Whiteout or leave at the National Park portal: you stand, no surf blob.
+  - [ ] A shiny Trapinch (or any shiny) in the dimension is in colour.
+  - [ ] Hotel Z: step off the stage next to Lida/Canari; they draw over you when they're in front.
+  - [ ] Rogue Mega and rivals feel fair. Rivals have 3 mons with the Mega highest, and each rival has its own battle theme.
+  - [ ] The intro's suspicious music; the dimension's new music.
+  - [ ] Tradewind's west wall before/after the intro → the district → Hotel Z → out lands back in the district → east edge back to Tradewind. Rebel Hideout (9,0) → Hotel Z → out lands back in the hideout.
+  - [ ] Mable: the tally counts up; 19 → tests; next day the Primal call; catch both Primals → the Rayquaza call; catch Rayquaza → done.
+
+### 2026-10-21 (round 130) — LUGIA IS POST-CREDITS AGAIN; CARVED MASK WEARS THE CORNERSTONE MASK; COIN CASE HINT
+- **Build clean (22:29). Not play-tested (Joe). Uncommitted.**
+- **Shadow Lugia only rises after the credits.** `ShinTokyo_EventScript_LugiaRise` now ends early unless `FLAG_SYS_GAME_CLEAR` is set (same flag the ferry and Draco's call use). This undoes round 91's "post-game gate is gone". The trigger still sets `VAR_TEMP_B` first, so before the credits the pier is silent and nothing loops.
+- **Carved Mask = Cornerstone Mask art.** Same item (`ITEM_CARVED_MASK`, name, description, disguise use unchanged); the bag icon is now `gItemIcon_CornerstoneMask`/its palette. The Munen Tunnel pickup (`OBJ_EVENT_GFX_ITEM_CARVED_MASK`) is now **32x32**: the 22x24 Cornerstone icon pasted unscaled, bottom-aligned, into `graphics/object_events/pics/misc/item_cornerstone_mask.png`, with its own palette tag `OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK` (0x800B, loads `icon_palettes/cornerstone_mask.pal`). It no longer uses the shared GROUND_ITEMS palette. The old `item_carved_mask.png` is unreferenced but left in place (it had uncommitted edits). If the 32x32 pickup looks too big on the floor, the fallback is a scaled-down 16x16 version.
+- **Tradewind curios got their own icons** (all seven were on Strange Souvenir; rebuilt green 22:43), borrowed from existing items in `src/data/items.h`: Bottled Warmth = Honey, Borrowed Years = Old Amber, Unspoken Last Words = Soothe Bell, Stranger's Name = Spell Tag, Folded Goodbye = Letter, One Good Dream = Star Piece, Long Way Home = Old Sea Map.
+- **Shin Tokyo game room (Mauville Game Corner map):** the "young lady next door" Coin Case line now says to dig through the garbage can, someone down on their luck tossed one. It points at the existing hidden Coin Case at (2,2) (`FLAG_WOT_HIDDEN_COIN_CASE`).
+
+### 2026-10-21 (round 129) — MEGA DIMENSION PLAYTEST 7: LIDA'S PLATE, CLAIMED MEGAS, POST-TALLY PORTALS, LV70 LEGENDS, MEGA RAYQUAZA
+- **Build clean. `make check TESTS='(WoT)'`: 10/10 pass** (new: a smart wild Rayquaza with Dragon Ascent Mega Evolves, with the wild line). Headless replays below. Not play-tested (Joe). Uncommitted.
+- **Lida's nameplate:** the DLC plates sit on a dark blue box, so her text is light blue again: message-box palette slot 15 = (136,200,248).
+- **"Caught Mega Poliwrath, it came back in a new portal": not reproducible on this build.** In the replay, catching Poliwrath (the real post-catch script) set its claim flag and freed the portal, and **8 forced respawns never rolled Poliwrath** (the pool skips claimed Megas and Megas another open portal holds).
+  - Added a safeguard anyway: the **first time you step into a portal, a rogue Mega that's been claimed since the portal opened is swapped** for an unclaimed one (`PickRogueMega`, `WotMegaDim_EnterPortal`).
+  - If it happens again, note whether that portal was already open before the catch, and how it was opened (8:00 spawn or debug "portal").
+- **After the 19-stone tally:** turning in the 19th stone (or debug "Mable next" from collecting) **closes every open portal**. From then on the 8:00 spawn opens portals **only for the legends Mable's current quest still needs**. Once Rayquaza is caught, no more portals open. Replay: after "Mable next", all three rogue-Mega portals were gone and only Groudon's and Kyogre's opened.
+- **Legends are a fixed Lv70** (`MEGA_DIM_LEGEND_LEVEL`). Rogue Megas and rivals keep the 12-16-under window.
+- **Mega Rayquaza:**
+  - The replay shows the portal's Rayquaza (Lv70, Dragon Ascent in slot 1, smart flag on) **does Mega Evolve at the start of its first turn**, once you've picked your first action. It isn't on entry like the Primals, and Joe chose to keep it that way.
+  - **Fixed:** its line was the trainer "fervent wish" message, which has no trainer to name for a wild Pokémon (the test runner flagged "Opponent needs a valid name"). A wild Mega Rayquaza now gets the wild Mega line ("…is overflowing with Mega energy!"), the same as the rogue Megas.
+- **Test checklist:**
+  - [ ] Lida's nameplate text is light blue and readable.
+  - [ ] Catch or KO a rogue Mega: it never appears again.
+  - [ ] Hand Mable the 19th stone: every portal disappears. The next portals are only Primal Groudon/Kyogre, then only Rayquaza.
+  - [ ] Each legend is Lv70.
+  - [ ] Mega Rayquaza Mega Evolves on turn 1 with the "overflowing with Mega energy" line.
+
+### 2026-10-21 (round 130) — NAMEPLATE CLASSES, EXCLAMATION SOUND, HOTEL Z BACK IN TRADEWIND, LEGEND MAPS
+- **Build clean** (only the two pre-existing ShinTokyo/scripts.inc:62 waitstate warnings). `make check TESTS='(WoT)'`: 10/10 pass. Headless replays below. Not play-tested (Joe). Uncommitted.
+- **Nameplates, root cause:** `message_box.png` palette **slot 15 is every nameplate's background** (name_box.png fills its plate with it). Rounds 126-129 recoloured slot 15 for Lida's text, which repainted *every* plate. Slots 10 and 15 are back to their originals in the PNG.
+  - **Speaker classes now set both colours:** `sNameboxStyles` in `src/field_name_box.c` writes the plate colour into slot 15 and the name colour into slot 10 whenever a plate is drawn.
+  - **The Legends Z-A cast is its own class** with a **dark blue plate** (40,72,184): Canari yellow, Lida light blue, Jacinthe purple, Researcher Mable green, and Emma, Taunie and Tulip white.
+  - **Team Mutrid:** red plate, white name.
+  - Quest givers keep green names and Gengar purple, on the normal plate. Everyone else is unchanged.
+- **Exclamations make a sound:** the single and double "!" icons now play `SE_PIN` themselves (`FldEff_ExclamationMarkIcon` / `FldEff_DoubleExclMarkIcon`, trainer_see.c). That covers script emotes and trainers spotting you.
+- **Hotel Z is back in Tradewind, at the (23,17) building:**
+  - **New warp 5** at (23,17) → Hotel Z. **Metatile 0x7A (that door) got WoT's door behavior 100** in the Night Market tileset; it keeps its collision on the map, so other 0x7A tiles stay walls.
+  - The door opens (`setmetatile 23,17,0x7A,FALSE` in a new ON_LOAD) only once the Mega Doomsday intro has played. Before that it's blocked and reading it says the door is locked.
+  - Hotel Z's exits still return you the way you came: Tradewind's door, or the Rebel Hideout back door (9,0).
+- **The Hotel Z District map is deleted** (map, layout, group entry, scripts), and Tradewind's west wall is back to the "Dev only" push-back.
+- **Intro:** after their lines, Lida and Canari walk down the corridor, along row 18 and up into Hotel Z's door (23,17), each with a door sound. The door is opened for them, so it's usable right after the intro.
+- **Legend portals lead to their own places, with no other Pokémon there:**
+  - **Primal Groudon → the Star Summit copy.** Its wild placeholders all stay hidden.
+  - **Primal Kyogre → new `MegaDimension_MarineCave`**, a gray copy of MarineCave_End. The exit portal is at (12,3) and Kyogre stands where the original did, (9,22) in the pool. The old trigger at (9,26) is rewired to start the battle.
+  - **Mega Rayquaza → new `MegaDimension_SkyPillar`**, a gray copy of SkyPillar_Top. The exit portal is at (14,15), Rayquaza at (14,7), and the trigger at (14,9) starts the battle.
+  - Both new maps play Abnormal Weather (inherited from the Star Summit copy). They're legend-only `sDimMaps` entries, never dealt to rogue-Mega portals; a legend's map comes from `sLegends`.
+- **Headless replays** (scratchpad `run_r130.sh`):
+  - **Kyogre portal:** map 75.8, portal (12,3), Primal Kyogre at (9,22), 0 wild. The trigger started a Lv70 Kyogre (Blue Orb, Kyogre/Groudon theme) battle.
+  - **Groudon portal:** Star Summit 75.5, Primal Groudon, 12 placeholders, 0 shown.
+  - **Rayquaza portal:** map 75.9, Mega Rayquaza at (14,7). The trigger started a Lv70 battle (Rayquaza theme).
+  - **Hotel Z door:** after the intro, (23,18) → up → Hotel Z → out at the Tradewind door. Before the intro, holding up does nothing.
+  - **Intro:** Lida and Canari walked to the door and were removed; the door's collision is 0 afterwards.
+- **Test checklist:**
+  - [ ] Plates: the ZA cast is dark blue with their own name colours; Mutrid plates are red with white text; other NPC plates look as they did before round 126.
+  - [ ] Any "!" (scripted or a trainer spotting you) plays a sound.
+  - [ ] The Tradewind (23,17) door is locked before the intro. In the intro Lida and Canari go in through it, and afterwards you can too.
+  - [ ] Each legend's portal: Groudon on Star Summit, Kyogre in the gray Marine Cave, Rayquaza atop the gray Sky Pillar, with no wild Pokémon. Stepping in front of Kyogre/Rayquaza starts the fight.
+
 ### 2026-09-20 (round 93) — THE FROSTWOOD GYM ROSTER; THE FRONTIER FERRY SAILS
 - **Three different adult men in the gym.** Both under-trainers fought as the Youngster pic, which matched nobody: MikManc's overworld sprite is a light-haired man, the "Minister" object is the caped WOT_LEON sprite and Yiffer's is a bare-chested brawler. Closest vanilla adult males, one each: **Guitarist** (MikManc), **Cooltrainer M** (Minister), **Black Belt** (Yiffer — he runs a kickboxing dojo). RedFatality keeps Leader Brawly: already an adult male, and the **Leader class is what gives him the gym-leader battle and victory music**, so it is not free to change.
 - **Teams: five each, nothing outside 12-18, one idea apiece.** MikManc is fast offence (Snover 13, Vanillite 14, Deerling 14, Sneasel 15, Leavanny 16 @ Oran Berry); the Minister is control (Oddish 15 for Sleep Powder, Delibird 14, Spheal 15, Claydol 16, Noivern 17); Yiffer is five physical attackers (Meditite 13, Cubchoo 14, Machop 15, Makuhita 15, Crabrawler 16 @ Oran Berry); RedFatality is the ice line proper (Snorunt 15, Sealeo 16, **Snover 16 added**, Froslass 17) with **Arcanine 18 @ Sitrus Berry** still the ace. AI flags differ per trainer so they play to those shapes.
