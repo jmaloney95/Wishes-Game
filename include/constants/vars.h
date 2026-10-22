@@ -367,4 +367,20 @@
 // must not reshuffle when the player leaves the map and comes back.
 #define VAR_STARTER_SHINY_ROLL         VAR_UNUSED_0x40F9
 
+// === Pokemon Wishes of Tomorrow - Mega Dimension (portals v2, round 127) ===
+// Up to three portals open at once, one record each (src/wot_mega_dimension.c
+// has the bit layouts).
+// STATE: bits 12-11 = the record the player is in (3 = none), bits 10-7 =
+// portal day of the last spawn, bits 6-0 = record 2's timer.
+#define VAR_WOT_MEGA_DIM_STATE         VAR_UNUSED_0x40FA
+// PORTAL_0..2: bit 15 = open, 14-12 = spot, 11-9 = dimension map, 8-4 = Mega,
+// bit 3 = entered before, 2-0 = rival (0 = none).
+#define VAR_WOT_MEGA_DIM_PORTAL_0      VAR_UNUSED_0x40FB
+#define VAR_WOT_MEGA_DIM_PORTAL_1      VAR_UNUSED_0x40FC
+#define VAR_WOT_MEGA_DIM_PORTAL_2      VAR_UNUSED_0x40FD
+// SEEDS: 5 bits per record (slots + the wild deal). TIMERS: record 0's
+// seconds in bits 6-0, record 1's in bits 13-7.
+#define VAR_WOT_MEGA_DIM_SEEDS         VAR_UNUSED_0x40FE
+#define VAR_WOT_MEGA_DIM_TIMERS        VAR_UNUSED_0x40FF
+
 #endif // GUARD_CONSTANTS_VARS_H

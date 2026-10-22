@@ -24,6 +24,7 @@
 #include "text_window.h"
 #include "trig.h"
 #include "window.h"
+#include "wot_mega_dimension.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
@@ -931,6 +932,10 @@ static u8 GetBattleEnvironmentOverride(void)
 {
     u8 battleScene = GetCurrentMapBattleScene();
 
+    // The Mega Dimension: every battle there, wild or the Mega, on the black-and-white void.
+    if (WotMegaDim_IsActive())
+        return BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION;
+
     // National Park: always use the beach (sand) background, regardless of terrain or trainer class.
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE_2_2)
      && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_ROUTE_2_2))
@@ -1076,6 +1081,7 @@ void LoadBattleMenuWindowGfx(void)
     LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
     LoadPalette(gBattleWindowTextPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
+    WotMegaDim_GrayBattleUi(); // WoT: black-and-white battle UI in the Mega Dimension
 
     if ((gBattleTypeFlags & (BATTLE_TYPE_ARENA | BATTLE_TYPE_POKEDUDE))
     || (IS_FRLG && (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)))
@@ -1439,6 +1445,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         break;
     case 2:
         LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+        WotMegaDim_GrayBattleUi(); // WoT: black-and-white battle UI in the Mega Dimension
         break;
     case 3:
         { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); DecompressDataWithHeaderVram(t, (void *)(BG_CHAR_ADDR(2))); }

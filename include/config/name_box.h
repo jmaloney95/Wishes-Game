@@ -15,14 +15,11 @@
 #define OW_NAME_BOX_FOREGROUND_COLOR  2
 #define OW_NAME_BOX_SHADOW_COLOR      3
 
-// Per-tier name colors (message_box palette indexes). Which speaker gets
-// which tier is data: gSpeakerNameTiers in src/data/speaker_names.h.
-// Auto-named trainers and raw text-pointer speakers use the defaults above.
-#define OW_NAME_BOX_VILLAIN_FG_COLOR      4 // red - Team Mutrid
-#define OW_NAME_BOX_VILLAIN_SHADOW_COLOR  5
-#define OW_NAME_BOX_QUEST_FG_COLOR        6 // green - quest-giver characters
-#define OW_NAME_BOX_QUEST_SHADOW_COLOR    7
-#define OW_NAME_BOX_GHOST_FG_COLOR        8 // purple - GENGAR (Clarkson's ghost)
-#define OW_NAME_BOX_GHOST_SHADOW_COLOR    9
+// Per-class plate and name colours: sNameboxStyles in src/field_name_box.c.
+// Which speaker gets which class is data: gSpeakerNameTiers in
+// src/data/speaker_names.h. Each plate is drawn by writing its two colours
+// into the message-box palette before the name prints:
+#define OW_NAME_BOX_PLATE_COLOR      15 // the plate fill in name_box.png (every plate)
+#define OW_NAME_BOX_NAME_COLOR       10 // not used by any box art
 
 #endif // GUARD_CONFIG_NAME_BOX_H

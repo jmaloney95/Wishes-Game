@@ -3,6 +3,7 @@
 #include "battle_controllers.h"
 #include "battle_ai_main.h"
 #include "battle_anim.h"
+#include "wot_mega_dimension.h"
 #include "constants/battle_anim.h"
 #include "battle_interface.h"
 #include "main.h"
@@ -784,6 +785,7 @@ bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         {
             LoadSpritePalette(&sSpritePalettes_HealthBoxHealthBar[0]);
             LoadSpritePalette(&sSpritePalettes_HealthBoxHealthBar[1]);
+            WotMegaDim_GrayBattleUi(); // WoT: black-and-white battle UI in the Mega Dimension
             CategoryIcons_LoadSpritesGfx();
         }
         else if (!IsDoubleBattle())

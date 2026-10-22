@@ -1243,6 +1243,31 @@ static const union AnimCmd *const sAnimTable_WotScreen[] = {
     [ANIM_STD_GO_FAST_EAST] = sAnim_WotScreenLoop,
 };
 
+// WoT: the Mega Dimension portal swirls on a loop (needs the unpause hook in
+// UpdateObjectEventSpriteAnimPause to keep turning while it stands still).
+static const union AnimCmd sAnim_WotMegaPortalLoop[] = {
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_WotMegaPortal[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_FACE_NORTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_FACE_WEST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_FACE_EAST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_SOUTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_NORTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_WEST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_EAST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_WotMegaPortalLoop,
+};
+
 static const union AnimCmd *const sAnimTable_Standard[] = {
     [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
     [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth,

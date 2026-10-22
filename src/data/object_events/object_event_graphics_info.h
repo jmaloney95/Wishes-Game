@@ -1280,6 +1280,132 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotVictor = {
     .images = sPicTable_WotVictor,
 };
 
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaEmma = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_EMMA,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaEmma,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaCanari = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_CANARI,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaCanari,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaValerie = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_VALERIE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaValerie,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaTulip = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_TULIP,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaTulip,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaMable = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_MABLE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaMable,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaTaunie = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_TAUNIE,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaTaunie,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaLida = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ZA_LIDA,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_SPECIAL,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = FALSE,
+    .tracks = TRACKS_FOOT,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_Standard,
+    .images = sPicTable_ZaLida,
+};
+
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotShadowJirachi = {
     .tileTag = TAG_NONE,
     .paletteTag = OBJ_EVENT_PAL_TAG_WOT_SHADOW_JIRACHI,
@@ -2072,23 +2198,24 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_CuttableTree = {
     .images = sPicTable_CuttableTree,
 };
 
-// Ground-item overworld icons: 16x16 static objects sharing one palette
-// (OBJ_EVENT_PAL_TAG_GROUND_ITEMS), used in place of the Poke Ball for the
-// Carved Mask, Catalpa Bow, and Potion pickups.
+// Ground-item overworld icons: static objects. The Bow and Potion are 16x16
+// sharing one palette; the Carved Mask is 32x32 with the Cornerstone Mask
+// icon palette (OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK). All three are used in
+// place of the Poke Ball for those pickups.
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemCarvedMask = {
     .tileTag = TAG_NONE,
-    .paletteTag = OBJ_EVENT_PAL_TAG_GROUND_ITEMS,
+    .paletteTag = OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK,
     .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
-    .size = 128,
-    .width = 16,
-    .height = 16,
+    .size = 512,
+    .width = 32,
+    .height = 32,
     .paletteSlot = PALSLOT_NPC_SPECIAL,
     .shadowSize = SHADOW_SIZE_S,
     .inanimate = TRUE,
     .compressed = FALSE,
     .tracks = TRACKS_NONE,
-    .oam = &gObjectEventBaseOam_16x16,
-    .subspriteTables = sOamTables_16x16,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
     .anims = sAnimTable_Inanimate,
     .images = sPicTable_ItemCarvedMask,
 };
@@ -7971,6 +8098,24 @@ const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotWantedPoster = 
     .subspriteTables = sOamTables_64x64,
     .anims = sAnimTable_WotScreen,
     .images = sPicTable_WotWantedPoster,
+};
+
+const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMegaPortal = {
+    .tileTag = TAG_NONE,
+    .paletteTag = OBJ_EVENT_PAL_TAG_WOT_MEGA_PORTAL,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 512,
+    .width = 32,
+    .height = 32,
+    .paletteSlot = PALSLOT_NPC_1,
+    .shadowSize = SHADOW_SIZE_NONE,
+    .inanimate = TRUE,
+    .compressed = FALSE,
+    .tracks = TRACKS_NONE,
+    .oam = &gObjectEventBaseOam_32x32,
+    .subspriteTables = sOamTables_32x32,
+    .anims = sAnimTable_WotMegaPortal,
+    .images = sPicTable_WotMegaPortal,
 };
 
 const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotWantedSmall = {

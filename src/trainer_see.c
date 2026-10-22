@@ -1,4 +1,6 @@
 #include "global.h"
+#include "constants/songs.h"
+#include "sound.h"
 #include "battle_setup.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -1052,6 +1054,7 @@ u8 FldEff_ExclamationMarkIcon(void)
     {
         SetIconSpriteData(&gSprites[spriteId], FLDEFF_EXCLAMATION_MARK_ICON, 0);
         UpdateSpritePaletteByTemplate(&sSpriteTemplate_ExclamationQuestionMark, &gSprites[spriteId]);
+        PlaySE(SE_PIN); // WoT: an exclamation always makes its sound
     }
 
     return 0;
@@ -1107,6 +1110,7 @@ u8 FldEff_DoubleExclMarkIcon(void)
 
         SetIconSpriteData(sprite, FLDEFF_DOUBLE_EXCL_MARK_ICON, 2);
         UpdateSpritePaletteByTemplate(&sSpriteTemplate_ExclamationQuestionMark, sprite);
+        PlaySE(SE_PIN); // WoT: an exclamation always makes its sound
     }
 
     return 0;

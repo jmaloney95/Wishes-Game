@@ -66,6 +66,9 @@ const u32 gBattleEnvironmentTilemap_WotLab[] = INCBIN_U32("graphics/battle_envir
 const u32 gBattleEnvironmentTiles_WotSpace[] = INCGFX_U32("graphics/battle_environment/space/tiles.png", ".4bpp.smol");
 const u16 gBattleEnvironmentPalette_WotSpace[] = INCGFX_U16("graphics/battle_environment/space/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_WotSpace[] = INCBIN_U32("graphics/battle_environment/space/map.bin.smolTM");
+// The Mega Dimension reuses the starfield tiles/tilemap with its own black-and-white palette
+// (tools/build_mega_dimension_battle_pal.py).
+const u16 gBattleEnvironmentPalette_WotMegaDimension[] = INCGFX_U16("graphics/battle_environment/mega_dimension/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTiles_WotGraveyard[] = INCGFX_U32("graphics/battle_environment/graveyard/tiles.png", ".4bpp.smol");
 const u16 gBattleEnvironmentPalette_WotGraveyard[] = INCGFX_U16("graphics/battle_environment/graveyard/palette.pal", ".gbapal");
 const u32 gBattleEnvironmentTilemap_WotGraveyard[] = INCBIN_U32("graphics/battle_environment/graveyard/map.bin.smolTM");

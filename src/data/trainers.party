@@ -16739,175 +16739,155 @@ Golem
 Level: 33
 IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
 
+/* WoT Mega Dimension rival (repurposed vanilla rematch id; see TRAINER_MEGADIM_* in
+   opponents.h). Levels are rewritten at battle start (WotMegaDim_AdjustRivalParty)
+   and the 3rd slot becomes the portal's rogue Mega holding its stone (always
+   their highest level; the other two sit 2-4 under it). */
 === TRAINER_GABRIELLE_2 ===
-Name: GABRIELLE
-Class: Pkmn Breeder
-Pic: Pokemon Breeder F
+Name: CANARI
+Class: Streamer
+Pic: Lass
 Gender: Female
-Music: Female
+Music: Girl
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Skitty
-Level: 31
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+Eelektross
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Mightyena
-Level: 31
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+Rotom-Wash
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Zigzagoon
-Level: 31
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+Snorlax
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Lotad
-Level: 31
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Seedot
-Level: 31
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
-Taillow
-Level: 31
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
-
+/* WoT Mega Dimension rival (repurposed vanilla rematch id; see TRAINER_MEGADIM_* in
+   opponents.h). Levels are rewritten at battle start (WotMegaDim_AdjustRivalParty)
+   and the 3rd slot becomes the portal's rogue Mega holding its stone (always
+   their highest level; the other two sit 2-4 under it). */
 === TRAINER_GABRIELLE_3 ===
-Name: GABRIELLE
-Class: Pkmn Breeder
-Pic: Pokemon Breeder F
+Name: LIDA
+Class: Team MZ
+Pic: Za Lida
 Gender: Female
-Music: Female
+Music: Cool
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Skitty
-Level: 33
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
+Hawlucha
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Mightyena
-Level: 33
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
+Lucario
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Linoone
-Level: 33
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
+Snorlax
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Lombre
-Level: 33
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
-
-Nuzleaf
-Level: 33
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
-
-Taillow
-Level: 33
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
-
+/* WoT Mega Dimension rival (repurposed vanilla rematch id; see TRAINER_MEGADIM_* in
+   opponents.h). Levels are rewritten at battle start (WotMegaDim_AdjustRivalParty)
+   and the 3rd slot becomes the portal's rogue Mega holding its stone (always
+   their highest level; the other two sit 2-4 under it). */
 === TRAINER_GABRIELLE_4 ===
-Name: GABRIELLE
-Class: Pkmn Breeder
-Pic: Pokemon Breeder F
+Name: EMMA
+Class: Detective
+Pic: Expert F
 Gender: Female
-Music: Female
+Music: Intense
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Delcatty
-Level: 35
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Inteleon
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Mightyena
-Level: 35
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Umbreon
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Linoone
-Level: 35
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
+Snorlax
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Lombre
-Level: 35
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
-
-Nuzleaf
-Level: 35
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
-
-Swellow
-Level: 35
-IVs: 3 HP / 3 Atk / 3 Def / 3 SpA / 3 SpD / 3 Spe
-
+/* WoT Mega Dimension rival (repurposed vanilla rematch id; see TRAINER_MEGADIM_* in
+   opponents.h). Levels are rewritten at battle start (WotMegaDim_AdjustRivalParty)
+   and the 3rd slot becomes the portal's rogue Mega holding its stone (always
+   their highest level; the other two sit 2-4 under it). */
 === TRAINER_GABRIELLE_5 ===
-Name: GABRIELLE
-Class: Pkmn Breeder
-Pic: Pokemon Breeder F
+Name: TAUNIE
+Class: Team MZ
+Pic: Pokemon Ranger F
 Gender: Female
-Music: Female
+Music: Cool
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Delcatty
-Level: 37
-IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
+Feraligatr
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Mightyena
-Level: 37
-IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
+Dragonite
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Linoone
-Level: 37
-IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
+Snorlax
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Ludicolo
-Level: 37
-IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-
-Shiftry
-Level: 37
-IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-
-Swellow
-Level: 37
-IVs: 4 HP / 4 Atk / 4 Def / 4 SpA / 4 SpD / 4 Spe
-
+/* WoT Mega Dimension rival (repurposed vanilla rematch id; see TRAINER_MEGADIM_* in
+   opponents.h). Levels are rewritten at battle start (WotMegaDim_AdjustRivalParty)
+   and the 3rd slot becomes the portal's rogue Mega holding its stone (always
+   their highest level; the other two sit 2-4 under it). */
 === TRAINER_THALIA_2 ===
-Name: THALIA
-Class: Beauty
-Pic: Beauty
+Name: TULIP
+Class: Leader
+Pic: Psychic F
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Wailmer
-Level: 34
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+Farigiraf
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Horsea
-Level: 34
-IVs: 1 HP / 1 Atk / 1 Def / 1 SpA / 1 SpD / 1 Spe
+Gardevoir
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
+Snorlax
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+
+/* WoT Mega Dimension rival (repurposed vanilla rematch id; see TRAINER_MEGADIM_* in
+   opponents.h). Levels are rewritten at battle start (WotMegaDim_AdjustRivalParty)
+   and the 3rd slot becomes the portal's rogue Mega holding its stone (always
+   their highest level; the other two sit 2-4 under it). */
 === TRAINER_THALIA_3 ===
-Name: THALIA
-Class: Beauty
-Pic: Beauty
+Name: JACINTHE
+Class: Socialite
+Pic: Lady
 Gender: Female
 Music: Female
 Double Battle: No
-AI: Check Bad Move
+AI: Check Bad Move / Try To Faint / Check Viability
 
-Luvdisc
-Level: 36
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
+Klefki
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Wailmer
-Level: 36
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
+Aegislash
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
-Seadra
-Level: 36
-IVs: 2 HP / 2 Atk / 2 Def / 2 SpA / 2 SpD / 2 Spe
+Snorlax
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
 
 === TRAINER_THALIA_4 ===
 Name: THALIA

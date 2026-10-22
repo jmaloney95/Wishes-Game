@@ -2619,6 +2619,75 @@
 // script instead. It gets a flag of its own here.
 #define FLAG_WOT_NO_WHITEOUT                    FLAG_UNUSED_0x4C8 // set around a battle the player is meant to lose
 
+// === Mega Dimension (2026-10-19) ===
+// One claim flag per fan Mega, in sMegaRoster order (src/wot_mega_dimension.c).
+// Claimed = its stone has been won (KO) or the Mega was caught.
+#define FLAG_WOT_MEGA_CLAIMED_AMOONGUSS                    FLAG_UNUSED_0x4A9
+#define FLAG_WOT_MEGA_CLAIMED_AZUMARILL                    FLAG_UNUSED_0x4AA
+#define FLAG_WOT_MEGA_CLAIMED_BUTTERFREE                   FLAG_UNUSED_0x4AB
+#define FLAG_WOT_MEGA_CLAIMED_CONKELDURR                   FLAG_UNUSED_0x4AC
+#define FLAG_WOT_MEGA_CLAIMED_DUGTRIO                      FLAG_UNUSED_0x4AD
+#define FLAG_WOT_MEGA_CLAIMED_ELECTIVIRE                   FLAG_UNUSED_0x4AE
+#define FLAG_WOT_MEGA_CLAIMED_FLYGON                       FLAG_UNUSED_0x4AF
+#define FLAG_WOT_MEGA_CLAIMED_GOLEM                        FLAG_UNUSED_0x4B0
+#define FLAG_WOT_MEGA_CLAIMED_JUMPLUFF                     FLAG_UNUSED_0x4B1
+#define FLAG_WOT_MEGA_CLAIMED_KABUTOPS                     FLAG_UNUSED_0x4B2
+#define FLAG_WOT_MEGA_CLAIMED_MAGMORTAR                    FLAG_UNUSED_0x4B3
+#define FLAG_WOT_MEGA_CLAIMED_MILOTIC                      FLAG_UNUSED_0x4B4
+#define FLAG_WOT_MEGA_CLAIMED_OMASTAR                      FLAG_UNUSED_0x4B5
+#define FLAG_WOT_MEGA_CLAIMED_POLIWRATH                    FLAG_UNUSED_0x4B6
+#define FLAG_WOT_MEGA_CLAIMED_SHIFTRY                      FLAG_UNUSED_0x4B7
+#define FLAG_WOT_MEGA_CLAIMED_SNORLAX                      FLAG_UNUSED_0x4B8
+#define FLAG_WOT_MEGA_CLAIMED_TORKOAL                      FLAG_UNUSED_0x4B9
+#define FLAG_WOT_MEGA_CLAIMED_TYPHLOSION                   FLAG_UNUSED_0x4BA
+#define FLAG_WOT_MEGA_CLAIMED_WHIMSICOTT                   FLAG_UNUSED_0x4BB
+// 0x4BC was FLAG_HIDE_MEGA_PORTAL (one shared portal flag), retired in round 127.
+#define FLAG_WOT_SMART_WILD_AI                  FLAG_UNUSED_0x4BD // B_SMART_WILD_AI_FLAG: set only around the Mega battle
+// A portal spot only enters the daily roll once its map has been visited
+// (set on every entry by WotMegaDim_UpdatePortalFlag). Route 2 needs none.
+#define FLAG_WOT_MEGA_DIM_SEEN_NATIONAL_PARK    FLAG_UNUSED_0x4CE
+#define FLAG_WOT_MEGA_DIM_SEEN_TRADEWIND        FLAG_UNUSED_0x4CF
+#define FLAG_WOT_MEGA_DIM_SEEN_SHIN_TOKYO       FLAG_UNUSED_0x4D0
+#define FLAG_WOT_MEGA_DIM_SEEN_ASHLANDS         FLAG_UNUSED_0x4D1
+#define FLAG_WOT_MEGA_DIM_SEEN_STAR_SUMMIT      FLAG_UNUSED_0x4D2
+#define FLAG_WOT_MEGA_DIM_SEEN_WALNUT_WOODS     FLAG_UNUSED_0x4D3
+// Mega Doomsday: the Tradewind intro has played (Lida + Canari out of the
+// portal). Unlocks the daily portals -- no Mega Ring needed.
+#define FLAG_WOT_MEGA_DOOMSDAY_INTRO            FLAG_UNUSED_0x4D4
+#define FLAG_HIDE_TRADEWIND_LIDA_CANARI         FLAG_UNUSED_0x4D5 // only exist inside the intro scene
+#define FLAG_WOT_HOTEL_Z_MET                    FLAG_UNUSED_0x4D6 // the Hotel Z briefing has played (Mable)
+#define FLAG_HIDE_HOTEL_Z_TEAM                  FLAG_UNUSED_0x4D7 // Lida/Canari/Mable: only after the Tradewind intro
+// One hide flag per portal spot (sPortalSpots order), recomputed on every map
+// load by WotMegaDim_UpdatePortalFlag: up to three portals are open at once.
+#define FLAG_HIDE_MEGA_PORTAL_0                 FLAG_UNUSED_0x4D8 // Tradewind Town (61,24)
+#define FLAG_HIDE_MEGA_PORTAL_1                 FLAG_UNUSED_0x4D9 // National Park Act 2 (50,38)
+#define FLAG_HIDE_MEGA_PORTAL_2                 FLAG_UNUSED_0x4DA // National Park Act 2 (10,47)
+#define FLAG_HIDE_MEGA_PORTAL_3                 FLAG_UNUSED_0x4DB // Ashlands (19,15)
+#define FLAG_HIDE_MEGA_PORTAL_4                 FLAG_UNUSED_0x4DC // Shin Tokyo (46,24)
+#define FLAG_HIDE_MEGA_PORTAL_5                 FLAG_UNUSED_0x4DD // Shin Tokyo (55,43)
+#define FLAG_HIDE_MEGA_PORTAL_6                 FLAG_UNUSED_0x4DE // Shin Tokyo (12,18)
+#define FLAG_HIDE_TRADEWIND_INTRO_PORTAL        FLAG_UNUSED_0x4DF // the rift in the Mega Doomsday intro only
+#define FLAG_WOT_MEGA_DIM_SEEN_PARK_ACT2        FLAG_UNUSED_0x4E0
+#define FLAG_WOT_MEGA_DIM_V2                    FLAG_UNUSED_0x4E1 // the vars below hold the round-127 layout (an older save is reset once)
+// Set when the 8:00 spawn opens record 0/1/2; Lida's alert names those towns, then clears them.
+#define FLAG_WOT_MEGA_DIM_NEW_0                 FLAG_UNUSED_0x4E2
+#define FLAG_WOT_MEGA_DIM_NEW_1                 FLAG_UNUSED_0x4E3
+#define FLAG_WOT_MEGA_DIM_NEW_2                 FLAG_UNUSED_0x4E4
+// Mable's quest chain: the legends caught in portals (only a catch counts).
+#define FLAG_WOT_CAUGHT_PRIMAL_GROUDON          FLAG_UNUSED_0x4E5
+#define FLAG_WOT_CAUGHT_PRIMAL_KYOGRE           FLAG_UNUSED_0x4E6
+#define FLAG_WOT_CAUGHT_MEGA_RAYQUAZA           FLAG_UNUSED_0x4E7
+// Mable's quest state, packed into flags (no saved var is free):
+// 0x4E8-0x4EC = stones reported to her (0-19), 0x4ED-0x4EF = stage,
+// 0x882-0x885 = the portal day her tests started (src/wot_mega_dimension.c).
+#define FLAG_WOT_MABLE_TALLY_START              FLAG_UNUSED_0x4E8
+#define FLAG_WOT_MABLE_STAGE_START              FLAG_UNUSED_0x4ED
+#define FLAG_WOT_MABLE_DAY_START                FLAG_UNUSED_0x882
+// Per open portal (3 records x 19): what stays the same while that portal
+// lives. Bits 0-8: dealt wild Pokemon k beaten/caught (gone); bits 9-17: k
+// is shiny (kept); bit 18: the rogue Mega is shiny. Cleared on collapse.
+#define FLAG_WOT_MEGA_DIM_MASKS_START           FLAG_UNUSED_0x8E5 // through 0x91D
+
 // === Shadow Lugia off the Shin Tokyo pier (post-credits) ===
 #define FLAG_HIDE_SHINTOKYO_LUGIA               FLAG_UNUSED_0x4CC // re-set on every map load; the scene shows it
 #define FLAG_WOT_LUGIA_CAUGHT                   FLAG_UNUSED_0x4CD // only a capture ends the encounter

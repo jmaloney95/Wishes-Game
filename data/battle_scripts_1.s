@@ -5427,7 +5427,14 @@ BattleScript_FocusPunchSetUp::
 BattleScript_MegaEvolution::
 	flushtextbox
 	trytrainerslidemegaevolutionmsg
+	@ WoT: a wild Mega (the Mega Dimension) has no trainer or Mega Ring to name.
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_MegaEvolutionRingString
+	jumpifside BS_ATTACKER, B_SIDE_OPPONENT, BattleScript_MegaEvolutionWildString
+BattleScript_MegaEvolutionRingString:
 	printstring STRINGID_MEGAEVOREACTING
+	goto BattleScript_MegaEvolutionAfterString
+BattleScript_MegaEvolutionWildString:
+	printstring STRINGID_WOTWILDMEGAREACTING
 BattleScript_MegaEvolutionAfterString:
 	waitmessage B_WAIT_TIME_LONG
 	handleformchange BS_SCRIPTING, 0
@@ -5442,6 +5449,11 @@ BattleScript_MegaEvolutionAfterString:
 BattleScript_WishMegaEvolution::
 	flushtextbox
 	trytrainerslidemegaevolutionmsg
+	@ WoT: a wild Mega Rayquaza (Mable's quest) has no trainer whose wish it
+	@ answers; it gets the wild Mega line instead.
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_WishMegaEvolutionTrainerString
+	jumpifside BS_ATTACKER, B_SIDE_OPPONENT, BattleScript_MegaEvolutionWildString
+BattleScript_WishMegaEvolutionTrainerString:
 	printstring STRINGID_FERVENTWISHREACHED
 	goto BattleScript_MegaEvolutionAfterString
 

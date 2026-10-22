@@ -9920,6 +9920,17 @@
       "border_filepath": "data/layouts/Frostwood_House2/border.bin",
       "blockdata_filepath": "data/layouts/Frostwood_House2/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_HOTEL_Z",
+      "name": "HotelZ_Layout",
+      "width": 14,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonFanClub",
+      "border_filepath": "data/layouts/HotelZ/border.bin",
+      "blockdata_filepath": "data/layouts/HotelZ/map.bin",
+      "layout_version": "emerald"
     }
   ]
 }

@@ -598,6 +598,48 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinTokyo_EventScript_FerryHand",
       "flag": "FLAG_WOT_HIDE_FRONTIER_FERRY"
+    },
+    {
+      "local_id": "LOCALID_SHINTOKYO_MEGA_PORTAL",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 46,
+      "y": 24,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_4"
+    },
+    {
+      "local_id": "LOCALID_SHINTOKYO_MEGA_PORTAL_2",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 55,
+      "y": 43,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_5"
+    },
+    {
+      "local_id": "LOCALID_SHINTOKYO_MEGA_PORTAL_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 12,
+      "y": 18,
+      "elevation": 5,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_6"
     }
   ],
   "warp_events": [

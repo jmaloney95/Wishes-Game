@@ -317,6 +317,34 @@ static const struct SpriteFrameImage sPicTable_WotVictor[] = {
     overworld_ascending_frames(gObjectEventPic_WotVictor, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_ZaEmma[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaEmma, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaCanari[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaCanari, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaValerie[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaValerie, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaTulip[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaTulip, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaMable[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaMable, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaTaunie[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaTaunie, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaLida[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaLida, 4, 4),
+};
+
 
 static const struct SpriteFrameImage sPicTable_WotShadowJirachi[] = {
     overworld_frame(gObjectEventPic_WotShadowJirachi, 4, 4, 0),
@@ -473,7 +501,7 @@ static const struct SpriteFrameImage sPicTable_CuttableTree[] = {
 };
 
 static const struct SpriteFrameImage sPicTable_ItemCarvedMask[] = {
-    overworld_ascending_frames(gObjectEventPic_ItemCarvedMask, 2, 2),
+    overworld_frame(gObjectEventPic_ItemCarvedMask, 4, 4, 0),
 };
 
 static const struct SpriteFrameImage sPicTable_ItemCatalpaBow[] = {
@@ -3199,6 +3227,13 @@ static const struct SpriteFrameImage sPicTable_WotLeaderScreen[] = {
 static const struct SpriteFrameImage sPicTable_WotWantedPoster[] = {
     overworld_frame(gObjectEventPic_WotWantedPoster, 8, 8, 0),
     overworld_frame(gObjectEventPic_WotWantedPoster, 8, 8, 1),
+};
+
+static const struct SpriteFrameImage sPicTable_WotMegaPortal[] = {
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 0),
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 1),
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 2),
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 3),
 };
 
 static const struct SpriteFrameImage sPicTable_WotWantedSmall[] = {

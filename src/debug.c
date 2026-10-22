@@ -385,6 +385,12 @@ extern const u8 Debug_EventScript_Script_5[];
 extern const u8 Debug_EventScript_Script_6[];
 extern const u8 Debug_EventScript_Script_7[];
 extern const u8 Debug_EventScript_Script_8[];
+extern const u8 Debug_EventScript_MegaDimPortal[];
+extern const u8 Debug_EventScript_MegaDimShortTimer[];
+extern const u8 Debug_EventScript_MegaDimRival[];
+extern const u8 Debug_EventScript_MegaDimIntro[];
+extern const u8 Debug_EventScript_MegaDimShiny[];
+extern const u8 Debug_EventScript_MegaDimMableNext[];
 extern const u8 DebugScript_DaycareMonsNotCompatible[];
 extern const u8 DebugScript_OneDaycareMons[];
 extern const u8 DebugScript_ZeroDaycareMons[];
@@ -660,6 +666,12 @@ static const struct DebugMenuOption sDebugMenu_Actions_Scripts[] =
     { COMPOUND_STRING("Script 6"), DebugAction_ExecuteScript, Debug_EventScript_Script_6 },
     { COMPOUND_STRING("Shadow: single"), DebugAction_ExecuteScript, Debug_EventScript_Script_7 },
     { COMPOUND_STRING("Shadow: doubles"), DebugAction_ExecuteScript, Debug_EventScript_Script_8 },
+    { COMPOUND_STRING("Mega Dim: portal"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimPortal },
+    { COMPOUND_STRING("Mega Dim: 10s left"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimShortTimer },
+    { COMPOUND_STRING("Mega Dim: rival"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimRival },
+    { COMPOUND_STRING("Mega Dim: intro"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimIntro },
+    { COMPOUND_STRING("Mega Dim: shiny"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimShiny },
+    { COMPOUND_STRING("Mega Dim: Mable next"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimMableNext },
     { NULL }
 };
 

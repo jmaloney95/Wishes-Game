@@ -1,0 +1,78 @@
+{
+  "id": "MAP_HOTEL_Z",
+  "name": "HotelZ",
+  "layout": "LAYOUT_HOTEL_Z",
+  "music": "MUS_LILYCOVE_MUSEUM",
+  "region_map_section": "MAPSEC_TRADEWIND_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "local_id": "LOCALID_HOTEL_Z_MABLE",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_MABLE",
+      "x": 6,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Mable",
+      "flag": "FLAG_HIDE_HOTEL_Z_TEAM"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_LIDA",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_LIDA",
+      "x": 4,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Lida",
+      "flag": "FLAG_HIDE_HOTEL_Z_TEAM"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_CANARI",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_CANARI",
+      "x": 9,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Canari",
+      "flag": "FLAG_HIDE_HOTEL_Z_TEAM"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 6,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "WARP_ID_DYNAMIC"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "WARP_ID_DYNAMIC"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

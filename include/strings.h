@@ -2252,6 +2252,7 @@ extern const u8 gText_Quest_ToastyTime_Name[];
 extern const u8 gText_Quest_ToastyTime_Desc[];
 extern const u8 gText_Quest_ToastyTime_DoneDesc[];
 extern const u8 gText_QuestLoc_ShinTokyo[];
+extern const u8 gText_QuestLoc_HotelZ[];
 extern const u8 gText_Quest_StopTheMachine_Name[];
 extern const u8 gText_Quest_StopTheMachine_Desc1[];
 extern const u8 gText_Quest_StopTheMachine_DoneDesc[];
@@ -2262,5 +2263,17 @@ extern const u8 gText_Quest_HarnessDarkness_DoneDesc[];
 extern const u8 gText_Quest_MinistersFavor_Name[];
 extern const u8 gText_Quest_MinistersFavor_Desc1[];
 extern const u8 gText_Quest_MinistersFavor_DoneDesc[];
+extern const u8 gText_Quest_MegaDoomsday_Name[];
+extern const u8 gText_Quest_MegaDoomsday_Desc[];
+extern const u8 gText_Quest_MegaDoomsday_DoneDesc[];
+extern const u8 gText_Quest_TwoMinutes_Name[];
+extern const u8 gText_Quest_TwoMinutes_Desc[];
+extern const u8 gText_Quest_TwoMinutes_DoneDesc[];
+extern const u8 gText_Quest_PrimalSignatures_Name[];
+extern const u8 gText_Quest_PrimalSignatures_Desc[];
+extern const u8 gText_Quest_PrimalSignatures_DoneDesc[];
+extern const u8 gText_Quest_SkyHighMega_Name[];
+extern const u8 gText_Quest_SkyHighMega_Desc[];
+extern const u8 gText_Quest_SkyHighMega_DoneDesc[];
 
 #endif // GUARD_STRINGS_H

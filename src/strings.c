@@ -1237,6 +1237,7 @@ const u8 gText_QuestLoc_NationalPark[] = _("NATIONAL PARK");
 const u8 gText_QuestLoc_Pompeii[] = _("POMPEII");
 const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
 const u8 gText_QuestLoc_ShinTokyo[] = _("SHIN-TOKYO");
+const u8 gText_QuestLoc_HotelZ[] = _("HOTEL Z");
 
 const u8 gText_Quest_StopTheMachine_Name[] = _("Stop the Machine");
 const u8 gText_Quest_StopTheMachine_Desc1[] = _("The tides run low tonight.\nSurf south, find the shrine,\nthen climb Mutrid's tower.");
@@ -1250,6 +1251,18 @@ const u8 gText_Quest_HarnessDarkness_DoneDesc[] = _("Their darkness answers to\n
 const u8 gText_Quest_MinistersFavor_Name[] = _("Jailbreaker");
 const u8 gText_Quest_MinistersFavor_Desc1[] = _("Meet the MINISTER at the\nSHIN-TOKYO docks, then bust\nMikmanc out of the jail.");
 const u8 gText_Quest_MinistersFavor_DoneDesc[] = _("Mikmanc walks free. The\nMinister paid what he owed.");
+const u8 gText_Quest_MegaDoomsday_Name[] = _("Mega Doomsday");
+const u8 gText_Quest_MegaDoomsday_Desc[] = _("Meet Lida and Canari in\nHotel Z.");
+const u8 gText_Quest_MegaDoomsday_DoneDesc[] = _("You met Lida and Canari\nat Hotel Z.");
+const u8 gText_Quest_TwoMinutes_Name[] = _("Two Minutes Is a Long Time");
+const u8 gText_Quest_TwoMinutes_Desc[] = _("Bring Mable the Mega Stone\nof every rogue Mega (19).\nAsk her for your tally.");
+const u8 gText_Quest_TwoMinutes_DoneDesc[] = _("Mable has all 19 samples.\nShe's running her tests.");
+const u8 gText_Quest_PrimalSignatures_Name[] = _("Primal Signatures");
+const u8 gText_Quest_PrimalSignatures_Desc[] = _("Off-the-charts readings in\nthe rifts. Catch Primal\nGroudon and Primal Kyogre.");
+const u8 gText_Quest_PrimalSignatures_DoneDesc[] = _("Both Primals are caught.\nMable has their readings.");
+const u8 gText_Quest_SkyHighMega_Name[] = _("Sky-High Mega");
+const u8 gText_Quest_SkyHighMega_Desc[] = _("Something in the rifts is\nafter the Primals' power.\nCatch Mega Rayquaza.");
+const u8 gText_Quest_SkyHighMega_DoneDesc[] = _("Mega Rayquaza is caught.\nThe rifts are calming.");
 
 //QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
 const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");

@@ -9,6 +9,8 @@
 #include "script_menu.h"
 #include "field_message_box.h"
 #include "graphics.h"
+#include "palette.h"
+#include "constants/rgb.h"
 #include "script.h"
 #include "field_name_box.h"
 #include "npc_portrait.h"
@@ -26,6 +28,32 @@ static EWRAM_DATA u8 sSpeakerTier = SPEAKER_TIER_DEFAULT;
 
 static const u32 sNameBoxDefaultGfx[] = INCGFX_U32("graphics/text_window/name_box.png", ".4bpp");
 static const u32 sNameBoxPokenavGfx[] = INCGFX_U32("graphics/pokenav/name_box.png", ".4bpp");
+
+// WoT: one plate colour and one name colour per speaker class (enum
+// SpeakerNameTier). The name shades with OW_NAME_BOX_SHADOW_COLOR.
+struct NameboxStyle
+{
+    u16 plate;
+    u16 name;
+};
+
+#define NAMEBOX_RGB(r, g, b)    RGB((r) >> 3, (g) >> 3, (b) >> 3)
+#define NAMEBOX_PLATE_DEFAULT   NAMEBOX_RGB(72, 112, 160)  // name_box.png's own plate colour
+#define NAMEBOX_PLATE_ZA        NAMEBOX_RGB(40, 72, 184)   // the Legends Z-A cast: dark blue
+#define NAMEBOX_NAME_WHITE      NAMEBOX_RGB(240, 240, 240)
+
+static const struct NameboxStyle sNameboxStyles[SPEAKER_TIER_COUNT] =
+{
+    [SPEAKER_TIER_DEFAULT]   = {NAMEBOX_PLATE_DEFAULT, NAMEBOX_NAME_WHITE},
+    [SPEAKER_TIER_VILLAIN]   = {NAMEBOX_RGB(168, 40, 40),     NAMEBOX_NAME_WHITE},       // Team Mutrid: red plate
+    [SPEAKER_TIER_QUEST]     = {NAMEBOX_PLATE_DEFAULT, NAMEBOX_RGB(96, 224, 96)},        // green
+    [SPEAKER_TIER_GHOST]     = {NAMEBOX_PLATE_DEFAULT, NAMEBOX_RGB(184, 120, 248)},      // purple
+    [SPEAKER_TIER_ZA]        = {NAMEBOX_PLATE_ZA,      NAMEBOX_NAME_WHITE},
+    [SPEAKER_TIER_ZA_YELLOW] = {NAMEBOX_PLATE_ZA,      NAMEBOX_RGB(248, 216, 64)},       // Canari
+    [SPEAKER_TIER_ZA_BLUE]   = {NAMEBOX_PLATE_ZA,      NAMEBOX_RGB(136, 200, 248)},      // Lida
+    [SPEAKER_TIER_ZA_PURPLE] = {NAMEBOX_PLATE_ZA,      NAMEBOX_RGB(184, 120, 248)},      // Jacinthe
+    [SPEAKER_TIER_ZA_GREEN]  = {NAMEBOX_PLATE_ZA,      NAMEBOX_RGB(96, 224, 96)},        // Mable
+};
 
 static void DestroyNameboxFrame(void);
 static void WindowFunc_DrawNamebox(u32, u32, u32, u32, u32, u32, u32);
@@ -79,27 +107,21 @@ void PrepareNamebox(u32 tileNum)
     sNameboxWindowId = AddWindow(&template);
     FillNamebox();
 
-    u8 colors[3] = {TEXT_COLOR_TRANSPARENT, OW_NAME_BOX_FOREGROUND_COLOR, OW_NAME_BOX_SHADOW_COLOR};
+    u8 colors[3] = {TEXT_COLOR_TRANSPARENT, OW_NAME_BOX_NAME_COLOR, OW_NAME_BOX_SHADOW_COLOR};
     int strX = GetStringCenterAlignXOffset(fontId, strbuf, (winWidth * 8));
-    switch (sSpeakerTier)
-    {
-    case SPEAKER_TIER_VILLAIN:
-        colors[1] = OW_NAME_BOX_VILLAIN_FG_COLOR;
-        colors[2] = OW_NAME_BOX_VILLAIN_SHADOW_COLOR;
-        break;
-    case SPEAKER_TIER_QUEST:
-        colors[1] = OW_NAME_BOX_QUEST_FG_COLOR;
-        colors[2] = OW_NAME_BOX_QUEST_SHADOW_COLOR;
-        break;
-    case SPEAKER_TIER_GHOST:
-        colors[1] = OW_NAME_BOX_GHOST_FG_COLOR;
-        colors[2] = OW_NAME_BOX_GHOST_SHADOW_COLOR;
-        break;
-    }
     if (matchCall)
     {
         colors[1] = 1;
         colors[2] = 0;
+    }
+    else
+    {
+        // WoT: the speaker's class picks the plate and name colours; both are
+        // written into the message-box palette (every plate shares it).
+        const struct NameboxStyle *style = &sNameboxStyles[sSpeakerTier < SPEAKER_TIER_COUNT ? sSpeakerTier : SPEAKER_TIER_DEFAULT];
+
+        LoadPalette(&style->plate, BG_PLTT_ID(DLG_WINDOW_PALETTE_NUM) + OW_NAME_BOX_PLATE_COLOR, PLTT_SIZEOF(1));
+        LoadPalette(&style->name, BG_PLTT_ID(DLG_WINDOW_PALETTE_NUM) + OW_NAME_BOX_NAME_COLOR, PLTT_SIZEOF(1));
     }
 
     union TextColor savedTextColors = SaveTextColors();
@@ -239,6 +261,12 @@ static const struct { u16 trainerId; u8 speakerName; } sTrainerSpeakers[] =
     { TRAINER_MARC,                    SP_NAME_YIFFER },
     { TRAINER_ROXANNE_1,               SP_NAME_RED_FATALITY },
     { TRAINER_MADAM_TSUJI,             SP_NAME_MADAM_TSUJI },
+    { TRAINER_MEGADIM_CANARI,          SP_NAME_CANARI },
+    { TRAINER_MEGADIM_LIDA,            SP_NAME_LIDA },
+    { TRAINER_MEGADIM_EMMA,            SP_NAME_EMMA },
+    { TRAINER_MEGADIM_TAUNIE,          SP_NAME_TAUNIE },
+    { TRAINER_MEGADIM_TULIP,           SP_NAME_TULIP },
+    { TRAINER_MEGADIM_JACINTHE,        SP_NAME_JACINTHE },
     { TRAINER_ROUTE2_SWIMMER_ALLISON,  SP_NAME_ALLISON },
     { TRAINER_HARU_HAS_TYRUNT,         SP_NAME_DRACO },
     { TRAINER_HARU_HAS_AMAURA,         SP_NAME_DRACO },

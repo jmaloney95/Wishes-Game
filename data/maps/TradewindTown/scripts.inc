@@ -1,12 +1,27 @@
 TradewindTown_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, TradewindTown_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, TradewindTown_OnLoad
 	.byte 0
 
 @ Whiteout respawn: Tradewind has no Pokemon Center, so without this a faint
 @ here sent the player all the way back to a pre-Star-Summit Act 1 spawn. Making
 @ the town its own heal location keeps the playthrough local.
+@ Hotel Z's door (23,17) stays shut until the Mega Doomsday intro has played
+@ (the metatile keeps its collision on the map; this clears it).
+TradewindTown_OnLoad::
+	call_if_set FLAG_WOT_MEGA_DOOMSDAY_INTRO, TradewindTown_EventScript_OpenHotelZDoor
+	end
+
+TradewindTown_EventScript_OpenHotelZDoor::
+	setmetatile 23, 17, 0x7A, FALSE
+	return
+
 TradewindTown_OnTransition::
 	setrespawn HEAL_LOCATION_TRADEWIND_TOWN
+	@ Lida and Canari only exist inside the Mega Doomsday intro (addobject).
+	setflag FLAG_HIDE_TRADEWIND_LIDA_CANARI
+	@ So does the rift they come through (the daily portals have their own).
+	setflag FLAG_HIDE_TRADEWIND_INTRO_PORTAL
 	end
 
 @ ============================================================================
@@ -240,6 +255,14 @@ Tradewind_EventScript_MaskedMerchant::
 @ Locked doors (bg_event signs on the shut storefronts)
 Tradewind_EventScript_LockedDoor::
 	msgbox Tradewind_Text_LockedDoor, MSGBOX_SIGN
+	end
+
+@ Hotel Z's door (23,17): locked until the Mega Doomsday intro. After it,
+@ walking into the door warps in; reading it says nothing.
+Tradewind_EventScript_HotelZDoor::
+	goto_if_set FLAG_WOT_MEGA_DOOMSDAY_INTRO, Tradewind_EventScript_HotelZDoorOpen
+	msgbox Tradewind_Text_LockedDoor, MSGBOX_SIGN
+Tradewind_EventScript_HotelZDoorOpen::
 	end
 
 @ Dev-only wall on the far-west edge (coord triggers x=3, y=17-22): shows the
@@ -659,3 +682,250 @@ Tradewind_Text_PiperPostBattle::
 	.string "SABLEYE followed me home from\n"
 	.string "the gem stall. Or maybe I\l"
 	.string "followed IT home. It's fuzzy.$"
+
+@ ============================================================================
+@  MEGA DOOMSDAY -- the Mega Dimension's opening scene (first time the player
+@  comes down the arrival corridor from the Ashlands). The camera pans to the
+@  portal, Lida and Canari step out of it, it collapses behind them, they
+@  notice the player, introduce themselves and head off; the quest starts and
+@  the daily portals unlock (FLAG_WOT_MEGA_DOOMSDAY_INTRO, no Mega Ring needed).
+@  Trigger row: y=10, x=28-32 (VAR_TEMP_1 = 0). The player is first stepped to
+@  column 30 so every movement below is fixed.
+@ ============================================================================
+TradewindTown_EventScript_MegaDoomsdayIntro::
+	lockall
+	setvar VAR_TEMP_1, 1
+	goto_if_set FLAG_WOT_MEGA_DOOMSDAY_INTRO, TradewindTown_EventScript_MegaDoomsdayIntroDone
+	playbgm MUS_ENCOUNTER_SUSPICIOUS, FALSE
+	setflag FLAG_SAFE_FOLLOWER_MOVEMENT
+	getplayerxy VAR_0x8004, VAR_0x8005
+	call_if_eq VAR_0x8004, 28, TradewindTown_EventScript_IntroStepRight2
+	call_if_eq VAR_0x8004, 29, TradewindTown_EventScript_IntroStepRight1
+	call_if_eq VAR_0x8004, 31, TradewindTown_EventScript_IntroStepLeft1
+	call_if_eq VAR_0x8004, 32, TradewindTown_EventScript_IntroStepLeft2
+	applymovement LOCALID_PLAYER, Common_Movement_FaceDown
+	waitmovement 0
+	delay 20
+	@ The camera drifts down the corridor to a crackling rift.
+	special SpawnCameraObject
+	applymovement LOCALID_CAMERA, TradewindTown_Movement_CameraToPortal
+	waitmovement 0
+	clearflag FLAG_HIDE_TRADEWIND_INTRO_PORTAL
+	addobject LOCALID_TRADEWIND_MEGA_PORTAL
+	playse SE_M_TELEPORT
+	special StartRiftDistortion
+	delay 40
+	@ Lida and Canari step out of it.
+	setobjectxyperm LOCALID_TRADEWIND_LIDA, 30, 14
+	setobjectxyperm LOCALID_TRADEWIND_CANARI, 30, 14
+	clearflag FLAG_HIDE_TRADEWIND_LIDA_CANARI
+	addobject LOCALID_TRADEWIND_LIDA
+	addobject LOCALID_TRADEWIND_CANARI
+	playse SE_WARP_OUT
+	applymovement LOCALID_TRADEWIND_LIDA, TradewindTown_Movement_LidaStepsOut
+	applymovement LOCALID_TRADEWIND_CANARI, TradewindTown_Movement_CanariStepsOut
+	waitmovement LOCALID_TRADEWIND_LIDA
+	waitmovement LOCALID_TRADEWIND_CANARI
+	@ They're through: the shaking stops, the portal stays open behind them.
+	special EndRiftDistortion
+	applymovement LOCALID_TRADEWIND_LIDA, Common_Movement_FaceRight
+	applymovement LOCALID_TRADEWIND_CANARI, Common_Movement_FaceLeft
+	waitmovement 0
+	setspeaker SP_NAME_LIDA
+	msgbox TradewindTown_Text_LidaEnoughResearch, MSGBOX_DEFAULT
+	closemessage
+	setspeaker SP_NAME_NONE
+	@ The portal lingers until Lida's said her piece, then closes.
+	playse SE_WARP_IN
+	removeobject LOCALID_TRADEWIND_MEGA_PORTAL
+	delay 30
+	setspeaker SP_NAME_CANARI
+	msgbox TradewindTown_Text_CanariBattery, MSGBOX_DEFAULT
+	closemessage
+	setspeaker SP_NAME_NONE
+	@ They notice the player.
+	applymovement LOCALID_TRADEWIND_LIDA, TradewindTown_Movement_NoticeUp
+	applymovement LOCALID_TRADEWIND_CANARI, TradewindTown_Movement_NoticeUp
+	waitmovement LOCALID_TRADEWIND_LIDA
+	waitmovement LOCALID_TRADEWIND_CANARI
+	applymovement LOCALID_CAMERA, TradewindTown_Movement_CameraToPlayer
+	waitmovement 0
+	special RemoveCameraObject
+	applymovement LOCALID_TRADEWIND_LIDA, TradewindTown_Movement_LidaApproach
+	applymovement LOCALID_TRADEWIND_CANARI, TradewindTown_Movement_CanariApproach
+	waitmovement LOCALID_TRADEWIND_LIDA
+	waitmovement LOCALID_TRADEWIND_CANARI
+	setspeaker SP_NAME_LIDA
+	msgbox TradewindTown_Text_LidaAreYou, MSGBOX_DEFAULT
+	msgbox TradewindTown_Text_LidaIntro, MSGBOX_DEFAULT
+	setspeaker SP_NAME_CANARI
+	msgbox TradewindTown_Text_CanariHelp, MSGBOX_DEFAULT
+	closemessage
+	setspeaker SP_NAME_NONE
+	@ Off they go, south down the corridor and into Hotel Z (23,17).
+	setmetatile 23, 17, 0x7A, FALSE
+	applymovement LOCALID_TRADEWIND_LIDA, TradewindTown_Movement_LidaLeaves
+	applymovement LOCALID_TRADEWIND_CANARI, TradewindTown_Movement_CanariLeaves
+	waitmovement LOCALID_TRADEWIND_LIDA
+	playse SE_EXIT
+	removeobject LOCALID_TRADEWIND_LIDA
+	waitmovement LOCALID_TRADEWIND_CANARI
+	playse SE_EXIT
+	removeobject LOCALID_TRADEWIND_CANARI
+	setflag FLAG_HIDE_TRADEWIND_LIDA_CANARI
+	clearflag FLAG_SAFE_FOLLOWER_MOVEMENT
+	setflag FLAG_WOT_MEGA_DOOMSDAY_INTRO
+	@ Today's rift just collapsed; the first real portals open tomorrow at 8:00.
+	special WotMegaDim_CloseTodaysPortal
+	startquest QUEST_MEGA_DOOMSDAY
+	fadedefaultbgm
+	releaseall
+	end
+
+TradewindTown_EventScript_MegaDoomsdayIntroDone::
+	releaseall
+	end
+
+TradewindTown_EventScript_IntroStepRight2::
+	applymovement LOCALID_PLAYER, TradewindTown_Movement_StepRight2
+	waitmovement 0
+	return
+
+TradewindTown_EventScript_IntroStepRight1::
+	applymovement LOCALID_PLAYER, TradewindTown_Movement_StepRight1
+	waitmovement 0
+	return
+
+TradewindTown_EventScript_IntroStepLeft1::
+	applymovement LOCALID_PLAYER, TradewindTown_Movement_StepLeft1
+	waitmovement 0
+	return
+
+TradewindTown_EventScript_IntroStepLeft2::
+	applymovement LOCALID_PLAYER, TradewindTown_Movement_StepLeft2
+	waitmovement 0
+	return
+
+TradewindTown_Movement_StepRight2:
+	walk_right
+	walk_right
+	step_end
+
+TradewindTown_Movement_StepRight1:
+	walk_right
+	step_end
+
+TradewindTown_Movement_StepLeft1:
+	walk_left
+	step_end
+
+TradewindTown_Movement_StepLeft2:
+	walk_left
+	walk_left
+	step_end
+
+@ Player at (30,10); the portal is at (30,14).
+TradewindTown_Movement_CameraToPortal:
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	walk_slow_down
+	step_end
+
+TradewindTown_Movement_CameraToPlayer:
+	walk_up
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ Out of the rift at (30,14): Lida to (29,14), Canari to (31,14).
+TradewindTown_Movement_LidaStepsOut:
+	walk_left
+	step_end
+
+TradewindTown_Movement_CanariStepsOut:
+	walk_right
+	step_end
+
+TradewindTown_Movement_NoticeUp:
+	face_up
+	emote_exclamation_mark
+	delay_16
+	step_end
+
+@ Up the corridor to stand just below the player: Lida (30,11), Canari (31,11).
+TradewindTown_Movement_LidaApproach:
+	walk_right
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+TradewindTown_Movement_CanariApproach:
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+@ South down the corridor to the open road at y=18, then west until they're
+@ out of sight (the camera sits on the player at (30,10)).
+TradewindTown_Movement_LidaLeaves:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+TradewindTown_Movement_CanariLeaves:
+	delay_16
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_left
+	walk_up
+	step_end
+
+TradewindTown_Text_LidaEnoughResearch:
+	.string "Phew… that's enough research for\n"
+	.string "today. Let's head back to Hotel Z.$"
+
+TradewindTown_Text_CanariBattery:
+	.string "Agreed. My battery's at two\n"
+	.string "percent and so am I.$"
+
+TradewindTown_Text_LidaAreYou:
+	.string "Wait… are you {PLAYER}?\p"
+	.string "I heard about what you did at\n"
+	.string "Star Summit.\p"
+	.string "You must have some guts to take\n"
+	.string "on The Oni.$"
+
+TradewindTown_Text_LidaIntro:
+	.string "I'm Lida, and this is Canari.$"
+
+TradewindTown_Text_CanariHelp:
+	.string "We could really use your help.\n"
+	.string "Meet us at Hotel Z when you can!$"

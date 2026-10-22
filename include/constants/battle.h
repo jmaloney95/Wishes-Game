@@ -660,6 +660,7 @@ enum BattleEnvironments
     BATTLE_ENVIRONMENT_WOT_TOWN,     // Celebi Island village
     BATTLE_ENVIRONMENT_WOT_INDOORS,  // Tradewind Gym
     BATTLE_ENVIRONMENT_WOT_GRAVEYARD,// Shin Tokyo + its jail: every fight there is a Shadow fight
+    BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION, // every battle in the Mega Dimension: the starfield in black and white
     BATTLE_ENVIRONMENT_COUNT,
 };
 

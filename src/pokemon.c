@@ -53,6 +53,7 @@
 #include "text.h"
 #include "trainer_hill.h"
 #include "util.h"
+#include "wot_mega_dimension.h"
 #include "constants/abilities.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_move_effects.h"
@@ -5829,6 +5830,17 @@ bool32 IsSpeciesInHoennDex(u16 species)
 
 u16 GetBattleBGM(void)
 {
+    // WoT: in the Mega Dimension each rival has a theme of their own, the rogue
+    // Mega fights to Giratina's and the wild Pokemon to Dialga and Palkia's.
+    // Mable's legends (Primal Groudon/Kyogre, Mega Rayquaza) fall through to
+    // their own themes below.
+    if (WotMegaDim_IsActive() && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+     && !((gBattleTypeFlags & BATTLE_TYPE_LEGENDARY) && WotMegaDim_IsLegendBoss()))
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+            return WotMegaDim_GetRivalMusic(TRAINER_BATTLE_PARAM.opponentA);
+        return (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY) ? MUS_PL_VS_GIRATINA : MUS_DP_VS_DIALGA_PALKIA;
+    }
     if (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY)
     {
         switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))

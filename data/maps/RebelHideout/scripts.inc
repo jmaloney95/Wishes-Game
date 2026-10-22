@@ -722,3 +722,31 @@ RebelHideout_Text_PostgameAllison::
 	.string "The bay sings different now.\n"
 	.string "Cleaner. Lighter.\p"
 	.string "You did that.$"
+
+@ Back door to Hotel Z (coord trigger (9,0), placeholder: paint a door there
+@ in porymap). Open once the Mega Doomsday intro has played; Hotel Z sends
+@ the player back here on the way out (WotHotelZ_SetExit).
+RebelHideout_EventScript_HotelZDoor::
+	lockall
+	goto_if_unset FLAG_WOT_MEGA_DOOMSDAY_INTRO, RebelHideout_EventScript_HotelZDoorLocked
+	playse SE_EXIT
+	warp MAP_HOTEL_Z, 0
+	waitstate
+	releaseall
+	end
+
+RebelHideout_EventScript_HotelZDoorLocked::
+	msgbox RebelHideout_Text_HotelZDoorLocked, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, RebelHideout_Movement_HotelZDoorBack
+	waitmovement 0
+	releaseall
+	end
+
+RebelHideout_Movement_HotelZDoorBack:
+	walk_down
+	step_end
+
+RebelHideout_Text_HotelZDoorLocked:
+	.string "(A back door to Hotel Z. This area\n"
+	.string "is part of the Mega Dimension DLC.)$"

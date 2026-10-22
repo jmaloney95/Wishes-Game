@@ -57,6 +57,12 @@ const u32 gTrainerFrontPic_WotPokeKid[] = INCGFX_U32("graphics/trainers/front_pi
 const u16 gTrainerPalette_WotPokeKid[] = INCGFX_U16("graphics/trainers/front_pics/wot_poke_kid.png", ".gbapal");
 const u32 gTrainerFrontPic_WotBeachGirl[] = INCGFX_U32("graphics/trainers/front_pics/wot_beach_girl.png", ".4bpp.smol");
 const u16 gTrainerPalette_WotBeachGirl[] = INCGFX_U16("graphics/trainers/front_pics/wot_beach_girl.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaDetectiveEmma[] = INCGFX_U32("graphics/trainers/front_pics/za_detective_emma.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaDetectiveEmma[] = INCGFX_U16("graphics/trainers/front_pics/za_detective_emma.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaMable[] = INCGFX_U32("graphics/trainers/front_pics/za_mable.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaMable[] = INCGFX_U16("graphics/trainers/front_pics/za_mable.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaLida[] = INCGFX_U32("graphics/trainers/front_pics/za_lida.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaLida[] = INCGFX_U16("graphics/trainers/front_pics/za_lida.png", ".gbapal");
 const u32 gTrainerFrontPic_MutridGoon[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_goon.png", ".4bpp.smol");
 const u16 gTrainerPalette_MutridGoon[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_goon.png", ".gbapal");
 
@@ -564,6 +570,9 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_REINA_VANESSA, gTrainerFrontPic_WotReinaVanessa, gTrainerPalette_WotReinaVanessa),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_POKE_KID, gTrainerFrontPic_WotPokeKid, gTrainerPalette_WotPokeKid),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_BEACH_GIRL, gTrainerFrontPic_WotBeachGirl, gTrainerPalette_WotBeachGirl),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_DETECTIVE_EMMA, gTrainerFrontPic_ZaDetectiveEmma, gTrainerPalette_ZaDetectiveEmma),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_MABLE, gTrainerFrontPic_ZaMable, gTrainerPalette_ZaMable),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_LIDA, gTrainerFrontPic_ZaLida, gTrainerPalette_ZaLida),
 
     TRAINER_SPRITE(TRAINER_PIC_FRONT_EXPERT_M, gTrainerFrontPic_ExpertM, gTrainerPalette_ExpertM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_AQUA_ADMIN_M, gTrainerFrontPic_AquaAdminM, gTrainerPalette_AquaAdminM),

@@ -288,6 +288,7 @@ extern const u16 gBattleEnvironmentPalette_WotLab[];
 extern const u32 gBattleEnvironmentTiles_WotSpace[];
 extern const u32 gBattleEnvironmentTilemap_WotSpace[];
 extern const u16 gBattleEnvironmentPalette_WotSpace[];
+extern const u16 gBattleEnvironmentPalette_WotMegaDimension[];
 extern const u32 gBattleEnvironmentTiles_WotGraveyard[];
 extern const u16 gBattleEnvironmentPalette_WotGraveyard[];
 extern const u32 gBattleEnvironmentTilemap_WotGraveyard[];

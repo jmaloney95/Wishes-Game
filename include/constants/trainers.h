@@ -190,6 +190,10 @@ enum __attribute__((packed)) TrainerPicID
     TRAINER_PIC_FRONT_WOT_REINA_VANESSA,
     TRAINER_PIC_FRONT_WOT_POKE_KID,
     TRAINER_PIC_FRONT_WOT_BEACH_GIRL,
+    // Pokemon ZA trainers
+    TRAINER_PIC_FRONT_ZA_DETECTIVE_EMMA,
+    TRAINER_PIC_FRONT_ZA_MABLE,
+    TRAINER_PIC_FRONT_ZA_LIDA,
     TRAINER_PIC_FRONT_COUNT,
     TRAINER_PIC_BACK_BRENDAN = TRAINER_PIC_FRONT_COUNT, // The player back pics are assumed to alternate according to the gender values (MALE/FEMALE)
     TRAINER_PIC_BACK_MAY,
@@ -558,6 +562,11 @@ enum TrainerClassID
     TRAINER_CLASS_CAPTAIN,
     // Swimmer Allison's boss identity (Route 2)
     TRAINER_CLASS_SIREN,
+    // The Mega Dimension rivals (Legends Z-A cast)
+    TRAINER_CLASS_STREAMER,
+    TRAINER_CLASS_TEAM_MZ,
+    TRAINER_CLASS_DETECTIVE,
+    TRAINER_CLASS_SOCIALITE,
 
     TRAINER_CLASS_COUNT,
 };

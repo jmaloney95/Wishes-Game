@@ -682,3 +682,29 @@ gSpecials::
 	@ WoT: the team pose (src/wot_team_pose.c; L in the field)
 	def_special WotTeamPose_Plan
 	def_special WotTeamPose_Run, waitstate=1
+	@ WoT: the Mega Dimension (src/wot_mega_dimension.c)
+	def_special WotMegaDim_EnterPortal, waitstate=1
+	def_special WotMegaDim_LeaveOut, waitstate=1
+	def_special WotMegaDim_CollapseOut, waitstate=1
+	def_special WotMegaDim_CheckPortal
+	def_special WotMegaDim_MarkWildGone
+	def_special WotMegaDim_DebugForceShiny
+	def_special WotMegaDim_MableReport
+	def_special WotMegaDim_StartLegendQuest
+	def_special WotMegaDim_BufferPortalAlert
+	def_special WotMegaDim_DebugMableNext
+	def_special WotHotelZ_SetExit
+	def_special WotMegaDim_GetMega
+	def_special WotMegaDim_SetMegaGfx
+	def_special WotMegaDim_SetupMegaBattle
+	def_special WotMegaDim_EndMegaBattle
+	def_special WotMegaDim_MarkClaimed
+	def_special WotMegaDim_StartHud
+	def_special WotMegaDim_DebugOpenPortal, waitstate=1
+	def_special WotMegaDim_DebugShortTimer
+	def_special WotMegaDim_CloseTodaysPortal
+	def_special WotMegaDim_GetRival
+	def_special WotMegaDim_DebugForceRival
+	def_special WotMegaDim_BufferTalkedMon
+	def_special WotMegaDim_StartOverworldMonBattle, waitstate=1
+	def_special WotMegaDim_CountClaimed

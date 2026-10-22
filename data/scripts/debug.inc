@@ -918,3 +918,78 @@ Debug_EventScript_TellTheTime_Text_0:
 
 DebugEventScript_PrintWeekday_Text_0:
 	.string "Time of day: {STR_VAR_1}$"
+
+@ ===========================================================================
+@  WoT Mega Dimension (debug menu -> Scripts -> Mega Dim)
+@  "portal": opens a freshly rolled portal on the first portal spot of the
+@  map you're standing on (Tradewind Town, National Park Act 2, the Ashlands
+@  or Shin Tokyo; anywhere else = Tradewind's), unlocks the DLC (skips the
+@  Tradewind intro), and drops you in front of it.
+@  "10s left": inside the dimension, cuts the countdown to see the collapse.
+@ ===========================================================================
+Debug_EventScript_MegaDimPortal::
+	special WotMegaDim_DebugOpenPortal
+	release
+	end
+
+Debug_EventScript_MegaDimShortTimer::
+	special WotMegaDim_DebugShortTimer
+	release
+	end
+
+@ "rival": the next portal entered has a rival instead of the Mega, for as
+@ long as it stays open (cycles Canari, Lida, Emma, Taunie, Tulip, Jacinthe
+@ on each use).
+Debug_EventScript_MegaDimRival::
+	special WotMegaDim_DebugForceRival
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimRival, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimRival:
+	.string "Next portal trip: rival {STR_VAR_1}\n"
+	.string "(1 Canari ... 6 Jacinthe).$"
+
+@ "shiny": the next trip in deals its first wild Pokemon shiny, to check it
+@ stays shiny (and put) when you leave and come back through the same portal.
+Debug_EventScript_MegaDimShiny::
+	special WotMegaDim_DebugForceShiny
+	msgbox Debug_Text_MegaDimShiny, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimShiny:
+	.string "Next portal trip: the first\n"
+	.string "wild Pokemon is shiny.$"
+
+@ "Mable next": jumps Mable's quest chain to its next call, as if earned.
+@ Collecting -> all 19 stones claimed and reported (Two Minutes completes) and
+@ the Primal call rings within a second; Primals -> both caught and the
+@ Rayquaza call rings. Use it on the field, outside the dimension.
+Debug_EventScript_MegaDimMableNext::
+	special WotMegaDim_DebugMableNext
+	goto_if_ne VAR_RESULT, 1, Debug_EventScript_MegaDimMableNextDone
+	goto_if_quest_complete QUEST_TWO_MINUTES, Debug_EventScript_MegaDimMableNextDone
+	completequest QUEST_TWO_MINUTES
+Debug_EventScript_MegaDimMableNextDone::
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimMableNext, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimMableNext:
+	.string "Mable stage {STR_VAR_1} (1 tests, 3 Rayquaza\n"
+	.string "call). Her call rings when free.$"
+
+@ "intro": forget the Mega Doomsday intro, so walking down Tradewind's
+@ arrival corridor (y=6) replays it. Portals stay shut until it has played.
+Debug_EventScript_MegaDimIntro::
+	clearflag FLAG_WOT_MEGA_DOOMSDAY_INTRO
+	msgbox Debug_Text_MegaDimIntro, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimIntro:
+	.string "Mega Doomsday intro reset. Walk\n"
+	.string "down into Tradewind to replay it.$"

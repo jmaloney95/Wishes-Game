@@ -378,6 +378,46 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      NULL,
 	      0
 	),
+	[QUEST_MEGA_DOOMSDAY] = side_quest(
+	      gText_Quest_MegaDoomsday_Name,
+	      gText_Quest_MegaDoomsday_Desc,
+	      gText_Quest_MegaDoomsday_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_LIDA,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_TWO_MINUTES] = side_quest(
+	      gText_Quest_TwoMinutes_Name,
+	      gText_Quest_TwoMinutes_Desc,
+	      gText_Quest_TwoMinutes_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_PRIMAL_SIGNATURES] = side_quest(
+	      gText_Quest_PrimalSignatures_Name,
+	      gText_Quest_PrimalSignatures_Desc,
+	      gText_Quest_PrimalSignatures_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_SKY_HIGH_MEGA] = side_quest(
+	      gText_Quest_SkyHighMega_Name,
+	      gText_Quest_SkyHighMega_Desc,
+	      gText_Quest_SkyHighMega_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
 	[SIDE_QUEST_HARNESS_DARKNESS] = side_quest(
 	      gText_Quest_HarnessDarkness_Name,
 	      gText_Quest_HarnessDarkness_Desc1,

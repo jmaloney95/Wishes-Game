@@ -596,6 +596,21 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .battleIntroSlide = BattleIntroSlide1,
     },
 
+    [BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION] =
+    {
+        // The starfield, inverted to black and white: a white void over a black pit.
+        .name = _("Mega Dimension"),
+        .naturePower = MOVE_DRACO_METEOR,
+        .secretPowerAnimation = gBattleAnimMove_Swift,
+        .secretPowerEffect = MOVE_EFFECT_FLINCH,
+        .camouflageType = TYPE_DRAGON,
+        .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        .entry = ENVIRONMENT_ENTRY(Rock),
+        .background = ENVIRONMENT_BACKGROUND(WotSpace),
+        .palette = gBattleEnvironmentPalette_WotMegaDimension,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
     [BATTLE_ENVIRONMENT_WOT_TOWN] =
     {
         // carchagui's FR-patch town (Celebi Island).

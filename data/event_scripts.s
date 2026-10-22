@@ -1862,5 +1862,16 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/MewtwoPostGame/scripts.inc"
 	.include "data/maps/YachtInterior/scripts.inc"
+	.include "data/maps/MegaDimension_Route2/scripts.inc"
+	.include "data/maps/MegaDimension_NationalPark/scripts.inc"
+	.include "data/maps/MegaDimension_TradewindTown/scripts.inc"
+	.include "data/maps/MegaDimension_ShinTokyo/scripts.inc"
+	.include "data/maps/MegaDimension_Ashlands/scripts.inc"
+	.include "data/maps/MegaDimension_StarSummit/scripts.inc"
+	.include "data/maps/MegaDimension_WalnutWoods/scripts.inc"
+	.include "data/maps/HotelZ/scripts.inc"
+	.include "data/maps/MegaDimension_SkyPillar/scripts.inc"
+	.include "data/maps/MegaDimension_MarineCave/scripts.inc"
+	.include "data/scripts/mega_dimension.inc"
 
 	.include "data/maps/Frostwood_House2/scripts.inc"

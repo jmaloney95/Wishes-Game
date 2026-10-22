@@ -29,17 +29,34 @@ enum SpeakerNames {
     SP_NAME_THE_ONI,
     SP_NAME_DEFECTOR,
     SP_NAME_EDWARDS,
+    // The Mega Dimension (Legends Z-A cast)
+    SP_NAME_LIDA,
+    SP_NAME_CANARI,
+    SP_NAME_EMMA,
+    SP_NAME_TAUNIE,
+    SP_NAME_TULIP,
+    SP_NAME_JACINTHE,
+    SP_NAME_MABLE,
     SP_NAME_COUNT
 };
 
-// Namebox name-text color tier, assigned per speaker in
-// src/data/speaker_names.h. Speakers set from a raw text pointer
-// (including auto-named trainers) always use SPEAKER_TIER_DEFAULT.
+// Namebox style (plate colour + name colour), assigned per speaker in
+// src/data/speaker_names.h; the colours are sNameboxStyles in
+// src/field_name_box.c. Speakers set from a raw text pointer (including
+// auto-named trainers) always use SPEAKER_TIER_DEFAULT.
 enum SpeakerNameTier {
-    SPEAKER_TIER_DEFAULT = 0, // near-white: everyone without a special tier
-    SPEAKER_TIER_VILLAIN,     // red: Team Mutrid (Draco, Leader ???, goons)
-    SPEAKER_TIER_QUEST,       // green: quest-giver characters
-    SPEAKER_TIER_GHOST,       // purple: GENGAR (Clarkson's ghost)
+    SPEAKER_TIER_DEFAULT = 0, // blue-grey plate, near-white name: everyone without a class
+    SPEAKER_TIER_VILLAIN,     // red plate, white name: Team Mutrid (Draco, Leader ???, goons)
+    SPEAKER_TIER_QUEST,       // green name: quest-giver characters
+    SPEAKER_TIER_GHOST,       // purple name: GENGAR (Clarkson's ghost)
+    // The Legends Z-A cast (Mega Dimension DLC): their own class, always on a
+    // dark blue plate, each with their own name colour.
+    SPEAKER_TIER_ZA,          // white name: Emma, Taunie, Tulip
+    SPEAKER_TIER_ZA_YELLOW,   // Canari
+    SPEAKER_TIER_ZA_BLUE,     // Lida (light blue)
+    SPEAKER_TIER_ZA_PURPLE,   // Jacinthe
+    SPEAKER_TIER_ZA_GREEN,    // Researcher Mable
+    SPEAKER_TIER_COUNT
 };
 
 #endif // GUARD_CONSTANTS_SPEAKER_NAMES_H

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "constants/event_objects.h"
 #include "constants/songs.h"
 #include "constants/weather.h"
 #include "constants/rgb.h"
@@ -20,6 +21,7 @@
 #include "gpu_regs.h"
 #include "field_camera.h"
 #include "overworld.h"
+#include "wot_mega_dimension.h"
 
 #define DROUGHT_COLOR_INDEX(color) ((((color) >> 1) & 0xF) | (((color) >> 2) & 0xF0) | (((color) >> 3) & 0xF00))
 
@@ -849,10 +851,34 @@ bool8 IsWeatherNotFadingIn(void)
     return (gWeatherPtr->palProcessingState != WEATHER_PAL_STATE_SCREEN_FADING_IN);
 }
 
+// WoT: in the Mega Dimension every field sprite palette goes gray except the
+// player's own (and its reflection), blend-immune UI-ish tags (emotes, item
+// icons) and the weather's. Nearly every field sprite palette load ends here.
+// Grayscale is idempotent, so a palette passing through twice is harmless.
+static void WotMegaDim_GraySpritePalette(u8 spritePaletteIndex)
+{
+    u16 tag;
+    u32 offset;
+
+    if (!WotMegaDim_IsActive())
+        return;
+    tag = GetSpritePaletteTagByPaletteNum(spritePaletteIndex);
+    if (IS_BLEND_IMMUNE_TAG(tag) || tag == PALTAG_WEATHER || WotMegaDim_IsPlayerPaletteTag(tag))
+        return;
+    // Overworld Pokemon (wild, the Mega) and the rivals stay in colour, like the player.
+    if ((tag & OBJ_EVENT_MON) || WotMegaDim_IsRivalPaletteTag(tag))
+        return;
+    offset = OBJ_PLTT_ID(spritePaletteIndex);
+    TintPalette_GrayScale(&gPlttBufferUnfaded[offset], 16);
+    TintPalette_GrayScale(&gPlttBufferFaded[offset], 16);
+}
+
 void UpdateSpritePaletteWithWeather(u8 spritePaletteIndex, bool8 allowFog)
 {
     u16 paletteIndex = 16 + spritePaletteIndex;
     u16 i;
+
+    WotMegaDim_GraySpritePalette(spritePaletteIndex);
 
     switch (gWeatherPtr->palProcessingState)
     {

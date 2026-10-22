@@ -882,6 +882,7 @@ const u8 *const gBattleStringsTable[STRINGID_COUNT] =
     [STRINGID_WOTGOTCHASNAGGED]                     = COMPOUND_STRING("Gotcha! {B_DEF_NAME} was snagged away!\p"),
     [STRINGID_WOTHYPERMODE]                         = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} is in HYPER MODE!"),
     [STRINGID_WOTHYPERSETTLES]                      = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} settled down."),
+    [STRINGID_WOTWILDMEGAREACTING]                  = COMPOUND_STRING("{B_ATK_NAME_WITH_PREFIX} is overflowing with Mega energy!"),
     [STRINGID_WOTCAUGHTTOPARTY]                     = COMPOUND_STRING("{B_BUFF1} was added to your party!\p"),
     [STRINGID_WOTCAUGHTTOPC]                        = COMPOUND_STRING("{B_BUFF1} was transferred to the PC!\p"),
     [STRINGID_WOTSNAGGEDTOPARTY]                    = COMPOUND_STRING("The snagged {B_BUFF1} was added to your party!\p"),

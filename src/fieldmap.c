@@ -18,6 +18,7 @@
 #include "constants/metatile_behaviors.h"
 #include "constants/metatile_behaviors_frlg.h"
 #include "wild_encounter.h"
+#include "wot_mega_dimension.h"
 
 struct ConnectionFlags
 {
@@ -998,10 +999,19 @@ static void CopyTilesetToVramUsingHeap(struct Tileset const *tileset, u16 numTil
     }
 }
 
-// Below two are dummied functions from FRLG, used to tint the overworld palettes for the Quest Log
-static void ApplyGlobalTintToPaletteEntries(u16 offset, u16 size)
+// Below two are dummied functions from FRLG, used to tint the overworld palettes for the Quest Log.
+// WoT: the first is the Mega Dimension's grayscale. Every tileset palette load
+// comes through LoadTilesetPalette, and the weather/fade code always rebuilds
+// the faded buffer from the unfaded one, so graying the unfaded colours here
+// (and the faded copy when this load wrote one) holds through fades, weather,
+// menus and battles. BG 13-15 (UI) are never tileset palettes.
+static void ApplyGlobalTintToPaletteEntries(u16 offset, u16 size, bool8 skipFaded)
 {
-
+    if (!WotMegaDim_IsActive() || size == 0)
+        return;
+    TintPalette_GrayScale(&gPlttBufferUnfaded[offset], size);
+    if (!skipFaded)
+        CpuCopy16(&gPlttBufferUnfaded[offset], &gPlttBufferFaded[offset], size * sizeof(u16));
 }
 
 static void UNUSED ApplyGlobalTintToPaletteSlot(u8 slot, u8 count)
@@ -1020,7 +1030,7 @@ static void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u1
             else
                 LoadPaletteFast(tileset->palettes, destOffset, size);
             gPlttBufferFaded[destOffset] = gPlttBufferUnfaded[destOffset] = RGB_BLACK;
-            ApplyGlobalTintToPaletteEntries(destOffset + 1, (size - 2) >> 1);
+            ApplyGlobalTintToPaletteEntries(destOffset + 1, (size - 2) >> 1, skipFaded);
         }
         else if (tileset->isSecondary == TRUE)
         {
@@ -1030,11 +1040,12 @@ static void LoadTilesetPalette(struct Tileset const *tileset, u16 destOffset, u1
                 CpuCopy16(tileset->palettes[numPalsInPrimary], &gPlttBufferUnfaded[destOffset], size);
             else
                 LoadPaletteFast(tileset->palettes[numPalsInPrimary], destOffset, size);
+            ApplyGlobalTintToPaletteEntries(destOffset, size >> 1, skipFaded);
         }
         else
         {
             LoadPalette((const u16 *)tileset->palettes, destOffset, size);
-            ApplyGlobalTintToPaletteEntries(destOffset, size >> 1);
+            ApplyGlobalTintToPaletteEntries(destOffset, size >> 1, FALSE);
         }
     }
 }

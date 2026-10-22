@@ -63,6 +63,14 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMisty;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotOleana;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJacinthe;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotVictor;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaEmma;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaCanari;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaValerie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaTulip;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaMable;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaTaunie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaLida;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMegaPortal;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerF;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BlackBelt;
@@ -514,6 +522,14 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOT_OLEANA] =                 &gObjectEventGraphicsInfo_WotOleana,
     [OBJ_EVENT_GFX_WOT_JACINTHE] =               &gObjectEventGraphicsInfo_WotJacinthe,
     [OBJ_EVENT_GFX_WOT_VICTOR] =                 &gObjectEventGraphicsInfo_WotVictor,
+    [OBJ_EVENT_GFX_ZA_EMMA] =                    &gObjectEventGraphicsInfo_ZaEmma,
+    [OBJ_EVENT_GFX_ZA_CANARI] =                  &gObjectEventGraphicsInfo_ZaCanari,
+    [OBJ_EVENT_GFX_ZA_VALERIE] =                 &gObjectEventGraphicsInfo_ZaValerie,
+    [OBJ_EVENT_GFX_ZA_TULIP] =                   &gObjectEventGraphicsInfo_ZaTulip,
+    [OBJ_EVENT_GFX_ZA_MABLE] =                   &gObjectEventGraphicsInfo_ZaMable,
+    [OBJ_EVENT_GFX_ZA_TAUNIE] =                  &gObjectEventGraphicsInfo_ZaTaunie,
+    [OBJ_EVENT_GFX_ZA_LIDA] =                    &gObjectEventGraphicsInfo_ZaLida,
+    [OBJ_EVENT_GFX_WOT_MEGA_PORTAL] =            &gObjectEventGraphicsInfo_WotMegaPortal,
     [OBJ_EVENT_GFX_SWIMMER_M] =                &gObjectEventGraphicsInfo_SwimmerM,
     [OBJ_EVENT_GFX_SWIMMER_F] =                &gObjectEventGraphicsInfo_SwimmerF,
     [OBJ_EVENT_GFX_BLACK_BELT] =               &gObjectEventGraphicsInfo_BlackBelt,

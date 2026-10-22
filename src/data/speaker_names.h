@@ -27,6 +27,13 @@ const u8 *const gSpeakerNamesTable[SP_NAME_COUNT] =
     [SP_NAME_THE_ONI]         = COMPOUND_STRING("THE ONI"),
     [SP_NAME_DEFECTOR]        = COMPOUND_STRING("Prof. Assistant"),
     [SP_NAME_EDWARDS]         = COMPOUND_STRING("GENERAL EDWARDS"),
+    [SP_NAME_LIDA]            = COMPOUND_STRING("LIDA"),
+    [SP_NAME_CANARI]          = COMPOUND_STRING("CANARI"),
+    [SP_NAME_EMMA]            = COMPOUND_STRING("EMMA"),
+    [SP_NAME_TAUNIE]          = COMPOUND_STRING("TAUNIE"),
+    [SP_NAME_TULIP]           = COMPOUND_STRING("TULIP"),
+    [SP_NAME_JACINTHE]        = COMPOUND_STRING("JACINTHE"),
+    [SP_NAME_MABLE]           = COMPOUND_STRING("RESEARCHER MABLE"),
 };
 
 // Name color tier per speaker (see enum SpeakerNameTier). Anyone not listed
@@ -45,4 +52,12 @@ const u8 gSpeakerNameTiers[SP_NAME_COUNT] =
     [SP_NAME_THE_ONI]       = SPEAKER_TIER_VILLAIN,
     [SP_NAME_DEFECTOR]      = SPEAKER_TIER_QUEST,
     [SP_NAME_MUTRID_CAPTAIN] = SPEAKER_TIER_VILLAIN,
+    // The Legends Z-A cast: dark blue plates (their own class).
+    [SP_NAME_LIDA]          = SPEAKER_TIER_ZA_BLUE,
+    [SP_NAME_CANARI]        = SPEAKER_TIER_ZA_YELLOW,
+    [SP_NAME_EMMA]          = SPEAKER_TIER_ZA,
+    [SP_NAME_TAUNIE]        = SPEAKER_TIER_ZA,
+    [SP_NAME_TULIP]         = SPEAKER_TIER_ZA,
+    [SP_NAME_JACINTHE]      = SPEAKER_TIER_ZA_PURPLE,
+    [SP_NAME_MABLE]         = SPEAKER_TIER_ZA_GREEN,  // green: who to report back to
 };

@@ -319,8 +319,10 @@ const u32 gObjectEventPic_OniGoon[] = INCGFX_U32("graphics/object_events/pics/pe
 const u16 gObjectEventPal_OniGoon[] = INCGFX_U16("graphics/object_events/palettes/oni_goon.pal", ".gbapal");
 const u32 gObjectEventPic_MutridGruntWhite[] = INCGFX_U32("graphics/object_events/pics/people/mutrid_grunt_white.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_MutridGruntWhite[] = INCGFX_U16("graphics/object_events/palettes/mutrid_grunt_white.pal", ".gbapal");
-// Ground-item overworld icons (Carved Mask, Catalpa Bow, Potion) sharing one palette.
-const u32 gObjectEventPic_ItemCarvedMask[] = INCGFX_U32("graphics/object_events/pics/misc/item_carved_mask.png", ".4bpp", "-mwidth 2 -mheight 2");
+// Ground-item overworld icons (Catalpa Bow, Potion) sharing one palette.
+// The Carved Mask wears the Cornerstone Mask bag icon, unscaled on a 32x32 frame, with its own palette.
+const u32 gObjectEventPic_ItemCarvedMask[] = INCGFX_U32("graphics/object_events/pics/misc/item_cornerstone_mask.png", ".4bpp");
+const u16 gObjectEventPal_ItemCarvedMask[] = INCGFX_U16("graphics/items/icon_palettes/cornerstone_mask.pal", ".gbapal");
 const u32 gObjectEventPic_ItemCatalpaBow[] = INCGFX_U32("graphics/object_events/pics/misc/item_catalpa_bow.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_ItemPotion[] = INCGFX_U32("graphics/object_events/pics/misc/item_potion.png", ".4bpp", "-mwidth 2 -mheight 2");
 const u32 gObjectEventPic_ItemGarchompite[] = INCGFX_U32("graphics/object_events/pics/misc/item_garchompite.png", ".4bpp", "-mwidth 2 -mheight 2");
@@ -691,6 +693,8 @@ const u16 gObjectEventPic_ClefairyOld[] = INCGFX_U16("graphics/object_events/pic
 
 const u32 gObjectEventPic_WotLeaderScreen[] = INCGFX_U32("graphics/object_events/pics/misc/wot_leader_screen.png", ".4bpp");
 const u32 gObjectEventPic_WotWantedPoster[] = INCGFX_U32("graphics/object_events/pics/misc/wot_wanted_poster.png", ".4bpp");
+const u32 gObjectEventPic_WotMegaPortal[] = INCGFX_U32("graphics/object_events/pics/misc/wot_mega_portal.png", ".4bpp");
+const u16 gObjectEventPal_WotMegaPortal[] = INCGFX_U16("graphics/object_events/palettes/wot_mega_portal.pal", ".gbapal");
 const u16 gObjectEventPal_WotScreen[] = INCGFX_U16("graphics/object_events/palettes/wot_screen.pal", ".gbapal");
 const u32 gObjectEventPic_WotDraco[] = INCGFX_U32("graphics/object_events/pics/people/wot_draco.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_WotDraco[] = INCGFX_U16("graphics/object_events/palettes/wot_draco.pal", ".gbapal");
@@ -732,5 +736,19 @@ const u32 gObjectEventPic_WotJacinthe[] = INCGFX_U32("graphics/object_events/pic
 const u16 gObjectEventPal_WotJacinthe[] = INCGFX_U16("graphics/object_events/palettes/wot_jacinthe.pal", ".gbapal");
 const u32 gObjectEventPic_WotVictor[] = INCGFX_U32("graphics/object_events/pics/people/wot_victor.png", ".4bpp", "-mwidth 2 -mheight 4");
 const u16 gObjectEventPal_WotVictor[] = INCGFX_U16("graphics/object_events/palettes/wot_victor.pal", ".gbapal");
+const u32 gObjectEventPic_ZaEmma[] = INCGFX_U32("graphics/object_events/pics/people/za_emma.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaEmma[] = INCGFX_U16("graphics/object_events/palettes/za_emma.pal", ".gbapal");
+const u32 gObjectEventPic_ZaCanari[] = INCGFX_U32("graphics/object_events/pics/people/za_canari.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaCanari[] = INCGFX_U16("graphics/object_events/palettes/za_canari.pal", ".gbapal");
+const u32 gObjectEventPic_ZaValerie[] = INCGFX_U32("graphics/object_events/pics/people/za_valerie.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaValerie[] = INCGFX_U16("graphics/object_events/palettes/za_valerie.pal", ".gbapal");
+const u32 gObjectEventPic_ZaTulip[] = INCGFX_U32("graphics/object_events/pics/people/za_tulip.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaTulip[] = INCGFX_U16("graphics/object_events/palettes/za_tulip.pal", ".gbapal");
+const u32 gObjectEventPic_ZaMable[] = INCGFX_U32("graphics/object_events/pics/people/za_mable.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaMable[] = INCGFX_U16("graphics/object_events/palettes/za_mable.pal", ".gbapal");
+const u32 gObjectEventPic_ZaTaunie[] = INCGFX_U32("graphics/object_events/pics/people/za_taunie.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaTaunie[] = INCGFX_U16("graphics/object_events/palettes/za_taunie.pal", ".gbapal");
+const u32 gObjectEventPic_ZaLida[] = INCGFX_U32("graphics/object_events/pics/people/za_lida.png", ".4bpp", "-mwidth 4 -mheight 4");
+const u16 gObjectEventPal_ZaLida[] = INCGFX_U16("graphics/object_events/palettes/za_lida.pal", ".gbapal");
 
 const u32 gObjectEventPic_WotWantedSmall[] = INCGFX_U32("graphics/object_events/pics/misc/wot_wanted_small.png", ".4bpp");

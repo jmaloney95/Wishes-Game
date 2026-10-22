@@ -939,6 +939,16 @@
 #define TRAINER_TRADEWIND_ROSHAN            894
 #define TRAINER_TRADEWIND_PIPER             895
 
+// Wishes of Tomorrow: the Mega Dimension rivals (src/wot_mega_dimension.c).
+// Repurposed vanilla rematch ids: referenced only by the rematch table, which
+// needs FLAG_HAS_MATCH_CALL (set only by vanilla Hoenn scripts).
+#define TRAINER_MEGADIM_CANARI              TRAINER_GABRIELLE_2
+#define TRAINER_MEGADIM_LIDA                TRAINER_GABRIELLE_3
+#define TRAINER_MEGADIM_EMMA                TRAINER_GABRIELLE_4
+#define TRAINER_MEGADIM_TAUNIE              TRAINER_GABRIELLE_5
+#define TRAINER_MEGADIM_TULIP               TRAINER_THALIA_2
+#define TRAINER_MEGADIM_JACINTHE            TRAINER_THALIA_3
+
 #define TRAINERS_COUNT_EMERALD     896
 #define MAX_TRAINERS_COUNT_EMERALD 896
 

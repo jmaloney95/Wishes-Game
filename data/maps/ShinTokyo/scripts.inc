@@ -293,8 +293,8 @@ ShinTokyo_EventScript_PatrolHoldout3::
 @ ===========================================================================
 @  SHADOW LUGIA -- the harbour.
 @  The last thing the program made, still down there. Walk to the seaward end
-@  of the Minister's jetty and it comes up under the pier -- at any point in
-@  the story, not just after the credits.
+@  of the Minister's jetty and it comes up under the pier -- postgame only:
+@  nothing stirs until the credits have rolled (FLAG_SYS_GAME_CLEAR).
 @  Repeatable on purpose: only a capture sets FLAG_WOT_LUGIA_CAUGHT, and
 @  VAR_TEMP_B (a temp var, cleared on every map load) keeps it to one rise
 @  per visit so a lost fight cannot loop straight back into itself.
@@ -303,6 +303,7 @@ ShinTokyo_EventScript_PatrolHoldout3::
 @ ===========================================================================
 ShinTokyo_EventScript_LugiaRise::
 	setvar VAR_TEMP_B, 1
+	goto_if_unset FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_LugiaRiseEnd
 	goto_if_set FLAG_WOT_LUGIA_CAUGHT, ShinTokyo_EventScript_LugiaRiseEnd
 	lockall
 	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyo_Movement_LugiaFaceSea

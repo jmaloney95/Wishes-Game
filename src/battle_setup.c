@@ -56,6 +56,7 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 #include "fishing.h"
+#include "wot_mega_dimension.h"
 
 enum TransitionType
 {
@@ -546,8 +547,13 @@ void BattleSetup_StartLegendaryBattle(void)
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
 
-    switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
+    // WoT: the Mega Dimension's rogue Mega fights to Giratina's theme; Mable's
+    // legends (Primal Groudon/Kyogre, Mega Rayquaza) keep their own below.
+    switch ((WotMegaDim_IsActive() && !WotMegaDim_IsLegendBoss()) ? SPECIES_NONE : GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
     {
+    case SPECIES_NONE:
+        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_PL_VS_GIRATINA);
+        break;
     case SPECIES_GROUDON:
     case SPECIES_GROUDON_PRIMAL:
         CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_VS_KYOGRE_GROUDON);
@@ -722,6 +728,10 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
         PlayerGetDestCoords(&x, &y);
 
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
+
+    // Wishes of Tomorrow: every battle in the Mega Dimension is in its black-and-white void.
+    if (WotMegaDim_IsActive())
+        return BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION;
 
     // Wishes of Tomorrow: Ashlands always battles on the volcanic field.
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ASHLANDS)

@@ -1,5 +1,6 @@
 #include "global.h"
 #include "wot_shadow_log.h"
+#include "wot_mega_dimension.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -393,7 +394,9 @@ void DoWhiteOut(void)
     RunScriptImmediately(EventScript_WhiteOut);
     HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
-    SetWarpDestinationToLastHealLocation();
+    // WoT: whiting out in the Mega Dimension puts the player back at its portal.
+    if (!WotMegaDim_TrySetWhiteoutWarp())
+        SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
 }
 
@@ -907,6 +910,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
+    WotMegaDim_UpdatePortalFlag(); // WoT: before ON_TRANSITION, so object spawns see it
     RunOnTransitionMapScript();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
@@ -982,6 +986,7 @@ static void LoadMapFromWarp(bool32 a1)
         FlagClear(FLAG_SYS_USE_FLASH);
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
+    WotMegaDim_UpdatePortalFlag(); // WoT: before ON_TRANSITION, so object spawns see it
     RunOnTransitionMapScript();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamersToOtherLocationSets();
@@ -1036,6 +1041,10 @@ static struct InitialPlayerAvatarState *GetInitialPlayerAvatarState(void)
 
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *playerStruct, u16 metatileBehavior, enum MapType mapType)
 {
+    // WoT: in and out of the Mega Dimension the player always lands on foot,
+    // even on a water tile (the National Park portal stands on pond water).
+    if (WotMegaDim_TakeForceOnFoot())
+        return PLAYER_AVATAR_FLAG_ON_FOOT;
     if (mapType != MAP_TYPE_INDOOR && FlagGet(FLAG_SYS_CRUISE_MODE))
         return PLAYER_AVATAR_FLAG_ON_FOOT;
     else if (mapType == MAP_TYPE_UNDERWATER)
@@ -1820,6 +1829,7 @@ static void OverworldBasic(void)
     UpdatePaletteFade();
     UpdateTilesetAnimations();
     DoScheduledBgTilemapCopiesToVram();
+    WotMegaDim_Tick(); // WoT: the Mega Dimension countdown
     // Every minute if no palette fade is active, update TOD blending as needed
     if (!gPaletteFade.active && --gTimeUpdateCounter <= 0)
     {

@@ -516,6 +516,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_OniGoon,               OBJ_EVENT_PAL_TAG_ONI_GOON},
     {gObjectEventPal_MutridGruntWhite,      OBJ_EVENT_PAL_TAG_MUTRID_GRUNT_WHITE},
     {gObjectEventPal_GroundItems,           OBJ_EVENT_PAL_TAG_GROUND_ITEMS},
+    {gObjectEventPal_ItemCarvedMask,    OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK},
     {gObjectEventPal_ItemGarchompite,   OBJ_EVENT_PAL_TAG_ITEM_GARCHOMPITE},
     {gObjectEventPal_ItemBaxcalibrite,  OBJ_EVENT_PAL_TAG_ITEM_BAXCALIBRITE},
     {gObjectEventPal_ItemGyaradosite,   OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE},
@@ -594,6 +595,7 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Substitute,            OBJ_EVENT_PAL_TAG_SUBSTITUTE},
     {gObjectEventPaletteLight,              OBJ_EVENT_PAL_TAG_LIGHT},
     {gObjectEventPal_WotScreen,             OBJ_EVENT_PAL_TAG_WOT_SCREEN},
+    {gObjectEventPal_WotMegaPortal,         OBJ_EVENT_PAL_TAG_WOT_MEGA_PORTAL},
     {gObjectEventPal_WotDraco,              OBJ_EVENT_PAL_TAG_WOT_DRACO},
     {gObjectEventPal_WotMikmanc,            OBJ_EVENT_PAL_TAG_WOT_MIKMANC},
     {gObjectEventPal_WotNessa,              OBJ_EVENT_PAL_TAG_WOT_NESSA},
@@ -614,6 +616,13 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_WotOleana,              OBJ_EVENT_PAL_TAG_WOT_OLEANA},
     {gObjectEventPal_WotJacinthe,            OBJ_EVENT_PAL_TAG_WOT_JACINTHE},
     {gObjectEventPal_WotVictor,              OBJ_EVENT_PAL_TAG_WOT_VICTOR},
+    {gObjectEventPal_ZaEmma,                 OBJ_EVENT_PAL_TAG_ZA_EMMA},
+    {gObjectEventPal_ZaCanari,               OBJ_EVENT_PAL_TAG_ZA_CANARI},
+    {gObjectEventPal_ZaValerie,              OBJ_EVENT_PAL_TAG_ZA_VALERIE},
+    {gObjectEventPal_ZaTulip,                OBJ_EVENT_PAL_TAG_ZA_TULIP},
+    {gObjectEventPal_ZaMable,                OBJ_EVENT_PAL_TAG_ZA_MABLE},
+    {gObjectEventPal_ZaTaunie,               OBJ_EVENT_PAL_TAG_ZA_TAUNIE},
+    {gObjectEventPal_ZaLida,                 OBJ_EVENT_PAL_TAG_ZA_LIDA},
     {gObjectEventPaletteLight2,             OBJ_EVENT_PAL_TAG_LIGHT_2},
     {gObjectEventPaletteEmotes,             OBJ_EVENT_PAL_TAG_EMOTES},
     {gObjectEventPaletteNeonLight,          OBJ_EVENT_PAL_TAG_NEON_LIGHT},
@@ -2348,13 +2357,18 @@ static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female, 
         // Note that the shiny palette tag is `species + SPECIES_SHINY_TAG`, which must be increased with more pokemon
         // so that palette tags do not overlap
         const u16 *palette = GetMonSpritePalFromSpecies(species, shiny, female); //ETODO
+        // WoT: tagged like the standalone palettes above (and like the sprite
+        // template, LoadDynamicFollowerPaletteFromGraphicsId), not with the bare
+        // species: a bare tag let a shiny and a normal one share a palette, and
+        // lacked OBJ_EVENT_MON, so the Mega Dimension's grayscale caught it.
+        u16 palTag = species + OBJ_EVENT_MON + (shiny ? OBJ_EVENT_MON_SHINY : 0) + (female ? OBJ_EVENT_MON_FEMALE : 0);
         // palette already loaded
-        if ((paletteNum = IndexOfSpritePaletteTag(species)) < 16)
+        if ((paletteNum = IndexOfSpritePaletteTag(palTag)) < 16)
             return paletteNum;
         // Use matching front sprite's normal/shiny palettes
         // Load compressed palette
-        LoadSpritePaletteWithTag(palette, species);
-        paletteNum = IndexOfSpritePaletteTag(species); // Tag is always present
+        LoadSpritePaletteWithTag(palette, palTag);
+        paletteNum = IndexOfSpritePaletteTag(palTag); // Tag is always present
     }
 
     if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL) // don't want to weather blend in fog
@@ -2600,6 +2614,7 @@ void UpdateFollowingPokemon(void)
      || SpeciesToGraphicsInfo(species, shiny, female) == NULL
      || gMapHeader.mapType == MAP_TYPE_INDOOR // Wishes of Tomorrow: hide the Pokémon follower in all interiors
      || gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD // Wishes of Tomorrow: no followers anywhere in the Distortion World
+     || gMapHeader.regionMapSectionId == MAPSEC_MEGA_DIMENSION // ...nor in the Mega Dimension
      || FlagGet(FLAG_TEMP_HIDE_FOLLOWER)
      || PlayerHasFollowerNPC()
      )
@@ -9887,10 +9902,12 @@ bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Spr
 
 static void UpdateObjectEventSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    // WoT: the jumbotron screens run their broadcast loop while standing --
-    // everything else pauses its anim when stationary.
+    // WoT: the jumbotron screens run their broadcast loop while standing, and
+    // the Mega Dimension portal keeps swirling -- everything else pauses its
+    // anim when stationary.
     if (objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_LEADER_SCREEN
-     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_WANTED_POSTER)
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_WANTED_POSTER
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_MEGA_PORTAL)
     {
         sprite->animPaused = FALSE;
         return;

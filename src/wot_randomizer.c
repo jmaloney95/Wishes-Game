@@ -11,6 +11,7 @@
 #include "task.h"
 #include "overworld.h"
 #include "wot_randomizer.h"
+#include "wot_mega_dimension.h"
 
 // ============================================================================
 //  WISHES OF TOMORROW -- RANDOMIZER MODE
@@ -55,6 +56,9 @@ bool32 WotTrainerIsRandomizerExempt(void)
 
     opponent = TRAINER_BATTLE_PARAM.opponentA;
     if (opponent == TRAINER_WALLY_VR_5 || opponent == TRAINER_WALLY_VR_4)
+        return TRUE;
+    // The Mega Dimension rivals: their ace is the day's rogue Mega.
+    if (WotMegaDim_IsRivalTrainer(opponent))
         return TRUE;
 
     opponent = TRAINER_BATTLE_PARAM.opponentB;

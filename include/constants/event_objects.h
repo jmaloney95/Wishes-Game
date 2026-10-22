@@ -480,7 +480,16 @@
 #define OBJ_EVENT_GFX_WOT_OLEANA                     429 // aveontrainer
 #define OBJ_EVENT_GFX_WOT_JACINTHE                   430 // DiegoWT
 #define OBJ_EVENT_GFX_WOT_VICTOR                     431 // Cyberstryke7
-#define NUM_OBJ_EVENT_GFX                        432
+#define OBJ_EVENT_GFX_WOT_MEGA_PORTAL                432 // Mega Dimension rift (placeholder art)
+// Pokemon ZA trainers: walking sprites from custom sprites/ZA Sprites
+#define OBJ_EVENT_GFX_ZA_EMMA                        433
+#define OBJ_EVENT_GFX_ZA_CANARI                      434
+#define OBJ_EVENT_GFX_ZA_VALERIE                     435
+#define OBJ_EVENT_GFX_ZA_TULIP                       436
+#define OBJ_EVENT_GFX_ZA_MABLE                       437
+#define OBJ_EVENT_GFX_ZA_TAUNIE                      438
+#define OBJ_EVENT_GFX_ZA_LIDA                        439
+#define NUM_OBJ_EVENT_GFX                        440
 
 
 // These are dynamic object gfx ids.
@@ -635,6 +644,14 @@
 #define OBJ_EVENT_PAL_TAG_WOT_OLEANA                            0x1171
 #define OBJ_EVENT_PAL_TAG_WOT_JACINTHE                          0x1172
 #define OBJ_EVENT_PAL_TAG_WOT_VICTOR                            0x1173
+// Pokemon ZA trainers
+#define OBJ_EVENT_PAL_TAG_ZA_EMMA                               0x1174
+#define OBJ_EVENT_PAL_TAG_ZA_CANARI                             0x1175
+#define OBJ_EVENT_PAL_TAG_ZA_VALERIE                            0x1176
+#define OBJ_EVENT_PAL_TAG_ZA_TULIP                              0x1177
+#define OBJ_EVENT_PAL_TAG_ZA_MABLE                              0x1178
+#define OBJ_EVENT_PAL_TAG_ZA_TAUNIE                             0x1179
+#define OBJ_EVENT_PAL_TAG_ZA_LIDA                               0x117A
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116
@@ -718,6 +735,12 @@
 #define OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE        0x8008
 // Wishes of Tomorrow: the red street light (LIGHT_TYPE_WOT_RED).
 #define OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT           0x8009
+// Wishes of Tomorrow: the Mega Dimension portal. Blend-immune on purpose: it
+// glows the same at night and stays in colour inside the grayscale dimension.
+#define OBJ_EVENT_PAL_TAG_WOT_MEGA_PORTAL         0x800A
+// Wishes of Tomorrow: the Carved Mask pickup, drawn with the Cornerstone Mask
+// bag icon and its palette.
+#define OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK        0x800B
 // Not a real OW palette tag; used for the white flash applied to followers
 // Wishes of Tomorrow: a Shadow Pokemon follower is drawn as a dark violet
 // silhouette built at runtime from its ordinary palette, so it needs a tag of

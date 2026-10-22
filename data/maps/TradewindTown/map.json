@@ -75,7 +75,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
       "x": 41,
-      "y": 14,
+      "y": 20,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 2,
@@ -87,8 +87,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
-      "x": 27,
-      "y": 17,
+      "x": 17,
+      "y": 42,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -100,8 +100,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_KIMONO_GIRL",
-      "x": 31,
-      "y": 10,
+      "x": 47,
+      "y": 13,
       "elevation": 0,
       "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
       "movement_range_x": 1,
@@ -113,10 +113,10 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_KIMONO_GIRL",
-      "x": 26,
-      "y": 12,
+      "x": 25,
+      "y": 13,
       "elevation": 0,
-      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
@@ -243,8 +243,8 @@
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(LITWICK)",
-      "x": 30,
-      "y": 14,
+      "x": 36,
+      "y": 15,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_WALK_SLOWLY_IN_PLACE_DOWN",
       "movement_range_x": 0,
@@ -331,6 +331,62 @@
       "trainer_sight_or_berry_tree_id": "ITEM_MAX_POTION",
       "script": "Common_EventScript_FindItem",
       "flag": "FLAG_ITEM_TRADEWIND_MAX_POTION"
+    },
+    {
+      "local_id": "LOCALID_TRADEWIND_MEGA_PORTAL",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 30,
+      "y": 14,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_HIDE_TRADEWIND_INTRO_PORTAL"
+    },
+    {
+      "local_id": "LOCALID_TRADEWIND_CANARI",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_CANARI",
+      "x": 31,
+      "y": 13,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_HIDE_TRADEWIND_LIDA_CANARI"
+    },
+    {
+      "local_id": "LOCALID_TRADEWIND_LIDA",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_LIDA",
+      "x": 29,
+      "y": 13,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_HIDE_TRADEWIND_LIDA_CANARI"
+    },
+    {
+      "local_id": "LOCALID_TRADEWIND_DIM_PORTAL",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 61,
+      "y": 24,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_0"
     }
   ],
   "warp_events": [
@@ -368,9 +424,61 @@
       "elevation": 0,
       "dest_map": "MAP_TRADEWIND_HOUSE",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 23,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_HOTEL_Z",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
+    {
+      "type": "trigger",
+      "x": 28,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "TradewindTown_EventScript_MegaDoomsdayIntro"
+    },
+    {
+      "type": "trigger",
+      "x": 29,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "TradewindTown_EventScript_MegaDoomsdayIntro"
+    },
+    {
+      "type": "trigger",
+      "x": 30,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "TradewindTown_EventScript_MegaDoomsdayIntro"
+    },
+    {
+      "type": "trigger",
+      "x": 31,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "TradewindTown_EventScript_MegaDoomsdayIntro"
+    },
+    {
+      "type": "trigger",
+      "x": 32,
+      "y": 10,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "TradewindTown_EventScript_MegaDoomsdayIntro"
+    },
     {
       "type": "trigger",
       "x": 3,
@@ -433,12 +541,20 @@
       "y": 17,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "Tradewind_EventScript_LockedDoor"
+      "script": "Tradewind_EventScript_HotelZDoor"
     },
     {
       "type": "sign",
       "x": 34,
       "y": 11,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "Tradewind_EventScript_LockedDoor"
+    },
+    {
+      "type": "sign",
+      "x": 26,
+      "y": 12,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "Tradewind_EventScript_LockedDoor"

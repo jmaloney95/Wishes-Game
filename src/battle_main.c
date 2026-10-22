@@ -301,6 +301,7 @@ const struct OamData gOamData_BattleSpritePlayerSide =
 static const s8 sCenterToCornerVecXs[8] ={-32, -16, -16, -32, -32};
 
 #include "data/types_info.h"
+#include "wot_mega_dimension.h"
 
 // [TRAINER_CLASS_XYZ] = { _("name"), <money=5>, <ball=BALL_POKE> }
 const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
@@ -429,6 +430,10 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_ONI] =                  { _("Oni"), 8 },
     [TRAINER_CLASS_CAPTAIN] =              { _("Captain"), 10 },
     [TRAINER_CLASS_SIREN] =                { _("Siren"), 12 },
+    [TRAINER_CLASS_STREAMER] =             { _("Streamer"), 15 },
+    [TRAINER_CLASS_TEAM_MZ] =              { _("Team MZ"), 15 },
+    [TRAINER_CLASS_DETECTIVE] =            { _("Detective"), 15 },
+    [TRAINER_CLASS_SOCIALITE] =            { _("Socialite"), 20 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =
@@ -2272,6 +2277,8 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     {
         retVal = CreateNPCTrainerPartyFromTrainer(party, GetTrainerStructFromId(trainerNum), firstTrainer, gBattleTypeFlags);
     }
+    // WoT: a Mega Dimension rival fields the day's rogue Mega, at party level.
+    WotMegaDim_AdjustRivalParty(party, trainerNum);
     return retVal;
 }
 
