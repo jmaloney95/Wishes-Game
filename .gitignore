@@ -30,3 +30,7 @@ FlatfootLabs/*.gba
 custom ui/Website Screenshots/
 custom ui/*.jpg
 Game Guide/
+
+# Private bug inbox: player reports carry names, email addresses and save
+# files, so it never leaves this machine. See .claude/skills/bug-sweep/.
+bug-inbox/

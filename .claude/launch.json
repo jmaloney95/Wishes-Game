@@ -4,8 +4,35 @@
     {
       "name": "docs",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8777", "--directory", "docs"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8777",
+        "--directory",
+        "docs"
+      ],
       "port": 8777
+    },
+    {
+      "name": "guide-editor",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "Game Guide/editor/serve.py",
+        "8778"
+      ],
+      "port": 8778
+    },
+    {
+      "name": "anim",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8790",
+        "--directory",
+        "C:/Users/jmalo/AppData/Local/Temp/claude/J--ROM-Hack-Project/74898f9a-8739-4ad5-a37e-b9744a7ebf71/scratchpad/anim"
+      ],
+      "port": 8790
     }
   ]
 }
