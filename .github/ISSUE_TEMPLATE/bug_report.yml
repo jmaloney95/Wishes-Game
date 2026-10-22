@@ -1,0 +1,64 @@
+name: Bug report
+description: Something in Wishes of Tomorrow crashed, froze, got stuck, or did the wrong thing.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time! The more of this you fill in, the faster it gets fixed. Spoilers are fine here.
+  - type: input
+    id: version
+    attributes:
+      label: Game version
+      description: It's in the name of the patch file you downloaded, for example `wishes-of-tomorrow-1.2.6.bps`. The Hall of Fame screen shows it too.
+      placeholder: v1.2.6
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: How do you play?
+      options:
+        - mGBA on a computer
+        - RetroArch
+        - A phone emulator (My Boy!, Pizza Boy, Lemuroid...)
+        - A flash cart on real hardware
+        - Something else (say which below)
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where in the game?
+      description: The town, route or building, and roughly how far into the story you are.
+      placeholder: National Park, after the second badge
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you saw, and what you expected instead. Crashes, freezes, black screens and getting stuck all count.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen
+      description: What you did right before it, as exactly as you can.
+      placeholder: |
+        1. Talk to the park guide
+        2. Press A through the tour
+        3. The screen stays black
+  - type: textarea
+    id: files
+    attributes:
+      label: Save file and screenshots
+      description: |
+        A save from just before the bug makes it about ten times easier to fix. GitHub won't take `.sav` files, so put the save in a `.zip` first, then drag the zip and any screenshots into this box.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Settings that might matter, such as Randomizer Mode, fast-forward or cheats.
