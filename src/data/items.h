@@ -14655,7 +14655,7 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_FullHeal,
     },
 
-    // Tradewind Town curios (reuse Strange Souvenir icon)
+    // Tradewind Town curios (borrowed icons that fit each curio)
     [ITEM_BOTTLED_WARMTH] =
     {
         .name = ITEM_NAME("Bottled Warmth"),
@@ -14667,8 +14667,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_Honey,
+        .iconPalette = gItemIconPalette_Honey,
     },
 
     [ITEM_BORROWED_YEARS] =
@@ -14682,8 +14682,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_OldAmber,
+        .iconPalette = gItemIconPalette_OldAmber,
     },
 
     [ITEM_UNSPOKEN_LAST_WORDS] =
@@ -14697,8 +14697,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_SootheBell,
+        .iconPalette = gItemIconPalette_SootheBell,
     },
 
     [ITEM_A_STRANGERS_NAME] =
@@ -14712,8 +14712,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_SpellTag,
+        .iconPalette = gItemIconPalette_SpellTag,
     },
 
     [ITEM_FOLDED_GOODBYE] =
@@ -14727,8 +14727,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_Letter,
+        .iconPalette = gItemIconPalette_LavaCookieAndLetter,
     },
 
     [ITEM_ONE_GOOD_DREAM] =
@@ -14742,8 +14742,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_StarPiece,
+        .iconPalette = gItemIconPalette_Star,
     },
 
     [ITEM_THE_LONG_WAY_HOME] =
@@ -14757,8 +14757,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_ITEMS,
         .type = ITEM_USE_BAG_MENU,
         .fieldUseFunc = ItemUseOutOfBattle_CannotUse,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_OldSeaMap,
+        .iconPalette = gItemIconPalette_OldSeaMap,
     },
 
     [ITEM_CARVED_MASK] =
@@ -14773,8 +14773,8 @@ const struct ItemInfo gItemsInfo[] =
         .pocket = POCKET_KEY_ITEMS,
         .type = ITEM_USE_FIELD,
         .fieldUseFunc = ItemUseOutOfBattle_OniMask,
-        .iconPic = gItemIcon_StrangeSouvenir,
-        .iconPalette = gItemIconPalette_StrangeSouvenir,
+        .iconPic = gItemIcon_CornerstoneMask,
+        .iconPalette = gItemIconPalette_CornerstoneMask,
     },
 
     [ITEM_CATALPA_BOW] =
