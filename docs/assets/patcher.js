@@ -319,6 +319,8 @@
   // The Update tab can ask for the player's own filename instead (see setOutputName).
   var outputName = PATCH.outputName;
   var patchedRom = null, playerBooted = false;
+  // A save the Update tab wants loaded once the game is running.
+  var pendingSave = null;
 
   /* ── in-browser player ──────────────────────────────────────────────
      EmulatorJS (mGBA core) loaded on demand from its CDN. The patched ROM
@@ -579,6 +581,7 @@
     window.EJS_onGameStart = function () {
       btn.disabled = false;
       btn.textContent = "Playing";
+      if (pendingSave) loadSave();
       makeFastForwardToggle();
       restrictMenuToButton();
     };
@@ -593,6 +596,32 @@
         "The player is fetched from the EmulatorJS CDN — check your connection or any blockers. Your patched ROM is still ready to save.");
     };
     document.body.appendChild(s);
+  }
+
+  /* ── a save from another emulator ─────────────────────────────────
+     The same steps as EmulatorJS's own "Import save" menu item: write the
+     file where the core keeps its save, load it, then restart so the game
+     reads it at boot like a cartridge would. Only the 128 KB of flash is
+     written; an mGBA RTC trailer means nothing to the core. */
+  function loadSave() {
+    var gm = window.EJS_emulator && window.EJS_emulator.gameManager;
+    if (!gm || !gm.getSaveFilePath) return;
+    var bytes = pendingSave;
+    pendingSave = null;
+    try {
+      var path = gm.getSaveFilePath(), FS = gm.FS, dir = "";
+      path.split("/").slice(0, -1).forEach(function (part) {
+        if (!part) return;
+        dir += "/" + part;
+        if (!FS.analyzePath(dir).exists) FS.mkdir(dir);
+      });
+      if (FS.analyzePath(path).exists) FS.unlink(path);
+      FS.writeFile(path, bytes.subarray(0, 0x20000));
+      gm.loadSaveFiles();
+      gm.restart();
+    } catch (e) {
+      say("bad", "Couldn't load your save into the player.", String(e && e.message || e));
+    }
   }
 
   function closePlayer() {
@@ -705,7 +734,16 @@
         ui.result.title = "Save " + outputName;
       }
     },
-    play: function (bytes, button) {
+    patchUrl: PATCH.url,
+    // An already-running player keeps its ROM; a save still loads into it.
+    play: function (bytes, button, save) {
+      pendingSave = save || null;
+      if (playerBooted) {
+        ui.player.hidden = false;
+        ui.player.scrollIntoView({ block: "center", behavior: "smooth" });
+        if (pendingSave && window.EJS_emulator && window.EJS_emulator.started) loadSave();
+        return;
+      }
       patchedRom = bytes;
       ui.activePlay = button;
       bootPlayer();

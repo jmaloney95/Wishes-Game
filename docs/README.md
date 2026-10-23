@@ -86,19 +86,26 @@ To publish a patch, see [`patches/README.md`](patches/README.md).
 
 ## Update my game
 
-The second tab on the patcher, `assets/updater.js`. The player chooses the WoT
-ROM they already play; its CRC32 is looked up in
-`patches/updates/manifest.json`, the matching old→latest patch (about 2–3 MB)
-is applied with `WoTPatcher.applyBPS`, and the result downloads **under the
-player's own filename**. mGBA, RetroArch, MyBoy, Pizza Boy, John GBA and VBA-M
-find a save by the ROM's filename, so the old save just loads. No base ROM
-needed. An unrecognised file offers the base-ROM route instead, with the
-output named after the player's file (`WoTPatcher.setOutputName`).
+The second tab on the patcher, `assets/updater.js`. One input takes whatever
+the player has, told apart by size: the WoT ROM they play (any version),
+their save, or both.
 
-Step 4 is a read-only save checker: it finds the newest complete save slot
-(sector signature, ids, counter), checks the SaveBlock2 checksum, and shows
-the player's name, ID and play time. It offers the same bytes back as
-`<name>.sav` / `.srm`, for when the filenames don't line up.
+- **A WoT ROM.** Its CRC32 is looked up in `patches/updates/manifest.json`
+  and the matching old→latest patch (about 2–3 MB) is applied with
+  `WoTPatcher.applyBPS`. The result keeps **the player's own filename**:
+  mGBA, RetroArch, MyBoy, Pizza Boy, John GBA and VBA-M find a save by the
+  ROM's filename, so the old save just loads.
+- **A save alone.** It's read (newest complete slot, SaveBlock2 checksum,
+  name and play time), then a second row asks for the base ROM or any WoT
+  ROM, because the site only ships patches. The result is named after the
+  save.
+
+Either way the last row offers Download and **Play in browser**, which loads
+the player's save into EmulatorJS when they gave one (`WoTPatcher.play`
+writes it to the core's save path, loads it, restarts).
+
+The file inputs have no `accept` filter on purpose: iOS has no file type
+for `.gba` and greys it out of the picker if one is set.
 
 `flatfootlabs.com/#update` opens the tab directly (handy for Discord answers).
 
