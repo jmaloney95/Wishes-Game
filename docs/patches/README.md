@@ -72,9 +72,28 @@ and all three embedded CRCs check.)
 
 Flips: <https://github.com/Alcaro/Flips>
 
+## Update patches (`updates/`)
+
+The site's **Update my game** tab turns a player's current WoT ROM straight
+into the latest one, so they don't need their base ROM and the file keeps its
+name (and so its save). Each `updates/wot-<old>-to-<new>.bps` is the diff from
+one archived release's output to the new release's output, about 2–3 MB.
+
+```sh
+python Tools/make_update_patches.py <new_version>        # every older release
+python Tools/make_update_patches.py <new_version> --keep 4   # only the last 4
+```
+
+The script rebuilds every release in memory from the base ROM and the patches
+in this folder (the new release too, never the build tree), re-applies each
+update patch with the independent applier and requires a byte-exact match. It
+writes `updates/manifest.json` (CRC32 of each old release → its patch, CRCs
+read from patch footers) and deletes update patches that target an older
+release. Releases it doesn't cover fall back to the base-ROM route on the page.
+
 ## After building a new patch
 
-1. Drop the `.bps` in this folder.
+1. Drop the `.bps` in this folder, then run `Tools/make_update_patches.py <version>`.
 2. Update `url` in `assets/patcher.js` and `RELEASE` in `assets/site.js`.
 3. Add a changelog entry in `index.html` (search for `data-changelog`).
 4. Attach the same `.bps` to the GitHub release so the release page matches.

@@ -28,7 +28,7 @@
      Google. Assets carry a version query: GitHub Pages serves them with a
      four-hour max-age, so bump the stamp whenever anything in assets/ changes. -->
 <link rel="preload" href="assets/fonts/Anton-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/wot.css?v=20261005a">
+<link rel="stylesheet" href="assets/wot.css?v=20261023a">
 </head>
 <body>
 
@@ -46,6 +46,7 @@
       <a href="#media">Screenshots</a>
       <a href="#downloads">Downloads</a>
       <a href="guide">Field guide</a>
+      <a href="dex">Pokédex</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="ff-header-actions">
@@ -175,7 +176,14 @@
       </a>
     </div>
 
-    <div class="ff-quest" id="patch" aria-labelledby="patch-title">
+    <div class="ff-patchbox">
+    <!-- Two tabs over one box: a fresh patch, or an update that keeps the
+         player's save. site.js opens #update straight from a shared link. -->
+    <div class="ff-tabs ff-tabs--quest" role="tablist" aria-label="New game or update">
+      <button class="ff-tab" role="tab" type="button" aria-selected="true" aria-controls="patch" id="tab-patch" data-tab="patch-new">Patch &amp; play</button>
+      <button class="ff-tab" role="tab" type="button" aria-selected="false" aria-controls="update" id="tab-update" data-tab="update">Update my game</button>
+    </div>
+    <div class="ff-quest" id="patch" role="tabpanel" aria-labelledby="tab-patch" data-panel="patch-new">
       <div class="ff-quest-head">
         <h3 class="ff-quest-title" id="patch-title">Patch &amp; play</h3>
         <span class="ff-lock"><i class="ff-i ff-i-lock ff-i--1x" aria-hidden="true"></i>100% local · no upload</span>
@@ -206,6 +214,49 @@
       </ol>
       <p class="patch-status is-idle" data-patch-status role="status" aria-live="polite"><strong>Loading the patcher…</strong></p>
       <p class="ff-legal">We share a patch, not a game. Bring your own legally obtained ROM.</p>
+    </div>
+
+    <!-- The update route (assets/updater.js): the player's current WoT ROM in,
+         the latest version out under the SAME filename, which is how most
+         emulators pair a ROM with its save. No base ROM needed. -->
+    <div class="ff-quest" id="update" role="tabpanel" aria-labelledby="tab-update" data-panel="update" data-updater>
+      <div class="ff-quest-head">
+        <h3 class="ff-quest-title">Keep your save</h3>
+        <span class="ff-lock"><i class="ff-i ff-i-lock ff-i--1x" aria-hidden="true"></i>100% local · no upload</span>
+      </div>
+      <ol class="ff-quest-list">
+        <li class="ff-quest-row">
+          <span class="ff-quest-num">1</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Save in the game first</div><div class="ff-quest-sub">START → SAVE. Save states don't carry over to a new version.</div></div>
+        </li>
+        <li class="ff-quest-row" data-slot="old-rom">
+          <span class="ff-quest-num">2</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Your Wishes of Tomorrow file</div><div class="ff-quest-sub"><span data-slot-name>No file chosen</span> <span data-slot-note>The .gba you play now, any version</span></div><div class="ff-quest-bar"><i></i></div></div>
+          <div class="ff-quest-end"><label class="ff-btn ff-btn--light ff-btn--sm ff-quest-file" for="old-rom-file">Choose<input id="old-rom-file" type="file" accept=".gba,.zip"></label></div>
+        </li>
+        <li class="ff-quest-row">
+          <span class="ff-quest-num">3</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Update to <span data-update-latest>v1.2.6</span></div><div class="ff-quest-sub">Same filename, so your emulator finds your save.</div><div class="ff-quest-bar"><i></i></div></div>
+          <div class="ff-quest-end"><button class="ff-btn ff-btn--violet ff-btn--sm" type="button" data-update-apply disabled>Update</button><a class="ff-btn ff-btn--light ff-btn--sm" data-update-result hidden>Save</a><button class="ff-btn ff-btn--light ff-btn--sm" type="button" data-update-play hidden>Play</button></div>
+        </li>
+        <li class="ff-quest-row" data-slot="save">
+          <span class="ff-quest-num">4</span>
+          <div style="min-width: 0;"><div class="ff-quest-name">Check your save <small class="ff-quest-opt">optional</small></div><div class="ff-quest-sub"><span data-slot-name>No file chosen</span> <span data-slot-note>.sav or .srm — see what's in it</span></div></div>
+          <div class="ff-quest-end"><label class="ff-btn ff-btn--light ff-btn--sm ff-quest-file" for="save-file">Choose<input id="save-file" type="file"></label></div>
+        </li>
+      </ol>
+      <div class="ff-save-card ff-notch" data-save-card hidden>
+        <p class="ff-save-who" data-save-who></p>
+        <p class="ff-save-meta" data-save-meta></p>
+        <div class="ff-save-rename">
+          <label for="save-name">Name it to match your game file</label>
+          <div class="ff-save-row"><input id="save-name" type="text" spellcheck="false" autocomplete="off" data-save-name><a class="ff-btn ff-btn--violet ff-btn--sm" data-save-sav>.sav</a><a class="ff-btn ff-btn--light ff-btn--sm" data-save-srm title="RetroArch and Lemuroid">.srm</a></div>
+        </div>
+      </div>
+      <p class="patch-status is-idle" data-update-status role="status" aria-live="polite"><strong>Choose the game file you play now.</strong><span>Your save stays where it is.</span></p>
+      <p class="ff-quest-alt" data-update-fallback hidden><button class="ff-btn ff-btn--light ff-btn--sm" type="button">Patch from your base ROM instead</button></p>
+      <p class="ff-legal">Put the new file where the old one was, replacing it, then open your emulator and press Continue. Phone saved it with “(1)” in the name? Delete the old file and remove the “(1)”, or name a copy of your save to match in step 4. Delta on iPhone: long-press the old game to export its save, add the new file, then import the save onto it. Played in this browser? Your save stays here: patch the new version in Patch &amp; play and press Play.</p>
+    </div>
     </div>
   </div>
   <!-- Built only when the player asks for it: the emulator is about a
@@ -399,7 +450,7 @@
         <details><summary><span>Can I play it without installing an emulator?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes. Patch your ROM <a href="#patch">on this page</a>, then press <b>Play in browser</b> — the emulator loads on demand and boots the ROM you just built, with keyboard controls on desktop and an on-screen pad on phones. Nothing is uploaded; the game runs on your own machine. Saves are kept in your browser, so export them from the emulator's menu if you want to move them to a real emulator or a flash cart.</p></details>
         <details><summary><span>The patcher says my ROM is wrong. Now what?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>The patch stores a checksum of the exact base ROM it was built against, and the patcher compares yours to it. A mismatch almost always means a different region or revision, or a dump with a header still attached. You want the plain 16 MB Pokémon Emerald (U) file, code BPEE. A .zip of that file also works — the patcher unzips it before checking.</p></details>
         <details><summary><span>Can I play it on my phone?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes — any modern GBA emulator works. Delta on iOS and mGBA on Android are the two we test against each release.</p></details>
-        <details><summary><span>Will saves carry over between versions?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes — v1.2.6 loads saves from every earlier version, and nothing in it touches a save slot. Patch a fresh ROM with the new version and keep using your existing save. One control works differently on any older save: B is now a tap that switches between running and walking, where it used to be held to walk. Choose HOLD B under AUTO SPRINT in Options for hold-to-run. Two things change on a save from v1.2.2 or earlier: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p></details>
+        <details><summary><span>Will saves carry over between versions?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Yes — v1.2.6 loads saves from every earlier version, and nothing in it touches a save slot. The easy way is the <a href="#update">Update my game</a> tab above: choose the game file you play now and you get the new version back under the same name, so your emulator keeps finding your save. Save in the game first; save states don't carry over. You can also patch a fresh ROM with the new version and keep using your existing save. One control works differently on any older save: B is now a tap that switches between running and walking, where it used to be held to walk. Choose HOLD B under AUTO SPRINT in Options for hold-to-run. Two things change on a save from v1.2.2 or earlier: the clock restarts from the first morning, because it now runs on play time; and if you have been to Ryuden Island, the Dragon Wardens and the egg can be available again, since they used to share save slots with the Munen Master Ball, the Munen Lake Super Rod and the Melting Mile path. Whenever a future version breaks save compatibility, the release notes will say so at the top.</p></details>
         <details><summary><span>How do I report a bug?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Open an issue on <a href="https://github.com/jmaloney95/Wishes-Game/issues">GitHub</a>, or email <a href="mailto:joe@flatfootlabs.com">joe@flatfootlabs.com</a> with your version number and the save file if you have it.</p></details>
         <details><summary><span>Is there a sequel?</span><i class="ff-i ff-i-plus" aria-hidden="true"></i></summary><p>Something is in prototype. It's smaller, and it's not set near the mountain.</p></details>
       </div>
@@ -435,7 +486,8 @@
   </div>
 </footer>
 
-<script src="assets/site.js?v=20261005a" defer></script>
-<script src="assets/patcher.js?v=20261005a" defer></script>
+<script src="assets/site.js?v=20261023a" defer></script>
+<script src="assets/patcher.js?v=20261023a" defer></script>
+<script src="assets/updater.js?v=20261023a" defer></script>
 </body>
 </html>

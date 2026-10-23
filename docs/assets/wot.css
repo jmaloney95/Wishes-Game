@@ -503,6 +503,44 @@ button { font: inherit; color: inherit; }
 .patch-status.is-warn { --status: var(--warn); --status-icon: var(--icon-alert); }
 .patch-status.is-bad { --status: var(--bad); --status-icon: var(--icon-close); }
 
+/* ── the update tab (assets/updater.js) ──────────────────────────────────
+   Same quest rows as the patcher; the tabs sit on the paper band, so they
+   take the box's night colour rather than the trailer band's raised one. */
+.ff-patchbox { min-width: 0; }
+.ff-tabs--quest { gap: 6px; margin-bottom: 10px; }
+.ff-tabs--quest .ff-tab { background: var(--night); color: var(--on-night-soft); }
+.ff-tabs--quest .ff-tab:hover { color: var(--on-night); }
+.ff-tabs--quest .ff-tab[aria-selected="true"] { background: var(--violet); color: var(--white); }
+.ff-quest-opt { margin-left: 6px; font-family: var(--font-sans); font-size: 11px; font-weight: 600; letter-spacing: .04em; color: var(--on-night-faint); }
+.ff-quest-row:has([data-update-result]:not([hidden])) { background: color-mix(in srgb, var(--violet) 30%, var(--night-raised)); }
+.ff-quest-row:has([data-update-result]:not([hidden])) .ff-quest-num { background: var(--violet); box-shadow: none; font-size: 0; }
+.ff-quest-row:has([data-update-result]:not([hidden])) .ff-quest-num::before {
+  content: ""; width: 22px; height: 22px; background: var(--white);
+  -webkit-mask: var(--icon-check) center / contain no-repeat;
+          mask: var(--icon-check) center / contain no-repeat;
+}
+.ff-quest-row:has([data-update-result]:not([hidden])) .ff-quest-bar i { width: 100%; background: var(--gold); }
+.ff-quest-row:has([data-update-apply]:disabled):not(:has([data-update-result]:not([hidden]))) { opacity: .55; }
+.ff-btn[data-update-play]::after {
+  content: ""; width: 11px; height: 11px; background: currentColor;
+  -webkit-mask: var(--icon-play) center / contain no-repeat;
+          mask: var(--icon-play) center / contain no-repeat;
+}
+.ff-save-card { --n: 10px; margin-top: 10px; padding: 14px 16px 16px; background: var(--night-raised); box-shadow: inset 3px 0 0 var(--status, var(--ok)); }
+.ff-save-card.is-warn { --status: var(--warn); }
+.ff-save-who { margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 1; letter-spacing: .04em; text-transform: uppercase; overflow-wrap: anywhere; }
+.ff-save-meta { margin: 6px 0 0; font-size: 13px; line-height: 18px; color: var(--on-night-soft); }
+.ff-save-rename { margin-top: 14px; }
+.ff-save-rename label { display: block; margin-bottom: 6px; font-size: 12.5px; color: var(--on-night-faint); }
+.ff-save-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.ff-save-row input {
+  flex: 1 1 200px; min-width: 0; height: 42px; padding: 0 12px;
+  border: 1px solid var(--night-line); border-radius: 0; background: var(--night); color: var(--on-night);
+  font: 14px/1 var(--font-sans);
+}
+.ff-save-row input:focus { outline: 3px solid var(--gold); outline-offset: 2px; }
+.ff-quest-alt { margin: 12px 0 0; }
+
 /* The emulator, opened from Play. Full width under the downloads grid. */
 .ff-player { display: flex; flex-direction: column; gap: 14px; margin: 44px auto 0; }
 .ff-player-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }

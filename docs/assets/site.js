@@ -389,7 +389,19 @@
           show(next);
         });
       });
-      show(list.querySelector('[data-tab][aria-selected="true"]') || tabs[0]);
+      // A link to a panel's id (flatfootlabs.com/#update, or the FAQ's
+      // in-page link) opens its tab.
+      var fromHash = function () {
+        var id = location.hash.slice(1);
+        return id && Array.prototype.filter.call(tabs, function (t) {
+          return t.getAttribute("aria-controls") === id;
+        })[0];
+      };
+      window.addEventListener("hashchange", function () {
+        var t = fromHash();
+        if (t) show(t);
+      });
+      show(fromHash() || list.querySelector('[data-tab][aria-selected="true"]') || tabs[0]);
     });
   }
 

@@ -316,6 +316,8 @@
   var patchBytes = null, patchName = "";
   var patchAvailable = false, patchSize = 0;
   var resultUrl = null;
+  // The Update tab can ask for the player's own filename instead (see setOutputName).
+  var outputName = PATCH.outputName;
   var patchedRom = null, playerBooted = false;
 
   /* ── in-browser player ──────────────────────────────────────────────
@@ -458,11 +460,11 @@
       if (resultUrl) URL.revokeObjectURL(resultUrl);
       resultUrl = URL.createObjectURL(new Blob([out], { type: "application/octet-stream" }));
       ui.result.href = resultUrl;
-      ui.result.download = PATCH.outputName;
+      ui.result.download = outputName;
       ui.result.hidden = false;
       // Short label for the quest row's button; the full name goes in the title.
       ui.result.textContent = "Save (" + fmtBytes(out.length) + ")";
-      ui.result.title = "Save " + PATCH.outputName;
+      ui.result.title = "Save " + outputName;
 
       patchedRom = out;
       if (ui.play) {
@@ -549,14 +551,15 @@
   }
 
   function bootPlayer() {
+    var btn = ui.activePlay || ui.play;
     if (!patchedRom) return;
     ui.player.hidden = false;
     ui.player.scrollIntoView({ block: "center", behavior: "smooth" });
     if (playerBooted) return;
     playerBooted = true;
 
-    ui.play.disabled = true;
-    ui.play.textContent = "Loading emulator…";
+    btn.disabled = true;
+    btn.textContent = "Loading emulator…";
 
     // EmulatorJS is configured through globals that its loader reads.
     window.EJS_player = "#game";
@@ -574,8 +577,8 @@
     window.EJS_defaultOptions = { "ff-ratio": "3.0" };
     window.EJS_startOnLoaded = true;
     window.EJS_onGameStart = function () {
-      ui.play.disabled = false;
-      ui.play.textContent = "Playing";
+      btn.disabled = false;
+      btn.textContent = "Playing";
       makeFastForwardToggle();
       restrictMenuToButton();
     };
@@ -584,8 +587,8 @@
     s.src = PLAYER.data + "loader.js";
     s.onerror = function () {
       playerBooted = false;
-      ui.play.disabled = false;
-      ui.play.textContent = "Play in browser";
+      btn.disabled = false;
+      btn.textContent = btn === ui.play ? "Play in browser" : "Play";
       say("bad", "Couldn't load the emulator.",
         "The player is fetched from the EmulatorJS CDN — check your connection or any blockers. Your patched ROM is still ready to save.");
     };
@@ -620,7 +623,7 @@
     ui.romInput.addEventListener("change", function () { onRom(this.files[0]); });
     ui.patchInput.addEventListener("change", function () { onPatch(this.files[0]); });
     ui.apply.addEventListener("click", apply);
-    if (ui.play) ui.play.addEventListener("click", bootPlayer);
+    if (ui.play) ui.play.addEventListener("click", function () { ui.activePlay = ui.play; bootPlayer(); });
     var closeBtn = root.querySelector("[data-player-close]");
     if (closeBtn) closeBtn.addEventListener("click", closePlayer);
     ui.fs = root.querySelector("[data-player-fs]");
@@ -692,6 +695,20 @@
     applyIPS: applyIPS,
     detectAndApply: detectAndApply,
     isZip: isZip,
-    unzipRom: unzipRom
+    unzipRom: unzipRom,
+    // For assets/updater.js: name the next patched ROM after the player's
+    // old file, and boot the player with a ROM the Update tab built.
+    setOutputName: function (name) {
+      outputName = name || PATCH.outputName;
+      if (ui.result && !ui.result.hidden) {
+        ui.result.download = outputName;
+        ui.result.title = "Save " + outputName;
+      }
+    },
+    play: function (bytes, button) {
+      patchedRom = bytes;
+      ui.activePlay = button;
+      bootPlayer();
+    }
   };
 })();

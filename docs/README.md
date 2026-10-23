@@ -84,14 +84,33 @@ core into `assets/` and point `PLAYER.data` in `patcher.js` at them.
 
 To publish a patch, see [`patches/README.md`](patches/README.md).
 
+## Update my game
+
+The second tab on the patcher, `assets/updater.js`. The player chooses the WoT
+ROM they already play; its CRC32 is looked up in
+`patches/updates/manifest.json`, the matching old→latest patch (about 2–3 MB)
+is applied with `WoTPatcher.applyBPS`, and the result downloads **under the
+player's own filename**. mGBA, RetroArch, MyBoy, Pizza Boy, John GBA and VBA-M
+find a save by the ROM's filename, so the old save just loads. No base ROM
+needed. An unrecognised file offers the base-ROM route instead, with the
+output named after the player's file (`WoTPatcher.setOutputName`).
+
+Step 4 is a read-only save checker: it finds the newest complete save slot
+(sector signature, ids, counter), checks the SaveBlock2 checksum, and shows
+the player's name, ID and play time. It offers the same bytes back as
+`<name>.sav` / `.srm`, for when the filenames don't line up.
+
+`flatfootlabs.com/#update` opens the tab directly (handy for Discord answers).
+
 ## Updating for a new release
 
-Four places:
+Five places:
 
 | What | Where |
 | --- | --- |
 | Version + date on the page | `RELEASE` at the top of `assets/site.js`, plus the hero kicker and the HUD tag (version and date) in `index.html`: search `1.2.6` |
 | Patch filename the patcher loads | `PATCH.url` at the top of `assets/patcher.js` |
+| Update patches for the Update tab | `python Tools/make_update_patches.py <version>`, after the release patch is in `patches/` |
 | Patch download button | `data-patch-link` in `index.html` — **version-pinned**, see below |
 | Changelog entry | `index.html`, search `data-changelog` |
 | Asset cache stamp | `?v=` on the css/js tags in all three HTML files — bump on any `assets/` change |
