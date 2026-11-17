@@ -14,6 +14,7 @@
 #include "text_window.h"
 #include "window.h"
 #include "config/ui.h"
+#include "event_data.h"
 #include "gba/m4a_internal.h"
 #include "constants/rgb.h"
 
@@ -28,6 +29,8 @@
 #define tFastForward data[8]   // menu index 0-2 (OFF 2x 3x), NOT the save value
 #define tScroll data[9]
 #define tAutoSprint data[10]
+#define tFollowersOff data[11]
+#define tLevelCapsOff data[12]
 
 enum
 {
@@ -40,6 +43,8 @@ enum
 #if USE_NPC_PORTRAITS
     MENUITEM_PORTRAITS,
 #endif
+    MENUITEM_FOLLOWERS,
+    MENUITEM_LEVELCAP,
     MENUITEM_AUTOSPRINT,
     MENUITEM_FASTFORWARD,
     MENUITEM_CANCEL,
@@ -68,6 +73,8 @@ static u8 sScroll;
 #if USE_NPC_PORTRAITS
 #define YPOS_PORTRAITS    ROW_Y(MENUITEM_PORTRAITS)
 #endif
+#define YPOS_FOLLOWERS    ROW_Y(MENUITEM_FOLLOWERS)
+#define YPOS_LEVELCAP     ROW_Y(MENUITEM_LEVELCAP)
 #define YPOS_AUTOSPRINT   ROW_Y(MENUITEM_AUTOSPRINT)
 #define YPOS_FASTFORWARD  ROW_Y(MENUITEM_FASTFORWARD)
 
@@ -111,6 +118,9 @@ static void ButtonMode_DrawChoices(u8 selection);
 static u8 Portraits_ProcessInput(u8 selection);
 static void Portraits_DrawChoices(u8 selection);
 #endif
+static u8 Followers_ProcessInput(u8 selection);
+static void Followers_DrawChoices(u8 selection);
+static void LevelCap_DrawChoices(u8 selection);
 static u8 AutoSprint_ProcessInput(u8 selection);
 static void AutoSprint_DrawChoices(u8 selection);
 static u8 FastForward_ProcessInput(u8 selection);
@@ -129,12 +139,17 @@ static const u8 gText_Option[]             = _("OPTION");
 static const u8 gText_TextSpeedSlow[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SLOW");
 static const u8 gText_TextSpeedMid[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MID");
 static const u8 gText_TextSpeedFast[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}FAST");
+static const u8 gText_TextSpeedInstant[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}INSTANT");
 static const u8 gText_BattleSceneOn[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 static const u8 gText_BattleSceneOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 #if USE_NPC_PORTRAITS
 static const u8 gText_PortraitsOn[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
 static const u8 gText_PortraitsOff[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 #endif
+static const u8 gText_FollowersOn[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+static const u8 gText_FollowersOff[]       = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
+static const u8 gText_LevelCapOn[]         = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}ON");
+static const u8 gText_LevelCapOff[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 static const u8 gText_FastForwardOff[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}OFF");
 static const u8 gText_FastForward2x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}2x");
 static const u8 gText_FastForward3x[]      = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}3x");
@@ -142,6 +157,7 @@ static const u8 gText_AutoSprintToggle[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN
 static const u8 gText_AutoSprintHoldB[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}HOLD B");
 static const u8 gText_BattleStyleShift[]   = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SHIFT");
 static const u8 gText_BattleStyleSet[]     = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SET");
+static const u8 gText_BattleStyleSemi[]    = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}SEMI");
 static const u8 gText_SoundMono[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}MONO");
 static const u8 gText_SoundStereo[]        = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}STEREO");
 static const u8 gText_FrameType[]          = _("{COLOR GREEN}{SHADOW LIGHT_GREEN}TYPE");
@@ -165,6 +181,8 @@ static const u8 *const sOptionMenuItemsNames[MENUITEM_COUNT] =
 #if USE_NPC_PORTRAITS
     [MENUITEM_PORTRAITS]   = COMPOUND_STRING("PORTRAITS"),
 #endif
+    [MENUITEM_FOLLOWERS]   = COMPOUND_STRING("FOLLOWERS"),
+    [MENUITEM_LEVELCAP]    = COMPOUND_STRING("LEVEL CAP"),
     [MENUITEM_AUTOSPRINT]  = COMPOUND_STRING("AUTO SPRINT"),
     [MENUITEM_FASTFORWARD] = COMPOUND_STRING("FAST FORWARD"),
     [MENUITEM_CANCEL]      = COMPOUND_STRING("CANCEL"),
@@ -313,7 +331,7 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tMenuSelection = 0;
         gTasks[taskId].tTextSpeed = gSaveBlock2Ptr->optionsTextSpeed;
         gTasks[taskId].tBattleSceneOff = gSaveBlock2Ptr->optionsBattleSceneOff;
-        gTasks[taskId].tBattleStyle = gSaveBlock2Ptr->optionsBattleStyle;
+        gTasks[taskId].tBattleStyle = gSaveBlock2Ptr->optionsBattleStyleSemi ? OPTIONS_BATTLE_STYLE_SEMI : gSaveBlock2Ptr->optionsBattleStyle;
         gTasks[taskId].tSound = gSaveBlock2Ptr->optionsSound;
         gTasks[taskId].tButtonMode = gSaveBlock2Ptr->optionsButtonMode;
         gTasks[taskId].tWindowFrameType = gSaveBlock2Ptr->optionsWindowFrameType;
@@ -321,6 +339,8 @@ void CB2_InitOptionMenu(void)
         gTasks[taskId].tPortraitsOff = gSaveBlock2Ptr->optionsPortraitsOff;
 #endif
         gTasks[taskId].tFastForward = FastForward_SaveToMenu(gSaveBlock2Ptr->optionsFastForward);
+        gTasks[taskId].tFollowersOff = FlagGet(FLAG_WOT_FOLLOWERS_OFF);
+        gTasks[taskId].tLevelCapsOff = FlagGet(FLAG_WOT_LEVEL_CAPS_OFF);
         gTasks[taskId].tAutoSprint = gSaveBlock2Ptr->optionsAutoSprint;
         gTasks[taskId].tScroll = 0;
         sScroll = 0;
@@ -334,6 +354,8 @@ void CB2_InitOptionMenu(void)
 #if USE_NPC_PORTRAITS
         Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
 #endif
+        Followers_DrawChoices(gTasks[taskId].tFollowersOff);
+        LevelCap_DrawChoices(gTasks[taskId].tLevelCapsOff);
         AutoSprint_DrawChoices(gTasks[taskId].tAutoSprint);
         FastForward_DrawChoices(gTasks[taskId].tFastForward);
         HighlightOptionMenuItem(gTasks[taskId].tMenuSelection);
@@ -433,6 +455,21 @@ static void Task_OptionMenuProcessInput(u8 taskId)
                 Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
             break;
 #endif
+        case MENUITEM_FOLLOWERS:
+            previousOption = gTasks[taskId].tFollowersOff;
+            gTasks[taskId].tFollowersOff = Followers_ProcessInput(gTasks[taskId].tFollowersOff);
+
+            if (previousOption != gTasks[taskId].tFollowersOff)
+                Followers_DrawChoices(gTasks[taskId].tFollowersOff);
+            break;
+        case MENUITEM_LEVELCAP:
+            previousOption = gTasks[taskId].tLevelCapsOff;
+            // Same two-way ON/OFF toggle as FOLLOWERS.
+            gTasks[taskId].tLevelCapsOff = Followers_ProcessInput(gTasks[taskId].tLevelCapsOff);
+
+            if (previousOption != gTasks[taskId].tLevelCapsOff)
+                LevelCap_DrawChoices(gTasks[taskId].tLevelCapsOff);
+            break;
         case MENUITEM_AUTOSPRINT:
             previousOption = gTasks[taskId].tAutoSprint;
             gTasks[taskId].tAutoSprint = AutoSprint_ProcessInput(gTasks[taskId].tAutoSprint);
@@ -470,7 +507,8 @@ static void Task_OptionMenuSave(u8 taskId)
 {
     gSaveBlock2Ptr->optionsTextSpeed = gTasks[taskId].tTextSpeed;
     gSaveBlock2Ptr->optionsBattleSceneOff = gTasks[taskId].tBattleSceneOff;
-    gSaveBlock2Ptr->optionsBattleStyle = gTasks[taskId].tBattleStyle;
+    gSaveBlock2Ptr->optionsBattleStyleSemi = (gTasks[taskId].tBattleStyle == OPTIONS_BATTLE_STYLE_SEMI);
+    gSaveBlock2Ptr->optionsBattleStyle = (gTasks[taskId].tBattleStyle == OPTIONS_BATTLE_STYLE_SET);
     gSaveBlock2Ptr->optionsSound = gTasks[taskId].tSound;
     gSaveBlock2Ptr->optionsButtonMode = gTasks[taskId].tButtonMode;
     gSaveBlock2Ptr->optionsWindowFrameType = gTasks[taskId].tWindowFrameType;
@@ -479,6 +517,14 @@ static void Task_OptionMenuSave(u8 taskId)
 #endif
     gSaveBlock2Ptr->optionsFastForward = FastForward_MenuToSave(gTasks[taskId].tFastForward);
     gSaveBlock2Ptr->optionsAutoSprint = gTasks[taskId].tAutoSprint;
+    if (gTasks[taskId].tFollowersOff)
+        FlagSet(FLAG_WOT_FOLLOWERS_OFF);
+    else
+        FlagClear(FLAG_WOT_FOLLOWERS_OFF);
+    if (gTasks[taskId].tLevelCapsOff)
+        FlagSet(FLAG_WOT_LEVEL_CAPS_OFF);
+    else
+        FlagClear(FLAG_WOT_LEVEL_CAPS_OFF);
 
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0, 16, RGB_BLACK);
     gTasks[taskId].func = Task_OptionMenuFadeOut;
@@ -524,24 +570,26 @@ static void DrawOptionMenuChoice(const u8 *text, u8 x, u8 y, u8 style)
     AddTextPrinterParameterized(WIN_OPTIONS, FONT_NORMAL, dst, x, y + 1, TEXT_SKIP_DRAW, NULL);
 }
 
+// SLOW, MID, FAST or INSTANT (the whole page at once). Four words don't fit
+// the row, so it shows the one chosen, like FRAME, and left/right step through.
+static const u8 *const sTextSpeedNames[] =
+{
+    [OPTIONS_TEXT_SPEED_SLOW]    = gText_TextSpeedSlow,
+    [OPTIONS_TEXT_SPEED_MID]     = gText_TextSpeedMid,
+    [OPTIONS_TEXT_SPEED_FAST]    = gText_TextSpeedFast,
+    [OPTIONS_TEXT_SPEED_INSTANT] = gText_TextSpeedInstant,
+};
+
 static u8 TextSpeed_ProcessInput(u8 selection)
 {
     if (JOY_NEW(DPAD_RIGHT))
     {
-        if (selection <= 1)
-            selection++;
-        else
-            selection = 0;
-
+        selection = (selection < OPTIONS_TEXT_SPEED_INSTANT) ? selection + 1 : 0;
         sArrowPressed = TRUE;
     }
     if (JOY_NEW(DPAD_LEFT))
     {
-        if (selection != 0)
-            selection--;
-        else
-            selection = 2;
-
+        selection = (selection > 0) ? selection - 1 : OPTIONS_TEXT_SPEED_INSTANT;
         sArrowPressed = TRUE;
     }
     return selection;
@@ -549,25 +597,12 @@ static u8 TextSpeed_ProcessInput(u8 selection)
 
 static void TextSpeed_DrawChoices(u8 selection)
 {
-    u8 styles[3];
-    s32 widthSlow, widthMid, widthFast, xMid;
+    const u8 *name = sTextSpeedNames[min(selection, (u8)OPTIONS_TEXT_SPEED_INSTANT)];
 
-    styles[0] = 0;
-    styles[1] = 0;
-    styles[2] = 0;
-    styles[selection] = 1;
-
-    DrawOptionMenuChoice(gText_TextSpeedSlow, 104, YPOS_TEXTSPEED, styles[0]);
-
-    widthSlow = GetStringWidth(FONT_NORMAL, gText_TextSpeedSlow, 0);
-    widthMid = GetStringWidth(FONT_NORMAL, gText_TextSpeedMid, 0);
-    widthFast = GetStringWidth(FONT_NORMAL, gText_TextSpeedFast, 0);
-
-    widthMid -= 94;
-    xMid = (widthSlow - widthMid - widthFast) / 2 + 104;
-    DrawOptionMenuChoice(gText_TextSpeedMid, xMid, YPOS_TEXTSPEED, styles[1]);
-
-    DrawOptionMenuChoice(gText_TextSpeedFast, GetStringRightAlignXOffset(FONT_NORMAL, gText_TextSpeedFast, 198), YPOS_TEXTSPEED, styles[2]);
+    // The word changes length, so the old one is wiped first.
+    if (YPOS_TEXTSPEED < VISIBLE_ROWS * 16)
+        FillWindowPixelRect(WIN_OPTIONS, PIXEL_FILL(1), 104, YPOS_TEXTSPEED, 198 - 104, 16);
+    DrawOptionMenuChoice(name, (104 + 198 - GetStringWidth(FONT_NORMAL, name, 0)) / 2, YPOS_TEXTSPEED, 1);
 }
 
 // Redraw every row of the window. Called when the window moves; the per-row
@@ -585,6 +620,8 @@ static void RedrawVisibleRows(u8 taskId)
 #if USE_NPC_PORTRAITS
     Portraits_DrawChoices(gTasks[taskId].tPortraitsOff);
 #endif
+    Followers_DrawChoices(gTasks[taskId].tFollowersOff);
+    LevelCap_DrawChoices(gTasks[taskId].tLevelCapsOff);
     AutoSprint_DrawChoices(gTasks[taskId].tAutoSprint);
     FastForward_DrawChoices(gTasks[taskId].tFastForward);
     CopyWindowToVram(WIN_OPTIONS, COPYWIN_GFX);
@@ -672,6 +709,42 @@ static void FastForward_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_FastForward3x, 198 - width3x, YPOS_FASTFORWARD, styles[2]);
 }
 
+// ON or OFF. Kept in a flag, FLAG_WOT_FOLLOWERS_OFF (the expansion's
+// B_FLAG_FOLLOWERS_DISABLED), as "off" so every existing save reads ON. The
+// follower appears or goes when the field reloads on the way out of here.
+// The team pose (L) doesn't use the follower and works either way.
+static u8 Followers_ProcessInput(u8 selection)
+{
+    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    {
+        selection ^= 1;
+        sArrowPressed = TRUE;
+    }
+
+    return selection;
+}
+
+static void Followers_DrawChoices(u8 selection)
+{
+    u8 styles[2] = {0};
+
+    styles[selection] = 1;
+    DrawOptionMenuChoice(gText_FollowersOn, 104, YPOS_FOLLOWERS, styles[0]);
+    DrawOptionMenuChoice(gText_FollowersOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_FollowersOff, 198), YPOS_FOLLOWERS, styles[1]);
+}
+
+// ON or OFF. Kept in FLAG_WOT_LEVEL_CAPS_OFF, stored as "off" so every save
+// starts with caps on. OFF lifts the cap everywhere it applies: battle EXP,
+// candies and the Day Care (src/caps.c), and the start menu stops showing it.
+static void LevelCap_DrawChoices(u8 selection)
+{
+    u8 styles[2] = {0};
+
+    styles[selection] = 1;
+    DrawOptionMenuChoice(gText_LevelCapOn, 104, YPOS_LEVELCAP, styles[0]);
+    DrawOptionMenuChoice(gText_LevelCapOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_LevelCapOff, 198), YPOS_LEVELCAP, styles[1]);
+}
+
 // TOGGLE or HOLD B; the running itself is in field_player_avatar.c.
 static u8 AutoSprint_ProcessInput(u8 selection)
 {
@@ -743,27 +816,38 @@ static void BattleScene_DrawChoices(u8 selection)
     DrawOptionMenuChoice(gText_BattleSceneOff, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleSceneOff, 198), YPOS_BATTLESCENE, styles[1]);
 }
 
+// SHIFT, SEMI and SET, left to right; SEMI sits between the two it mixes.
+// The selection is the style value (OPTIONS_BATTLE_STYLE_*), not the column.
+static const u8 sBattleStyleColumns[] = {OPTIONS_BATTLE_STYLE_SHIFT, OPTIONS_BATTLE_STYLE_SEMI, OPTIONS_BATTLE_STYLE_SET};
+
 static u8 BattleStyle_ProcessInput(u8 selection)
 {
-    if (JOY_NEW(DPAD_LEFT | DPAD_RIGHT))
+    u32 column;
+
+    for (column = 0; column < ARRAY_COUNT(sBattleStyleColumns) - 1 && sBattleStyleColumns[column] != selection; column++)
+        ;
+    if (JOY_NEW(DPAD_RIGHT))
     {
-        selection ^= 1;
+        column = (column + 1) % ARRAY_COUNT(sBattleStyleColumns);
         sArrowPressed = TRUE;
     }
-
-    return selection;
+    if (JOY_NEW(DPAD_LEFT))
+    {
+        column = (column + ARRAY_COUNT(sBattleStyleColumns) - 1) % ARRAY_COUNT(sBattleStyleColumns);
+        sArrowPressed = TRUE;
+    }
+    return sBattleStyleColumns[column];
 }
 
 static void BattleStyle_DrawChoices(u8 selection)
 {
-    u8 styles[2];
+    s32 widthShift = GetStringWidth(FONT_NORMAL, gText_BattleStyleShift, 0);
+    s32 widthSemi = GetStringWidth(FONT_NORMAL, gText_BattleStyleSemi, 0);
+    s32 widthSet = GetStringWidth(FONT_NORMAL, gText_BattleStyleSet, 0);
 
-    styles[0] = 0;
-    styles[1] = 0;
-    styles[selection] = 1;
-
-    DrawOptionMenuChoice(gText_BattleStyleShift, 104, YPOS_BATTLESTYLE, styles[0]);
-    DrawOptionMenuChoice(gText_BattleStyleSet, GetStringRightAlignXOffset(FONT_NORMAL, gText_BattleStyleSet, 198), YPOS_BATTLESTYLE, styles[1]);
+    DrawOptionMenuChoice(gText_BattleStyleShift, 104, YPOS_BATTLESTYLE, selection == OPTIONS_BATTLE_STYLE_SHIFT);
+    DrawOptionMenuChoice(gText_BattleStyleSemi, (104 + widthShift + 198 - widthSet - widthSemi) / 2, YPOS_BATTLESTYLE, selection == OPTIONS_BATTLE_STYLE_SEMI);
+    DrawOptionMenuChoice(gText_BattleStyleSet, 198 - widthSet, YPOS_BATTLESTYLE, selection == OPTIONS_BATTLE_STYLE_SET);
 }
 
 static u8 Sound_ProcessInput(u8 selection)

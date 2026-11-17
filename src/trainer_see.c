@@ -1,4 +1,6 @@
 #include "global.h"
+#include "constants/songs.h"
+#include "sound.h"
 #include "battle_setup.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -1052,6 +1054,7 @@ u8 FldEff_ExclamationMarkIcon(void)
     {
         SetIconSpriteData(&gSprites[spriteId], FLDEFF_EXCLAMATION_MARK_ICON, 0);
         UpdateSpritePaletteByTemplate(&sSpriteTemplate_ExclamationQuestionMark, &gSprites[spriteId]);
+        PlaySE(SE_PIN); // WoT: an exclamation always makes its sound
     }
 
     return 0;
@@ -1066,7 +1069,12 @@ u8 FldEff_QuestionMarkIcon(void)
         u8 emotion = gFieldEffectArguments[7];
         spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Emote, 0, 0, 0x52);
         if (spriteId == MAX_SPRITES)
+        {
+            // WoT: no sprite means no callback to end the effect, and
+            // waitfieldeffect FLDEFF_EMOTE would wait forever.
+            FieldEffectActiveListRemove(FLDEFF_EMOTE);
             return 0;
+        }
         SetIconSpriteData(&gSprites[spriteId], FLDEFF_EMOTE, emotion); // Set animation based on emotion
         UpdateSpritePaletteByTemplate(&sSpriteTemplate_Emote, &gSprites[spriteId]);
         return 0;
@@ -1107,6 +1115,7 @@ u8 FldEff_DoubleExclMarkIcon(void)
 
         SetIconSpriteData(sprite, FLDEFF_DOUBLE_EXCL_MARK_ICON, 2);
         UpdateSpritePaletteByTemplate(&sSpriteTemplate_ExclamationQuestionMark, sprite);
+        PlaySE(SE_PIN); // WoT: an exclamation always makes its sound
     }
 
     return 0;

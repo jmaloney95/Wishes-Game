@@ -374,7 +374,7 @@ static void Task_BossIntro(u8 taskId)
         // slides: BI_STATE_EXIT waits on its x to leave the screen, and the
         // flash and the fade mask both address its palette, so removing it
         // would strand the exit and unbalance the tint.
-        gSprites[tSprPort].invisible = WotPortraitsHidden();
+        gSprites[tSprPort].invisible = WotPortraitHidden(boss->portraitId);
         BeginNormalPaletteFade(BossIntro_FadeMask(), 0, 0, 10, boss->tintColor);
         tVelBanner = 64;
         tVelPort = 26;

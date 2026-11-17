@@ -1743,6 +1743,35 @@ const struct SpriteTemplate gPrecipiceBladesPlumeTemplate =
     .callback = SpriteCB_AnimSpriteOnSelectedMonPos
 };
 
+// Caldera Crash (Wishes of Tomorrow): a magma geyser that rises from under the battler and falls back
+static const union AnimCmd sAnim_CalderaCrashMagma[] =
+{
+    ANIMCMD_FRAME(0, 3),
+    ANIMCMD_FRAME(32, 3),
+    ANIMCMD_FRAME(64, 3),
+    ANIMCMD_FRAME(96, 5),
+    ANIMCMD_FRAME(128, 6),
+    ANIMCMD_FRAME(160, 6),
+    ANIMCMD_FRAME(192, 6),
+    ANIMCMD_FRAME(224, 6),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_CalderaCrashMagma[] =
+{
+    sAnim_CalderaCrashMagma,
+};
+
+// arg 0: x offset, arg 1: y offset, arg 2: battler
+const struct SpriteTemplate gCalderaCrashMagmaTemplate =
+{
+    .tileTag = ANIM_TAG_CALDERA_MAGMA,
+    .paletteTag = ANIM_TAG_CALDERA_MAGMA,
+    .oam = &gOamData_AffineOff_ObjNormal_32x64,
+    .anims = sAnims_CalderaCrashMagma,
+    .callback = SpriteCB_AnimSpriteOnSelectedMonPos
+};
+
 // Dragon Ascent
 static const union AffineAnimCmd sAffineAnimCmd_Drake[] =
 {

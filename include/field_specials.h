@@ -38,5 +38,12 @@ bool32 CheckObjectAtXY(u32, u32);
 bool32 CheckPartyHasSpecies(u32);
 bool8 CutMoveRuinValleyCheck(void);
 void CutMoveOpenDottedHoleDoor(void);
+void StartRiftDistortion(void);
+void EndRiftDistortion(void);
+void StartRiftDistortionFull(void);
+void EaseOutRiftDistortion(void);
+void WotPrototypeLab_RollDeoxysShiny(void);
+void WotPrototypeLab_SetDeoxysShiny(void);
+void WotDistortionWorld_StarterStone(void);
 
 #endif // GUARD_FIELD_SPECIALS_H

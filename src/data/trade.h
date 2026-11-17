@@ -1211,7 +1211,25 @@ static const struct InGameTrade sIngameTrades[] =
         .otGender = MALE,
         .sheen = 10,
         .requestedSpecies = SPECIES_PONYTA
-    }
+    },
+    // Victor in the Frostwood bar. Personality 0x67: male, Adamant, not shiny
+    // with this OT ID.
+    [INGAME_TRADE_VICTOR_MUDKIP] =
+    {
+        .nickname = _("WINGMAN"),
+        .species = SPECIES_MUDKIP,
+        .ivs = {20, 24, 20, 20, 16, 20},
+        .abilityNum = 0,
+        .otId = 52809,
+        .conditions = {5, 5, 5, 5, 5},
+        .personality = 0x67,
+        .heldItem = ITEM_NONE,
+        .mailNum = 255,
+        .otName = _("VICTOR"),
+        .otGender = MALE,
+        .sheen = 10,
+        .requestedSpecies = SPECIES_BERGMITE
+    },
 };
 
 static const u16 sIngameTradeMail[][MAIL_WORDS_COUNT + 1] =

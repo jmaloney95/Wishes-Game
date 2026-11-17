@@ -8,6 +8,7 @@ DistortionWorld_5_MapScripts::
 @ the Rift Heart ball behind him. setobjectxyperm keeps that position on
 @ every later visit.
 DistortionWorld_5_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
 	clearflag FLAG_DW_INVERTED
 	clearflag FLAG_DW_INVERT_PENDING
 	goto_if_unset FLAG_BADGE05_GET, DistortionWorld_5_OnTransition_End
@@ -53,8 +54,16 @@ DistortionWorld_5_EventScript_Leader::
 	applymovement LOCALID_DW5_LEADER, DistortionWorld_5_Movement_LeaderStepAside
 	waitmovement 0
 	setobjectxyperm LOCALID_DW5_LEADER, 25, 2
+	@ The bottom of the rift: INTO THE RIFT is done, and His Life's Work
+	@ moves on to the lab (its log text flips on FLAG_BADGE05_GET).
+	completequest QUEST_INTO_THE_RIFT
+	call_if_quest_active QUEST_LIFES_WORK, DistortionWorld_5_EventScript_LifesWorkUpdated
 	release
 	end
+
+DistortionWorld_5_EventScript_LifesWorkUpdated::
+	questtoast QUEST_TOAST_UPDATE, QUEST_LIFES_WORK
+	return
 
 DistortionWorld_5_Movement_LeaderStepAside:
 	walk_up

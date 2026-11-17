@@ -7,7 +7,37 @@ MunenTunnel_MapScripts::
 MunenTunnel_OnTransition::
 	setrespawn HEAL_LOCATION_NEW_MAP_INN
 	setescapewarp MAP_NEW_MAP, 10, 0, 0
+	call MunenTunnel_EventScript_SetNorthwindGate
+	call Common_EventScript_WotPostGameMutridsGone
 	end
+
+@ Northwind Cavern (the mouth at 35,27) stays sealed by a wall of wind until
+@ the player holds both the Surf (05) and Fly (06) badges -- late game, so
+@ they know what Shadow Pokemon are by the time they meet Suicune. The
+@ trigger on the mouth runs while VAR_TEMP_1 is 0; setting it to 1 disarms
+@ the trigger and the warp under it fires as normal. Coord events run before
+@ warps on the same tile, so the trigger always wins while it is armed.
+MunenTunnel_EventScript_SetNorthwindGate::
+	goto_if_unset FLAG_BADGE05_GET, MunenTunnel_EventScript_NorthwindGateShut
+	goto_if_unset FLAG_BADGE06_GET, MunenTunnel_EventScript_NorthwindGateShut
+	setvar VAR_TEMP_1, 1
+MunenTunnel_EventScript_NorthwindGateShut::
+	return
+
+MunenTunnel_EventScript_NorthwindSealed::
+	lockall
+	playse SE_M_ICY_WIND
+	waitse
+	msgbox MunenTunnel_Text_NorthwindSealed, MSGBOX_DEFAULT
+	closemessage
+	applymovement OBJ_EVENT_ID_PLAYER, MunenTunnel_Movement_NorthwindPushBack
+	waitmovement 0
+	releaseall
+	end
+
+MunenTunnel_Movement_NorthwindPushBack:
+	walk_down
+	step_end
 
 @ ============================================================================
 @  MUNEN TUNNEL -- old burial tunnel of the mountain dead, desecrated by the
@@ -390,3 +420,12 @@ MunenTunnel_Text_YifferStrength:
 MunenTunnel_Text_YifferAfter:
 	.string "BK KICKBOXING. First lesson's on me.\n"
 	.string "Hiii-YAAA!$"
+
+@ Northwind Cavern is sealed until Surf + Fly.
+MunenTunnel_Text_NorthwindSealed:
+	.string "A freezing wind howls out of the\n"
+	.string "opening and shoves you back.\p"
+	.string "Something deep inside is holding\n"
+	.string "the cold in place.\p"
+	.string "There's no pushing through it.\n"
+	.string "Not yet.$"

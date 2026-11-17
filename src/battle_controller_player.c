@@ -48,6 +48,7 @@
 #include "pokedex.h"
 #include "test/battle.h"
 #include "test/test_runner_battle.h"
+#include "wot_mega_dimension.h"
 
 static void PlayerHandleLoadMonSprite(enum BattlerId battler);
 static void PlayerHandleDrawTrainerPic(enum BattlerId battler);
@@ -84,6 +85,7 @@ static void TryMoveSelectionDisplayMoveDescription(enum BattlerId battler);
 static void MoveSelectionDisplayMoveDescription(enum BattlerId battler);
 static void WaitForMonSelection(enum BattlerId battler);
 static void CompleteWhenChoseItem(enum BattlerId battler);
+static void WotThrowQuickBall(enum BattlerId battler);
 static void Task_LaunchLvlUpAnim(u8);
 static void Task_PrepareToGiveExpWithExpBar(u8);
 static void Task_SetControllerToWaitForString(u8);
@@ -152,6 +154,30 @@ static void (*const sPlayerBufferCommands[CONTROLLER_CMDS_COUNT])(enum BattlerId
     [CONTROLLER_DEBUGMENU]                = PlayerHandleBattleDebug,
     [CONTROLLER_TERMINATOR_NOP]           = BtlController_TerminatorNop
 };
+
+// WoT: a Mega Dimension partner's Pokemon are picked by the player.
+// The partner controller hands over just the choosing commands; everything
+// else (its trainer sprite, slides, send-outs) stays its own.
+bool32 TryRunPlayerCommandForPartner(enum BattlerId battler)
+{
+    u32 cmd = gBattleResources->bufferA[battler][0];
+
+    if (!WotMegaDim_IsControlledPartner(battler))
+        return FALSE;
+    switch (cmd)
+    {
+    case CONTROLLER_CHOOSEACTION:
+    case CONTROLLER_CHOOSEMOVE:
+    case CONTROLLER_CHOOSEPOKEMON:
+    case CONTROLLER_ENDBOUNCE:
+    case CONTROLLER_LINKSTANDBYMSG:
+    case CONTROLLER_RESETACTIONMOVESELECTION:
+        sPlayerBufferCommands[cmd](battler);
+        return TRUE;
+    default:
+        return FALSE;
+    }
+}
 
 void SetControllerToPlayer(enum BattlerId battler)
 {
@@ -287,14 +313,11 @@ static void HandleInputChooseAction(enum BattlerId battler)
                 gBattleStruct->ballSwapped = FALSE;
                 ArrowsChangeColorLastBallCycle(FALSE);
             }
-            else if (!JOY_HELD(B_LAST_USED_BALL_BUTTON) && CanThrowLastUsedBall())
+            else if (!JOY_HELD(B_LAST_USED_BALL_BUTTON) && CanThrowLastUsedBall() && !WotMegaDim_IsControlledPartner(battler))
             {
                 gBattleStruct->ackBallUseBtn = FALSE;
-                PlaySE(SE_SELECT);
                 ArrowsChangeColorLastBallCycle(FALSE);
-                TryHideLastUsedBall();
-                BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_THROW_BALL, 0);
-                BtlController_Complete(battler);
+                WotThrowQuickBall(battler);
             }
             return;
         }
@@ -302,6 +325,13 @@ static void HandleInputChooseAction(enum BattlerId battler)
 
     if (JOY_NEW(A_BUTTON))
     {
+        // The partner's Pokemon only fight or switch: the bag and running
+        // are the player's own Pokemon's to choose.
+        if (WotMegaDim_IsControlledPartner(battler) && (gActionSelectionCursor[battler] & 1))
+        {
+            PlaySE(SE_FAILURE);
+            return;
+        }
         PlaySE(SE_SELECT);
         TryHideLastUsedBall();
 
@@ -367,7 +397,7 @@ static void HandleInputChooseAction(enum BattlerId battler)
         if (IsDoubleBattle()
          && GetBattlerPosition(battler) == B_POSITION_PLAYER_RIGHT
          && !(gAbsentBattlerFlags & (1u << GetBattlerAtPosition(B_POSITION_PLAYER_LEFT)))
-         && !(gBattleTypeFlags & BATTLE_TYPE_MULTI))
+         && (!(gBattleTypeFlags & BATTLE_TYPE_MULTI) || WotMegaDim_IsControlledPartner(battler)))
         {
             // Return item to bag if partner had selected one (if consumable).
             if (gBattleResources->bufferA[battler][1] == B_ACTION_USE_ITEM && GetItemConsumability(itemId))
@@ -399,13 +429,78 @@ static void HandleInputChooseAction(enum BattlerId battler)
         BtlController_Complete(battler);
     }
     else if (B_LAST_USED_BALL == TRUE && B_LAST_USED_BALL_CYCLE == FALSE
-             && JOY_NEW(B_LAST_USED_BALL_BUTTON) && CanThrowLastUsedBall())
+             && JOY_NEW(B_LAST_USED_BALL_BUTTON) && CanThrowLastUsedBall() && !WotMegaDim_IsControlledPartner(battler))
+    {
+        WotThrowQuickBall(battler);
+    }
+}
+
+// WoT Shadow system: the R quick-throw's own target cursor, for when two foes
+// could take the ball (both Shadows in a trainer battle, or a wild double).
+// Mirrors the bag's WotHandleInputChooseBallTarget; B goes back to the action
+// menu with nothing used, since the quick-throw takes its ball at throw time.
+static void WotHandleInputChooseQuickBallTarget(enum BattlerId battler)
+{
+    enum BattlerId i;
+
+    DoBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX, 15, 1);
+    for (i = 0; i < gBattlersCount; i++)
+    {
+        if (i != gMultiUsePlayerCursor)
+            EndBounceEffect(i, BOUNCE_HEALTHBOX);
+    }
+
+    if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        TryHideLastUsedBall();
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
+        EndBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX);
+        gBattleStruct->wotBallTarget = gMultiUsePlayerCursor + 1;
         BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_THROW_BALL, 0);
         BtlController_Complete(battler);
     }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
+        EndBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX);
+        TryRestoreLastUsedBall();
+        gBattlerControllerFuncs[battler] = HandleInputChooseAction;
+    }
+    else if (JOY_NEW(DPAD_ANY))
+    {
+        enum BattlerId other = gMultiUsePlayerCursor ^ BIT_FLANK;
+
+        if (WotIsQuickBallTarget(other))
+        {
+            PlaySE(SE_SELECT);
+            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
+            gMultiUsePlayerCursor = other;
+            gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
+        }
+    }
+}
+
+// WoT Shadow system: throw the R quick-throw ball. With one foe it can hit,
+// it goes straight there (Cmd_handleballthrow aims a trainer-battle ball at
+// the Shadow); with two, the player picks first.
+static void WotThrowQuickBall(enum BattlerId battler)
+{
+    enum BattlerId left = GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT);
+    enum BattlerId right = GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT);
+
+    PlaySE(SE_SELECT);
+    TryHideLastUsedBall();
+    gBattleStruct->wotBallTarget = 0;
+    if (WotIsQuickBallTarget(left) && WotIsQuickBallTarget(right))
+    {
+        gMultiUsePlayerCursor = left;
+        gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_ShowAsMoveTarget;
+        gBattlerControllerFuncs[battler] = WotHandleInputChooseQuickBallTarget;
+        return;
+    }
+    BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_THROW_BALL, 0);
+    BtlController_Complete(battler);
 }
 
 void HandleInputChooseTarget(enum BattlerId battler)

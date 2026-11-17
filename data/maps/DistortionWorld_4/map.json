@@ -28,7 +28,8 @@
       "flag": "FLAG_ITEM_DISTORTION_WORLD_4_RIFT_CORE"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_BRAWLY",
+      "local_id": "LOCALID_DISTORTION_WORLD_4_GUARD",
+      "graphics_id": "OBJ_EVENT_GFX_HEX_MANIAC",
       "x": 27,
       "y": 13,
       "elevation": 0,
@@ -37,7 +38,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
-      "script": "DistortionWorld_4_EventScript_Oni",
+      "script": "DistortionWorld_4_EventScript_Guard",
       "flag": "0"
     },
     {
@@ -116,7 +117,7 @@
     {
       "type": "trigger",
       "x": 42,
-      "y": 34,
+      "y": 35,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "0",
@@ -125,7 +126,7 @@
     {
       "type": "trigger",
       "x": 42,
-      "y": 33,
+      "y": 34,
       "elevation": 0,
       "var": "VAR_TEMP_0",
       "var_value": "0",

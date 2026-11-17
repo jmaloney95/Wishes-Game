@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_nuzlocke.h"
 #include "malloc.h"
 #include "bg.h"
 #include "data.h"
@@ -110,6 +111,7 @@ enum {
     MSG_ITEM_IS_HELD,
     MSG_CHANGED_TO_ITEM,
     MSG_CANT_STORE_MAIL,
+    MSG_WOT_GRAVE_SEALED,
 };
 
 // IDs for how to resolve variables in the above messages
@@ -481,6 +483,7 @@ struct PokemonStorageSystemData
     u8 cursorPalNums[2];
     const u16 *displayMonPalette;
     const struct WotShadowPic *displayMonShadow;
+    const u16 *displayMonShadowPal; // the art's shiny palette for a shiny Shadow
     u32 displayMonPersonality;
     u16 displayMonSpecies;
     u16 displayMonItemId;
@@ -1080,6 +1083,7 @@ static const struct StorageMessage sMessages[] =
     [MSG_ITEM_IS_HELD]         = {COMPOUND_STRING("{DYNAMIC 0} is now held."),   MSG_VAR_ITEM_NAME},
     [MSG_CHANGED_TO_ITEM]      = {COMPOUND_STRING("Changed to {DYNAMIC 0}."),    MSG_VAR_ITEM_NAME},
     [MSG_CANT_STORE_MAIL]      = {COMPOUND_STRING("MAIL can't be stored!"),      MSG_VAR_NONE},
+    [MSG_WOT_GRAVE_SEALED]     = {COMPOUND_STRING("The fallen rest here."),      MSG_VAR_NONE},
 };
 
 static const struct WindowTemplate sYesNoWindowTemplate =
@@ -2245,14 +2249,48 @@ enum {
     MSTATE_MULTIMOVE_RUN_MOVED,
     MSTATE_SCROLL_BOX_ITEM,
     MSTATE_WAIT_ITEM_ANIM,
+    MSTATE_ERROR_WOT_GRAVE,
 };
+
+// WoT Nuzlocke: the GRAVES box is sealed. Nothing leaves it and nothing new
+// goes in; viewing a summary, releasing and taking held items still work.
+static bool8 WotGraveBoxSealed(void)
+{
+    return sCursorArea == CURSOR_AREA_IN_BOX && WotNuzlocke_IsGraveBox(StorageGetCurrentBox());
+}
+
+static bool8 WotGraveBoxRefuses(u8 input)
+{
+    if (!WotGraveBoxSealed())
+        return FALSE;
+    switch (input)
+    {
+    case INPUT_MOVE_MON:
+    case INPUT_SHIFT_MON:
+    case INPUT_WITHDRAW:
+    case INPUT_PLACE_MON:
+    case INPUT_MULTIMOVE_START:
+    case INPUT_MULTIMOVE_SINGLE:
+    case INPUT_MULTIMOVE_PLACE_MONS:
+        return TRUE;
+    }
+    return FALSE;
+}
 
 static void Task_PokeStorageMain(u8 taskId)
 {
     switch (sStorage->state)
     {
     case MSTATE_HANDLE_INPUT:
-        switch (HandleInput())
+    {
+        u8 input = HandleInput();
+
+        if (WotGraveBoxRefuses(input))
+        {
+            sStorage->state = MSTATE_ERROR_WOT_GRAVE;
+            break;
+        }
+        switch (input)
         {
         case INPUT_MOVE_CURSOR:
             PlaySE(SE_SELECT);
@@ -2423,6 +2461,12 @@ static void Task_PokeStorageMain(u8 taskId)
             break;
         }
         break;
+    }
+    case MSTATE_ERROR_WOT_GRAVE:
+        PlaySE(SE_FAILURE);
+        PrintMessage(MSG_WOT_GRAVE_SEALED);
+        sStorage->state = MSTATE_WAIT_ERROR_MSG;
+        break;
     case MSTATE_MOVE_CURSOR:
         if (!UpdateCursorPos())
         {
@@ -2589,7 +2633,11 @@ static void Task_OnSelectedMon(u8 taskId)
             SetPokeStorageTask(Task_PokeStorageMain);
             break;
         case MENU_MOVE:
-            if (IsRemovingLastPartyMon())
+            if (WotGraveBoxSealed())
+            {
+                sStorage->state = 7;
+            }
+            else if (IsRemovingLastPartyMon())
             {
                 sStorage->state = 3;
             }
@@ -2601,12 +2649,21 @@ static void Task_OnSelectedMon(u8 taskId)
             }
             break;
         case MENU_PLACE:
+            if (WotGraveBoxSealed())
+            {
+                sStorage->state = 7;
+                break;
+            }
             PlaySE(SE_SELECT);
             ClearBottomWindow();
             SetPokeStorageTask(Task_PlaceMon);
             break;
         case MENU_SHIFT:
-            if (!CanShiftMon())
+            if (WotGraveBoxSealed())
+            {
+                sStorage->state = 7;
+            }
+            else if (!CanShiftMon())
             {
                 sStorage->state = 3;
             }
@@ -2618,6 +2675,11 @@ static void Task_OnSelectedMon(u8 taskId)
             }
             break;
         case MENU_WITHDRAW:
+            if (WotGraveBoxSealed())
+            {
+                sStorage->state = 7;
+                break;
+            }
             PlaySE(SE_SELECT);
             ClearBottomWindow();
             SetPokeStorageTask(Task_WithdrawMon);
@@ -2722,6 +2784,11 @@ static void Task_OnSelectedMon(u8 taskId)
     case 4:
         PlaySE(SE_FAILURE);
         PrintMessage(MSG_PLEASE_REMOVE_MAIL);
+        sStorage->state = 6;
+        break;
+    case 7:
+        PlaySE(SE_FAILURE);
+        PrintMessage(MSG_WOT_GRAVE_SEALED);
         sStorage->state = 6;
         break;
     case 6:
@@ -2869,7 +2936,12 @@ static void Task_DepositMenu(u8 taskId)
             SetPokeStorageTask(Task_PokeStorageMain);
             break;
         default:
-            if (TryStorePartyMonInBox(boxId))
+            if (WotNuzlocke_IsGraveBox(boxId))
+            {
+                PrintMessage(MSG_WOT_GRAVE_SEALED);
+                sStorage->state = 4;
+            }
+            else if (TryStorePartyMonInBox(boxId))
             {
                 sDepositBoxId = boxId;
                 ClearBottomWindow();
@@ -4010,7 +4082,7 @@ static void LoadDisplayMonGfx(u16 species, u32 pid, bool32 isEgg)
         if (sStorage->displayMonShadow != NULL)
             CpuCopy32(sStorage->displayMonShadow->pic, sStorage->tileBuffer, MON_PIC_SIZE);
         CpuCopy32(sStorage->tileBuffer, sStorage->displayMonTilePtr, MON_PIC_SIZE);
-        LoadPalette(sStorage->displayMonShadow != NULL ? sStorage->displayMonShadow->pal
+        LoadPalette(sStorage->displayMonShadow != NULL ? sStorage->displayMonShadowPal
                                                        : sStorage->displayMonPalette,
                     sStorage->displayMonPalOffset, PLTT_SIZE_4BPP);
         sStorage->displayMonSprite->invisible = FALSE;
@@ -6964,11 +7036,15 @@ void SetMonFormPSS_ItemHold(struct BoxPokemon *boxMon)
 // clears MON_DATA_IS_SHADOW, so it returns to its ordinary art on its own.
 // Species with no entry in the art table fall through to the stock sprite.
 // Reads sStorage->displayMonSpecies/IsEgg, so call it after both are set.
-static const struct WotShadowPic *WotDisplayMonShadowArt(bool32 isShadow)
+static void WotSetDisplayMonShadowArt(bool32 isShadow, bool32 isShiny)
 {
+    sStorage->displayMonShadow = NULL;
+    sStorage->displayMonShadowPal = NULL;
     if (!isShadow || sStorage->displayMonIsEgg)
-        return NULL;
-    return WotFindShadowPic(sStorage->displayMonSpecies);
+        return;
+    sStorage->displayMonShadow = WotFindShadowPic(sStorage->displayMonSpecies);
+    if (sStorage->displayMonShadow != NULL)
+        sStorage->displayMonShadowPal = WotShadowPicPal(sStorage->displayMonShadow, isShiny);
 }
 
 static void SetDisplayMonData(void *pokemon, u8 mode)
@@ -7002,7 +7078,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             sStorage->displayMonPalette = GetMonFrontSpritePal(mon);
             gender = GetMonGender(mon);
             sStorage->displayMonItemId = GetMonData(mon, MON_DATA_HELD_ITEM);
-            sStorage->displayMonShadow = WotDisplayMonShadowArt(GetMonData(mon, MON_DATA_IS_SHADOW));
+            WotSetDisplayMonShadowArt(GetMonData(mon, MON_DATA_IS_SHADOW), GetMonData(mon, MON_DATA_IS_SHINY));
         }
     }
     else if (mode == MODE_BOX)
@@ -7028,7 +7104,7 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             sStorage->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonalityIsEgg(sStorage->displayMonSpecies, isShiny, sStorage->displayMonPersonality, sStorage->displayMonIsEgg);
             gender = GetGenderFromSpeciesAndPersonality(sStorage->displayMonSpecies, sStorage->displayMonPersonality);
             sStorage->displayMonItemId = GetBoxMonData(boxMon, MON_DATA_HELD_ITEM);
-            sStorage->displayMonShadow = WotDisplayMonShadowArt(GetBoxMonData(boxMon, MON_DATA_IS_SHADOW));
+            WotSetDisplayMonShadowArt(GetBoxMonData(boxMon, MON_DATA_IS_SHADOW), isShiny);
         }
     }
     else
@@ -10090,7 +10166,7 @@ void UpdateSpeciesSpritePSS(struct BoxPokemon *boxMon)
     sStorage->displayMonSpecies = species;
     sStorage->displayMonPalette = GetMonSpritePalFromSpeciesAndPersonalityIsEgg(species, isShiny, pid, isEgg);
     sStorage->displayMonIsEgg = isEgg;
-    sStorage->displayMonShadow = WotDisplayMonShadowArt(GetBoxMonData(boxMon, MON_DATA_IS_SHADOW));
+    WotSetDisplayMonShadowArt(GetBoxMonData(boxMon, MON_DATA_IS_SHADOW), isShiny);
     if (!sJustOpenedBag)
     {
         if (sRefreshDisplayMonGfx)

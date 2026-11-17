@@ -21,6 +21,8 @@ enum InGameTradeID
     INGAME_TRADE_ELECTRODE,
     INGAME_TRADE_TANGELA,
     INGAME_TRADE_SEEL,
+    // Wishes of Tomorrow
+    INGAME_TRADE_VICTOR_MUDKIP,
 };
 
 // Return values for CanTradeSelectedMon and CanSpinTradeMon

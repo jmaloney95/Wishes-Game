@@ -1667,6 +1667,37 @@ u32 IndexOfSpritePaletteTag(u16 tag)
     return 0xFF;
 }
 
+// WoT: how many sprite palette slots are still unclaimed, so a caller about
+// to load several (the team pose) can check before anything draws in the
+// wrong colours.
+u32 CountFreeSpritePalettes(void)
+{
+    u32 i, count = 0;
+    for (i = gReservedSpritePaletteCount; i < 16; i++)
+        if (sSpritePaletteTags[i] == TAG_NONE)
+            count++;
+
+    return count;
+}
+
+// WoT: would AllocSpriteTiles(tileCount) find a contiguous block right now?
+// Claims the block and releases it again at once, so nothing stays held.
+// (Never pass 0 to AllocSpriteTiles: that frees every unreserved tile.)
+bool32 CanAllocSpriteTiles(u16 tileCount)
+{
+    s16 start;
+    u32 i;
+
+    if (tileCount == 0)
+        return TRUE;
+    start = AllocSpriteTiles(tileCount);
+    if (start < 0)
+        return FALSE;
+    for (i = start; i < start + tileCount; i++)
+        FREE_SPRITE_TILE(i);
+    return TRUE;
+}
+
 u16 GetSpritePaletteTagByPaletteNum(u8 paletteNum)
 {
     return sSpritePaletteTags[paletteNum];

@@ -20,6 +20,8 @@ EventScript_TryDoNormalTrainerBattle::
 	goto EventScript_ShowTrainerIntroMsg
 
 EventScript_NoNormalTrainerBattle::
+	specialvar VAR_RESULT, WotRematch_CanOffer
+	goto_if_eq VAR_RESULT, TRUE, EventScript_WotOfferRematch
 	gotopostbattlescript
 
 EventScript_TryDoDoubleTrainerBattle::
@@ -42,7 +44,37 @@ EventScript_NotEnoughMonsForDoubleBattle::
 	end
 
 EventScript_NoDoubleTrainerBattle::
+	specialvar VAR_RESULT, WotRematch_CanOffer
+	goto_if_eq VAR_RESULT, FALSE, EventScript_WotNoRematch
+	special HasEnoughMonsForDoubleBattle
+	goto_if_ne VAR_RESULT, PLAYER_HAS_TWO_USABLE_MONS, EventScript_WotNoRematch
+	goto EventScript_WotOfferRematch
+
+@ WoT: a beaten trainer offers to battle again (src/wot_rematch.c decides who).
+@ The rematch never runs the trainer's beaten script: it ends right here.
+EventScript_WotOfferRematch::
+	special WotRematch_BufferName
+	msgbox EventScript_WotText_RematchOffer, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_WotRematchDeclined
+	closemessage
+	special PlayTrainerEncounterMusic
+	special SetTrainerFacingDirection
+	special ShowTrainerIntroSpeech
+	waitmessage
+	waitbuttonpress
+	special WotRematch_Arm
+	dotrainerbattle
+	releaseall
+	end
+
+EventScript_WotRematchDeclined::
+	closemessage
+EventScript_WotNoRematch::
 	gotopostbattlescript
+
+EventScript_WotText_RematchOffer:
+	.string "{STR_VAR_1} wants\n"
+	.string "a rematch! Battle again?$"
 
 EventScript_DoNoIntroTrainerBattle::
 	setflag FLAG_SAFE_FOLLOWER_MOVEMENT

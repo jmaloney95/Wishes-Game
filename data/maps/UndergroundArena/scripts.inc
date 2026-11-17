@@ -76,6 +76,7 @@ UndergroundArena_EventScript_Announcer::
 	lock
 	faceplayer
 	goto_if_set FLAG_WOT_ARENA_WON, UndergroundArena_EventScript_AnnouncerChamp
+	call UndergroundArena_EventScript_MaglevTutor
 	goto_if_set FLAG_WOT_ARENA_ENTERED, UndergroundArena_EventScript_AnnouncerWaiting
 	msgbox UndergroundArena_Text_AnnouncerOffer, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, UndergroundArena_EventScript_AnnouncerDecline
@@ -106,6 +107,10 @@ UndergroundArena_EventScript_AnnouncerChamp::
 	msgbox UndergroundArena_Text_AnnouncerChamp, MSGBOX_DEFAULT
 	release
 	end
+
+@ The announcer's maglev warning and Gravity tutor live in
+@ data/scripts/move_tutors.inc (UndergroundArena_EventScript_MaglevTutor):
+@ the teachable-learnset generator only scans that file's tutors.
 
 @ ============================================================================
 @  THE TOURNAMENT (ring trigger at 4,6)
@@ -328,6 +333,29 @@ UndergroundArena_Text_AnnouncerChamp::
 	.string "Ladies and gentlemen: the\n"
 	.string "champion is in the building.\p"
 	.string "He winks at you.$"
+
+UndergroundArena_Text_MaglevWarning::
+	.string "The title bout runs on the\n"
+	.string "MAGLEV FLOOR, rookie.\p"
+	.string "Every ELECTRIC and STEEL POKéMON\n"
+	.string "floats on it. GROUND moves miss.$"
+
+UndergroundArena_Text_GravityTeach::
+	.string "Want the old trick? GRAVITY\n"
+	.string "pulls them right back down.\p"
+	.string "I'll teach it to one of yours.$"
+
+UndergroundArena_Text_GravityWhichMon::
+	.string "Which POKéMON should learn\n"
+	.string "GRAVITY?$"
+
+UndergroundArena_Text_GravityDeclined::
+	.string "Suit yourself. The floor\n"
+	.string "doesn't care either way.$"
+
+UndergroundArena_Text_GravityTaught::
+	.string "Now they come down when you\n"
+	.string "call them!$"
 
 UndergroundArena_Text_RoundOne::
 	.string "ANNOUNCER: ROUND ONE!\p"

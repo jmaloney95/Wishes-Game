@@ -1,5 +1,50 @@
 NationalParkAct2_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, NationalParkAct2_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, NationalParkAct2_OnFrame
 	.byte 0
+
+@ Post-game: the goons are gone, the ash clears, and the walls
+@ they put up come down: the beaches, the north gate, the road south to
+@ Sennen and the west path to Walnut Woods (warps 5-8) open again. The
+@ post-game layout is this park's own Act 2 art with only the 119 blocks
+@ that are walkable in the Act 1 park opened, so the park keeps its look
+@ and its Act 2 wild Pokemon.
+NationalParkAct2_OnTransition:
+	call Common_EventScript_WotPostGameMutridsGone
+	goto_if_unset FLAG_SYS_GAME_CLEAR, NationalParkAct2_OnTransition_End
+	setweather WEATHER_NONE
+	setmaplayoutindex LAYOUT_NATIONAL_PARK_ACT2_POSTGAME
+NationalParkAct2_OnTransition_End:
+	end
+
+NationalParkAct2_OnFrame:
+	map_script_2 VAR_TEMP_5, 0, NationalParkAct2_EventScript_RiftQuestCheck
+	.2byte 0
+
+@ --------------------------------------------------------------------------
+@  Back from meeting Clarkson: the quest log has to say what comes next.
+@  Runs on every park load (VAR_TEMP_5 is cleared each load) but only acts
+@  once -- the INTO THE RIFT quest state is its own one-shot marker. The
+@  Distortion World's collapse warps straight here, and quest toasts queued
+@  before a warp are dropped, so the toasts have to fire from this side.
+@  His Life's Work is started here too if the Act 1 ending never ran.
+@ --------------------------------------------------------------------------
+NationalParkAct2_EventScript_RiftQuestCheck::
+	setvar VAR_TEMP_5, 1
+	goto_if_unset FLAG_ACT2_MET_CLARKSON_DISTORTION, NationalParkAct2_EventScript_RiftQuestEnd
+	goto_if_set FLAG_BADGE05_GET, NationalParkAct2_EventScript_RiftQuestEnd
+	questmenu QUEST_MENU_CHECK_UNLOCKED, QUEST_INTO_THE_RIFT
+	goto_if_eq VAR_RESULT, TRUE, NationalParkAct2_EventScript_RiftQuestEnd
+	startquest QUEST_INTO_THE_RIFT
+	goto_if_quest_complete QUEST_LIFES_WORK, NationalParkAct2_EventScript_RiftQuestEnd
+	goto_if_quest_active QUEST_LIFES_WORK, NationalParkAct2_EventScript_LifesWorkUpdated
+	startquest QUEST_LIFES_WORK
+	end
+
+NationalParkAct2_EventScript_LifesWorkUpdated::
+	questtoast QUEST_TOAST_UPDATE, QUEST_LIFES_WORK
+NationalParkAct2_EventScript_RiftQuestEnd::
+	end
 
 @ ============================================================================
 @  NATIONAL PARK -- ACT 2 (occupied)

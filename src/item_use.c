@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_nuzlocke.h"
 #include "item_use.h"
 #include "battle.h"
 #include "battle_anim.h"
@@ -1323,6 +1324,8 @@ static u32 GetBallThrowableState(void)
         return BALL_THROW_UNABLE_SEMI_INVULNERABLE;
     else if (FlagGet(B_FLAG_NO_CATCHING) || !IsAllowedToUseBag())
         return BALL_THROW_UNABLE_DISABLED_FLAG;
+    else if (!WotNuzlocke_CanCatch())
+        return BALL_THROW_UNABLE_NUZLOCKE;
 
     return BALL_THROW_ABLE;
 }
@@ -1370,6 +1373,9 @@ void ItemUseInBattle_PokeBall(u8 taskId)
             DisplayItemMessage(taskId, FONT_NORMAL, sText_CantThrowPokeBall_Disabled, CloseItemMessage);
         else
             DisplayItemMessageInBattlePyramid(taskId, sText_CantThrowPokeBall_Disabled, Task_CloseBattlePyramidBagMessage);
+        break;
+    case BALL_THROW_UNABLE_NUZLOCKE:
+        DisplayItemMessage(taskId, FONT_NORMAL, WotNuzlocke_CantCatchText(), CloseItemMessage);
         break;
     }
 }
@@ -1487,6 +1493,10 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
             failStr = sText_CantThrowPokeBall_Disabled;
             cannotUse = TRUE;
             break;
+        case BALL_THROW_UNABLE_NUZLOCKE:
+            failStr = WotNuzlocke_CantCatchText();
+            cannotUse = TRUE;
+            break;
         }
         break;
     case EFFECT_ITEM_INCREASE_ALL_STATS:
@@ -1552,6 +1562,24 @@ bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon)
     return cannotUse;
 }
 
+// WoT Shadow system: a ball thrown at a trainer's Shadow is a real snag
+// attempt, so it must be used up -- the Gen4+ rule that refunds balls in
+// trainer battles only fits throws the trainer blocks. The R quick-throw
+// (battle_interface.c) uses it too: a Shadow out is what lets it show in a
+// trainer battle.
+bool32 WotOpponentHasShadowOut(void)
+{
+    u32 battler;
+
+    for (battler = 0; battler < gBattlersCount; battler++)
+    {
+        if (!IsOnPlayerSide(battler) && IsBattlerAlive(battler)
+         && GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW))
+            return TRUE;
+    }
+    return FALSE;
+}
+
 void ItemUseInBattle_BagMenu(u8 taskId)
 {
     gPartyMenu.slotId = gBattleStruct->itemPartyIndex[gBattlerInMenuId] = gBattlerPartyIndexes[gBattlerInMenuId];
@@ -1565,7 +1593,7 @@ void ItemUseInBattle_BagMenu(u8 taskId)
     else
     {
         PlaySE(SE_SELECT);
-        if (!GetItemImportance(gSpecialVar_ItemId) && !(B_TRY_CATCH_TRAINER_BALL >= GEN_4 && (GetItemBattleUsage(gSpecialVar_ItemId) == EFFECT_ITEM_THROW_BALL) && (gBattleTypeFlags & BATTLE_TYPE_TRAINER)))
+        if (!GetItemImportance(gSpecialVar_ItemId) && !(B_TRY_CATCH_TRAINER_BALL >= GEN_4 && (GetItemBattleUsage(gSpecialVar_ItemId) == EFFECT_ITEM_THROW_BALL) && (gBattleTypeFlags & BATTLE_TYPE_TRAINER) && !WotOpponentHasShadowOut()))
             RemoveUsedItem();
         ScheduleBgCopyTilemapToVram(2);
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)

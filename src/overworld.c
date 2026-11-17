@@ -1,5 +1,7 @@
 #include "global.h"
+#include "wot_nuzlocke.h"
 #include "wot_shadow_log.h"
+#include "wot_mega_dimension.h"
 #include "overworld.h"
 #include "battle_pyramid.h"
 #include "battle_setup.h"
@@ -393,7 +395,9 @@ void DoWhiteOut(void)
     RunScriptImmediately(EventScript_WhiteOut);
     HealPlayerParty();
     Overworld_ResetStateAfterWhiteOut();
-    SetWarpDestinationToLastHealLocation();
+    // WoT: whiting out in the Mega Dimension puts the player back at its portal.
+    if (!WotMegaDim_TrySetWhiteoutWarp())
+        SetWarpDestinationToLastHealLocation();
     WarpIntoMap();
 }
 
@@ -907,6 +911,7 @@ void LoadMapFromCameraTransition(u8 mapGroup, u8 mapNum)
     ChooseAmbientCrySpecies();
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
+    WotMegaDim_UpdatePortalFlag(); // WoT: before ON_TRANSITION, so object spawns see it
     RunOnTransitionMapScript();
     InitMap();
     CopySecondaryTilesetToVramUsingHeap(gMapHeader.mapLayout);
@@ -982,6 +987,7 @@ static void LoadMapFromWarp(bool32 a1)
         FlagClear(FLAG_SYS_USE_FLASH);
     SetDefaultFlashLevel();
     Overworld_ClearSavedMusic();
+    WotMegaDim_UpdatePortalFlag(); // WoT: before ON_TRANSITION, so object spawns see it
     RunOnTransitionMapScript();
     UpdateLocationHistoryForRoamer();
     MoveAllRoamersToOtherLocationSets();
@@ -1036,6 +1042,10 @@ static struct InitialPlayerAvatarState *GetInitialPlayerAvatarState(void)
 
 static u8 GetAdjustedInitialTransitionFlags(struct InitialPlayerAvatarState *playerStruct, u16 metatileBehavior, enum MapType mapType)
 {
+    // WoT: in and out of the Mega Dimension the player always lands on foot,
+    // even on a water tile (the National Park portal stands on pond water).
+    if (WotMegaDim_TakeForceOnFoot())
+        return PLAYER_AVATAR_FLAG_ON_FOOT;
     if (mapType != MAP_TYPE_INDOOR && FlagGet(FLAG_SYS_CRUISE_MODE))
         return PLAYER_AVATAR_FLAG_ON_FOOT;
     else if (mapType == MAP_TYPE_UNDERWATER)
@@ -1820,6 +1830,7 @@ static void OverworldBasic(void)
     UpdatePaletteFade();
     UpdateTilesetAnimations();
     DoScheduledBgTilemapCopiesToVram();
+    WotMegaDim_Tick(); // WoT: the Mega Dimension countdown
     // Every minute if no palette fade is active, update TOD blending as needed
     if (!gPaletteFade.active && --gTimeUpdateCounter <= 0)
     {
@@ -1932,6 +1943,7 @@ void CB2_WhiteOut(void)
         FieldClearVBlankHBlankCallbacks();
         StopMapMusic();
         ResetSafariZoneFlag_();
+        WotNuzlocke_OnWhiteOut(); // WoT: a blackout ends a Nuzlocke run
         DoWhiteOut();
         ResetInitialPlayerAvatarState();
         ScriptContext_Init();
@@ -2004,6 +2016,7 @@ static void CB2_LoadMapOnReturnToFieldCableClub(void)
 
 void CB2_ReturnToField(void)
 {
+    WotNuzlocke_AfterBattle(); // WoT: lay the fallen to rest before the field (and follower) load
     if (IsOverworldLinkActive() == TRUE)
     {
         SetMainCallback2(CB2_ReturnToFieldLink);
@@ -2075,6 +2088,8 @@ void CB2_ReturnToFieldFadeFromBlack(void)
     CB2_ReturnToField();
 }
 
+extern const u8 MegaDim_EventScript_MissedIntroRumor[];
+
 static void FieldCB_FadeTryShowMapPopup(void)
 {
     if (gMapHeader.showMapName == TRUE && SecretBaseMapPopupEnabled() == TRUE)
@@ -2124,6 +2139,13 @@ void CB2_ContinueSavedGame(void)
     if (FlagGet(FLAG_WOT_HIDEOUT_REVEAL_DONE) && !FlagGet(FLAG_WOT_POSTGAME_MAP_GET))
         FlagSet(FLAG_WOT_POSTGAME_MAP_GET);
 
+    // Wishes of Tomorrow: the engine's daily and per-minute updates only run
+    // once FLAG_SYS_CLOCK_SET is set. New games set it in NewGameInitData;
+    // older saves get it here, counted from today, so nothing catches up on
+    // the days already played. Before DoTimeBasedEvents below.
+    if (!FlagGet(FLAG_SYS_CLOCK_SET))
+        InitTimeBasedEvents();
+
     LoadSaveblockMapHeader();
     ClearDiveAndHoleWarps();
     trainerHillMapId = GetCurrentTrainerHillMapId();
@@ -2161,6 +2183,14 @@ void CB2_ContinueSavedGame(void)
     {
         TryPutTodaysRivalTrainerOnAir();
         gFieldCallback = FieldCB_FadeTryShowMapPopup;
+        // Wishes of Tomorrow: a save from before the Mega Dimension that's past
+        // Tradewind has no reason to walk its corridor again, so point it there.
+        if (WotMegaDim_SaveMissedIntro())
+        {
+            ScriptContext_SetupScript(MegaDim_EventScript_MissedIntroRumor);
+            ScriptContext_Stop();
+            gFieldCallback = FieldCB_ContinueScriptHandleMusic;
+        }
         SetMainCallback1(CB1_Overworld);
         CB2_ReturnToField();
     }

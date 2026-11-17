@@ -24,6 +24,14 @@ LilycoveCity_DepartmentStore_3F_Pokemart_Vitamins:
 	.2byte ITEM_THUNDER_STONE
 	.2byte ITEM_LEAF_STONE
 	.2byte ITEM_ICE_STONE
+	@ Evolution items WoT never places: Jigglypuff, Murkrow, Lampent,
+	@ Doublade, Kirlia, both Sneasels, Scyther, Onix and Poliwhirl.
+	.2byte ITEM_MOON_STONE
+	.2byte ITEM_DUSK_STONE
+	.2byte ITEM_DAWN_STONE
+	.2byte ITEM_RAZOR_CLAW
+	.2byte ITEM_METAL_COAT
+	.2byte ITEM_KINGS_ROCK
 	.2byte ITEM_MANKEYS_PAW
 	.2byte ITEM_PRIMEAPES_PAW
 	.2byte ITEM_ANNIHILAPES_PAW

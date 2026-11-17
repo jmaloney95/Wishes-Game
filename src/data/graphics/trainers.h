@@ -57,6 +57,42 @@ const u32 gTrainerFrontPic_WotPokeKid[] = INCGFX_U32("graphics/trainers/front_pi
 const u16 gTrainerPalette_WotPokeKid[] = INCGFX_U16("graphics/trainers/front_pics/wot_poke_kid.png", ".gbapal");
 const u32 gTrainerFrontPic_WotBeachGirl[] = INCGFX_U32("graphics/trainers/front_pics/wot_beach_girl.png", ".4bpp.smol");
 const u16 gTrainerPalette_WotBeachGirl[] = INCGFX_U16("graphics/trainers/front_pics/wot_beach_girl.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaDetectiveEmma[] = INCGFX_U32("graphics/trainers/front_pics/za_detective_emma.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaDetectiveEmma[] = INCGFX_U16("graphics/trainers/front_pics/za_detective_emma.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaMable[] = INCGFX_U32("graphics/trainers/front_pics/za_mable.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaMable[] = INCGFX_U16("graphics/trainers/front_pics/za_mable.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaLida[] = INCGFX_U32("graphics/trainers/front_pics/za_lida.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaLida[] = INCGFX_U16("graphics/trainers/front_pics/za_lida.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaTaunie[] = INCGFX_U32("graphics/trainers/front_pics/za_taunie.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaTaunie[] = INCGFX_U16("graphics/trainers/front_pics/za_taunie.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaJacinthe[] = INCGFX_U32("graphics/trainers/front_pics/za_jacinthe.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaJacinthe[] = INCGFX_U16("graphics/trainers/front_pics/za_jacinthe.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaAz[] = INCGFX_U32("graphics/trainers/front_pics/za_az.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaAz[] = INCGFX_U16("graphics/trainers/front_pics/za_az.png", ".gbapal");
+const u32 gTrainerFrontPic_Draco[] = INCGFX_U32("graphics/trainers/front_pics/draco.png", ".4bpp.smol");
+const u16 gTrainerPalette_Draco[] = INCGFX_U16("graphics/trainers/front_pics/draco.png", ".gbapal");
+const u32 gTrainerFrontPic_Vesper[] = INCGFX_U32("graphics/trainers/front_pics/vesper.png", ".4bpp.smol");
+const u16 gTrainerPalette_Vesper[] = INCGFX_U16("graphics/trainers/front_pics/vesper.png", ".gbapal");
+const u32 gTrainerFrontPic_WotElderF[] = INCGFX_U32("graphics/trainers/front_pics/wot_elder_f.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotElderF[] = INCGFX_U16("graphics/trainers/front_pics/wot_elder_f.png", ".gbapal");
+const u32 gTrainerFrontPic_WotClarkson[] = INCGFX_U32("graphics/trainers/front_pics/wot_clarkson.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotClarkson[] = INCGFX_U16("graphics/trainers/front_pics/wot_clarkson.png", ".gbapal");
+const u32 gTrainerFrontPic_WotSkierF[] = INCGFX_U32("graphics/trainers/front_pics/wot_skier_f.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotSkierF[] = INCGFX_U16("graphics/trainers/front_pics/wot_skier_f.png", ".gbapal");
+const u32 gTrainerFrontPic_WotSnowboarderM[] = INCGFX_U32("graphics/trainers/front_pics/wot_snowboarder_m.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotSnowboarderM[] = INCGFX_U16("graphics/trainers/front_pics/wot_snowboarder_m.png", ".gbapal");
+const u32 gTrainerFrontPic_WotMcCormick[] = INCGFX_U32("graphics/trainers/front_pics/wot_mccormick.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotMcCormick[] = INCGFX_U16("graphics/trainers/front_pics/wot_mccormick.png", ".gbapal");
+const u32 gTrainerFrontPic_WotKohana[] = INCGFX_U32("graphics/trainers/front_pics/wot_kohana.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotKohana[] = INCGFX_U16("graphics/trainers/front_pics/wot_kohana.png", ".gbapal");
+const u32 gTrainerFrontPic_WotSilas[] = INCGFX_U32("graphics/trainers/front_pics/wot_silas.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotSilas[] = INCGFX_U16("graphics/trainers/front_pics/wot_silas.png", ".gbapal");
+const u32 gTrainerFrontPic_WotAyame[] = INCGFX_U32("graphics/trainers/front_pics/wot_ayame.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotAyame[] = INCGFX_U16("graphics/trainers/front_pics/wot_ayame.png", ".gbapal");
+const u32 gTrainerFrontPic_WotPiper[] = INCGFX_U32("graphics/trainers/front_pics/wot_piper.png", ".4bpp.smol");
+const u16 gTrainerPalette_WotPiper[] = INCGFX_U16("graphics/trainers/front_pics/wot_piper.png", ".gbapal");
+const u32 gTrainerFrontPic_ZaTulip[] = INCGFX_U32("graphics/trainers/front_pics/za_tulip.png", ".4bpp.smol");
+const u16 gTrainerPalette_ZaTulip[] = INCGFX_U16("graphics/trainers/front_pics/za_tulip.png", ".gbapal");
 const u32 gTrainerFrontPic_MutridGoon[] = INCGFX_U32("graphics/trainers/front_pics/mutrid_goon.png", ".4bpp.smol");
 const u16 gTrainerPalette_MutridGoon[] = INCGFX_U16("graphics/trainers/front_pics/mutrid_goon.png", ".gbapal");
 
@@ -519,6 +555,16 @@ const u16 gTrainerBackPicPalette_Leaf[] = INCGFX_U16("graphics/trainers/back_pic
 const u16 gTrainerBackPicPalette_Pokedude[] = INCGFX_U16("graphics/trainers/back_pics/pokedude.png", ".gbapal");
 const u16 gTrainerBackPicPalette_OldMan[] = INCGFX_U16("graphics/trainers/back_pics/old_man.png", ".gbapal");
 
+// Mega Dimension partners. Each strip carries its own palette.
+const u8 gTrainerBackPic_WotLida[] = INCGFX_U8("graphics/trainers/back_pics/wot_lida.png", ".4bpp");
+const u8 gTrainerBackPic_WotTaunie[] = INCGFX_U8("graphics/trainers/back_pics/wot_taunie.png", ".4bpp");
+const u8 gTrainerBackPic_WotEmma[] = INCGFX_U8("graphics/trainers/back_pics/wot_emma.png", ".4bpp");
+const u8 gTrainerBackPic_WotTulip[] = INCGFX_U8("graphics/trainers/back_pics/wot_tulip.png", ".4bpp");
+const u16 gTrainerBackPicPalette_WotLida[] = INCGFX_U16("graphics/trainers/back_pics/wot_lida.png", ".gbapal");
+const u16 gTrainerBackPicPalette_WotTaunie[] = INCGFX_U16("graphics/trainers/back_pics/wot_taunie.png", ".gbapal");
+const u16 gTrainerBackPicPalette_WotEmma[] = INCGFX_U16("graphics/trainers/back_pics/wot_emma.png", ".gbapal");
+const u16 gTrainerBackPicPalette_WotTulip[] = INCGFX_U16("graphics/trainers/back_pics/wot_tulip.png", ".gbapal");
+
 // The first two parameters invoke a front pic and palette by
 // calling a "TRAINER_PIC" constant (e.g. TRAINER_PIC_FRONT_HIKER), and
 // gTrainerFrontPic/gTrainerPalette pointers, (e.g "gTrainerFrontPic_Hiker" and "gTrainerPalette_Hiker").
@@ -564,6 +610,24 @@ const struct TrainerSprite gTrainerSprites[] =
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_REINA_VANESSA, gTrainerFrontPic_WotReinaVanessa, gTrainerPalette_WotReinaVanessa),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_POKE_KID, gTrainerFrontPic_WotPokeKid, gTrainerPalette_WotPokeKid),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_BEACH_GIRL, gTrainerFrontPic_WotBeachGirl, gTrainerPalette_WotBeachGirl),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_DETECTIVE_EMMA, gTrainerFrontPic_ZaDetectiveEmma, gTrainerPalette_ZaDetectiveEmma),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_MABLE, gTrainerFrontPic_ZaMable, gTrainerPalette_ZaMable),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_LIDA, gTrainerFrontPic_ZaLida, gTrainerPalette_ZaLida),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_TAUNIE, gTrainerFrontPic_ZaTaunie, gTrainerPalette_ZaTaunie),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_JACINTHE, gTrainerFrontPic_ZaJacinthe, gTrainerPalette_ZaJacinthe),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_AZ, gTrainerFrontPic_ZaAz, gTrainerPalette_ZaAz),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_DRACO, gTrainerFrontPic_Draco, gTrainerPalette_Draco),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_VESPER, gTrainerFrontPic_Vesper, gTrainerPalette_Vesper),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_ELDER_F, gTrainerFrontPic_WotElderF, gTrainerPalette_WotElderF),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_CLARKSON, gTrainerFrontPic_WotClarkson, gTrainerPalette_WotClarkson),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_SKIER_F, gTrainerFrontPic_WotSkierF, gTrainerPalette_WotSkierF),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_SNOWBOARDER_M, gTrainerFrontPic_WotSnowboarderM, gTrainerPalette_WotSnowboarderM),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_MCCORMICK, gTrainerFrontPic_WotMcCormick, gTrainerPalette_WotMcCormick),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_KOHANA, gTrainerFrontPic_WotKohana, gTrainerPalette_WotKohana),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_SILAS, gTrainerFrontPic_WotSilas, gTrainerPalette_WotSilas),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_AYAME, gTrainerFrontPic_WotAyame, gTrainerPalette_WotAyame),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_WOT_PIPER, gTrainerFrontPic_WotPiper, gTrainerPalette_WotPiper),
+    TRAINER_SPRITE(TRAINER_PIC_FRONT_ZA_TULIP, gTrainerFrontPic_ZaTulip, gTrainerPalette_ZaTulip),
 
     TRAINER_SPRITE(TRAINER_PIC_FRONT_EXPERT_M, gTrainerFrontPic_ExpertM, gTrainerPalette_ExpertM),
     TRAINER_SPRITE(TRAINER_PIC_FRONT_AQUA_ADMIN_M, gTrainerFrontPic_AquaAdminM, gTrainerPalette_AquaAdminM),
@@ -802,5 +866,10 @@ const struct TrainerBacksprite gTrainerBacksprites[] =
     TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_STEVEN, 4, gTrainerBackPic_Steven, gTrainerPalette_Steven, sBackAnims_Hoenn),
     TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_POKEDUDE, 4, gTrainerBackPic_Pokedude, gTrainerBackPicPalette_Pokedude, sBackAnims_OldManPokedude),
     TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_OLD_MAN, 4, gTrainerBackPic_OldMan, gTrainerBackPicPalette_OldMan, sBackAnims_OldManPokedude),
+    // Dawn's strip is four frames in May's order; the other three are five in Red's.
+    TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_WOT_LIDA, 4, gTrainerBackPic_WotLida, gTrainerBackPicPalette_WotLida, sBackAnims_Hoenn),
+    TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_WOT_TAUNIE, 5, gTrainerBackPic_WotTaunie, gTrainerBackPicPalette_WotTaunie, sBackAnims_Kanto),
+    TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_WOT_EMMA, 5, gTrainerBackPic_WotEmma, gTrainerBackPicPalette_WotEmma, sBackAnims_Kanto),
+    TRAINER_BACK_SPRITE(TRAINER_PIC_BACK_WOT_TULIP, 5, gTrainerBackPic_WotTulip, gTrainerBackPicPalette_WotTulip, sBackAnims_Kanto),
 
 };

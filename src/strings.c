@@ -1237,6 +1237,7 @@ const u8 gText_QuestLoc_NationalPark[] = _("NATIONAL PARK");
 const u8 gText_QuestLoc_Pompeii[] = _("POMPEII");
 const u8 gText_QuestLoc_FrostwoodTown[] = _("FROSTWOOD TOWN");
 const u8 gText_QuestLoc_ShinTokyo[] = _("SHIN-TOKYO");
+const u8 gText_QuestLoc_HotelZ[] = _("HOTEL Z");
 
 const u8 gText_Quest_StopTheMachine_Name[] = _("Stop the Machine");
 const u8 gText_Quest_StopTheMachine_Desc1[] = _("The tides run low tonight.\nSurf south, find the shrine,\nthen climb Mutrid's tower.");
@@ -1250,6 +1251,27 @@ const u8 gText_Quest_HarnessDarkness_DoneDesc[] = _("Their darkness answers to\n
 const u8 gText_Quest_MinistersFavor_Name[] = _("Jailbreaker");
 const u8 gText_Quest_MinistersFavor_Desc1[] = _("Meet the MINISTER at the\nSHIN-TOKYO docks, then bust\nMikmanc out of the jail.");
 const u8 gText_Quest_MinistersFavor_DoneDesc[] = _("Mikmanc walks free. The\nMinister paid what he owed.");
+const u8 gText_Quest_MegaDoomsday_Name[] = _("Mega Doomsday");
+const u8 gText_Quest_MegaDoomsday_Desc[] = _("Meet Lida and Canari in\nHotel Z.");
+const u8 gText_Quest_MegaDoomsday_DoneDesc[] = _("You met Lida and Canari\nat Hotel Z.");
+const u8 gText_Quest_TwoMinutes_Name[] = _("Two Minutes Is a Long Time");
+const u8 gText_Quest_TwoMinutes_Desc[] = _("Bring Mable the Mega Stone\nof every rogue Mega (23).\nAsk her for your tally.");
+const u8 gText_Quest_TwoMinutes_DoneDesc[] = _("Mable has all 23 samples.\nShe's running her tests.");
+const u8 gText_Quest_PrimalSignatures_Name[] = _("Primal Signatures");
+const u8 gText_Quest_PrimalSignatures_Desc[] = _("Catch Primal Groudon and\nKyogre, and Mega Lugia\nand Ho-Oh, in the rifts.");
+const u8 gText_Quest_PrimalSignatures_DoneDesc[] = _("All four are caught.\nMable has their readings.");
+const u8 gText_Quest_OrderInTheRifts_Name[] = _("Order in the Rifts");
+const u8 gText_Quest_OrderInTheRifts_Desc[] = _("Find 20 Zygarde Cells in the\nrifts. Once Rayquaza is caught\nand Mable calls, see the desk.");
+const u8 gText_Quest_OrderInTheRifts_DoneDesc[] = _("The Cells led back to the\ndesk at Hotel Z.");
+const u8 gText_Quest_TheLongStay_Name[] = _("The Long Stay");
+const u8 gText_Quest_TheLongStay_Desc[] = _("Something is draining the\ngray world. Emma's trail\nends at Hotel Z.");
+const u8 gText_Quest_TheLongStay_DoneDesc[] = _("AZ and Floette are at rest.\nZygarde came with you.");
+const u8 gText_Quest_SkyHighMega_Name[] = _("Sky-High Mega");
+const u8 gText_Quest_SkyHighMega_Desc[] = _("Something in the rifts is\nafter their power.\nCatch Mega Rayquaza.");
+const u8 gText_Quest_SkyHighMega_DoneDesc[] = _("Mega Rayquaza is caught.\nThe rifts are calming.");
+const u8 gText_Quest_TwoHearts_Name[] = _("Two Hearts One Rift");
+const u8 gText_Quest_TwoHearts_Desc[] = _("A rift is easier with\nsomeone at your side.");
+const u8 gText_Quest_TwoHearts_DoneDesc[] = _("You and a partner rode\na rift to its collapse.");
 
 //QUEST_WAKING_MOUNTAIN (MAIN) - stage 2 once FLAG_BADGE01_GET is set
 const u8 gText_Quest_WakingMountain_Name[] = _("The Waking Mountain");
@@ -1289,12 +1311,22 @@ const u8 gText_Quest_GrandfathersWish_Name[] = _("Grandfather's Last Wish");
 const u8 gText_Quest_GrandfathersWish_Desc[] = _("Carry the Catalpa Bow across\nthe water. Play the mourning\nrite at his son's grave.");
 const u8 gText_Quest_GrandfathersWish_DoneDesc[] = _("The bow sang at the graveside.\nA last wish, carried all the\nway through.");
 
-//QUEST_LIFES_WORK (MAIN)
+//QUEST_LIFES_WORK (MAIN) - stage 2 once Clarkson's Gengar joins, stage 3 on the Distortion Badge
 const u8 gText_Quest_LifesWork_Name[] = _("His Life's Work");
 const u8 gText_Quest_LifesWork_Desc[] = _("Clarkson's last wish: destroy\nhis research. Reach his lab\nin Munen and end it.");
-const u8 gText_Quest_LifesWork_DoneDesc[] = _("The research will never fall\ninto the wrong hands. His\nwork ends as he asked.");
+const u8 gText_Quest_LifesWork_Desc2[] = _("GENGAR carries Clarkson now.\nGo deeper into the rift first,\nthen take him to his lab.");
+const u8 gText_Quest_LifesWork_Desc3[] = _("The rift is behind you. Use\nthe Catalpa Bow with GENGAR\nand choose Clarkson's Lab.");
+const u8 gText_Quest_LifesWork_DoneDesc[] = _("You stood at his desk and\nsettled his life's work. The\nchoice was yours to make.");
+
+//QUEST_INTO_THE_RIFT (MAIN) - Clarkson joins, the rift goes deeper
+const u8 gText_Quest_IntoTheRift_Name[] = _("Into the Rift");
+const u8 gText_Quest_IntoTheRift_Desc[] = _("Play the Catalpa Bow at the\npark grave with GENGAR. Go\ndown to the rift's heart.");
+const u8 gText_Quest_IntoTheRift_DoneDesc[] = _("You reached the bottom of the\nrift and won its badge. Now\nClarkson's lab is waiting.");
 
 //SIDE_QUEST_TOASTY_TIME (Side) - Frostwood gym leader's family
 const u8 gText_Quest_ToastyTime_Name[] = _("Toasty Time");
 const u8 gText_Quest_ToastyTime_Desc[] = _("The gym leader's father gave\nyou HOT COCOA. Coax his two\ndaughters home for dinner.");
 const u8 gText_Quest_ToastyTime_DoneDesc[] = _("The sisters warmed up and\nheaded home. Dinner is served.");
+const u8 gText_Quest_BreakTimesOver_Name[] = _("Break Time's Over");
+const u8 gText_Quest_BreakTimesOver_Desc[] = _("The GYM LEADER is stuck at the\nbeach without his EPIC PASS.\nTake the GONDOLA down to him.");
+const u8 gText_Quest_BreakTimesOver_DoneDesc[] = _("RedFatality rode back up the\nmountain. The FROSTWOOD GYM\nis open again.");

@@ -395,6 +395,7 @@ void BtlController_HandleBattleAnimation(enum BattlerId battler);
 // player controller
 void SetControllerToPlayer(enum BattlerId battler);
 void PlayerBufferExecCompleted(enum BattlerId battler);
+bool32 TryRunPlayerCommandForPartner(enum BattlerId battler);
 void SetBattleEndCallbacks(enum BattlerId battler);
 void PlayerHandleExpUpdate(enum BattlerId battler);
 enum TrainerPicID LinkPlayerGetTrainerPicId(u32 multiplayerId);

@@ -1,6 +1,8 @@
 #include "global.h"
 #include "gba/m4a_internal.h"
 #include "global.h"
+#include "wot_film_shiny.h"
+#include "constants/songs.h"
 
 extern const u8 gCgb3Vol[];
 
@@ -105,11 +107,23 @@ void m4aSoundMain(void)
     SoundMain();
 }
 
+// WoT debug "Music: off" (wot_film_shiny.c): any song for the music player
+// (map, battle, scripted themes, fanfares) is swapped for the silent dummy.
+// Swapping rather than skipping means a later m4aMPlayContinue (after a
+// fanfare) has nothing to resume. Cries and sound effects use other players.
+static u16 WotFilmMusic_Filter(u16 n)
+{
+    if (n != MUS_DUMMY && WotFilmMusic_IsOff()
+     && gMPlayTable[gSongTable[n].ms].info == &gMPlayInfo_BGM)
+        return MUS_DUMMY;
+    return n;
+}
+
 void m4aSongNumStart(u16 n)
 {
     const struct MusicPlayer *mplayTable = gMPlayTable;
     const struct Song *songTable = gSongTable;
-    const struct Song *song = &songTable[n];
+    const struct Song *song = &songTable[n = WotFilmMusic_Filter(n)];
     const struct MusicPlayer *mplay = &mplayTable[song->ms];
 
     MPlayStart(mplay->info, song->header);
@@ -119,7 +133,7 @@ void m4aSongNumStartOrChange(u16 n)
 {
     const struct MusicPlayer *mplayTable = gMPlayTable;
     const struct Song *songTable = gSongTable;
-    const struct Song *song = &songTable[n];
+    const struct Song *song = &songTable[n = WotFilmMusic_Filter(n)];
     const struct MusicPlayer *mplay = &mplayTable[song->ms];
 
     if (mplay->info->songHeader != song->header)

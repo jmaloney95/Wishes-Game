@@ -250,6 +250,14 @@ struct NPCFollower
 };
 
 #include "constants/items.h"
+#include "constants/wot_dexnav.h"
+// WoT DexNav slots saved in SaveBlock3. The generated count grows into this;
+// never shrink it -- the Shadow Log words after the array would move.
+#define WOT_DEXNAV_SLOT_CAPACITY 400
+// WoT Nuzlocke: one bit per map section, then one per Mega Dimension map.
+#define WOT_NUZLOCKE_AREA_BYTES 40
+// WoT Mystery Codes: one bit per card (64 cards fit).
+#define WOT_MYSTERY_CODE_BYTES 8
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
 
 struct SaveBlock3
@@ -270,6 +278,22 @@ struct SaveBlock3
 #if APRICORN_TREE_COUNT > 0
     u8 apricornTrees[NUM_APRICORN_TREE_BYTES];
 #endif
+    // WoT DexNav. Appended so older saves read zeros here.
+    u16 wotDexNavSpecies;   // VAR_WOT_DEXNAV_SPECIES
+    u16 wotDexNavSteps;     // VAR_WOT_DEXNAV_STEPS
+    // Fixed capacity: the slot list grows into it, so the fields
+    // below never move. Old saves stored only the 333 slots; the rest is zero.
+    u8 wotDexNavSearchLevels[WOT_DEXNAV_SLOT_CAPACITY];
+    // WoT Shadow Log rows 64-127; rows 0-63 live in the
+    // VAR_WOT_SHADOWLOG_* vars. Zero on older saves.
+    u16 wotShadowLogSnagExtra[4];
+    u16 wotShadowLogPureExtra[4];
+    // WoT Nuzlocke mode (src/wot_nuzlocke.c). Zero on older saves = off.
+    u8 wotNuzlocke;                                    // WOT_NUZLOCKE_* bits
+    u8 wotNuzlockeAreas[WOT_NUZLOCKE_AREA_BYTES];      // the area's first encounter is used
+    // WoT Mystery Codes (src/wot_mystery_code.c): bit n - 1 is set once card
+    // n's gift is received. Zero on older saves = none used.
+    u8 wotMysteryCodesUsed[WOT_MYSTERY_CODE_BYTES];
 }; /* max size 1624 bytes */
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
@@ -596,14 +620,16 @@ struct SaveBlock2
     /*0x10*/ u8 playTimeMinutes;
     /*0x11*/ u8 playTimeSeconds;
     /*0x12*/ u8 playTimeVBlanks;
-    /*0x13*/ u8 optionsButtonMode;  // OPTIONS_BUTTON_MODE_[NORMAL/LR/L_EQUALS_A]
+    /*0x13*/ u8 optionsButtonMode:2;  // OPTIONS_BUTTON_MODE_[NORMAL/LR/L_EQUALS_A]
+             u8 optionsBattleStyleSemi:1; // Wishes of Tomorrow: Semi Shift, which overrides optionsBattleStyle (OPTIONS_BATTLE_STYLE_SEMI)
+             u8 optionsUnused:5;
     /*0x14*/ u16 optionsTextSpeed:3; // OPTIONS_TEXT_SPEED_[SLOW/MID/FAST]
              u16 optionsWindowFrameType:5; // Specifies one of the 20 decorative borders for text boxes
              u16 optionsSound:1; // OPTIONS_SOUND_[MONO/STEREO]
              u16 optionsBattleStyle:1; // OPTIONS_BATTLE_STYLE_[SHIFT/SET]
              u16 optionsBattleSceneOff:1; // whether battle animations are disabled
              u16 regionMapZoom:1; // whether the map is zoomed in
-             u16 optionsPortraitsOff:1; // Wishes of Tomorrow: hide dialogue portraits (moot while USE_NPC_PORTRAITS is FALSE)
+             u16 optionsPortraitsOff:1; // Wishes of Tomorrow: hide dialogue portraits (Options)
              u16 optionsFastForward:2;  // Wishes of Tomorrow: OPTIONS_FAST_FORWARD_[OFF/3X/2X]. Grew from 1 bit into the old padding, so 1 is still 3x
              u16 optionsAutoSprint:1;   // Wishes of Tomorrow: OPTIONS_AUTO_SPRINT_[TOGGLE/HOLD_B]. The last spare bit: this u16 is now full
              //u16 padding2;
@@ -1104,6 +1130,19 @@ struct Bag
     struct ItemSlot berries[BAG_BERRIES_COUNT];
 };
 
+// Wishes of Tomorrow: one per Mega Dimension partner (Canari, Lida, Emma,
+// Taunie, Tulip, Jacinthe), in sRivals order. All-zero is the default.
+#define WOT_PARTNER_SAVE_COUNT 6
+#define WOT_PARTNER_TEAM_SIZE  3
+struct WotPartnerSave
+{
+    u8 runs;            // portals that collapsed with them along (friendship)
+    u8 order;           // permutation of their 3 (0 = as in battle_partners.party)
+    u8 pendingLevel;    // a friendship level reached but not yet announced
+    u8 sanctum;         // Rift Sanctum: bit 0 legend caught, bits 1-3 holdouts A-C beaten; bit 4 moves below are current
+    u16 moves[WOT_PARTNER_TEAM_SIZE][MAX_MON_MOVES]; // by original slot; MOVE_NONE = their default
+};
+
 struct SaveBlock1
 {
     /*0x00*/ struct Coords16 pos;
@@ -1220,6 +1259,9 @@ struct SaveBlock1
     u8 rivalName[PLAYER_NAME_LENGTH + 1];
     struct DaycareMon route5DayCareMon;
 #endif
+    // Wishes of Tomorrow: the Mega Dimension partners. Appended
+    // last, so older saves load it as zeros = everything at its default.
+    struct WotPartnerSave wotPartners[WOT_PARTNER_SAVE_COUNT];
     // sizeof: 0x3???
 };
 

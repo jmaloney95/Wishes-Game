@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_nuzlocke.h"
 #include "new_game.h"
 #include "random.h"
 #include "pokemon.h"
@@ -15,6 +16,7 @@
 #include "dewford_trend.h"
 #include "berry.h"
 #include "rtc.h"
+#include "clock.h"
 #include "easy_chat.h"
 #include "event_data.h"
 #include "money.h"
@@ -202,6 +204,10 @@ void NewGameInitData(void)
     PlayTimeCounter_Reset();
     ClearPokedexFlags();
     InitEventData();
+    // Pokémon Wishes of Tomorrow: switch on the engine's daily and per-minute
+    // updates (daily flags, lottery, Pokérus, ...). Vanilla does this at the
+    // wall clock in Brendan's house, a scene WoT never reaches.
+    InitTimeBasedEvents();
     FlagSet(FLAG_SYS_B_DASH); // Pokémon Wishes of Tomorrow: give Running Shoes from the start.
     // Pokémon Wishes of Tomorrow: white-out sends the player home (the player's house
     // front door, which heals via Mom inside), not to some other town's Pokémon Center.
@@ -267,6 +273,7 @@ void NewGameInitData(void)
     // Wishes of Tomorrow: the randomizer settings screen runs before this
     // function, and the memset above would erase its flags. Re-apply them here,
     // last, so they survive -- and so the seed reads the trainer id just made.
+    WotNuzlocke_ResetSave();
     WotApplyQueuedRandomizerSettings();
 }
 
@@ -291,4 +298,7 @@ static void ResetDexNav(void)
     memset(gSaveBlock3Ptr->dexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->dexNavSearchLevels));
 #endif
     gSaveBlock3Ptr->dexNavChain = 0;
+    gSaveBlock3Ptr->wotDexNavSpecies = 0;
+    gSaveBlock3Ptr->wotDexNavSteps = 0;
+    memset(gSaveBlock3Ptr->wotDexNavSearchLevels, 0, sizeof(gSaveBlock3Ptr->wotDexNavSearchLevels));
 }

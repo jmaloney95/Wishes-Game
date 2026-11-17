@@ -3384,9 +3384,16 @@ bool16 BufferUnionRoomPlayerName(void)
     if (!ShouldCheckForUnionRoom())
         return FALSE;
 
-    if (sUnionRoomPlayerName[0] != EOS)
+    // WoT: only InitUnionRoom (a center's CableClub_OnResume) resets this
+    // buffer to EOS. A center without that hook (Shin Tokyo's Tradewind_PC)
+    // found it still zeroed from power-on, read it as a name, and StringCopy
+    // ran on past its 12 bytes through gStringVar1 into gFonts -- every text
+    // box in the game, battles included, drew blank until reset. Zero counts
+    // as empty, and the copy never reads past the buffer.
+    if (sUnionRoomPlayerName[0] != EOS && sUnionRoomPlayerName[0] != 0)
     {
-        StringCopy(gStringVar1, sUnionRoomPlayerName);
+        StringCopyN(gStringVar1, sUnionRoomPlayerName, sizeof(sUnionRoomPlayerName) - 1);
+        gStringVar1[sizeof(sUnionRoomPlayerName) - 1] = EOS;
         sUnionRoomPlayerName[0] = EOS;
         return TRUE;
     }

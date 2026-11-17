@@ -1378,6 +1378,15 @@ static const struct SpriteFrameImage sPicTable_MewtwoArmored[] = {
 static const struct SpriteFrameImage sPicTable_JirachiShadow[] = {
     overworld_ascending_frames(gObjectEventPic_JirachiShadow, 4, 4),
 };
+static const struct SpriteFrameImage sPicTable_Browt[] = {
+    overworld_ascending_frames(gObjectEventPic_Browt, 4, 4),
+};
+static const struct SpriteFrameImage sPicTable_Gecqua[] = {
+    overworld_ascending_frames(gObjectEventPic_Gecqua, 4, 4),
+};
+static const struct SpriteFrameImage sPicTable_Pombon[] = {
+    overworld_ascending_frames(gObjectEventPic_Pombon, 4, 4),
+};
 #if OW_BATTLE_ONLY_FORMS
 #if P_MEGA_EVOLUTIONS
 static const struct SpriteFrameImage sPicTable_MewtwoMegaX[] = {

@@ -473,6 +473,24 @@ static u32 ScriptGiveMonParameterized(u8 side, u8 slot, u16 species, u8 level, e
     return MON_GIVEN_TO_PARTY;
 }
 
+#ifdef WOT_TESTER
+// Test profiles only (src/wot_tester.c). firstMove keeps a starter's signature move
+// on top of its level-up set; MOVE_DEFAULT leaves the level-up set as it is.
+u32 WotTester_GiveMon(u16 species, u8 level, enum Item item, enum Move firstMove, bool32 shiny)
+{
+    u16 evs[NUM_STATS] = {0};
+    u16 ivs[NUM_STATS];
+    enum Move moves[MAX_MON_MOVES] = {firstMove, MOVE_DEFAULT, MOVE_DEFAULT, MOVE_DEFAULT};
+    u32 i;
+
+    for (i = 0; i < NUM_STATS; i++)
+        ivs[i] = Random() % (MAX_PER_STAT_IVS + 1);
+    return ScriptGiveMonParameterized(B_SIDE_PLAYER, PARTY_SIZE, species, level, item, BALL_POKE, NATURE_RANDOM,
+                                      NUM_ABILITY_PERSONALITY, MON_GENDER_RANDOM, evs, ivs, moves,
+                                      shiny ? SHINY_MODE_ALWAYS : SHINY_MODE_NEVER, FALSE, NUMBER_OF_MON_TYPES, 0);
+}
+#endif // WOT_TESTER
+
 u32 ScriptGiveMon(u16 species, u8 level, enum Item item)
 {
     struct Pokemon mon;

@@ -190,6 +190,10 @@ u16 *GetVarPointer(u16 id)
     else if (id >= TESTING_VARS_START)
         return &sTestVars[id - TESTING_VARS_START];
 #endif // TESTING
+    else if (id == VAR_WOT_DEXNAV_SPECIES)
+        return &gSaveBlock3Ptr->wotDexNavSpecies;
+    else if (id == VAR_WOT_DEXNAV_STEPS)
+        return &gSaveBlock3Ptr->wotDexNavSteps;
     else
         return gSpecialVars[id - SPECIAL_VARS_START];
 }

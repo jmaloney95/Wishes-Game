@@ -40,6 +40,7 @@
 #include "constants/battle_move_effects.h"
 #include "constants/abilities.h"
 #include "constants/moves.h"
+#include "wot_mega_dimension.h"
 
 #define STAT_STAGE(battler, stat) (gBattleMons[battler].statStages[stat - 1])
 
@@ -129,6 +130,15 @@ bool32 CanUseZMove(enum BattlerId battler)
     if (HasTrainerUsedGimmick(battler, GIMMICK_Z_MOVE))
         return FALSE;
 
+    // WoT: a Mega Dimension rogue Mega gets its Z-Move without a crystal,
+    // after it has Mega Evolved.
+    if (WotMegaDim_IsRogueZMoveUser(battler))
+        return GetActiveGimmick(battler) == GIMMICK_NONE || GetActiveGimmick(battler) == GIMMICK_MEGA;
+
+    // WoT: the Rogue Core: the player's own Mega, inside a rift.
+    if (WotMegaDim_IsRogueCoreZUser(battler))
+        return TRUE;
+
     // Check if battler has another gimmick active.
     if (GetActiveGimmick(battler) != GIMMICK_NONE && GetActiveGimmick(battler) != GIMMICK_ULTRA_BURST)
         return FALSE;
@@ -146,6 +156,13 @@ enum Move GetUsableZMove(enum BattlerId battler, enum Move move)
     enum Item item = gBattleMons[battler].item;
     enum HoldEffect holdEffect = GetBattlerHoldEffectIgnoreNegation(battler);
 
+    // WoT: a rift boss's Z-Move comes from the move its set names; the Rogue
+    // Core's from any damaging move.
+    if (holdEffect != HOLD_EFFECT_Z_CRYSTAL && WotMegaDim_IsRogueZMoveUser(battler))
+        return WotMegaDim_IsBossZMove(move) ? GetTypeBasedZMove(move) : MOVE_NONE;
+    if (holdEffect != HOLD_EFFECT_Z_CRYSTAL && WotMegaDim_IsRogueCoreZUser(battler))
+        return (move != MOVE_NONE && !IsBattleMoveStatus(move)) ? GetTypeBasedZMove(move) : MOVE_NONE;
+
     if (holdEffect == HOLD_EFFECT_Z_CRYSTAL)
     {
         enum Move zMove = GetSignatureZMove(move, gBattleMons[battler].species, item);
@@ -162,6 +179,7 @@ enum Move GetUsableZMove(enum BattlerId battler, enum Move move)
 void ActivateZMove(enum BattlerId battler)
 {
     SetActiveGimmick(battler, GIMMICK_Z_MOVE);
+    WotMegaDim_NoteZMoveUsed(battler);
 }
 
 bool32 IsViableZMove(enum BattlerId battler, enum Move move)
@@ -188,6 +206,13 @@ bool32 IsViableZMove(enum BattlerId battler, enum Move move)
     {
         return FALSE;
     }
+
+    // WoT: the crystal-free Z-Moves: a rift boss's from the move its set
+    // names, the Rogue Core's from any damaging move.
+    if (holdEffect != HOLD_EFFECT_Z_CRYSTAL && WotMegaDim_IsRogueZMoveUser(battler))
+        return WotMegaDim_IsBossZMove(move);
+    if (holdEffect != HOLD_EFFECT_Z_CRYSTAL && WotMegaDim_IsRogueCoreZUser(battler))
+        return move != MOVE_NONE && !IsBattleMoveStatus(move);
 
     // Check for signature Z-Move or type-based Z-Move.
     if (holdEffect == HOLD_EFFECT_Z_CRYSTAL)

@@ -91,8 +91,13 @@ ShinTokyo_EventScript_DracoCallSkip::
 @ Tile edits must run in ON_LOAD -- ON_TRANSITION fires before the map layout
 @ is loaded, so a setmetatile there is thrown away (the fence never opened).
 ShinTokyo_OnLoad::
+	special WotHotelZ_SetupShinTokyoDoor
 	call_if_set FLAG_ACT3_RED_ALERT, ShinTokyo_OnLoad_RedAlert
 	end
+
+ShinTokyo_EventScript_HideHotelZSign::
+	setflag FLAG_TEMP_1
+	return
 
 @ the rebels kick a panel out of the lattice fence: the broken-panel
 @ metatile with DOOR behavior lands on the hideout warp at (16,12).
@@ -109,6 +114,8 @@ ShinTokyo_OnLoad_RedAlert::
 @ LAYOUT_SHIN_TOKYO, the one Porymap edits -- is the source of truth. The
 @ tide beat is gated in script instead (see ShinTokyo_EventScript_SurfToIsland).
 ShinTokyo_OnTransition::
+	@ Hotel Z's sign goes up with its door, after the Mega Doomsday intro.
+	call_if_unset FLAG_WOT_MEGA_DOOMSDAY_INTRO, ShinTokyo_EventScript_HideHotelZSign
 	setflag FLAG_HIDE_ACT3_CAPTAIN
 	@ Lugia is only ever on the water during its own scene (hide-flags default
 	@ CLEAR, so this has to be re-set on every load, ferry-style).
@@ -293,8 +300,8 @@ ShinTokyo_EventScript_PatrolHoldout3::
 @ ===========================================================================
 @  SHADOW LUGIA -- the harbour.
 @  The last thing the program made, still down there. Walk to the seaward end
-@  of the Minister's jetty and it comes up under the pier -- at any point in
-@  the story, not just after the credits.
+@  of the Minister's jetty and it comes up under the pier -- postgame only:
+@  nothing stirs until the credits have rolled (FLAG_SYS_GAME_CLEAR).
 @  Repeatable on purpose: only a capture sets FLAG_WOT_LUGIA_CAUGHT, and
 @  VAR_TEMP_B (a temp var, cleared on every map load) keeps it to one rise
 @  per visit so a lost fight cannot loop straight back into itself.
@@ -303,21 +310,31 @@ ShinTokyo_EventScript_PatrolHoldout3::
 @ ===========================================================================
 ShinTokyo_EventScript_LugiaRise::
 	setvar VAR_TEMP_B, 1
+	goto_if_unset FLAG_SYS_GAME_CLEAR, ShinTokyo_EventScript_LugiaRiseEnd
 	goto_if_set FLAG_WOT_LUGIA_CAUGHT, ShinTokyo_EventScript_LugiaRiseEnd
 	lockall
+	@ OBJ VRAM has room for Lugia's 64x64 sheet OR a 64x64 follower's here,
+	@ not both: with Suicune out, Lugia's sheet failed to load and it drew
+	@ other sprites' tiles. The follower goes back in its ball
+	@ for the scene and the battle; FLAG_TEMP_HIDE_FOLLOWER keeps it from
+	@ coming back out when the field returns, until the scene ends.
+	hidefollower
+	setflag FLAG_TEMP_HIDE_FOLLOWER
+	updatefollowingmon
 	applymovement OBJ_EVENT_ID_PLAYER, ShinTokyo_Movement_LugiaFaceSea
 	waitmovement 0
 	delay 20
 	playse SE_M_WHIRLPOOL
 	msgbox ShinTokyo_Text_LugiaWater, MSGBOX_DEFAULT
 	closemessage
+	@ Shaded BEFORE it spawns: it comes up in its own Shadow art
+	@ and loads only that sheet, not normal Lugia's first.
+	setvar VAR_0x8004, LOCALID_SHINTOKYO_LUGIA
+	special WotMakeObjectEventShadow
 	@ Spawn it while (68,46) is still off the bottom of the screen -- the
 	@ camera pan below brings it into frame instead of popping it in.
 	clearflag FLAG_HIDE_SHINTOKYO_LUGIA
 	addobject LOCALID_SHINTOKYO_LUGIA
-	@ the violet silhouette the Shadow follower wears, on the map object too
-	setvar VAR_0x8004, LOCALID_SHINTOKYO_LUGIA
-	special WotMakeObjectEventShadow
 	@ out over the open water, or the rise happens below the frame
 	special SpawnCameraObject
 	applymovement LOCALID_CAMERA, ShinTokyo_Movement_LugiaCameraOut
@@ -342,6 +359,7 @@ ShinTokyo_EventScript_LugiaRise::
 	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, ShinTokyo_EventScript_LugiaCaught
 	removeobject LOCALID_SHINTOKYO_LUGIA
 	setflag FLAG_HIDE_SHINTOKYO_LUGIA
+	call ShinTokyo_EventScript_LugiaFollowerBack
 	msgbox ShinTokyo_Text_LugiaSinks, MSGBOX_DEFAULT
 	releaseall
 	end
@@ -350,9 +368,17 @@ ShinTokyo_EventScript_LugiaCaught::
 	setflag FLAG_WOT_LUGIA_CAUGHT
 	removeobject LOCALID_SHINTOKYO_LUGIA
 	setflag FLAG_HIDE_SHINTOKYO_LUGIA
+	call ShinTokyo_EventScript_LugiaFollowerBack
 	msgbox ShinTokyo_Text_LugiaCaught, MSGBOX_DEFAULT
 	releaseall
 	end
+
+@ Lugia's sheet is gone: the follower may come back (out of its ball on
+@ the next step, the usual way).
+ShinTokyo_EventScript_LugiaFollowerBack::
+	clearflag FLAG_TEMP_HIDE_FOLLOWER
+	updatefollowingmon
+	return
 
 ShinTokyo_EventScript_LugiaRiseEnd::
 	end
@@ -1084,6 +1110,22 @@ ShinTokyo_Pokemart_BlackMarketAMs:
 	.2byte ITEM_AM_REGENERATOR
 	.2byte ITEM_AM_SPEED_BOOST
 	.2byte ITEM_AM_MAGIC_BOUNCE
+	@ Evolution goods for lines that otherwise need a trade or a stone
+	@ WoT never places (Golem, Conkeldurr, Electivire, Magmortar, Milotic,
+	@ Poliwrath, Shiftry, Whimsicott). The held ones work from the bag because
+	@ I_USE_EVO_HELD_ITEMS_FROM_BAG is TRUE.
+	.2byte ITEM_LINKING_CORD
+	.2byte ITEM_ELECTIRIZER
+	.2byte ITEM_MAGMARIZER
+	.2byte ITEM_PRISM_SCALE
+	@ Rhyperior, Porygon2, Kleavor and Ursaluna.
+	.2byte ITEM_PROTECTOR
+	.2byte ITEM_UPGRADE
+	.2byte ITEM_BLACK_AUGURITE
+	.2byte ITEM_PEAT_BLOCK
+	.2byte ITEM_WATER_STONE
+	.2byte ITEM_LEAF_STONE
+	.2byte ITEM_SUN_STONE
 	pokemartlistend
 
 ShinTokyo_EventScript_BlackMarketPaw::

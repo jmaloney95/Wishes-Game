@@ -15,9 +15,18 @@ struct WotShadowPic
     u16 species;
     const u32 *pic;
     const u16 *pal;
+    const u16 *shinyPal; // gold aura, else hue shift, else the official shiny shift
 };
 
 const struct WotShadowPic *WotFindShadowPic(u16 species);
+// The palette to show the art with: the shiny one for a shiny Shadow.
+const u16 *WotShadowPicPal(const struct WotShadowPic *art, bool32 isShiny);
+
+// A form whose own art is what its Shadow shows in battle, as drawn: no Shadow
+// art and no violet tint. Mega Deoxys, which the Prototype Lab's
+// Shadow Deoxys Mega Evolves into (shiny or not -- the Mega has no shiny art).
+// The mon stays a Shadow; only the picture is left alone.
+bool32 WotShadowKeepsOwnArt(u16 species);
 
 // The table as a list, for anything that wants "every species with custom
 // Shadow art" (the debug menu's box filler does).

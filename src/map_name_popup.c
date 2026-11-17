@@ -594,7 +594,10 @@ void ShowQuestPopup(void)
 
 static void ShowMapNamePopUpWindow(void)
 {
-    u8 mapDisplayHeader[27];
+    // 6 control bytes, then the name. A quest toast copies its quest name in
+    // here (sQuestPopupText), and quest names run longer than map names: the
+    // old 27 bytes overran the stack on "Two Minutes Is a Long Time" (26).
+    u8 mapDisplayHeader[6 + sizeof(sQuestPopupText)];
     u8 *withoutPrefixPtr;
     u8 x;
     const u8 *mapDisplayHeaderSource;

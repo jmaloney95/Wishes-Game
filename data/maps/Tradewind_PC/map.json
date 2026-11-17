@@ -15,7 +15,7 @@
   "connections": null,
   "object_events": [
     {
-      "local_id": "LOCALID_OLDALE_NURSE",
+      "local_id": "LOCALID_SHINTOKYO_PC_NURSE",
       "graphics_id": "OBJ_EVENT_GFX_NURSE",
       "x": 7,
       "y": 2,
@@ -25,8 +25,21 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "OldaleTown_PokemonCenter_1F_EventScript_Nurse",
-      "flag": "0"
+      "script": "Tradewind_PC_EventScript_Nurse",
+      "flag": "FLAG_TEMP_1"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_MYSTERY_GIFT_MAN",
+      "x": 11,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "WotMysteryCode_EventScript_Npc",
+      "flag": "FLAG_TEMP_1"
     }
   ],
   "warp_events": [
@@ -34,15 +47,15 @@
       "x": 6,
       "y": 8,
       "elevation": 0,
-      "dest_map": "MAP_SHIN_TOKYO",
-      "dest_warp_id": "6"
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "WARP_ID_DYNAMIC"
     },
     {
       "x": 7,
       "y": 8,
       "elevation": 0,
-      "dest_map": "MAP_SHIN_TOKYO",
-      "dest_warp_id": "6"
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "WARP_ID_DYNAMIC"
     }
   ],
   "coord_events": [],

@@ -213,6 +213,9 @@ enum Gender
 
 #define OPTIONS_BATTLE_STYLE_SHIFT 0
 #define OPTIONS_BATTLE_STYLE_SET 1
+// Wishes of Tomorrow: Shift against ordinary trainers, Set against bosses. Saved
+// in its own bit (optionsBattleStyleSemi); a battle only ever sees SHIFT or SET.
+#define OPTIONS_BATTLE_STYLE_SEMI 2
 
 enum __attribute__((packed)) Direction
 {

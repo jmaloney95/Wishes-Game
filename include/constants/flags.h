@@ -94,7 +94,9 @@
 #define FLAG_ITEM_NATIONAL_PARK_TM_EARTHQUAKE 0x48
 #define FLAG_NATIONAL_PARK_EEVEE_BREEDER 0x49
 #define FLAG_NATIONAL_PARK_TOUR_DONE 0x4A
-#define FLAG_NATIONAL_PARK_METAL_COAT_DONE 0x4B
+// 0x4B was FLAG_NATIONAL_PARK_METAL_COAT_DONE, which no script ever set.
+// Prototype Island's X switch has been pressed: the lab gate is open for good.
+#define FLAG_WOT_PROTOTYPE_LAB_UNLOCKED 0x4B
 #define FLAG_NATIONAL_PARK_GRAVE_SECRET 0x4C
 #define FLAG_NATIONAL_PARK_CUT_GIVEN 0x4D
 // Lantern Badge (Tradewind gym + Mega unlock) lives INSIDE the numbered badge
@@ -1580,8 +1582,8 @@
 #define FLAG_UNUSED_0x920                           (DAILY_FLAGS_START + 0x0)  // Unused Flag
 #define FLAG_DAILY_CONTEST_LOBBY_RECEIVED_BERRY     (DAILY_FLAGS_START + 0x1)
 #define FLAG_DAILY_SECRET_BASE                      (DAILY_FLAGS_START + 0x2)
-#define FLAG_UNUSED_0x923                           (DAILY_FLAGS_START + 0x3)  // Unused Flag
-#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // Unused Flag
+#define FLAG_UNUSED_0x923                           (DAILY_FLAGS_START + 0x3)  // Unused Flag (was the WoT DexNav search flag)
+#define FLAG_UNUSED_0x924                           (DAILY_FLAGS_START + 0x4)  // Unused Flag (was the WoT DexNav detector flag)
 #define FLAG_UNUSED_0x925                           (DAILY_FLAGS_START + 0x5)  // Unused Flag
 #define FLAG_UNUSED_0x926                           (DAILY_FLAGS_START + 0x6)  // Unused Flag
 #define FLAG_UNUSED_0x927                           (DAILY_FLAGS_START + 0x7)  // Unused Flag
@@ -2459,12 +2461,12 @@
 
 // === Pokémon Wishes of Tomorrow — Munen Village ===
 // These reuse existing unused flag slots so we don't shift the flag table.
-#define FLAG_MUNEN_INTRO_PLAYED        FLAG_UNUSED_0x020
+// 0x020 and 0x025 were Munen flags no script ever set; they now hold
+// FLAG_WOT_ALLISON_CHOICE_SPECS and FLAG_WOT_LEVEL_CAPS_OFF (below).
 #define FLAG_RECEIVED_STARTER          FLAG_UNUSED_0x021
 #define FLAG_MET_HINOKI                FLAG_UNUSED_0x022
 #define FLAG_TALKED_TO_MOM             FLAG_UNUSED_0x023
 #define FLAG_MET_RIVAL_HARU            FLAG_UNUSED_0x024
-#define FLAG_SHRINE_ROPE_SEEN          FLAG_UNUSED_0x025
 #define FLAG_OLD_LADY_SPOKE            FLAG_UNUSED_0x026
 #define FLAG_HIDE_RIVAL_HARU           FLAG_UNUSED_0x027
 #define FLAG_BATTLED_HARU              FLAG_UNUSED_0x028
@@ -2619,6 +2621,86 @@
 // script instead. It gets a flag of its own here.
 #define FLAG_WOT_NO_WHITEOUT                    FLAG_UNUSED_0x4C8 // set around a battle the player is meant to lose
 
+// === Mega Dimension (2026-10-19) ===
+// One claim flag per fan Mega, in sMegaRoster order (src/wot_mega_dimension.c).
+// Claimed = its stone has been won (KO) or the Mega was caught.
+#define FLAG_WOT_MEGA_CLAIMED_AMOONGUSS                    FLAG_UNUSED_0x4A9
+#define FLAG_WOT_MEGA_CLAIMED_AZUMARILL                    FLAG_UNUSED_0x4AA
+#define FLAG_WOT_MEGA_CLAIMED_BUTTERFREE                   FLAG_UNUSED_0x4AB
+#define FLAG_WOT_MEGA_CLAIMED_CONKELDURR                   FLAG_UNUSED_0x4AC
+#define FLAG_WOT_MEGA_CLAIMED_DUGTRIO                      FLAG_UNUSED_0x4AD
+#define FLAG_WOT_MEGA_CLAIMED_ELECTIVIRE                   FLAG_UNUSED_0x4AE
+#define FLAG_WOT_MEGA_CLAIMED_FLYGON                       FLAG_UNUSED_0x4AF
+#define FLAG_WOT_MEGA_CLAIMED_GOLEM                        FLAG_UNUSED_0x4B0
+#define FLAG_WOT_MEGA_CLAIMED_JUMPLUFF                     FLAG_UNUSED_0x4B1
+#define FLAG_WOT_MEGA_CLAIMED_KABUTOPS                     FLAG_UNUSED_0x4B2
+#define FLAG_WOT_MEGA_CLAIMED_MAGMORTAR                    FLAG_UNUSED_0x4B3
+#define FLAG_WOT_MEGA_CLAIMED_MILOTIC                      FLAG_UNUSED_0x4B4
+#define FLAG_WOT_MEGA_CLAIMED_OMASTAR                      FLAG_UNUSED_0x4B5
+#define FLAG_WOT_MEGA_CLAIMED_POLIWRATH                    FLAG_UNUSED_0x4B6
+#define FLAG_WOT_MEGA_CLAIMED_SHIFTRY                      FLAG_UNUSED_0x4B7
+#define FLAG_WOT_MEGA_CLAIMED_SNORLAX                      FLAG_UNUSED_0x4B8
+#define FLAG_WOT_MEGA_CLAIMED_TORKOAL                      FLAG_UNUSED_0x4B9
+#define FLAG_WOT_MEGA_CLAIMED_TYPHLOSION                   FLAG_UNUSED_0x4BA
+#define FLAG_WOT_MEGA_CLAIMED_WHIMSICOTT                   FLAG_UNUSED_0x4BB
+// 0x4BC was FLAG_HIDE_MEGA_PORTAL (one shared portal flag), now retired.
+#define FLAG_WOT_SMART_WILD_AI                  FLAG_UNUSED_0x4BD // B_SMART_WILD_AI_FLAG: set only around the Mega battle
+// A portal spot only enters the daily roll once its map has been visited
+// (set on every entry by WotMegaDim_UpdatePortalFlag). Route 2 needs none.
+#define FLAG_WOT_MEGA_DIM_SEEN_NATIONAL_PARK    FLAG_UNUSED_0x4CE
+#define FLAG_WOT_MEGA_DIM_SEEN_TRADEWIND        FLAG_UNUSED_0x4CF
+#define FLAG_WOT_MEGA_DIM_SEEN_SHIN_TOKYO       FLAG_UNUSED_0x4D0
+#define FLAG_WOT_MEGA_DIM_SEEN_ASHLANDS         FLAG_UNUSED_0x4D1
+#define FLAG_WOT_MEGA_DIM_SEEN_STAR_SUMMIT      FLAG_UNUSED_0x4D2
+#define FLAG_WOT_MEGA_DIM_SEEN_WALNUT_WOODS     FLAG_UNUSED_0x4D3
+// Mega Doomsday: the Tradewind intro has played (Lida + Canari out of the
+// portal). Unlocks the daily portals -- no Mega Ring needed.
+#define FLAG_WOT_MEGA_DOOMSDAY_INTRO            FLAG_UNUSED_0x4D4
+#define FLAG_HIDE_TRADEWIND_LIDA_CANARI         FLAG_UNUSED_0x4D5 // only exist inside the intro scene
+#define FLAG_WOT_HOTEL_Z_MET                    FLAG_UNUSED_0x4D6 // the Hotel Z briefing has played (Mable)
+#define FLAG_HIDE_HOTEL_Z_TEAM                  FLAG_UNUSED_0x4D7 // Lida/Canari/Mable: only after the Tradewind intro
+// One hide flag per portal spot (sPortalSpots order), recomputed on every map
+// load by WotMegaDim_UpdatePortalFlag: up to three portals are open at once.
+#define FLAG_HIDE_MEGA_PORTAL_0                 FLAG_UNUSED_0x4D8 // Tradewind Town (61,24)
+#define FLAG_HIDE_MEGA_PORTAL_1                 FLAG_UNUSED_0x4D9 // National Park Act 2 (50,38)
+#define FLAG_HIDE_MEGA_PORTAL_2                 FLAG_UNUSED_0x4DA // National Park Act 2 (10,47)
+#define FLAG_HIDE_MEGA_PORTAL_3                 FLAG_UNUSED_0x4DB // Ashlands (19,15)
+#define FLAG_HIDE_MEGA_PORTAL_4                 FLAG_UNUSED_0x4DC // Shin Tokyo (46,24)
+#define FLAG_HIDE_MEGA_PORTAL_5                 FLAG_UNUSED_0x4DD // Shin Tokyo (55,43)
+#define FLAG_HIDE_MEGA_PORTAL_6                 FLAG_UNUSED_0x4DE // Shin Tokyo (12,18)
+#define FLAG_HIDE_TRADEWIND_INTRO_PORTAL        FLAG_UNUSED_0x4DF // the rift in the Mega Doomsday intro only
+#define FLAG_WOT_MEGA_DIM_SEEN_PARK_ACT2        FLAG_UNUSED_0x4E0
+#define FLAG_WOT_MEGA_DIM_V2                    FLAG_UNUSED_0x4E1 // the vars below hold the v2 layout (an older save is reset once)
+// Set when the 8:00 spawn opens record 0/1/2; Lida's alert names those towns, then clears them.
+#define FLAG_WOT_MEGA_DIM_NEW_0                 FLAG_UNUSED_0x4E2
+#define FLAG_WOT_MEGA_DIM_NEW_1                 FLAG_UNUSED_0x4E3
+#define FLAG_WOT_MEGA_DIM_NEW_2                 FLAG_UNUSED_0x4E4
+// Mable's quest chain: the legends caught in portals (only a catch counts).
+#define FLAG_WOT_CAUGHT_PRIMAL_GROUDON          FLAG_UNUSED_0x4E5
+#define FLAG_WOT_CAUGHT_PRIMAL_KYOGRE           FLAG_UNUSED_0x4E6
+#define FLAG_WOT_CAUGHT_MEGA_RAYQUAZA           FLAG_UNUSED_0x4E7
+// Mable's quest state, packed into flags (no saved var is free):
+// 0x4E8-0x4EC = stones reported to her (0-19), 0x4ED-0x4EF = stage,
+// 0x882-0x885 = the portal day her tests started (src/wot_mega_dimension.c).
+#define FLAG_WOT_MABLE_TALLY_START              FLAG_UNUSED_0x4E8
+#define FLAG_WOT_MABLE_STAGE_START              FLAG_UNUSED_0x4ED
+#define FLAG_WOT_MABLE_DAY_START                FLAG_UNUSED_0x882
+// A recruited rival follows (and fights beside) the player inside
+// the dimension while this is set; it is FNPC_FLAG_PARTNER_WILD_BATTLES.
+#define FLAG_WOT_MEGA_DIM_PARTNER_ON            FLAG_UNUSED_0x886
+// Earned "Two Hearts One Rift" (a portal collapsed with a partner along);
+// the quest completes once the player is free on the field.
+#define FLAG_WOT_TWO_HEARTS_PENDING             FLAG_UNUSED_0x887
+// Per open portal (3 records x 19): what stays the same while that portal
+// lives. Bits 0-8: dealt wild Pokemon k beaten/caught (gone); bits 9-17: k
+// is shiny (kept); bit 18: the rogue Mega is shiny. Cleared on collapse.
+#define FLAG_WOT_MEGA_DIM_MASKS_START           FLAG_UNUSED_0x8E5 // through 0x91D
+// DexNav (config/dexnav.h). Kept out of the daily range: WoT sets
+// FLAG_SYS_CLOCK_SET, so the engine clears that range at every
+// in-game midnight, and a cleared search flag would strand a running search.
+#define FLAG_WOT_DEXNAV_SEARCHING               FLAG_UNUSED_0x91E // a search is running
+#define FLAG_WOT_DEXNAV_DETECTOR                FLAG_UNUSED_0x91F // detector mode (never set: no hidden_mons tables)
+
 // === Shadow Lugia off the Shin Tokyo pier (post-credits) ===
 #define FLAG_HIDE_SHINTOKYO_LUGIA               FLAG_UNUSED_0x4CC // re-set on every map load; the scene shows it
 #define FLAG_WOT_LUGIA_CAUGHT                   FLAG_UNUSED_0x4CD // only a capture ends the encounter
@@ -2648,10 +2730,48 @@
 #define FLAG_HIDDEN_ITEM_FROSTWOOD_BAR_SODA_POP  FLAG_UNUSED_0x4C4 // bottle on the bar at (5,4)
 
 // === RedFatality's Epic Pass (2026-09-14) ===
-#define FLAG_ITEM_SENNEN_EPIC_PASS          FLAG_UNUSED_0x4C5 // Poke Ball object 1 in Sennen Village (placeholder spot)
+// Got the Epic Pass: the Frostwood bar's snowboarder hands it over. Same bit
+// the old Sennen Village item ball used, so saves that picked that up count.
+#define FLAG_GOT_EPIC_PASS                  FLAG_UNUSED_0x4C5
 #define FLAG_REDFATALITY_HAS_EPIC_PASS      FLAG_UNUSED_0x4C6 // gave him the pass: hides him on Route 2 AND unlocks the Frostwood Gym door
 
 // === Toasty Time aftermath (2026-09-15) ===
-#define FLAG_TOASTY_TIME_RARE_CANDY         FLAG_UNUSED_0x4C7 // the gym leader's dad thanked the player with a Rare Candy (Frostwood_House2)
+#define FLAG_TOASTY_TIME_RARE_CANDY         FLAG_UNUSED_0x4C7 // the gym leader's dad thanked the player (now TM Rock Tomb, was a Rare Candy) (Frostwood_House2)
+
+// === Giratina dream: Shin Tokyo's blue PC (2026-10-26) ===
+// No saved var is free, so the dream's state is three flags:
+//   ARMED            the nurse healed you; the PC exit leads into the void
+//   ARMED + FIGHTING in the battle, or back from a whiteout until the heal ends the dream
+//   ARMED + CAUGHT   just woke with Giratina; the nurse is gone this visit
+//   CAUGHT           done; the PC is an ordinary Pokemon Center again
+// 0x4BC is avoided on purpose: it was the retired portal flag and old saves may hold it set.
+#define FLAG_WOT_GIRATINA_DREAM_ARMED       FLAG_UNUSED_0x4BE
+#define FLAG_WOT_GIRATINA_DREAM_FIGHTING    FLAG_UNUSED_0x4BF
+#define FLAG_WOT_GIRATINA_DREAM_CAUGHT      FLAG_UNUSED_0x4F9
+
+// === The Zygarde arc ===
+// 2 bits, through 0x88F (WotZygarde_GetStage). The rest is the bag: the Odd
+// Pebble, the Cell count, the Zygarde Cube.
+#define FLAG_WOT_ZYGARDE_STAGE_START        FLAG_UNUSED_0x88E
+#define FLAG_WOT_CAUGHT_ZYGARDE             FLAG_UNUSED_0x4FF
+#define FLAG_WOT_NO_CATCHING                FLAG_UNUSED_0x8E3 // B_FLAG_NO_CATCHING: the dog and Mega Floette
+// === Options > FOLLOWERS: OFF (2026-11-03) ===
+// Set = no follower Pokemon walks behind the player (B_FLAG_FOLLOWERS_DISABLED).
+// The team pose (L) is separate and still works. Moved from 0x4E9:
+// that bit is part of Mable's tally.
+#define FLAG_WOT_FOLLOWERS_OFF              FLAG_UNUSED_0x4FA
+// None of these may sit in 0x8E5-0x91D: those are the rift masks.
+// Options > LEVEL CAP: OFF. Stored as "off" so every save starts with caps on.
+#define FLAG_WOT_LEVEL_CAPS_OFF             FLAG_UNUSED_0x025
+// Battle rules, re-decided at the start of every battle from the opponent
+// (src/wot_battle_rules.c), so they never outlive the fight that set them.
+// That makes the daily range safe for them: midnight clearing them is harmless.
+#define FLAG_WOT_INVERSE_BATTLE             FLAG_UNUSED_0x925 // B_FLAG_INVERSE_BATTLE: the Distortion World
+#define FLAG_WOT_MAGLEV_FLOOR               FLAG_UNUSED_0x926 // Electric and Steel types float (Volten's arena)
+#define FLAG_WOT_ALLISON_CHOICE_SPECS       FLAG_UNUSED_0x020 // Siren Allison handed over her Choice Specs
+// Mable's Primal step also wants Mega Lugia and Mega Ho-Oh (only a catch
+// counts). They reuse Navel Rock's flags: no build has reached Navel Rock.
+#define FLAG_WOT_CAUGHT_MEGA_LUGIA          FLAG_CAUGHT_LUGIA
+#define FLAG_WOT_CAUGHT_MEGA_HO_OH          FLAG_CAUGHT_HO_OH
 
 #endif // GUARD_CONSTANTS_FLAGS_H

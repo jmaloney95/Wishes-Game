@@ -50,6 +50,23 @@ static const u8 sPortraitNessaGfx[] = INCGFX_U8("graphics/portraits/nessa.png", 
 static const u16 sPortraitNessaPal[] = INCGFX_U16("graphics/portraits/nessa.png", ".gbapal");
 static const u8 sPortraitDracoGfx[] = INCGFX_U8("graphics/portraits/draco.png", ".4bpp");
 static const u16 sPortraitDracoPal[] = INCGFX_U16("graphics/portraits/draco.png", ".gbapal");
+// Z-A cast, cut 1:1 from their sprite art
+static const u8 sPortraitZaCanariGfx[] = INCGFX_U8("graphics/portraits/za_canari.png", ".4bpp");
+static const u16 sPortraitZaCanariPal[] = INCGFX_U16("graphics/portraits/za_canari.png", ".gbapal");
+static const u8 sPortraitZaLidaGfx[] = INCGFX_U8("graphics/portraits/za_lida.png", ".4bpp");
+static const u16 sPortraitZaLidaPal[] = INCGFX_U16("graphics/portraits/za_lida.png", ".gbapal");
+static const u8 sPortraitZaEmmaGfx[] = INCGFX_U8("graphics/portraits/za_emma.png", ".4bpp");
+static const u16 sPortraitZaEmmaPal[] = INCGFX_U16("graphics/portraits/za_emma.png", ".gbapal");
+static const u8 sPortraitZaTaunieGfx[] = INCGFX_U8("graphics/portraits/za_taunie.png", ".4bpp");
+static const u16 sPortraitZaTauniePal[] = INCGFX_U16("graphics/portraits/za_taunie.png", ".gbapal");
+static const u8 sPortraitZaTulipGfx[] = INCGFX_U8("graphics/portraits/za_tulip.png", ".4bpp");
+static const u16 sPortraitZaTulipPal[] = INCGFX_U16("graphics/portraits/za_tulip.png", ".gbapal");
+static const u8 sPortraitZaJacintheGfx[] = INCGFX_U8("graphics/portraits/za_jacinthe.png", ".4bpp");
+static const u16 sPortraitZaJacinthePal[] = INCGFX_U16("graphics/portraits/za_jacinthe.png", ".gbapal");
+static const u8 sPortraitZaMableGfx[] = INCGFX_U8("graphics/portraits/za_mable.png", ".4bpp");
+static const u16 sPortraitZaMablePal[] = INCGFX_U16("graphics/portraits/za_mable.png", ".gbapal");
+static const u8 sPortraitZaAzGfx[] = INCGFX_U8("graphics/portraits/za_az.png", ".4bpp");
+static const u16 sPortraitZaAzPal[] = INCGFX_U16("graphics/portraits/za_az.png", ".gbapal");
 // THE ONI has no drawn portrait: his card and his dialogue use his battle
 // sprite, which is already a 64x64 16-colour indexed PNG with index 0 as the
 // background -- exactly the portrait format.
@@ -74,6 +91,14 @@ static const struct NpcPortrait sNpcPortraits[PORTRAIT_COUNT] =
     [PORTRAIT_ALLISON]         = {sPortraitAllisonGfx,      sPortraitAllisonPal},
     [PORTRAIT_YIFFER]          = {sPortraitYifferGfx,       sPortraitYifferPal},
     [PORTRAIT_NESSA]           = {sPortraitNessaGfx,        sPortraitNessaPal},
+    [PORTRAIT_ZA_CANARI]        = {sPortraitZaCanariGfx,   sPortraitZaCanariPal},
+    [PORTRAIT_ZA_LIDA]          = {sPortraitZaLidaGfx,     sPortraitZaLidaPal},
+    [PORTRAIT_ZA_EMMA]          = {sPortraitZaEmmaGfx,     sPortraitZaEmmaPal},
+    [PORTRAIT_ZA_TAUNIE]        = {sPortraitZaTaunieGfx,   sPortraitZaTauniePal},
+    [PORTRAIT_ZA_TULIP]         = {sPortraitZaTulipGfx,    sPortraitZaTulipPal},
+    [PORTRAIT_ZA_JACINTHE]      = {sPortraitZaJacintheGfx, sPortraitZaJacinthePal},
+    [PORTRAIT_ZA_MABLE]         = {sPortraitZaMableGfx,    sPortraitZaMablePal},
+    [PORTRAIT_ZA_AZ]            = {sPortraitZaAzGfx,       sPortraitZaAzPal},
 };
 
 // Speaker-linked portraits: setspeaker with one of these SP_NAME_* ids
@@ -90,6 +115,14 @@ static const struct { u8 speaker; u8 portrait; } sSpeakerPortraits[] =
     { SP_NAME_CLARKSON,     PORTRAIT_CLARKSON_GENGAR },
     { SP_NAME_OPERATIVE,    PORTRAIT_NESSA },
     { SP_NAME_DRACO,        PORTRAIT_DRACO },
+    { SP_NAME_CANARI,       PORTRAIT_ZA_CANARI },
+    { SP_NAME_LIDA,         PORTRAIT_ZA_LIDA },
+    { SP_NAME_EMMA,         PORTRAIT_ZA_EMMA },
+    { SP_NAME_TAUNIE,       PORTRAIT_ZA_TAUNIE },
+    { SP_NAME_TULIP,        PORTRAIT_ZA_TULIP },
+    { SP_NAME_JACINTHE,     PORTRAIT_ZA_JACINTHE },
+    { SP_NAME_MABLE,        PORTRAIT_ZA_MABLE },
+    { SP_NAME_AZ,           PORTRAIT_ZA_AZ },
     // MASTER GEN and MOM are deliberately unbound: no portrait art exists, and
     // an unmatched speaker shows the nameplate alone (WotShowSpeakerPortrait
     // hides any auto portrait on a miss). Add art -> add a row here.
@@ -191,13 +224,15 @@ void HideNpcPortrait(void)
     sPortraitSpriteId = SPRITE_NONE;
 }
 
-// Portraits are hidden when they are switched off for everyone at build time
-// (USE_NPC_PORTRAITS) or by the player in Options. Dialogue and the boss intro
-// cards both ask here. Read live rather than cached, so switching the option
-// off takes effect on the very next line instead of at the next map load.
-bool32 WotPortraitsHidden(void)
+// A portrait is hidden when portraits are switched off for everyone at build
+// time (USE_NPC_PORTRAITS) or by the player in Options, and always when it is
+// one of the older AI-assisted ones (below PORTRAIT_FIRST_CLEARED). Dialogue
+// and the boss intro cards both ask here. Read live rather than cached, so
+// switching the option off takes effect on the very next line instead of at
+// the next map load.
+bool32 WotPortraitHidden(u32 portraitId)
 {
-    return !USE_NPC_PORTRAITS || gSaveBlock2Ptr->optionsPortraitsOff;
+    return !USE_NPC_PORTRAITS || gSaveBlock2Ptr->optionsPortraitsOff || portraitId < PORTRAIT_FIRST_CLEARED;
 }
 
 void ShowNpcPortrait(u8 portraitId, u8 side)
@@ -205,10 +240,10 @@ void ShowNpcPortrait(u8 portraitId, u8 side)
     struct SpritePalette palette = { .tag = PORTRAIT_PAL_TAG };
     s16 x;
 
-    if (WotPortraitsHidden())
-        return;
     if (portraitId >= PORTRAIT_COUNT)
         portraitId = PORTRAIT_PLACEHOLDER;
+    if (WotPortraitHidden(portraitId))
+        return;
 
     HideNpcPortrait(); // showing over an existing portrait swaps cleanly
 

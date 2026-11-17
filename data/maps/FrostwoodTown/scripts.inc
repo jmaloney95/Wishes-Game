@@ -75,8 +75,9 @@ FrostwoodTown_EventScript_MartLady::
 FrostwoodText_OldMan:
 	.string "Welcome to FROSTWOOD TOWN, traveler.\p"
 	.string "These woods have worn the same white\ncoat for a thousand winters.\p"
-	.string "But walk the trees now and you'll hear\nit, dripping. The frost is letting go.\p"
-	.string "Snow that old should never melt. Same\nas they say down in MUNEN.$"
+	.string "But the snow is melting. You know\nwhat that means, right?\p"
+	.string "The UNDYING WISH has risen again!\p"
+	.string "…Well, according to some old\nfolklore, anyway.$"
 
 FrostwoodText_GymWoman:
 	.string "See that big building with the snowed-\nover roof? That's our POKEMON GYM.\p"

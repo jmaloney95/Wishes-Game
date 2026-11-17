@@ -6,12 +6,12 @@
 
 // 64x64 character portraits beside the message box, driven by the
 // showportrait/hideportrait script commands (src/npc_portrait.c).
-// FALSE for now: the current portraits are AI-assisted art, which new listing
-// rules restrict, so they stay off until replacements are drawn. FALSE also
-// hides the portrait on the boss intro cards and takes PORTRAITS out of
-// Options. The save bit is left alone, so setting this back to TRUE brings the
-// option back with each player's own choice intact.
-#define USE_NPC_PORTRAITS FALSE
+// The older portraits (Clarkson, the boss cards' faces, ...) are AI-assisted
+// art, which new listing rules restrict, so they never draw: only ids from
+// PORTRAIT_FIRST_CLEARED on (the Z-A cast) are shown. FALSE hides
+// every portrait and takes PORTRAITS out of Options; the save bit is left
+// alone either way, so each player's own choice survives.
+#define USE_NPC_PORTRAITS TRUE
 
 // Horizontal icon-bar start menu (sprites along the bottom + a label window)
 // instead of the vanilla vertical text list. Presentation only: the action

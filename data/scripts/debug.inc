@@ -918,3 +918,233 @@ Debug_EventScript_TellTheTime_Text_0:
 
 DebugEventScript_PrintWeekday_Text_0:
 	.string "Time of day: {STR_VAR_1}$"
+
+@ ===========================================================================
+@  WoT Mega Dimension (debug menu -> Scripts -> Mega Dim)
+@  "portal": opens a freshly rolled portal on the first portal spot of the
+@  map you're standing on (Tradewind Town, National Park Act 2, the Ashlands
+@  or Shin Tokyo; anywhere else = Tradewind's), unlocks the DLC (skips the
+@  Tradewind intro), and drops you in front of it.
+@  "10s left": inside the dimension, cuts the countdown to see the collapse.
+@ ===========================================================================
+Debug_EventScript_MegaDimPortal::
+	special WotMegaDim_DebugOpenPortal
+	release
+	end
+
+Debug_EventScript_MegaDimShortTimer::
+	special WotMegaDim_DebugShortTimer
+	release
+	end
+
+@ "rival": the next portal entered has a rival instead of the Mega, for as
+@ long as it stays open (cycles Canari, Lida, Emma, Taunie, Tulip, Jacinthe
+@ on each use).
+Debug_EventScript_MegaDimRival::
+	special WotMegaDim_DebugForceRival
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimRival, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimRival:
+	.string "Next portal trip: rival {STR_VAR_1}\n"
+	.string "(1 Canari ... 6 Jacinthe).$"
+
+@ "shiny": the next trip in deals its first wild Pokemon shiny, to check it
+@ stays shiny (and put) when you leave and come back through the same portal.
+Debug_EventScript_MegaDimShiny::
+	special WotMegaDim_DebugForceShiny
+	msgbox Debug_Text_MegaDimShiny, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimShiny:
+	.string "Next portal trip: the Mega or legend\n"
+	.string "and the first wild Pokemon are shiny.$"
+
+@ Shiny wilds for filming (src/wot_film_shiny.c). RAM only, never
+@ saved. "next" makes the next wild battle (or the next trainer's Shadows)
+@ shiny, then turns itself off; "all" does it until chosen again. Ordinary
+@ trainer Pokemon, gifts, eggs and the Mega Dimension (use "Mega Dim: shiny"
+@ there) are left alone.
+Debug_EventScript_FilmShinyNext::
+	special WotFilmShiny_DebugToggleNext
+	goto_if_eq VAR_RESULT, FALSE, Debug_EventScript_FilmShinyOff
+	msgbox Debug_Text_FilmShinyNext, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_EventScript_FilmShinyAll::
+	special WotFilmShiny_DebugToggleAll
+	goto_if_eq VAR_RESULT, FALSE, Debug_EventScript_FilmShinyOff
+	msgbox Debug_Text_FilmShinyAll, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_EventScript_FilmShinyOff::
+	msgbox Debug_Text_FilmShinyOff, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_FilmShinyNext:
+	.string "Shiny: the next wild Pokemon, or the\n"
+	.string "next trainer's Shadows. Once only.$"
+
+Debug_Text_FilmShinyAll:
+	.string "Shiny: every wild Pokemon and\n"
+	.string "trainer Shadow, until you choose\l"
+	.string "this again.$"
+
+Debug_Text_FilmShinyOff:
+	.string "Shiny wilds: off.$"
+
+@ "Catch: 100%": every thrown ball catches until chosen again (RAM only).
+Debug_EventScript_FilmCatchAll::
+	special WotFilmCatch_DebugToggle
+	goto_if_eq VAR_RESULT, FALSE, Debug_EventScript_FilmCatchOff
+	msgbox Debug_Text_FilmCatchOn, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_EventScript_FilmCatchOff::
+	msgbox Debug_Text_FilmCatchOff, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_FilmCatchOn:
+	.string "Catch: every ball catches, until\n"
+	.string "you choose this again.$"
+
+Debug_Text_FilmCatchOff:
+	.string "Catch: normal odds.$"
+
+@ "Music: off": no map, battle or scripted music and no fanfares until chosen
+@ again (RAM only); cries, move sounds and other sound effects still play.
+Debug_EventScript_FilmBattleMusic::
+	special WotFilmMusic_DebugToggle
+	goto_if_eq VAR_RESULT, FALSE, Debug_EventScript_FilmBattleMusicOn
+	msgbox Debug_Text_FilmBattleMusicOff, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_EventScript_FilmBattleMusicOn::
+	msgbox Debug_Text_FilmBattleMusicOn, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_FilmBattleMusicOff:
+	.string "Music: off, on maps and in battle.\n"
+	.string "Sound effects and cries still play,\l"
+	.string "until you choose this again.$"
+
+Debug_Text_FilmBattleMusicOn:
+	.string "Music: on.$"
+
+@ "Mable next": jumps Mable's quest chain to its next call, as if earned.
+@ Collecting -> all 23 stones claimed and reported (Two Minutes completes) and
+@ the Primal call rings within a second; Primals -> both caught and the
+@ Rayquaza call rings. Use it on the field, outside the dimension.
+Debug_EventScript_MegaDimMableNext::
+	special WotMegaDim_DebugMableNext
+	goto_if_ne VAR_RESULT, 1, Debug_EventScript_MegaDimMableNextDone
+	goto_if_quest_complete QUEST_TWO_MINUTES, Debug_EventScript_MegaDimMableNextDone
+	completequest QUEST_TWO_MINUTES
+Debug_EventScript_MegaDimMableNextDone::
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimMableNext, MSGBOX_DEFAULT
+	release
+	end
+
+@ "partner": every Mega Dimension rival counts as beaten (unlocked) and the
+@ partner cycles none -> Canari -> Lida -> Emma -> Taunie -> Tulip ->
+@ Jacinthe -> none. They join on the next portal entered.
+Debug_EventScript_MegaDimPartner::
+	special WotMegaDim_DebugPartner
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimPartner, MSGBOX_DEFAULT
+	release
+	end
+
+@ "+5 runs": the current partner gains 5 portal runs, one friendship level.
+@ Their level-up call rings once the menu closes.
+Debug_EventScript_MegaDimPartnerRuns::
+	special WotMegaDim_DebugPartnerRuns
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	buffernumberstring STR_VAR_2, VAR_0x8004
+	msgbox Debug_Text_MegaDimPartnerRuns, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimPartnerRuns:
+	.string "Partner runs {STR_VAR_1}, friendship Lv{STR_VAR_2}\n"
+	.string "(0 = no partner chosen).$"
+
+@ "sanctum": the game counts as beaten, the partner (Canari if
+@ none) is at max friendship, and portal 0 (if open) leads to their barrier.
+Debug_EventScript_MegaDimSanctum::
+	special WotMegaDim_DebugSanctum
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimSanctum, MSGBOX_DEFAULT
+	release
+	end
+
+@ "Z kit": the Z-Power Ring, the Rogue Core and 200 Z-Shards.
+Debug_EventScript_MegaDimZKit::
+	special WotMegaDim_DebugZKit
+	msgbox Debug_Text_MegaDimZKit, MSGBOX_DEFAULT
+	release
+	end
+
+@ "Zygarde next": the arc's next beat. See WotZygarde_DebugNext.
+Debug_EventScript_MegaDimZygarde::
+	special WotZygarde_DebugNext
+	buffernumberstring STR_VAR_1, VAR_RESULT
+	msgbox Debug_Text_MegaDimZygarde, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimZygarde:
+	.string "Zygarde arc: step {STR_VAR_1} done.\n"
+	.string "1 dog due at Hotel Z, 2 calls due,\l"
+	.string "3 calls done or AZ, 4-5 further.$"
+
+Debug_Text_MegaDimZKit:
+	.string "Z-Power Ring, Rogue Core and\n"
+	.string "200 Z-Shards added.$"
+
+Debug_Text_MegaDimSanctum:
+	.string "Game clear set; partner {STR_VAR_1} is at\n"
+	.string "max friendship. Portal 0 -> barrier.$"
+
+Debug_Text_MegaDimPartner:
+	.string "Partner {STR_VAR_1} (0 none, 1 Canari …\n"
+	.string "6 Jacinthe). All rivals unlocked.$"
+
+Debug_Text_MegaDimMableNext:
+	.string "Mable stage {STR_VAR_1} (1 tests, 3 Rayquaza\n"
+	.string "call). Her call rings when free.$"
+
+@ "intro": forget the Mega Doomsday intro, so walking down Tradewind's
+@ arrival corridor (y=6) replays it. Portals stay shut until it has played.
+Debug_EventScript_MegaDimIntro::
+	clearflag FLAG_WOT_MEGA_DOOMSDAY_INTRO
+	msgbox Debug_Text_MegaDimIntro, MSGBOX_DEFAULT
+	release
+	end
+
+Debug_Text_MegaDimIntro:
+	.string "Mega Doomsday intro reset. Walk\n"
+	.string "down into Tradewind to replay it.$"
+
+@ "Giratina dream": forget the Shin Tokyo PC dream (any stage), hand over a
+@ ball kit and stand the player in front of the blank nurse.
+Debug_EventScript_GiratinaDream::
+	clearflag FLAG_WOT_GIRATINA_DREAM_ARMED
+	clearflag FLAG_WOT_GIRATINA_DREAM_FIGHTING
+	clearflag FLAG_WOT_GIRATINA_DREAM_CAUGHT
+	additem ITEM_ULTRA_BALL, 20
+	warp MAP_TRADEWIND_PC, 7, 4
+	waitstate
+	release
+	end

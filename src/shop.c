@@ -34,6 +34,7 @@
 #include "strings.h"
 #include "text_window.h"
 #include "tv.h"
+#include "wot_mega_dimension.h"
 #include "constants/decorations.h"
 #include "constants/event_objects.h"
 #include "constants/items.h"
@@ -108,6 +109,20 @@ struct ShopData
 };
 
 static EWRAM_DATA struct MartInfo sMartInfo = {0};
+
+// WoT: Hotel Z's exchange. The same screen, buy only, one at a
+// time, paid in Z-Shards from the bag.
+static EWRAM_DATA bool8 sZShardShop = FALSE;
+
+static const u8 sText_ZShardFunds[] = _("Z-SHARDS {STR_VAR_1}");
+static const u8 sText_ZShardPrice[] = _("{STR_VAR_1} Z");
+static const u8 sText_ZShardConfirm[] = _("{STR_VAR_1}?\nThat will be {STR_VAR_2} Z-Shards.");
+static const u8 sText_ZShardNotEnough[] = _("You don't have enough Z-Shards.{PAUSE_UNTIL_PRESS}");
+
+static u32 GetShopFunds(void)
+{
+    return sZShardShop ? CountTotalItemQuantityInBag(ITEM_Z_SHARD) : GetMoney(&gSaveBlock1Ptr->money);
+}
 static EWRAM_DATA struct ShopData *sShopData = NULL;
 static EWRAM_DATA struct ListMenuItem *sListMenuItems = NULL;
 static EWRAM_DATA u8 (*sItemNames)[ITEM_NAME_LENGTH + 2] = {0};
@@ -347,7 +362,7 @@ static u8 CreateShopMenu(u8 martType)
     LockPlayerFieldControls();
     sMartInfo.martType = martType;
 
-    if (martType == MART_TYPE_NORMAL)
+    if (martType == MART_TYPE_NORMAL && !sZShardShop)
     {
         struct WindowTemplate winTemplate = sShopMenuWindowTemplates[WIN_BUY_SELL_QUIT];
         winTemplate.width = GetMaxWidthInMenuTable(sShopMenuActions_BuySellQuit, ARRAY_COUNT(sShopMenuActions_BuySellQuit));
@@ -630,7 +645,7 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
         {
             ConvertIntToDecimalStringN(
                 gStringVar1,
-                GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT),
+                sZShardShop ? WotZShop_GetPrice(itemId) : (u32)(GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT)),
                 STR_CONV_MODE_LEFT_ALIGN,
                 6);
         }
@@ -646,7 +661,7 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
         if (GetItemImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
             StringCopy(gStringVar4, gText_SoldOut);
         else
-            StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
+            StringExpandPlaceholders(gStringVar4, sZShardShop ? sText_ZShardPrice : gText_PokedollarVar1);
         x = GetStringRightAlignXOffset(FONT_NARROW, gStringVar4, 120);
         AddTextPrinterParameterized4(windowId, FONT_NARROW, x, y, 0, 0, sShopBuyMenuTextColors[COLORID_ITEM_LIST], TEXT_SKIP_DRAW, gStringVar4);
     }
@@ -772,12 +787,29 @@ static void BuyMenuDisplayMessage(u8 taskId, const u8 *text, TaskFunc callback)
     ScheduleBgCopyTilemapToVram(0);
 }
 
+static void PrintZShardFunds(void)
+{
+    ConvertIntToDecimalStringN(gStringVar1, GetShopFunds(), STR_CONV_MODE_LEFT_ALIGN, MAX_ITEM_DIGITS);
+    StringExpandPlaceholders(gStringVar4, sText_ZShardFunds);
+    FillWindowPixelBuffer(WIN_MONEY, PIXEL_FILL(1));
+    AddTextPrinterParameterized(WIN_MONEY, FONT_NARROW, gStringVar4, 0, 1, 0, NULL);
+    CopyWindowToVram(WIN_MONEY, COPYWIN_GFX);
+}
+
 static void BuyMenuDrawGraphics(void)
 {
     BuyMenuDrawMapGraphics();
     BuyMenuCopyMenuBgToBg1TilemapBuffer();
-    AddMoneyLabelObject(19, 11);
-    PrintMoneyAmountInMoneyBoxWithBorder(WIN_MONEY, 1, 13, GetMoney(&gSaveBlock1Ptr->money));
+    if (sZShardShop)
+    {
+        DrawStdFrameWithCustomTileAndPalette(WIN_MONEY, FALSE, 1, 13);
+        PrintZShardFunds();
+    }
+    else
+    {
+        AddMoneyLabelObject(19, 11);
+        PrintMoneyAmountInMoneyBoxWithBorder(WIN_MONEY, 1, 13, GetMoney(&gSaveBlock1Ptr->money));
+    }
     ScheduleBgCopyTilemapToVram(0);
     ScheduleBgCopyTilemapToVram(1);
     ScheduleBgCopyTilemapToVram(2);
@@ -1003,22 +1035,29 @@ static void Task_BuyMenu(u8 taskId)
             BuyMenuPrintCursor(tListTaskId, COLORID_GRAY_CURSOR);
 
             if (sMartInfo.martType == MART_TYPE_NORMAL)
-                sShopData->totalCost = (GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
+                sShopData->totalCost = sZShardShop ? WotZShop_GetPrice(itemId) : (u32)(GetItemPrice(itemId) >> IsPokeNewsActive(POKENEWS_SLATEPORT));
             else
                 sShopData->totalCost = gDecorations[itemId].price;
 
             if (GetItemImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
                 BuyMenuDisplayMessage(taskId, gText_ThatItemIsSoldOut, BuyMenuReturnToItemList);
-            else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
+            else if (GetShopFunds() < sShopData->totalCost)
             {
-                BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
+                BuyMenuDisplayMessage(taskId, sZShardShop ? sText_ZShardNotEnough : gText_YouDontHaveMoney, BuyMenuReturnToItemList);
             }
             else
             {
                 if (sMartInfo.martType == MART_TYPE_NORMAL)
                 {
                     CopyItemName(itemId, gStringVar1);
-                    if (GetItemImportance(itemId))
+                    if (sZShardShop)
+                    {
+                        ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, MAX_ITEM_DIGITS);
+                        StringExpandPlaceholders(gStringVar4, sText_ZShardConfirm);
+                        tItemCount = 1;
+                        BuyMenuDisplayMessage(taskId, gStringVar4, BuyMenuConfirmPurchase);
+                    }
+                    else if (GetItemImportance(itemId))
                     {
                         ConvertIntToDecimalStringN(gStringVar2, sShopData->totalCost, STR_CONV_MODE_LEFT_ALIGN, 6);
                         StringExpandPlaceholders(gStringVar4, gText_YouWantedVar1ThatllBeVar2);
@@ -1163,9 +1202,17 @@ static void BuyMenuTryMakePurchase(u8 taskId)
 static void BuyMenuSubtractMoney(u8 taskId)
 {
     IncrementGameStat(GAME_STAT_SHOPPED);
-    RemoveMoney(&gSaveBlock1Ptr->money, sShopData->totalCost);
     PlaySE(SE_SHOP);
-    PrintMoneyAmountInMoneyBox(WIN_MONEY, GetMoney(&gSaveBlock1Ptr->money), 0);
+    if (sZShardShop)
+    {
+        RemoveBagItem(ITEM_Z_SHARD, sShopData->totalCost);
+        PrintZShardFunds();
+    }
+    else
+    {
+        RemoveMoney(&gSaveBlock1Ptr->money, sShopData->totalCost);
+        PrintMoneyAmountInMoneyBox(WIN_MONEY, GetMoney(&gSaveBlock1Ptr->money), 0);
+    }
 
     if (sMartInfo.martType == MART_TYPE_NORMAL)
         gTasks[taskId].func = Task_ReturnToItemListAfterItemPurchase;
@@ -1252,7 +1299,8 @@ static void Task_ExitBuyMenu(u8 taskId)
 {
     if (!gPaletteFade.active)
     {
-        RemoveMoneyLabelObject();
+        if (!sZShardShop)
+            RemoveMoneyLabelObject();
         BuyMenuFreeMemory();
         SetMainCallback2(CB2_ReturnToField);
         DestroyTask(taskId);
@@ -1297,8 +1345,18 @@ static void RecordItemPurchase(u8 taskId)
 #undef tCallbackHi
 #undef tCallbackLo
 
+void CreateZShardMartMenu(const u16 *itemsForSale)
+{
+    sZShardShop = TRUE;
+    CreateShopMenu(MART_TYPE_NORMAL);
+    SetShopItemsForSale(itemsForSale);
+    ClearItemPurchases();
+    SetShopMenuCallback(ScriptContext_Enable);
+}
+
 void CreatePokemartMenu(const u16 *itemsForSale)
 {
+    sZShardShop = FALSE;
     CreateShopMenu(MART_TYPE_NORMAL);
     SetShopItemsForSale(itemsForSale);
     ClearItemPurchases();
@@ -1307,6 +1365,7 @@ void CreatePokemartMenu(const u16 *itemsForSale)
 
 void CreateDecorationShop1Menu(const u16 *itemsForSale)
 {
+    sZShardShop = FALSE;
     CreateShopMenu(MART_TYPE_DECOR);
     SetShopItemsForSale(itemsForSale);
     SetShopMenuCallback(ScriptContext_Enable);
@@ -1314,6 +1373,7 @@ void CreateDecorationShop1Menu(const u16 *itemsForSale)
 
 void CreateDecorationShop2Menu(const u16 *itemsForSale)
 {
+    sZShardShop = FALSE;
     CreateShopMenu(MART_TYPE_DECOR2);
     SetShopItemsForSale(itemsForSale);
     SetShopMenuCallback(ScriptContext_Enable);

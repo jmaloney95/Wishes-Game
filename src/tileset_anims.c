@@ -637,6 +637,87 @@ void InitSecondaryTilesetAnimation(void)
     _InitSecondaryTilesetAnimation();
 }
 
+// Tradewind's HOTEL Z sign: neon
+// on failing power. Not a steady loop of frames but a script of them, ticks each.
+const u16 gTilesetAnims_HotelZSign_Frame0[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/0.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame1[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/1.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame2[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/2.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame3[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/3.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame4[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/4.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame5[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/5.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame6[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/6.png", ".4bpp");
+const u16 gTilesetAnims_HotelZSign_Frame7[] = INCGFX_U16("data/tilesets/secondary/ashland_trees/anim/hotel_z_sign/7.png", ".4bpp");
+
+static const u16 *const gTilesetAnims_HotelZSign[] = {
+    gTilesetAnims_HotelZSign_Frame0,
+    gTilesetAnims_HotelZSign_Frame1,
+    gTilesetAnims_HotelZSign_Frame2,
+    gTilesetAnims_HotelZSign_Frame3,
+    gTilesetAnims_HotelZSign_Frame4,
+    gTilesetAnims_HotelZSign_Frame5,
+    gTilesetAnims_HotelZSign_Frame6,
+    gTilesetAnims_HotelZSign_Frame7,
+};
+
+enum
+{
+    SIGN_FULL,
+    SIGN_SAGGING,
+    SIGN_NEARLY_GONE,
+    SIGN_OUT,
+    SIGN_L_GONE,
+    SIGN_Z_DROPS,
+    SIGN_ONLY_Z,
+    SIGN_L_GONE_DIM,
+};
+
+static const struct { u8 frame; u8 ticks; } sHotelZSignSteps[] =
+{
+    {SIGN_FULL, 170},
+    // A shiver.
+    {SIGN_SAGGING, 3}, {SIGN_FULL, 5}, {SIGN_SAGGING, 3}, {SIGN_FULL, 60},
+    // The L goes, and stays gone; the Z stutters.
+    {SIGN_L_GONE, 90},
+    {SIGN_Z_DROPS, 35}, {SIGN_L_GONE, 6}, {SIGN_Z_DROPS, 20}, {SIGN_L_GONE, 30},
+    // The power sags.
+    {SIGN_L_GONE_DIM, 40},
+    {SIGN_NEARLY_GONE, 6}, {SIGN_L_GONE_DIM, 4}, {SIGN_NEARLY_GONE, 40},
+    {SIGN_ONLY_Z, 30},
+    // Dark. The Z tries twice.
+    {SIGN_OUT, 25}, {SIGN_ONLY_Z, 5}, {SIGN_OUT, 10}, {SIGN_ONLY_Z, 5}, {SIGN_OUT, 40},
+    // It fights its way back.
+    {SIGN_NEARLY_GONE, 6}, {SIGN_OUT, 6}, {SIGN_SAGGING, 5}, {SIGN_OUT, 4}, {SIGN_SAGGING, 8}, {SIGN_FULL, 4}, {SIGN_SAGGING, 4},
+};
+
+static void TilesetAnim_AshlandTrees(u16 timer)
+{
+    u32 i, start = 0;
+
+    for (i = 0; i < ARRAY_COUNT(sHotelZSignSteps); i++)
+    {
+        if (timer == start)
+        {
+            AppendTilesetAnimToBuffer(gTilesetAnims_HotelZSign[sHotelZSignSteps[i].frame],
+                                      (u16 *)(BG_VRAM + TILE_OFFSET_4BPP(NUM_TILES_IN_PRIMARY + 400)),
+                                      24 * TILE_SIZE_4BPP);
+            return;
+        }
+        start += sHotelZSignSteps[i].ticks;
+    }
+}
+
+void InitTilesetAnim_AshlandTrees(void)
+{
+    u32 i, total = 0;
+
+    for (i = 0; i < ARRAY_COUNT(sHotelZSignSteps); i++)
+        total += sHotelZSignSteps[i].ticks;
+    // Its own counter: not every primary it pairs with runs one.
+    sSecondaryTilesetAnimCounter = 0;
+    sSecondaryTilesetAnimCounterMax = total;
+    sSecondaryTilesetAnimCallback = TilesetAnim_AshlandTrees;
+}
+
 void UpdateTilesetAnimations(void)
 {
     ResetTilesetAnimBuffer();

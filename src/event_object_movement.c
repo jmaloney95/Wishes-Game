@@ -40,6 +40,9 @@
 #include "trainer_hill.h"
 #include "util.h"
 #include "wild_encounter.h"
+#include "wot_permanent_mega.h"
+#include "wot_team_pose.h"
+#include "wot_trailer.h"
 #include "constants/event_object_movement.h"
 #include "constants/abilities.h"
 #include "constants/battle.h"
@@ -486,6 +489,85 @@ const u8 gInitialMovementTypeFacingDirections[NUM_MOVEMENT_TYPES] = {
 #include "data/object_events/object_event_graphics_info.h"
 #include "data/object_events/object_event_graphics_info_followers.h"
 
+// WoT: a Shadow OW Pokemon that has its own drawn overworld art
+// wears it, with its own palette, instead of the violet silhouette of its
+// ordinary sprite (a shiny one still gets the gold silhouette, built from the
+// art's palette). Each sheet
+// has a fixed tile tag, clear of the COMP_OW_TILE_TAG_BASE + graphicsId ones.
+static const u32 sWotShadowOwPic_Lugia[] = INCGFX_COMP("graphics/pokemon/lugia/overworld_shadow.png", ".4bpp", "-mwidth 8 -mheight 8");
+static const u16 sWotShadowOwPal_Lugia[] = INCGFX_U16("graphics/pokemon/lugia/overworld_shadow.pal", ".gbapal");
+static const struct SpriteFrameImage sPicTable_WotShadowLugia[] = {
+    overworld_ascending_frames(sWotShadowOwPic_Lugia, 8, 8),
+};
+
+#define WOT_SHADOW_OW_TILE_TAG_LUGIA 0x7B00
+
+static const struct ObjectEventGraphicsInfo sWotShadowOwInfo_Lugia =
+{
+    .tileTag = WOT_SHADOW_OW_TILE_TAG_LUGIA,
+    .paletteTag = OBJ_EVENT_PAL_TAG_DYNAMIC,
+    .reflectionPaletteTag = OBJ_EVENT_PAL_TAG_NONE,
+    .size = 2048,
+    .width = 64,
+    .height = 64,
+    .paletteSlot = PALSLOT_NPC_1,
+    .shadowSize = SHADOW_SIZE_M,
+    .inanimate = FALSE,
+    .compressed = OW_GFX_COMPRESS,
+    .tracks = TRACKS_NONE,
+    .oam = &gObjectEventBaseOam_64x64,
+    .subspriteTables = sOamTables_64x64,
+    .anims = sAnimTable_Following,
+    .images = sPicTable_WotShadowLugia,
+};
+
+static const struct
+{
+    u16 species;
+    const struct ObjectEventGraphicsInfo *info;
+    const u16 *pal;
+} sWotShadowOws[] =
+{
+    {SPECIES_LUGIA, &sWotShadowOwInfo_Lugia, sWotShadowOwPal_Lugia},
+};
+
+static s32 WotFindShadowOw(u32 species)
+{
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sWotShadowOws); i++)
+    {
+        if (sWotShadowOws[i].species == species)
+            return i;
+    }
+    return -1;
+}
+
+// The graphics a Shadow OW mon draws with: its own art if it has some.
+static const struct ObjectEventGraphicsInfo *WotShadowOwGraphicsInfo(const struct ObjectEventGraphicsInfo *info, u32 species, bool32 shadow)
+{
+    s32 i = shadow ? WotFindShadowOw(species) : -1;
+
+    return i >= 0 ? sWotShadowOws[i].info : info;
+}
+
+// WoT: the map object WotMakeObjectEventShadow last named. It spawns as a
+// Shadow, so it loads only its Shadow sheet (two 64x64 sheets at once don't
+// fit beside a 64x64 follower: the harbour Lugia drew garbage tiles), and it
+// keeps the look when it respawns, e.g. back from its battle.
+static EWRAM_DATA bool8 sWotShadowSpawnSet = FALSE;
+static EWRAM_DATA u8 sWotShadowSpawnLocalId = 0;
+static EWRAM_DATA u8 sWotShadowSpawnMapNum = 0;
+static EWRAM_DATA u8 sWotShadowSpawnMapGroup = 0;
+
+static bool32 WotIsShadowSpawn(const struct ObjectEvent *objectEvent)
+{
+    return sWotShadowSpawnSet
+        && objectEvent->localId == sWotShadowSpawnLocalId
+        && objectEvent->mapNum == sWotShadowSpawnMapNum
+        && objectEvent->mapGroup == sWotShadowSpawnMapGroup;
+}
+
 static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Npc1,                  OBJ_EVENT_PAL_TAG_NPC_1},
     {gObjectEventPal_Npc2,                  OBJ_EVENT_PAL_TAG_NPC_2},
@@ -515,9 +597,11 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_OniGoon,               OBJ_EVENT_PAL_TAG_ONI_GOON},
     {gObjectEventPal_MutridGruntWhite,      OBJ_EVENT_PAL_TAG_MUTRID_GRUNT_WHITE},
     {gObjectEventPal_GroundItems,           OBJ_EVENT_PAL_TAG_GROUND_ITEMS},
+    {gObjectEventPal_ItemCarvedMask,    OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK},
     {gObjectEventPal_ItemGarchompite,   OBJ_EVENT_PAL_TAG_ITEM_GARCHOMPITE},
     {gObjectEventPal_ItemBaxcalibrite,  OBJ_EVENT_PAL_TAG_ITEM_BAXCALIBRITE},
     {gObjectEventPal_ItemGyaradosite,   OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE},
+    {gObjectEventPal_ItemHaxorite,      OBJ_EVENT_PAL_TAG_ITEM_HAXORITE},
     {gObjectEventPal_Truck,                 OBJ_EVENT_PAL_TAG_TRUCK},
     {gObjectEventPal_Vigoroth,              OBJ_EVENT_PAL_TAG_VIGOROTH},
     {gObjectEventPal_EnemyZigzagoon,        OBJ_EVENT_PAL_TAG_ZIGZAGOON},
@@ -593,6 +677,8 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_Substitute,            OBJ_EVENT_PAL_TAG_SUBSTITUTE},
     {gObjectEventPaletteLight,              OBJ_EVENT_PAL_TAG_LIGHT},
     {gObjectEventPal_WotScreen,             OBJ_EVENT_PAL_TAG_WOT_SCREEN},
+    {gObjectEventPal_WotMegaPortal,         OBJ_EVENT_PAL_TAG_WOT_MEGA_PORTAL},
+    {gObjectEventPal_WotNeonSign,           OBJ_EVENT_PAL_TAG_WOT_NEON_SIGN},
     {gObjectEventPal_WotDraco,              OBJ_EVENT_PAL_TAG_WOT_DRACO},
     {gObjectEventPal_WotMikmanc,            OBJ_EVENT_PAL_TAG_WOT_MIKMANC},
     {gObjectEventPal_WotNessa,              OBJ_EVENT_PAL_TAG_WOT_NESSA},
@@ -613,6 +699,21 @@ static const struct SpritePalette sObjectEventSpritePalettes[] = {
     {gObjectEventPal_WotOleana,              OBJ_EVENT_PAL_TAG_WOT_OLEANA},
     {gObjectEventPal_WotJacinthe,            OBJ_EVENT_PAL_TAG_WOT_JACINTHE},
     {gObjectEventPal_WotVictor,              OBJ_EVENT_PAL_TAG_WOT_VICTOR},
+    {gObjectEventPal_ZaEmma,                 OBJ_EVENT_PAL_TAG_ZA_EMMA},
+    {gObjectEventPal_ZaCanari,               OBJ_EVENT_PAL_TAG_ZA_CANARI},
+    {gObjectEventPal_ZaValerie,              OBJ_EVENT_PAL_TAG_ZA_VALERIE},
+    {gObjectEventPal_ZaTulip,                OBJ_EVENT_PAL_TAG_ZA_TULIP},
+    {gObjectEventPal_ZaMable,                OBJ_EVENT_PAL_TAG_ZA_MABLE},
+    {gObjectEventPal_ZaTaunie,               OBJ_EVENT_PAL_TAG_ZA_TAUNIE},
+    {gObjectEventPal_ZaLida,                 OBJ_EVENT_PAL_TAG_ZA_LIDA},
+    {gObjectEventPal_WotBarrierSurge,        OBJ_EVENT_PAL_TAG_WOT_BARRIER_SURGE},
+    {gObjectEventPal_WotBarrierTimefreeze,   OBJ_EVENT_PAL_TAG_WOT_BARRIER_TIMEFREEZE},
+    {gObjectEventPal_WotBarrierIllusion,     OBJ_EVENT_PAL_TAG_WOT_BARRIER_ILLUSION},
+    {gObjectEventPal_WotBarrierLifeline,     OBJ_EVENT_PAL_TAG_WOT_BARRIER_LIFELINE},
+    {gObjectEventPal_WotBarrierBreakthrough, OBJ_EVENT_PAL_TAG_WOT_BARRIER_BREAKTHROUGH},
+    {gObjectEventPal_WotBarrierDash,         OBJ_EVENT_PAL_TAG_WOT_BARRIER_DASH},
+    {gObjectEventPal_ZaAz,                   OBJ_EVENT_PAL_TAG_ZA_AZ},
+    {gObjectEventPal_WotZygardeCell,         OBJ_EVENT_PAL_TAG_WOT_ZYGARDE_CELL},
     {gObjectEventPaletteLight2,             OBJ_EVENT_PAL_TAG_LIGHT_2},
     {gObjectEventPaletteEmotes,             OBJ_EVENT_PAL_TAG_EMOTES},
     {gObjectEventPaletteNeonLight,          OBJ_EVENT_PAL_TAG_NEON_LIGHT},
@@ -1408,6 +1509,7 @@ static void ClearAllObjectEvents(void)
 
 void ResetObjectEvents(void)
 {
+    sWotShadowSpawnSet = FALSE; // a new map: no object of the old one to shade
     ClearLinkPlayerObjectEvents();
     ClearAllObjectEvents();
     ClearPlayerAvatarInfo();
@@ -1908,16 +2010,27 @@ static u8 TrySetupObjectEventSprite(const struct ObjectEventTemplate *objectEven
     if (objectEvent->movementType == MOVEMENT_TYPE_INVISIBLE)
         objectEvent->invisible = TRUE;
 
+    // WoT: set before the graphics and palette below are chosen. Only the
+    // follower can be a Shadow -- a static OW mon of the same species must
+    // stay its own colour. The team pose's party mons are the other
+    // exception: they ARE party mons.
+    if (IS_OW_MON_OBJ(objectEvent) && objectEvent->localId == OBJ_EVENT_ID_FOLLOWER)
+        objectEvent->shadow = WotFollowerMonIsShadow();
+    else if (IS_OW_MON_OBJ(objectEvent) && WotTeamPoseGetMon(objectEvent->localId) != NULL)
+        objectEvent->shadow = GetMonData(WotTeamPoseGetMon(objectEvent->localId), MON_DATA_IS_SHADOW);
+    else if (IS_OW_MON_OBJ(objectEvent) && WotIsShadowSpawn(objectEvent))
+        objectEvent->shadow = TRUE;
+    if (IS_OW_MON_OBJ(objectEvent))
+    {
+        graphicsInfo = WotShadowOwGraphicsInfo(graphicsInfo, OW_SPECIES(objectEvent), objectEvent->shadow);
+        spriteTemplate->images = graphicsInfo->images;
+    }
+
     if (OW_GFX_COMPRESS)
         spriteTemplate->tileTag = LoadSheetGraphicsInfo(graphicsInfo, objectEvent->graphicsId, NULL);
 
     if (objectEvent->graphicsId & OBJ_EVENT_MON && objectEvent->graphicsId & OBJ_EVENT_MON_SHINY)
         objectEvent->shiny = TRUE;
-
-    // WoT: set before the palette below is chosen. Only the follower can be a
-    // Shadow -- a static OW mon of the same species must stay its own colour.
-    if (IS_OW_MON_OBJ(objectEvent) && objectEvent->localId == OBJ_EVENT_ID_FOLLOWER)
-        objectEvent->shadow = WotFollowerMonIsShadow();
 
     spriteId = CreateSprite(spriteTemplate, 0, 0, 0);
     if (spriteId == MAX_SPRITES)
@@ -1966,6 +2079,9 @@ u8 TrySpawnObjectEventTemplate(const struct ObjectEventTemplate *objectEventTemp
     if (objectEventId == OBJECT_EVENTS_COUNT)
         return OBJECT_EVENTS_COUNT;
 
+    // WoT: TrySetupObjectEventSprite may have swapped in Shadow art.
+    if (IS_OW_MON_OBJ(&gObjectEvents[objectEventId]))
+        graphicsInfo = WotShadowOwGraphicsInfo(graphicsInfo, OW_SPECIES(&gObjectEvents[objectEventId]), gObjectEvents[objectEventId].shadow);
     gSprites[gObjectEvents[objectEventId].spriteId].images = graphicsInfo->images;
     if (subspriteTables)
         SetSubspriteTables(&gSprites[gObjectEvents[objectEventId].spriteId], subspriteTables);
@@ -2262,10 +2378,17 @@ bool32 WotFollowerMonIsShadow(void)
 #define SHADOW_OW_TINT_R   159  // violet, as 8-bit weights of the luminance
 #define SHADOW_OW_TINT_G   128
 #define SHADOW_OW_TINT_B   255
+// A shiny Shadow's silhouette is gold
+#define SHADOW_OW_SHINY_TINT_R   255
+#define SHADOW_OW_SHINY_TINT_G   208
+#define SHADOW_OW_SHINY_TINT_B   96
 #define SHADOW_OW_TINT(v, w)  (((v) * (w) + 128) >> 8)   // rounded, not floored
-static void BuildShadowFollowerPalette(const u16 *src, u16 *dest)
+static void BuildShadowFollowerPalette(const u16 *src, u16 *dest, bool32 shiny)
 {
     u32 i;
+    u32 tintR = shiny ? SHADOW_OW_SHINY_TINT_R : SHADOW_OW_TINT_R;
+    u32 tintG = shiny ? SHADOW_OW_SHINY_TINT_G : SHADOW_OW_TINT_G;
+    u32 tintB = shiny ? SHADOW_OW_SHINY_TINT_B : SHADOW_OW_TINT_B;
 
     dest[0] = src[0];   // index 0 is the object layer's transparency
     for (i = 1; i < 16; i++)
@@ -2274,9 +2397,9 @@ static void BuildShadowFollowerPalette(const u16 *src, u16 *dest)
         u32 v = (GET_R(src[i]) * 77 + GET_G(src[i]) * 150 + GET_B(src[i]) * 29) >> 8;
 
         v = (v * SHADOW_OW_CEILING) / 31;
-        dest[i] = RGB(SHADOW_OW_TINT(v, SHADOW_OW_TINT_R),
-                      SHADOW_OW_TINT(v, SHADOW_OW_TINT_G),
-                      SHADOW_OW_TINT(v, SHADOW_OW_TINT_B));
+        dest[i] = RGB(SHADOW_OW_TINT(v, tintR),
+                      SHADOW_OW_TINT(v, tintG),
+                      SHADOW_OW_TINT(v, tintB));
     }
 }
 
@@ -2286,21 +2409,29 @@ static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female, 
     u32 paletteNum;
 
     // WoT: a Shadow Pokemon silhouette, built from its ordinary (non-shiny)
-    // palette. Keyed on species alone: the ramp discards hue, so the shiny and
-    // female variants would come out the same anyway, and only one object can
-    // ever hold this palette because only the follower is ever a Shadow.
+    // palette: the ramp discards hue, so the shiny and female palettes would
+    // come out the same anyway. A shiny Shadow's ramp is gold instead of
+    // violet, so it has tags of its own; female shares the species tag.
     if (shadow)
     {
         u16 silhouette[16];
-        u16 palTag = species + OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON;
+        u16 palTag = species + (shiny ? OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON_SHINY : OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON);
         struct SpritePalette spritePalette = {.tag = palTag, .data = silhouette};
         const u16 *src = gSpeciesInfo[species].overworldPalette;
+        s32 art = WotFindShadowOw(species);
 
         if ((paletteNum = IndexOfSpritePaletteTag(palTag)) < 16)
             return paletteNum;
+        if (art >= 0)
+            src = sWotShadowOws[art].pal;
         if (src == NULL)
             src = GetMonSpritePalFromSpecies(species, FALSE, female);
-        BuildShadowFollowerPalette(src, silhouette);
+        // Its own Shadow art is already dark: shown as drawn,
+        // and only a shiny one goes through the (gold) ramp.
+        if (art >= 0 && !shiny)
+            spritePalette.data = src;
+        else
+            BuildShadowFollowerPalette(src, silhouette, shiny);
         paletteNum = LoadSpritePalette(&spritePalette);
     }
     else
@@ -2344,13 +2475,18 @@ static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female, 
         // Note that the shiny palette tag is `species + SPECIES_SHINY_TAG`, which must be increased with more pokemon
         // so that palette tags do not overlap
         const u16 *palette = GetMonSpritePalFromSpecies(species, shiny, female); //ETODO
+        // WoT: tagged like the standalone palettes above (and like the sprite
+        // template, LoadDynamicFollowerPaletteFromGraphicsId), not with the bare
+        // species: a bare tag let a shiny and a normal one share a palette, and
+        // lacked OBJ_EVENT_MON, so the Mega Dimension's grayscale caught it.
+        u16 palTag = species + OBJ_EVENT_MON + (shiny ? OBJ_EVENT_MON_SHINY : 0) + (female ? OBJ_EVENT_MON_FEMALE : 0);
         // palette already loaded
-        if ((paletteNum = IndexOfSpritePaletteTag(species)) < 16)
+        if ((paletteNum = IndexOfSpritePaletteTag(palTag)) < 16)
             return paletteNum;
         // Use matching front sprite's normal/shiny palettes
         // Load compressed palette
-        LoadSpritePaletteWithTag(palette, species);
-        paletteNum = IndexOfSpritePaletteTag(species); // Tag is always present
+        LoadSpritePaletteWithTag(palette, palTag);
+        paletteNum = IndexOfSpritePaletteTag(palTag); // Tag is always present
     }
 
     if (gWeatherPtr->currWeather != WEATHER_FOG_HORIZONTAL) // don't want to weather blend in fog
@@ -2358,10 +2494,21 @@ static u32 LoadDynamicFollowerPalette(u32 species, bool32 shiny, bool32 female, 
     return paletteNum;
 }
 
+// WoT: the follower palette for a species, loaded or found (src/wot_surf_mon.c).
+u32 WotLoadMonOverworldPalette(u32 species, bool32 shiny, bool32 female, bool32 shadow)
+{
+    return LoadDynamicFollowerPalette(species, shiny, female, shadow);
+}
+
+void WotBuildShadowPalette(const u16 *src, u16 *dest, bool32 shiny)
+{
+    BuildShadowFollowerPalette(src, dest, shiny);
+}
+
 // Set graphics & sprite for a follower object event by species & shininess.
 static void FollowerSetGraphics(struct ObjectEvent *objEvent, u32 species, bool32 shiny, bool32 female)
 {
-    const struct ObjectEventGraphicsInfo *graphicsInfo = SpeciesToGraphicsInfo(species, shiny, female);
+    const struct ObjectEventGraphicsInfo *graphicsInfo = WotShadowOwGraphicsInfo(SpeciesToGraphicsInfo(species, shiny, female), species, objEvent->shadow);
     ObjectEventSetGraphics(objEvent, graphicsInfo);
     objEvent->graphicsId = GetGraphicsIdForMon(species, shiny, female);
     if (graphicsInfo->paletteTag == OBJ_EVENT_PAL_TAG_DYNAMIC) // Use palette from species palette table
@@ -2382,7 +2529,7 @@ static void RefreshFollowerGraphics(struct ObjectEvent *objEvent)
     u32 species = OW_SPECIES(objEvent);
     bool32 shiny = OW_SHINY(objEvent);
     bool32 female = OW_FEMALE(objEvent);
-    const struct ObjectEventGraphicsInfo *graphicsInfo = SpeciesToGraphicsInfo(species, shiny, female);
+    const struct ObjectEventGraphicsInfo *graphicsInfo = WotShadowOwGraphicsInfo(SpeciesToGraphicsInfo(species, shiny, female), species, objEvent->shadow);
     struct Sprite *sprite = &gSprites[objEvent->spriteId];
     u32 i = FindObjectEventPaletteIndexByTag(graphicsInfo->paletteTag);
 
@@ -2423,15 +2570,21 @@ static void RefreshFollowerGraphics(struct ObjectEvent *objEvent)
 
 // WoT: wear the Shadow silhouette on a map's OW Pokemon object, not just on
 // the follower -- the harbour's Shadow Lugia is an ordinary object event.
-// special; local id in VAR_0x8004, on the current map.
+// special; local id in VAR_0x8004, on the current map. Call it BEFORE
+// addobject: the object then spawns as a Shadow (see sWotShadowSpawnSet).
 void WotMakeObjectEventShadow(void)
 {
     u8 objId;
 
-    if (TryGetObjectEventIdByLocalIdAndMap(gSpecialVar_0x8004,
-                                           gSaveBlock1Ptr->location.mapNum,
-                                           gSaveBlock1Ptr->location.mapGroup, &objId)
-        && objId < OBJECT_EVENTS_COUNT)   // the helper's out-param is only valid on TRUE
+    sWotShadowSpawnSet = TRUE;
+    sWotShadowSpawnLocalId = gSpecialVar_0x8004;
+    sWotShadowSpawnMapNum = gSaveBlock1Ptr->location.mapNum;
+    sWotShadowSpawnMapGroup = gSaveBlock1Ptr->location.mapGroup;
+    // The helper returns TRUE when it did NOT find the object (until round
+    // 155 this test was inverted, so the special never shaded anything).
+    if (!TryGetObjectEventIdByLocalIdAndMap(gSpecialVar_0x8004,
+                                            gSaveBlock1Ptr->location.mapNum,
+                                            gSaveBlock1Ptr->location.mapGroup, &objId))
     {
         gObjectEvents[objId].shadow = TRUE;
         RefreshFollowerGraphics(&gObjectEvents[objId]);
@@ -2480,6 +2633,15 @@ static bool8 GetMonInfo(struct Pokemon *mon, u32 *species, bool32 *shiny, bool32
         *species = GetOverworldWeatherSpecies(*species);
         break;
     }
+    // WoT: a Mega kept after battle that has no overworld sprite of its own
+    // walks as its usual form, not as the Substitute doll.
+    if (*species < NUM_SPECIES && gSpeciesInfo[*species].overworldData.tileTag == 0)
+    {
+        u32 base = WotGetMegaBaseSpecies(*species);
+
+        if (base != SPECIES_NONE)
+            *species = base;
+    }
     return TRUE;
 }
 
@@ -2487,6 +2649,104 @@ static bool8 GetMonInfo(struct Pokemon *mon, u32 *species, bool32 *shiny, bool32
 bool8 GetFollowerInfo(u32 *species, bool32 *shiny, bool32 *female)
 {
     return GetMonInfo(GetFirstLiveMon(), species, shiny, female);
+}
+
+// WoT team pose: the object graphics id for any party mon, worked out the
+// way the follower's is (weather forms, Unown letters, shiny, female).
+u16 WotGetPartyMonObjectGraphicsId(struct Pokemon *mon)
+{
+    u32 species;
+    bool32 shiny, female;
+
+    GetMonInfo(mon, &species, &shiny, &female);
+    return GetGraphicsIdForMon(species, shiny, female);
+}
+
+// WoT team pose: the palette tag that mon's object will load, mirroring the
+// choice LoadDynamicFollowerPalette makes, so the pose can count the palette
+// slots it needs BEFORE spawning anything. A Shadow mon wears the silhouette.
+u16 WotGetPartyMonObjectPaletteTag(struct Pokemon *mon)
+{
+    u32 species;
+    bool32 shiny, female;
+
+    GetMonInfo(mon, &species, &shiny, &female);
+    if (GetMonData(mon, MON_DATA_IS_SHADOW))
+        return species + (shiny ? OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON_SHINY : OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON);
+#if OW_POKEMON_OBJECT_EVENTS == TRUE && OW_PKMN_OBJECTS_SHARE_PALETTES == FALSE
+    if ((shiny && gSpeciesInfo[species].overworldPalette)
+    || (!shiny && gSpeciesInfo[species].overworldShinyPalette))
+    {
+        u16 palTag = species + OBJ_EVENT_MON + (shiny ? OBJ_EVENT_MON_SHINY : 0);
+    #if P_GENDER_DIFFERENCES
+        if (female && gSpeciesInfo[species].overworldShinyPaletteFemale != NULL)
+            palTag += OBJ_EVENT_MON_FEMALE;
+    #endif
+        return palTag;
+    }
+#endif
+    return species;
+}
+
+// The graphics an object with this graphics id draws with: a Shadow mon with
+// its own art uses that sheet, not its species' ordinary one.
+static const struct ObjectEventGraphicsInfo *WotGetObjectSheetInfo(u16 graphicsId, bool32 shadow)
+{
+    const struct ObjectEventGraphicsInfo *info = GetObjectEventGraphicsInfo(graphicsId);
+
+    if (graphicsId & OBJ_EVENT_MON)
+        info = WotShadowOwGraphicsInfo(info, graphicsId & OBJ_EVENT_MON_SPECIES_MASK, shadow);
+    return info;
+}
+
+// The tile tag LoadSheetGraphicsInfo files this graphics id's sheet under,
+// or TAG_NONE when it doesn't use a sheet at all.
+static u16 WotGetObjectSheetTag(u16 graphicsId, bool32 shadow)
+{
+    const struct ObjectEventGraphicsInfo *info = WotGetObjectSheetInfo(graphicsId, shadow);
+
+    if (!OW_GFX_COMPRESS || (info->tileTag == TAG_NONE && !info->compressed))
+        return TAG_NONE;
+    if (info->tileTag != TAG_NONE)
+        return info->tileTag;
+    return COMP_OW_TILE_TAG_BASE + graphicsId;
+}
+
+// WoT team pose: put the sheet an object with this graphics id will use into
+// OBJ VRAM BEFORE the object exists, and keep `headroom` tiles free after it.
+// An object whose sheet can't load is still created -- pointing at whatever
+// tiles are there -- and the Poke Ball animation then copies the ball's frames
+// over them, which at the start of OBJ VRAM is the PLAYER (a pose with several
+// 64x64 legendaries did exactly that). FALSE, with nothing left loaded, when
+// the sheet doesn't fit.
+bool32 WotReserveObjectSheet(u16 graphicsId, bool32 shadow, u16 headroom)
+{
+    u16 tag = WotGetObjectSheetTag(graphicsId, shadow);
+
+    if (tag == TAG_NONE)
+        return TRUE; // not a sheet: CreateSprite allocates, or fails cleanly
+    if (GetSpriteTileStartByTag(tag) != TAG_NONE)
+        return TRUE; // already resident, e.g. the follower's own species
+    LoadSheetGraphicsInfo(WotGetObjectSheetInfo(graphicsId, shadow), graphicsId, NULL);
+    if (GetSpriteTileStartByTag(tag) == TAG_NONE)
+        return FALSE;
+    if (!CanAllocSpriteTiles(headroom))
+    {
+        FreeSpriteTilesByTag(tag);
+        return FALSE;
+    }
+    return TRUE;
+}
+
+// Undo WotReserveObjectSheet when the object then failed to spawn: frees the
+// sheet unless a sprite is already drawing from it.
+void WotReleaseObjectSheet(u16 graphicsId, bool32 shadow)
+{
+    u16 tag = WotGetObjectSheetTag(graphicsId, shadow);
+    u16 tileStart;
+
+    if (tag != TAG_NONE && (tileStart = GetSpriteTileStartByTag(tag)) != TAG_NONE)
+        FieldEffectFreeTilesIfUnused(tileStart);
 }
 
 // Update following pokemon if any
@@ -2509,6 +2769,8 @@ void UpdateFollowingPokemon(void)
      || SpeciesToGraphicsInfo(species, shiny, female) == NULL
      || gMapHeader.mapType == MAP_TYPE_INDOOR // Wishes of Tomorrow: hide the Pokémon follower in all interiors
      || gMapHeader.regionMapSectionId == MAPSEC_DISTORTION_WORLD // Wishes of Tomorrow: no followers anywhere in the Distortion World
+     || gMapHeader.regionMapSectionId == MAPSEC_MEGA_DIMENSION // ...nor in the Mega Dimension
+     || WotTrailer_IsEmptyPark() // ...nor in the empty park of the debug trailer capture
      || FlagGet(FLAG_TEMP_HIDE_FOLLOWER)
      || PlayerHasFollowerNPC()
      )
@@ -3076,7 +3338,9 @@ void TrySpawnObjectEvents(s16 cameraX, s16 cameraY)
 
             if (top <= npcY && bottom >= npcY && left <= npcX && right >= npcX && !FlagGet(template->flagId))
             {
-                if (template->graphicsId == OBJ_EVENT_GFX_LIGHT_SPRITE)
+                if (WotTrailer_IsEmptyPark()) // debug trailer capture: no one but a portal
+                    WotTrailer_SpawnParkObject(template, cameraX, cameraY);
+                else if (template->graphicsId == OBJ_EVENT_GFX_LIGHT_SPRITE)
                     SpawnLightSprite(npcX, npcY, cameraX, cameraY, template->trainerRange_berryTreeId); // light sprite instead
                 else
                     TrySpawnObjectEventTemplate(template, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, cameraX, cameraY);
@@ -3160,6 +3424,8 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
     subspriteTables = NULL;
     graphicsInfo = GetObjectEventGraphicsInfo(objectEvent->graphicsId);
     CopyObjectGraphicsInfoToSpriteTemplate_WithMovementType(objectEvent->graphicsId, objectEvent->movementType, &spriteTemplate, &subspriteTables);
+    if (IS_OW_MON_OBJ(objectEvent))
+        graphicsInfo = WotShadowOwGraphicsInfo(graphicsInfo, OW_SPECIES(objectEvent), objectEvent->shadow);
     spriteFrameImage.size = graphicsInfo->size;
     spriteTemplate.images = &spriteFrameImage;
 
@@ -7945,6 +8211,11 @@ static void ObjectEventSetPokeballGfx(struct ObjectEvent *objEvent)
         if (mon)
             ball = GetMonData(mon, MON_DATA_POKEBALL);
     }
+    else if (WotTeamPoseGetMon(objEvent->localId) != NULL)
+    {
+        // WoT: each mon in the team pose comes out of its own ball.
+        ball = GetMonData(WotTeamPoseGetMon(objEvent->localId), MON_DATA_POKEBALL);
+    }
 
     if (ball != BALL_POKE && ball < POKEBALL_COUNT)
     {
@@ -9791,10 +10062,14 @@ bool8 MovementAction_PauseSpriteAnim(struct ObjectEvent *objectEvent, struct Spr
 
 static void UpdateObjectEventSpriteAnimPause(struct ObjectEvent *objectEvent, struct Sprite *sprite)
 {
-    // WoT: the jumbotron screens run their broadcast loop while standing --
-    // everything else pauses its anim when stationary.
+    // WoT: the jumbotron screens run their broadcast loop while standing, and
+    // the Mega Dimension portal keeps swirling, and neon signs keep flickering
+    // -- everything else pauses its anim when stationary.
     if (objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_LEADER_SCREEN
-     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_WANTED_POSTER)
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_WANTED_POSTER
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_MEGA_PORTAL
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_HOTEL_Z_SIGN
+     || objectEvent->graphicsId == OBJ_EVENT_GFX_WOT_GYM_ARROW_SIGN)
     {
         sprite->animPaused = FALSE;
         return;

@@ -26,10 +26,26 @@
 #include "text_window.h"
 #include "overworld.h"
 #include "walda_phrase.h"
+#include "wot_mystery_code.h"
 #include "main.h"
 #include "decompress.h"
+#include "dma3.h"
+#include "scanline_effect.h"
 #include "constants/event_objects.h"
 #include "constants/rgb.h"
+
+// Wishes of Tomorrow: the backdrop is the party screen's dark grid, not the
+// yellow stripes. One 32x32 cell of it, tiled across BG3 around the name box.
+// It sits in BG3's tile block after the text entry windows (which end at
+// 0x73) and before the tilemaps that share that block (0x100 on).
+#define GRID_TILE_BASE   0x80
+#define GRID_CELL_TILES  4
+#define GRID_PAL         6           // BG palettes 0-5, 10, 11 and 14-15 are taken
+#define NAME_BOX_TILE_FIRST 0x09     // background.bin draws the name box with
+#define NAME_BOX_TILE_LAST  0x0E     // these tiles; everything else is backdrop
+
+static const u32 sGridBg_Gfx[] = INCGFX_U32("graphics/naming_screen/grid.png", ".4bpp");
+static const u16 sGridBg_Pal[] = INCGFX_U16("graphics/naming_screen/grid.png", ".gbapal");
 
 enum {
     INPUT_NONE,
@@ -386,6 +402,7 @@ static void LoadGfx(void);
 static void CreateHelperTasks(void);
 static void LoadPalettes(void);
 static void DrawBgTilemap(u8, const void *);
+static void DrawGridBackdrop(void);
 static void NamingScreen_Dummy(u8, u8);
 static void DrawTextEntry(void);
 static void PrintKeyboardKeys(u8, u8);
@@ -429,6 +446,13 @@ static void CB2_LoadNamingScreen(void)
     {
     case 0:
         ResetVHBlank();
+        // This screen opens straight out of a battle (a catch's nickname)
+        // and other menus. Anything they left running must not reach the
+        // new VRAM: an HBlank scanline effect would keep writing scroll
+        // registers, and a copy still queued for their tilemaps would land
+        // on BG3's tiles after the clear below. Neither is wanted here.
+        ScanlineEffect_Stop();
+        ClearDma3Requests();
         NamingScreen_Init();
         gMain.state++;
         break;
@@ -628,6 +652,7 @@ static u8 CurrentPageToKeyboardId(void)
 static bool8 MainState_FadeIn(void)
 {
     DrawBgTilemap(3, gNamingScreenBackground_Tilemap);
+    DrawGridBackdrop();
     sNamingScreen->currentPage = KBPAGE_LETTERS_UPPER;
     DrawBgTilemap(2, gNamingScreenKeyboardLower_Tilemap);
     DrawBgTilemap(1, gNamingScreenKeyboardUpper_Tilemap);
@@ -1795,7 +1820,8 @@ static void (*const sDrawTextEntryBoxFuncs[])(void) =
     [NAMING_SCREEN_NICKNAME]   = DrawMonTextEntryBox,
     [NAMING_SCREEN_WALDA]      = DrawNormalTextEntryBox,
     [NAMING_SCREEN_CODE]       = DrawNormalTextEntryBox,
-    [NAMING_SCREEN_RIVAL]      = DrawNormalTextEntryBox
+    [NAMING_SCREEN_RIVAL]      = DrawNormalTextEntryBox,
+    [NAMING_SCREEN_MYSTERY_CODE] = DrawNormalTextEntryBox,
 };
 
 static void DrawTextEntryBox(void)
@@ -1938,6 +1964,7 @@ static void LoadGfx(void)
     LoadBgTiles(1, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
     LoadBgTiles(2, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
     LoadBgTiles(3, sNamingScreen->tileBuffer, sizeof(sNamingScreen->tileBuffer), 0);
+    LoadBgTiles(3, sGridBg_Gfx, sizeof(sGridBg_Gfx), GRID_TILE_BASE);
     LoadSpriteSheets(sSpriteSheets);
     LoadSpritePalettes(sSpritePalettes);
 }
@@ -1953,11 +1980,38 @@ static void LoadPalettes(void)
     LoadPalette(gNamingScreenMenu_Pal, BG_PLTT_ID(0), sizeof(gNamingScreenMenu_Pal));
     LoadPalette(sKeyboard_Pal, BG_PLTT_ID(10), sizeof(sKeyboard_Pal));
     LoadPalette(GetTextWindowPalette(2), BG_PLTT_ID(11), PLTT_SIZE_4BPP);
+    LoadPalette(sGridBg_Pal, BG_PLTT_ID(GRID_PAL), PLTT_SIZE_4BPP);
+    // The backdrop (BG colour 0) shows through the clear pixels just outside
+    // the name box's rounded border, so it takes the grid's fill colour.
+    LoadPalette(&sGridBg_Pal[1], BG_PLTT_ID(0), PLTT_SIZEOF(1));
 }
 
 static void DrawBgTilemap(u8 bg, const void *src)
 {
     CopyToBgTilemapBuffer(bg, src, 0, 0);
+}
+
+// Swaps the striped backdrop in BG3's buffer for the grid, keeping the name
+// box that background.bin draws. The grid repeats every four tiles, so each
+// map entry takes the cell tile at its position within the repeat.
+static void DrawGridBackdrop(void)
+{
+    u16 *tilemap = GetBgTilemapBuffer(3);
+    u32 x, y;
+
+    for (y = 0; y < 32; y++)
+    {
+        for (x = 0; x < 32; x++)
+        {
+            u16 *entry = &tilemap[y * 32 + x];
+            u16 tile = *entry & 0x3FF;
+
+            if (tile >= NAME_BOX_TILE_FIRST && tile <= NAME_BOX_TILE_LAST)
+                continue;
+            *entry = (GRID_TILE_BASE + (y % GRID_CELL_TILES) * GRID_CELL_TILES + (x % GRID_CELL_TILES))
+                   | (GRID_PAL << 12);
+        }
+    }
 }
 
 static void NamingScreen_Dummy(u8 bg, u8 page)
@@ -2212,6 +2266,17 @@ static const struct NamingScreenTemplate sRivalNamingScreenTemplate =
     .title = sText_RivalsName,
 };
 
+// WoT Mystery Codes (src/wot_mystery_code.c): eight letters, either case.
+static const struct NamingScreenTemplate sMysteryCodeScreenTemplate =
+{
+    .copyExistingString = FALSE,
+    .maxChars = WOT_MYSTERY_CODE_LENGTH,
+    .iconFunction = 5,
+    .addGenderIcon = FALSE,
+    .initialPage = KBPAGE_LETTERS_UPPER,
+    .title = COMPOUND_STRING("Enter Mystery Code:"),
+};
+
 static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
 {
     [NAMING_SCREEN_PLAYER]     = &sPlayerNamingScreenTemplate,
@@ -2221,6 +2286,7 @@ static const struct NamingScreenTemplate *const sNamingScreenTemplates[] =
     [NAMING_SCREEN_WALDA]      = &sWaldaWordsScreenTemplate,
     [NAMING_SCREEN_CODE]       = &sCodeScreenTemplate,
     [NAMING_SCREEN_RIVAL]      = &sRivalNamingScreenTemplate,
+    [NAMING_SCREEN_MYSTERY_CODE] = &sMysteryCodeScreenTemplate,
 };
 
 static const struct OamData sOam_8x8 =

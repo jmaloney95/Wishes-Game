@@ -103,7 +103,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
       "script": "MunenTunnel_EventScript_GoonA",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -116,7 +116,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "2",
       "script": "MunenTunnel_EventScript_GoonB",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MAXIE",
@@ -322,7 +322,17 @@
       "dest_warp_id": "0"
     }
   ],
-  "coord_events": [],
+  "coord_events": [
+    {
+      "type": "trigger",
+      "x": 35,
+      "y": 27,
+      "elevation": 0,
+      "var": "VAR_TEMP_1",
+      "var_value": "0",
+      "script": "MunenTunnel_EventScript_NorthwindSealed"
+    }
+  ],
   "bg_events": [
     {
       "type": "sign",

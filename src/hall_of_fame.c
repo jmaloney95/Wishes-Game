@@ -139,7 +139,7 @@ static const u8 sMonInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_WHIT
 // WoT: the only place the build number appears in the ROM. BUMP AT RELEASE.
 // It has to be a literal here rather than a #define in a header, because
 // _() is expanded by tools/preproc over the .c file, not by the C compiler.
-static const u8 sText_WotHofVersion[] = _("WISHES OF TOMORROW  v1.2.6");
+static const u8 sText_WotHofVersion[] = _("WISHES OF TOMORROW  v1.3.0");
 static const u8 sPlayerInfoTextColors[4] = {TEXT_COLOR_TRANSPARENT, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_LIGHT_GRAY};
 static const u8 sUnusedTextColors[4] = {TEXT_COLOR_RED, TEXT_COLOR_LIGHT_RED, TEXT_COLOR_TRANSPARENT};
 
@@ -573,7 +573,7 @@ static void Task_Hof_SetMonDisplayTask(u8 taskId)
 
 static void Task_Hof_DisplayMon(u8 taskId)
 {
-    u8 spriteId;
+    u16 spriteId;
     s16 startX, startY, destX, destY;
 
     u16 currMonId = gTasks[taskId].tDisplayedMonId;
@@ -598,6 +598,18 @@ static void Task_Hof_DisplayMon(u8 taskId)
         destY += 10;
 
     spriteId = CreateMonPicSprite_Affine(currMon->species, currMon->isShiny, currMon->personality, MON_PIC_AFFINE_FRONT, startX, startY, currMonId, TAG_NONE);
+    if (spriteId == 0xFFFF)
+    {
+        // WoT: no picture (out of heap or pic slots). As a u8 this was
+        // sprite 255: written through, then waited on forever. Show the name
+        // and move on to the next mon instead.
+        gTasks[taskId].tMonSpriteId(currMonId) = SPRITE_NONE;
+        ClearDialogWindowAndFrame(0, TRUE);
+        HallOfFame_PrintMonInfo(currMon, 0, 14);
+        gTasks[taskId].tFrameCount = 120;
+        gTasks[taskId].func = Task_Hof_TryDisplayAnotherMon;
+        return;
+    }
     WotHofApplyShadowArt(currMon, spriteId, currMonId);
     gSprites[spriteId].tDestinationX = destX;
     gSprites[spriteId].tDestinationY = destY;
@@ -635,12 +647,16 @@ static void Task_Hof_TryDisplayAnotherMon(u8 taskId)
     }
     else
     {
-        sHofFadePalettes |= (0x10000 << gSprites[gTasks[taskId].tMonSpriteId(currPokeID)].oam.paletteNum);
+        u8 monSpriteId = gTasks[taskId].tMonSpriteId(currPokeID);
+
+        if (monSpriteId != SPRITE_NONE)
+            sHofFadePalettes |= (0x10000 << gSprites[monSpriteId].oam.paletteNum);
         if (gTasks[taskId].tDisplayedMonId < PARTY_SIZE - 1 && currMon[1].species != SPECIES_NONE) // there is another Pokémon to display
         {
             gTasks[taskId].tDisplayedMonId++;
             BeginNormalPaletteFade(sHofFadePalettes, 0, 12, 12, RGB(16, 29, 24));
-            gSprites[gTasks[taskId].tMonSpriteId(currPokeID)].oam.priority = 1;
+            if (monSpriteId != SPRITE_NONE)
+                gSprites[monSpriteId].oam.priority = 1;
             gTasks[taskId].func = Task_Hof_DisplayMon;
         }
         else
@@ -1124,7 +1140,7 @@ static void WotHofApplyShadowArt(const struct HallofFameMon *currMon, u16 sprite
         return;
     art = WotFindShadowPic(currMon->species);
     if (art != NULL)
-        WotRepaintPicSprite(spriteId, art->pic, art->pal, paletteSlot);
+        WotRepaintPicSprite(spriteId, art->pic, WotShadowPicPal(art, currMon->isShiny), paletteSlot);
 }
 
 static void HallOfFame_PrintWelcomeText(u8 unusedPossiblyWindowId, u8 unused2)

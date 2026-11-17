@@ -358,6 +358,16 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      NULL,
 	      0
 	),
+	[QUEST_BREAK_TIMES_OVER] = side_quest(
+	      gText_Quest_BreakTimesOver_Name,
+	      gText_Quest_BreakTimesOver_Desc,
+	      gText_Quest_BreakTimesOver_DoneDesc,
+	      gText_QuestLoc_FrostwoodTown,
+	      ITEM_EPIC_PASS,
+	      ITEM,
+	      NULL,
+	      0
+	),
 	[QUEST_STOP_THE_MACHINE] = side_quest(
 	      gText_Quest_StopTheMachine_Name,
 	      gText_Quest_StopTheMachine_Desc1,
@@ -374,6 +384,86 @@ static const struct SideQuest sSideQuests[QUEST_COUNT] =
 	      gText_Quest_MinistersFavor_DoneDesc,
 	      gText_QuestLoc_ShinTokyo,
 	      OBJ_EVENT_GFX_MAN_2,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_MEGA_DOOMSDAY] = side_quest(
+	      gText_Quest_MegaDoomsday_Name,
+	      gText_Quest_MegaDoomsday_Desc,
+	      gText_Quest_MegaDoomsday_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_LIDA,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_TWO_MINUTES] = side_quest(
+	      gText_Quest_TwoMinutes_Name,
+	      gText_Quest_TwoMinutes_Desc,
+	      gText_Quest_TwoMinutes_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_PRIMAL_SIGNATURES] = side_quest(
+	      gText_Quest_PrimalSignatures_Name,
+	      gText_Quest_PrimalSignatures_Desc,
+	      gText_Quest_PrimalSignatures_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_ORDER_IN_THE_RIFTS] = side_quest(
+	      gText_Quest_OrderInTheRifts_Name,
+	      gText_Quest_OrderInTheRifts_Desc,
+	      gText_Quest_OrderInTheRifts_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_THE_LONG_STAY] = side_quest(
+	      gText_Quest_TheLongStay_Name,
+	      gText_Quest_TheLongStay_Desc,
+	      gText_Quest_TheLongStay_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_EMMA,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_SKY_HIGH_MEGA] = side_quest(
+	      gText_Quest_SkyHighMega_Name,
+	      gText_Quest_SkyHighMega_Desc,
+	      gText_Quest_SkyHighMega_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_ZA_MABLE,
+	      OBJECT,
+	      NULL,
+	      0
+	),
+	[QUEST_INTO_THE_RIFT] = side_quest(
+	      gText_Quest_IntoTheRift_Name,
+	      gText_Quest_IntoTheRift_Desc,
+	      gText_Quest_IntoTheRift_DoneDesc,
+	      gText_QuestLoc_NationalPark,
+	      ITEM_CATALPA_BOW,
+	      ITEM,
+	      NULL,
+	      0
+	),
+	[QUEST_TWO_HEARTS] = side_quest(
+	      gText_Quest_TwoHearts_Name,
+	      gText_Quest_TwoHearts_Desc,
+	      gText_Quest_TwoHearts_DoneDesc,
+	      gText_QuestLoc_HotelZ,
+	      OBJ_EVENT_GFX_WOT_MEGA_PORTAL,
 	      OBJECT,
 	      NULL,
 	      0
@@ -1597,6 +1687,12 @@ void UpdateQuestFlavorText(s32 questId)
 	case QUEST_WAKING_MOUNTAIN:
 		if (FlagGet(FLAG_BADGE01_GET)) // Clarkson calls after the Ember Badge
 			desc = gText_Quest_WakingMountain_Desc2;
+		break;
+	case QUEST_LIFES_WORK:
+		if (FlagGet(FLAG_BADGE05_GET)) // the rift is cleared: the lab road is open
+			desc = gText_Quest_LifesWork_Desc3;
+		else if (FlagGet(FLAG_ACT2_MET_CLARKSON_DISTORTION)) // Clarkson rides as Gengar
+			desc = gText_Quest_LifesWork_Desc2;
 		break;
 	case SIDE_QUEST_ONE_THAT_GOT_AWAY:
 		if (FlagGet(FLAG_SEAFLOOR_GYARADOS_GONE)) // the father has been found

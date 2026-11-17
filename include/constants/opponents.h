@@ -918,7 +918,7 @@
 #define TRAINER_TUNNEL_CAPTAIN              889
 
 // Distortion World rift layers -- the Oni guarding the Rift Core (layer 4)
-#define TRAINER_DISTORTION_ONI              890
+#define TRAINER_RIFT_CORE_GUARD             890
 #define TRAINER_RIFT_WARDEN                 891
 #define TRAINER_DISTORTION_LEADER           892
 
@@ -938,6 +938,37 @@
 #define TRAINER_TRADEWIND_SABLE             893
 #define TRAINER_TRADEWIND_ROSHAN            894
 #define TRAINER_TRADEWIND_PIPER             895
+
+// Wishes of Tomorrow: the Mega Dimension rivals (src/wot_mega_dimension.c).
+// Repurposed vanilla rematch ids: referenced only by the rematch table, which
+// needs FLAG_HAS_MATCH_CALL (set only by vanilla Hoenn scripts).
+#define TRAINER_MEGADIM_CANARI              TRAINER_GABRIELLE_2
+#define TRAINER_MEGADIM_LIDA                TRAINER_GABRIELLE_3
+#define TRAINER_MEGADIM_EMMA                TRAINER_GABRIELLE_4
+#define TRAINER_MEGADIM_TAUNIE              TRAINER_GABRIELLE_5
+#define TRAINER_MEGADIM_TULIP               TRAINER_THALIA_2
+#define TRAINER_MEGADIM_JACINTHE            TRAINER_THALIA_3
+// Rift Sanctum holdouts: three Mutrid ids every sanctum shares;
+// each sanctum gives them its own team (WotMegaDim_AdjustSanctumParty).
+#define TRAINER_SANCTUM_HOLDOUT_A           TRAINER_WALLY_VR_3
+#define TRAINER_SANCTUM_HOLDOUT_B           TRAINER_THALIA_4
+#define TRAINER_SANCTUM_HOLDOUT_C           TRAINER_THALIA_5
+
+// AZ: Victory Road's Wally, as his rematch tiers already were.
+#define TRAINER_HOTEL_Z_AZ                  TRAINER_WALLY_VR_2
+
+// Walnut Woods and the Frostwood bar. Route 102 Calvin's rematch tiers, which
+// only the rematch table names (it needs FLAG_HAS_MATCH_CALL).
+#define TRAINER_WALNUT_CLARKSON             TRAINER_CALVIN_2
+#define TRAINER_FROSTWOOD_BAR_SKIER         TRAINER_CALVIN_3
+#define TRAINER_FROSTWOOD_BAR_SNOWBOARDER   TRAINER_CALVIN_4 // hands over the Epic Pass
+// Not a battle: this id's defeated flag records that Victor, in the
+// Frostwood bar, has traded his Mudkip for a Bergmite.
+#define TRAINER_FROSTWOOD_VICTOR_TRADED     TRAINER_CALVIN_5
+
+// Prototype Island's lab guard. Route 110 Isabel's rematch tier, which only
+// the rematch table names (it needs FLAG_HAS_MATCH_CALL).
+#define TRAINER_PROTOTYPE_ISLAND_GUARD      TRAINER_ISABEL_2
 
 #define TRAINERS_COUNT_EMERALD     896
 #define MAX_TRAINERS_COUNT_EMERALD 896

@@ -77,6 +77,7 @@
 #include "constants/vars.h"
 #include "constants/weather.h"
 #include "constants/speaker_names.h"
+#include "constants/wot_mystery_code.h"
 	.include "asm/macros.inc"
 	.include "asm/macros/event.inc"
 	.include "constants/constants.inc"
@@ -1059,6 +1060,7 @@ gStdScripts_End::
 
 	.include "data/scripts/config.inc"
 	.include "data/scripts/debug.inc"
+	.include "data/scripts/wot_trailer.inc"
 
 EventScript_WhiteOut::
 	call EverGrandeCity_HallOfFame_EventScript_ResetEliteFour
@@ -1066,6 +1068,7 @@ EventScript_WhiteOut::
 	end
 
 EventScript_AfterWhiteOutHeal::
+	goto_if_set FLAG_WOT_GIRATINA_DREAM_ARMED, Tradewind_PC_EventScript_DreamWhiteOutHeal
 	lockall
 	msgbox gText_FirstShouldRestoreMonsHealth
 	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
@@ -1073,6 +1076,7 @@ EventScript_AfterWhiteOutHeal::
 	call_if_set FLAG_DEFEATED_RUSTBORO_GYM, EventScript_AfterWhiteOutHealMsg
 	applymovement VAR_LAST_TALKED, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
+	call EventScript_WotNuzlockeEndedNotice
 	fadedefaultbgm
 	releaseall
 	end
@@ -1093,9 +1097,22 @@ EventScript_AfterWhiteOutMomHeal::
 	msgbox gText_HadQuiteAnExperienceTakeRest
 	call Common_EventScript_OutOfCenterPartyHeal
 	msgbox gText_MomExplainHPGetPotions
+	call EventScript_WotNuzlockeEndedNotice
 	fadedefaultbgm
 	releaseall
 	end
+
+@ WoT Nuzlocke: said once, after the blackout that ended the run.
+EventScript_WotNuzlockeEndedNotice::
+	specialvar VAR_RESULT, WotNuzlocke_TakeEndedNotice
+	goto_if_eq VAR_RESULT, FALSE, EventScript_WotNuzlockeEndedNoticeDone
+	msgbox EventScript_WotText_NuzlockeEnded, MSGBOX_DEFAULT
+EventScript_WotNuzlockeEndedNoticeDone::
+	return
+
+EventScript_WotText_NuzlockeEnded:
+	.string "Your NUZLOCKE run is over.\n"
+	.string "The Nuzlocke rules are lifted.$"
 
 EventScript_ResetMrBriney::
 	goto_if_eq VAR_BRINEY_LOCATION, 1, EventScript_MoveMrBrineyToHouse
@@ -1828,6 +1845,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/maps/TradewindLab/scripts.inc"
 
 	.include "data/maps/Tradewind_PC/scripts.inc"
+	.include "data/maps/ShinTokyo_PCDream/scripts.inc"
 
 	.include "data/maps/ShinkansenInterior_Act2/scripts.inc"
 
@@ -1842,6 +1860,9 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wot_shadow_log.inc"
 	.include "data/scripts/wot_snag_progress.inc"
 	.include "data/scripts/wot_pokemon_cry.inc"
+	.include "data/scripts/wot_postgame.inc"
+	.include "data/scripts/wot_team_pose.inc"
+	.include "data/scripts/wot_mystery_code.inc"
 	.include "data/maps/TowerStreet/scripts.inc"
 	.include "data/maps/TowerMid/scripts.inc"
 	.include "data/maps/TowerCommand/scripts.inc"
@@ -1861,5 +1882,25 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 
 	.include "data/maps/MewtwoPostGame/scripts.inc"
 	.include "data/maps/YachtInterior/scripts.inc"
+	.include "data/maps/MegaDimension_Route2/scripts.inc"
+	.include "data/maps/MegaDimension_NationalPark/scripts.inc"
+	.include "data/maps/MegaDimension_TradewindTown/scripts.inc"
+	.include "data/maps/MegaDimension_ShinTokyo/scripts.inc"
+	.include "data/maps/MegaDimension_Ashlands/scripts.inc"
+	.include "data/maps/MegaDimension_StarSummit/scripts.inc"
+	.include "data/maps/MegaDimension_WalnutWoods/scripts.inc"
+	.include "data/maps/HotelZ/scripts.inc"
+	.include "data/maps/MegaDimension_SkyPillar/scripts.inc"
+	.include "data/maps/MegaDimension_MarineCave/scripts.inc"
+	.include "data/maps/MegaDimension_DrainedHotel/scripts.inc"
+	.include "data/maps/MegaDimension_NavelRockBottom/scripts.inc"
+	.include "data/maps/MegaDimension_NavelRockTop/scripts.inc"
+	.include "data/maps/MegaDimension_SanctumSurge/scripts.inc"
+	.include "data/maps/MegaDimension_SanctumLifeline/scripts.inc"
+	.include "data/maps/MegaDimension_SanctumTimeFreeze/scripts.inc"
+	.include "data/maps/MegaDimension_SanctumDash/scripts.inc"
+	.include "data/maps/MegaDimension_SanctumIllusion/scripts.inc"
+	.include "data/maps/MegaDimension_SanctumBreakthrough/scripts.inc"
+	.include "data/scripts/mega_dimension.inc"
 
 	.include "data/maps/Frostwood_House2/scripts.inc"

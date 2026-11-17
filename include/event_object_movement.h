@@ -146,6 +146,8 @@ void ClearObjectEventMovement(struct ObjectEvent *objectEvent, struct Sprite *sp
 void ObjectEventClearHeldMovement(struct ObjectEvent *objectEvent);
 void ObjectEventClearHeldMovementIfActive(struct ObjectEvent *objectEvent);
 struct Pokemon *GetFirstLiveMon(void);
+u32 WotLoadMonOverworldPalette(u32 species, bool32 shiny, bool32 female, bool32 shadow);
+void WotBuildShadowPalette(const u16 *src, u16 *dest, bool32 shiny);
 u16 GetOverworldWeatherSpecies(u16 species);
 void UpdateFollowingPokemon(void);
 void RemoveFollowingPokemon(void);
@@ -266,6 +268,10 @@ bool8 GetFollowerInfo(u32 *species, bool32 *shiny, bool32 *female);
 // WoT: whether the mon the follower mirrors is a Shadow Pokemon. Declared
 // here because TrySetupObjectEventSprite needs it well above its definition.
 bool32 WotFollowerMonIsShadow(void);
+u16 WotGetPartyMonObjectGraphicsId(struct Pokemon *mon);
+u16 WotGetPartyMonObjectPaletteTag(struct Pokemon *mon);
+bool32 WotReserveObjectSheet(u16 graphicsId, bool32 shadow, u16 headroom);
+void WotReleaseObjectSheet(u16 graphicsId, bool32 shadow);
 void WotMakeObjectEventShadow(void); // special: VAR_0x8004 = local id
 const struct ObjectEventGraphicsInfo *SpeciesToGraphicsInfo(u32 species, bool32 shiny, bool32 female);
 u16 GetObjectEventFlagIdByLocalIdAndMap(u8 localId, u8 mapNum, u8 mapGroup);

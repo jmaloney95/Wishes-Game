@@ -1,4 +1,6 @@
 #include "global.h"
+#include "wot_nuzlocke.h"
+#include "wot_film_shiny.h"
 #include "malloc.h"
 #include "apprentice.h"
 #include "battle.h"
@@ -51,8 +53,10 @@
 #include "task.h"
 #include "test_runner.h"
 #include "text.h"
+#include "wot_permanent_mega.h"
 #include "trainer_hill.h"
 #include "util.h"
+#include "wot_mega_dimension.h"
 #include "constants/abilities.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_move_effects.h"
@@ -975,6 +979,7 @@ const struct NatureInfo gNaturesInfo[NUM_NATURES] =
 #elif P_LVL_UP_LEARNSETS >= GEN_1
 #include "data/pokemon/level_up_learnsets/gen_1.h" // Yellow
 #endif
+#include "data/pokemon/level_up_learnsets/wot_gen_x.h" // WoT Gen X starter evolutions
 
 #include "data/pokemon/teachable_learnsets.h"
 #include "data/pokemon/egg_moves.h"
@@ -1461,6 +1466,15 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u32 personal
     //using gen 3-4 ability formula, it was changed in later gens
     if (GetSpeciesAbility(species, 1))
         SetBoxMonData(boxMon, MON_DATA_ABILITY_NUM, &value);
+
+    // WoT: Shadow Jirachi is only ever a Shadow. Whatever creates it (the
+    // tower, the debug menus), it carries the flag the Shadow checks read.
+    // Purifying clears the flag later; this runs at creation only.
+    if (species == SPECIES_JIRACHI_SHADOW)
+    {
+        value = TRUE;
+        SetBoxMonData(boxMon, MON_DATA_IS_SHADOW, &value);
+    }
 }
 
 static bool32 IsValidGender(u32 gender)
@@ -3464,10 +3478,15 @@ void CopyMon(void *dest, void *src, size_t size)
 u8 GiveCapturedMonToPlayer(struct Pokemon *mon)
 {
     s32 i;
+    // WoT: shininess is derived from the OT ID, so taking over a snagged
+    // trainer mon's OT would re-roll it (a shiny lost its shine, a normal one
+    // could turn shiny). Keep it across the change, as UpdateMonPersonality does.
+    bool32 isShiny = GetMonData(mon, MON_DATA_IS_SHINY);
 
     SetMonData(mon, MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
     SetMonData(mon, MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
     SetMonData(mon, MON_DATA_OT_ID, gSaveBlock2Ptr->playerTrainerId);
+    SetMonData(mon, MON_DATA_IS_SHINY, &isShiny);
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
@@ -3493,7 +3512,8 @@ u8 CopyMonToPC(struct Pokemon *mon)
 
     do
     {
-        for (boxPos = 0; boxPos < IN_BOX_COUNT; boxPos++)
+        // WoT Nuzlocke: nothing new goes into the GRAVES box.
+        for (boxPos = 0; boxPos < IN_BOX_COUNT && !WotNuzlocke_IsGraveBox(boxNo); boxPos++)
         {
             struct BoxPokemon *checkingMon = GetBoxedMonPtr(boxNo, boxPos);
             if (GetBoxMonData(checkingMon, MON_DATA_SPECIES) == SPECIES_NONE)
@@ -3719,7 +3739,7 @@ bool8 IsPokemonStorageFull(void)
     s32 i, j;
 
     for (i = 0; i < TOTAL_BOXES_COUNT; i++)
-        for (j = 0; j < IN_BOX_COUNT; j++)
+        for (j = 0; j < IN_BOX_COUNT && !WotNuzlocke_IsGraveBox(i); j++)
             if (GetBoxMonDataAt(i, j, MON_DATA_SPECIES) == SPECIES_NONE)
                 return FALSE;
 
@@ -5829,6 +5849,17 @@ bool32 IsSpeciesInHoennDex(u16 species)
 
 u16 GetBattleBGM(void)
 {
+    // WoT: in the Mega Dimension each rival has a theme of their own, the rogue
+    // Mega fights to Giratina's and the wild Pokemon to Dialga and Palkia's.
+    // Mable's legends (Primal Groudon/Kyogre, Mega Rayquaza) fall through to
+    // their own themes below.
+    if (WotMegaDim_IsActive() && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK))
+     && !((gBattleTypeFlags & BATTLE_TYPE_LEGENDARY) && WotMegaDim_IsLegendBoss()))
+    {
+        if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+            return WotMegaDim_GetRivalMusic(TRAINER_BATTLE_PARAM.opponentA);
+        return (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY) ? MUS_PL_VS_GIRATINA : MUS_DP_VS_DIALGA_PALKIA;
+    }
     if (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY)
     {
         switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
@@ -6435,9 +6466,11 @@ void HandleSetPokedexFlag(enum NationalDexOrder nationalNum, u8 caseId, u32 pers
 void HandleSetPokedexFlagFromMon(struct Pokemon *mon, u32 caseId)
 {
     u32 personality = GetMonData(mon, MON_DATA_PERSONALITY);
-    enum NationalDexOrder nationalNum = SpeciesToNationalPokedexNum(GetMonData(mon, MON_DATA_SPECIES));
+    u32 species = GetMonData(mon, MON_DATA_SPECIES);
+    enum NationalDexOrder nationalNum = SpeciesToNationalPokedexNum(species);
 
     HandleSetPokedexFlag(nationalNum, caseId, personality);
+    WotDexNavMarkSeen(species); // dex #0 species have no seen flag of their own
 }
 
 bool8 HasTwoFramesAnimation(u16 species)
@@ -6699,6 +6732,12 @@ u32 GetFormChangeTargetSpecies_Internal(struct FormChangeContext ctx)
 
     if (formChanges == NULL)
         return ctx.currentSpecies;
+
+    // Wishes of Tomorrow: a Mega kept after battle (src/wot_permanent_mega.c)
+    // changes back when its stone comes off or it's deposited.
+    if (!gMain.inBattle && gSpeciesInfo[ctx.currentSpecies].isMegaEvolution
+     && (ctx.method == FORM_CHANGE_ITEM_HOLD || ctx.method == FORM_CHANGE_DEPOSIT || ctx.method == FORM_CHANGE_FAINT))
+        return WotGetOutOfBattleMegaTarget(ctx.method, ctx.currentSpecies, ctx.heldItem);
 
     for (i = 0; formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
     {

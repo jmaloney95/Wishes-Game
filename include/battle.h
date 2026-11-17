@@ -564,6 +564,7 @@ struct BattleStruct
     u8 wotAuraAnnounced; // WoT Shadow system: per-battler latch for the switch-in "Shadow aura" announce
     u8 wotBallTarget; // WoT Shadow system: manually chosen ball target, stored +1 (0 = none chosen, so the zeroed struct means "auto")
     u8 wotDeliverSlot; // WoT Shadow system: enemy party slot currently going through snag delivery/nicknaming
+    bool8 wotQuickBallPicked; // WoT Shadow system: the R quick-throw already opened this battle on its Shadow default (a Snag Ball)
     u8 expGettersOrder[PARTY_SIZE]; // First battlers which were sent out, then via exp-share
     u8 expGetterMonId;
     u8 expOrderId:3;

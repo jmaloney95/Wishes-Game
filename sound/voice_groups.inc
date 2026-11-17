@@ -315,3 +315,4 @@
 .include "sound/voicegroups/voicegroup272.inc"
 .include "sound/voicegroups/voicegroup273.inc"
 .include "sound/voicegroups/voicegroup274.inc"
+.include "sound/voicegroups/wot_sfx.inc"

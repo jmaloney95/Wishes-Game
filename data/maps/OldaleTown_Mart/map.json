@@ -68,7 +68,7 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
+      "graphics_id": "OBJ_EVENT_GFX_GRETA",
       "x": 1,
       "y": 5,
       "elevation": 0,
@@ -120,7 +120,8 @@
       "flag": "0"
     },
     {
-      "graphics_id": "OBJ_EVENT_GFX_GRETA",
+      "local_id": "LOCALID_FROSTWOOD_BAR_SNOWBOARDER",
+      "graphics_id": "OBJ_EVENT_GFX_MAN_4",
       "x": 0,
       "y": 5,
       "elevation": 0,
@@ -151,6 +152,14 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "OldaleTown_Mart_EventScript_MenuCard"
+    },
+    {
+      "type": "sign",
+      "x": 6,
+      "y": 7,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "OldaleTown_Mart_EventScript_Jukebox"
     },
     {
       "type": "hidden_item",

@@ -36,11 +36,38 @@ WALNUT_WOODS_EventScript_SetHM06Snow::
 	return
 
 @ ===========================================================================
-@ Professor Clarkson - pep talk, then runs off to the east (gone for good).
+@ Professor Clarkson - starts a how-to-battle lesson, sees the player already
+@ knows, and battles them instead. Afterwards he talks about his son, then
+@ runs off to the east (gone for good).
 @ ===========================================================================
 WALNUT_WOODS_EventScript_Clarkson::
 	lock
 	faceplayer
+	@ Beaten but the scene never finished: skip straight to the talk after.
+	goto_if_defeated TRAINER_WALNUT_CLARKSON, WALNUT_WOODS_EventScript_ClarksonAfterBattle
+	setspeaker SP_NAME_CLARKSON
+	showportrait PORTRAIT_CLARKSON_GENGAR
+	msgbox WALNUT_WOODS_Text_ClarksonLesson, MSGBOX_DEFAULT
+	closemessage
+	playse SE_PIN
+	applymovement VAR_LAST_TALKED, Common_Movement_ExclamationMark
+	waitmovement 0
+	applymovement VAR_LAST_TALKED, Common_Movement_Delay48
+	waitmovement 0
+	setspeaker SP_NAME_CLARKSON
+	msgbox WALNUT_WOODS_Text_ClarksonYouKnow, MSGBOX_DEFAULT
+	closemessage
+	hideportrait
+	@ Losing is fine: the player whites out to the Blissey here, not back to
+	@ the last town, and he is still standing here for another try (a loss
+	@ never sets his trainer flag).
+	setrespawn HEAL_LOCATION_WALNUT_WOODS
+	setspeaker SP_NAME_CLARKSON
+	trainerbattle_no_intro TRAINER_WALNUT_CLARKSON, WALNUT_WOODS_Text_ClarksonDefeated
+WALNUT_WOODS_EventScript_ClarksonAfterBattle::
+	@ The field reload after the battle turns him back to his map facing.
+	applymovement VAR_LAST_TALKED, Common_Movement_FacePlayer
+	waitmovement 0
 	setspeaker SP_NAME_CLARKSON
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox WALNUT_WOODS_Text_Clarkson1, MSGBOX_DEFAULT
@@ -50,7 +77,17 @@ WALNUT_WOODS_EventScript_Clarkson::
 	msgbox WALNUT_WOODS_Text_Clarkson2, MSGBOX_DEFAULT
 	closemessage
 	hideportrait
+	@ Off down row 30. If the player is standing right below him, that is
+	@ where he would step first, so he goes round them on the right instead.
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_ne VAR_0x8004, 30, WALNUT_WOODS_EventScript_ClarksonRunStraight
+	goto_if_ne VAR_0x8005, 30, WALNUT_WOODS_EventScript_ClarksonRunStraight
+	applymovement VAR_LAST_TALKED, WALNUT_WOODS_Movement_ClarksonRunAround
+	goto WALNUT_WOODS_EventScript_ClarksonGone
+
+WALNUT_WOODS_EventScript_ClarksonRunStraight::
 	applymovement VAR_LAST_TALKED, WALNUT_WOODS_Movement_ClarksonRunOff
+WALNUT_WOODS_EventScript_ClarksonGone::
 	waitmovement 0
 	setflag FLAG_HIDE_WALNUT_CLARKSON
 	removeobject VAR_LAST_TALKED
@@ -179,10 +216,10 @@ WALNUT_WOODS_EventScript_SignEast::
 @ ===========================================================================
 @ Movement
 @ ===========================================================================
-@ Down one, THEN east. He starts at (30,25) and row 25 is walled at x=31, 33,
-@ 34 and 35 -- running straight east put him through the pots and the trees,
-@ because applymovement never collision-checks. Row 26 is clear from x=28 to
-@ x=43, so the single step down is what makes the exit legal.
+@ Down one, THEN east. He stands at (30,29) and row 29 is walled from x=33,
+@ so running straight east would put him through the trees (applymovement
+@ never collision-checks). Row 30 is clear from x=20 to x=41, so the single
+@ step down is what makes the exit legal.
 @ Ten steps east reaches x=40; the screen's right edge sits around x=37 with
 @ the player where they'd be standing, so he is gone before removeobject.
 WALNUT_WOODS_Movement_ClarksonRunOff:
@@ -199,12 +236,46 @@ WALNUT_WOODS_Movement_ClarksonRunOff:
 	walk_fast_right
 	step_end
 
+@ The player is on (30,30): step right to (31,29) first, then down onto row
+@ 30 beside them and east, ending at x=40 like the straight run.
+WALNUT_WOODS_Movement_ClarksonRunAround:
+	walk_fast_right
+	walk_fast_down
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	walk_fast_right
+	step_end
+
 @ ===========================================================================
 @ Text
 @ ===========================================================================
-WALNUT_WOODS_Text_Clarkson1:
+WALNUT_WOODS_Text_ClarksonLesson:
 	.string "Glad to see you out\n"
 	.string "here training!\p"
+	.string "Here, let me show you how a battle\n"
+	.string "works.\p"
+	.string "First, you pick which POKéMON you\n"
+	.string "want to fight with.\p"
+	.string "Then you just bring out your\n"
+	.string "POKéMON like this…$"
+
+WALNUT_WOODS_Text_ClarksonYouKnow:
+	.string "Whaaa?\p"
+	.string "You already know how to battle?\p"
+	.string "Well, alright then.\n"
+	.string "Give me your best shot!$"
+
+WALNUT_WOODS_Text_ClarksonDefeated:
+	.string "Ha! You weren't kidding.\n"
+	.string "You really do know how to battle!$"
+
+WALNUT_WOODS_Text_Clarkson1:
 	.string "I used to battle with my son out here\n"
 	.string "in these very fields, back in the day…\p"
 	.string "before he got involved with\n"

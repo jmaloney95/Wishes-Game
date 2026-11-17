@@ -52,6 +52,16 @@
 #include "constants/region_map_sections.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
+#include "data/wot_summary_bw.h"
+
+// WoT: the BW-style summary screen. Its art is generated from the
+// Emerald art by tools/wot_bw_summary/gen_summary.py, which mirrors it: the
+// Pokemon's column moved from the left edge (tiles 0-9) to the right (20-29),
+// and the page from tiles 10-29 to 0-19. Every coordinate below follows that:
+// page things are 10 tiles / 80px further left, the Pokemon's 20 / 160 further right.
+static const u16 sWotPssBwPal[] = INCGFX_U16("graphics/summary_screen/wot_bw.pal", ".gbapal");
+static const u16 sWotPssBwShinyPal[] = INCGFX_U16("graphics/summary_screen/wot_bw_shiny.pal", ".gbapal");
+static const u16 sWotPssBwBackdropPal[] = INCGFX_U16("graphics/summary_screen/wot_bw_backdrop.pal", ".gbapal");
 
 // Screen titles (upper left)
 #define PSS_LABEL_WINDOW_POKEMON_INFO_TITLE 0
@@ -91,6 +101,7 @@
 #define PSS_DATA_WINDOW_INFO_ID 1
 #define PSS_DATA_WINDOW_INFO_ABILITY 2
 #define PSS_DATA_WINDOW_INFO_MEMO 3
+#define PSS_DATA_WINDOW_INFO_SHADOW 4 // WoT: "SHADOW" beside the type icons
 
 // Dynamic fields for the Pokémon Skills page
 #define PSS_DATA_WINDOW_SKILLS_HELD_ITEM 0
@@ -118,10 +129,10 @@ enum
     SPRITE_ARR_ID_COUNT = SPRITE_ARR_ID_MOVE_SELECTOR2 + MOVE_SELECTOR_SPRITES_COUNT
 };
 
-#define TILE_EMPTY_APPEAL_HEART  0x1039
-#define TILE_FILLED_APPEAL_HEART 0x103A
-#define TILE_FILLED_JAM_HEART    0x103C
-#define TILE_EMPTY_JAM_HEART     0x103D
+#define TILE_EMPTY_APPEAL_HEART  WOT_PSS_TILE_EMPTY_APPEAL_HEART
+#define TILE_FILLED_APPEAL_HEART WOT_PSS_TILE_FILLED_APPEAL_HEART
+#define TILE_FILLED_JAM_HEART    WOT_PSS_TILE_FILLED_JAM_HEART
+#define TILE_EMPTY_JAM_HEART     WOT_PSS_TILE_EMPTY_JAM_HEART
 
 static EWRAM_DATA struct PokemonSummaryScreenData
 {
@@ -260,6 +271,7 @@ static void PrintInfoPageText(void);
 static void Task_PrintInfoPage(u8);
 static void PrintMonOTName(void);
 static void PrintMonOTID(void);
+static void PrintMonShadowTag(void);
 static void PrintMonAbilityName(void);
 static void PrintMonAbilityDescription(void);
 static void BufferMonTrainerMemo(void);
@@ -396,19 +408,19 @@ static const u16 sStatusTilemap[] = INCBIN_U16("graphics/summary_screen/status_t
 static const struct SlidingWindow sStatusSlidingWindow1 =
 {
     .gfx = sStatusTilemap,
-    .defaultTile = 1,
+    .defaultTile = WOT_PSS_TILE_STATUS_EMPTY,
     .width = 10,
     .height = 2,
-    .left = 0,
+    .left = 20,
     .top = 18
 };
 static const struct SlidingWindow sStatusSlidingWindow2 =
 {
     .gfx = sStatusTilemap,
-    .defaultTile = 1,
+    .defaultTile = WOT_PSS_TILE_STATUS_EMPTY,
     .width = 10,
     .height = 2,
-    .left = 0,
+    .left = 20,
     .top = 50
 };
 static const struct SlidingWindow sPowerAccSlidingWindow =
@@ -417,7 +429,7 @@ static const struct SlidingWindow sPowerAccSlidingWindow =
     .defaultTile = 0,
     .width = 10,
     .height = 7,
-    .left = 0,
+    .left = 20,
     .top = 45
 };
 static const struct SlidingWindow sAppealJamSlidingWindow =
@@ -426,7 +438,7 @@ static const struct SlidingWindow sAppealJamSlidingWindow =
     .defaultTile = 0,
     .width = 10,
     .height = 7,
-    .left = 0,
+    .left = 20,
     .top = 45
 };
 static const s8 sMultiBattleOrder[] = {0, 2, 3, 1, 4, 5};
@@ -497,7 +509,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_UNUSED1] = {
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 1,
         .tilemapTop = 4,
         .width = 0,
         .height = 2,
@@ -506,7 +518,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_POKEMON_INFO_RENTAL] = {
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 1,
         .tilemapTop = 4,
         .width = 18,
         .height = 2,
@@ -515,7 +527,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_POKEMON_INFO_TYPE] = {
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 1,
         .tilemapTop = 6,
         .width = 18,
         .height = 2,
@@ -524,7 +536,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_LEFT] = {
         .bg = 0,
-        .tilemapLeft = 10,
+        .tilemapLeft = 0,
         .tilemapTop = 7,
         .width = 6,
         .height = 6,
@@ -533,7 +545,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_POKEMON_SKILLS_STATS_RIGHT] = {
         .bg = 0,
-        .tilemapLeft = 22,
+        .tilemapLeft = 12,
         .tilemapTop = 7,
         .width = 5,
         .height = 6,
@@ -542,7 +554,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_POKEMON_SKILLS_EXP] = {
         .bg = 0,
-        .tilemapLeft = 10,
+        .tilemapLeft = 0,
         .tilemapTop = 14,
         .width = 11,
         .height = 4,
@@ -551,7 +563,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_POKEMON_SKILLS_STATUS] = {
         .bg = 0,
-        .tilemapLeft = 0,
+        .tilemapLeft = 20,
         .tilemapTop = 18,
         .width = 6,
         .height = 2,
@@ -560,7 +572,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_MOVES_POWER_ACC] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 21,
         .tilemapTop = 15,
         .width = 9,
         .height = 4,
@@ -569,7 +581,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_MOVES_APPEAL_JAM] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 21,
         .tilemapTop = 15,
         .width = 5,
         .height = 4,
@@ -578,7 +590,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PROMPT_RELEARN] = {
         .bg = 0,
-        .tilemapLeft = (P_ENABLE_MOVE_RELEARNERS) ? 18 : 22,
+        .tilemapLeft = (P_ENABLE_MOVE_RELEARNERS) ? 8 : 9, // WoT BW: ends at the page edge (tile 19), clear of the dex number
         .tilemapTop = 2,
         .width = 11,
         .height = 2,
@@ -587,7 +599,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PORTRAIT_DEX_NUMBER] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 21,
         .tilemapTop = 2,
         .width = 5,
         .height = 2,
@@ -596,7 +608,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PORTRAIT_NICKNAME] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 21,
         .tilemapTop = 12,
         .width = 9,
         .height = 2,
@@ -605,7 +617,7 @@ static const struct WindowTemplate sSummaryTemplate[] =
     },
     [PSS_LABEL_WINDOW_PORTRAIT_SPECIES] = {
         .bg = 0,
-        .tilemapLeft = 1,
+        .tilemapLeft = 21,
         .tilemapTop = 14,
         .width = 9,
         .height = 4,
@@ -618,7 +630,7 @@ static const struct WindowTemplate sPageInfoTemplate[] =
 {
     [PSS_DATA_WINDOW_INFO_ORIGINAL_TRAINER] = {
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 1,
         .tilemapTop = 4,
         .width = 11,
         .height = 2,
@@ -627,7 +639,7 @@ static const struct WindowTemplate sPageInfoTemplate[] =
     },
     [PSS_DATA_WINDOW_INFO_ID] = {
         .bg = 0,
-        .tilemapLeft = 22,
+        .tilemapLeft = 12,
         .tilemapTop = 4,
         .width = 7,
         .height = 2,
@@ -636,7 +648,7 @@ static const struct WindowTemplate sPageInfoTemplate[] =
     },
     [PSS_DATA_WINDOW_INFO_ABILITY] = {
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 1,
         .tilemapTop = 9,
         .width = 18,
         .height = 4,
@@ -645,19 +657,31 @@ static const struct WindowTemplate sPageInfoTemplate[] =
     },
     [PSS_DATA_WINDOW_INFO_MEMO] = {
         .bg = 0,
-        .tilemapLeft = 11,
+        .tilemapLeft = 1,
         .tilemapTop = 14,
         .width = 18,
         .height = 6,
         .paletteNum = 6,
         .baseBlock = 575,
     },
+    // WoT: a Shadow Pokemon says so in words, in the free space
+    // after its type icons -- the portrait badge alone was easy to miss. The
+    // BW palette carries the purples (13, 14).
+    [PSS_DATA_WINDOW_INFO_SHADOW] = {
+        .bg = 0,
+        .tilemapLeft = 14,
+        .tilemapTop = 6,
+        .width = 5,
+        .height = 2,
+        .paletteNum = WOT_PSS_BW_PAL,
+        .baseBlock = 830,
+    },
 };
 static const struct WindowTemplate sPageSkillsTemplate[] =
 {
     [PSS_DATA_WINDOW_SKILLS_HELD_ITEM] = {
         .bg = 0,
-        .tilemapLeft = 10,
+        .tilemapLeft = 0,
         .tilemapTop = 4,
         .width = 10,
         .height = 2,
@@ -666,7 +690,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
     },
     [PSS_DATA_WINDOW_SKILLS_RIBBON_COUNT] = {
         .bg = 0,
-        .tilemapLeft = 20,
+        .tilemapLeft = 10,
         .tilemapTop = 4,
         .width = 10,
         .height = 2,
@@ -675,7 +699,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
     },
     [PSS_DATA_WINDOW_SKILLS_STATS_LEFT] = {
         .bg = 0,
-        .tilemapLeft = 16,
+        .tilemapLeft = 6,
         .tilemapTop = 7,
         .width = 6,
         .height = 6,
@@ -684,7 +708,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
     },
     [PSS_DATA_WINDOW_SKILLS_STATS_RIGHT] = {
         .bg = 0,
-        .tilemapLeft = 27,
+        .tilemapLeft = 17,
         .tilemapTop = 7,
         .width = 3,
         .height = 6,
@@ -693,7 +717,7 @@ static const struct WindowTemplate sPageSkillsTemplate[] =
     },
     [PSS_DATA_WINDOW_EXP] = {
         .bg = 0,
-        .tilemapLeft = 24,
+        .tilemapLeft = 14,
         .tilemapTop = 14,
         .width = 6,
         .height = 4,
@@ -705,7 +729,7 @@ static const struct WindowTemplate sPageMovesTemplate[] = // This is used for bo
 {
     [PSS_DATA_WINDOW_MOVE_NAMES] = {
         .bg = 0,
-        .tilemapLeft = 15,
+        .tilemapLeft = 5,
         .tilemapTop = 4,
         .width = 9,
         .height = 10,
@@ -714,7 +738,7 @@ static const struct WindowTemplate sPageMovesTemplate[] = // This is used for bo
     },
     [PSS_DATA_WINDOW_MOVE_PP] = {
         .bg = 0,
-        .tilemapLeft = 24,
+        .tilemapLeft = 14,
         .tilemapTop = 4,
         .width = 6,
         .height = 10,
@@ -723,7 +747,7 @@ static const struct WindowTemplate sPageMovesTemplate[] = // This is used for bo
     },
     [PSS_DATA_WINDOW_MOVE_DESCRIPTION] = {
         .bg = 0,
-        .tilemapLeft = 10,
+        .tilemapLeft = 0,
         .tilemapTop = 15,
         .width = 20,
         .height = 4,
@@ -745,8 +769,10 @@ static const u8 sTextColors[][3] =
     {0, 1, 2},
     {0, 3, 4},
     {0, 5, 6},
-    {0, 7, 8}
+    {0, 7, 8},
+    {0, 13, 14}, // WoT: Shadow purple, on a WOT_PSS_BW_PAL window
 };
+#define PSS_COLOR_WOT_SHADOW 13
 
 static const u8 sButtons_Gfx[][4 * TILE_SIZE_4BPP] = {
     INCGFX_U8("graphics/summary_screen/a_button.png", ".4bpp"),
@@ -1173,7 +1199,7 @@ static const u16 sMarkings_Pal[] = INCGFX_U16("graphics/summary_screen/markings.
 static u8 ShowCategoryIcon(enum DamageCategory category)
 {
     if (sMonSummaryScreen->categoryIconSpriteId == 0xFF)
-        sMonSummaryScreen->categoryIconSpriteId = CreateSprite(&gSpriteTemplate_CategoryIcons, 48, 128, 0);
+        sMonSummaryScreen->categoryIconSpriteId = CreateSprite(&gSpriteTemplate_CategoryIcons, 48 + 160, 128, 0); // WoT BW: Pokemon column
 
     gSprites[sMonSummaryScreen->categoryIconSpriteId].invisible = FALSE;
     StartSpriteAnim(&gSprites[sMonSummaryScreen->categoryIconSpriteId], category);
@@ -1469,6 +1495,9 @@ static bool8 DecompressGraphics(void)
     case 6:
         LoadPalette(gSummaryScreen_Pal, BG_PLTT_ID(0), 8 * PLTT_SIZE_4BPP);
         LoadPalette(&gPPTextPalette, BG_PLTT_ID(8) + 1, PLTT_SIZEOF(16 - 1));
+        LoadPalette(sWotPssBwPal, BG_PLTT_ID(WOT_PSS_BW_PAL), PLTT_SIZE_4BPP);
+        LoadPalette(sWotPssBwShinyPal, BG_PLTT_ID(WOT_PSS_BW_SHINY_PAL), PLTT_SIZE_4BPP);
+        LoadPalette(sWotPssBwBackdropPal, BG_PLTT_ID(WOT_PSS_BW_BACKDROP_PAL), PLTT_SIZE_4BPP);
         sMonSummaryScreen->switchCounter++;
         break;
     case 7:
@@ -1678,7 +1707,7 @@ static void ChangeStatLabel(s16 mode)
     u32 ivsBlock = 221;
     u32 evsBlock = 218;
 
-    u32 statsCoordX = 44;
+    u32 statsCoordX = 44 - 10; // WoT BW: the page moved 10 tiles left
     u32 statsCoordY = 102;
 
     u32 statsLength = 3;
@@ -2936,6 +2965,8 @@ static void DrawPagination(void) // Updates the pagination dots at the top of th
             tilemap[j + 2 * PSS_PAGE_COUNT + 1] = 0x59;
         }
     }
+    for (i = 0; i < PSS_PAGE_COUNT * 4; i++)
+        tilemap[i] = WOT_PSS_DOT(tilemap[i]); // WoT: the BW versions of the dot tiles
     CopyToBgTilemapBufferRect_ChangePalette(3, tilemap, 11, 0, PSS_PAGE_COUNT * 2, 2, 16);
     ScheduleBgCopyTilemapToVram(3);
     Free(tilemap);
@@ -3126,8 +3157,8 @@ static void TilemapFiveMovesDisplay(u16 *dst, u16 palette, bool8 remove)
 {
     u16 i, id;
 
-    palette *= 0x1000;
-    id = 0x56A;
+    palette = 0; // WoT: the BW tilemap entries carry their own palette
+    id = 0x560;  // WoT: [1] half, row 11, col 0 (was col 10)
     if (!remove)
     {
         for (i = 0; i < 20; i++)
@@ -3152,13 +3183,13 @@ static void DrawPokerusCuredSymbol(struct Pokemon *mon) // This checks if the mo
 {
     if (ShouldPokemonShowCuredPokerus(mon))
     {
-        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0][0x223] = 0x2C;
-        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1][0x223] = 0x2C;
+        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0][0x237] = WOT_PSS_TILE_POKERUS_CURED;
+        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1][0x237] = WOT_PSS_TILE_POKERUS_CURED;
     }
     else
     {
-        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0][0x223] = 0x81A;
-        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1][0x223] = 0x81A;
+        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][0][0x237] = WOT_PSS_TILE_POKERUS_NONE;
+        sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_INFO][1][0x237] = WOT_PSS_TILE_POKERUS_NONE;
     }
     ScheduleBgCopyTilemapToVram(3);
 }
@@ -3166,9 +3197,16 @@ static void DrawPokerusCuredSymbol(struct Pokemon *mon) // This checks if the mo
 static void SetMonPicBackgroundPalette(bool8 isMonShiny)
 {
     if (!isMonShiny)
-        SetBgTilemapPalette(3, 1, 4, 8, 8, 0);
+    {
+        // a light grid, so Shadow Pokemon stay visible (both halves: the egg page is the right one)
+        SetBgTilemapPalette(3, 21, 4, 8, 8, WOT_PSS_BW_BACKDROP_PAL);
+        SetBgTilemapPalette(3, 21, 4 + 32, 8, 8, WOT_PSS_BW_BACKDROP_PAL); // +32 rows = the second 32x32 half
+    }
     else
-        SetBgTilemapPalette(3, 1, 4, 8, 8, 5);
+    {
+        SetBgTilemapPalette(3, 21, 4, 8, 8, WOT_PSS_BW_SHINY_PAL); // light gold behind a shiny
+        SetBgTilemapPalette(3, 21, 4 + 32, 8, 8, WOT_PSS_BW_SHINY_PAL);
+    }
     ScheduleBgCopyTilemapToVram(3);
 }
 
@@ -3196,13 +3234,13 @@ static void DrawExperienceProgressBar(struct Pokemon *unused)
         numExpProgressBarTicks = 0;
     }
 
-    dst = &sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1][0x255];
+    dst = &sMonSummaryScreen->bgTilemapBuffers[PSS_PAGE_SKILLS][1][0x24B]; // WoT: row 18, col 11 (was 21)
     for (i = 0; i < 8; i++)
     {
         if (numExpProgressBarTicks > 7)
-            dst[i] = 0x206A;
+            dst[i] = sWotPssExpTiles[8] | (WOT_PSS_BW_PAL << 12);
         else
-            dst[i] = 0x2062 + (numExpProgressBarTicks % 8);
+            dst[i] = sWotPssExpTiles[numExpProgressBarTicks % 8] | (WOT_PSS_BW_PAL << 12);
         numExpProgressBarTicks -= 8;
         if (numExpProgressBarTicks < 0)
             numExpProgressBarTicks = 0;
@@ -3229,9 +3267,9 @@ static void DrawContestMoveHearts(enum Move move)
         for (i = 0; i < MAX_CONTEST_MOVE_HEARTS; i++)
         {
             if (effectValue != 0xFF && i < effectValue)
-                tilemap[(i / 4 * 32) + (i & 3) + 0x1E6] = TILE_FILLED_APPEAL_HEART;
+                tilemap[(i / 4 * 32) + (i & 3) + 0x1FA] = TILE_FILLED_APPEAL_HEART; // WoT: col 26 (was 6)
             else
-                tilemap[(i / 4 * 32) + (i & 3) + 0x1E6] = TILE_EMPTY_APPEAL_HEART;
+                tilemap[(i / 4 * 32) + (i & 3) + 0x1FA] = TILE_EMPTY_APPEAL_HEART;
         }
 
         // Draw jam hearts
@@ -3242,9 +3280,9 @@ static void DrawContestMoveHearts(enum Move move)
         for (i = 0; i < MAX_CONTEST_MOVE_HEARTS; i++)
         {
             if (effectValue != 0xFF && i < effectValue)
-                tilemap[(i / 4 * 32) + (i & 3) + 0x226] = TILE_FILLED_JAM_HEART;
+                tilemap[(i / 4 * 32) + (i & 3) + 0x23A] = TILE_FILLED_JAM_HEART;
             else
-                tilemap[(i / 4 * 32) + (i & 3) + 0x226] = TILE_EMPTY_JAM_HEART;
+                tilemap[(i / 4 * 32) + (i & 3) + 0x23A] = TILE_EMPTY_JAM_HEART;
         }
     }
 }
@@ -3591,6 +3629,7 @@ static void PrintInfoPageText(void)
         PrintMonAbilityDescription();
         BufferMonTrainerMemo();
         PrintMonTrainerMemo();
+        PrintMonShadowTag();
     }
 }
 
@@ -3618,6 +3657,9 @@ static void Task_PrintInfoPage(u8 taskId)
         PrintMonTrainerMemo();
         break;
     case 7:
+        PrintMonShadowTag();
+        break;
+    case 8:
         DestroyTask(taskId);
         return;
     }
@@ -3637,6 +3679,21 @@ static void PrintMonOTName(void)
         else
             PrintTextOnWindow(windowId, sMonSummaryScreen->summary.OTName, x, 1, 0, 6);
     }
+}
+
+// WoT: "SHADOW" after the type icons while the Pokemon is one.
+static void PrintMonShadowTag(void)
+{
+    static const u8 sText_Shadow[] = _("SHADOW");
+    u8 windowId;
+
+    if (!GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_IS_SHADOW))
+        return;
+    windowId = AddWindowFromTemplateList(sPageInfoTemplate, PSS_DATA_WINDOW_INFO_SHADOW);
+    PrintTextOnWindow(windowId, sText_Shadow, GetStringCenterAlignXOffset(FONT_NORMAL, sText_Shadow, 40), 1, 0, PSS_COLOR_WOT_SHADOW);
+    // it can first appear on a mon switch, after the page's tilemaps went up
+    PutWindowTilemap(windowId);
+    ScheduleBgCopyTilemapToVram(0);
 }
 
 static void PrintMonOTID(void)
@@ -4457,15 +4514,15 @@ static void SetMonTypeIcons(void)
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
     if (summary->isEgg)
     {
-        SetTypeSpritePosAndPal(TYPE_MYSTERY, 120, 48, SPRITE_ARR_ID_TYPE);
+        SetTypeSpritePosAndPal(TYPE_MYSTERY, 120 - 80, 48, SPRITE_ARR_ID_TYPE);
         SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, TRUE);
     }
     else
     {
-        SetTypeSpritePosAndPal(GetSpeciesType(summary->species, 0), 120, 48, SPRITE_ARR_ID_TYPE);
+        SetTypeSpritePosAndPal(GetSpeciesType(summary->species, 0), 120 - 80, 48, SPRITE_ARR_ID_TYPE);
         if (GetSpeciesType(summary->species, 0) != GetSpeciesType(summary->species, 1))
         {
-            SetTypeSpritePosAndPal(GetSpeciesType(summary->species, 1), 160, 48, SPRITE_ARR_ID_TYPE + 1);
+            SetTypeSpritePosAndPal(GetSpeciesType(summary->species, 1), 160 - 80, 48, SPRITE_ARR_ID_TYPE + 1);
             SetSpriteInvisibility(SPRITE_ARR_ID_TYPE + 1, FALSE);
         }
         else
@@ -4474,7 +4531,7 @@ static void SetMonTypeIcons(void)
         }
         if (P_SHOW_TERA_TYPE >= GEN_9)
         {
-            SetTypeSpritePosAndPal(summary->teraType, 200, 48, SPRITE_ARR_ID_TYPE + 2);
+            SetTypeSpritePosAndPal(summary->teraType, 200 - 80, 48, SPRITE_ARR_ID_TYPE + 2);
         }
     }
 }
@@ -4497,7 +4554,7 @@ static void SetMoveTypeIcons(void)
                 type = CheckDynamicMoveType(mon, summary->moves[i], 0, state); // Bug: in battle, this only shows the dynamic type of battler in position 0
             }
 
-            SetTypeSpritePosAndPal(type, 85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
+            SetTypeSpritePosAndPal(type, 85 - 80, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
         }
         else
         {
@@ -4513,7 +4570,7 @@ static void SetContestMoveTypeIcons(void)
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         if (summary->moves[i] != MOVE_NONE)
-            SetTypeSpritePosAndPal(NUMBER_OF_MON_TYPES + GetMoveContestCategory(summary->moves[i]), 85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
+            SetTypeSpritePosAndPal(NUMBER_OF_MON_TYPES + GetMoveContestCategory(summary->moves[i]), 85 - 80, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
         else
             SetSpriteInvisibility(i + SPRITE_ARR_ID_TYPE, TRUE);
     }
@@ -4538,11 +4595,11 @@ static void SetNewMoveTypeIcon(void)
     {
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
         {
-            SetTypeSpritePosAndPal(type, 85, 96, SPRITE_ARR_ID_TYPE + 4);
+            SetTypeSpritePosAndPal(type, 85 - 80, 96, SPRITE_ARR_ID_TYPE + 4);
         }
         else
         {
-            SetTypeSpritePosAndPal(NUMBER_OF_MON_TYPES + GetMoveContestCategory(sMonSummaryScreen->newMove), 85, 96, SPRITE_ARR_ID_TYPE + 4);
+            SetTypeSpritePosAndPal(NUMBER_OF_MON_TYPES + GetMoveContestCategory(sMonSummaryScreen->newMove), 85 - 80, 96, SPRITE_ARR_ID_TYPE + 4);
         }
     }
 }
@@ -4619,7 +4676,7 @@ static u8 LoadMonGfxAndSprite(struct Pokemon *mon, s16 *state)
             u32 slot = IndexOfSpritePaletteTag(summary->species2);
 
             if (slot != 0xFF)
-                LoadPalette(shadowArt->pal, OBJ_PLTT_ID(slot), PLTT_SIZE_4BPP);
+                LoadPalette(WotShadowPicPal(shadowArt, summary->isShiny), OBJ_PLTT_ID(slot), PLTT_SIZE_4BPP);
         }
         SetMultiuseSpriteTemplateToPokemon(summary->species2, B_POSITION_OPPONENT_LEFT);
         (*state)++;
@@ -4700,7 +4757,7 @@ static void WotSummaryShadowBadge_Update(struct Pokemon *mon)
         LoadSpriteSheet(&sWotSummaryShadowSheet);
         LoadSpritePalette(&sWotSummaryShadowPalette);
         // Portrait sprite sits at (40,64); badge tucks by its top-left edge.
-        spriteId = CreateSprite(&sWotSummaryShadowTemplate, 14, 46, 0);
+        spriteId = CreateSprite(&sWotSummaryShadowTemplate, 14 + 160, 46, 0);
         if (spriteId == MAX_SPRITES)
             return;
         sWotSummaryShadowSpriteId = spriteId + 1;
@@ -4730,7 +4787,7 @@ static void WotSummaryShadowBadge_Destroy(void)
 static u8 CreateMonSprite(struct Pokemon *unused)
 {
     struct PokeSummary *summary = &sMonSummaryScreen->summary;
-    u8 spriteId = CreateSprite(&gMultiuseSpriteTemplate, 40, 64, 5);
+    u8 spriteId = CreateSprite(&gMultiuseSpriteTemplate, 40 + 160, 64, 5);
 
     FreeSpriteOamMatrix(&gSprites[spriteId]);
     gSprites[spriteId].data[0] = summary->species2;
@@ -4808,7 +4865,7 @@ static void CreateMonMarkingsSprite(struct Pokemon *mon)
     if (sprite != NULL)
     {
         StartSpriteAnim(sprite, GetMonData(mon, MON_DATA_MARKINGS));
-        sMonSummaryScreen->markingsSprite->x = 60;
+        sMonSummaryScreen->markingsSprite->x = 60 + 160;
         sMonSummaryScreen->markingsSprite->y = 26;
         sMonSummaryScreen->markingsSprite->oam.priority = 1;
     }
@@ -4826,7 +4883,7 @@ static void CreateCaughtBallSprite(struct Pokemon *mon)
     enum PokeBall ball = GetMonData(mon, MON_DATA_POKEBALL);
 
     LoadBallGfx(ball);
-    sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gPokeBalls[ball].spriteTemplate, 16, 136, 0);
+    sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL] = CreateSprite(&gPokeBalls[ball].spriteTemplate, 16 + 160, 136, 0);
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].callback = SpriteCallbackDummy;
     gSprites[sMonSummaryScreen->spriteIds[SPRITE_ARR_ID_BALL]].oam.priority = 3;
 }
@@ -4837,7 +4894,7 @@ static void CreateSetStatusSprite(void)
     u8 statusAnim;
 
     if (*spriteId == SPRITE_NONE)
-        *spriteId = CreateSprite(&sSpriteTemplate_StatusCondition, 64, 152, 0);
+        *spriteId = CreateSprite(&sSpriteTemplate_StatusCondition, 64 + 160, 152, 0);
 
     statusAnim = GetMonAilment(&sMonSummaryScreen->currentMon);
     if (statusAnim != 0)
@@ -4864,7 +4921,7 @@ static void CreateMoveSelectorSprites(u8 idArrayStart)
 
         for (i = 0; i < MOVE_SELECTOR_SPRITES_COUNT; i++)
         {
-            spriteIds[i] = CreateSprite(&sMoveSelectorSpriteTemplate, i * 16 + 89, 40, subpriority);
+            spriteIds[i] = CreateSprite(&sMoveSelectorSpriteTemplate, i * 16 + 89 - 80, 40, subpriority);
             if (i == 0)
                 StartSpriteAnim(&gSprites[spriteIds[i]], 4); // left
             else if (i == 9)

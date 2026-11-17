@@ -3,8 +3,9 @@ NorthwindCavern_MapScripts::
 
 @ ============================================================================
 @  NORTHWIND CAVERN -- the north wind sleeps at the back of the burial
-@  tunnel. SUICUNE waits here (Deoxys pattern: it only leaves when CAUGHT;
-@  defeat or flight and it simply reforms on the wind).
+@  tunnel. A SHADOW SUICUNE waits here (Deoxys pattern: it only leaves when
+@  CAUGHT; defeat or flight and it simply reforms on the wind). The tunnel
+@  mouth stays sealed until the Surf and Fly badges (MunenTunnel scripts).
 @ ============================================================================
 NorthwindCavern_EventScript_Suicune::
 	lock
@@ -16,6 +17,9 @@ NorthwindCavern_EventScript_Suicune::
 	msgbox NorthwindCavern_Text_SuicuneStirs, MSGBOX_DEFAULT
 	closemessage
 	setwildbattle SPECIES_SUICUNE, 35
+	@ Shadow Suicune: the cavern only opens late (Surf + Fly, see
+	@ MunenTunnel), once the player knows what a Shadow Pokemon is.
+	special WotMakeEventMonShadow
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE

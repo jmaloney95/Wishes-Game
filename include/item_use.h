@@ -64,9 +64,11 @@ enum {
     BALL_THROW_UNABLE_SEMI_INVULNERABLE,
     BALL_THROW_ABLE,
     BALL_THROW_UNABLE_DISABLED_FLAG,
+    BALL_THROW_UNABLE_NUZLOCKE, // WoT: not this area's first encounter
 };
 
 bool32 CanThrowBall(void);
+bool32 WotOpponentHasShadowOut(void); // WoT Shadow system
 bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon);
 
 enum ItemTMHMOrEvolutionStone

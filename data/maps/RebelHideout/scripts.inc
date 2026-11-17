@@ -722,3 +722,4 @@ RebelHideout_Text_PostgameAllison::
 	.string "The bay sings different now.\n"
 	.string "Cleaner. Lighter.\p"
 	.string "You did that.$"
+

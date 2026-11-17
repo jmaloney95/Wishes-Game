@@ -97,3 +97,220 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 - Rest
 - Protect
 
+/*
+Wishes of Tomorrow -- the Mega Dimension rivals as portal-run partners (round
+131). A partner fields at most 3 (FillPartnerParty), so they bring the first
+3 of their original team; the 4th is noted per partner to swap in. Levels are
+rewritten to the player's best +/-3 at battle start
+(WotMegaDim_AdjustPartnerParty). Back pics borrow May's (only stock back
+sprites exist).
+*/
+=== PARTNER_MEGADIM_CANARI ===
+Name: CANARI
+Class: Streamer
+Pic: Lass
+Gender: Female
+Music: Girl
+Back Pic: May
+AI: Basic Trainer
+
+Eelektross
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Thunderbolt
+- Flamethrower
+- Giga Drain
+- Supercell Slam
+
+Rotom-Wash
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Hydro Pump
+- Thunderbolt
+- Shadow Ball
+- Will-O-Wisp
+
+Toxtricity
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Overdrive
+- Sludge Bomb
+- Hyper Voice
+- Nasty Plot
+
+/* spare: Pawmot */
+
+=== PARTNER_MEGADIM_LIDA ===
+Name: LIDA
+Class: Team MZ
+Pic: Za Lida
+Gender: Female
+Music: Cool
+Back Pic: Wot Lida
+AI: Basic Trainer
+
+Hawlucha
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Flying Press
+- Close Combat
+- Acrobatics
+- Swords Dance
+
+Lucario @ Lucarionite
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Close Combat
+- Meteor Mash
+- Extreme Speed
+- Swords Dance
+
+Scrafty
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Drain Punch
+- Knock Off
+- Ice Punch
+- Dragon Dance
+
+/* spare: Heracross */
+
+=== PARTNER_MEGADIM_EMMA ===
+Name: EMMA
+Class: Detective
+Pic: Za Detective Emma
+Gender: Female
+Music: Intense
+Back Pic: Wot Emma
+AI: Basic Trainer
+
+Inteleon
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Snipe Shot
+- Ice Beam
+- Dark Pulse
+- Air Slash
+
+Umbreon
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Foul Play
+- Snarl
+- Moonlight
+- Toxic
+
+Noctowl
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Hurricane
+- Psychic Noise
+- Moonblast
+- Roost
+
+/* spare: Alakazam */
+
+=== PARTNER_MEGADIM_TAUNIE ===
+Name: TAUNIE
+Class: Team MZ
+Pic: Za Taunie
+Gender: Female
+Music: Cool
+Back Pic: Wot Taunie
+AI: Basic Trainer
+
+Feraligatr
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Liquidation
+- Scale Shot
+- Ice Punch
+- Dragon Dance
+
+Dragonite
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Dragon Claw
+- Dual Wingbeat
+- Extreme Speed
+- Dragon Dance
+
+Talonflame
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Flare Blitz
+- Brave Bird
+- Swords Dance
+- Roost
+
+/* spare: Sylveon */
+
+=== PARTNER_MEGADIM_TULIP ===
+Name: TULIP
+Class: Leader
+Pic: Za Tulip
+Gender: Female
+Music: Female
+Back Pic: Wot Tulip
+AI: Basic Trainer
+
+Farigiraf
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Twin Beam
+- Hyper Voice
+- Shadow Ball
+- Calm Mind
+
+Gardevoir @ Gardevoirite
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Moonblast
+- Psychic
+- Hyper Voice
+- Calm Mind
+
+Espathra
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Lumina Crash
+- Dazzling Gleam
+- Shadow Ball
+- Calm Mind
+
+/* spare: Florges */
+
+=== PARTNER_MEGADIM_JACINTHE ===
+Name: JACINTHE
+Class: Socialite
+Pic: Za Jacinthe
+Gender: Female
+Music: Female
+Back Pic: May
+AI: Basic Trainer
+
+Klefki
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Flash Cannon
+- Dazzling Gleam
+- Foul Play
+- Thunder Wave
+
+Aegislash
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Shadow Ball
+- Iron Head
+- Sacred Sword
+- King's Shield
+
+Mawile @ Mawilite
+Level: 30
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Play Rough
+- Iron Head
+- Sucker Punch
+- Swords Dance
+
+/* spare: Clefable */

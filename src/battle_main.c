@@ -301,6 +301,11 @@ const struct OamData gOamData_BattleSpritePlayerSide =
 static const s8 sCenterToCornerVecXs[8] ={-32, -16, -16, -32, -32};
 
 #include "data/types_info.h"
+#include "wot_mega_dimension.h"
+#include "wot_film_shiny.h"
+#include "wot_battle_rules.h"
+#include "wot_rematch.h"
+#include "wot_nuzlocke.h"
 
 // [TRAINER_CLASS_XYZ] = { _("name"), <money=5>, <ball=BALL_POKE> }
 const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
@@ -429,6 +434,12 @@ const struct TrainerClass gTrainerClasses[TRAINER_CLASS_COUNT] =
     [TRAINER_CLASS_ONI] =                  { _("Oni"), 8 },
     [TRAINER_CLASS_CAPTAIN] =              { _("Captain"), 10 },
     [TRAINER_CLASS_SIREN] =                { _("Siren"), 12 },
+    [TRAINER_CLASS_STREAMER] =             { _("Streamer"), 15 },
+    [TRAINER_CLASS_TEAM_MZ] =              { _("Team MZ"), 15 },
+    [TRAINER_CLASS_DETECTIVE] =            { _("Detective"), 15 },
+    [TRAINER_CLASS_SOCIALITE] =            { _("Socialite"), 20 },
+    [TRAINER_CLASS_SKIER] =                { _("Skier"), 8 },
+    [TRAINER_CLASS_SNOWBOARDER] =          { _("Snowboarder"), 8 },
 };
 
 static void (*const sTurnActionsFuncsTable[])(void) =
@@ -492,6 +503,8 @@ void CB2_InitBattle(void)
     AllocateBattleSpritesData();
     AllocateMonSpritesGfx();
     RecordedBattle_ClearFrontierPassFlag();
+    WotSetBattleRules(); // boss arena rules: inverse battle, maglev floor
+    WotNuzlocke_OnBattleInit();
 
 #if T_SHOULD_RUN_MOVE_ANIM
     gLoadFail = FALSE;
@@ -609,6 +622,7 @@ static void CB2_InitBattleInternal(void)
             CreateNPCTrainerParty(&gEnemyParty[0], TRAINER_BATTLE_PARAM.opponentA, TRUE);
             if (gBattleTypeFlags & BATTLE_TYPE_TWO_OPPONENTS && !BATTLE_TWO_VS_ONE_OPPONENT)
                 CreateNPCTrainerParty(&gEnemyParty[PARTY_SIZE / 2], TRAINER_BATTLE_PARAM.opponentB, FALSE);
+            WotFilmShiny_OnTrainerPartyMade();
             SetWildMonHeldItem();
             CalculateEnemyPartyCount();
         }
@@ -1933,6 +1947,29 @@ void CustomTrainerPartyAssignMoves(struct Pokemon *mon, const struct TrainerMon 
     }
 }
 
+// WoT: trainer-owned Shadow Pokemon roll for shiny the way wild
+// ones do (1/SHINY_ODDS, more rolls with the Shiny Charm), so a snag can land a
+// shiny Shadow. Every other trainer mon stays non-shiny unless its entry says so.
+static bool32 WotRollShadowShiny(void)
+{
+    u32 rolls = 1;
+
+    if (P_FLAG_FORCE_NO_SHINY != 0 && FlagGet(P_FLAG_FORCE_NO_SHINY))
+        return FALSE;
+    if (P_FLAG_FORCE_SHINY != 0 && FlagGet(P_FLAG_FORCE_SHINY))
+        return TRUE;
+    if (WotFilmShiny_GetMode() != WOT_FILM_SHINY_OFF) // debug "Shiny: next/all"
+        return TRUE;
+    if (CheckBagHasItem(ITEM_SHINY_CHARM, 1))
+        rolls += I_SHINY_CHARM_ADDITIONAL_ROLLS;
+    while (rolls-- > 0)
+    {
+        if (Random() < SHINY_ODDS)
+            return TRUE;
+    }
+    return FALSE;
+}
+
 u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer *trainer, bool32 firstTrainer, u32 battleTypeFlags)
 {
     u32 personalityValue;
@@ -2014,10 +2051,18 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             // throw away their custom battle art. Story bosses are exempt too
             // (see WotTrainerIsRandomizerExempt).
             u32 monSpecies = (partyData[monIndex].isShadow
-                           || !FlagGet(FLAG_WOT_RAND_TRAINERS)
+                           || !WotRandomizerOption(FLAG_WOT_RAND_TRAINERS)
                            || WotTrainerIsRandomizerExempt())
                            ? partyData[monIndex].species
                            : WotRandomizeSpecies(partyData[monIndex].species);
+            // WoT rematch: raise the mon to the rematch level and evolve it to
+            // fit, before anything species-dependent is worked out below.
+            u32 wotRematchLevel = 0;
+            if (WotRematch_IsActiveFor(firstTrainer == TRUE ? TRAINER_BATTLE_PARAM.opponentA : TRAINER_BATTLE_PARAM.opponentB))
+            {
+                wotRematchLevel = WotRematch_ScaleLevel(partyData[monIndex].lvl, i, monsCount);
+                monSpecies = WotRematch_EvolveSpecies(monSpecies, wotRematchLevel);
+            }
 
             if (trainer->battleType != TRAINER_BATTLE_TYPE_SINGLES)
                 personalityValue = 0x80;
@@ -2042,6 +2087,8 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             u32 monLevel = partyData[monIndex].lvl;
             if (gymLevelShift != 0)
                 monLevel = (monLevel > gymLevelShift) ? (monLevel - gymLevelShift) : 1;
+            if (wotRematchLevel != 0)
+                monLevel = wotRematchLevel;
             CreateMon(&party[i], monSpecies, monLevel, personalityValue, otId);
             SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[monIndex].heldItem);
 
@@ -2074,6 +2121,19 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
                 {
                     if (speciesInfo->abilities[abilityNum] == partyData[monIndex].ability)
                         break;
+                }
+                // WoT: an evolved (rematch) or randomized mon may not have the
+                // authored ability; it keeps the same ability SLOT instead.
+                if (abilityNum >= maxAbilityNum && monSpecies != partyData[monIndex].species)
+                {
+                    const struct SpeciesInfo *baseInfo = &gSpeciesInfo[partyData[monIndex].species];
+                    for (abilityNum = 0; abilityNum < maxAbilityNum; ++abilityNum)
+                    {
+                        if (baseInfo->abilities[abilityNum] == partyData[monIndex].ability)
+                            break;
+                    }
+                    if (abilityNum >= maxAbilityNum || speciesInfo->abilities[abilityNum] == ABILITY_NONE)
+                        abilityNum = 0;
                 }
                 assertf(abilityNum < maxAbilityNum, "illegal ability %S for %S", gAbilitiesInfo[partyData[monIndex].ability].name, speciesInfo->speciesName);
             }
@@ -2120,6 +2180,8 @@ u8 CreateNPCTrainerPartyFromTrainer(struct Pokemon *party, const struct Trainer 
             {
                 u32 data = TRUE;
                 SetMonData(&party[i], MON_DATA_IS_SHADOW, &data);
+                if (!partyData[monIndex].isShiny && WotRollShadowShiny())
+                    SetMonData(&party[i], MON_DATA_IS_SHINY, &data);
             }
             if (partyData[monIndex].teraType > 0)
             {
@@ -2151,6 +2213,10 @@ static const u16 sWotPatrolPoolStolen[] =
     SPECIES_RILLABOOM, SPECIES_HAXORUS, SPECIES_MELMETAL,
     SPECIES_URSALUNA, SPECIES_RHYPERIOR, SPECIES_ANNIHILAPE,
     SPECIES_ABSOL, SPECIES_ALAKAZAM, SPECIES_RAPIDASH,
+    // More of the custom Shadow art.
+    SPECIES_DRAGONITE, SPECIES_KINGDRA, SPECIES_TYPHLOSION,
+    SPECIES_CHARIZARD, SPECIES_GARCHOMP, SPECIES_GARDEVOIR,
+    SPECIES_GALLADE, SPECIES_EMPOLEON,
     SPECIES_ARCANINE, SPECIES_MAROWAK, SPECIES_MANECTRIC,
     SPECIES_LUXRAY, SPECIES_FLYGON, SPECIES_VENUSAUR,
 };
@@ -2159,16 +2225,33 @@ static const u16 sWotPatrolPoolBase[] =
     SPECIES_WEAVILE, SPECIES_HONCHKROW, SPECIES_TOXICROAK,
     SPECIES_DRAPION, SPECIES_CORVISQUIRE, SPECIES_CENTISKORCH,
     SPECIES_TINKATON, SPECIES_ARCTOZOLT, SPECIES_ARCHEOPS,
+    // More of the custom Shadow art.
+    SPECIES_DRAGONAIR, SPECIES_VAPOREON, SPECIES_CAMERUPT,
+    SPECIES_ONIX, SPECIES_SQUIRTLE, SPECIES_PIPLUP,
+    SPECIES_PIKACHU, SPECIES_AZURILL, SPECIES_CHIMCHAR,
+    SPECIES_CHARMELEON, SPECIES_TURTWIG, SPECIES_UMBREON,
     SPECIES_ARCANINE, SPECIES_MAROWAK, SPECIES_MANECTRIC,
     SPECIES_LUXRAY, SPECIES_FLYGON, SPECIES_VENUSAUR,
 };
 
+// The patrols never field legendaries or mythicals -- the
+// story bosses and the Mega Dimension do. Melmetal is his one exception: it
+// stays in the research-taken pool, so it may turn up after the Oni too.
+static bool32 WotIsBarredFromPatrols(u16 species)
+{
+    if (species == SPECIES_MELMETAL)
+        return FALSE;
+    return gSpeciesInfo[species].isRestrictedLegendary || gSpeciesInfo[species].isSubLegendary
+        || gSpeciesInfo[species].isMythical || gSpeciesInfo[species].isUltraBeast;
+}
+
 // With the Oni beaten there is nothing left holding the program back, so the
-// patrols stop drawing from a curated pool and take anything: the Shadow Log
-// roster is the list, legendaries and all, at the Oni's own level band.
-// Skipped: the two scripted legendaries, which have their own set pieces, and
-// anything that can still evolve -- the roster carries the rod and starter
-// Shadows too, and a level 56 Azurill on patrol is not the intended note.
+// patrols stop drawing from a curated pool and take anything on the Shadow Log
+// (both research pools are on it, checked), at the Oni's own level
+// band. Skipped: the patrol-barred legends, and anything that can still evolve
+// -- the roster carries the rod and starter Shadows too, and a level 56
+// Azurill on patrol is not the intended note. (The missing-Shadow slot below
+// is the one place those still turn up.)
 static u16 WotPickFromShadowRoster(void)
 {
     u32 count = WotShadowLog_SpeciesCount();
@@ -2178,13 +2261,54 @@ static u16 WotPickFromShadowRoster(void)
     for (tries = 0; tries < 64; tries++)
     {
         species = WotShadowLog_SpeciesAt(Random() % count);
-        if (species == SPECIES_NONE || species == SPECIES_DEOXYS || species == SPECIES_JIRACHI)
+        if (species == SPECIES_NONE || WotIsBarredFromPatrols(species))
             continue;
         if (GetSpeciesEvolutions(species) != NULL)
             continue;
         return species;
     }
     return SPECIES_WEAVILE; // the roster is full of finals; this cannot be reached
+}
+
+// After the Oni, one slot of every patrol team is a Shadow the log
+// still lacks (any that counts toward finishing it and isn't patrol-barred),
+// so the log can be finished on either research path without a hundred
+// fights for the last few. SPECIES_NONE once none are left. Not static: the
+// WoT tests call it.
+u16 WotPatrol_PickMissingShadow(void)
+{
+    u16 missing[128];
+    u32 i, n = 0;
+
+    for (i = 0; i < WotShadowLog_SpeciesCount() && n < ARRAY_COUNT(missing); i++)
+    {
+        u16 species = WotShadowLog_SpeciesAt(i);
+
+        if (!WotShadowLog_SpeciesCounts(species) || WotShadowLog_IsSpeciesSnagged(species)
+         || WotIsBarredFromPatrols(species))
+            continue;
+        missing[n++] = species;
+    }
+    return n != 0 ? missing[Random() % n] : SPECIES_NONE;
+}
+
+// For the WoT tests: every research-pool species is on the Shadow Log, which
+// the post-Oni picker and the missing-Shadow slot rely on.
+bool32 WotPatrol_PoolsAreOnShadowLog(void)
+{
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sWotPatrolPoolStolen); i++)
+    {
+        if (!WotShadowLog_SpeciesCounts(sWotPatrolPoolStolen[i]))
+            return FALSE;
+    }
+    for (i = 0; i < ARRAY_COUNT(sWotPatrolPoolBase); i++)
+    {
+        if (!WotShadowLog_SpeciesCounts(sWotPatrolPoolBase[i]))
+            return FALSE;
+    }
+    return TRUE;
 }
 
 static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
@@ -2197,6 +2321,12 @@ static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
     u16 chosen[ARRAY_COUNT(sLevels)];
     bool32 wholeRoster = FlagGet(FLAG_WOT_ONI_DEFEATED);
 
+    // Trainer battles only: CreateNPCTrainerParty also runs for wild battles,
+    // with the last trainer's id still set, so after a patrol fight the next
+    // wild or scripted battle (the Prototype Lab Deoxys) became a Lv43 patrol
+    // team (same trap as WotMegaDim_AdjustRivalParty).
+    if (!(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
+        return FALSE;
     if (trainerNum != TRAINER_NATE && trainerNum != TRAINER_MACEY && trainerNum != TRAINER_CLIFFORD)
         return FALSE;
 
@@ -2222,7 +2352,11 @@ static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
     {
         u32 j, pick;
     retry:
-        pick = wholeRoster ? WotPickFromShadowRoster() : pool[Random() % poolSize];
+        pick = SPECIES_NONE;
+        if (wholeRoster && i == 0)
+            pick = WotPatrol_PickMissingShadow();
+        if (pick == SPECIES_NONE)
+            pick = wholeRoster ? WotPickFromShadowRoster() : pool[Random() % poolSize];
         for (j = 0; j < i; j++)
         {
             if (chosen[j] == pick)
@@ -2237,9 +2371,14 @@ static bool32 WotTryRandomizeShadowPatrol(struct Pokemon *party, u16 trainerNum)
         bool32 isShadow = TRUE;
         struct OriginalTrainerId otId = OTID_STRUCT_RANDOM_NO_SHINY;
 
-        CreateMon(&party[i], chosen[i], levels[i], Random32(), otId);
+        // A missing Shadow that can still evolve keeps the pre-Oni level.
+        u32 level = (GetSpeciesEvolutions(chosen[i]) != NULL) ? sLevels[i] : levels[i];
+
+        CreateMon(&party[i], chosen[i], level, Random32(), otId);
         GiveMonInitialMoveset(&party[i]);
         SetMonData(&party[i], MON_DATA_IS_SHADOW, &isShadow);
+        if (WotRollShadowShiny())
+            SetMonData(&party[i], MON_DATA_IS_SHINY, &isShadow); // TRUE
         CalculateMonStats(&party[i]);
     }
     return TRUE;
@@ -2272,6 +2411,10 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum, bool8 fir
     {
         retVal = CreateNPCTrainerPartyFromTrainer(party, GetTrainerStructFromId(trainerNum), firstTrainer, gBattleTypeFlags);
     }
+    // WoT: a Mega Dimension rival fields the day's rogue Mega, at party level.
+    WotMegaDim_AdjustRivalParty(party, trainerNum);
+    WotMegaDim_AdjustSanctumParty(party, trainerNum);
+    WotZygarde_AdjustAZParty(party, trainerNum);
     return retVal;
 }
 
@@ -3231,7 +3374,7 @@ static void ClearSetBScriptingStruct(void)
     memset(&gBattleScripting, 0, sizeof(gBattleScripting));
 
     gBattleScripting.windowsType = temp;
-    gBattleScripting.battleStyle = gSaveBlock2Ptr->optionsBattleStyle;
+    gBattleScripting.battleStyle = WotGetBattleStyle();
     #if TESTING
     gBattleScripting.battleStyle = OPTIONS_BATTLE_STYLE_SET;
     #endif
@@ -4371,7 +4514,9 @@ static void HandleTurnActionSelectionState(void)
             // fallthrough
         case STATE_BEFORE_ACTION_CHOSEN: // Choose an action.
             gBattleStruct->monToSwitchIntoId[battler] = PARTY_SIZE;
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI
+            // WoT: a Mega Dimension partner the player controls chooses
+            // second, as in an ordinary double battle.
+            if ((gBattleTypeFlags & BATTLE_TYPE_MULTI && !WotMegaDim_PartnerPlayerControlled())
                 || (position & BIT_FLANK) == B_FLANK_LEFT
                 || gAbsentBattlerFlags & 1u << GetBattlerAtPosition(BATTLE_PARTNER(position))
                 || gBattleCommunication[GetBattlerAtPosition(BATTLE_PARTNER(position))] == STATE_WAIT_ACTION_CONFIRMED)
@@ -6049,6 +6194,9 @@ enum Type TrySetAteType(enum Move move, enum BattlerId battlerAtk, enum Ability 
     case ABILITY_GALVANIZE:
         ateType = TYPE_ELECTRIC;
         break;
+    case ABILITY_DRAGONIZE: // Ported from expansion 1.16
+        ateType = TYPE_DRAGON;
+        break;
     default:
         ateType = TYPE_NONE;
         break;
@@ -6095,6 +6243,9 @@ enum Type GetDynamicMoveType(struct Pokemon *mon, enum Move move, enum BattlerId
     switch (moveEffect)
     {
     case EFFECT_WEATHER_BALL:
+        // Mega Sol (expansion 1.16): its user's Weather Ball is always the sunny, Fire-type one.
+        if (ability == ABILITY_MEGA_SOL)
+            return TYPE_FIRE;
         if (state == MON_IN_BATTLE)
         {
             if (HasWeatherEffect())

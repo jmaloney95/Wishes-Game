@@ -1,10 +1,12 @@
 #include "global.h"
 #include "config/save.h"
 #include "wot_shadow_log.h"
+#include "wot_tester.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
 #include "battle_pyramid_bag.h"
 #include "bg.h"
+#include "caps.h"
 #include "debug.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -41,6 +43,7 @@
 #include "script.h"
 #include "sound.h"
 #include "start_menu.h"
+#include "field_move.h"
 #include "strings.h"
 #include "string_util.h"
 #include "task.h"
@@ -96,7 +99,7 @@ EWRAM_DATA static u8 sSafariBallsWindowId = 0;
 EWRAM_DATA static u8 sBattlePyramidFloorWindowId = 0;
 EWRAM_DATA static u8 sStartMenuCursorPos = 0;
 EWRAM_DATA static u8 sNumStartMenuActions = 0;
-EWRAM_DATA static u8 sCurrentStartMenuActions[10] = {0};
+EWRAM_DATA static u8 sCurrentStartMenuActions[16] = {0};
 EWRAM_DATA static s8 sInitStartMenuData[2] = {0};
 
 EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
@@ -283,6 +286,7 @@ static EWRAM_DATA u8 sStartMenuInfoMinute = 0;
 
 static const u8 sText_ClockAM[] = _("AM");
 static const u8 sText_ClockPM[] = _("PM");
+static const u8 sText_LevelCap[] = _("Lv. cap ");
 
 static const u8 *const sWotDayNames[WEEKDAY_COUNT] = {
     [WEEKDAY_SUN] = COMPOUND_STRING("Sunday"),
@@ -339,6 +343,27 @@ static void PrintStartMenuInfo(void)
     AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_SMALL, clock,
                                 GetStringRightAlignXOffset(FONT_SMALL, clock, INFO_PANEL_WIDTH * 8 - 3), 1, TEXT_SKIP_DRAW, NULL);
     AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_NORMAL, gSaveBlock2Ptr->playerName, 2, 14, TEXT_SKIP_DRAW, NULL);
+    // The level cap sits under the clock. Nothing is shown when caps are
+    // switched off in Options or after the credits lift them.
+    if (WotLevelCapsActive())
+    {
+        u8 capText[16];
+        u8 *end = StringCopy(capText, sText_LevelCap);
+
+        ConvertIntToDecimalStringN(end, GetCurrentLevelCap(), STR_CONV_MODE_LEFT_ALIGN, 3);
+        AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_SMALL, capText,
+                                    GetStringRightAlignXOffset(FONT_SMALL, capText, INFO_PANEL_WIDTH * 8 - 3), 15, TEXT_SKIP_DRAW, NULL);
+    }
+#ifdef WOT_TESTER
+    {
+        u8 label[8];
+
+        // Under the level cap, on the money row.
+        WotTester_BuildLabel(label);
+        AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_SMALL, label,
+                                    GetStringRightAlignXOffset(FONT_SMALL, label, INFO_PANEL_WIDTH * 8 - 3), 31, TEXT_SKIP_DRAW, NULL);
+    }
+#endif
     ConvertIntToDecimalStringN(gStringVar1, GetMoney(&gSaveBlock1Ptr->money), STR_CONV_MODE_LEFT_ALIGN, MAX_MONEY_DIGITS);
     StringExpandPlaceholders(money, gText_PokedollarVar1);
     AddTextPrinterParameterized(sStartMenuInfoWindowId, FONT_NORMAL, money, 2, 30, TEXT_SKIP_DRAW, NULL);
@@ -643,12 +668,51 @@ static void AddStartMenuAction(u8 action)
     AppendToList(sCurrentStartMenuActions, &sNumStartMenuActions, action);
 }
 
+// WoT: at 16 px a row, 8 is all that fits on screen. Past that the window stays
+// at its tallest and the rows close up to share it.
+#define START_MENU_MAX_ROWS     8
+#define START_MENU_ROW_HEIGHT   16
+#define START_MENU_TALL_HEIGHT  (START_MENU_MAX_ROWS * START_MENU_ROW_HEIGHT + 16)
+
+static u32 GetStartMenuRowHeight(void)
+{
+    if (sNumStartMenuActions <= START_MENU_MAX_ROWS)
+        return START_MENU_ROW_HEIGHT;
+    return min(START_MENU_ROW_HEIGHT, START_MENU_TALL_HEIGHT / sNumStartMenuActions);
+}
+
+static u32 GetStartMenuTop(void)
+{
+    if (sNumStartMenuActions <= START_MENU_MAX_ROWS)
+        return 9;
+    return (START_MENU_TALL_HEIGHT - sNumStartMenuActions * GetStartMenuRowHeight()) / 2;
+}
+
+// WoT: not every HM comes from a badge (Fly and Strength don't), so the tab
+// follows what's actually unlocked.
+static bool32 HasAnyHMUnlocked(void)
+{
+    static const u8 sHMs[] =
+    {
+        FIELD_MOVE_CUT, FIELD_MOVE_FLASH, FIELD_MOVE_ROCK_SMASH, FIELD_MOVE_STRENGTH,
+        FIELD_MOVE_SURF, FIELD_MOVE_FLY, FIELD_MOVE_DIVE, FIELD_MOVE_WATERFALL,
+    };
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sHMs); i++)
+    {
+        if (IsFieldMoveUnlocked(sHMs[i]))
+            return TRUE;
+    }
+    return FALSE;
+}
+
 static void BuildNormalStartMenu(void)
 {
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
         AddStartMenuAction(MENU_ACTION_POKEDEX);
 
-    if (DN_FLAG_DEXNAV_GET != 0 && FlagGet(DN_FLAG_DEXNAV_GET))
+    if (DN_FLAG_DEXNAV_GET != 0 && FlagGet(DN_FLAG_DEXNAV_GET) && !WotDexNavBlocked())
         AddStartMenuAction(MENU_ACTION_DEXNAV);
 
     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
@@ -664,13 +728,14 @@ static void BuildNormalStartMenu(void)
     if (FlagGet(FLAG_SYS_QUEST_MENU_GET))
         AddStartMenuAction(MENU_ACTION_QUEST_MENU);
 
-    // WoT: show the HMs list once the first badge has unlocked anything.
-    if (FlagGet(FLAG_BADGE01_GET))
+    // WoT: show the HMs list as soon as anything is unlocked.
+    if (HasAnyHMUnlocked())
         AddStartMenuAction(MENU_ACTION_WOT_HMS);
 
     // WoT: the Shadow Log is a gift from Prof. Assistant at the hideout
-    // briefing (FLAG_WOT_SHADOW_LOG_GET; migrated for older saves).
-    if (FlagGet(FLAG_WOT_SHADOW_LOG_GET))
+    // briefing (FLAG_WOT_SHADOW_LOG_GET; migrated for older saves). LOG also
+    // holds the Mega Log, from the Mega Doomsday intro on.
+    if (FlagGet(FLAG_WOT_SHADOW_LOG_GET) || FlagGet(FLAG_WOT_MEGA_DOOMSDAY_INTRO))
         AddStartMenuAction(MENU_ACTION_WOT_SHADOW_LOG);
 
     AddStartMenuAction(MENU_ACTION_SAVE);
@@ -814,14 +879,16 @@ static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
 
     do
     {
+        u32 x = 8, y = GetStartMenuTop() + index * GetStartMenuRowHeight();
+
         if (sStartMenuItems[sCurrentStartMenuActions[index]].func.u8_void == StartMenuPlayerNameCallback)
         {
-            PrintPlayerNameOnWindow(GetStartMenuWindowId(), sStartMenuItems[sCurrentStartMenuActions[index]].text, 8, (index << 4) + 9);
+            PrintPlayerNameOnWindow(GetStartMenuWindowId(), sStartMenuItems[sCurrentStartMenuActions[index]].text, x, y);
         }
         else
         {
             StringExpandPlaceholders(gStringVar4, sStartMenuItems[sCurrentStartMenuActions[index]].text);
-            AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
+            AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_NORMAL, gStringVar4, x, y, TEXT_SKIP_DRAW, NULL);
         }
 
         index++;
@@ -857,7 +924,7 @@ static bool32 InitStartMenuStep(void)
         if (USE_GRAPHICAL_START_MENU)
             CreateStartMenuLabelWindow();
         else
-            DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
+            DrawStdWindowFrame(AddStartMenuWindow(min(sNumStartMenuActions, START_MENU_MAX_ROWS)), FALSE);
         sInitStartMenuData[1] = 0;
         sInitStartMenuData[0]++;
         break;
@@ -890,7 +957,7 @@ static bool32 InitStartMenuStep(void)
         }
         else
         {
-            sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
+            sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, GetStartMenuTop(), GetStartMenuRowHeight(), sNumStartMenuActions, sStartMenuCursorPos);
             CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
         }
         return TRUE;

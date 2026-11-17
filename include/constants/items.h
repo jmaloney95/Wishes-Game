@@ -1127,6 +1127,36 @@ enum __attribute__((packed)) Item
     ITEM_CRAFT = 922,          // works and costs like a Super Potion
     // Wishes of Tomorrow: a Rare Candy that is never used up (key item).
     ITEM_INFINITE_CANDY = 923,
+    // Wishes of Tomorrow: Mega Stones for the custom Megas
+    ITEM_AMOONGUSSITE = 924,
+    ITEM_AZUMARILLITE = 925,
+    ITEM_BUTTERFRITE = 926,
+    ITEM_CONKELDURRITE = 927,
+    ITEM_DUGTRIONITE = 928,
+    ITEM_ELECTIVIRITE = 929,
+    ITEM_FLYGONITE = 930,
+    ITEM_GOLEMITE = 931,
+    ITEM_JUMPLUFFITE = 932,
+    ITEM_KABUTOPSITE = 933,
+    ITEM_MAGMORTARITE = 934,
+    ITEM_MILOTICITE = 935,
+    ITEM_OMASTARITE = 936,
+    ITEM_POLIWRATHITE = 937,
+    ITEM_SHIFTRITE = 938,
+    ITEM_SNORLAXITE = 939,
+    ITEM_TORKOALITE = 940,
+    ITEM_TYPHLOSIONITE = 941,
+    ITEM_WHIMSICOTTITE = 942,
+    // Wishes of Tomorrow: Mega Haxorus and Mega Deoxys
+    ITEM_HAXORITE = 943,
+    ITEM_DEOXYSITE = 944,
+    // Wishes of Tomorrow: Mega Lugia and Mega Ho-Oh
+    ITEM_LUGIANITE = 945,
+    ITEM_HO_OHNITE = 946,
+    ITEM_Z_SHARD = 947,     // Hotel Z's currency
+    ITEM_ROGUE_CORE = 948,
+    ITEM_ODD_PEBBLE = 949,  // the Zygarde arc
+    ITEM_ZYGARDE_CELL = 950,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

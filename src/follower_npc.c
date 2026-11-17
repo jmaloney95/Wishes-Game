@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_mega_dimension.h"
 #include "follower_npc.h"
 #include "follower_npc_alternate_sprites.h"
 #include "battle.h"
@@ -1710,6 +1711,7 @@ void PrepareForFollowerNPCBattle(void)
         CallFrontierUtilFunc();
         gPartnerTrainerId = TRAINER_PARTNER(GetFollowerNPCData(FNPC_DATA_BATTLE_PARTNER));
         FillPartnerParty(gPartnerTrainerId);
+        WotMegaDim_AdjustPartnerParty(); // WoT: a Mega Dimension partner matches the player's level
     }
 }
 

@@ -1,6 +1,7 @@
 #include "global.h"
 #include "main.h"
 #include "bike.h"
+#include "dexnav.h"
 #include "event_data.h"
 #include "event_object_movement.h"
 #include "field_camera.h"
@@ -366,6 +367,23 @@ static bool32 WotShouldRun(u16 heldKeys)
     if (gSaveBlock2Ptr->optionsAutoSprint == OPTIONS_AUTO_SPRINT_HOLD_B)
         return (heldKeys & B_BUTTON) != 0;
     return !sWotWalkLatched;
+}
+
+// WoT: during a DexNav search the player creeps while A is held, as before,
+// and also on their own for any step that ends close to the target
+// (WotDexNavShouldCreep), so walking up to it just works.
+static bool32 WotDexNavCreepStep(enum Direction direction, u16 heldKeys)
+{
+    struct ObjectEvent *player = &gObjectEvents[gPlayerAvatar.objectEventId];
+    s16 x = player->currentCoords.x;
+    s16 y = player->currentCoords.y;
+
+    if (!FlagGet(DN_FLAG_SEARCHING))
+        return FALSE;
+    if (heldKeys & A_BUTTON)
+        return TRUE;
+    MoveCoords(direction, &x, &y);
+    return WotDexNavShouldCreep(x, y);
 }
 
 void PlayerStep(enum Direction direction, u16 newKeys, u16 heldKeys)
@@ -926,7 +944,7 @@ static void PlayerNotOnBikeMoving(enum Direction direction, u16 heldKeys)
     gPlayerAvatar.creeping = FALSE;
     if (gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_SURFING)
     {
-        if (FlagGet(DN_FLAG_SEARCHING) && (heldKeys & A_BUTTON))
+        if (WotDexNavCreepStep(direction, heldKeys))
         {
             gPlayerAvatar.creeping = TRUE;
             PlayerWalkSlow(direction);
@@ -939,7 +957,14 @@ static void PlayerNotOnBikeMoving(enum Direction direction, u16 heldKeys)
         return;
     }
 
-    if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER)
+    // WoT: DexNav's creep goes first. AUTO SPRINT runs without B, so after the
+    // run check it never fired and every approach ended in "moved too fast".
+    if (WotDexNavCreepStep(direction, heldKeys))
+    {
+        gPlayerAvatar.creeping = TRUE;
+        PlayerWalkSlow(direction);
+    }
+    else if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_UNDERWATER)
      && WotShouldRun(heldKeys) // AUTO SPRINT option (Pokémon Wishes of Tomorrow)
      && FlagGet(FLAG_SYS_B_DASH)
      && IsRunningDisallowed(gObjectEvents[gPlayerAvatar.objectEventId].currentMetatileBehavior) == 0
@@ -953,11 +978,6 @@ static void PlayerNotOnBikeMoving(enum Direction direction, u16 heldKeys)
 
         gPlayerAvatar.flags |= PLAYER_AVATAR_FLAG_DASH;
         return;
-    }
-    else if (FlagGet(DN_FLAG_SEARCHING) && (heldKeys & A_BUTTON))
-    {
-        gPlayerAvatar.creeping = TRUE;
-        PlayerWalkSlow(direction);
     }
     else
     {

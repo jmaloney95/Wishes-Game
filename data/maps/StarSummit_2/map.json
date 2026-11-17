@@ -51,7 +51,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -64,7 +64,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -77,7 +77,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NULL",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     }
   ],
   "warp_events": [

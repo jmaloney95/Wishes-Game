@@ -1698,7 +1698,41 @@
 #define SPECIES_DODRIO_DELTA                            1579
 #define SPECIES_JIRACHI_SHADOW                          1580
 
-#define SPECIES_EGG                                     (SPECIES_JIRACHI_SHADOW + 1)
+// Wishes of Tomorrow custom Mega Evolutions (stats are a first pass)
+#define SPECIES_AMOONGUSS_MEGA                          1581
+#define SPECIES_AZUMARILL_MEGA                          1582
+#define SPECIES_BUTTERFREE_MEGA                         1583
+#define SPECIES_CONKELDURR_MEGA                         1584
+#define SPECIES_DUGTRIO_MEGA                            1585
+#define SPECIES_ELECTIVIRE_MEGA                         1586
+#define SPECIES_FLYGON_MEGA                             1587
+#define SPECIES_GOLEM_MEGA                              1588
+#define SPECIES_JUMPLUFF_MEGA                           1589
+#define SPECIES_KABUTOPS_MEGA                           1590
+#define SPECIES_MAGMORTAR_MEGA                          1591
+#define SPECIES_MILOTIC_MEGA                            1592
+#define SPECIES_OMASTAR_MEGA                            1593
+#define SPECIES_POLIWRATH_MEGA                          1594
+#define SPECIES_SHIFTRY_MEGA                            1595
+#define SPECIES_SNORLAX_MEGA                            1596
+#define SPECIES_TORKOAL_MEGA                            1597
+#define SPECIES_TYPHLOSION_MEGA                         1598
+#define SPECIES_WHIMSICOTT_MEGA                         1599
+// The artist's Gen X Evos sheet
+#define SPECIES_HAXORUS_MEGA                            1600
+#define SPECIES_DEOXYS_MEGA                             1601
+// Gen X starter evolutions (same sheet; Gecquadorf art is a placeholder)
+#define SPECIES_SPROUTBILL                              1602
+#define SPECIES_HORNBREW                                1603
+#define SPECIES_TOKIQUA                                 1604
+#define SPECIES_GECQUADORF                              1605
+#define SPECIES_PYRAPOM                                 1606
+#define SPECIES_CALDERUFF                               1607
+// The artist's SEPH art (draft stats)
+#define SPECIES_LUGIA_MEGA                              1608
+#define SPECIES_HO_OH_MEGA                              1609
+
+#define SPECIES_EGG                                     (SPECIES_HO_OH_MEGA + 1)
 
 #define NUM_SPECIES SPECIES_EGG
 

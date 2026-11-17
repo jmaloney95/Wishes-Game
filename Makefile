@@ -25,6 +25,13 @@ MAKER_CODE  := 01
 REVISION    := 0
 KEEP_TEMPS  ?= 0
 
+# Wishes of Tomorrow: closed test build for Discord testers. Builds pokewottest.gba
+# in its own object directory, so it can't leak into a public pokeemerald.gba.
+WOT_TESTER ?= 0
+ifeq ($(WOT_TESTER),1)
+  override BUILD_NAME := wottest
+endif
+
 # `File name`.gba
 FILE_NAME := poke$(BUILD_NAME)
 BUILD_DIR := build
@@ -162,6 +169,12 @@ ifeq ($(RELEASE),1)
 	ifeq ($(USE_LTO_ON_RELEASE),1)
 		LTO := 1
 	endif
+endif
+ifeq ($(WOT_TESTER),1)
+  ifeq ($(RELEASE),1)
+    $(error WOT_TESTER and RELEASE can't be combined)
+  endif
+  override CPPFLAGS += -DWOT_TESTER
 endif
 ARMCC := $(PREFIX)gcc
 PATH_ARMCC := PATH="$(PATH)" $(ARMCC)

@@ -21,6 +21,7 @@
 #include "tv.h"
 #include "wild_encounter.h"
 #include "wot_randomizer.h"
+#include "wot_mega_dimension.h"
 #include "battle_debug.h"
 #include "battle_pike.h"
 #include "battle_pyramid.h"
@@ -474,8 +475,11 @@ void CreateWildMon(u16 species, u8 level)
 {
     // WoT Randomizer Mode: swap the species, keep the level. Every wild
     // encounter in the game funnels through here.
-    if (FlagGet(FLAG_WOT_RAND_WILD))
+    if (WotRandomizerOption(FLAG_WOT_RAND_WILD))
         species = WotRandomizeSpecies(species);
+    // WoT: Mega Dimension wilds track the party instead of the table level.
+    if (WotMegaDim_IsActive())
+        level = WotMegaDim_GetWildLevel();
 
     ZeroEnemyPartyMons();
     u32 personality = GetMonPersonality(species, GetSynchronizedGender(WILDMON_ORIGIN, species), PickWildMonNature(species), RANDOM_UNOWN_LETTER);

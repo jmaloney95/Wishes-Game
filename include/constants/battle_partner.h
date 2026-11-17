@@ -6,7 +6,15 @@
 #define PARTNER_STEVEN 1
 #define PARTNER_DUMMY 2
 #define PARTNER_MIKMANC 3 // Wishes of Tomorrow: jailbreak escort doubles (Act 3 Step 4)
-#define PARTNER_COUNT 4
+// Wishes of Tomorrow: the Mega Dimension rivals, recruitable once beaten
+// (sRivals order in src/wot_mega_dimension.c).
+#define PARTNER_MEGADIM_CANARI   4
+#define PARTNER_MEGADIM_LIDA     5
+#define PARTNER_MEGADIM_EMMA     6
+#define PARTNER_MEGADIM_TAUNIE   7
+#define PARTNER_MEGADIM_TULIP    8
+#define PARTNER_MEGADIM_JACINTHE 9
+#define PARTNER_COUNT 10
 //Tests need PARTNER_COUNT to be at least 3 so we add a dummy partner
 
 #endif  // GUARD_CONSTANTS_BATTLE_PARTNERS_H

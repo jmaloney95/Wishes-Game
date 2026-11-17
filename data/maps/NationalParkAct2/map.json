@@ -77,7 +77,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -90,7 +90,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -103,7 +103,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -116,7 +116,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -129,7 +129,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -142,7 +142,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NationalParkAct2_EventScript_GoonEast",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -155,7 +155,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NationalParkAct2_EventScript_GoonWest",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -168,7 +168,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "NationalParkAct2_EventScript_GraveWatcher",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_SPECIES(PORYGON)",
@@ -207,7 +207,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_MUTRID_GOON_RED",
@@ -220,7 +220,35 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "OniMask_EventScript_GoonNod",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
+    },
+    {
+      "local_id": "LOCALID_NATIONAL_PARK2_DIM_PORTAL_1",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 50,
+      "y": 38,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_1"
+    },
+    {
+      "local_id": "LOCALID_NATIONAL_PARK2_DIM_PORTAL_2",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 10,
+      "y": 47,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_2"
     }
   ],
   "warp_events": [
@@ -258,6 +286,34 @@
       "elevation": 0,
       "dest_map": "MAP_SENNEN_VILLAGE",
       "dest_warp_id": "1"
+    },
+    {
+      "x": 0,
+      "y": 39,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 0,
+      "y": 40,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "3"
+    },
+    {
+      "x": 0,
+      "y": 41,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "2"
+    },
+    {
+      "x": 0,
+      "y": 42,
+      "elevation": 0,
+      "dest_map": "MAP_WALNUT_WOODS",
+      "dest_warp_id": "2"
     }
   ],
   "coord_events": [],

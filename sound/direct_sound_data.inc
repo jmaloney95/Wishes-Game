@@ -10887,3 +10887,7 @@ DirectSoundWaveData_bw_wind_chimes::
 	.align 2
 DirectSoundWaveData_bw_zero_g_side_stick::
 	.incbin "sound/direct_sound_samples/bw_zero_g_side_stick.bin"
+
+	.align 2
+DirectSoundWaveData_wot_shiny::
+	.incbin "sound/direct_sound_samples/wot_shiny.bin"

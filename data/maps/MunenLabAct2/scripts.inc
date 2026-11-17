@@ -59,7 +59,18 @@ MunenLabAct2_EventScript_DracoFlees::
 	setspeaker SP_NAME_DRACO
 	msgbox MunenLabAct2_Text_DracoFlee, MSGBOX_DEFAULT
 	closemessage
+	@ His run is straight down column 6. If the player stands anywhere in it
+	@ (the (6,8) trigger tile, or (6,3) when they talked to him), he cuts over
+	@ to column 7 first -- clear from row 2 down to the door's (7,12) tile.
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_eq VAR_0x8004, 6, MunenLabAct2_EventScript_DracoFleeAround
 	applymovement 1, MunenLabAct2_Movement_DracoFlee
+	goto MunenLabAct2_EventScript_DracoFleeGone
+
+MunenLabAct2_EventScript_DracoFleeAround::
+	applymovement 1, MunenLabAct2_Movement_DracoFleeAround
+
+MunenLabAct2_EventScript_DracoFleeGone::
 	waitmovement 0
 	playse SE_EXIT
 	removeobject 1
@@ -111,6 +122,8 @@ MunenLabAct2_EventScript_KeepResearch::
 	giveitem ITEM_SHADOW_DOSSIER
 	setflag FLAG_ACT2_RESEARCH_RESOLVED
 	msgbox MunenLabAct2_Text_KeptResearch, MSGBOX_DEFAULT
+	@ Either choice settles His Life's Work; keeping it has its Act 3 cost.
+	completequest QUEST_LIFES_WORK
 	releaseall
 	end
 
@@ -123,6 +136,7 @@ MunenLabAct2_EventScript_DestroyResearch::
 	fadescreen FADE_FROM_WHITE
 	setflag FLAG_ACT2_RESEARCH_RESOLVED
 	msgbox MunenLabAct2_Text_DestroyResearch2, MSGBOX_DEFAULT
+	completequest QUEST_LIFES_WORK
 	releaseall
 	end
 
@@ -251,6 +265,23 @@ MunenLabAct2_Movement_Exclaim:
 MunenLabAct2_Movement_DracoFlee:
 	face_down
 	delay_8
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	step_end
+
+@ Same run, one column over, for when the player is standing in column 6.
+MunenLabAct2_Movement_DracoFleeAround:
+	face_down
+	delay_8
+	walk_fast_right
 	walk_fast_down
 	walk_fast_down
 	walk_fast_down

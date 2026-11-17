@@ -14,6 +14,7 @@ void InitTilesetAnim_Slateport(void);
 void InitTilesetAnim_Mauville(void);
 void InitTilesetAnim_MiddleDistrict(void);
 void InitTilesetAnim_Route224(void);
+void InitTilesetAnim_AshlandTrees(void);
 void InitTilesetAnim_Lavaridge(void);
 void InitTilesetAnim_MtMoonVillageInterior(void);
 void InitTilesetAnim_DistortionWorld(void);

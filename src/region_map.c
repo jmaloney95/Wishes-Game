@@ -1560,6 +1560,8 @@ static u8 GetMapsecType(mapsec_u16_t mapSecId)
     case MAPSEC_RYUDEN_ISLAND:
     case MAPSEC_PROTOTYPE_ISLAND:
     case MAPSEC_REBEL_HIDEOUT:
+    case MAPSEC_ROUTE_2: // Route 2, the Sennen beach (WoT has no Kanto Route 2)
+    case MAPSEC_ROUTE_3: // Torii Route (WoT has no Kanto Route 3)
         // Wishes of Tomorrow: every region area is flyable. No visited gating
         // is needed -- FLY itself only unlocks with the post-game PRIVATE JET
         // (IsFieldMoveUnlocked_Fly), by which point the region is open.
@@ -2328,6 +2330,11 @@ static const struct FlyLocation sFlyLocations[] =
     },
     {
         .regionMapType = REGION_MAP_HOENN,
+        .mapsec = MAPSEC_NATIONAL_PARK,
+        .flag = FLAG_WOT_FLY_GRANTED,
+    },
+    {
+        .regionMapType = REGION_MAP_HOENN,
         .mapsec = MAPSEC_FROSTWOOD_TOWN,
         .flag = FLAG_WOT_FLY_GRANTED,
     },
@@ -2516,7 +2523,14 @@ static void CreateFlyDestIcons(void)
         x = (x + MAPCURSOR_X_MIN) * 8 + 4;
         y = (y + MAPCURSOR_Y_MIN) * 8 + 4;
 
-        if (width == 2)
+        // A 2x2 section (National Park) gets one blip at its centre.
+        if (width == 2 && height == 2)
+        {
+            shape = SPRITE_SHAPE(8x8);
+            x += 4;
+            y += 4;
+        }
+        else if (width == 2)
             shape = SPRITE_SHAPE(16x8);
         else if (height == 2)
             shape = SPRITE_SHAPE(8x16);
@@ -2744,7 +2758,29 @@ void SetFlyDestination(struct RegionMap* regionMap)
         SetWarpDestination(MAP_GROUP(MAP_ASHLANDS), MAP_NUM(MAP_ASHLANDS), WARP_ID_NONE, 22, 14);
         return;
     case MAPSEC_NATIONAL_PARK:
-        SetWarpDestination(MAP_GROUP(MAP_ROUTE_2_2), MAP_NUM(MAP_ROUTE_2_2), WARP_ID_NONE, 58, 11);
+        // The occupied park (Fly only comes in Act 3), at its heal spot. Once
+        // the game is clear the same map loads its post-game layout without
+        // the Mutrid guards (NationalParkAct2_OnTransition).
+        SetWarpDestination(MAP_GROUP(MAP_NATIONAL_PARK_ACT2), MAP_NUM(MAP_NATIONAL_PARK_ACT2), WARP_ID_NONE, 41, 18);
+        return;
+    case MAPSEC_SENNEN_LINE:
+        // Until the Oni falls, Sennen is the occupied station: land on open
+        // ground by the Dojo door, clear of the fights. After that, the
+        // village's heal spot below.
+        if (!FlagGet(FLAG_WOT_ONI_DEFEATED))
+        {
+            SetWarpDestination(MAP_GROUP(MAP_SENNEN_ACT2), MAP_NUM(MAP_SENNEN_ACT2), WARP_ID_NONE, 19, 20);
+            return;
+        }
+        break;
+    case MAPSEC_ROUTE_3: // Torii Route: just below the warp at (8,18)
+        SetWarpDestination(MAP_GROUP(MAP_TORII), MAP_NUM(MAP_TORII), WARP_ID_NONE, 8, 19);
+        return;
+    case MAPSEC_ROUTE_2: // Route 2: in front of the lifeguard shack
+        SetWarpDestination(MAP_GROUP(MAP_ROUTE_2), MAP_NUM(MAP_ROUTE_2), WARP_ID_NONE, 34, 18);
+        return;
+    case MAPSEC_POMPEII: // outside the inn (its heal spot is inside it)
+        SetWarpDestination(MAP_GROUP(MAP_NEW_MAP), MAP_NUM(MAP_NEW_MAP), WARP_ID_NONE, 41, 15);
         return;
     }
 

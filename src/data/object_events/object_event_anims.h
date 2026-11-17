@@ -1243,6 +1243,120 @@ static const union AnimCmd *const sAnimTable_WotScreen[] = {
     [ANIM_STD_GO_FAST_EAST] = sAnim_WotScreenLoop,
 };
 
+// WoT: the Mega Dimension portal swirls on a loop (needs the unpause hook in
+// UpdateObjectEventSpriteAnimPause to keep turning while it stands still).
+// Neon on failing power, and the gym sign's flash and chase.
+static const union AnimCmd sAnim_WotHotelZSignLoop[] = {
+    ANIMCMD_FRAME(0, 63),
+    ANIMCMD_FRAME(0, 63),
+    ANIMCMD_FRAME(0, 44),
+    ANIMCMD_FRAME(1, 3),
+    ANIMCMD_FRAME(0, 5),
+    ANIMCMD_FRAME(1, 3),
+    ANIMCMD_FRAME(0, 60),
+    ANIMCMD_FRAME(4, 63),
+    ANIMCMD_FRAME(4, 27),
+    ANIMCMD_FRAME(5, 35),
+    ANIMCMD_FRAME(4, 6),
+    ANIMCMD_FRAME(5, 20),
+    ANIMCMD_FRAME(4, 30),
+    ANIMCMD_FRAME(7, 40),
+    ANIMCMD_FRAME(2, 6),
+    ANIMCMD_FRAME(7, 4),
+    ANIMCMD_FRAME(2, 40),
+    ANIMCMD_FRAME(6, 30),
+    ANIMCMD_FRAME(3, 25),
+    ANIMCMD_FRAME(6, 5),
+    ANIMCMD_FRAME(3, 10),
+    ANIMCMD_FRAME(6, 5),
+    ANIMCMD_FRAME(3, 40),
+    ANIMCMD_FRAME(2, 6),
+    ANIMCMD_FRAME(3, 6),
+    ANIMCMD_FRAME(1, 5),
+    ANIMCMD_FRAME(3, 4),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(1, 4),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_WotHotelZSign[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_FACE_NORTH] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_FACE_WEST] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_FACE_EAST] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_SOUTH] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_NORTH] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_WEST] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_EAST] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_WotHotelZSignLoop,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_WotHotelZSignLoop,
+};
+
+static const union AnimCmd sAnim_WotGymArrowSignLoop[] = {
+    ANIMCMD_FRAME(0, 26),
+    ANIMCMD_FRAME(1, 14),
+    ANIMCMD_FRAME(0, 26),
+    ANIMCMD_FRAME(1, 14),
+    ANIMCMD_FRAME(2, 9),
+    ANIMCMD_FRAME(3, 9),
+    ANIMCMD_FRAME(4, 9),
+    ANIMCMD_FRAME(1, 6),
+    ANIMCMD_FRAME(2, 9),
+    ANIMCMD_FRAME(3, 9),
+    ANIMCMD_FRAME(4, 9),
+    ANIMCMD_FRAME(1, 6),
+    ANIMCMD_FRAME(2, 9),
+    ANIMCMD_FRAME(3, 9),
+    ANIMCMD_FRAME(4, 9),
+    ANIMCMD_FRAME(1, 6),
+    ANIMCMD_FRAME(0, 40),
+    ANIMCMD_FRAME(5, 3),
+    ANIMCMD_FRAME(0, 4),
+    ANIMCMD_FRAME(5, 3),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_WotGymArrowSign[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_FACE_NORTH] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_FACE_WEST] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_FACE_EAST] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_SOUTH] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_NORTH] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_WEST] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_EAST] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_WotGymArrowSignLoop,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_WotGymArrowSignLoop,
+};
+
+static const union AnimCmd sAnim_WotMegaPortalLoop[] = {
+    ANIMCMD_FRAME(0, 8),
+    ANIMCMD_FRAME(1, 8),
+    ANIMCMD_FRAME(2, 8),
+    ANIMCMD_FRAME(3, 8),
+    ANIMCMD_JUMP(0),
+};
+
+static const union AnimCmd *const sAnimTable_WotMegaPortal[] = {
+    [ANIM_STD_FACE_SOUTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_FACE_NORTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_FACE_WEST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_FACE_EAST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_SOUTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_NORTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_WEST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_EAST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_SOUTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_NORTH] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_WEST] = sAnim_WotMegaPortalLoop,
+    [ANIM_STD_GO_FAST_EAST] = sAnim_WotMegaPortalLoop,
+};
+
 static const union AnimCmd *const sAnimTable_Standard[] = {
     [ANIM_STD_FACE_SOUTH] = sAnim_FaceSouth,
     [ANIM_STD_FACE_NORTH] = sAnim_FaceNorth,

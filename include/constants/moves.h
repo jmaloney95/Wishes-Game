@@ -906,8 +906,13 @@ enum __attribute__((packed)) Move
     MOVES_COUNT_GEN9,
 
     // Add any custom moves here, not further down!
+    // Wishes of Tomorrow: Gen X starter signature moves (draft numbers)
+    MOVE_OMEN_WAVE = MOVES_COUNT_GEN9,
+    MOVE_KOPI_RUSH,
+    MOVE_CALDERA_CRASH,
+    MOVES_COUNT_WOT,
 
-    MOVES_COUNT = MOVES_COUNT_GEN9,
+    MOVES_COUNT = MOVES_COUNT_WOT,
 
     // Z Moves
     FIRST_Z_MOVE = MOVES_COUNT,

@@ -427,6 +427,20 @@
       "map": "MAP_DOJO",
       "x": 7,
       "y": 11
+    },
+    {
+      "id": "HEAL_LOCATION_NATIONAL_PARK_ACT2",
+      "map": "MAP_NATIONAL_PARK_ACT2",
+      "x": 41,
+      "y": 18
+    },
+    {
+      "id": "HEAL_LOCATION_SHIN_TOKYO_PC",
+      "map": "MAP_SHIN_TOKYO",
+      "x": 55,
+      "y": 24,
+      "respawn_map": "MAP_TRADEWIND_PC",
+      "respawn_npc": "LOCALID_SHINTOKYO_PC_NURSE"
     }
   ]
 }

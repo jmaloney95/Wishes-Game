@@ -1,14 +1,38 @@
 MunenVillageAct2_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, MunenVillageAct2_OnTransition
+	map_script MAP_SCRIPT_ON_LOAD, MunenVillageAct2_OnLoad
 	.byte 0
+
+@ Post-game the goons are gone, which opens the north road to Melting Mile.
+MunenVillageAct2_OnTransition:
+	call Common_EventScript_WotPostGameMutridsGone
+	end
 
 @ ============================================================================
 @  MUNEN VILLAGE -- ACT 2 (overrun by Team Mutrid)
-@  Reached ONLY via the Gengar ferry (Catalpa Bow, post-Distortion scene).
-@  This is the point of no return: house doors are barred by Mutrid, EXCEPT
-@  Clarkson's LABORATORY at (38,18) -> MAP_MUNEN_LAB_ACT2 (warp 0), where
-@  Draco waits with the stolen research. Arrival point is (9,14).
-@  Still to come: arrival cutscene, villager fates, boss encounter.
+@  The layout is a clone of the Act 1 village (MunenVillage), so both acts
+@  share one geometry. The player arrives by walking out of Clarkson's
+@  LABORATORY (lab door 45,21 = warp 0 <-> MAP_MUNEN_LAB_ACT2), after the
+@  Draco battle and the research choice; the Gengar ferry only runs to the
+@  lab. HOME (16,19 = warp 1 <-> MAP_MUNEN_HOME_ACT2) plays Mom's cutscene
+@  and she takes the player on to the Dojo. Every other way out is held by
+@  Mutrid: a goon on Draco's doorstep (31,20) and three across the north
+@  road (34..36,4); there is no map connection to Melting Mile in this act.
 @ ============================================================================
+
+@ The painted item balls and Rock Smash boulders came across with the cloned
+@ layout. They share Act 1's flags and scripts, so anything taken or smashed
+@ in Act 1 stays gone here and anything left can still be had.
+MunenVillageAct2_OnLoad::
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_1, MunenVillage_EventScript_ClearBoulder1
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_2, MunenVillage_EventScript_ClearBoulder2
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_3, MunenVillage_EventScript_ClearBoulder3
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_4, MunenVillage_EventScript_ClearBoulder4
+	call_if_set FLAG_MUNEN_VILLAGE_BOULDER_5, MunenVillage_EventScript_ClearBoulder5
+	call_if_set FLAG_ITEM_MUNEN_VILLAGE_TM_DIG, MunenVillage_EventScript_ClearItemTMDig
+	call_if_set FLAG_ITEM_MUNEN_VILLAGE_SACRED_ASH, MunenVillage_EventScript_ClearItemSacredAsh
+	call_if_set FLAG_ITEM_MUNEN_VILLAGE_LIGHT_BALL, MunenVillage_EventScript_ClearItemLightBall
+	end
 
 MunenVillageAct2_EventScript_GoonSquare::
 	lock

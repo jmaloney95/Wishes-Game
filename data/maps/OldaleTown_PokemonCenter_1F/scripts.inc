@@ -6,6 +6,7 @@ OldaleTown_PokemonCenter_1F_MapScripts::
 OldaleTown_PokemonCenter_1F_OnTransition:
 	setrespawn HEAL_LOCATION_OLDALE_TOWN
 	call Common_EventScript_UpdateBrineyLocation
+	call Common_EventScript_WotPostGameMutridsGone
 	end
 
 @ WoT: this is Frostwood Town's POKéMON CENTER. The nurse stands behind the

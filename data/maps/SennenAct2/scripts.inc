@@ -26,6 +26,7 @@ SennenAct2_MapScripts::
 @ re-hidden on every map load.
 SennenAct2_OnTransition::
 	setrespawn HEAL_LOCATION_DOJO
+	call Common_EventScript_WotPostGameMutridsGone
 	setflag FLAG_WOT_SA2_AIRSHOW
 	setflag FLAG_WOT_SA2_FALLER
 	goto_if_defeated TRAINER_SENNEN_CAPTAIN_KANNON, SennenAct2_OnTransition_EdwardsDone

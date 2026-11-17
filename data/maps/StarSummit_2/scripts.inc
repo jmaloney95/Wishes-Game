@@ -3,8 +3,14 @@
 @ labels are global and this duplicate's object local ids match 1:1
 @ (1 Jirachi / 2 Prof / 3 the masked leader / 4-5 the top goons).
 StarSummit_2_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, StarSummit_2_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, StarSummit_2_OnFrame
 	.byte 0
+
+@ Post-game the masked leader and his goons are gone from the summit.
+StarSummit_2_OnTransition:
+	call Common_EventScript_WotPostGameMutridsGone
+	end
 
 @ Setting foot on the summit completes the Act 1 main quest -- same
 @ idempotent shape as the original map's hook.

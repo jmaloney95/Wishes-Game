@@ -63,6 +63,24 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMisty;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotOleana;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotJacinthe;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotVictor;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaEmma;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaCanari;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaValerie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaTulip;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaMable;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaTaunie;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaLida;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBarrierSurge;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBarrierTimefreeze;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBarrierIllusion;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBarrierLifeline;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBarrierBreakthrough;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotBarrierDash;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ZaAz;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotZygardeCell;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotMegaPortal;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotHotelZSign;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_WotGymArrowSign;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerM;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_SwimmerF;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_BlackBelt;
@@ -443,6 +461,7 @@ extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemPotion;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemGarchompite;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemBaxcalibrite;
 extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemGyaradosite;
+extern const struct ObjectEventGraphicsInfo gObjectEventGraphicsInfo_ItemHaxorite;
 
 const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM_OBJ_EVENT_GFX] = {
     [OBJ_EVENT_GFX_BRENDAN_NORMAL] =           &gObjectEventGraphicsInfo_BrendanNormal,
@@ -514,6 +533,24 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_WOT_OLEANA] =                 &gObjectEventGraphicsInfo_WotOleana,
     [OBJ_EVENT_GFX_WOT_JACINTHE] =               &gObjectEventGraphicsInfo_WotJacinthe,
     [OBJ_EVENT_GFX_WOT_VICTOR] =                 &gObjectEventGraphicsInfo_WotVictor,
+    [OBJ_EVENT_GFX_ZA_EMMA] =                    &gObjectEventGraphicsInfo_ZaEmma,
+    [OBJ_EVENT_GFX_ZA_CANARI] =                  &gObjectEventGraphicsInfo_ZaCanari,
+    [OBJ_EVENT_GFX_ZA_VALERIE] =                 &gObjectEventGraphicsInfo_ZaValerie,
+    [OBJ_EVENT_GFX_ZA_TULIP] =                   &gObjectEventGraphicsInfo_ZaTulip,
+    [OBJ_EVENT_GFX_ZA_MABLE] =                   &gObjectEventGraphicsInfo_ZaMable,
+    [OBJ_EVENT_GFX_ZA_TAUNIE] =                  &gObjectEventGraphicsInfo_ZaTaunie,
+    [OBJ_EVENT_GFX_ZA_LIDA] =                    &gObjectEventGraphicsInfo_ZaLida,
+    [OBJ_EVENT_GFX_WOT_BARRIER_SURGE] =          &gObjectEventGraphicsInfo_WotBarrierSurge,
+    [OBJ_EVENT_GFX_WOT_BARRIER_TIMEFREEZE] =     &gObjectEventGraphicsInfo_WotBarrierTimefreeze,
+    [OBJ_EVENT_GFX_WOT_BARRIER_ILLUSION] =       &gObjectEventGraphicsInfo_WotBarrierIllusion,
+    [OBJ_EVENT_GFX_WOT_BARRIER_LIFELINE] =       &gObjectEventGraphicsInfo_WotBarrierLifeline,
+    [OBJ_EVENT_GFX_WOT_BARRIER_BREAKTHROUGH] =   &gObjectEventGraphicsInfo_WotBarrierBreakthrough,
+    [OBJ_EVENT_GFX_WOT_BARRIER_DASH] =           &gObjectEventGraphicsInfo_WotBarrierDash,
+    [OBJ_EVENT_GFX_ZA_AZ] =                      &gObjectEventGraphicsInfo_ZaAz,
+    [OBJ_EVENT_GFX_WOT_ZYGARDE_CELL] =           &gObjectEventGraphicsInfo_WotZygardeCell,
+    [OBJ_EVENT_GFX_WOT_MEGA_PORTAL] =            &gObjectEventGraphicsInfo_WotMegaPortal,
+    [OBJ_EVENT_GFX_WOT_HOTEL_Z_SIGN] =           &gObjectEventGraphicsInfo_WotHotelZSign,
+    [OBJ_EVENT_GFX_WOT_GYM_ARROW_SIGN] =         &gObjectEventGraphicsInfo_WotGymArrowSign,
     [OBJ_EVENT_GFX_SWIMMER_M] =                &gObjectEventGraphicsInfo_SwimmerM,
     [OBJ_EVENT_GFX_SWIMMER_F] =                &gObjectEventGraphicsInfo_SwimmerF,
     [OBJ_EVENT_GFX_BLACK_BELT] =               &gObjectEventGraphicsInfo_BlackBelt,
@@ -735,6 +772,7 @@ const struct ObjectEventGraphicsInfo *const gObjectEventGraphicsInfoPointers[NUM
     [OBJ_EVENT_GFX_ITEM_GARCHOMPITE] = &gObjectEventGraphicsInfo_ItemGarchompite,
     [OBJ_EVENT_GFX_ITEM_BAXCALIBRITE] = &gObjectEventGraphicsInfo_ItemBaxcalibrite,
     [OBJ_EVENT_GFX_ITEM_GYARADOSITE] = &gObjectEventGraphicsInfo_ItemGyaradosite,
+    [OBJ_EVENT_GFX_ITEM_HAXORITE] = &gObjectEventGraphicsInfo_ItemHaxorite,
     // WoT: used on an Emerald map (the dying old man in the Ashlands), so it
     // lives outside the IS_FRLG block along with its NpcPink palette.
     [OBJ_EVENT_GFX_OLD_MAN_LYING_DOWN]       = &gObjectEventGraphicsInfo_OldManLyingDown,

@@ -29,8 +29,8 @@ TradewindGym_Text_Acolyte::
 	.string "Douse all three, and MADAM TSUJI\n"
 	.string "will grant you her trial at the\l"
 	.string "far shrine.\p"
-	.string "Mind the dark between the lamps.\n"
-	.string "It minds you back.$"
+	.string "Mind the dark in her hall. There,\n"
+	.string "the slowest light burns longest.$"
 
 TradewindGym_Text_Meditant::
 	.string "…Each lantern in this hall holds\n"

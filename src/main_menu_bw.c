@@ -121,10 +121,11 @@ static void CB2_BWNewGameFromNamingScreen(void)
 {
     if (gSaveBlock2Ptr->playerName[0] == EOS)
         WotSetRandomPresetPlayerName();
-    // WoT: the RANDOMIZER settings page sits between naming and the opening,
-    // so the choice is made before a single encounter exists. It commits its
-    // flags and then hands control to the game start.
-    WotStartRandomizerMenu(CB2_BWStartGameAfterSettings);
+    // WoT: the NEW GAME SETTINGS page (fast forward, level cap, randomizer)
+    // sits between naming and the opening, so the choices are made before a
+    // single encounter exists. It commits them and then hands control to the
+    // game start.
+    WotStartNewGameSettings(CB2_BWStartGameAfterSettings);
 }
 static void DestroyAllMenuSprites(void);
 static void LoadPlayerOverworldSprite(u8 anim);

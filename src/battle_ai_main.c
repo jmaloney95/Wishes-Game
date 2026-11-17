@@ -25,6 +25,7 @@
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_move_effects.h"
+#include "wot_mega_dimension.h"
 #include "constants/moves.h"
 #include "constants/items.h"
 #include "constants/trainers.h"
@@ -201,6 +202,11 @@ static u64 GetWildAiFlags(void)
         flags |= AI_FLAG_TRY_TO_2HKO;
     if (avgLevel >= 80)
         flags |= AI_FLAG_HP_AWARE;
+    // WoT: a rift boss fights like a strong trainer's ace: it goes for the KO
+    // with its hardest-hitting move and knows what it's up against.
+    if (WotMegaDim_IsRiftBossBattle())
+        flags |= AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY
+               | AI_FLAG_OMNISCIENT | AI_FLAG_PREFER_HIGHEST_DAMAGE_MOVE;
 
     if (B_VAR_WILD_AI_FLAGS != 0 && VarGet(B_VAR_WILD_AI_FLAGS) != 0)
         flags |= VarGet(B_VAR_WILD_AI_FLAGS);
@@ -491,6 +497,39 @@ void AI_TrySwitchOrUseItem(enum BattlerId battler)
     BtlController_EmitTwoReturnValues(battler, B_COMM_TO_ENGINE, B_ACTION_USE_MOVE, BATTLE_OPPOSITE(battler) << 8);
 }
 
+// WoT: a rift boss throws its Z-Move the first turn it can (the turn after
+// it Mega Evolves), from the move its set names, unless that move would do
+// nothing to its target. In a 2v1 it turns on the other foe if that one isn't
+// immune.
+static u32 TryRiftBossZMove(enum BattlerId battler, u32 chosenMoveIndex)
+{
+    enum Move zBase = WotMegaDim_GetBossZMoveFor(battler);
+    enum BattlerId target = gBattlerTarget;
+    u32 i;
+
+    if (zBase == MOVE_NONE || gBattleStruct->gimmick.usableGimmick[battler] != GIMMICK_Z_MOVE)
+        return chosenMoveIndex;
+    for (i = 0; i < MAX_MON_MOVES; i++)
+    {
+        if (gBattleMons[battler].moves[i] == zBase)
+            break;
+    }
+    if (i == MAX_MON_MOVES || gBattleMons[battler].pp[i] == 0
+     || (gAiLogicData->moveLimitations[battler] & (1u << i)))
+        return chosenMoveIndex;
+    if (GetBattlerSide(target) == GetBattlerSide(battler) || !IsBattlerAlive(target)
+     || AI_GetMoveEffectiveness(zBase, battler, target) == UQ_4_12(0.0))
+    {
+        target = BATTLE_PARTNER(target);
+        if (!IsDoubleBattle() || GetBattlerSide(target) == GetBattlerSide(battler) || !IsBattlerAlive(target)
+         || AI_GetMoveEffectiveness(zBase, battler, target) == UQ_4_12(0.0))
+            return chosenMoveIndex;
+    }
+    gBattlerTarget = target;
+    gAiBattleData->chosenTarget[battler] = target;
+    return i;
+}
+
 u32 BattleAI_ChooseMoveIndex(enum BattlerId battler)
 {
     u32 chosenMoveIndex;
@@ -502,6 +541,8 @@ u32 BattleAI_ChooseMoveIndex(enum BattlerId battler)
         DecideTerastal(battler);
 
     chosenMoveIndex = ChooseMoveOrAction(battler);
+    if (chosenMoveIndex < MAX_MON_MOVES)
+        chosenMoveIndex = TryRiftBossZMove(battler, chosenMoveIndex);
 
     if (gBattleStruct->gimmick.usableGimmick[battler] != GIMMICK_NONE)
         ReconsiderGimmick(battler, gBattlerTarget, gBattleMons[battler].moves[chosenMoveIndex]);
@@ -3068,7 +3109,7 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             ADJUST_SCORE(-10);
         break;
     case EFFECT_DARK_VOID:
-        if (B_DARK_VOID_FAIL >= GEN_7 && gBattleMons[battlerAtk].species != SPECIES_DARKRAI)
+        if (B_DARK_VOID_FAIL >= GEN_7 && gBattleMons[battlerAtk].species != SPECIES_DARKRAI && gBattleMons[battlerAtk].species != SPECIES_DARKRAI_MEGA)
             ADJUST_SCORE(-10);
         break;
     case EFFECT_HYPERSPACE_FURY:
@@ -3554,6 +3595,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
                 break;
             case ABILITY_EARTH_EATER:
             case ABILITY_LEVITATE:
+            case ABILITY_EELEVATE:
                 if (moveType == TYPE_GROUND)
                 {
                     if (moveTarget == TARGET_FOES_AND_ALLY)

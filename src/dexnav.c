@@ -1,4 +1,5 @@
 #include "global.h"
+#include "wot_nuzlocke.h"
 #include "battle_main.h"
 #include "battle_setup.h"
 #include "bg.h"
@@ -28,6 +29,7 @@
 #include "metatile_behavior.h"
 #include "move.h"
 #include "overworld.h"
+#include "wot_randomizer.h"
 #include "palette.h"
 #include "party_menu.h"
 #include "pokedex.h"
@@ -50,6 +52,7 @@
 #include "text_window.h"
 #include "wild_encounter.h"
 #include "window.h"
+#include "wot_mega_dimension.h"
 #include "constants/species.h"
 #include "constants/maps.h"
 #include "constants/field_effects.h"
@@ -182,8 +185,7 @@ static const u32 sHiddenMonIconGfx[] = INCGFX_U32("graphics/dexnav/hidden.png", 
 // strings
 static const u8 sText_DexNav_NoInfo[] = _("--------");
 static const u8 sText_DexNav_CaptureToSee[] = _("Capture first!");
-static const u8 sText_DexNav_PressRToRegister[] = _("R TO REGISTER!");
-static const u8 sText_DexNav_SearchForRegisteredSpecies[] = _("Search {STR_VAR_1}");
+static const u8 sText_DexNav_PressAToSearch[] = _("A TO SEARCH!");
 static const u8 sText_DexNav_NotFoundHere[] = _("This Pokémon cannot be found here!");
 static const u8 sText_ThreeQmarks[] = _("???");
 static const u8 sText_SearchLevel[] = _("SEARCH {LV}. {STR_VAR_1}");
@@ -571,6 +573,17 @@ static void DexNavProximityUpdate(void)
     sDexNavSearchDataPtr->proximity = GetPlayerDistance(sDexNavSearchDataPtr->tileX, sDexNavSearchDataPtr->tileY);
 }
 
+// Wishes of Tomorrow: sneaking is automatic. A step on foot or on water that
+// ends within SNEAKING_PROXIMITY of the target is taken at the creeping pace,
+// so the player never has to know to hold A, and AUTO SPRINT's run can't
+// scare the Pokémon off. (x, y) is the tile the step ends on.
+bool32 WotDexNavShouldCreep(s16 x, s16 y)
+{
+    if (!FlagGet(DN_FLAG_SEARCHING) || sDexNavSearchDataPtr == NULL)
+        return FALSE;
+    return abs(x - sDexNavSearchDataPtr->tileX) + abs(y - sDexNavSearchDataPtr->tileY) <= SNEAKING_PROXIMITY;
+}
+
 //Pick a specific tile based on environment
 static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, bool8 smallScan)
 {
@@ -590,6 +603,11 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
     u8 *yPos = AllocZeroed((botX - topX) * (botY - topY) * sizeof(u8));
     u32 iter = 0;
     bool32 ret = FALSE;
+    // WoT: one valid tile kept as a fallback (reservoir pick). The weighted
+    // pass gives cave tiles ~1% each, fine on a cave floor but nearly always
+    // empty on the Distortion World's few grass patches.
+    u32 validCount = 0;
+    s16 fallbackX = 0, fallbackY = 0;
 
     // loop through every tile in area and evaluate
     while (topY < botY)
@@ -641,12 +659,22 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
 
                         scale = 440 - (smallScan * 200) - (GetPlayerDistance(topX, topY) / 2)  - (2 * (topX + topY));
                         weight = ((Random() % scale) < 1) && !MapGridGetCollisionAt(topX, topY);
+                        if (!MapGridGetCollisionAt(topX, topY) && Random() % ++validCount == 0)
+                        {
+                            fallbackX = topX;
+                            fallbackY = topY;
+                        }
                     }
                     else
                     {
                         // outdoors: grass
                         scale = 100 - (GetPlayerDistance(topX, topY) * 2);
                         weight = (Random() % scale <= 5) && !MapGridGetCollisionAt(topX, topY);
+                        if (!MapGridGetCollisionAt(topX, topY) && Random() % ++validCount == 0)
+                        {
+                            fallbackX = topX;
+                            fallbackY = topY;
+                        }
                     }
                 }
                 break;
@@ -658,6 +686,11 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
                         break;
 
                     weight = (Random() % scale <= 1) && !MapGridGetCollisionAt(topX, topY);
+                    if (!MapGridGetCollisionAt(topX, topY) && Random() % ++validCount == 0)
+                    {
+                        fallbackX = topX;
+                        fallbackY = topY;
+                    }
                 }
                 break;
             default:
@@ -683,6 +716,12 @@ static bool8 DexNavPickTile(enum EncounterType environment, u8 areaX, u8 areaY, 
         i = Random() % iter;
         sDexNavSearchDataPtr->tileX = xPos[i];
         sDexNavSearchDataPtr->tileY = yPos[i];
+        ret = TRUE;
+    }
+    else if (validCount > 0)
+    {
+        sDexNavSearchDataPtr->tileX = fallbackX;
+        sDexNavSearchDataPtr->tileY = fallbackY;
         ret = TRUE;
     }
 
@@ -783,7 +822,7 @@ static u8 GetSearchLevel(u16 species)
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
     searchLevel = gSaveBlock3Ptr->dexNavSearchLevels[species];
 #else
-    searchLevel = 0;
+    searchLevel = WotDexNavGetSearchLevel(species);
 #endif
     return searchLevel;
 }
@@ -949,6 +988,9 @@ bool32 TryStartDexNavSearch(void)
 {
     u16 val = VarGet(DN_VAR_SPECIES);
 
+    if (WotDexNavBlocked())
+        return FALSE;
+
     if (FlagGet(DN_FLAG_SEARCHING) && sDexNavSearchDataPtr->hiddenSearch)
     {
         RevealHiddenSearch();
@@ -1010,7 +1052,7 @@ static void RevealHiddenMon(void)
     }
 
 
-    if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN))
+    if (!WotDexNavSeen(species))
     {
         u8 index;
 
@@ -1099,6 +1141,7 @@ bool32 OnStep_DexNavSearch(void)
         CreateDexNavWildMon(sDexNavSearchDataPtr->species, sDexNavSearchDataPtr->potential, sDexNavSearchDataPtr->monLevel,
                             sDexNavSearchDataPtr->abilityNum, sDexNavSearchDataPtr->heldItem, sDexNavSearchDataPtr->moves);
 
+        WotNuzlocke_NextScriptedWildCounts(); // WoT: a DexNav chase is an ordinary encounter
         ScriptContext_SetupScript(EventScript_StartDexNavBattle);
         FREE_AND_SET_NULL(sDexNavSearchDataPtr);
         FlagClear(DN_FLAG_SEARCHING);
@@ -1133,7 +1176,7 @@ static void DexNavUpdateSearchWindow(u8 proximity, u8 searchLevel)
 {
     bool8 hideName = FALSE;
 
-    if (sDexNavSearchDataPtr->hiddenSearch && !GetSetPokedexFlag(SpeciesToNationalPokedexNum(sDexNavSearchDataPtr->species), FLAG_GET_SEEN))
+    if (sDexNavSearchDataPtr->hiddenSearch && !WotDexNavSeen(sDexNavSearchDataPtr->species))
         hideName = TRUE;    //if a detector mode hidden search and player hasn't seen the mon, hide info
 
     FillWindowPixelBuffer(sDexNavSearchDataPtr->windowId, PIXEL_FILL(1));   //clear window
@@ -1872,6 +1915,15 @@ static void DexNavFadeAndExit(void)
     SetMainCallback2(DexNav_MainCB);
 }
 
+// WoT: species with no National Dex number (Hellraiser, WOT_GHOST) share #0
+// with the empty SPECIES_NONE slots, so #0 matches by species instead.
+static bool32 DexNavSameEntry(u16 slotSpecies, u16 species, enum NationalDexOrder dexNum)
+{
+    if (dexNum == NATIONAL_DEX_NONE)
+        return slotSpecies == species;
+    return SpeciesToNationalPokedexNum(slotSpecies) == dexNum;
+}
+
 static bool8 SpeciesInArray(u16 species, u8 section)
 {
     u32 i;
@@ -1882,21 +1934,21 @@ static bool8 SpeciesInArray(u16 species, u8 section)
     case 0: //land
         for (i = 0; i < LAND_WILD_COUNT; i++)
         {
-            if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->landSpecies[i]) == dexNum)
+            if (DexNavSameEntry(sDexNavUiDataPtr->landSpecies[i], species, dexNum))
                 return TRUE;
         }
         break;
     case 1: //water
         for (i = 0; i < WATER_WILD_COUNT; i++)
         {
-            if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->waterSpecies[i]) == dexNum)
+            if (DexNavSameEntry(sDexNavUiDataPtr->waterSpecies[i], species, dexNum))
                 return TRUE;
         }
         break;
     case 2: //hidden
         for (i = 0; i < HIDDEN_WILD_COUNT; i++)
         {
-            if (SpeciesToNationalPokedexNum(sDexNavUiDataPtr->hiddenSpecies[i]) == dexNum)
+            if (DexNavSameEntry(sDexNavUiDataPtr->hiddenSpecies[i], species, dexNum))
                 return TRUE;
         }
         break;
@@ -1971,7 +2023,7 @@ static void TryDrawIconInSlot(u16 species, s16 x, s16 y)
 {
     if (species == SPECIES_NONE || species > NUM_SPECIES)
         CreateNoDataIcon(x, y);   //'X' in slot
-    else if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN))
+    else if (!WotDexNavSeen(species))
         CreateMonIcon(SPECIES_NONE, SpriteCB_MonIcon, x, y, 0, 0xFFFFFFFF); //question mark
     else
         CreateMonIcon(species, SpriteCB_MonIcon, x, y, 0, 0xFFFFFFFF);
@@ -2039,7 +2091,7 @@ static u16 DexNavGetSpecies(void)
         return SPECIES_NONE;
     }
 
-    if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(species), FLAG_GET_SEEN))
+    if (!WotDexNavSeen(species))
         return SPECIES_NONE;
 
     return species;
@@ -2094,7 +2146,7 @@ static void PrintCurrentSpeciesInfo(void)
     enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
     enum Type type1, type2;
 
-    if (!GetSetPokedexFlag(dexNum, FLAG_GET_SEEN))
+    if (!WotDexNavSeen(species))
         species = SPECIES_NONE;
 
     // clear windows
@@ -2168,21 +2220,13 @@ static void PrintMapName(void)
     CopyWindowToVram(WINDOW_REGISTERED, 3);
 }
 
-static void PrintSearchableSpecies(u16 species)
+// WoT: the top bar says how to search (A) where it used to show the
+// registered species; there is no registering any more.
+static void PrintSearchableSpecies(void)
 {
     FillWindowPixelBuffer(WINDOW_REGISTERED, PIXEL_FILL(TEXT_COLOR_TRANSPARENT));
     PutWindowTilemap(WINDOW_REGISTERED);
-    if (species == SPECIES_NONE)
-    {
-        AddTextPrinterParameterized3(WINDOW_REGISTERED, FONT_NORMAL, 0, 0, sFontColor_White, TEXT_SKIP_DRAW, sText_DexNav_PressRToRegister);
-    }
-    else
-    {
-        StringCopy(gStringVar1, GetSpeciesName(species));
-        StringExpandPlaceholders(gStringVar4, sText_DexNav_SearchForRegisteredSpecies);
-        AddTextPrinterParameterized3(WINDOW_REGISTERED, FONT_NORMAL, 0, 0, sFontColor_White, TEXT_SKIP_DRAW, gStringVar4);
-    }
-
+    AddTextPrinterParameterized3(WINDOW_REGISTERED, FONT_NORMAL, 0, 0, sFontColor_White, TEXT_SKIP_DRAW, sText_DexNav_PressAToSearch);
     PrintMapName();
 }
 
@@ -2253,7 +2297,7 @@ static bool8 DexNav_DoGfxSetup(void)
         gMain.state++;
         break;
     case 7:
-        PrintSearchableSpecies(VarGet(DN_VAR_SPECIES) & DEXNAV_MASK_SPECIES);
+        PrintSearchableSpecies();
         DexNavLoadEncounterData();
         gMain.state++;
         break;
@@ -2440,25 +2484,8 @@ static void Task_DexNavMain(u8 taskId)
         PlaySE(SE_RG_BAG_CURSOR);
         UpdateCursorPosition();
     }
-    else if (JOY_NEW(R_BUTTON))
-    {
-        // check selection is valid. Play sound if invalid
-        species = DexNavGetSpecies();
-
-        if (species != SPECIES_NONE)
-        {
-            PrintSearchableSpecies(species);
-            //PlaySE(SE_DEX_SEARCH);
-            PlayCry_Script(species, 0);
-
-            // create value to store in a var
-            VarSet(DN_VAR_SPECIES, ((sDexNavUiDataPtr->environment << 14) | species));
-        }
-        else
-        {
-            PlaySE(SE_FAILURE);
-        }
-    }
+    // WoT: no R to register a species. The field's R shortcut that used it is
+    // gone (R is the debug menu's), so A on the screen is the only way to search.
     else if (JOY_NEW(A_BUTTON))
     {
         species = DexNavGetSpecies();
@@ -2669,6 +2696,8 @@ void TryIncrementSpeciesSearchLevel()
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
     if (gMapHeader.regionMapSectionId != MAPSEC_BATTLE_FRONTIER && gSaveBlock3Ptr->dexNavSearchLevels[gDexNavSpecies] < 255)
         gSaveBlock3Ptr->dexNavSearchLevels[gDexNavSpecies]++;
+#else
+    WotDexNavIncrementSearchLevel(gDexNavSpecies);
 #endif
 }
 
@@ -2684,4 +2713,80 @@ void IncrementDexNavChain(void)
 {
     if (gSaveBlock3Ptr->dexNavChain < DEXNAV_CHAIN_MAX)
         gSaveBlock3Ptr->dexNavChain++;
+}
+
+// WoT: DexNav is off while the Randomizer swaps wild species (a search for X
+// would spawn Y) and inside the Mega Dimension (timed instances, placed wilds).
+bool32 WotDexNavBlocked(void)
+{
+    return WotRandomizerOption(FLAG_WOT_RAND_WILD) || WotMegaDim_IsActive();
+}
+
+// WoT: search levels are kept only for species in a wild table,
+// one byte each in SaveBlock3 (slot list from tools/wot_dexnav_species.py).
+// Bit 7 of the byte is "seen" for species with no National Dex number
+// (Hellraiser, WOT_GHOST), which have no dex flag to check.
+#define WOT_DEXNAV_SEEN_BIT  0x80
+#define WOT_DEXNAV_LEVEL_MAX 0x7F
+
+#include "data/wot_dexnav_species.h"
+
+// Past this, raise WOT_DEXNAV_SLOT_CAPACITY (global.h) -- which moves the
+// Shadow Log words after the array, so only before a release.
+STATIC_ASSERT(WOT_DEXNAV_SPECIES_COUNT <= WOT_DEXNAV_SLOT_CAPACITY, WotDexNavSlotsFull);
+
+static s32 WotDexNavSlot(u16 species)
+{
+    u32 i;
+
+    for (i = 0; i < WOT_DEXNAV_SPECIES_COUNT; i++)
+    {
+        if (sWotDexNavSpecies[i] == species)
+            return i;
+    }
+    return -1;
+}
+
+bool32 WotDexNavHasSlot(u16 species)
+{
+    return WotDexNavSlot(species) >= 0;
+}
+
+u32 WotDexNavGetSearchLevel(u16 species)
+{
+    s32 slot = WotDexNavSlot(species);
+
+    if (slot < 0)
+        return 0;
+    return gSaveBlock3Ptr->wotDexNavSearchLevels[slot] & WOT_DEXNAV_LEVEL_MAX;
+}
+
+void WotDexNavIncrementSearchLevel(u16 species)
+{
+    s32 slot = WotDexNavSlot(species);
+
+    if (slot >= 0 && (gSaveBlock3Ptr->wotDexNavSearchLevels[slot] & WOT_DEXNAV_LEVEL_MAX) < WOT_DEXNAV_LEVEL_MAX)
+        gSaveBlock3Ptr->wotDexNavSearchLevels[slot]++;
+}
+
+void WotDexNavMarkSeen(u16 species)
+{
+    s32 slot;
+
+    if (species == SPECIES_NONE || SpeciesToNationalPokedexNum(species) != NATIONAL_DEX_NONE)
+        return;
+    slot = WotDexNavSlot(species);
+    if (slot >= 0)
+        gSaveBlock3Ptr->wotDexNavSearchLevels[slot] |= WOT_DEXNAV_SEEN_BIT;
+}
+
+bool32 WotDexNavSeen(u16 species)
+{
+    enum NationalDexOrder dexNum = SpeciesToNationalPokedexNum(species);
+    s32 slot;
+
+    if (dexNum != NATIONAL_DEX_NONE)
+        return GetSetPokedexFlag(dexNum, FLAG_GET_SEEN);
+    slot = WotDexNavSlot(species);
+    return slot >= 0 && (gSaveBlock3Ptr->wotDexNavSearchLevels[slot] & WOT_DEXNAV_SEEN_BIT);
 }

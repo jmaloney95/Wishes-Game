@@ -12,6 +12,8 @@
 #include "test/test.h"
 #include "test/battle.h"
 
+void WotMegaDim_Test_SetRiftBoss(u16 zMove);
+
 #define TIMEOUT_SECONDS 60
 
 void CB2_TestRunner(void);
@@ -328,6 +330,7 @@ top:
         gPersistentTestRunnerState.expectCrash = FALSE;
         SeedRng(0);
         SeedRng2(0);
+        WotMegaDim_Test_SetRiftBoss(MOVE_NONE); // WoT: no test inherits a rift boss
         if (gTestRunnerState.test->runner->setUp)
         {
             gTestRunnerState.test->runner->setUp(gTestRunnerState.test->data);

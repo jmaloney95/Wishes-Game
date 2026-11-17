@@ -205,6 +205,10 @@ static void Task_HidePartyStatusSummary_BattleStart_2(u8);
 static void Task_HidePartyStatusSummary_DuringBattle(u8);
 
 static void SpriteCB_HealthBoxOther(struct Sprite *);
+static void WotKeepHealthboxGold(u8 healthboxSpriteId);
+
+// Battlers whose box should be gold, for WotKeepHealthboxGold.
+static EWRAM_DATA u8 sWotGoldHealthboxes = 0;
 static void SpriteCB_HealthBar(struct Sprite *);
 static void SpriteCB_StatusSummaryBar_Enter(struct Sprite *);
 static void SpriteCB_StatusSummaryBar_Exit(struct Sprite *);
@@ -644,6 +648,8 @@ u8 CreateBattlerHealthboxSprites(enum BattlerId battler)
     u8 healthbarSpriteId;
     struct Sprite *healthBarSpritePtr;
 
+    sWotGoldHealthboxes &= ~(1u << battler); // UpdateHealthboxAttribute sets it again for a shiny
+
     switch (GetBattlerCoordsIndex(battler))
     {
     default:
@@ -778,6 +784,8 @@ static void SpriteCB_HealthBar(struct Sprite *sprite)
 static void SpriteCB_HealthBoxOther(struct Sprite *sprite)
 {
     u8 healthboxMainSpriteId = sprite->hOther_HealthBoxSpriteId;
+
+    WotKeepHealthboxGold(healthboxMainSpriteId);
 
     sprite->x = gSprites[healthboxMainSpriteId].x + 64;
     sprite->y = gSprites[healthboxMainSpriteId].y;
@@ -2036,6 +2044,12 @@ static void WotSetHealthboxShiny(u8 healthboxSpriteId, bool32 shiny)
     u8 normal = IndexOfSpritePaletteTag(TAG_HEALTHBOX_PAL);
     u8 right = gSprites[healthboxSpriteId].oam.affineParam;
     u8 pal = shiny ? WotShinyHealthboxPalette() : normal;
+    u32 battlerBit = 1u << gSprites[healthboxSpriteId].hMain_Battler;
+
+    if (shiny)
+        sWotGoldHealthboxes |= battlerBit;
+    else
+        sWotGoldHealthboxes &= ~battlerBit;
 
     if (pal == 0xFF)
         pal = normal;
@@ -2045,6 +2059,20 @@ static void WotSetHealthboxShiny(u8 healthboxSpriteId, bool32 shiny)
     gSprites[healthboxSpriteId].oam.paletteNum = pal;
     if (right < MAX_SPRITES)
         gSprites[right].oam.paletteNum = pal;
+}
+
+// Playtest: the gold box sometimes went dark mid-battle. The gold palette is
+// allocated late, so it often sits in the last free slot (15), and a sprite
+// whose own palette failed to allocate also lands in slot 15. Destroying that
+// sprite frees the gold tag, and the next palette loaded (the trainer sliding
+// back in, an anim) takes the slot, so the box shows its colours. Every frame,
+// a box that should be gold checks that its slot is still the gold one.
+static void WotKeepHealthboxGold(u8 healthboxSpriteId)
+{
+    if (!(sWotGoldHealthboxes & (1u << gSprites[healthboxSpriteId].hMain_Battler)))
+        return;
+    if (GetSpritePaletteTagByPaletteNum(gSprites[healthboxSpriteId].oam.paletteNum) != TAG_HEALTHBOX_SHINY_PAL)
+        WotSetHealthboxShiny(healthboxSpriteId, TRUE);
 }
 
 void UpdateHealthboxAttribute(u8 healthboxSpriteId, struct Pokemon *mon, u8 elementId)
@@ -2960,24 +2988,56 @@ static const struct SpriteSheet sSpriteSheet_MoveInfoWindow =
 #define sState     data[0]
 #define sSameBall  data[1]
 
+// WoT Shadow system: a foe the R quick-throw may aim at. In a wild battle that
+// is anything still standing; in a trainer battle only a Shadow, since every
+// other ball is blocked by the trainer.
+bool32 WotIsQuickBallTarget(enum BattlerId battler)
+{
+    if (battler >= gBattlersCount || IsOnPlayerSide(battler) || !IsBattlerAlive(battler))
+        return FALSE;
+    if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+        return GetMonData(GetBattlerMon(battler), MON_DATA_IS_SHADOW);
+    return TRUE;
+}
+
 bool32 CanThrowLastUsedBall(void)
 {
     if (B_LAST_USED_BALL == FALSE)
         return FALSE;
     if (!CanThrowBall())
         return FALSE;
-    // WoT: the quick-throw button has no target prompt, so keep it to a
-    // single unambiguous foe. With two out, throw from the bag instead
-    // (that path runs the manual target selector).
-    if (IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
-     && IsBattlerAlive(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
+    if (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_RECORDED_LINK | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_FRONTIER))
         return FALSE;
-    if (gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_FRONTIER))
+    // WoT Shadow system: in a trainer battle the quick-throw is the snag
+    // shortcut, so it shows whenever one of the trainer's Shadows is out.
+    // With two foes it could hit, the controller asks which one first.
+    if (!WotIsQuickBallTarget(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))
+     && !WotIsQuickBallTarget(GetBattlerAtPosition(B_POSITION_OPPONENT_RIGHT)))
         return FALSE;
     if (!CheckBagHasItem(gBallToDisplay, 1))
         return FALSE;
 
     return TRUE;
+}
+
+// WoT Shadow system: the ball the quick-throw offers while a Shadow is out.
+// A battle opens on a Snag Ball (4x on Shadows) when the bag has one; after
+// that the player's own pick -- the ball last thrown or cycled to -- stays
+// while it lasts. Past that: a Snag Ball, the last ball thrown, then whatever
+// ball is first in the bag.
+u16 WotPickShadowQuickBall(u16 current, bool32 battleStart)
+{
+    u16 firstBall;
+
+    if (!battleStart && current != ITEM_NONE && CheckBagHasItem(current, 1))
+        return current;
+    if (CheckBagHasItem(ITEM_SNAG_BALL, 1))
+        return ITEM_SNAG_BALL;
+    if (gLastThrownBall != ITEM_NONE && CheckBagHasItem(gLastThrownBall, 1))
+        return gLastThrownBall;
+    CompactItemsInBagPocket(POCKET_POKE_BALLS);
+    firstBall = GetBagItemId(POCKET_POKE_BALLS, 0);
+    return (firstBall != ITEM_NONE) ? firstBall : current;
 }
 
 void TryAddLastUsedBallItemSprites(void)
@@ -2996,6 +3056,12 @@ void TryAddLastUsedBallItemSprites(void)
         firstBall = GetBagItemId(POCKET_POKE_BALLS, 0);
         if (firstBall > ITEM_NONE)
             gBallToDisplay = firstBall;
+    }
+
+    if (WotOpponentHasShadowOut())
+    {
+        gBallToDisplay = WotPickShadowQuickBall(gBallToDisplay, !gBattleStruct->wotQuickBallPicked);
+        gBattleStruct->wotQuickBallPicked = TRUE;
     }
 
     if (!CanThrowLastUsedBall())

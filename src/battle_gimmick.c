@@ -288,7 +288,9 @@ static inline u32 GetIndicatorSpriteId(u32 healthboxId)
 
 // WoT Shadow system: any on-field Shadow mon (an enemy snag target, or a
 // snagged-but-unpurified mon of the player's) shows a purple flame by its
-// level. An active gimmick's indicator takes precedence.
+// level. It stays through Mega Evolution and Primal Reversion (The
+// Prototype Lab's Shadow Deoxys Mega Evolves); only a Tera type icon
+// outranks it.
 static bool32 WotBattlerShowsShadowIndicator(enum BattlerId battler)
 {
     return WotMonIsShadow(GetBattlerMon(battler));
@@ -307,7 +309,11 @@ const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
 {
     u32 gimmick = GetActiveGimmick(battler);
 
-    if (IsBattlerPrimalReverted(battler))
+    if (gimmick != GIMMICK_TERA && WotBattlerShowsShadowIndicator(battler))
+    {
+        return (u32 *)&sWotShadowIndicatorGfx;
+    }
+    else if (IsBattlerPrimalReverted(battler))
     {
         if (gBattleMons[battler].species == SPECIES_GROUDON_PRIMAL)
             return (u32 *)&sOmegaIndicatorGfx;
@@ -322,10 +328,6 @@ const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
     {
         return (u32 *)gGimmicksInfo[gimmick].indicatorData;
     }
-    else if (WotBattlerShowsShadowIndicator(battler))
-    {
-        return (u32 *)&sWotShadowIndicatorGfx;
-    }
     else if (WotBattlerShowsPurifiedIndicator(battler))
     {
         return (u32 *)&sWotPurifiedIndicatorGfx;
@@ -339,12 +341,12 @@ const u32 *GetIndicatorSpriteSrc(enum BattlerId battler)
 u32 GetIndicatorPalTag(enum BattlerId battler)
 {
     u32 gimmick = GetActiveGimmick(battler);
-    if (IsBattlerPrimalReverted(battler))
+    if (gimmick != GIMMICK_TERA && WotBattlerShowsShadowIndicator(battler))
+        return TAG_MISC_INDICATOR_PAL;
+    else if (IsBattlerPrimalReverted(battler))
         return TAG_MISC_INDICATOR_PAL;
     else if (gGimmicksInfo[gimmick].indicatorPalTag != 0)
         return gGimmicksInfo[gimmick].indicatorPalTag;
-    else if (WotBattlerShowsShadowIndicator(battler))
-        return TAG_MISC_INDICATOR_PAL;
     else if (WotBattlerShowsPurifiedIndicator(battler))
         return TAG_MISC_INDICATOR_PAL;
     else

@@ -17,6 +17,7 @@
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/species.h"
+#include "wot_surf_mon.h"
 
 // Distortion World cherry-blossom grass: recolored tall-grass rustle (see
 // gFieldEffectObjectPalette_DistortionGrass). Same sprite as tall grass, dark palette.
@@ -1220,17 +1221,25 @@ static void UpdateAshFieldEffect_End(struct Sprite *sprite)
 
 u32 FldEff_SurfBlob(void)
 {
-    u8 spriteId;
+    u8 spriteId = MAX_SPRITES;
 
     SetSpritePosToOffsetMapCoords((s16 *)&gFieldEffectArguments[0], (s16 *)&gFieldEffectArguments[1], 8, 8);
-    spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SURF_BLOB], gFieldEffectArguments[0], gFieldEffectArguments[1], 150);
+    // WoT: the player rides a party Pokemon when one has a surf sprite
+    // (src/wot_surf_mon.c). A follower NPC keeps the blob.
+    if (gFieldEffectArguments[2] == gPlayerAvatar.objectEventId)
+        spriteId = WotCreateSurfMonSprite(gFieldEffectArguments[0], gFieldEffectArguments[1]);
+    if (spriteId == MAX_SPRITES)
+    {
+        spriteId = CreateSpriteAtEnd(gFieldEffectObjectTemplatePointers[FLDEFFOBJ_SURF_BLOB], gFieldEffectArguments[0], gFieldEffectArguments[1], 150);
+        // Can use either gender's palette, so try to use the one that should be loaded
+        if (spriteId != MAX_SPRITES)
+            gSprites[spriteId].oam.paletteNum = LoadPlayerObjectEventPalette(gSaveBlock2Ptr->playerGender);
+    }
     if (spriteId != MAX_SPRITES)
     {
         struct Sprite *sprite = &gSprites[spriteId];
         sprite->coordOffsetEnabled = TRUE;
         sprite->sPlayerObjId = gFieldEffectArguments[2];
-        // Can use either gender's palette, so try to use the one that should be loaded
-        sprite->oam.paletteNum = LoadPlayerObjectEventPalette(gSaveBlock2Ptr->playerGender);
         sprite->sVelocity = -1;
         sprite->sPrevX = -1;
         sprite->sPrevY = -1;
@@ -1259,6 +1268,11 @@ void SetSurfBlob_PlayerOffset(u8 spriteId, bool8 hasOffset, s16 offset)
 static u8 GetSurfBlob_BobState(struct Sprite *sprite)
 {
     return sprite->sBitfield & 0xF;
+}
+
+u8 GetSurfBlobBobState(u8 spriteId)
+{
+    return GetSurfBlob_BobState(&gSprites[spriteId]);
 }
 
 // Never TRUE
@@ -1352,7 +1366,7 @@ static void UpdateBobbingEffect(struct ObjectEvent *playerObj, struct Sprite *pl
             else
                 playerSprite->y2 = sprite->sPlayerOffset + sprite->y2;
             sprite->x = playerSprite->x;
-            sprite->y = playerSprite->y + 8;
+            sprite->y = playerSprite->y + 8 + WotSurfMonSpriteYOffset(sprite);
         }
     }
 }

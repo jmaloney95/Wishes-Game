@@ -1322,6 +1322,10 @@ const u16 gBattleAnimSpritePal_TeraStarstormBeam[] = INCGFX_U16("graphics/battle
 const u32 gBattleAnimSpriteGfx_SaltParticle[] = INCGFX_U32("graphics/battle_anims/sprites/salt_particle.png", ".4bpp.smol");
 const u16 gBattleAnimSpritePal_SaltParticle[] = INCGFX_U16("graphics/battle_anims/sprites/salt_particle.png", ".gbapal");
 
+// Wishes of Tomorrow: Caldera Crash magma geyser (8 frames of 32x64)
+const u32 gBattleAnimSpriteGfx_CalderaMagma[] = INCGFX_U32("graphics/battle_anims/sprites/caldera_magma.png", ".4bpp.smol");
+const u16 gBattleAnimSpritePal_CalderaMagma[] = INCGFX_U16("graphics/battle_anims/sprites/caldera_magma.png", ".gbapal");
+
 const u16 gBattleAnimUnusedPal_Unknown2[] = INCGFX_U16("graphics/battle_anims/unused/unknown_2.pal", ".gbapal");
 
 #include "data/graphics/trainers.h"
@@ -1700,7 +1704,7 @@ const u32 gBattleAnimBgImage_Swamp[] = INCGFX_U32("graphics/battle_anims/backgro
 const u16 gBattleAnimBGPalette_Swamp[] = INCGFX_U16("graphics/battle_anims/backgrounds/swampswizzle.pal", ".gbapal");
 const u32 gBattleAnimBgTilemap_Swamp[] = INCBIN_U32("graphics/battle_anims/backgrounds/swampswizzle.bin.smolTM");
 
-const u32 gPartyMenuBg_Gfx[] = INCGFX_U32("graphics/party_menu/bg.png", ".4bpp.smol", "-num_tiles 62 -Wnum_tiles");
+const u32 gPartyMenuBg_Gfx[] = INCGFX_U32("graphics/party_menu/bg.png", ".4bpp.smol", "-num_tiles 80 -Wnum_tiles"); // WoT: BW party art (80 tiles)
 const u16 gPartyMenuBg_Pal[] = INCGFX_U16("graphics/party_menu/bg.png", ".gbapal");
 const u32 gPartyMenuBg_Tilemap[] = INCBIN_U32("graphics/party_menu/bg.bin.smolTM");
 

@@ -50,7 +50,12 @@ static bool32 IsFieldMoveUnlocked_Fly(void)
 {
     // Wishes of Tomorrow: FLY is the reward for the first purification --
     // Prof. Assistant triangulates Celebi and opens the sky. Never a badge.
+    // Closed-test builds have it from the start, to get around quickly.
+#ifdef WOT_TESTER
+    return TRUE;
+#else
     return FlagGet(FLAG_WOT_FLY_GRANTED);
+#endif
 }
 
 static bool32 IsFieldMoveUnlocked_Dive(void)

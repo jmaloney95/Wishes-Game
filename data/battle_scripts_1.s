@@ -3328,6 +3328,23 @@ BattleScript_EffectShoreUp::
 	recoverbasedonsunlight BattleScript_AlreadyAtFullHp
 	goto BattleScript_PresentHealTarget
 
+@ Mega Sol (ported from expansion 1.17): the sun-boosted heal shows the ability.
+@ recoverbasedonsunlight jumps here with gBattlerAbility set to the user.
+BattleScript_MegaSolActivatesHealing::
+	attackanimation
+	waitanimation
+	call BattleScript_AbilityPopUp
+	healthbarupdate BS_TARGET, PASSIVE_HP_UPDATE
+	datahpupdate BS_TARGET, PASSIVE_HP_UPDATE
+	printstring STRINGID_PKMNREGAINEDHEALTH
+	waitmessage B_WAIT_TIME_LONG
+	goto BattleScript_MoveEnd
+
+@ Mega Sol: Solar Beam / Solar Blade skip their charge turn (gBattlerAbility = user).
+BattleScript_MegaSolActivatesTwoTurnMove::
+	call BattleScript_AbilityPopUp
+	return
+
 BattleScript_EffectWeather::
 	attackcanceler
 BattleScript_EffectWeatherSetWeather:
@@ -3591,6 +3608,7 @@ BattleScript_FlatterTryConfuse::
 BattleScript_EffectDarkVoid::
 .if B_DARK_VOID_FAIL >= GEN_7
 	jumpifspecies SPECIES_DARKRAI, BattleScript_EffectNonVolatileStatus
+	jumpifspecies SPECIES_DARKRAI_MEGA, BattleScript_EffectNonVolatileStatus
 	goto BattleScript_PokemonCantUseTheMove
 .endif
 BattleScript_EffectNonVolatileStatus::
@@ -5381,6 +5399,19 @@ BattleScript_EnduredMsg::
 	waitmessage B_WAIT_TIME_LONG
 	return
 
+@ WoT: the rogue Mega's last stand, once a battle (WotMegaDim_TakeBossLastStand).
+BattleScript_WotBossLastStand::
+	pause B_WAIT_TIME_SHORTEST
+	printstring STRINGID_WOTBOSSREFUSEDTOFALL
+	waitmessage B_WAIT_TIME_LONG
+	playanimation BS_TARGET, B_ANIM_HELD_ITEM_EFFECT
+	waitanimation
+	printstring STRINGID_WOTBOSSRIFTSURGE
+	waitmessage B_WAIT_TIME_LONG
+	healthbarupdate BS_TARGET, PASSIVE_HP_UPDATE
+	datahpupdate BS_TARGET, PASSIVE_HP_UPDATE
+	return
+
 BattleScript_SturdiedMsg::
 	pause B_WAIT_TIME_SHORTEST
 	call BattleScript_AbilityPopUpTarget
@@ -5410,7 +5441,14 @@ BattleScript_FocusPunchSetUp::
 BattleScript_MegaEvolution::
 	flushtextbox
 	trytrainerslidemegaevolutionmsg
+	@ WoT: a wild Mega (the Mega Dimension) has no trainer or Mega Ring to name.
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_MegaEvolutionRingString
+	jumpifside BS_ATTACKER, B_SIDE_OPPONENT, BattleScript_MegaEvolutionWildString
+BattleScript_MegaEvolutionRingString:
 	printstring STRINGID_MEGAEVOREACTING
+	goto BattleScript_MegaEvolutionAfterString
+BattleScript_MegaEvolutionWildString:
+	printstring STRINGID_WOTWILDMEGAREACTING
 BattleScript_MegaEvolutionAfterString:
 	waitmessage B_WAIT_TIME_LONG
 	handleformchange BS_SCRIPTING, 0
@@ -5425,6 +5463,11 @@ BattleScript_MegaEvolutionAfterString:
 BattleScript_WishMegaEvolution::
 	flushtextbox
 	trytrainerslidemegaevolutionmsg
+	@ WoT: a wild Mega Rayquaza (Mable's quest) has no trainer whose wish it
+	@ answers; it gets the wild Mega line instead.
+	jumpifbattletype BATTLE_TYPE_TRAINER, BattleScript_WishMegaEvolutionTrainerString
+	jumpifside BS_ATTACKER, B_SIDE_OPPONENT, BattleScript_MegaEvolutionWildString
+BattleScript_WishMegaEvolutionTrainerString:
 	printstring STRINGID_FERVENTWISHREACHED
 	goto BattleScript_MegaEvolutionAfterString
 

@@ -13,6 +13,7 @@
 #include "text_window.h"
 #include "window.h"
 #include "constants/songs.h"
+#include "wot_permanent_mega.h"
 #include "wot_shadow_log.h"
 #include "constants/species.h"
 
@@ -121,13 +122,36 @@ static const u16 sWotShadowLogSpecies[] =
     SPECIES_GIRATINA,
     SPECIES_ARCEUS,
     SPECIES_LUGIA,       // the harbour, post-credits
+    // Wave 5 -- the rest of the custom Shadow art, now in the
+    // research-path patrol pools. Rows 64+ live in SaveBlock3.
+    SPECIES_DRAGONITE,   // research taken
+    SPECIES_TYPHLOSION,  // research taken
+    SPECIES_CHARIZARD,   // research taken
+    SPECIES_GARDEVOIR,   // research taken
+    SPECIES_GALLADE,     // research taken
+    SPECIES_CAMERUPT,    // research destroyed
+    SPECIES_PIKACHU,     // research destroyed
+    SPECIES_CHIMCHAR,    // research destroyed
+    SPECIES_CHARMELEON,  // research destroyed
+    SPECIES_TURTWIG,     // research destroyed
 };
 
 #define WOT_SHADOW_LOG_COUNT ARRAY_COUNT(sWotShadowLogSpecies)
 
-// The log is 4 snag vars + 4 purified vars, 16 bits each. Adding a 65th
-// species needs a fifth var in BOTH tables below (and in vars.h) first.
-STATIC_ASSERT(WOT_SHADOW_LOG_COUNT <= 64, WotShadowLogOutOfBits);
+// Rows 0-63: 4 snag vars + 4 purified vars, 16 bits each. Rows 64-127: the
+// SaveBlock3 words (no saved var was free). Past 128 needs more
+// SaveBlock3 words.
+#define WOT_SHADOW_LOG_VAR_ROWS 64
+STATIC_ASSERT(WOT_SHADOW_LOG_COUNT <= WOT_SHADOW_LOG_VAR_ROWS + 16 * ARRAY_COUNT(gSaveBlock3Ptr->wotShadowLogSnagExtra), WotShadowLogOutOfBits);
+
+// Rows that don't count toward finishing the log:
+// ARCEUS is the reward for finishing it (it waits at Tower Top), and
+// CRESSELIA is optional: it waits in Emma's Rift Sanctum after the story.
+// Both rows still fill if one is caught.
+static bool32 IsUncountedSpecies(u16 species)
+{
+    return species == SPECIES_ARCEUS || species == SPECIES_CRESSELIA;
+}
 
 u32 WotShadowLog_SpeciesCount(void)
 {
@@ -156,13 +180,17 @@ static const u16 sPureBitVars[] =
 // the ORDINARY species and its saved bit indices must never move. Fold them
 // back before looking up, so a Shadow Jirachi fills the Jirachi row exactly as
 // a flagged plain one used to -- and old saves keep the bit they already have.
+// A Mega (a Shadow Mega kept after battle, or a Mystery Code gift) is its base.
 u16 WotBaseSpeciesForShadow(u16 species)
 {
     switch (species)
     {
     case SPECIES_JIRACHI_SHADOW: return SPECIES_JIRACHI;
     case SPECIES_LUGIA_SHADOW:   return SPECIES_LUGIA;
-    default:                     return species;
+    default:
+        if (species < NUM_SPECIES && gSpeciesInfo[species].isMegaEvolution && WotGetMegaBaseSpecies(species) != SPECIES_NONE)
+            return WotGetMegaBaseSpecies(species);
+        return species;
     }
 }
 
@@ -179,14 +207,24 @@ static s32 LogIndexOfSpecies(u16 species)
     return -1;
 }
 
+static u16 *GetLogWord(const u16 *vars, u32 index)
+{
+    if (index < WOT_SHADOW_LOG_VAR_ROWS)
+        return GetVarPointer(vars[index / 16]);
+    index -= WOT_SHADOW_LOG_VAR_ROWS;
+    if (vars == sPureBitVars)
+        return &gSaveBlock3Ptr->wotShadowLogPureExtra[index / 16];
+    return &gSaveBlock3Ptr->wotShadowLogSnagExtra[index / 16];
+}
+
 static bool32 GetLogBit(const u16 *vars, u32 index)
 {
-    return (VarGet(vars[index / 16]) >> (index % 16)) & 1;
+    return (*GetLogWord(vars, index) >> (index % 16)) & 1;
 }
 
 static void SetLogBit(const u16 *vars, u32 index)
 {
-    VarSet(vars[index / 16], VarGet(vars[index / 16]) | (1u << (index % 16)));
+    *GetLogWord(vars, index) |= 1u << (index % 16);
 }
 
 void WotShadowLog_MarkSnaggedSpecies(u16 species)
@@ -220,12 +258,17 @@ void WotShadowLog_MarkMon(struct Pokemon *mon)
         WotShadowLog_MarkPurifiedSpecies(species);
 }
 
+// The counts (and the "SNAGGED x/y" header) cover only the rows that count
+// toward finishing the log.
 u32 WotShadowLog_CountSnagged(void)
 {
     u32 i, n = 0;
 
     for (i = 0; i < WOT_SHADOW_LOG_COUNT; i++)
-        n += GetLogBit(sSnagBitVars, i);
+    {
+        if (!IsUncountedSpecies(sWotShadowLogSpecies[i]))
+            n += GetLogBit(sSnagBitVars, i);
+    }
     return n;
 }
 
@@ -234,8 +277,52 @@ u32 WotShadowLog_CountPurified(void)
     u32 i, n = 0;
 
     for (i = 0; i < WOT_SHADOW_LOG_COUNT; i++)
-        n += GetLogBit(sPureBitVars, i);
+    {
+        if (!IsUncountedSpecies(sWotShadowLogSpecies[i]))
+            n += GetLogBit(sPureBitVars, i);
+    }
     return n;
+}
+
+u32 WotShadowLog_CountedRows(void)
+{
+    u32 i, n = 0;
+
+    for (i = 0; i < WOT_SHADOW_LOG_COUNT; i++)
+        n += !IsUncountedSpecies(sWotShadowLogSpecies[i]);
+    return n;
+}
+
+bool32 WotShadowLog_SpeciesCounts(u16 species)
+{
+    return LogIndexOfSpecies(species) >= 0 && !IsUncountedSpecies(WotBaseSpeciesForShadow(species));
+}
+
+bool32 WotShadowLog_IsSpeciesSnagged(u16 species)
+{
+    s32 i = LogIndexOfSpecies(species);
+
+    return i >= 0 && GetLogBit(sSnagBitVars, i);
+}
+
+// Finished = every counted row snagged (purifying is optional).
+bool32 WotShadowLog_IsComplete(void)
+{
+    return WotShadowLog_CountSnagged() == WotShadowLog_CountedRows();
+}
+
+// Script bridges for the reward and the missed tower legends.
+// Shadow Arceus waits at Tower Top while the log is finished and its row is
+// still empty.
+void WotShadowLogArceusWaits(void)
+{
+    gSpecialVar_Result = WotShadowLog_IsComplete() && !WotShadowLog_IsSpeciesSnagged(SPECIES_ARCEUS);
+}
+
+// VAR_0x8004 = species.
+void WotShadowLogSpeciesSnagged(void)
+{
+    gSpecialVar_Result = WotShadowLog_IsSpeciesSnagged(gSpecialVar_0x8004);
 }
 
 // Continue-game migration: derive log bits from every mon the player holds.
@@ -310,6 +397,8 @@ static EWRAM_DATA struct ListMenuItem sRowItems[WOT_SHADOW_LOG_COUNT] = {0};
 static const u8 sText_StatusSnagged[]  = _("SNAGGED");
 static const u8 sText_StatusPurified[] = _("PURIFIED");
 static const u8 sText_StatusLoose[]    = _("LOOSE");
+static const u8 sText_StatusSealed[]   = _("SEALED");
+static const u8 sText_SealedName[]     = _("?????");
 static const u8 sText_WotShadowLogHeader[] = _("SHADOW LOG  SNAGGED ");
 static const u8 sText_WotShadowLogPure[]   = _("  PURE ");
 
@@ -319,32 +408,50 @@ static const u8 sText_WotShadowLogPure[]   = _("  PURE ");
 
 static void Task_WotShadowLogInput(u8 taskId);
 
-static void BuildRows(void)
+static u32 BuildRows(void)
 {
-    u32 i;
+    u32 i, n = 0;
 
     for (i = 0; i < WOT_SHADOW_LOG_COUNT; i++)
     {
+        u16 species = sWotShadowLogSpecies[i];
         bool32 snag = GetLogBit(sSnagBitVars, i);
         bool32 pure = GetLogBit(sPureBitVars, i);
-        u8 *p = sRowText[i];
+        u8 *p = sRowText[n];
 
+        // Cresselia is the log's secret: its row stays off the list until
+        // one is caught, in Emma's Rift Sanctum.
+        if (species == SPECIES_CRESSELIA && !snag)
+            continue;
         // Full roster is always visible; status shows the hunt state:
-        // LOOSE (still out there) -> SNAGGED -> PURIFIED.
-        p = StringCopy(p, GetSpeciesName(sWotShadowLogSpecies[i]));
-        while (p - sRowText[i] < 13)
-            *p++ = CHAR_SPACE;
-        *p = EOS;
-        if (pure)
-            p = StringCopy(p, sText_StatusPurified);
-        else if (snag)
-            p = StringCopy(p, sText_StatusSnagged);
+        // LOOSE (still out there) -> SNAGGED -> PURIFIED. The reward row reads
+        // ??? / SEALED until the rest of the log is done.
+        if (species == SPECIES_ARCEUS && !snag && !WotShadowLog_IsComplete())
+        {
+            p = StringCopy(p, sText_SealedName);
+            while (p - sRowText[n] < 13)
+                *p++ = CHAR_SPACE;
+            p = StringCopy(p, sText_StatusSealed);
+        }
         else
-            p = StringCopy(p, sText_StatusLoose);
+        {
+            p = StringCopy(p, GetSpeciesName(species));
+            while (p - sRowText[n] < 13)
+                *p++ = CHAR_SPACE;
+            *p = EOS;
+            if (pure)
+                p = StringCopy(p, sText_StatusPurified);
+            else if (snag)
+                p = StringCopy(p, sText_StatusSnagged);
+            else
+                p = StringCopy(p, sText_StatusLoose);
+        }
         *p = EOS;
-        sRowItems[i].name = sRowText[i];
-        sRowItems[i].id = i;
+        sRowItems[n].name = sRowText[n];
+        sRowItems[n].id = i;
+        n++;
     }
+    return n;
 }
 
 void WotShowShadowLog(void)
@@ -353,8 +460,7 @@ void WotShowShadowLog(void)
     struct Task *task = &gTasks[taskId];
     struct ListMenuTemplate listTemplate;
     u8 *hdr = gStringVar4;
-
-    BuildRows();
+    u32 rows = BuildRows();
 
     task->tHeaderWindowId = AddWindow(&sHeaderWindowTemplate);
     DrawStdWindowFrame(task->tHeaderWindowId, FALSE);
@@ -362,7 +468,7 @@ void WotShowShadowLog(void)
     hdr = StringCopy(hdr, sText_WotShadowLogHeader);
     hdr = ConvertIntToDecimalStringN(hdr, WotShadowLog_CountSnagged(), STR_CONV_MODE_LEFT_ALIGN, 2);
     *hdr++ = CHAR_SLASH;
-    hdr = ConvertIntToDecimalStringN(hdr, WOT_SHADOW_LOG_COUNT, STR_CONV_MODE_LEFT_ALIGN, 2);
+    hdr = ConvertIntToDecimalStringN(hdr, WotShadowLog_CountedRows(), STR_CONV_MODE_LEFT_ALIGN, 2);
     hdr = StringCopy(hdr, sText_WotShadowLogPure);
     hdr = ConvertIntToDecimalStringN(hdr, WotShadowLog_CountPurified(), STR_CONV_MODE_LEFT_ALIGN, 2);
     *hdr = EOS;
@@ -374,7 +480,7 @@ void WotShowShadowLog(void)
 
     listTemplate = gMultiuseListMenuTemplate;
     listTemplate.items = sRowItems;
-    listTemplate.totalItems = WOT_SHADOW_LOG_COUNT;
+    listTemplate.totalItems = rows;
     listTemplate.maxShowed = 7;
     listTemplate.windowId = task->tListWindowId;
     listTemplate.header_X = 0;

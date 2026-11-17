@@ -182,3 +182,22 @@ MoveTutor_AfterChooseBoxMon::
 	special CanTeachMoveBoxMon
 	waitstate
 	return
+
+@ Underground Arena (Shin-Tokyo): the title bout is fought on the maglev floor,
+@ where every Electric and Steel Pokemon floats and Ground moves miss them
+@ (src/wot_battle_rules.c). The announcer warns about it and teaches the
+@ counter, Gravity, as often as the player likes. Called from the announcer
+@ in data/maps/UndergroundArena/scripts.inc; kept here so the teachable-
+@ learnset generator picks Gravity up as a tutor move.
+UndergroundArena_EventScript_MaglevTutor::
+	msgbox UndergroundArena_Text_MaglevWarning, MSGBOX_DEFAULT
+	move_tutor MOVE_GRAVITY, UndergroundArena_Text_GravityTeach, UndergroundArena_Text_GravityWhichMon, UndergroundArena_EventScript_GravityDeclined, UndergroundArena_EventScript_GravityTaught
+	return
+
+UndergroundArena_EventScript_GravityDeclined::
+	msgbox UndergroundArena_Text_GravityDeclined, MSGBOX_DEFAULT
+	return
+
+UndergroundArena_EventScript_GravityTaught::
+	msgbox UndergroundArena_Text_GravityTaught, MSGBOX_DEFAULT
+	return

@@ -276,7 +276,7 @@ gSongTable::
 	song se_pike_curtain_close, MUSIC_PLAYER_SE1, 1
 	song se_pike_curtain_open, MUSIC_PLAYER_SE1, 1
 	song se_sudowoodo_shake, MUSIC_PLAYER_SE1, 1
-	song dummy_song_header, MUSIC_PLAYER_BGM, 0
+	song se_wot_shiny, MUSIC_PLAYER_SE1, 1
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0
 	song dummy_song_header, MUSIC_PLAYER_BGM, 0

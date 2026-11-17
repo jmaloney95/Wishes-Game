@@ -17,6 +17,7 @@
 #include "random.h"
 #include "recorded_battle.h"
 #include "util.h"
+#include "wot_mega_dimension.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_move_effects.h"
@@ -5187,7 +5188,7 @@ bool32 IsUnseenFistContactMove(enum BattlerId battlerAtk, enum BattlerId battler
 {
     if (move == MOVE_NONE || move == MOVE_UNAVAILABLE)
         return FALSE;
-    if (gAiLogicData->abilities[battlerAtk] != ABILITY_UNSEEN_FIST)
+    if (gAiLogicData->abilities[battlerAtk] != ABILITY_UNSEEN_FIST && gAiLogicData->abilities[battlerAtk] != ABILITY_PIERCING_DRILL)
         return FALSE;
     if (GetMoveEffect(move) == EFFECT_SHELL_SIDE_ARM)
     {
@@ -5223,6 +5224,11 @@ bool32 ShouldUseZMove(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum
         return FALSE;   // don't use z move on partner
     if (HasTrainerUsedGimmick(battlerAtk, GIMMICK_Z_MOVE))
         return FALSE;   // can't use z move twice
+
+    // WoT: a rift boss throws its Z-Move the first time it picks the move
+    // its set names for it.
+    if (WotMegaDim_IsRogueZMoveUser(battlerAtk) && IsViableZMove(battlerAtk, chosenMove))
+        return TRUE;
 
     if (IsViableZMove(battlerAtk, chosenMove))
     {
@@ -5839,6 +5845,7 @@ bool32 IsMoxieTypeAbility(enum Ability ability)
     {
     case ABILITY_MOXIE:
     case ABILITY_BEAST_BOOST:
+    case ABILITY_EELEVATE:
     case ABILITY_CHILLING_NEIGH:
     case ABILITY_AS_ONE_ICE_RIDER:
     case ABILITY_GRIM_NEIGH:

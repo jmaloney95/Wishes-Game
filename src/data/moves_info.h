@@ -21408,6 +21408,70 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .battleAnimScript = gBattleAnimMove_MalignantChain,
     },
 
+    // Wishes of Tomorrow: Gen X starter signature moves. Draft numbers
+    //; animations borrow stock moves.
+    [MOVE_OMEN_WAVE] =
+    {
+        .name = COMPOUND_STRING("Omen Wave"),
+        .description = COMPOUND_STRING(
+            "A foretold wave. Twice as\n"
+            "strong on a foe just sent in."),
+        .effect = EFFECT_OMEN_WAVE,
+        .power = 70,
+        .type = TYPE_WATER,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_SPECIAL,
+        .battleAnimScript = gBattleAnimMove_WaterPulse,
+    },
+
+    [MOVE_KOPI_RUSH] =
+    {
+        .name = COMPOUND_STRING("Kopi Rush"),
+        .description = COMPOUND_STRING(
+            "A caffeinated charge that\n"
+            "may raise the user's Speed."),
+        .effect = EFFECT_HIT,
+        .power = 80,
+        .type = TYPE_GRASS,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_SPD_PLUS_1,
+            .self = TRUE,
+            .chance = 30,
+        }),
+        .battleAnimScript = gBattleAnimMove_Trailblaze,
+    },
+
+    [MOVE_CALDERA_CRASH] =
+    {
+        .name = COMPOUND_STRING("Caldera Crash"),
+        .description = COMPOUND_STRING(
+            "Slams down like an eruption.\n"
+            "May leave the foe burned."),
+        .effect = EFFECT_HIT,
+        .power = 90,
+        .type = TYPE_GROUND,
+        .accuracy = 100,
+        .pp = 10,
+        .target = TARGET_SELECTED,
+        .priority = 0,
+        .category = DAMAGE_CATEGORY_PHYSICAL,
+        .makesContact = TRUE,
+        .additionalEffects = ADDITIONAL_EFFECTS({
+            .moveEffect = MOVE_EFFECT_BURN,
+            .chance = 20,
+        }),
+        .battleAnimScript = gBattleAnimMove_CalderaCrash,
+    },
+
     // Z-Moves
     [MOVE_BREAKNECK_BLITZ] =
     {

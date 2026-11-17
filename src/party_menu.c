@@ -69,6 +69,7 @@
 #include "trade.h"
 #include "union_room.h"
 #include "window.h"
+#include "wot_mega_dimension.h"
 #include "constants/battle.h"
 #include "constants/battle_frontier.h"
 #include "constants/field_effects.h"
@@ -150,6 +151,10 @@ enum {
     PARTY_BOX_LEFT_COLUMN,
     PARTY_BOX_RIGHT_COLUMN,
 };
+
+// WoT: the BW party screen's box, in tiles (every slot, both columns)
+#define PARTY_SLOT_WIDTH  14
+#define PARTY_SLOT_HEIGHT 5
 
 enum {
     TAG_POKEBALL = 1200,
@@ -332,9 +337,7 @@ static void PartyMenuDisplayYesNoMenu(void);
 static void Task_HandleCancelChooseMonYesNoInput(u8);
 static void Task_ReturnToChooseMonAfterText(u8);
 static void UpdateCurrentPartySelection(s8 *, s8);
-static void UpdatePartySelectionSingleLayout(s8 *, s8);
-static void UpdatePartySelectionDoubleLayout(s8 *, s8);
-static s8 GetNewSlotDoubleLayout(s8, s8);
+static void UpdatePartySelectionGrid(s8 *, s8);
 static void PrintMessage(const u8 *);
 static void Task_PrintAndWaitForText(u8);
 static bool16 IsMonAllowedInPokemonJump(struct Pokemon *);
@@ -464,8 +467,8 @@ static void Task_ChooseMonForMoveRelearner(u8);
 static void CB2_ChooseMonForMoveRelearner(void);
 static void Task_BattlePyramidChooseMonHeldItems(u8);
 static void ShiftMoveSlot(struct BoxPokemon *, u8, u8);
-static void BlitBitmapToPartyWindow_LeftColumn(u8, u8, u8, u8, u8, bool8);
-static void BlitBitmapToPartyWindow_RightColumn(u8, u8, u8, u8, u8, bool8);
+static void BlitBitmapToPartyWindow_Slot(u8, u8, u8, u8, u8, bool8);
+static void RestorePartyBoxRect(struct PartyMenuBox *, u32, u32, u32, u32, bool32);
 static void CursorCb_Summary(u8);
 static void CursorCb_Switch(u8);
 static void CursorCb_Cancel1(u8);
@@ -887,7 +890,12 @@ static bool8 AllocPartyMenuBg(void)
     ResetAllBgsCoordinates();
     ScheduleBgCopyTilemapToVram(1);
     SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_OBJ_1D_MAP);
-    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    // WoT (BW party screen): the boxes on BG0 are drawn translucent over the
+    // grid on BG1, as the BW patch's blend hook did. The showcase keeps the
+    // partner's boxes on BG2, so they blend too.
+    SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG1
+                               | (gPartyMenu.layout == PARTY_LAYOUT_MULTI_SHOWCASE ? BLDCNT_TGT1_BG2 : 0));
+    SetGpuReg(REG_OFFSET_BLDALPHA, BLDALPHA_BLEND(16, 8));
     ShowBg(0);
     ShowBg(1);
     ShowBg(2);
@@ -961,6 +969,9 @@ static void FreePartyPointers(void)
     if (sPartyMenuBoxes)
         Free(sPartyMenuBoxes);
     FreeAllWindowBuffers();
+    // Undo the BW box blend before whatever screen comes next.
+    SetGpuReg(REG_OFFSET_BLDCNT, 0);
+    SetGpuReg(REG_OFFSET_BLDALPHA, 0);
 }
 
 static void InitPartyMenuBoxes(u8 layout)
@@ -973,6 +984,8 @@ static void LoadPartyMenuBoxes(u8 layout)
 {
     u32 i;
 
+    // WoT (BW party screen): every slot is the same box, so there is no
+    // special left-column slot any more.
     for (i = 0; i < PARTY_SIZE; i++)
     {
         sPartyMenuBoxes[i].infoRects = &sPartyBoxInfoRects[PARTY_BOX_RIGHT_COLUMN];
@@ -983,13 +996,6 @@ static void LoadPartyMenuBoxes(u8 layout)
         sPartyMenuBoxes[i].pokeballSpriteId = SPRITE_NONE;
         sPartyMenuBoxes[i].statusSpriteId = SPRITE_NONE;
     }
-    // The first party mon goes in the left column
-    sPartyMenuBoxes[0].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
-
-    if (layout == PARTY_LAYOUT_MULTI_SHOWCASE)
-        sPartyMenuBoxes[3].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
-    else if (layout != PARTY_LAYOUT_SINGLE)
-        sPartyMenuBoxes[1].infoRects = &sPartyBoxInfoRects[PARTY_BOX_LEFT_COLUMN];
 }
 
 static void RenderPartyMenuBox(u8 slot)
@@ -1003,7 +1009,7 @@ static void RenderPartyMenuBox(u8 slot)
             LoadPartyBoxPalette(&sPartyMenuBoxes[slot], PARTY_PAL_MULTI_ALT);
         CopyWindowToVram(sPartyMenuBoxes[slot].windowId, COPYWIN_GFX);
         PutWindowTilemap(sPartyMenuBoxes[slot].windowId);
-        ScheduleBgCopyTilemapToVram(2);
+        ScheduleBgCopyTilemapToVram(2); // the partner's boxes stay on BG2 to slide in
     }
     else if (gPlayerPartyCount != 0)
     {
@@ -1268,8 +1274,8 @@ static void CreateCancelConfirmPokeballSprites(void)
 {
     if (gPartyMenu.menuType == PARTY_MENU_TYPE_MULTI_SHOWCASE)
     {
-        // The showcase has no Cancel/Confirm buttons
-        FillBgTilemapBufferRect(1, 14, 23, 17, 7, 2, 1);
+        // The showcase has no Cancel/Confirm buttons (tile 9 is the BW art's plain fill)
+        FillBgTilemapBufferRect(1, 9, 23, 17, 7, 2, 1);
     }
     else
     {
@@ -1738,12 +1744,8 @@ static u16 PartyMenuButtonHandler(s8 *slotPtr)
 static void UpdateCurrentPartySelection(s8 *slotPtr, s8 movementDir)
 {
     s8 newSlotId = *slotPtr;
-    u8 layout = gPartyMenu.layout;
 
-    if (layout == PARTY_LAYOUT_SINGLE)
-        UpdatePartySelectionSingleLayout(slotPtr, movementDir);
-    else
-        UpdatePartySelectionDoubleLayout(slotPtr, movementDir);
+    UpdatePartySelectionGrid(slotPtr, movementDir);
 
     if (*slotPtr != newSlotId)
     {
@@ -1753,178 +1755,110 @@ static void UpdateCurrentPartySelection(s8 *slotPtr, s8 movementDir)
     }
 }
 
-static void UpdatePartySelectionSingleLayout(s8 *slotPtr, s8 movementDir)
+// WoT (BW party screen): the six boxes form a 2x3 grid (sPartySlotGridPos).
+// Up/down stay in the column and run on to Cancel/Confirm past the ends;
+// left/right cross to the box level with this one in the other column, else
+// the nearest one with a Pokemon above it, else below it.
+static bool32 IsPartySlotSelectable(s32 slot)
 {
-    // PARTY_SIZE + 1 is Cancel, PARTY_SIZE is Confirm
-    switch (movementDir)
-    {
-    case MENU_DIR_UP:
-        if (*slotPtr == 0)
-        {
-            *slotPtr = PARTY_SIZE + 1;
-        }
-        else if (*slotPtr == PARTY_SIZE)
-        {
-            *slotPtr = gPlayerPartyCount - 1;
-        }
-        else if (*slotPtr == PARTY_SIZE + 1)
-        {
-            if (sPartyMenuInternal->chooseHalf)
-                *slotPtr = PARTY_SIZE;
-            else
-                *slotPtr = gPlayerPartyCount - 1;
-        }
-        else
-        {
-            (*slotPtr)--;
-        }
-        break;
-    case MENU_DIR_DOWN:
-        if (*slotPtr == PARTY_SIZE + 1)
-        {
-            *slotPtr = 0;
-        }
-        else
-        {
-            if (*slotPtr == gPlayerPartyCount - 1)
-            {
-                if (sPartyMenuInternal->chooseHalf)
-                    *slotPtr = PARTY_SIZE;
-                else
-                    *slotPtr = PARTY_SIZE + 1;
-            }
-            else
-            {
-                (*slotPtr)++;
-            }
-        }
-        break;
-    case MENU_DIR_RIGHT:
-        if (gPlayerPartyCount != 1 && *slotPtr == 0)
-        {
-            if (sPartyMenuInternal->lastSelectedSlot == 0)
-                *slotPtr = 1;
-            else
-                *slotPtr = sPartyMenuInternal->lastSelectedSlot;
-        }
-        break;
-    case MENU_DIR_LEFT:
-        if (*slotPtr != 0 && *slotPtr != PARTY_SIZE && *slotPtr != PARTY_SIZE + 1)
-        {
-            sPartyMenuInternal->lastSelectedSlot = *slotPtr;
-            *slotPtr = 0;
-        }
-        break;
-    }
+    if (slot < 0 || slot >= PARTY_SIZE)
+        return FALSE;
+    if (gPartyMenu.layout == PARTY_LAYOUT_SINGLE)
+        return slot < gPlayerPartyCount;
+    return GetMonData(&gPlayerParty[slot], MON_DATA_SPECIES) != SPECIES_NONE;
 }
 
-static void UpdatePartySelectionDoubleLayout(s8 *slotPtr, s8 movementDir)
+static s32 GetPartySlotAtGridPos(u32 column, s32 row)
+{
+    u32 i;
+
+    for (i = 0; i < PARTY_SIZE; i++)
+    {
+        if (sPartySlotGridPos[gPartyMenu.layout][i][0] == column
+         && sPartySlotGridPos[gPartyMenu.layout][i][1] == row)
+            return i;
+    }
+    return -1;
+}
+
+// The first selectable box in the column from row on, stepping by rowStep; -1 if none
+static s32 FindPartySlotInColumn(u32 column, s32 row, s32 rowStep)
+{
+    for (; row >= 0 && row < PARTY_SIZE / 2; row += rowStep)
+    {
+        s32 slot = GetPartySlotAtGridPos(column, row);
+        if (IsPartySlotSelectable(slot))
+            return slot;
+    }
+    return -1;
+}
+
+static s32 GetLastSelectablePartySlot(void)
+{
+    s32 i;
+
+    for (i = PARTY_SIZE - 1; i > 0; i--)
+    {
+        if (IsPartySlotSelectable(i))
+            return i;
+    }
+    return 0;
+}
+
+static void UpdatePartySelectionGrid(s8 *slotPtr, s8 movementDir)
 {
     // PARTY_SIZE + 1 is Cancel, PARTY_SIZE is Confirm
-    // newSlot is used temporarily as a movement direction during its later assignment
-    s8 newSlot = movementDir;
+    s32 slot = *slotPtr;
+    s32 newSlot;
+    u32 column;
+    s32 row;
 
+    if (slot == PARTY_SIZE || slot == PARTY_SIZE + 1)
+    {
+        if (movementDir == MENU_DIR_UP)
+        {
+            if (slot == PARTY_SIZE + 1 && sPartyMenuInternal->chooseHalf)
+                *slotPtr = PARTY_SIZE;
+            else
+                *slotPtr = GetLastSelectablePartySlot();
+        }
+        else if (movementDir == MENU_DIR_DOWN)
+        {
+            if (slot == PARTY_SIZE)
+                *slotPtr = PARTY_SIZE + 1;
+            else
+                *slotPtr = 0;
+        }
+        return;
+    }
+
+    column = sPartySlotGridPos[gPartyMenu.layout][slot][0];
+    row = sPartySlotGridPos[gPartyMenu.layout][slot][1];
     switch (movementDir)
     {
     case MENU_DIR_UP:
-        if (*slotPtr == 0)
-        {
+        newSlot = FindPartySlotInColumn(column, row - 1, -1);
+        *slotPtr = (newSlot != -1) ? newSlot : PARTY_SIZE + 1;
+        break;
+    case MENU_DIR_DOWN:
+        newSlot = FindPartySlotInColumn(column, row + 1, 1);
+        if (newSlot != -1)
+            *slotPtr = newSlot;
+        else if (sPartyMenuInternal->chooseHalf)
+            *slotPtr = PARTY_SIZE;
+        else
             *slotPtr = PARTY_SIZE + 1;
-            break;
-        }
-        else if (*slotPtr == PARTY_SIZE)
-        {
-            *slotPtr = gPlayerPartyCount - 1;
-            break;
-        }
-        else if (*slotPtr == PARTY_SIZE + 1)
-        {
-            if (sPartyMenuInternal->chooseHalf)
-            {
-                *slotPtr = PARTY_SIZE;
-                break;
-            }
-            (*slotPtr)--;
-        }
-        newSlot = GetNewSlotDoubleLayout(*slotPtr, newSlot);
+        break;
+    case MENU_DIR_LEFT:
+    case MENU_DIR_RIGHT:
+        if ((movementDir == MENU_DIR_RIGHT) != (column == 0))
+            break; // already in that column
+        newSlot = FindPartySlotInColumn(column ^ 1, row, -1);
+        if (newSlot == -1)
+            newSlot = FindPartySlotInColumn(column ^ 1, row + 1, 1);
         if (newSlot != -1)
             *slotPtr = newSlot;
         break;
-    case MENU_DIR_DOWN:
-        if (*slotPtr == PARTY_SIZE)
-        {
-            *slotPtr = PARTY_SIZE + 1;
-        }
-        else if (*slotPtr == PARTY_SIZE + 1)
-        {
-            *slotPtr = 0;
-        }
-        else
-        {
-            newSlot = GetNewSlotDoubleLayout(*slotPtr, MENU_DIR_DOWN);
-            if (newSlot == -1)
-            {
-                if (sPartyMenuInternal->chooseHalf)
-                    *slotPtr = PARTY_SIZE;
-                else
-                    *slotPtr = PARTY_SIZE + 1;
-            }
-            else
-            {
-                *slotPtr = newSlot;
-            }
-        }
-        break;
-    case MENU_DIR_RIGHT:
-        if (*slotPtr == 0)
-        {
-            if (sPartyMenuInternal->lastSelectedSlot == 3)
-            {
-                if (GetMonData(&gPlayerParty[3], MON_DATA_SPECIES) != SPECIES_NONE)
-                    *slotPtr = 3;
-            }
-            else if (GetMonData(&gPlayerParty[2], MON_DATA_SPECIES) != SPECIES_NONE)
-            {
-                *slotPtr = 2;
-            }
-        }
-        else if (*slotPtr == 1)
-        {
-            if (sPartyMenuInternal->lastSelectedSlot == 5)
-            {
-                if (GetMonData(&gPlayerParty[5], MON_DATA_SPECIES) != SPECIES_NONE)
-                    *slotPtr = 5;
-            }
-            else if (GetMonData(&gPlayerParty[4], MON_DATA_SPECIES) != SPECIES_NONE)
-            {
-                *slotPtr = 4;
-            }
-        }
-        break;
-    case MENU_DIR_LEFT:
-        if (*slotPtr == 2 || *slotPtr == 3)
-        {
-            sPartyMenuInternal->lastSelectedSlot = *slotPtr;
-            *slotPtr = 0;
-        }
-        else if (*slotPtr == 4 || *slotPtr == 5)
-        {
-            sPartyMenuInternal->lastSelectedSlot = *slotPtr;
-            *slotPtr = 1;
-        }
-        break;
-    }
-}
-
-static s8 GetNewSlotDoubleLayout(s8 slotId, s8 movementDir)
-{
-    while (TRUE)
-    {
-        slotId += movementDir;
-        if ((u8)slotId >= PARTY_SIZE)
-            return -1;
-        if (GetMonData(&gPlayerParty[slotId], MON_DATA_SPECIES) != SPECIES_NONE)
-            return slotId;
     }
 }
 
@@ -2379,35 +2313,47 @@ static void BlitBitmapToPartyWindow(u8 windowId, const u8 *b, u8 c, u8 x, u8 y, 
     }
 }
 
-static void BlitBitmapToPartyWindow_LeftColumn(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
+static void BlitBitmapToPartyWindow_Slot(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
 {
     if (width == 0 && height == 0)
     {
-        width = 10;
-        height = 7;
+        width = PARTY_SLOT_WIDTH;
+        height = PARTY_SLOT_HEIGHT;
     }
     if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Main, 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Wide, PARTY_SLOT_WIDTH, x, y, width, height);
     else
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_MainNoHP, 10, x, y, width, height);
+        BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideNoHP, PARTY_SLOT_WIDTH, x, y, width, height);
 }
 
-static void BlitBitmapToPartyWindow_RightColumn(u8 windowId, u8 x, u8 y, u8 width, u8 height, bool8 hideHP)
+// WoT (BW party screen): the box text sits off the tile grid, so a field is
+// redrawn by copying back exactly its pixel rect of the box art (the BW patch
+// hooked a pixel blit in for the same reason). Clipped to the box.
+static void RestorePartyBoxRect(struct PartyMenuBox *menuBox, u32 x, u32 y, u32 width, u32 height, bool32 hideHP)
 {
-    if (width == 0 && height == 0)
-    {
-        width = 18;
-        height = 3;
-    }
-    if (hideHP == FALSE)
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_Wide, 18, x, y, width, height);
-    else
-        BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideNoHP, 18, x, y, width, height);
+    const u8 *tilemap = hideHP ? sSlotTilemap_WideNoHP : sSlotTilemap_Wide;
+    u8 *pixels;
+    u32 i;
+
+    if (x >= PARTY_SLOT_WIDTH * 8 || y >= PARTY_SLOT_HEIGHT * 8)
+        return;
+    if (x + width > PARTY_SLOT_WIDTH * 8)
+        width = PARTY_SLOT_WIDTH * 8 - x;
+    if (y + height > PARTY_SLOT_HEIGHT * 8)
+        height = PARTY_SLOT_HEIGHT * 8 - y;
+
+    pixels = Alloc(PARTY_SLOT_WIDTH * PARTY_SLOT_HEIGHT * TILE_SIZE_4BPP);
+    if (pixels == NULL)
+        return;
+    for (i = 0; i < PARTY_SLOT_WIDTH * PARTY_SLOT_HEIGHT; i++)
+        CpuCopy16(GetPartyMenuBgTile(tilemap[i]), &pixels[i * TILE_SIZE_4BPP], TILE_SIZE_4BPP);
+    BlitBitmapRectToWindow(menuBox->windowId, pixels, x, y, PARTY_SLOT_WIDTH * 8, PARTY_SLOT_HEIGHT * 8, x, y, width, height);
+    Free(pixels);
 }
 
 static void DrawEmptySlot(u8 windowId)
 {
-    BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideEmpty, 18, 0, 0, 18, 3);
+    BlitBitmapToPartyWindow(windowId, sSlotTilemap_WideEmpty, PARTY_SLOT_WIDTH, 0, 0, PARTY_SLOT_WIDTH, PARTY_SLOT_HEIGHT);
 }
 
 #define LOAD_PARTY_BOX_PAL(paletteIds, paletteOffsets)                                                    \
@@ -2511,7 +2457,7 @@ static void DisplayPartyPokemonNickname(struct Pokemon *mon, struct PartyMenuBox
     if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
     {
         if (c == 1)
-            menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[0] >> 3, menuBox->infoRects->dimensions[1] >> 3, menuBox->infoRects->dimensions[2] >> 3, menuBox->infoRects->dimensions[3] >> 3, FALSE);
+            RestorePartyBoxRect(menuBox, menuBox->infoRects->dimensions[0], menuBox->infoRects->dimensions[1], menuBox->infoRects->dimensions[2], menuBox->infoRects->dimensions[3], FALSE);
         GetMonNickname(mon, nickname);
         DisplayPartyPokemonBarDetailToFit(menuBox->windowId, nickname, 0, menuBox->infoRects->dimensions, 50);
     }
@@ -2525,7 +2471,7 @@ static void DisplayPartyPokemonLevelCheck(struct Pokemon *mon, struct PartyMenuB
         if (ailment == AILMENT_NONE || ailment == AILMENT_PKRS)
         {
             if (c != 0)
-                menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[4] >> 3, (menuBox->infoRects->dimensions[5] >> 3) + 1, menuBox->infoRects->dimensions[6] >> 3, menuBox->infoRects->dimensions[7] >> 3, FALSE);
+                RestorePartyBoxRect(menuBox, menuBox->infoRects->dimensions[4], menuBox->infoRects->dimensions[5], menuBox->infoRects->dimensions[6], menuBox->infoRects->dimensions[7], FALSE);
             if (c != 2)
                 DisplayPartyPokemonLevel(GetMonData(mon, MON_DATA_LEVEL), menuBox);
         }
@@ -2545,7 +2491,7 @@ static void DisplayPartyPokemonGenderNidoranCheck(struct Pokemon *mon, struct Pa
     u8 nickname[POKEMON_NAME_LENGTH + 1];
 
     if (c == 1)
-        menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[8] >> 3, (menuBox->infoRects->dimensions[9] >> 3) + 1, menuBox->infoRects->dimensions[10] >> 3, menuBox->infoRects->dimensions[11] >> 3, FALSE);
+        RestorePartyBoxRect(menuBox, menuBox->infoRects->dimensions[8], menuBox->infoRects->dimensions[9], menuBox->infoRects->dimensions[10], menuBox->infoRects->dimensions[11], FALSE);
     GetMonNickname(mon, nickname);
     DisplayPartyPokemonGender(GetMonGender(mon), GetMonData(mon, MON_DATA_SPECIES), nickname, menuBox);
 }
@@ -2578,7 +2524,7 @@ static void DisplayPartyPokemonHPCheck(struct Pokemon *mon, struct PartyMenuBox 
     if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
     {
         if (c != 0)
-            menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->dimensions[12] >> 3, (menuBox->infoRects->dimensions[13] >> 3) + 1, menuBox->infoRects->dimensions[14] >> 3, menuBox->infoRects->dimensions[15] >> 3, FALSE);
+            RestorePartyBoxRect(menuBox, menuBox->infoRects->dimensions[12], menuBox->infoRects->dimensions[13], menuBox->infoRects->dimensions[14], menuBox->infoRects->dimensions[15], FALSE);
         if (c != 2)
             DisplayPartyPokemonHP(GetMonData(mon, MON_DATA_HP), GetMonData(mon, MON_DATA_MAX_HP), menuBox);
     }
@@ -2612,7 +2558,7 @@ static void DisplayPartyPokemonMaxHPCheck(struct Pokemon *mon, struct PartyMenuB
     if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_NONE)
     {
         if (c != 0)
-            menuBox->infoRects->blitFunc(menuBox->windowId, (menuBox->infoRects->dimensions[16] >> 3) + 1, (menuBox->infoRects->dimensions[17] >> 3) + 1, menuBox->infoRects->dimensions[18] >> 3, menuBox->infoRects->dimensions[19] >> 3, FALSE);
+            RestorePartyBoxRect(menuBox, menuBox->infoRects->dimensions[16], menuBox->infoRects->dimensions[17], menuBox->infoRects->dimensions[18], menuBox->infoRects->dimensions[19], FALSE);
         if (c != 2)
             DisplayPartyPokemonMaxHP(GetMonData(mon, MON_DATA_MAX_HP), menuBox);
     }
@@ -2675,11 +2621,7 @@ static void DisplayPartyPokemonHPBar(u16 hp, u16 maxhp, struct PartyMenuBox *men
 static void DisplayPartyPokemonDescriptionText(u8 stringID, struct PartyMenuBox *menuBox, u8 c)
 {
     if (c)
-    {
-        int width = ((menuBox->infoRects->descTextLeft % 8) + menuBox->infoRects->descTextWidth + 7) / 8;
-        int height = ((menuBox->infoRects->descTextTop % 8) + menuBox->infoRects->descTextHeight + 7) / 8;
-        menuBox->infoRects->blitFunc(menuBox->windowId, menuBox->infoRects->descTextLeft >> 3, menuBox->infoRects->descTextTop >> 3, width, height, TRUE);
-    }
+        RestorePartyBoxRect(menuBox, menuBox->infoRects->descTextLeft, menuBox->infoRects->descTextTop, menuBox->infoRects->descTextWidth, menuBox->infoRects->descTextHeight, TRUE);
     if (c != 2)
         AddTextPrinterParameterized3(menuBox->windowId, FONT_NORMAL, menuBox->infoRects->descTextLeft, menuBox->infoRects->descTextTop, sFontColorTable[0], 0, sDescriptionStringTable[stringID]);
 }
@@ -2776,7 +2718,7 @@ static u8 DisplaySelectionWindow(u8 windowType)
     switch (windowType)
     {
     case SELECTWINDOW_ACTIONS:
-        SetWindowTemplateFields(&window, 2, 19, 19 - (sPartyMenuInternal->numActions * 2), 10, sPartyMenuInternal->numActions * 2, 14, 0x2E9);
+        SetWindowTemplateFields(&window, 2, 19, 19 - (sPartyMenuInternal->numActions * 2), 10, sPartyMenuInternal->numActions * 2, 14, 0x30D); // WoT: menus start past the BW slots (see party_menu.h)
         break;
     case SELECTWINDOW_ITEM:
         window = sItemGiveTakeWindowTemplate;
@@ -3142,7 +3084,8 @@ static void SwitchSelectedMons(u8 taskId)
         tSlot1Width = GetWindowAttribute(windowIds[0], WINDOW_WIDTH);
         tSlot1Height = GetWindowAttribute(windowIds[0], WINDOW_HEIGHT);
         tSlot1Offset = 0;
-        if (tSlot1Width == 10)
+        // WoT: BW boxes are all 14 wide; the left column slides out left, the right column right
+        if (tSlot1Left * 8 < DISPLAY_WIDTH / 2)
             tSlot1SlideDir = -1;
         else
             tSlot1SlideDir = 1;
@@ -3152,7 +3095,8 @@ static void SwitchSelectedMons(u8 taskId)
         tSlot2Width = GetWindowAttribute(windowIds[1], WINDOW_WIDTH);
         tSlot2Height = GetWindowAttribute(windowIds[1], WINDOW_HEIGHT);
         tSlot2Offset = 0;
-        if (tSlot2Width == 10)
+        // WoT: BW boxes are all 14 wide; the left column slides out left, the right column right
+        if (tSlot2Left * 8 < DISPLAY_WIDTH / 2)
             tSlot2SlideDir = -1;
         else
             tSlot2SlideDir = 1;
@@ -3238,20 +3182,26 @@ static void SlidePartyMenuBoxOneStep(u8 taskId)
     ScheduleBgCopyTilemapToVram(0);
 }
 
+// WoT: a box has slid off once it has fully left the 32-tile tilemap. Vanilla
+// compared the u16 position against 33, which let a left-column box count as
+// gone a tile after it started moving.
+static bool32 IsPartySlotOffscreen(s16 x, s16 width)
+{
+    return x + width <= 0 || x >= 32;
+}
+
 static void Task_SlideSelectedSlotsOffscreen(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
-    u16 slidingSlotPositions[2];
 
     SlidePartyMenuBoxOneStep(taskId);
     SlidePartyMenuBoxSpritesOneStep(taskId);
     tSlot1Offset += tSlot1SlideDir;
     tSlot2Offset += tSlot2SlideDir;
-    slidingSlotPositions[0] = tSlot1Left + tSlot1Offset;
-    slidingSlotPositions[1] = tSlot2Left + tSlot2Offset;
 
     // Both slots have slid offscreen
-    if (slidingSlotPositions[0] > 33 && slidingSlotPositions[1] > 33)
+    if (IsPartySlotOffscreen(tSlot1Left + tSlot1Offset, tSlot1Width)
+     && IsPartySlotOffscreen(tSlot2Left + tSlot2Offset, tSlot2Width))
     {
         tSlot1SlideDir *= -1;
         tSlot2SlideDir *= -1;
@@ -7646,7 +7596,11 @@ static bool8 TrySwitchInPokemon(void)
     // In a multi battle, slots 1, 4, and 5 are the partner's Pokémon
     if (IsMultiBattle() == TRUE && (slot == 1 || slot == 4 || slot == 5))
     {
-        StringCopy(gStringVar1, GetTrainerPartnerName());
+        // WoT: choosing for a Mega Dimension partner, the "ally" is the player.
+        if (WotMegaDim_IsControlledPartner(gBattlerInMenuId))
+            StringCopy(gStringVar1, gSaveBlock2Ptr->playerName);
+        else
+            StringCopy(gStringVar1, GetTrainerPartnerName());
         StringExpandPlaceholders(gStringVar4, gText_CantSwitchWithAlly);
         return FALSE;
     }

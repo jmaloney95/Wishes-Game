@@ -15,5 +15,8 @@ void Script_GetChosenMonDefensiveIVs(void);
 void SetSeafloorGyaradosShiny(void);
 u16 CheckPlayerHasRedGyarados(void);
 u16 TakeRedGyaradosFromPlayer(void);
+#ifdef WOT_TESTER
+u32 WotTester_GiveMon(u16 species, u8 level, enum Item item, enum Move firstMove, bool32 shiny);
+#endif
 
 #endif // GUARD_SCRIPT_POKEMON_UTIL_H

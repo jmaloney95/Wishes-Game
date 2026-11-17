@@ -164,6 +164,7 @@ DistortionRift_EventScript_InvertOff::
 @ arrival point tracks each layer's entrance warp wherever it is moved in
 @ Porymap -- no coordinates to keep in sync.
 DistortionWorld_2_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
 	clearflag FLAG_DW_INVERTED
 	clearflag FLAG_DW_INVERT_PENDING
 	goto_if_eq VAR_DISTORTION_RIFT_DEPTH, 2, DistortionWorld_2_OnTransition_CaveToLayer4
@@ -390,3 +391,64 @@ DistortionWorld_2_Text_SeamHint::
 	.string "your hip.\p"
 	.string "When you want out, call the\n"
 	.string "ghost-road. Kekeke.$"
+
+@ ----------------------------------------------------------------------------
+@  The cave used to jump straight to the deepest
+@  unlocked layer, so items left in a cleared layer were lost for good. The
+@  cave tile (25,5) now has a coord event (it runs before the warp on the same
+@  tile): with more than one layer open, the player picks one. B steps back
+@  out. The MAP_DYNAMIC warp stays as the layers' return point (warp id 1).
+@ ----------------------------------------------------------------------------
+DistortionWorld_2_EventScript_CaveChoice::
+	lockall
+	goto_if_lt VAR_DISTORTION_RIFT_DEPTH, 2, DistortionWorld_2_EventScript_CaveToLayer3
+	message DistortionWorld_2_Text_RiftBranches
+	waitmessage
+	goto_if_ge VAR_DISTORTION_RIFT_DEPTH, 3, DistortionWorld_2_EventScript_CaveChoiceThree
+	dynmultichoice 0, 0, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE, DistortionWorld_2_Text_Layer3, DistortionWorld_2_Text_Layer4
+	goto DistortionWorld_2_EventScript_CaveChoiceResult
+
+DistortionWorld_2_EventScript_CaveChoiceThree::
+	dynmultichoice 0, 0, FALSE, 3, 0, DYN_MULTICHOICE_CB_NONE, DistortionWorld_2_Text_Layer3, DistortionWorld_2_Text_Layer4, DistortionWorld_2_Text_Layer5
+DistortionWorld_2_EventScript_CaveChoiceResult::
+	closemessage
+	switch VAR_RESULT
+	case 0, DistortionWorld_2_EventScript_CaveToLayer3
+	case 1, DistortionWorld_2_EventScript_CaveToLayer4
+	case 2, DistortionWorld_2_EventScript_CaveToLayer5
+	applymovement OBJ_EVENT_ID_PLAYER, DistortionWorld_2_Movement_StepOutOfCave
+	waitmovement 0
+	releaseall
+	end
+
+DistortionWorld_2_EventScript_CaveToLayer3::
+	warp MAP_DISTORTION_WORLD_3, 0
+	waitstate
+	end
+
+DistortionWorld_2_EventScript_CaveToLayer4::
+	warp MAP_DISTORTION_WORLD_4, 0
+	waitstate
+	end
+
+DistortionWorld_2_EventScript_CaveToLayer5::
+	warp MAP_DISTORTION_WORLD_5, 0
+	waitstate
+	end
+
+DistortionWorld_2_Movement_StepOutOfCave:
+	walk_down
+	step_end
+
+DistortionWorld_2_Text_RiftBranches:
+	.string "The rift branches into the dark.\n"
+	.string "Which layer?$"
+
+DistortionWorld_2_Text_Layer3:
+	.string "LAYER 3$"
+
+DistortionWorld_2_Text_Layer4:
+	.string "LAYER 4$"
+
+DistortionWorld_2_Text_Layer5:
+	.string "LAYER 5$"

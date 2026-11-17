@@ -5,8 +5,14 @@
 	.set LOCALID_STARSUMMIT_GOON_TOP2, 5
 
 StarSummit_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, StarSummit_OnTransition
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, StarSummit_OnFrame
 	.byte 0
+
+@ Post-game the masked leader and his goons are gone from the summit.
+StarSummit_OnTransition:
+	call Common_EventScript_WotPostGameMutridsGone
+	end
 
 @ Setting foot on the summit at all completes the Act 1 main quest -- fires
 @ once per map entry (VAR_TEMP_1) and only while the quest is still active,

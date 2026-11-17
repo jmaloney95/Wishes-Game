@@ -872,8 +872,9 @@ MauvilleCity_GameCorner_Text_CantWinJackpot:
 MauvilleCity_GameCorner_Text_NeedCoinCaseGoNextDoor:
 	.string "Hey, kid, if you want to play here,\n"
 	.string "you need a COIN CASE.\p"
-	.string "I think the young lady next door\n"
-	.string "had one. Go see her!$"
+	.string "Try digging through the garbage can.\n"
+	.string "Someone probably tossed one in there.\p"
+	.string "Must've been down on their luck.$"
 
 MauvilleCity_GameCorner_Text_LuckOnlyLastSoLongTakeCoins:
 	.string "My luck can only last so long.\n"

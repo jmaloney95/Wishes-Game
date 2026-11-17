@@ -19,6 +19,25 @@ u16 WotShadowPicSpeciesAt(u32 index)
     return sWotShadowPics[index].species;
 }
 
+const u16 *WotShadowPicPal(const struct WotShadowPic *art, bool32 isShiny)
+{
+    return (isShiny && art->shinyPal != NULL) ? art->shinyPal : art->pal;
+}
+
+bool32 WotShadowKeepsOwnArt(u16 species)
+{
+#if P_FAMILY_DEOXYS && P_MEGA_EVOLUTIONS
+    if (species == SPECIES_DEOXYS_MEGA)
+        return TRUE;
+#endif
+    // Tulip's sanctum legend: its Mega art, untinted.
+#if P_FAMILY_DARKRAI && P_GEN_9_MEGA_EVOLUTIONS
+    if (species == SPECIES_DARKRAI_MEGA)
+        return TRUE;
+#endif
+    return FALSE;
+}
+
 const struct WotShadowPic *WotFindShadowPic(u16 species)
 {
     u32 i;

@@ -28,7 +28,16 @@
 #define QUEST_STOP_THE_MACHINE           9  // MAIN - Act 3 main line: purify, then tear out the Shadow Generator's heart
 #define SIDE_QUEST_HARNESS_DARKNESS     10  // Side - snag Mutrid's Shadow Pokemon with the stolen Snag Machine (starts at the first jail squad)
 #define SIDE_QUEST_MINISTERS_FAVOR      11  // Side - the Minister opened the jail; find out what his mercy costs
-#define QUEST_COUNT                     12
+#define QUEST_MEGA_DOOMSDAY             12  // MAIN (DLC) - the Mega Dimension: Lida and Canari's research
+#define QUEST_TWO_MINUTES               13  // MAIN (DLC) - Mable's tally: the stones of all 19 rogue Megas
+#define QUEST_PRIMAL_SIGNATURES         14  // MAIN (DLC) - catch Primal Groudon and Primal Kyogre in the portals
+#define QUEST_SKY_HIGH_MEGA             15  // MAIN (DLC) - catch Mega Rayquaza in a portal
+#define QUEST_TWO_HEARTS                16  // SECRET (DLC) - a portal run with a partner; "??????" until done
+#define QUEST_INTO_THE_RIFT             17  // MAIN - go deeper into the Distortion World with Clarkson's Gengar (ends on the Distortion Badge)
+#define QUEST_ORDER_IN_THE_RIFTS        18  // MAIN (DLC) - the Odd Pebble and the Zygarde Cells
+#define QUEST_THE_LONG_STAY             19  // MAIN (DLC) - what's draining the gray world
+#define QUEST_BREAK_TIMES_OVER          20  // Side - take RedFatality his Epic Pass so the Frostwood Gym reopens
+#define QUEST_COUNT                     21
 
 // No subquests yet; the parked purification line (one subquest per shadow
 // legendary) will use these when it is unparked.

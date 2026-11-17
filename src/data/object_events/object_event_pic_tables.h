@@ -317,6 +317,66 @@ static const struct SpriteFrameImage sPicTable_WotVictor[] = {
     overworld_ascending_frames(gObjectEventPic_WotVictor, 2, 4),
 };
 
+static const struct SpriteFrameImage sPicTable_ZaEmma[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaEmma, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaCanari[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaCanari, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaValerie[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaValerie, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaTulip[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaTulip, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaMable[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaMable, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaTaunie[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaTaunie, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaLida[] = {
+    overworld_ascending_frames(gObjectEventPic_ZaLida, 4, 4),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBarrierSurge[] = {
+    overworld_frame(gObjectEventPic_WotBarrierSurge, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBarrierTimefreeze[] = {
+    overworld_frame(gObjectEventPic_WotBarrierTimefreeze, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBarrierIllusion[] = {
+    overworld_frame(gObjectEventPic_WotBarrierIllusion, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBarrierLifeline[] = {
+    overworld_frame(gObjectEventPic_WotBarrierLifeline, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBarrierBreakthrough[] = {
+    overworld_frame(gObjectEventPic_WotBarrierBreakthrough, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotBarrierDash[] = {
+    overworld_frame(gObjectEventPic_WotBarrierDash, 4, 4, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_ZaAz[] = {
+    overworld_frame(gObjectEventPic_ZaAz, 8, 8, 0),
+};
+
+static const struct SpriteFrameImage sPicTable_WotZygardeCell[] = {
+    overworld_frame(gObjectEventPic_WotZygardeCell, 2, 2, 0),
+};
+
 
 static const struct SpriteFrameImage sPicTable_WotShadowJirachi[] = {
     overworld_frame(gObjectEventPic_WotShadowJirachi, 4, 4, 0),
@@ -473,7 +533,7 @@ static const struct SpriteFrameImage sPicTable_CuttableTree[] = {
 };
 
 static const struct SpriteFrameImage sPicTable_ItemCarvedMask[] = {
-    overworld_ascending_frames(gObjectEventPic_ItemCarvedMask, 2, 2),
+    overworld_frame(gObjectEventPic_ItemCarvedMask, 4, 4, 0),
 };
 
 static const struct SpriteFrameImage sPicTable_ItemCatalpaBow[] = {
@@ -494,6 +554,9 @@ static const struct SpriteFrameImage sPicTable_ItemBaxcalibrite[] = {
 
 static const struct SpriteFrameImage sPicTable_ItemGyaradosite[] = {
     overworld_ascending_frames(gObjectEventPic_ItemGyaradosite, 2, 2),
+};
+static const struct SpriteFrameImage sPicTable_ItemHaxorite[] = {
+    overworld_ascending_frames(gObjectEventPic_ItemHaxorite, 2, 2),
 };
 
 static const struct SpriteFrameImage sPicTable_MartEmployee[] = {
@@ -3199,6 +3262,33 @@ static const struct SpriteFrameImage sPicTable_WotLeaderScreen[] = {
 static const struct SpriteFrameImage sPicTable_WotWantedPoster[] = {
     overworld_frame(gObjectEventPic_WotWantedPoster, 8, 8, 0),
     overworld_frame(gObjectEventPic_WotWantedPoster, 8, 8, 1),
+};
+
+static const struct SpriteFrameImage sPicTable_WotHotelZSign[] = {
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 0),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 1),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 2),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 3),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 4),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 5),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 6),
+    overworld_frame(gObjectEventPic_WotHotelZSign, 8, 4, 7),
+};
+
+static const struct SpriteFrameImage sPicTable_WotGymArrowSign[] = {
+    overworld_frame(gObjectEventPic_WotGymArrowSign, 8, 4, 0),
+    overworld_frame(gObjectEventPic_WotGymArrowSign, 8, 4, 1),
+    overworld_frame(gObjectEventPic_WotGymArrowSign, 8, 4, 2),
+    overworld_frame(gObjectEventPic_WotGymArrowSign, 8, 4, 3),
+    overworld_frame(gObjectEventPic_WotGymArrowSign, 8, 4, 4),
+    overworld_frame(gObjectEventPic_WotGymArrowSign, 8, 4, 5),
+};
+
+static const struct SpriteFrameImage sPicTable_WotMegaPortal[] = {
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 0),
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 1),
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 2),
+    overworld_frame(gObjectEventPic_WotMegaPortal, 4, 4, 3),
 };
 
 static const struct SpriteFrameImage sPicTable_WotWantedSmall[] = {

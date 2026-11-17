@@ -18,6 +18,7 @@ void InitBattleBgsVideo(void);
 void LoadBattleMenuWindowGfx(void);
 void DrawMainBattleBackground(void);
 void LoadBattleTextboxAndBackground(void);
+void DrawCaughtMonGridBackground(void);
 void InitLinkBattleVsScreen(u8 taskId);
 void DrawBattleEntryBackground(void);
 bool8 LoadChosenBattleElement(u8 caseId);

@@ -1979,6 +1979,12 @@ const struct BattleMoveEffect gBattleMoveEffects[NUM_BATTLE_MOVE_EFFECTS] =
         .battleTvScore = 0, // TODO: Assign points
     },
 
+    [EFFECT_OMEN_WAVE] =
+    {
+        .battleScript = BattleScript_EffectHit,
+        .battleTvScore = 0,
+    },
+
     [EFFECT_SKY_DROP] =
     {
         .battleScript = BattleScript_EffectHit,

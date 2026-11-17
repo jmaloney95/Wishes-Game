@@ -26,11 +26,11 @@
 #define PALTAG_INTRO_BG      0
 #define PALTAG_INTRO_OVERLAY 1
 
-static const u32 sIntroBgGfx[]        = INCGFX_U32("graphics/intro_flatfoot/intro_bg.png", ".4bpp.smol", "-num_tiles 16 -Wnum_tiles");
+static const u32 sIntroBgGfx[]        = INCGFX_U32("graphics/intro_flatfoot/intro_bg.png", ".4bpp.smol", "-num_tiles 6 -Wnum_tiles");
 static const u32 sIntroBgTilemap[]    = INCBIN_U32("graphics/intro_flatfoot/intro_bg.bin.smolTM");
 static const u16 sIntroBgPal[]        = INCGFX_U16("graphics/intro_flatfoot/intro_bg.pal", ".gbapal");
 
-static const u32 sFlatfootOverlayGfx[]     = INCGFX_U32("graphics/intro_flatfoot/flatfoot_overlay.png", ".4bpp.smol", "-num_tiles 144 -Wnum_tiles");
+static const u32 sFlatfootOverlayGfx[]     = INCGFX_U32("graphics/intro_flatfoot/flatfoot_overlay.png", ".4bpp.smol", "-num_tiles 60 -Wnum_tiles");
 static const u32 sFlatfootOverlayTilemap[] = INCBIN_U32("graphics/intro_flatfoot/flatfoot_overlay.bin.smolTM");
 static const u16 sFlatfootOverlayPal[]     = INCGFX_U16("graphics/intro_flatfoot/flatfoot_overlay.pal", ".gbapal");
 

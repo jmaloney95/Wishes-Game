@@ -77,6 +77,8 @@ static const u32 sTitleScreenCloudsGfx[] = INCGFX_U32("graphics/title_screen/clo
 //  AI-generated and are out of the build. The Oni is his battle sprite, read
 //  straight out of gTrainerSprites, so the title adds no art of its own. The
 //  backdrop is BG palette entry 0, with every background switched off.
+//  Everything is in greyscale: the Oni and PRESS START palettes go through
+//  TintPalette_GrayScale as they load, the same grey as the Mega Dimension.
 // ============================================================================
 #define TAG_WOT_TITLE_ONI 2002
 #define WOT_ONI_X         (DISPLAY_WIDTH / 2)
@@ -116,15 +118,22 @@ static void SpriteCB_WotTitleOni(struct Sprite *sprite)
 }
 #undef sBobAngle
 
+static void LoadWotGreySpritePalette(const u16 *data, u16 tag)
+{
+    u16 grey[16];
+
+    CpuCopy16(data, grey, sizeof(grey));
+    TintPalette_GrayScale(grey, ARRAY_COUNT(grey));
+    LoadSpritePaletteWithTag(grey, tag);   // copies now, so a stack buffer is fine
+}
+
 static void LoadWotTitleOni(void)
 {
     struct CompressedSpriteSheet sheet = gTrainerSprites[TRAINER_PIC_FRONT_MUTRID_LEADER].frontPic;
-    struct SpritePalette palette = gTrainerSprites[TRAINER_PIC_FRONT_MUTRID_LEADER].palette;
 
     sheet.tag = TAG_WOT_TITLE_ONI;
-    palette.tag = TAG_WOT_TITLE_ONI;
     LoadCompressedSpriteSheet(&sheet);
-    LoadSpritePalette(&palette);
+    LoadWotGreySpritePalette(gTrainerSprites[TRAINER_PIC_FRONT_MUTRID_LEADER].palette.data, TAG_WOT_TITLE_ONI);
 }
 
 // Used to blend "Emerald Version" as it passes over over the Pokémon banner.
@@ -674,7 +683,8 @@ void CB2_InitTitleScreen(void)
         // over a picture that no longer has the stock logo in the stock place.
         // LoadCompressedSpriteSheet(&sPokemonLogoShineSpriteSheet[0]);
         LoadPalette(gTitleScreenEmeraldVersionPal, OBJ_PLTT_ID(0), PLTT_SIZE_4BPP);
-        LoadSpritePalette(&sSpritePalette_PressStart[0]);
+        // Pokemon Wishes of Tomorrow: PRESS START in true grey (its greys lean blue).
+        LoadWotGreySpritePalette(sSpritePalette_PressStart[0].data, sSpritePalette_PressStart[0].tag);
         // Pokemon Wishes of Tomorrow: the Oni is the only art on the title.
         LoadWotTitleOni();
         gMain.state = 2;

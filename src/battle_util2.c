@@ -12,6 +12,7 @@
 #include "random.h"
 #include "battle_scripts.h"
 #include "constants/battle_string_ids.h"
+#include "wot_mega_dimension.h"
 
 void AllocateBattleResources(void)
 {
@@ -118,6 +119,25 @@ void SwitchPartyOrderInGameMulti(enum BattlerId battler, u8 arg1)
 
         for (i = 0; i < (int)ARRAY_COUNT(gBattlePartyCurrentOrder); i++)
             *(i + (u8 *)(gBattleStruct->battlerPartyOrders)) = gBattlePartyCurrentOrder[i];
+
+        // WoT: the player also opens the party menu for a Mega Dimension
+        // partner (battler 2), which reads its own order: the same six seen
+        // from the other flank, so it follows the switch too.
+        if (WotMegaDim_PartnerPlayerControlled())
+        {
+            static const u8 sOtherFlank[PARTY_SIZE] = {1, 0, 4, 5, 2, 3};
+            u8 ids[PARTY_SIZE];
+            u8 *left = gBattleStruct->battlerPartyOrders[B_POSITION_PLAYER_LEFT];
+            u8 *right = gBattleStruct->battlerPartyOrders[GetBattlerAtPosition(B_POSITION_PLAYER_RIGHT)];
+
+            for (i = 0; i < PARTY_SIZE / 2; i++)
+            {
+                ids[i * 2] = left[i] >> 4;
+                ids[i * 2 + 1] = left[i] & 0xF;
+            }
+            for (i = 0; i < PARTY_SIZE / 2; i++)
+                right[i] = (ids[sOtherFlank[i * 2]] << 4) | ids[sOtherFlank[i * 2 + 1]];
+        }
     }
 }
 

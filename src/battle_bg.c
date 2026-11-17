@@ -24,6 +24,7 @@
 #include "text_window.h"
 #include "trig.h"
 #include "window.h"
+#include "wot_mega_dimension.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 #include "constants/trainers.h"
@@ -901,6 +902,20 @@ static void GetTimeVariantBackground(u16 environment, const u32 **tiles, const u
     }
 }
 
+// WoT: the black-and-white graveyard is the colour one, grayed as it loads.
+// Both background palette loads come through here (the battle's first draw
+// and a move animation's restore, and the redraw after the bag or party
+// menu), so the gray holds for the whole battle.
+static void LoadBattleEnvironmentPalette(u16 environment, const u16 *palette)
+{
+    LoadPalette(palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+    if (environment == BATTLE_ENVIRONMENT_WOT_GRAVEYARD_GRAY)
+    {
+        TintPalette_GrayScale(&gPlttBufferUnfaded[BG_PLTT_ID(2)], 3 * 16);
+        TintPalette_GrayScale(&gPlttBufferFaded[BG_PLTT_ID(2)], 3 * 16);
+    }
+}
+
 // Loads the initial battle environment.
 static void LoadBattleEnvironmentGfx(u16 environment)
 {
@@ -913,7 +928,7 @@ static void LoadBattleEnvironmentGfx(u16 environment)
     // Copy to bg3
     DecompressDataWithHeaderVram(tiles, (void *)(BG_CHAR_ADDR(2)));
     DecompressDataWithHeaderVram(tilemap, (void *)(BG_SCREEN_ADDR(26)));
-    LoadPalette(palette, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP);
+    LoadBattleEnvironmentPalette(environment, palette);
 }
 
 // Loads the entry associated with the battle environment.
@@ -930,6 +945,19 @@ static void LoadBattleEnvironmentEntryGfx(u16 environment)
 static u8 GetBattleEnvironmentOverride(void)
 {
     u8 battleScene = GetCurrentMapBattleScene();
+
+    // The Rift Sanctums: the holdouts and the Shadow legend on the black-and-white graveyard.
+    if (WotMegaDim_IsInSanctum())
+        return BATTLE_ENVIRONMENT_WOT_GRAVEYARD_GRAY;
+
+    // The Mega Dimension: every battle there, wild or the Mega, on the black-and-white void.
+    if (WotMegaDim_IsActive())
+        return BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION;
+
+    // The Giratina dream: Shadow Giratina on the black-and-white graveyard.
+    if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SHIN_TOKYO_PC_DREAM)
+     && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SHIN_TOKYO_PC_DREAM))
+        return BATTLE_ENVIRONMENT_WOT_GRAVEYARD_GRAY;
 
     // National Park: always use the beach (sand) background, regardless of terrain or trainer class.
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ROUTE_2_2)
@@ -952,9 +980,18 @@ static u8 GetBattleEnvironmentOverride(void)
       || TRAINER_BATTLE_PARAM.opponentA == TRAINER_WALLY_VR_4))
         return BATTLE_ENVIRONMENT_WOT_LAB;
 
+    // Shadow Lugia rises out of the harbour: it is fought on the open sea
+    // (tod variants at load), not on Shin Tokyo's graveyard below. Any
+    // legendary-style Lugia battle, wherever it is set up.
+    if ((gBattleTypeFlags & BATTLE_TYPE_LEGENDARY) && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER)
+     && (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES) == SPECIES_LUGIA
+      || GetMonData(&gEnemyParty[0], MON_DATA_SPECIES) == SPECIES_LUGIA_SHADOW))
+        return BATTLE_ENVIRONMENT_WOT_SEA;
+
     // Shin Tokyo and its jail: aveontrainer's graveyard. Everything fought on
     // those two maps is a Shadow (the patrols, the squads, the goons), so the
-    // backdrop is by map rather than by opponent. The tower has its own.
+    // backdrop is by map rather than by opponent. The tower has its own. (The
+    // PC dream's Shadow Giratina gets the black-and-white one, above.)
     if ((gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SHIN_TOKYO)
       && gSaveBlock1Ptr->location.mapNum == MAP_NUM(MAP_SHIN_TOKYO))
      || (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_SHIN_TOKYO_JAIL)
@@ -962,8 +999,12 @@ static u8 GetBattleEnvironmentOverride(void)
         return BATTLE_ENVIRONMENT_WOT_GRAVEYARD;
 
     // The DragonKeeper warden duo on Ryuden Island fight under the stars.
+    // So does Draco's Act 2 finale in Clarkson's lab (all three starter variants).
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
-     && TRAINER_BATTLE_PARAM.opponentA == TRAINER_AMY_AND_LIV_3)
+     && (TRAINER_BATTLE_PARAM.opponentA == TRAINER_AMY_AND_LIV_3
+      || TRAINER_BATTLE_PARAM.opponentA == TRAINER_DRACO_LAB_AURORUS
+      || TRAINER_BATTLE_PARAM.opponentA == TRAINER_DRACO_LAB_ARMALDO
+      || TRAINER_BATTLE_PARAM.opponentA == TRAINER_DRACO_LAB_TYRANTRUM))
         return BATTLE_ENVIRONMENT_SPACE;
 
     // Archipelago surf corridor: carchagui's open sea (tod variants at load).
@@ -1006,7 +1047,10 @@ static u8 GetBattleEnvironmentOverride(void)
         return BATTLE_ENVIRONMENT_FRONTIER;
     else if (gBattleTypeFlags & BATTLE_TYPE_LEGENDARY)
     {
-        switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
+        // WoT: by base species, so the backdrop survives a form change
+        // mid-battle (the Prototype Lab Deoxys Mega Evolves; Primal Groudon/Kyogre,
+        // Mega Rayquaza). A move animation's background restore re-reads this.
+        switch (GET_BASE_SPECIES_ID(GetMonData(&gEnemyParty[0], MON_DATA_SPECIES)))
         {
         case SPECIES_GROUDON:
             return BATTLE_ENVIRONMENT_GROUDON;
@@ -1076,6 +1120,7 @@ void LoadBattleMenuWindowGfx(void)
     LoadUserWindowBorderGfx(2, 0x12, BG_PLTT_ID(1));
     LoadUserWindowBorderGfx(2, 0x22, BG_PLTT_ID(1));
     LoadPalette(gBattleWindowTextPalette, BG_PLTT_ID(5), PLTT_SIZE_4BPP);
+    WotMegaDim_GrayBattleUi(); // WoT: black-and-white battle UI in the Mega Dimension
 
     if ((gBattleTypeFlags & (BATTLE_TYPE_ARENA | BATTLE_TYPE_POKEDUDE))
     || (IS_FRLG && (gBattleTypeFlags & BATTLE_TYPE_FIRST_BATTLE)))
@@ -1104,6 +1149,40 @@ void LoadBattleTextboxAndBackground(void)
         DrawTerrainTypeBattleBackground();
     else
         DrawMainBattleBackground();
+}
+
+// Wishes of Tomorrow: after a new catch's Pokédex page, the Pokémon stands on
+// the party screen's dark grid instead of the battle background's tiled half.
+// BG3 shows nothing else before the battle ends, so the grid takes over its
+// first tiles, both halves of its map and its first palette.
+static const u32 sCaughtMonGrid_Gfx[] = INCGFX_U32("graphics/naming_screen/grid.png", ".4bpp");
+static const u16 sCaughtMonGrid_Pal[] = INCGFX_U16("graphics/naming_screen/grid.png", ".gbapal");
+
+#define CAUGHT_MON_GRID_CELL 4  // the grid repeats every 4 tiles
+#define CAUGHT_MON_GRID_PAL  2  // the battle background's first palette
+
+void DrawCaughtMonGridBackground(void)
+{
+    u16 *tilemap = (u16 *)BG_SCREEN_ADDR(26);
+    u32 x, y;
+
+    CpuCopy32(sCaughtMonGrid_Gfx, (void *)BG_CHAR_ADDR(2), sizeof(sCaughtMonGrid_Gfx));
+    for (y = 0; y < 32; y++)
+    {
+        for (x = 0; x < 64; x++)
+        {
+            // 64x32 map: the right half is the next 32x32 screen block
+            tilemap[(x / 32) * 32 * 32 + y * 32 + (x % 32)]
+                = ((y % CAUGHT_MON_GRID_CELL) * CAUGHT_MON_GRID_CELL + (x % CAUGHT_MON_GRID_CELL))
+                | (CAUGHT_MON_GRID_PAL << 12);
+        }
+    }
+    LoadPalette(sCaughtMonGrid_Pal, BG_PLTT_ID(CAUGHT_MON_GRID_PAL), PLTT_SIZE_4BPP);
+    if (WotMegaDim_IsActive())
+    {
+        TintPalette_GrayScale(&gPlttBufferUnfaded[BG_PLTT_ID(CAUGHT_MON_GRID_PAL)], 16);
+        TintPalette_GrayScale(&gPlttBufferFaded[BG_PLTT_ID(CAUGHT_MON_GRID_PAL)], 16);
+    }
 }
 
 static void DrawLinkBattleParticipantPokeballs(u8 taskId, u8 multiplayerId, u8 bgId, u8 destX, u8 destY)
@@ -1439,6 +1518,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         break;
     case 2:
         LoadPalette(gBattleTextboxPalette, BG_PLTT_ID(0), 2 * PLTT_SIZE_4BPP);
+        WotMegaDim_GrayBattleUi(); // WoT: black-and-white battle UI in the Mega Dimension
         break;
     case 3:
         { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); DecompressDataWithHeaderVram(t, (void *)(BG_CHAR_ADDR(2))); }
@@ -1447,7 +1527,7 @@ bool8 LoadChosenBattleElement(u8 caseId)
         { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); DecompressDataWithHeaderVram(m, (void *)(BG_SCREEN_ADDR(26))); }
         break;
     case 5:
-        { const u32 *t, *m; const u16 *p; GetTimeVariantBackground(GetBattleEnvironmentOverride(), &t, &m, &p); LoadPalette(p, BG_PLTT_ID(2), 3 * PLTT_SIZE_4BPP); }
+        { const u32 *t, *m; const u16 *p; u8 env = GetBattleEnvironmentOverride(); GetTimeVariantBackground(env, &t, &m, &p); LoadBattleEnvironmentPalette(env, p); }
         break;
     case 6:
         LoadBattleMenuWindowGfx();

@@ -16,6 +16,7 @@
 #include "field_effect.h"
 #include "field_message_box.h"
 #include "field_move.h"
+#include "wot_mega_dimension.h"
 #include "field_player_avatar.h"
 #include "field_screen_effect.h"
 #include "field_specials.h"
@@ -60,6 +61,7 @@
 #include "tv.h"
 #include "wallclock.h"
 #include "window.h"
+#include "wot_film_shiny.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_pyramid.h"
 #include "constants/battle_tower.h"
@@ -1724,13 +1726,29 @@ static void StopCameraShake(u8 taskId)
 //   fadescreen FADE_TO_...        @ the world dissolves while distorted
 //   special EndRiftDistortion     @ cleanup while the screen is blank
 #define tTimer data[0]
+#define tEasing data[1]
+
+#define RIFT_FULL_TIMER 48  // the ramp's top: full mosaic and wobble
 
 static void Task_RiftDistortion(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
     u16 mosaic, panAmp;
 
-    tTimer++;
+    // Easing out: the ramp runs back down, then it ends itself.
+    if (tEasing)
+    {
+        tTimer -= 2;
+        if (tTimer <= 0)
+        {
+            EndRiftDistortion();
+            return;
+        }
+    }
+    else
+    {
+        tTimer++;
+    }
     mosaic = tTimer / 8;
     if (mosaic > 4)
         mosaic = 4;
@@ -1763,6 +1781,39 @@ void EndRiftDistortion(void)
     InstallCameraPanAheadCallback();
 }
 
+// The Mega Dimension portal's far side. The new map fades in
+// already distorted (StartRiftDistortionFull, from the arrival field
+// callback), and EaseOutRiftDistortion lets it settle while the player steps
+// out of the portal.
+void StartRiftDistortionFull(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_RiftDistortion);
+
+    if (taskId == TASK_NONE)
+    {
+        SetCameraPanningCallback(NULL);
+        taskId = CreateTask(Task_RiftDistortion, 80);
+    }
+    gTasks[taskId].tTimer = RIFT_FULL_TIMER;
+    gTasks[taskId].tEasing = FALSE;
+}
+
+void EaseOutRiftDistortion(void)
+{
+    u8 taskId = FindTaskIdByFunc(Task_RiftDistortion);
+
+    if (taskId != TASK_NONE)
+    {
+        // The timer keeps counting while the effect holds (it drives the
+        // wobble); ease down from the ramp's top, not from wherever it got to.
+        if (gTasks[taskId].tTimer > RIFT_FULL_TIMER)
+            gTasks[taskId].tTimer = RIFT_FULL_TIMER;
+        gTasks[taskId].tEasing = TRUE;
+    }
+}
+
+#undef RIFT_FULL_TIMER
+#undef tEasing
 #undef tTimer
 
 // -- WoT Shadow system, phase 1 ---------------------
@@ -1812,6 +1863,9 @@ void PurifyPartyMon(void)
 void WotIsHMUnlocked(void)
 {
     gSpecialVar_Result = IsFieldMoveUnlocked(gSpecialVar_0x8004);
+    // A rift's only way out is its portal, before the clock runs out.
+    if (gSpecialVar_0x8004 == FIELD_MOVE_FLY && WotMegaDim_IsActive())
+        gSpecialVar_Result = FALSE;
 }
 
 // Fly has no overworld tile to interact with, so it is used FROM the HM menu:
@@ -1877,6 +1931,57 @@ void WotMakeEventMonShadow(void)
     u32 one = TRUE;
 
     SetMonData(&gEnemyParty[0], MON_DATA_IS_SHADOW, &one);
+}
+
+// Prototype Lab, map ON_TRANSITION: whether this visit's Deoxys
+// is shiny, rolled on every trip in at wild odds (Shiny Charm counted), and
+// always while the debug "Shiny: next/all" switch is on. VAR_TEMP_1 holds it
+// for the visit -- the map's ON_FRAME script plays the Z-A shiny jingle once
+// and moves it to 2 -- and the object (OBJ_EVENT_GFX_VAR_0) shows its
+// shiny overworld colours.
+void WotPrototypeLab_RollDeoxysShiny(void)
+{
+    bool32 shiny = FALSE;
+    u32 rolls = 1;
+
+    if (FlagGet(FLAG_WOT_DEOXYS_CAUGHT))
+        shiny = FALSE;
+    else if (P_FLAG_FORCE_NO_SHINY != 0 && FlagGet(P_FLAG_FORCE_NO_SHINY))
+        shiny = FALSE;
+    else if ((P_FLAG_FORCE_SHINY != 0 && FlagGet(P_FLAG_FORCE_SHINY)) || WotFilmShiny_GetMode() != WOT_FILM_SHINY_OFF)
+        shiny = TRUE;
+    else
+    {
+        if (CheckBagHasItem(ITEM_SHINY_CHARM, 1))
+            rolls += I_SHINY_CHARM_ADDITIONAL_ROLLS;
+        while (rolls-- > 0 && !shiny)
+            shiny = (Random() < SHINY_ODDS);
+    }
+    VarSet(VAR_TEMP_1, shiny);
+    VarSet(VAR_OBJ_GFX_ID_0, OBJ_EVENT_GFX_SPECIES(DEOXYS) + (shiny ? OBJ_EVENT_MON_SHINY : 0));
+}
+
+// The battle matches the overworld Deoxys: shiny exactly when it showed shiny
+// (its shiny Shadow palette). Run it after WotMakeEventMonShadow.
+void WotPrototypeLab_SetDeoxysShiny(void)
+{
+    u32 shiny = (VarGet(VAR_TEMP_1) != 0);
+
+    SetMonData(&gEnemyParty[0], MON_DATA_IS_SHINY, &shiny);
+}
+
+// Distortion World 3: the mega stone on the floor at (23,12) is
+// the starter's stone for a player who chose Axew (VAR_STARTER_CHOICE 3, not
+// randomized): Haxorite. Everyone else finds Gyaradosite there as before; the
+// Gible and Frigibax lines' stones lie on DW5 and DW4. The map's
+// ON_TRANSITION calls this to draw it (VAR_OBJ_GFX_ID_0), and the object's
+// script calls it again to give it (gSpecialVar_Result).
+void WotDistortionWorld_StarterStone(void)
+{
+    bool32 haxorus = (VarGet(VAR_STARTER_CHOICE) == 3 && !FlagGet(FLAG_WOT_RAND_STARTERS));
+
+    gSpecialVar_Result = haxorus ? ITEM_HAXORITE : ITEM_GYARADOSITE;
+    VarSet(VAR_OBJ_GFX_ID_0, haxorus ? OBJ_EVENT_GFX_ITEM_HAXORITE : OBJ_EVENT_GFX_ITEM_GYARADOSITE);
 }
 
 // gSpecialVar_Result = number of Shadow mons in the party;

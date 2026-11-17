@@ -56,6 +56,10 @@
 #include "constants/trainer_hill.h"
 #include "constants/weather.h"
 #include "fishing.h"
+#include "wot_mega_dimension.h"
+#include "wot_film_shiny.h"
+#include "wot_rematch.h"
+#include "wot_nuzlocke.h"
 
 enum TransitionType
 {
@@ -270,6 +274,7 @@ static void CreateBattleStartTask(enum BattleTransition transition, u16 song)
 {
     u8 taskId = CreateTask(Task_BattleStart, 1);
 
+    WotFilmShiny_OnBattleStart(); // debug: shiny wilds for filming (off unless switched on)
     gTasks[taskId].tTransition = transition;
     if (gWotBossIntroPrimed)
         gWotBossIntroPrimed = FALSE; // the boss card's theme carries into the battle
@@ -353,6 +358,7 @@ void BattleSetup_StartBattlePikeWildBattle(void)
 
 static void DoStandardWildBattle(bool32 isDouble)
 {
+    WotNuzlocke_OnWildBattleStart(FALSE);
     LockPlayerFieldControls();
     FreezeObjectEvents();
     StopPlayerAvatar();
@@ -397,6 +403,7 @@ void DoStandardWildBattle_Debug(void)
 
 void BattleSetup_StartRoamerBattle(void)
 {
+    WotNuzlocke_OnWildBattleStart(FALSE);
     LockPlayerFieldControls();
     FreezeObjectEvents();
     StopPlayerAvatar();
@@ -487,9 +494,13 @@ void StartOldManTutorialBattle(void)
 
 void BattleSetup_StartScriptedWildBattle(void)
 {
+    WotNuzlocke_OnWildBattleStart(TRUE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = 0;
+    // WoT: with a Mega Dimension partner along, this becomes a 2v1 double.
+    if (WotMegaDim_HasPartnerHere())
+        gBattleTypeFlags |= BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_DOUBLE;
     CreateBattleStartTask(GetWildBattleTransition(), 0);
     IncrementGameStat(GAME_STAT_TOTAL_BATTLES);
     IncrementGameStat(GAME_STAT_WILD_BATTLES);
@@ -499,6 +510,7 @@ void BattleSetup_StartScriptedWildBattle(void)
 
 void BattleSetup_StartScriptedDoubleWildBattle(void)
 {
+    WotNuzlocke_OnWildBattleStart(TRUE);
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_DOUBLE;
@@ -545,9 +557,17 @@ void BattleSetup_StartLegendaryBattle(void)
     LockPlayerFieldControls();
     gMain.savedCallback = CB2_EndScriptedWildBattle;
     gBattleTypeFlags = BATTLE_TYPE_LEGENDARY;
+    // WoT: with a Mega Dimension partner along, this becomes a 2v1 double.
+    if (WotMegaDim_HasPartnerHere())
+        gBattleTypeFlags |= BATTLE_TYPE_MULTI | BATTLE_TYPE_INGAME_PARTNER | BATTLE_TYPE_DOUBLE;
 
-    switch (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
+    // WoT: the Mega Dimension's rogue Mega fights to Giratina's theme; Mable's
+    // legends (Primal Groudon/Kyogre, Mega Rayquaza) keep their own below.
+    switch ((WotMegaDim_IsActive() && !WotMegaDim_IsLegendBoss()) ? SPECIES_NONE : GetMonData(&gEnemyParty[0], MON_DATA_SPECIES))
     {
+    case SPECIES_NONE:
+        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_PL_VS_GIRATINA);
+        break;
     case SPECIES_GROUDON:
     case SPECIES_GROUDON_PRIMAL:
         CreateBattleStartTask(B_TRANSITION_GROUDON, MUS_VS_KYOGRE_GROUDON);
@@ -565,6 +585,11 @@ void BattleSetup_StartLegendaryBattle(void)
     case SPECIES_DEOXYS_DEFENSE:
     case SPECIES_DEOXYS_SPEED:
         CreateBattleStartTask(B_TRANSITION_BLUR, MUS_RG_VS_DEOXYS);
+        break;
+    // WoT: the Shin Tokyo PC dream's Shadow Giratina.
+    case SPECIES_GIRATINA_ALTERED:
+    case SPECIES_GIRATINA_ORIGIN:
+        CreateBattleStartTask(B_TRANSITION_BLUR, MUS_PL_VS_GIRATINA);
         break;
     case SPECIES_LUGIA:
     case SPECIES_HO_OH:
@@ -676,6 +701,11 @@ static void CB2_EndScriptedWildBattle(void)
     CpuFill16(0, (void *)(BG_PLTT), BG_PLTT_SIZE);
     ResetOamRange(0, 128);
 
+    // WoT: a Mega Dimension partner battle hands the player's full party back.
+    if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) && FollowerNPCIsBattlePartner())
+        RestorePartyAfterFollowerNPCBattle();
+    WotMegaDim_EndPartnerBattle();
+
     if (IsPlayerDefeated(gBattleOutcome) == TRUE)
     {
         if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE)
@@ -722,6 +752,10 @@ enum BattleEnvironments BattleSetup_GetEnvironmentId(void)
         PlayerGetDestCoords(&x, &y);
 
     tileBehavior = MapGridGetMetatileBehaviorAt(x, y);
+
+    // Wishes of Tomorrow: every battle in the Mega Dimension is in its black-and-white void.
+    if (WotMegaDim_IsActive())
+        return BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION;
 
     // Wishes of Tomorrow: Ashlands always battles on the volcanic field.
     if (gSaveBlock1Ptr->location.mapGroup == MAP_GROUP(MAP_ASHLANDS)
@@ -1320,7 +1354,9 @@ bool8 GetTrainerFlag(void)
 
 static void SetBattledTrainersFlags(void)
 {
-    if (TRAINER_BATTLE_PARAM.opponentB != 0)
+    // A partner battle against one trainer leaves opponentB at 0xFFFF. It has no
+    // flag: added to TRAINER_FLAGS_START, it wraps round to 0x4FF, FLAG_WOT_CAUGHT_ZYGARDE.
+    if (TRAINER_BATTLE_PARAM.opponentB != 0 && TRAINER_BATTLE_PARAM.opponentB != 0xFFFF)
         FlagSet(GetTrainerBFlag());
     FlagSet(GetTrainerAFlag());
 }
@@ -1480,8 +1516,10 @@ static void HandleBattleVariantEndParty(void)
 static void CB2_EndTrainerBattle(void)
 {
     HandleBattleVariantEndParty();
+    WotRematch_Disarm();
 
     gIsDebugBattle = FALSE;
+    WotMegaDim_EndPartnerBattle();
     if (FollowerNPCIsBattlePartner())
     {
         RestorePartyAfterFollowerNPCBattle();
@@ -1528,7 +1566,10 @@ static void CB2_EndTrainerBattle(void)
     }
     else if (IsPlayerDefeated(gBattleOutcome) == TRUE)
     {
-        if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InTrainerHillChallenge() || (!NoAliveMonsForPlayer()) || FlagGet(B_FLAG_NO_WHITEOUT))
+        // WoT: in the Mega Dimension a lost partner battle always whites out
+        // (collapses the portal), even with healthy Pokemon left on the bench.
+        if (CurrentBattlePyramidLocation() != PYRAMID_LOCATION_NONE || InTrainerHillChallenge()
+         || (!NoAliveMonsForPlayer() && !WotMegaDim_IsActive()) || FlagGet(B_FLAG_NO_WHITEOUT))
             SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
         else
             SetMainCallback2(CB2_WhiteOut);

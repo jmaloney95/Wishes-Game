@@ -202,6 +202,7 @@ TowerTop_EventScript_Overload::
 	completequest QUEST_WAKING_MOUNTAIN
 	completequest QUEST_GRANDFATHERS_WISH
 	completequest QUEST_LIFES_WORK
+	completequest QUEST_INTO_THE_RIFT
 	special WotSuppressWeatherSE
 	msgbox TowerTop_Text_MachineOverload, MSGBOX_DEFAULT
 	closemessage

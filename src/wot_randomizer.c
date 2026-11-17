@@ -11,6 +11,8 @@
 #include "task.h"
 #include "overworld.h"
 #include "wot_randomizer.h"
+#include "wot_nuzlocke.h"
+#include "wot_mega_dimension.h"
 
 // ============================================================================
 //  WISHES OF TOMORROW -- RANDOMIZER MODE
@@ -56,6 +58,9 @@ bool32 WotTrainerIsRandomizerExempt(void)
     opponent = TRAINER_BATTLE_PARAM.opponentA;
     if (opponent == TRAINER_WALLY_VR_5 || opponent == TRAINER_WALLY_VR_4)
         return TRUE;
+    // The Mega Dimension rivals: their ace is the day's rogue Mega.
+    if (WotMegaDim_IsRivalTrainer(opponent))
+        return TRUE;
 
     opponent = TRAINER_BATTLE_PARAM.opponentB;
     if (opponent == TRAINER_WALLY_VR_5 || opponent == TRAINER_WALLY_VR_4)
@@ -85,20 +90,25 @@ static u32 WotRandomizerSeed(void)
 //  exists. The PC path has no new game to survive and just writes the flags.
 // ----------------------------------------------------------------------------
 
-#define QUEUED_MASTER   (1 << 0)
-#define QUEUED_STARTERS (1 << 1)
-#define QUEUED_WILD     (1 << 2)
-#define QUEUED_TRAINERS (1 << 3)
+#define QUEUED_MASTER    (1 << 0)
+#define QUEUED_STARTERS  (1 << 1)
+#define QUEUED_WILD      (1 << 2)
+#define QUEUED_TRAINERS  (1 << 3)
+#define QUEUED_CAPS_OFF  (1 << 4)   // the NEW GAME page's LEVEL CAP row, also a flag
+#define QUEUED_NUZLOCKE  (1 << 5)   // the NEW GAME page's NUZLOCKE row (SaveBlock3)
 
 static u8 sQueuedSettings;
 static bool8 sHasQueuedSettings;
 
-void WotQueueRandomizerSettings(bool32 master, bool32 starters, bool32 wild, bool32 trainers)
+// The master is on exactly while one of the three rows is.
+void WotQueueNewGameSettings(bool32 starters, bool32 wild, bool32 trainers, bool32 levelCapsOff, bool32 nuzlocke)
 {
-    sQueuedSettings = (master   ? QUEUED_MASTER   : 0)
-                    | (starters ? QUEUED_STARTERS : 0)
-                    | (wild     ? QUEUED_WILD     : 0)
-                    | (trainers ? QUEUED_TRAINERS : 0);
+    sQueuedSettings = ((starters || wild || trainers) ? QUEUED_MASTER : 0)
+                    | (starters     ? QUEUED_STARTERS : 0)
+                    | (wild         ? QUEUED_WILD     : 0)
+                    | (trainers     ? QUEUED_TRAINERS : 0)
+                    | (levelCapsOff ? QUEUED_CAPS_OFF : 0)
+                    | (nuzlocke     ? QUEUED_NUZLOCKE : 0);
     sHasQueuedSettings = TRUE;
 }
 
@@ -115,6 +125,8 @@ void WotApplyQueuedRandomizerSettings(void)
     if (sQueuedSettings & QUEUED_STARTERS) FlagSet(FLAG_WOT_RAND_STARTERS);  else FlagClear(FLAG_WOT_RAND_STARTERS);
     if (sQueuedSettings & QUEUED_WILD)     FlagSet(FLAG_WOT_RAND_WILD);      else FlagClear(FLAG_WOT_RAND_WILD);
     if (sQueuedSettings & QUEUED_TRAINERS) FlagSet(FLAG_WOT_RAND_TRAINERS);  else FlagClear(FLAG_WOT_RAND_TRAINERS);
+    if (sQueuedSettings & QUEUED_CAPS_OFF) FlagSet(FLAG_WOT_LEVEL_CAPS_OFF); else FlagClear(FLAG_WOT_LEVEL_CAPS_OFF);
+    WotNuzlocke_SetOn(sQueuedSettings & QUEUED_NUZLOCKE);
 }
 
 bool32 WotRandomizerActive(void)
@@ -122,11 +134,20 @@ bool32 WotRandomizerActive(void)
     return FlagGet(FLAG_WOT_RANDOMIZER);
 }
 
+// One of FLAG_WOT_RAND_STARTERS / _WILD / _TRAINERS, but only while the master
+// switch is on. Saves from v1.2.6 and earlier can hold a sub-flag with the
+// master off (the menu used to save the rows even after the master was turned
+// off), and that player chose no randomizer.
+bool32 WotRandomizerOption(u16 flag)
+{
+    return WotRandomizerActive() && FlagGet(flag);
+}
+
 // Starters come from `givemon` in the Munen script, which bypasses both hook
 // points, so they are randomized explicitly through here.
 u16 WotRandomizeStarter(u16 species)
 {
-    if (!WotRandomizerActive() || !FlagGet(FLAG_WOT_RAND_STARTERS))
+    if (!WotRandomizerOption(FLAG_WOT_RAND_STARTERS))
         return species;
     return WotRandomizeSpecies(species);
 }

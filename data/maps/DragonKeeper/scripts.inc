@@ -9,7 +9,7 @@ DragonKeeper_MapScripts::
 @  RYUDEN ISLAND -- the dragon keepers' shrine settlement. Two DRAGON WARDENS
 @  guard the incubator; stepping up to the eggs summons them from their homes
 @  for a 2-on-1 dragon double battle. Victory earns ONE egg of the three --
-@  a random legend among them.
+@  a random dragon line (pool in src/wot_ryuden.c).
 @ ============================================================================
 
 DragonKeeper_OnTransition::
@@ -95,42 +95,16 @@ DragonKeeper_EventScript_EggIncubator::
 	goto_if_unset FLAG_WOT_DRAGON_WARDENS_BEATEN, DragonKeeper_EventScript_EggGuarded
 	msgbox DragonKeeper_Text_TakeEgg, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, DragonKeeper_EventScript_EggNo
-	random 8
-	switch VAR_RESULT
-	case 0, DragonKeeper_EventScript_EggRayquaza
-	case 1, DragonKeeper_EventScript_EggZekrom
-	case 2, DragonKeeper_EventScript_EggDialga
-	case 3, DragonKeeper_EventScript_EggZygarde
-	case 4, DragonKeeper_EventScript_EggEternatus
-	case 5, DragonKeeper_EventScript_EggDragapult
-	case 6, DragonKeeper_EventScript_EggNecrozma
-	case 7, DragonKeeper_EventScript_EggKyurem
-	end
+@ The pool lives in src/wot_ryuden.c (gWotRyudenEggPool). The egg only counts
+@ as taken once it was actually delivered (party or PC).
+	special WotGiveRyudenEgg
+	goto_if_eq VAR_RESULT, MON_CANT_GIVE, DragonKeeper_EventScript_EggNoRoom
+	goto DragonKeeper_EventScript_EggTaken
 
-DragonKeeper_EventScript_EggRayquaza::
-	giveegg SPECIES_RAYQUAZA
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggZekrom::
-	giveegg SPECIES_ZEKROM
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggDialga::
-	giveegg SPECIES_DIALGA
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggZygarde::
-	giveegg SPECIES_ZYGARDE
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggEternatus::
-	giveegg SPECIES_ETERNATUS
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggDragapult::
-	giveegg SPECIES_DRAGAPULT
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggNecrozma::
-	giveegg SPECIES_NECROZMA_ULTRA
-	goto DragonKeeper_EventScript_EggTaken
-DragonKeeper_EventScript_EggKyurem::
-	giveegg SPECIES_KYUREM_WHITE
-	goto DragonKeeper_EventScript_EggTaken
+DragonKeeper_EventScript_EggNoRoom::
+	msgbox DragonKeeper_Text_EggNoRoom, MSGBOX_DEFAULT
+	releaseall
+	end
 
 DragonKeeper_EventScript_EggTaken::
 	setflag FLAG_WOT_RYUDEN_EGG_TAKEN
@@ -213,6 +187,10 @@ DragonKeeper_Text_EggTaken::
 	.string "{PLAYER} received a DRAGON EGG!\p"
 	.string "It is warm... and something\n"
 	.string "enormous turns inside.$"
+
+DragonKeeper_Text_EggNoRoom::
+	.string "There is no room to carry an\n"
+	.string "egg. Make space and return.$"
 
 DragonKeeper_Text_EggNo::
 	.string "The eggs settle back into\n"

@@ -130,6 +130,8 @@ u8 GetHPBarLevel(s16 hp, s16 maxhp);
 void CreateAbilityPopUp(enum BattlerId battlerId, enum Ability ability, bool32 isDoubleBattle);
 void DestroyAbilityPopUp(enum BattlerId battlerId);
 bool32 CanThrowLastUsedBall(void);
+bool32 WotIsQuickBallTarget(enum BattlerId battler);
+u16 WotPickShadowQuickBall(u16 current, bool32 battleStart);
 void TryHideLastUsedBall(void);
 void TryRestoreLastUsedBall(void);
 void TryAddLastUsedBallItemSprites(void);

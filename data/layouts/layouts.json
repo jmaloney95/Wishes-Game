@@ -9611,10 +9611,10 @@
     {
       "id": "LAYOUT_MUNEN_VILLAGE_ACT2",
       "name": "MunenVillageAct2_Layout",
-      "width": 49,
-      "height": 29,
+      "width": 59,
+      "height": 34,
       "primary_tileset": "gTileset_General",
-      "secondary_tileset": "gTileset_SnowAndStone",
+      "secondary_tileset": "gTileset_SnowStone",
       "border_filepath": "data/layouts/MunenVillageAct2/border.bin",
       "blockdata_filepath": "data/layouts/MunenVillageAct2/map.bin"
     },
@@ -9782,8 +9782,8 @@
     {
       "id": "LAYOUT_PROTOTYPE_LAB",
       "name": "PrototypeLab_Layout",
-      "width": 26,
-      "height": 27,
+      "width": 32,
+      "height": 31,
       "primary_tileset": "gTileset_General",
       "secondary_tileset": "gTileset_DeoxysLab",
       "border_filepath": "data/layouts/PrototypeLab/border.bin",
@@ -9920,6 +9920,218 @@
       "border_filepath": "data/layouts/Frostwood_House2/border.bin",
       "blockdata_filepath": "data/layouts/Frostwood_House2/map.bin",
       "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_HOTEL_Z",
+      "name": "HotelZ_Layout",
+      "width": 14,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonFanClub",
+      "border_filepath": "data/layouts/HotelZ/border.bin",
+      "blockdata_filepath": "data/layouts/HotelZ/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_SHIN_TOKYO_PC_DREAM",
+      "name": "ShinTokyo_PCDream_Layout",
+      "width": 15,
+      "height": 14,
+      "primary_tileset": "gTileset_MiddleDistrictGround",
+      "secondary_tileset": "gTileset_MiddleDistrict",
+      "border_filepath": "data/layouts/ShinTokyo_PCDream/border.bin",
+      "blockdata_filepath": "data/layouts/ShinTokyo_PCDream/map.bin",
+      "layout_version": "emerald"
+    },
+    {
+      "id": "LAYOUT_NATIONAL_PARK_ACT2_POSTGAME",
+      "name": "NationalParkAct2PostGame_Layout",
+      "width": 76,
+      "height": 97,
+      "primary_tileset": "gTileset_Route224Primary",
+      "secondary_tileset": "gTileset_Route224",
+      "border_filepath": "data/layouts/NationalParkAct2PostGame/border.bin",
+      "blockdata_filepath": "data/layouts/NationalParkAct2PostGame/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_ASHLANDS",
+      "name": "MegaDimension_Ashlands_Layout",
+      "width": 27,
+      "height": 32,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/MegaDimension_Ashlands/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_Ashlands/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_DRAINED_HOTEL",
+      "name": "MegaDimension_DrainedHotel_Layout",
+      "width": 14,
+      "height": 11,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PokemonFanClub",
+      "border_filepath": "data/layouts/MegaDimension_DrainedHotel/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_DrainedHotel/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_MARINE_CAVE",
+      "name": "MegaDimension_MarineCave_Layout",
+      "width": 27,
+      "height": 30,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/MegaDimension_MarineCave/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_MarineCave/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_NATIONAL_PARK",
+      "name": "MegaDimension_NationalPark_Layout",
+      "width": 76,
+      "height": 97,
+      "primary_tileset": "gTileset_Route224Primary",
+      "secondary_tileset": "gTileset_Route224",
+      "border_filepath": "data/layouts/MegaDimension_NationalPark/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_NationalPark/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_ROUTE2",
+      "name": "MegaDimension_Route2_Layout",
+      "width": 49,
+      "height": 42,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Slateport",
+      "border_filepath": "data/layouts/MegaDimension_Route2/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_Route2/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SANCTUM_BREAKTHROUGH",
+      "name": "MegaDimension_SanctumBreakthrough_Layout",
+      "width": 17,
+      "height": 33,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Cave",
+      "border_filepath": "data/layouts/MegaDimension_SanctumBreakthrough/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SanctumBreakthrough/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SANCTUM_DASH",
+      "name": "MegaDimension_SanctumDash_Layout",
+      "width": 27,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Rustboro",
+      "border_filepath": "data/layouts/MegaDimension_SanctumDash/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SanctumDash/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SANCTUM_ILLUSION",
+      "name": "MegaDimension_SanctumIllusion_Layout",
+      "width": 29,
+      "height": 26,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Fortree",
+      "border_filepath": "data/layouts/MegaDimension_SanctumIllusion/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SanctumIllusion/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SANCTUM_LIFELINE",
+      "name": "MegaDimension_SanctumLifeline_Layout",
+      "width": 25,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_NavelRock",
+      "border_filepath": "data/layouts/MegaDimension_SanctumLifeline/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SanctumLifeline/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SANCTUM_SURGE",
+      "name": "MegaDimension_SanctumSurge_Layout",
+      "width": 41,
+      "height": 41,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_BikeShop",
+      "border_filepath": "data/layouts/MegaDimension_SanctumSurge/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SanctumSurge/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SANCTUM_TIME_FREEZE",
+      "name": "MegaDimension_SanctumTimeFreeze_Layout",
+      "width": 14,
+      "height": 14,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Pacifidlog",
+      "border_filepath": "data/layouts/MegaDimension_SanctumTimeFreeze/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SanctumTimeFreeze/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SHIN_TOKYO",
+      "name": "MegaDimension_ShinTokyo_Layout",
+      "width": 79,
+      "height": 58,
+      "primary_tileset": "gTileset_MiddleDistrictGround",
+      "secondary_tileset": "gTileset_MiddleDistrict",
+      "border_filepath": "data/layouts/MegaDimension_ShinTokyo/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_ShinTokyo/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_SKY_PILLAR",
+      "name": "MegaDimension_SkyPillar_Layout",
+      "width": 27,
+      "height": 24,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_Pacifidlog",
+      "border_filepath": "data/layouts/MegaDimension_SkyPillar/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_SkyPillar/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_STAR_SUMMIT",
+      "name": "MegaDimension_StarSummit_Layout",
+      "width": 30,
+      "height": 29,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_LavaMap",
+      "border_filepath": "data/layouts/MegaDimension_StarSummit/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_StarSummit/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_TRADEWIND_TOWN",
+      "name": "MegaDimension_TradewindTown_Layout",
+      "width": 80,
+      "height": 53,
+      "primary_tileset": "gTileset_NightMarket",
+      "secondary_tileset": "gTileset_AshlandTrees",
+      "border_filepath": "data/layouts/MegaDimension_TradewindTown/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_TradewindTown/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_WALNUT_WOODS",
+      "name": "MegaDimension_WalnutWoods_Layout",
+      "width": 73,
+      "height": 38,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_SnowStone",
+      "border_filepath": "data/layouts/MegaDimension_WalnutWoods/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_WalnutWoods/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_NAVEL_ROCK_BOTTOM",
+      "name": "MegaDimension_NavelRockBottom_Layout",
+      "width": 22,
+      "height": 22,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_NavelRock",
+      "border_filepath": "data/layouts/MegaDimension_NavelRockBottom/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_NavelRockBottom/map.bin"
+    },
+    {
+      "id": "LAYOUT_MEGA_DIMENSION_NAVEL_ROCK_TOP",
+      "name": "MegaDimension_NavelRockTop_Layout",
+      "width": 25,
+      "height": 28,
+      "primary_tileset": "gTileset_General",
+      "secondary_tileset": "gTileset_NavelRock",
+      "border_filepath": "data/layouts/MegaDimension_NavelRockTop/border.bin",
+      "blockdata_filepath": "data/layouts/MegaDimension_NavelRockTop/map.bin"
     }
   ]
 }

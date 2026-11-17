@@ -77,7 +77,14 @@ void ResetDexNavSearch(void);
 bool32 TryFindHiddenPokemon(void);
 u32 CalculateDexNavShinyRolls(void);
 void IncrementDexNavChain(void);
+bool32 WotDexNavBlocked(void);
+bool32 WotDexNavHasSlot(u16 species);
+u32 WotDexNavGetSearchLevel(u16 species);
+void WotDexNavIncrementSearchLevel(u16 species);
+void WotDexNavMarkSeen(u16 species);
+bool32 WotDexNavSeen(u16 species);
 bool32 OnStep_DexNavSearch(void);
+bool32 WotDexNavShouldCreep(s16 x, s16 y);
 
 extern u16 gDexNavSpecies;
 

@@ -9,10 +9,14 @@ ShinkansenInterior_Act2_MapScripts::
 @ warp (SennenAct2 19,15 -- the old scripted door was retired), so this
 @ ON_TRANSITION does the reveal for every way in.
 ShinkansenInterior_Act2_OnTransition::
+	goto_if_set FLAG_SYS_GAME_CLEAR, ShinkansenInterior_Act2_OnTransition_PostGame
 	checkitem ITEM_SHINKANSEN_KEY
 	goto_if_eq VAR_RESULT, FALSE, ShinkansenInterior_Act2_OnTransition_End
 	clearflag FLAG_HIDE_SHINKANSEN_ACT2_GOONS
 ShinkansenInterior_Act2_OnTransition_End::
+	end
+ShinkansenInterior_Act2_OnTransition_PostGame::
+	setflag FLAG_HIDE_SHINKANSEN_ACT2_GOONS
 	end
 
 @ Without the Minister's keycard the car must not be boardable: the plain

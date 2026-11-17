@@ -6,6 +6,8 @@ DistortionWorld_3_MapScripts::
 @ through intra-map warps (a warp reloads the map, which would otherwise clear
 @ it here). Fresh entries from anywhere else always land right-side-up.
 DistortionWorld_3_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
+	special WotDistortionWorld_StarterStone
 	goto_if_set FLAG_DW_INVERT_PENDING, DistortionWorld_3_OnTransition_StayInverted
 	clearflag FLAG_DW_INVERTED
 	end
@@ -16,11 +18,13 @@ DistortionWorld_3_OnTransition_StayInverted::
 
 @ Right-edge portal: lower corridor (30,20) <-> ceiling corridor (30,12).
 @ Going UP flips the player (arrive inverted); coming back DOWN restores.
+@ Each side lands one tile in from the other side's trigger (x29), so the
+@ arrival tile is never itself the portal back.
 DistortionWorld_3_EventScript_PortalUp::
 	lockall
 	playse SE_WARP_IN
 	setflag FLAG_DW_INVERT_PENDING
-	warp MAP_DISTORTION_WORLD_3, 30, 12
+	warp MAP_DISTORTION_WORLD_3, 29, 12
 	waitstate
 	releaseall
 	end
@@ -28,7 +32,7 @@ DistortionWorld_3_EventScript_PortalUp::
 DistortionWorld_3_EventScript_PortalDown::
 	lockall
 	playse SE_WARP_IN
-	warp MAP_DISTORTION_WORLD_3, 30, 20
+	warp MAP_DISTORTION_WORLD_3, 29, 20
 	waitstate
 	releaseall
 	end
@@ -49,6 +53,14 @@ DistortionWorld_3_EventScript_RiftShard::
 DistortionWorld_3_EventScript_ShardLeftBehind::
 	end
 
+@ The mega stone at (23,12) is Haxorite for a player who chose
+@ Axew, Gyaradosite otherwise (WotDistortionWorld_StarterStone; ON_TRANSITION
+@ picks its sprite). Std_FindItem hides it with the object's own flag.
+DistortionWorld_3_EventScript_StarterStone::
+	special WotDistortionWorld_StarterStone
+	finditem VAR_RESULT
+	end
+
 @ The rift's first keeper -- a stranger who has been down here too long.
 DistortionWorld_3_EventScript_Warden::
 	trainerbattle_single TRAINER_RIFT_WARDEN, DistortionWorld_3_Text_WardenIntro, DistortionWorld_3_Text_WardenDefeat
@@ -60,6 +72,8 @@ DistortionWorld_3_Text_WardenIntro::
 	.string "The rift keeps what cannot be let\n"
 	.string "go. I stayed to learn what it\l"
 	.string "kept me for.\p"
+	.string "Here the world runs backward.\n"
+	.string "Strength is weakness.\p"
 	.string "Show me your grip on the world.$"
 
 DistortionWorld_3_Text_WardenDefeat::

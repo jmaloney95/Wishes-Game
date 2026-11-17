@@ -66,6 +66,7 @@ static void StartBgAnimation(bool8 isLink);
 static void StopBgAnimation(void);
 static void Task_AnimateBg(u8 taskId);
 static void RestoreBgAfterAnim(void);
+static void LoadEvolutionSceneBackdrop(void);
 
 static const u16 sUnusedPal1[] = INCGFX_U16("graphics/evolution_scene/unused_1.pal", ".gbapal");
 static const u32 sBgAnim_Gfx[] = INCGFX_U32("graphics/evolution_scene/bg.png", ".4bpp.smol");
@@ -76,6 +77,14 @@ static const u16 sUnusedPal2[] = INCGFX_U16("graphics/evolution_scene/unused_2.p
 static const u16 sUnusedPal3[]  = INCGFX_U16("graphics/evolution_scene/unused_3.pal", ".gbapal");
 static const u16 sUnusedPal4[] = INCGFX_U16("graphics/evolution_scene/unused_4.pal", ".gbapal");
 static const u16 sBgAnim_Pal[] = INCGFX_U16("graphics/evolution_scene/bg_anim.pal", ".gbapal");
+
+// WoT: the scene's backdrop is the party screen's BW grid, not the battle
+// environment. The environment followed WoT's location and trainer overrides
+// and the last battle's terrain, and the scene showed its right half, so
+// evolutions looked broken wherever they happened.
+static const u32 sWotBackdrop_Gfx[] = INCGFX_U32("graphics/evolution_scene/wot_backdrop.png", ".4bpp");
+static const u16 sWotBackdrop_Pal[] = INCGFX_U16("graphics/evolution_scene/wot_backdrop.png", ".gbapal");
+static const u16 sWotBackdrop_Tilemap[] = INCBIN_U16("graphics/evolution_scene/wot_backdrop.bin");
 
 static const u8 sText_ShedinjaJapaneseName[] = _("ヌケニン");
 
@@ -241,6 +250,7 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
 
     InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
+    LoadEvolutionSceneBackdrop();
     ResetSpriteData();
     ScanlineEffect_Stop();
     ResetTasks();
@@ -300,7 +310,11 @@ void EvolutionScene(struct Pokemon *mon, u16 postEvoSpecies, bool8 canStopEvo, u
 
     memcpy(&sEvoStructPtr->savedPalette, &gPlttBufferUnfaded[BG_PLTT_ID(2)], sizeof(sEvoStructPtr->savedPalette));
 
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_1D_MAP);
+    // WoT: only the text box and the backdrop until the swirl starts. BG1/BG2
+    // share char base 1 with the battle environment's tiles, so with their
+    // still-empty maps they painted tile 0 of that image over the whole scene
+    // (and the Pokemon); the swirl turns them on itself when it loads.
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_1D_MAP);
 
     SetHBlankCallback(EvoDummyFunc);
     SetVBlankCallback(VBlankCB_EvolutionScene);
@@ -347,6 +361,7 @@ static void CB2_EvolutionSceneLoadGraphics(void)
 
     InitBattleBgsVideo();
     LoadBattleTextboxAndBackground();
+    LoadEvolutionSceneBackdrop();
     ResetSpriteData();
     FreeAllSpritePalettes();
     gReservedSpritePaletteCount = 4;
@@ -364,7 +379,11 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     gSprites[id].callback = SpriteCallbackDummy_2;
     gSprites[id].oam.paletteNum = 2;
 
-    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG_ALL_ON | DISPCNT_OBJ_1D_MAP);
+    // WoT: only the text box and the backdrop until the swirl starts. BG1/BG2
+    // share char base 1 with the battle environment's tiles, so with their
+    // still-empty maps they painted tile 0 of that image over the whole scene
+    // (and the Pokemon); the swirl turns them on itself when it loads.
+    SetGpuReg(REG_OFFSET_DISPCNT, DISPCNT_OBJ_ON | DISPCNT_BG0_ON | DISPCNT_BG3_ON | DISPCNT_OBJ_1D_MAP);
 
     SetHBlankCallback(EvoDummyFunc);
     SetVBlankCallback(VBlankCB_EvolutionScene);
@@ -373,8 +392,8 @@ static void CB2_EvolutionSceneLoadGraphics(void)
     BeginNormalPaletteFade(PALETTES_ALL, 0, 0x10, 0, RGB_BLACK);
 
     ShowBg(0);
-    ShowBg(1);
-    ShowBg(2);
+    HideBg(1); // WoT: see the DISPCNT note above
+    HideBg(2);
     ShowBg(3);
 }
 
@@ -672,8 +691,8 @@ static void Task_EvolutionScene(u8 taskId)
         gSprites[sEvoStructPtr->preEvoSpriteId].invisible = FALSE;
         gTasks[taskId].tState++;
         ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
+        HideBg(1); // WoT: BG1/BG2 stay off until the swirl shows them (see EvolutionScene)
+        HideBg(2);
         ShowBg(3);
         break;
     case EVOSTATE_INTRO_MSG:
@@ -1701,6 +1720,15 @@ static void StopBgAnimation(void)
 
     FillPalette(RGB_BLACK, BG_PLTT_ID(10), PLTT_SIZE_4BPP);
     RestoreBgAfterAnim();
+}
+
+// Over BG3's environment gfx (BG3 is 64x32; the map tiles the grid across
+// both halves, so the scene's scroll of 256 still lands on it).
+static void LoadEvolutionSceneBackdrop(void)
+{
+    LoadBgTiles(3, sWotBackdrop_Gfx, sizeof(sWotBackdrop_Gfx), 0);
+    LoadBgTilemap(3, sWotBackdrop_Tilemap, sizeof(sWotBackdrop_Tilemap), 0);
+    LoadPalette(sWotBackdrop_Pal, BG_PLTT_ID(2), PLTT_SIZE_4BPP);
 }
 
 static void RestoreBgAfterAnim(void)

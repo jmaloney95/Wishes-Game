@@ -105,7 +105,7 @@ SeafloorCavern_Entrance_EventScript_RedGyarados::
 	delay 40
 	waitmoncry
 	setvar VAR_LAST_TALKED, LOCALID_SEAFLOOR_CAVERN_ENTRANCE_GYARADOS
-	setwildbattle SPECIES_GYARADOS, 20
+	setwildbattle SPECIES_GYARADOS, 18
 	special SetSeafloorGyaradosShiny
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle

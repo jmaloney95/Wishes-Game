@@ -35,7 +35,14 @@ EventScript_CatalpaBowLabCheck::
 	goto EventScript_CatalpaBowToLab
 
 EventScript_CatalpaBowLabLocked::
+	@ The rift comes first: without its badge, point the player back down.
+	goto_if_unset FLAG_BADGE05_GET, EventScript_CatalpaBowLabRiftFirst
 	msgbox Text_GengarLabLocked, MSGBOX_DEFAULT
+	releaseall
+	end
+
+EventScript_CatalpaBowLabRiftFirst::
+	msgbox Text_GengarLabRiftFirst, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -148,6 +155,15 @@ Text_GengarLabLocked::
 	.string "DISTORTION.\p"
 	.string "Bring me all four badges, and\n"
 	.string "the ghost-road will carry you.$"
+
+Text_GengarLabRiftFirst::
+	.string "Not yet, {PLAYER}.\p"
+	.string "We haven't reached the bottom\n"
+	.string "of the rift. Go deeper first.\p"
+	.string "Choose the DISTORTION WORLD and\n"
+	.string "follow the cave down, layer by\l"
+	.string "layer.\p"
+	.string "Then we go home to my lab.$"
 
 Text_GengarLeaveRift::
 	.string "The roads twist strangely in\n"

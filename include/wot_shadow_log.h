@@ -6,6 +6,10 @@ void WotShadowLog_MarkPurifiedSpecies(u16 species);
 void WotShadowLog_MarkMon(struct Pokemon *mon);
 u32 WotShadowLog_CountSnagged(void);
 u32 WotShadowLog_CountPurified(void);
+u32 WotShadowLog_CountedRows(void);
+bool32 WotShadowLog_SpeciesCounts(u16 species);   // a row that counts toward finishing
+bool32 WotShadowLog_IsSpeciesSnagged(u16 species);
+bool32 WotShadowLog_IsComplete(void);              // every counted row snagged
 void WotShadowLog_Backfill(void);
 void WotShowShadowLog(void);
 

@@ -192,7 +192,7 @@ LittlerootTown_BrendansHouse_2F_Movement_PlayerWatchBrendanEast:
 WotText_PCRandomizerAsk::
 	.string "The home computer is still on\n"
 	.string "the setup screen.\p"
-	.string "Open RANDOMIZER SETTINGS?$"
+	.string "Open CHALLENGE SETTINGS?$"
 
 LittlerootTown_BrendansHouse_2F_EventScript_PC::
 	lockall

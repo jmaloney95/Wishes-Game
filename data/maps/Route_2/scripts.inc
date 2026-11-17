@@ -233,8 +233,27 @@ Route_2_EventScript_AllisonBattle2::
 Route_2_EventScript_AllisonBeaten::
 	setspeaker SP_NAME_ALLISON
 	call Route_2_EventScript_AllisonSayPost
+	call Route_2_EventScript_AllisonGiveSpecs
 	releaseall
 	end
+
+@ Her prize for beating her: CHOICE SPECS, once. Shared with her National
+@ Park encounter (Route_2_2). Called again whenever she is talked to after
+@ the fight, so a full bag can retry and a save that beat her before the
+@ prize existed still collects it.
+Route_2_EventScript_AllisonGiveSpecs::
+	goto_if_set FLAG_WOT_ALLISON_CHOICE_SPECS, Route_2_EventScript_AllisonGiveSpecsDone
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonGiveSpecs, MSGBOX_DEFAULT
+	setspeaker SP_NAME_NONE
+	giveitem ITEM_CHOICE_SPECS
+	@ giveitem's success flag is VAR_0x8007; it already said the bag was full.
+	goto_if_eq VAR_0x8007, FALSE, Route_2_EventScript_AllisonGiveSpecsDone
+	setflag FLAG_WOT_ALLISON_CHOICE_SPECS
+	setspeaker SP_NAME_ALLISON
+	msgbox Route_2_Text_AllisonSpecsAfter, MSGBOX_DEFAULT
+Route_2_EventScript_AllisonGiveSpecsDone::
+	return
 
 Route_2_EventScript_AllisonSayPost::
 	random 3
@@ -302,8 +321,18 @@ Route_2_EventScript_AllisonAfter::
 	faceplayer
 	setspeaker SP_NAME_ALLISON
 	call Route_2_EventScript_AllisonSayPost
+	call Route_2_EventScript_AllisonGiveSpecs
 	release
 	end
+
+Route_2_Text_AllisonGiveSpecs:
+	.string "Fine. You earned these.\p"
+	.string "CHOICE SPECS. All the power,\n"
+	.string "one song. Don't change your tune.$"
+
+Route_2_Text_AllisonSpecsAfter:
+	.string "Every siren needs a stage.\n"
+	.string "Go find yours.$"
 
 Route_2_Text_AllisonIntro0:
 	.string "It's UV 9…\n"
@@ -576,9 +605,10 @@ Route_2_Text_LostSnowboarder::
 	.string "slopes were!$"
 
 @ RedFatality, Frostwood's GYM LEADER, stuck at the bottom of the lift with no ticket.
-@ Giving him the EPIC PASS (Sennen Village item ball, placeholder) sends him bolting
-@ back up north and sets FLAG_REDFATALITY_HAS_EPIC_PASS, which hides this object and
-@ unlocks the Frostwood Gym door (WotGetLockedDoorScript in field_control_avatar.c).
+@ Giving him the EPIC PASS (the Frostwood bar's snowboarder hands it over) sends him
+@ bolting back up north and sets FLAG_REDFATALITY_HAS_EPIC_PASS, which hides this
+@ object and unlocks the Frostwood Gym door (WotGetLockedDoorScript in
+@ field_control_avatar.c). It also completes Break Time's Over.
 Route_2_EventScript_RedFatality::
 	lock
 	faceplayer
@@ -595,6 +625,7 @@ Route_2_EventScript_RedFatality::
 	msgbox Route_2_Text_RedFatalitySick, MSGBOX_DEFAULT
 	closemessage
 	setflag FLAG_REDFATALITY_HAS_EPIC_PASS
+	completequest QUEST_BREAK_TIMES_OVER
 	@ Up column 28 is clear to the top of the beach; if the player is standing
 	@ right above him he sidesteps into column 29 instead of running through them.
 	getplayerxy VAR_0x8004, VAR_0x8005

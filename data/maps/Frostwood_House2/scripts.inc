@@ -28,7 +28,7 @@ Frostwood_House2_EventScript_Dad::
 	faceplayer
 	goto_if_set FLAG_TOASTY_TIME_RARE_CANDY, Frostwood_House2_EventScript_DadAfter
 	msgbox Frostwood_House2_Text_DadThanks, MSGBOX_DEFAULT
-	giveitem ITEM_RARE_CANDY
+	giveitem ITEM_TM_ROCK_TOMB
 	@ giveitem clobbers VAR_RESULT; its success flag is VAR_0x8007, and it
 	@ already printed the bag-full message if there was no room.
 	goto_if_eq VAR_0x8007, FALSE, Frostwood_House2_EventScript_DadBagFull
@@ -72,8 +72,10 @@ Frostwood_House2_Text_DadThanks:
 	.string "your trouble.$"
 
 Frostwood_House2_Text_DadAfterGift:
-	.string "Give it to a POKéMON you're proud of.\n"
-	.string "Our girls sure made us proud today.$"
+	.string "Our boy runs the GYM up the lift.\p"
+	.string "Ice cracks under a good rock, and\n"
+	.string "so does that ARCANINE of his.\p"
+	.string "…You didn't hear it from me.$"
 
 Frostwood_House2_Text_DadAfter:
 	.string "A full house and a hot supper.\n"

@@ -1,5 +1,12 @@
 DistortionWorld_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, DistortionWorld_OnTransition
 	.byte 0
+
+@ Whiting out anywhere in the Distortion World respawns at the National Park
+@ (Act 2) spawn point, 41,18. Every layer sets it on entry.
+DistortionWorld_OnTransition::
+	setrespawn HEAL_LOCATION_NATIONAL_PARK_ACT2
+	end
 
 @ ============================================================================
 @  DISTORTION WORLD -- the far side of the gravesite seam.
@@ -7,7 +14,8 @@ DistortionWorld_MapScripts::
 @  Story: Prof. Clarkson died at Star Summit. His spirit lives on inside a
 @  wild GENGAR ("ghosts collect ghosts"). The Catalpa Bow is the one string
 @  that sounds on both sides of the veil -- it lets the living hear him.
-@  The NPC here is the GENGAR (local ID 1), speaking as Clarkson.
+@  The NPC here is the GENGAR (local ID 1, drawn as a shiny Mega Gengar),
+@  speaking as Clarkson. The gift is a plain shiny Gengar: Megas only last a battle.
 @  Scene: full confession -> Gengar JOINS THE PARTY -> the Distortion World
 @  collapses (screen shake) -> player is thrown back in front of the
 @  gravesite (47,19). Afterward the seam is closed for good
@@ -20,9 +28,9 @@ DistortionWorld_EventScript_Clarkson::
 	lock
 	faceplayer
 	waitse
-	playmoncry SPECIES_GENGAR, CRY_MODE_NORMAL
+	playmoncry SPECIES_GENGAR_MEGA, CRY_MODE_NORMAL
 	waitmoncry
-	setspeaker SP_NAME_GENGAR
+	setspeaker SP_NAME_CLARKSON
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox DistortionWorld_Text_GengarClarkson1, MSGBOX_DEFAULT
 	msgbox DistortionWorld_Text_GengarClarkson2, MSGBOX_DEFAULT
@@ -47,7 +55,7 @@ DistortionWorld_EventScript_Collapse::
 	closemessage
 	@ Gengar offers to send the player home before he fades and the world
 	@ collapses (the warp back to National Park below IS that teleport).
-	setspeaker SP_NAME_GENGAR
+	setspeaker SP_NAME_CLARKSON
 	showportrait PORTRAIT_CLARKSON_GENGAR
 	msgbox DistortionWorld_Text_GengarTeleportHome, MSGBOX_DEFAULT
 	closemessage
@@ -152,7 +160,7 @@ DistortionWorld_Text_GengarClarkson1::
 	.string "Kekeke... don't reach for a Poke\n"
 	.string "Ball just yet, {PLAYER}.\p"
 	.string "It's me. Or what remains of me.\n"
-	.string "Let me say it plainly,\n"
+	.string "Let me say it plainly,\p"
 	.string "Professor Clarkson died on Star\n"
 	.string "Summit.\p"
 	.string "What fell into the lava was me.\n"
@@ -178,7 +186,12 @@ DistortionWorld_Text_GengarClarkson3::
 	.string "Team Mutrid find it.\p"
 	.string "You must DESTROY my research.\n"
 	.string "Burn every page.\p"
-	.string "We must see this through together.\p"
+	.string "But not yet. This room is only\n"
+	.string "the first layer of the rift.\p"
+	.string "Whatever fed Mutrid's program\n"
+	.string "is waiting further down.\p"
+	.string "We go deeper first. Then you\n"
+	.string "take me home to my lab in Munen.\p"
 	.string "Take us with you, {PLAYER}.$"
 
 DistortionWorld_Text_GengarJoined::
@@ -186,7 +199,7 @@ DistortionWorld_Text_GengarJoined::
 	.string "within it, joined your party!$"
 
 DistortionWorld_Text_GengarJoinedPC::
-	.string "GENGAR: and everything riding\n"
+	.string "GENGAR and everything riding\n"
 	.string "within it, was sent to the PC.\p"
 	.string "Box logistics. Even death has\n"
 	.string "paperwork, kekeke.$"
@@ -194,7 +207,7 @@ DistortionWorld_Text_GengarJoinedPC::
 DistortionWorld_Text_NoRoom::
 	.string "...Your party and your boxes are\n"
 	.string "FULL, {PLAYER}.\p"
-	.string "“Even a ghost needs a seat.\p"
+	.string "Even a ghost needs a seat.\p"
 	.string "Make room, then come back for\n"
 	.string "me. I have waited this long.$"
 
@@ -205,7 +218,11 @@ DistortionWorld_Text_GengarTeleportHome::
 	.string "for one last trick.\p"
 	.string "Let me send you home, {PLAYER}.\n"
 	.string "Back to the living world, where you\l"
-	.string "belong.$"
+	.string "belong.\p"
+	.string "When you're ready, play the bow\n"
+	.string "at my grave with me in your party.\p"
+	.string "It will carry us back in, and\n"
+	.string "deeper. The lab comes after.$"
 
 DistortionWorld_Text_Collapse1::
 	.string "Ah. There it is.\p"
@@ -214,7 +231,7 @@ DistortionWorld_Text_Collapse1::
 	.string "Hold on to me!$"
 
 DistortionWorld_Text_Collapse2::
-	.string "The floating stones crack apart\p"
+	.string "The floating stones crack apart.\p"
 	.string "The Distortion World folds\n"
 	.string "inward…$"
 

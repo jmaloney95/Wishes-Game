@@ -1,5 +1,6 @@
 #include "global.h"
 #include "wot_shadow_log.h"
+#include "wot_nuzlocke.h"
 #include "battle.h"
 #include "battle_hold_effects.h"
 #include "battle_message.h"
@@ -75,6 +76,8 @@
 #include "follower_npc.h"
 #include "load_save.h"
 #include "test/test_runner_battle.h"
+#include "wot_mega_dimension.h"
+#include "wot_film_shiny.h"
 
 // Helper for accessing command arguments and advancing gBattlescriptCurrInstr.
 //
@@ -1380,6 +1383,12 @@ static void Cmd_multihitresultmessage(void)
     if (gBattleControllerExecFlags)
         return;
 
+    if (WotMegaDim_TakeBossLastStand(gBattlerTarget))
+    {
+        BattleScriptCall(BattleScript_WotBossLastStand);
+        return;
+    }
+
     if (!(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_FAILED)
      && !(gBattleStruct->moveResultFlags[gBattlerTarget] & MOVE_RESULT_FOE_ENDURED))
     {
@@ -2001,6 +2010,12 @@ static void Cmd_resultmessage(void)
 
     if (gBattleControllerExecFlags)
         return;
+
+    if (WotMegaDim_TakeBossLastStand(gBattlerTarget))
+    {
+        BattleScriptCall(BattleScript_WotBossLastStand);
+        return;
+    }
 
     if (*moveResultFlags & MOVE_RESULT_MISSED && !(*moveResultFlags & MOVE_RESULT_DOESNT_AFFECT_FOE))
     {
@@ -3892,6 +3907,7 @@ static void Cmd_tryfaintmon(void)
                     gBattleResults.playerFaintCounter++;
                 AdjustFriendshipOnBattleFaint(battler);
                 gSideTimers[B_SIDE_PLAYER].retaliateTimer = 2;
+                WotNuzlocke_RecordFaint(battler);
             }
             else
             {
@@ -5557,7 +5573,10 @@ static void Cmd_openpartyscreen(void)
 
     if (cmd->battler == BS_FAINTED_MULTIPLE_1)
     {
-        if ((gBattleTypeFlags & BATTLE_TYPE_MULTI) || !(IsDoubleBattle()))
+        // WoT: with both player-side Pokemon chosen by the player (a Mega
+        // Dimension partner battle), replacements come one menu at a time,
+        // the double-battle way.
+        if ((gBattleTypeFlags & BATTLE_TYPE_MULTI && !WotMegaDim_PartnerPlayerControlled()) || !(IsDoubleBattle()))
         {
             for (battler = 0; battler < gBattlersCount; battler++)
             {
@@ -5648,7 +5667,7 @@ static void Cmd_openpartyscreen(void)
     }
     else if (cmd->battler == BS_FAINTED_MULTIPLE_2)
     {
-        if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI))
+        if (!(gBattleTypeFlags & BATTLE_TYPE_MULTI) || WotMegaDim_PartnerPlayerControlled())
         {
             if (IsDoubleBattle())
             {
@@ -9503,12 +9522,35 @@ static void Cmd_recoverbasedonsunlight(void)
     if (gBattleMons[gBattlerAttacker].hp != gBattleMons[gBattlerAttacker].maxHP)
     {
         s32 recoverAmount = 0;
+        // Mega Sol (ported from expansion 1.16-1.17): heals as if in sun whatever the
+        // weather, and shows its pop-up when that is what made the difference.
+        bool32 megaSol = (GetBattlerAbility(gBattlerAttacker) == ABILITY_MEGA_SOL);
+        bool32 megaSolPopUp = FALSE;
         if (GetMoveEffect(gCurrentMove) == EFFECT_SHORE_UP)
         {
-            if (HasWeatherEffect() && gBattleWeather & B_WEATHER_SANDSTORM)
+            if (HasWeatherEffect() && gBattleWeather & B_WEATHER_SANDSTORM && !megaSol)
                 recoverAmount = 20 * GetNonDynamaxMaxHP(gBattlerAttacker) / 30;
             else
                 recoverAmount = GetNonDynamaxMaxHP(gBattlerAttacker) / 2;
+        }
+        else if (megaSol)
+        {
+            if (GetConfig(B_TIME_OF_DAY_HEALING_MOVES) != GEN_2)
+            {
+                recoverAmount = 20 * GetNonDynamaxMaxHP(gBattlerAttacker) / 30;
+            }
+            else
+            {
+                u32 time = GetTimeOfDay();
+                u32 healingModifier = 1;
+                if ((GetMoveEffect(gCurrentMove) == EFFECT_MOONLIGHT && (time == TIME_NIGHT || time == TIME_EVENING))
+                 || (GetMoveEffect(gCurrentMove) == EFFECT_MORNING_SUN
+                     && ((OW_TIMES_OF_DAY == GEN_3 && time == TIME_DAY) || (OW_TIMES_OF_DAY != GEN_3 && time == TIME_MORNING)))
+                 || (GetMoveEffect(gCurrentMove) == EFFECT_SYNTHESIS && time == TIME_DAY))
+                    healingModifier = 2;
+                recoverAmount = healingModifier * GetNonDynamaxMaxHP(gBattlerAttacker) / 2;
+            }
+            megaSolPopUp = !IsBattlerWeatherAffected(gBattlerAttacker, B_WEATHER_SUN);
         }
         else if (GetConfig(B_TIME_OF_DAY_HEALING_MOVES) != GEN_2)
         {
@@ -9554,7 +9596,15 @@ static void Cmd_recoverbasedonsunlight(void)
         }
 
         SetHealAmount(gBattlerAttacker, recoverAmount);
-        gBattlescriptCurrInstr = cmd->nextInstr;
+        if (megaSolPopUp)
+        {
+            gBattlerAbility = gBattlerAttacker;
+            gBattlescriptCurrInstr = BattleScript_MegaSolActivatesHealing;
+        }
+        else
+        {
+            gBattlescriptCurrInstr = cmd->nextInstr;
+        }
     }
     else
     {
@@ -10656,6 +10706,10 @@ struct BallData
 
 #define CAPTURE_GUARANTEED -1
 
+// WoT: minimum catch rates for Shadow Pokemon (see ComputeCaptureOdds).
+#define WOT_SHADOW_CATCH_RATE_FLOOR        90
+#define WOT_SHADOW_LEGEND_CATCH_RATE_FLOOR 45
+
 static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallData *ball)
 {
     u32 i;
@@ -10878,6 +10932,19 @@ static u32 ComputeCaptureOdds(u32 wildMonBattler, u32 playerBattler)
     else
         catchRate = gSpeciesInfo[battleMon->species].catchRate;
 
+    // WoT Shadow system: Shadows are weakened by the aura, so their catch
+    // rate never drops below a floor -- legends (Deoxys, Jirachi, Lugia...)
+    // get a lower one so they still take some work. Stacks with the Snag Ball.
+    if (GetMonData(GetBattlerMon(wildMonBattler), MON_DATA_IS_SHADOW))
+    {
+        const struct SpeciesInfo *info = &gSpeciesInfo[battleMon->species];
+        s32 floor = (info->isRestrictedLegendary || info->isSubLegendary || info->isMythical || info->isUltraBeast)
+                  ? WOT_SHADOW_LEGEND_CATCH_RATE_FLOOR : WOT_SHADOW_CATCH_RATE_FLOOR;
+        if (catchRate < floor)
+            catchRate = floor;
+    }
+    catchRate = WotMegaDim_CapCatchRate(catchRate, wildMonBattler);
+
     catchRate += ball.flatBonus;
     if (catchRate <= 0)
         catchRate = catchRate + ball.flatBonus;
@@ -11036,6 +11103,8 @@ static void Cmd_handleballthrow(void)
         u32 odds = ComputeCaptureOdds(gBattlerTarget, gBattlerAttacker);
         if (gTestRunnerEnabled)
             TestRunner_Battle_RecordCatchChance(odds);
+        if (WotFilmCatch_IsOn()) // debug: every ball catches (off unless switched on)
+            odds = CAPTURE_GUARANTEED;
 
         u32 ballId = ItemIdToBallId(gLastUsedItem);
         if (gBattleResults.catchAttempts[ballId] < 255)
@@ -11324,6 +11393,7 @@ static void Cmd_displaydexinfo(void)
     case 3:
         InitBattleBgsVideo();
         LoadBattleTextboxAndBackground();
+        DrawCaughtMonGridBackground(); // WoT: the party screen's grid behind the caught Pokémon
         gBattle_BG3_X = 256;
         gBattleCommunication[0]++;
         break;
@@ -11766,10 +11836,12 @@ void BS_WotGiveSnaggedMon(void)
         // the BACKUP party (the thing that gets restored): first open slot
         // joins the party, otherwise the PC.
         u32 slot;
+        bool32 isShiny = GetMonData(&gEnemyParty[i], MON_DATA_IS_SHINY); // kept across the OT change (see GiveCapturedMonToPlayer)
 
         SetMonData(&gEnemyParty[i], MON_DATA_OT_NAME, gSaveBlock2Ptr->playerName);
         SetMonData(&gEnemyParty[i], MON_DATA_OT_GENDER, &gSaveBlock2Ptr->playerGender);
         SetMonData(&gEnemyParty[i], MON_DATA_OT_ID, gSaveBlock2Ptr->playerTrainerId);
+        SetMonData(&gEnemyParty[i], MON_DATA_IS_SHINY, &isShiny);
         for (slot = 0; slot < PARTY_SIZE; slot++)
         {
             if (!GetMonData(GetSavedPlayerPartyMon(slot), MON_DATA_SPECIES))
@@ -15065,7 +15137,9 @@ void BS_JumpIfWeatherAffected(void)
 {
     NATIVE_ARGS(u16 flags, const u8 *jumpInstr);
     u32 weather = cmd->flags;
-    if (IsBattlerWeatherAffected(gBattlerAttacker, weather))
+    // The attacker's weather (expansion 1.16): Growth's sun bonus counts for a Mega Sol user.
+    if (IsBattlerWeatherAffected(gBattlerAttacker, weather)
+     || (GetBattlerAbility(gBattlerAttacker) == ABILITY_MEGA_SOL && (weather & B_WEATHER_SUN)))
         gBattlescriptCurrInstr = cmd->jumpInstr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;

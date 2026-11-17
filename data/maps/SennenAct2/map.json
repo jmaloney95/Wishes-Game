@@ -38,7 +38,7 @@
       "trainer_type": "TRAINER_TYPE_NORMAL",
       "trainer_sight_or_berry_tree_id": "3",
       "script": "SennenAct2_EventScript_CaptainRyoko",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOT_ALDO",
@@ -194,7 +194,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "SennenAct2_EventScript_GoonFighter3",
-      "flag": "0"
+      "flag": "FLAG_WOT_HIDE_POSTGAME_MUTRIDS"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_WOT_JET",

@@ -647,6 +647,8 @@ gSpecials::
 	def_special ShowQuestPopup
 	def_special StartRiftDistortion
 	def_special EndRiftDistortion
+	def_special EaseOutRiftDistortion
+	def_special StartRiftDistortionFull
 	def_special RefreshPlayerAvatarGraphicsIfOnFoot
 	def_special GetMonShadowState
 	def_special PurifyPartyMon
@@ -667,6 +669,7 @@ gSpecials::
 	@ WoT: give a map's OW Pokemon object the Shadow silhouette (VAR_0x8004 = local id)
 	def_special WotMakeObjectEventShadow
 	def_special WotShowShadowLog
+	def_special WotMegaLog_Open, waitstate=1
 	def_special WotShadowLogSnaggedCount
 	def_special WotShadowLogPurifiedCount
 	def_special WotSetStarterSpecies
@@ -679,3 +682,105 @@ gSpecials::
 	def_special WotShipDepart, waitstate=1
 	def_special WotBufferLastTalkedSpecies
 	def_special WotStartFamilyHearts
+	@ WoT: the team pose (src/wot_team_pose.c; L in the field)
+	def_special WotTeamPose_Plan
+	def_special WotTeamPose_Run, waitstate=1
+	def_special WotTeamPose_Scram
+	def_special WotTeamPose_ScramDone, waitstate=1
+	@ WoT: the Mega Dimension (src/wot_mega_dimension.c)
+	def_special WotMegaDim_EnterPortal, waitstate=1
+	def_special WotMegaDim_LeaveOut, waitstate=1
+	def_special WotMegaDim_CollapseOut, waitstate=1
+	def_special WotMegaDim_CheckPortal
+	def_special WotMegaDim_TaunieScout
+	def_special WotMegaDim_MarkWildGone
+	def_special WotMegaDim_DebugForceShiny
+	def_special WotMegaDim_MableReport
+	def_special WotMegaDim_StartLegendQuest
+	def_special WotMegaDim_BufferPortalAlert
+	def_special WotMegaDim_BufferAlertClock
+	def_special WotMegaDim_DebugMableNext
+	def_special WotHotelZ_SetExit
+	def_special WotHotelZ_SetupShinTokyoDoor
+	def_special WotMegaDim_GetRivalState
+	def_special WotMegaDim_SetPartner
+	def_special WotMegaDim_BufferPartner
+	def_special WotMegaDim_TakeTwoHearts
+	def_special WotMegaDim_TakeFriendshipUp
+	def_special WotPartnerCard_Open
+	def_special WotPartner_BufferFieldLine
+	def_special WotPartner_BufferHotelLine
+	def_special WotHotelZ_ShowRivals
+	def_special WotMegaDim_DebugPartner
+	def_special WotMegaDim_DebugPartnerRuns
+	def_special WotMegaDim_GetMega
+	def_special WotMegaDim_SetMegaGfx
+	def_special WotMegaDim_SetupMegaBattle
+	def_special WotMegaDim_EndMegaBattle
+	def_special WotMegaDim_MarkClaimed
+	def_special WotMegaDim_StartHud
+	def_special WotMegaDim_DebugOpenPortal, waitstate=1
+	def_special WotMegaDim_DebugShortTimer
+	def_special WotMegaDim_CloseTodaysPortal
+	def_special WotMegaDim_GetRival
+	def_special WotMegaDim_DebugForceRival
+	def_special WotMegaDim_BufferTalkedMon
+	def_special WotMegaDim_StartOverworldMonBattle, waitstate=1
+	def_special WotMegaDim_CountClaimed
+	def_special WotMegaDim_PortalArrivalDone
+	def_special WotZShards_Give
+	def_special WotZShards_GiveBoss
+	def_special WotMegaDim_MableGiftDue
+	def_special WotZShop_Open, waitstate=1
+	def_special WotTmShop_Open, waitstate=1
+	def_special WotEvoAdvice_Prepare
+	def_special WotEvoAdvice_Get
+	def_special WotPartner_TakeCrystalGift
+	def_special WotMegaDim_DebugZKit
+	def_special WotZygarde_GetStage
+	def_special WotZygarde_SetStage
+	def_special WotZygarde_PebbleDue
+	def_special WotZygarde_RevealDue
+	def_special WotZygarde_SetupDesk
+	def_special WotZygarde_SetupDrainedHotel
+	def_special WotZygarde_IsTalkedCell
+	def_special WotZygarde_TakeCell
+	def_special WotZygarde_DogCounts
+	def_special WotZygarde_MableLine
+	def_special WotZygarde_SetupDogBattle
+	def_special WotZygarde_SetupFloetteBattle
+	def_special WotZygarde_SetupZygardeBattle
+	def_special WotZygarde_DebugNext
+	def_special WotMegaDim_GetReturnPortal
+	def_special WotMegaDim_ShowReturningPlayer
+	def_special WotMegaDim_PortalGrow, waitstate=1
+	def_special WotMegaDim_PortalShrink, waitstate=1
+	def_special WotSanctum_CheckBarrier
+	def_special WotSanctum_Enter, waitstate=1
+	def_special WotSanctum_Leave, waitstate=1
+	def_special WotSanctum_Setup
+	def_special WotSanctum_ShadeLegend
+	def_special WotSanctum_HoldoutBeaten
+	def_special WotSanctum_SetupLegendBattle
+	def_special WotSanctum_LegendCaught
+	def_special WotMegaDim_DebugSanctum
+	def_special WotGiveRyudenEgg
+	def_special WotFilmShiny_DebugToggleNext
+	def_special WotFilmShiny_DebugToggleAll
+	def_special WotFilmCatch_DebugToggle
+	def_special WotFilmMusic_DebugToggle
+	def_special WotPrototypeLab_RollDeoxysShiny
+	def_special WotPrototypeLab_SetDeoxysShiny
+	def_special WotDistortionWorld_StarterStone
+	def_special WotShadowLogArceusWaits
+	def_special WotShadowLogSpeciesSnagged
+	def_special WotRematch_CanOffer
+	def_special WotRematch_BufferName
+	def_special WotRematch_Arm
+	def_special WotNuzlocke_TakeEndedNotice
+	def_special WotJukebox_PlayRandomSong
+	def_special WotTrailer_StartParkTour
+	def_special WotTrailer_EndParkTour
+	def_special WotMysteryCode_OpenEntry, waitstate=1
+	def_special WotMysteryCode_Check
+	def_special WotMysteryCode_Give

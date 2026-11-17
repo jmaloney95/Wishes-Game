@@ -598,6 +598,61 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "ShinTokyo_EventScript_FerryHand",
       "flag": "FLAG_WOT_HIDE_FRONTIER_FERRY"
+    },
+    {
+      "local_id": "LOCALID_SHINTOKYO_MEGA_PORTAL",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 46,
+      "y": 24,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_4"
+    },
+    {
+      "local_id": "LOCALID_SHINTOKYO_MEGA_PORTAL_2",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 55,
+      "y": 43,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_5"
+    },
+    {
+      "local_id": "LOCALID_SHINTOKYO_MEGA_PORTAL_3",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 28,
+      "y": 18,
+      "elevation": 5,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "MegaDim_EventScript_Portal",
+      "flag": "FLAG_HIDE_MEGA_PORTAL_6"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_WOT_HOTEL_Z_SIGN",
+      "x": 13,
+      "y": 15,
+      "elevation": 4,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "0x0",
+      "flag": "FLAG_TEMP_1"
     }
   ],
   "warp_events": [
@@ -677,6 +732,20 @@
       "elevation": 0,
       "dest_map": "MAP_MEWTWO_POST_GAME",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 12,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_HOTEL_Z",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 13,
+      "y": 17,
+      "elevation": 0,
+      "dest_map": "MAP_HOTEL_Z",
+      "dest_warp_id": "1"
     }
   ],
   "coord_events": [

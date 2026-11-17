@@ -480,7 +480,31 @@
 #define OBJ_EVENT_GFX_WOT_OLEANA                     429 // aveontrainer
 #define OBJ_EVENT_GFX_WOT_JACINTHE                   430 // DiegoWT
 #define OBJ_EVENT_GFX_WOT_VICTOR                     431 // Cyberstryke7
-#define NUM_OBJ_EVENT_GFX                        432
+#define OBJ_EVENT_GFX_WOT_MEGA_PORTAL                432 // Mega Dimension rift (placeholder art)
+// Pokemon ZA trainers: walking sprites
+#define OBJ_EVENT_GFX_ZA_EMMA                        433
+#define OBJ_EVENT_GFX_ZA_CANARI                      434
+#define OBJ_EVENT_GFX_ZA_VALERIE                     435
+#define OBJ_EVENT_GFX_ZA_TULIP                       436
+#define OBJ_EVENT_GFX_ZA_MABLE                       437
+#define OBJ_EVENT_GFX_ZA_TAUNIE                      438
+#define OBJ_EVENT_GFX_ZA_LIDA                        439
+// Rift Sanctum barriers
+#define OBJ_EVENT_GFX_WOT_BARRIER_SURGE              440
+#define OBJ_EVENT_GFX_WOT_BARRIER_TIMEFREEZE         441
+#define OBJ_EVENT_GFX_WOT_BARRIER_ILLUSION           442
+#define OBJ_EVENT_GFX_WOT_BARRIER_LIFELINE           443
+#define OBJ_EVENT_GFX_WOT_BARRIER_BREAKTHROUGH       444
+#define OBJ_EVENT_GFX_WOT_BARRIER_DASH               445
+// The Haxorus starter line's stone on the Distortion World floor.
+#define OBJ_EVENT_GFX_ITEM_HAXORITE                  446
+// AZ at Hotel Z's desk
+#define OBJ_EVENT_GFX_ZA_AZ                          447
+#define OBJ_EVENT_GFX_WOT_ZYGARDE_CELL               448
+// Neon signs in Shin Tokyo
+#define OBJ_EVENT_GFX_WOT_HOTEL_Z_SIGN               449
+#define OBJ_EVENT_GFX_WOT_GYM_ARROW_SIGN             450
+#define NUM_OBJ_EVENT_GFX                        451
 
 
 // These are dynamic object gfx ids.
@@ -635,6 +659,23 @@
 #define OBJ_EVENT_PAL_TAG_WOT_OLEANA                            0x1171
 #define OBJ_EVENT_PAL_TAG_WOT_JACINTHE                          0x1172
 #define OBJ_EVENT_PAL_TAG_WOT_VICTOR                            0x1173
+// Pokemon ZA trainers
+#define OBJ_EVENT_PAL_TAG_ZA_EMMA                               0x1174
+#define OBJ_EVENT_PAL_TAG_ZA_CANARI                             0x1175
+#define OBJ_EVENT_PAL_TAG_ZA_VALERIE                            0x1176
+#define OBJ_EVENT_PAL_TAG_ZA_TULIP                              0x1177
+#define OBJ_EVENT_PAL_TAG_ZA_MABLE                              0x1178
+#define OBJ_EVENT_PAL_TAG_ZA_TAUNIE                             0x1179
+#define OBJ_EVENT_PAL_TAG_ZA_LIDA                               0x117A
+// Rift Sanctum barriers
+#define OBJ_EVENT_PAL_TAG_WOT_BARRIER_SURGE                     0x117B
+#define OBJ_EVENT_PAL_TAG_WOT_BARRIER_TIMEFREEZE                0x117C
+#define OBJ_EVENT_PAL_TAG_WOT_BARRIER_ILLUSION                  0x117D
+#define OBJ_EVENT_PAL_TAG_WOT_BARRIER_LIFELINE                  0x117E
+#define OBJ_EVENT_PAL_TAG_WOT_BARRIER_BREAKTHROUGH              0x117F
+#define OBJ_EVENT_PAL_TAG_WOT_BARRIER_DASH                      0x1180
+#define OBJ_EVENT_PAL_TAG_ZA_AZ                                 0x1181
+#define OBJ_EVENT_PAL_TAG_WOT_ZYGARDE_CELL                      0x1182
 #define OBJ_EVENT_PAL_TAG_SSTIDAL                 0x1114
 #define OBJ_EVENT_PAL_TAG_PLAYER_UNDERWATER       0x1115
 #define OBJ_EVENT_PAL_TAG_KYOGRE                  0x1116
@@ -718,6 +759,16 @@
 #define OBJ_EVENT_PAL_TAG_ITEM_GYARADOSITE        0x8008
 // Wishes of Tomorrow: the red street light (LIGHT_TYPE_WOT_RED).
 #define OBJ_EVENT_PAL_TAG_WOT_RED_LIGHT           0x8009
+// Wishes of Tomorrow: the Mega Dimension portal. Blend-immune on purpose: it
+// glows the same at night and stays in colour inside the grayscale dimension.
+#define OBJ_EVENT_PAL_TAG_WOT_MEGA_PORTAL         0x800A
+// Wishes of Tomorrow: the Carved Mask pickup, drawn with the Cornerstone Mask
+// bag icon and its palette.
+#define OBJ_EVENT_PAL_TAG_ITEM_CARVED_MASK        0x800B
+// Haxorite on the Distortion World floor, its bag-icon palette.
+#define OBJ_EVENT_PAL_TAG_ITEM_HAXORITE           0x800C
+// Neon: blend-immune, so it glows the same at night.
+#define OBJ_EVENT_PAL_TAG_WOT_NEON_SIGN           0x800D
 // Not a real OW palette tag; used for the white flash applied to followers
 // Wishes of Tomorrow: a Shadow Pokemon follower is drawn as a dark violet
 // silhouette built at runtime from its ordinary palette, so it needs a tag of
@@ -727,6 +778,10 @@
 // FLDEFF_PAL_TAG_FIELD_MOVE_MON 0x8400. Reflections are the tag + 0x800, so
 // these land at 0x9800-0x9DDC, also free.
 #define OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON          0x9000
+// A SHINY Shadow's silhouette is gold, so it needs its own tags:
+// 0xA000-0xA6DC, reflections 0xA800-0xAEDC. Only the contest screen uses
+// anything near there (0xABE0-0xABE2), never alongside the field.
+#define OBJ_EVENT_PAL_TAG_WOT_SHADOW_MON_SHINY    0xA000
 
 #define OBJ_EVENT_PAL_TAG_WHITE                   (OBJ_EVENT_PAL_TAG_NONE - 1)
 #define OBJ_EVENT_PAL_TAG_NONE                    0x11FF

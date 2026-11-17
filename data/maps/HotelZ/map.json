@@ -1,0 +1,209 @@
+{
+  "id": "MAP_HOTEL_Z",
+  "name": "HotelZ",
+  "layout": "LAYOUT_HOTEL_Z",
+  "music": "MUS_LILYCOVE_MUSEUM",
+  "region_map_section": "MAPSEC_TRADEWIND_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_INDOOR",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": false,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "local_id": "LOCALID_HOTEL_Z_MABLE",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_MABLE",
+      "x": 6,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Mable",
+      "flag": "FLAG_HIDE_HOTEL_Z_TEAM"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_LIDA",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_LIDA",
+      "x": 4,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Lida",
+      "flag": "FLAG_HIDE_HOTEL_Z_TEAM"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_CANARI",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_CANARI",
+      "x": 9,
+      "y": 8,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Canari",
+      "flag": "FLAG_HIDE_HOTEL_Z_TEAM"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_EMMA",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_EMMA",
+      "x": 2,
+      "y": 6,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Emma",
+      "flag": "FLAG_TEMP_1"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_TAUNIE",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_TAUNIE",
+      "x": 11,
+      "y": 6,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Taunie",
+      "flag": "FLAG_TEMP_2"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_TULIP",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_TULIP",
+      "x": 5,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN_AND_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Tulip",
+      "flag": "FLAG_TEMP_3"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_JACINTHE",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_JACINTHE",
+      "x": 8,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN_UP_AND_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Jacinthe",
+      "flag": "FLAG_TEMP_4"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_AZ",
+      "graphics_id": "OBJ_EVENT_GFX_ZA_AZ",
+      "x": 1,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_FACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_AZ",
+      "flag": "FLAG_TEMP_5"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_DOG",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(ZYGARDE_10_AURA_BREAK)",
+      "x": 3,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
+      "movement_range_x": 1,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_Dog",
+      "flag": "FLAG_TEMP_6"
+    },
+    {
+      "local_id": "LOCALID_HOTEL_Z_RIFT",
+      "graphics_id": "OBJ_EVENT_GFX_WOT_MEGA_PORTAL",
+      "x": 1,
+      "y": 3,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HotelZ_EventScript_DeskRift",
+      "flag": "FLAG_TEMP_7"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 6,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "WARP_ID_DYNAMIC"
+    },
+    {
+      "x": 7,
+      "y": 10,
+      "elevation": 0,
+      "dest_map": "MAP_DYNAMIC",
+      "dest_warp_id": "WARP_ID_DYNAMIC"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": [
+    {
+      "type": "sign",
+      "x": 0,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "HotelZ_EventScript_AZ"
+    },
+    {
+      "type": "sign",
+      "x": 1,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "HotelZ_EventScript_AZ"
+    },
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 5,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "HotelZ_EventScript_AZ"
+    },
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 4,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "HotelZ_EventScript_AZ"
+    }
+  ]
+}

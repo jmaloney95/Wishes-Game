@@ -20,11 +20,16 @@ WoT_EventScript_HideFollower::
 	setflag FLAG_TEMP_HIDE_FOLLOWER
 	end
 
+@ WoT: talking to your follower plays its cry and nothing else, like every
+@ other overworld Pokemon (Common_EventScript_WotPokemonCry). The engine's
+@ getfolloweraction reactions and emotes are no longer used.
 EventScript_Follower::
 	lock
-	bufferlivemonnickname STR_VAR_1
 	playfirstmoncry
-	getfolloweraction
+	waitmoncry
+	release
+	end
+
 EventScript_FollowerEnd::
 	waitfieldeffect FLDEFF_EMOTE
 	release

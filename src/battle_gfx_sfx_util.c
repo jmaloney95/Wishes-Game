@@ -3,6 +3,7 @@
 #include "battle_controllers.h"
 #include "battle_ai_main.h"
 #include "battle_anim.h"
+#include "wot_mega_dimension.h"
 #include "constants/battle_anim.h"
 #include "battle_interface.h"
 #include "main.h"
@@ -618,9 +619,10 @@ bool8 IsBattleSEPlaying(enum BattlerId battler)
 #include "wot_shadow_log.h"
 
 // Returns TRUE if custom shadow art was applied (gfx + palette overwritten).
-static bool32 WotTryLoadShadowMonGfx(u32 species, enum BattlerId battler, u32 paletteOffset)
+static bool32 WotTryLoadShadowMonGfx(u32 species, enum BattlerId battler, u32 paletteOffset, bool32 isShiny)
 {
     const struct WotShadowPic *art;
+    const u16 *pal;
     enum BattlerPosition position = GetBattlerPosition(battler);
     u32 f;
 
@@ -633,8 +635,9 @@ static bool32 WotTryLoadShadowMonGfx(u32 species, enum BattlerId battler, u32 pa
 
     for (f = 0; f < MAX_MON_PIC_FRAMES; f++)
         CpuCopy32(art->pic, gMonSpritesGfxPtr->spritesGfx[position] + f * MON_PIC_SIZE, MON_PIC_SIZE);
-    LoadPalette(art->pal, paletteOffset, PLTT_SIZE_4BPP);
-    LoadPalette(art->pal, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);
+    pal = WotShadowPicPal(art, isShiny); // Shiny Shadows have their own palette
+    LoadPalette(pal, paletteOffset, PLTT_SIZE_4BPP);
+    LoadPalette(pal, BG_PLTT_ID(8) + BG_PLTT_ID(battler), PLTT_SIZE_4BPP);
     return TRUE;
 }
 
@@ -704,12 +707,13 @@ void BattleLoadMonSpriteGfx(struct Pokemon *mon, enum BattlerId battler)
     // WoT Shadow system: Shadow mons carry a violet cast -- an engine-side
     // tint (same mechanism as the dynamax blend), no per-species art needed.
     // The aura overlay + red eyes are an art pass on top of this.
-    if (WotMonIsShadow(mon) && !WotSpeciesIsShadow(species))
+    // A form drawn for its Shadow (Mega Deoxys) shows that art untouched.
+    if (WotMonIsShadow(mon) && !WotSpeciesIsShadow(species) && !WotShadowKeepsOwnArt(species))
     {
         // Custom shadow art replaces the tint where it exists (enemy side).
         // A species that IS a Shadow species is already drawn that way and is
         // excluded above -- tinting it again would only muddy its own art.
-        if (!WotTryLoadShadowMonGfx(species, battler, paletteOffset))
+        if (!WotTryLoadShadowMonGfx(species, battler, paletteOffset, isShiny))
         {
             BlendPalette(paletteOffset, 16, 8, RGB(18, 4, 26));
             CpuCopy32(gPlttBufferFaded + paletteOffset, gPlttBufferUnfaded + paletteOffset, PLTT_SIZEOF(16));
@@ -784,6 +788,7 @@ bool8 BattleLoadAllHealthBoxesGfx(u8 state)
         {
             LoadSpritePalette(&sSpritePalettes_HealthBoxHealthBar[0]);
             LoadSpritePalette(&sSpritePalettes_HealthBoxHealthBar[1]);
+            WotMegaDim_GrayBattleUi(); // WoT: black-and-white battle UI in the Mega Dimension
             CategoryIcons_LoadSpritesGfx();
         }
         else if (!IsDoubleBattle())

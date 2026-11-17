@@ -596,6 +596,39 @@ const struct BattleEnvironment gBattleEnvironmentInfo[BATTLE_ENVIRONMENT_COUNT] 
         .battleIntroSlide = BattleIntroSlide1,
     },
 
+    [BATTLE_ENVIRONMENT_WOT_GRAVEYARD_GRAY] =
+    {
+        // The same graveyard in black and white: the Rift Sanctums and the
+        // Giratina dream. This is the colour palette; LoadBattleEnvironmentGfx
+        // grays it as it loads (the Mega Dimension's own TintPalette_GrayScale),
+        // so a repaint of the graveyard carries over by itself.
+        .name = _("Graveyard"),
+        .naturePower = MOVE_SHADOW_BALL,
+        .secretPowerAnimation = gBattleAnimMove_Pound,
+        .secretPowerEffect = MOVE_EFFECT_FLINCH,
+        .camouflageType = TYPE_GHOST,
+        .camouflageBlend = RGB(12, 15, 8),
+        .entry = ENVIRONMENT_ENTRY(Building),
+        .background = ENVIRONMENT_BACKGROUND(WotGraveyard),
+        .palette = gBattleEnvironmentPalette_WotGraveyard,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
+    [BATTLE_ENVIRONMENT_WOT_MEGA_DIMENSION] =
+    {
+        // The starfield, inverted to black and white: a white void over a black pit.
+        .name = _("Mega Dimension"),
+        .naturePower = MOVE_DRACO_METEOR,
+        .secretPowerAnimation = gBattleAnimMove_Swift,
+        .secretPowerEffect = MOVE_EFFECT_FLINCH,
+        .camouflageType = TYPE_DRAGON,
+        .camouflageBlend = DEFAULT_CAMOUFLAGE_BLEND,
+        .entry = ENVIRONMENT_ENTRY(Rock),
+        .background = ENVIRONMENT_BACKGROUND(WotSpace),
+        .palette = gBattleEnvironmentPalette_WotMegaDimension,
+        .battleIntroSlide = BattleIntroSlide1,
+    },
+
     [BATTLE_ENVIRONMENT_WOT_TOWN] =
     {
         // carchagui's FR-patch town (Celebi Island).

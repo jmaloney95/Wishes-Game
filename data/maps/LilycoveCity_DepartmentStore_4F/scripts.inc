@@ -18,7 +18,9 @@ LilycoveCity_DepartmentStore_4F_EventScript_ClerkLeft::
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs
+	@ The stock grows with the story: src/wot_tm_shop.c.
+	setvar VAR_0x8004, 0
+	special WotTmShop_Open
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
@@ -29,6 +31,8 @@ LilycoveCity_DepartmentStore_4F_Pokemart_AttackTMs:
 	.2byte ITEM_TM_THUNDER
 	.2byte ITEM_TM_BLIZZARD
 	.2byte ITEM_TM_HYPER_BEAM
+	.2byte ITEM_TM_ICE_BEAM
+	.2byte ITEM_TM_PLAY_ROUGH
 	.2byte ITEM_AM_GUTS
 	.2byte ITEM_AM_TECHNICIAN
 	.2byte ITEM_AM_MOXIE
@@ -47,7 +51,8 @@ LilycoveCity_DepartmentStore_4F_EventScript_ClerkRight::
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart LilycoveCity_DepartmentStore_4F_Pokemart_DefenseTMs
+	setvar VAR_0x8004, 1
+	special WotTmShop_Open
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
@@ -58,6 +63,7 @@ LilycoveCity_DepartmentStore_4F_Pokemart_DefenseTMs:
 	.2byte ITEM_TM_SAFEGUARD
 	.2byte ITEM_TM_REFLECT
 	.2byte ITEM_TM_LIGHT_SCREEN
+	.2byte ITEM_TM_TAUNT
 	.2byte ITEM_AM_INTIMIDATE
 	.2byte ITEM_AM_THICK_FAT
 	.2byte ITEM_AM_STURDY

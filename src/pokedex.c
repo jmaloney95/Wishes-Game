@@ -4515,6 +4515,12 @@ s8 GetSetPokedexFlag(enum NationalDexOrder nationalDexNo, u8 caseID)
     u32 index, bit, mask;
     s8 retVal = 0;
 
+    // WoT: species with no dex number (Hellraiser, WOT_GHOST) are #0, and
+    // #0 - 1 indexed far past the dex flags. They have no flag: never seen,
+    // never caught here (DexNav tracks their "seen" itself, WotDexNavSeen).
+    if (nationalDexNo == NATIONAL_DEX_NONE)
+        return 0;
+
     nationalDexNo--;
     index = nationalDexNo / 8;
     bit = nationalDexNo % 8;

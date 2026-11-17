@@ -1,5 +1,23 @@
 PrototypeLab_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, PrototypeLab_OnTransition
+	map_script MAP_SCRIPT_ON_FRAME_TABLE, PrototypeLab_OnFrame
 	.byte 0
+
+@ Each trip in rolls whether Deoxys is shiny (VAR_TEMP_1, and its
+@ overworld colours through VAR_OBJ_GFX_ID_0); a shiny one chimes the Z-A
+@ shiny jingle once the lab has faded in.
+PrototypeLab_OnTransition:
+	special WotPrototypeLab_RollDeoxysShiny
+	end
+
+PrototypeLab_OnFrame:
+	map_script_2 VAR_TEMP_1, 1, PrototypeLab_EventScript_ShinyChime
+	.2byte 0
+
+PrototypeLab_EventScript_ShinyChime::
+	playse SE_WOT_SHINY
+	setvar VAR_TEMP_1, 2
+	end
 
 @ ============================================================================
 @  THE FLOODED LAB (under Prototype Island). Mutrid's abandoned first
@@ -16,7 +34,7 @@ PrototypeLab_MapScripts::
 
 PrototypeLab_EventScript_ExitToIsland::
 	lockall
-	warp MAP_PROTOTYPE_ISLAND, 8, 5
+	warp MAP_PROTOTYPE_ISLAND, 6, 15
 	waitstate
 	releaseall
 	end
@@ -30,11 +48,17 @@ PrototypeLab_EventScript_Deoxys::
 	delay 30
 	msgbox PrototypeLab_Text_DeoxysStirs, MSGBOX_DEFAULT
 	closemessage
-	setwildbattle SPECIES_DEOXYS, 50
+	@ It Mega Evolves on its own. It holds its stone, and the
+	@ smart-wild-AI flag lets a wild mon choose its gimmick. It stays a
+	@ Shadow; its Mega art is shown as drawn (WotShadowKeepsOwnArt).
+	setwildbattle SPECIES_DEOXYS, 50, ITEM_DEOXYSITE
 	special WotMakeEventMonShadow
+	special WotPrototypeLab_SetDeoxysShiny
+	setflag FLAG_WOT_SMART_WILD_AI
 	setflag FLAG_SYS_CTRL_OBJ_DELETE
 	special BattleSetup_StartLegendaryBattle
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
+	clearflag FLAG_WOT_SMART_WILD_AI
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, PrototypeLab_EventScript_DeoxysDown
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, PrototypeLab_EventScript_DeoxysDown

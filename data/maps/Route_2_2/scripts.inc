@@ -27,38 +27,38 @@ Route_2_2_EventScript_ParkGuide::
 	closemessage
 	special SpawnCameraObject
 	@ Cut to shot 1: pan east along y54 (x25 -> x35)
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 	applymovement LOCALID_CAMERA, Route_2_2_Movement_CamToShot1
 	waitmovement 0
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 	applymovement LOCALID_CAMERA, Route_2_2_Movement_PanEast
 	msgbox Route_2_2_Text_GuideShot1, MSGBOX_DEFAULT
 	waitmovement 0
 	closemessage
 	@ Jump cut to shot 2: pan south along x51 (y51 -> y61)
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 	applymovement LOCALID_CAMERA, Route_2_2_Movement_CamToShot2
 	waitmovement 0
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 	applymovement LOCALID_CAMERA, Route_2_2_Movement_PanSouth
 	msgbox Route_2_2_Text_GuideShot2, MSGBOX_DEFAULT
 	waitmovement 0
 	closemessage
 	@ Cut to final still at (47,19)
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 	applymovement LOCALID_CAMERA, Route_2_2_Movement_CamToShot3
 	waitmovement 0
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 	msgbox Route_2_2_Text_GuideShot3, MSGBOX_DEFAULT
 	closemessage
 	@ Return control to the player
-	fadescreen FADE_TO_BLACK
+	fadescreenswapbuffers FADE_TO_BLACK
 	@ Walk the camera back onto the player BEFORE removing it, or the player is
 	@ left steering the camera. (net forward pan was east 18 / north 47)
 	applymovement LOCALID_CAMERA, Route_2_2_Movement_CamReturn
 	waitmovement 0
 	special RemoveCameraObject
-	fadescreen FADE_FROM_BLACK
+	fadescreenswapbuffers FADE_FROM_BLACK
 	setflag FLAG_NATIONAL_PARK_TOUR_DONE
 	msgbox Route_2_2_Text_GuideExitNorth, MSGBOX_DEFAULT
 	closemessage
@@ -237,6 +237,7 @@ Route_2_2_EventScript_SwimmerAllison::
 	trainerbattle_no_intro TRAINER_ROUTE2_SWIMMER_ALLISON, Route_2_2_Text_AllisonDefeat
 	setspeaker SP_NAME_ALLISON
 	msgbox Route_2_2_Text_AllisonPost, MSGBOX_DEFAULT
+	call Route_2_EventScript_AllisonGiveSpecs
 	releaseall
 	end
 
@@ -245,6 +246,7 @@ Route_2_2_EventScript_AllisonAfter::
 	faceplayer
 	setspeaker SP_NAME_ALLISON
 	msgbox Route_2_2_Text_AllisonPost, MSGBOX_DEFAULT
+	call Route_2_EventScript_AllisonGiveSpecs
 	release
 	end
 

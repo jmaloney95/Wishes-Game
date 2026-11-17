@@ -53,6 +53,7 @@
 #include "pokemon_summary_screen.h"
 #include "wild_encounter.h"
 #include "wot_shadow_art.h"
+#include "wot_tester.h"
 #include "constants/abilities.h"
 #include "constants/battle_ai.h"
 #include "constants/battle_frontier.h"
@@ -192,7 +193,9 @@ enum DebugTrainerSelection
 #define DEBUG_NUMBER_ICON_X 210
 #define DEBUG_NUMBER_ICON_Y 50
 
-#define DEBUG_MAX_MENU_ITEMS 20
+// Scripts… has 25 entries. Going over this overruns the list's heap buffer:
+// garbage rows, then a crash. That table asserts it fits.
+#define DEBUG_MAX_MENU_ITEMS 32
 #define DEBUG_MAX_SUB_MENU_LEVELS 4
 
 // *******************************
@@ -285,6 +288,7 @@ static void DebugAction_PCBag_Fill_PocketTMHM(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketBerries(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketKeyItems(u8 taskId);
 static void DebugAction_PCBag_Fill_ShadowArtMons(u8 taskId);
+static void DebugAction_PCBag_Fill_ShinyShadowArtMons(u8 taskId);
 static void DebugAction_PCBag_ClearBag(u8 taskId);
 static void DebugAction_PCBag_ClearBoxes(u8 taskId);
 
@@ -293,6 +297,15 @@ static void DebugAction_Party_ClearPokerus(u8 taskId);
 static void DebugAction_Party_ClearParty(u8 taskId);
 static void DebugAction_Party_SetParty(u8 taskId);
 static void DebugAction_Party_BattleSingle(u8 taskId);
+
+#ifdef WOT_TESTER
+static void DebugAction_Tester_ProfileA(u8 taskId);
+static void DebugAction_Tester_ProfileB(u8 taskId);
+static void DebugAction_Tester_ProfileC(u8 taskId);
+static void DebugAction_Tester_ProfileD(u8 taskId);
+static void DebugAction_Tester_ProfileE(u8 taskId);
+static void DebugAction_Tester_ProfileF(u8 taskId);
+#endif
 
 static void DebugAction_Trainers_ChooseFromMap(u8 taskId);
 static void DebugAction_Trainers_ChooseTrainer(u8 taskId, u32 selection);
@@ -385,6 +398,25 @@ extern const u8 Debug_EventScript_Script_5[];
 extern const u8 Debug_EventScript_Script_6[];
 extern const u8 Debug_EventScript_Script_7[];
 extern const u8 Debug_EventScript_Script_8[];
+extern const u8 Debug_EventScript_MegaDimPortal[];
+extern const u8 Debug_EventScript_MegaDimShortTimer[];
+extern const u8 Debug_EventScript_MegaDimRival[];
+extern const u8 Debug_EventScript_MegaDimIntro[];
+extern const u8 Debug_EventScript_MegaDimShiny[];
+extern const u8 Debug_EventScript_FilmShinyNext[];
+extern const u8 Debug_EventScript_FilmShinyAll[];
+extern const u8 Debug_EventScript_FilmCatchAll[];
+extern const u8 Debug_EventScript_FilmBattleMusic[];
+extern const u8 Debug_EventScript_MegaDimMableNext[];
+extern const u8 Debug_EventScript_MegaDimPartner[];
+extern const u8 Debug_EventScript_MegaDimPartnerRuns[];
+extern const u8 Debug_EventScript_MegaDimSanctum[];
+extern const u8 Debug_EventScript_MegaDimZKit[];
+extern const u8 Debug_EventScript_MegaDimZygarde[];
+extern const u8 Debug_EventScript_GiratinaDream[];
+extern const u8 Debug_EventScript_TrailerPark[];
+extern const u8 Debug_EventScript_TrailerParkText[];
+extern const u8 Debug_EventScript_TrailerParkPortal[];
 extern const u8 DebugScript_DaycareMonsNotCompatible[];
 extern const u8 DebugScript_OneDaycareMons[];
 extern const u8 DebugScript_ZeroDaycareMons[];
@@ -590,6 +622,7 @@ static const struct DebugMenuOption sDebugMenu_Actions_PCBag_Fill[] =
     { COMPOUND_STRING("Fill Pocket Berries"),       DebugAction_PCBag_Fill_PocketBerries },
     { COMPOUND_STRING("Fill Pocket Key Items"),     DebugAction_PCBag_Fill_PocketKeyItems },
     { COMPOUND_STRING("Fill PC Shadow Art Mons"),   DebugAction_PCBag_Fill_ShadowArtMons },
+    { COMPOUND_STRING("Fill PC Shiny Shadow Mons"), DebugAction_PCBag_Fill_ShinyShadowArtMons },
     { NULL }
 };
 
@@ -660,8 +693,31 @@ static const struct DebugMenuOption sDebugMenu_Actions_Scripts[] =
     { COMPOUND_STRING("Script 6"), DebugAction_ExecuteScript, Debug_EventScript_Script_6 },
     { COMPOUND_STRING("Shadow: single"), DebugAction_ExecuteScript, Debug_EventScript_Script_7 },
     { COMPOUND_STRING("Shadow: doubles"), DebugAction_ExecuteScript, Debug_EventScript_Script_8 },
+    { COMPOUND_STRING("Mega Dim: portal"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimPortal },
+    { COMPOUND_STRING("Mega Dim: 10s left"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimShortTimer },
+    { COMPOUND_STRING("Mega Dim: rival"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimRival },
+    { COMPOUND_STRING("Mega Dim: intro"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimIntro },
+    { COMPOUND_STRING("Mega Dim: shiny"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimShiny },
+    { COMPOUND_STRING("Shiny: next"), DebugAction_ExecuteScript, Debug_EventScript_FilmShinyNext },
+    { COMPOUND_STRING("Shiny: all"), DebugAction_ExecuteScript, Debug_EventScript_FilmShinyAll },
+    { COMPOUND_STRING("Catch: 100%"), DebugAction_ExecuteScript, Debug_EventScript_FilmCatchAll },
+    { COMPOUND_STRING("Music: off"), DebugAction_ExecuteScript, Debug_EventScript_FilmBattleMusic },
+    { COMPOUND_STRING("Mega Dim: Mable next"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimMableNext },
+    { COMPOUND_STRING("Mega Dim: partner"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimPartner },
+    { COMPOUND_STRING("Mega Dim: +5 runs"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimPartnerRuns },
+    { COMPOUND_STRING("Mega Dim: sanctum"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimSanctum },
+    { COMPOUND_STRING("Mega Dim: Z kit"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimZKit },
+    { COMPOUND_STRING("Mega Dim: Zygarde next"), DebugAction_ExecuteScript, Debug_EventScript_MegaDimZygarde },
+    { COMPOUND_STRING("Giratina dream"), DebugAction_ExecuteScript, Debug_EventScript_GiratinaDream },
+#ifndef WOT_TESTER // trailer capture only (wot_trailer.c): not in the testers' build
+    { COMPOUND_STRING("Trailer: grey park"), DebugAction_ExecuteScript, Debug_EventScript_TrailerPark },
+    { COMPOUND_STRING("Trailer: grey park+text"), DebugAction_ExecuteScript, Debug_EventScript_TrailerParkText },
+    { COMPOUND_STRING("Trailer: park portal"), DebugAction_ExecuteScript, Debug_EventScript_TrailerParkPortal },
+#endif
     { NULL }
 };
+
+STATIC_ASSERT(ARRAY_COUNT(sDebugMenu_Actions_Scripts) - 1 <= DEBUG_MAX_MENU_ITEMS, DebugScriptsMenuFits);
 
 static const struct DebugMenuOption sDebugMenu_Actions_Trainers[] =
 {
@@ -723,8 +779,25 @@ static const u8 *const sDebugMenu_Actions_BagUse_Options[] =
     COMPOUND_STRING("No Bag: {STR_VAR_1}Invalid value"),
 };
 
+#ifdef WOT_TESTER
+// Each row needs L held with A: it replaces the party and the PC, then saves.
+static const struct DebugMenuOption sDebugMenu_Actions_Tester[] =
+{
+    { COMPOUND_STRING("L+A: Profile A"), DebugAction_Tester_ProfileA },
+    { COMPOUND_STRING("L+A: Profile B"), DebugAction_Tester_ProfileB },
+    { COMPOUND_STRING("L+A: Profile C"), DebugAction_Tester_ProfileC },
+    { COMPOUND_STRING("L+A: Profile D"), DebugAction_Tester_ProfileD },
+    { COMPOUND_STRING("L+A: Profile E"), DebugAction_Tester_ProfileE },
+    { COMPOUND_STRING("L+A: Profile F"), DebugAction_Tester_ProfileF },
+    { NULL }
+};
+#endif
+
 static const struct DebugMenuOption sDebugMenu_Actions_Main[] =
 {
+#ifdef WOT_TESTER
+    { COMPOUND_STRING("Test profile…"), DebugAction_OpenSubMenu, sDebugMenu_Actions_Tester, },
+#endif
     { COMPOUND_STRING("Utilities…"),    DebugAction_OpenSubMenu, sDebugMenu_Actions_Utilities, },
     { COMPOUND_STRING("PC/Bag…"),       DebugAction_OpenSubMenu, sDebugMenu_Actions_PCBag, },
     { COMPOUND_STRING("Party…"),        DebugAction_OpenSubMenu, sDebugMenu_Actions_Party, },
@@ -3892,7 +3965,20 @@ static void DebugAction_PCBag_Fill_PocketKeyItems(u8 taskId)
 // They are NOT marked as "opened" and NOT written to the Shadow Log: a test
 // box should not look like a played save.
 #define DEBUG_SHADOW_ART_LEVEL 50
+static void FillPCWithShadowArtMons(u8 taskId, bool32 shiny);
+
 static void DebugAction_PCBag_Fill_ShadowArtMons(u8 taskId)
+{
+    FillPCWithShadowArtMons(taskId, FALSE);
+}
+
+// The same boxes, every one shiny, to look at the shiny Shadow art.
+static void DebugAction_PCBag_Fill_ShinyShadowArtMons(u8 taskId)
+{
+    FillPCWithShadowArtMons(taskId, TRUE);
+}
+
+static void FillPCWithShadowArtMons(u8 taskId, bool32 shiny)
 {
     u32 i;
     u32 count = WotShadowPicCount();
@@ -3907,6 +3993,9 @@ static void DebugAction_PCBag_Fill_ShadowArtMons(u8 taskId)
             continue;
 
         CreateMon(&mon, species, DEBUG_SHADOW_ART_LEVEL, Random32(), OTID_STRUCT_PLAYER_ID);
+        if (shiny)
+            SetMonData(&mon, MON_DATA_IS_SHINY, &shiny);
+        GiveMonInitialMoveset(&mon);   // CreateMon gives no moves in this expansion
         SetMonData(&mon, MON_DATA_IS_SHADOW, &isShadow);
         CalculateMonStats(&mon);   // CreateMon leaves HP at 0 until this runs
         if (CopyMonToPC(&mon) == MON_CANT_GIVE)
@@ -4614,7 +4703,8 @@ static void DebugAction_DestroyFollowerNPC(u8 taskId)
     X(SE_ARENA_TIMEUP2)             \
     X(SE_PIKE_CURTAIN_CLOSE)        \
     X(SE_PIKE_CURTAIN_OPEN)         \
-    X(SE_SUDOWOODO_SHAKE)
+    X(SE_SUDOWOODO_SHAKE)           \
+    X(SE_WOT_SHINY)
 
 // Create BGM list
 #define X(songId) static const u8 sBGMName_##songId[] = _(#songId);
@@ -4747,6 +4837,28 @@ static void DebugAction_BerryFunctions_Weeds(u8 taskId)
 
 // *******************************
 // Actions Party/Boxes
+
+#ifdef WOT_TESTER
+static void Debug_Tester_Apply(u8 taskId, enum WotTesterProfile profile)
+{
+    if (!JOY_HELD(L_BUTTON))
+    {
+        PlaySE(SE_FAILURE);
+        return;
+    }
+    WotTester_ApplyProfile(profile);
+    PlaySE(SE_SAVE);
+    ScriptContext_Enable();
+    Debug_DestroyMenu_Full(taskId);
+}
+
+static void DebugAction_Tester_ProfileA(u8 taskId) { Debug_Tester_Apply(taskId, WOT_TESTER_PROFILE_A); }
+static void DebugAction_Tester_ProfileB(u8 taskId) { Debug_Tester_Apply(taskId, WOT_TESTER_PROFILE_B); }
+static void DebugAction_Tester_ProfileC(u8 taskId) { Debug_Tester_Apply(taskId, WOT_TESTER_PROFILE_C); }
+static void DebugAction_Tester_ProfileD(u8 taskId) { Debug_Tester_Apply(taskId, WOT_TESTER_PROFILE_D); }
+static void DebugAction_Tester_ProfileE(u8 taskId) { Debug_Tester_Apply(taskId, WOT_TESTER_PROFILE_E); }
+static void DebugAction_Tester_ProfileF(u8 taskId) { Debug_Tester_Apply(taskId, WOT_TESTER_PROFILE_F); }
+#endif // WOT_TESTER
 
 static void DebugAction_Party_HealParty(u8 taskId)
 {

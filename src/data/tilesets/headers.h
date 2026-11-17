@@ -1683,7 +1683,7 @@ const struct Tileset gTileset_AshlandTrees =
     .palettes = gTilesetPalettes_AshlandTrees,
     .metatiles = gMetatiles_AshlandTrees,
     .metatileAttributes = gMetatileAttributes_AshlandTrees,
-    .callback = NULL,
+    .callback = InitTilesetAnim_AshlandTrees,
 };
 
 // Pokemon Wishes of Tomorrow: NIGHT MARKET PRIMARY (odisea stalls + lanterns +

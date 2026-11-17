@@ -53,8 +53,18 @@
         .iconPalIndex = 1,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         FOOTPRINT(Rowlet)
+        OVERWORLD(
+            sPicTable_Browt,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following_Asym,
+            gOverworldPalette_Browt,
+            gShinyOverworldPalette_Browt
+        )
         .levelUpLearnset = sRowletLevelUpLearnset,
         .teachableLearnset = sRowletTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_SPROUTBILL}),
     },
 
     // Water gecko (custom art: Gecqua folder).
@@ -106,8 +116,18 @@
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         FOOTPRINT(Froakie)
+        OVERWORLD(
+            sPicTable_Gecqua,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following_Asym,
+            gOverworldPalette_Gecqua,
+            gShinyOverworldPalette_Gecqua
+        )
         .levelUpLearnset = sFroakieLevelUpLearnset,
         .teachableLearnset = sFroakieTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_TOKIQUA}),
     },
 
     // Fire pomeranian (custom art: Pombon folder).
@@ -159,8 +179,350 @@
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
         FOOTPRINT(Growlithe)
+        OVERWORLD(
+            sPicTable_Pombon,
+            SIZE_32x32,
+            SHADOW_SIZE_M,
+            TRACKS_FOOT,
+            sAnimTable_Following_Asym,
+            gOverworldPalette_Pombon,
+            gShinyOverworldPalette_Pombon
+        )
         .levelUpLearnset = sGrowlitheLevelUpLearnset,
         .teachableLearnset = sGrowlitheTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 16, SPECIES_PYRAPOM}),
+    },
+
+    // Gen X starter evolutions. Stats, types and abilities are
+    // the design doc ("Gen 10 Starter Evolutions: Fan Concepts"); art from
+    // From the artist's SEPH files, icons too.
+    // No shiny art yet (shiny.pal = normal.pal), no follower art (OVERWORLD
+    // left out), borrowed stock cries.
+    // Level-up learnsets: level_up_learnsets/wot_gen_x.h.
+
+    // Browt -> Sproutbill (Lv. 16). Hornbill chick; Browt is already
+    // Grass/Flying in WoT, so the line keeps Flying from the start.
+    [SPECIES_SPROUTBILL] =
+    {
+        .baseHP        = 68,
+        .baseAttack    = 80,
+        .baseDefense   = 60,
+        .baseSpeed     = 75,
+        .baseSpAttack  = 60,
+        .baseSpDefense = 62,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_FLYING),
+        .catchRate = 45,
+        .expYield = 147,
+        .evYield_Speed = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 15,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FLYING),
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_HARVEST },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Sproutbill"),
+        .cryId = CRY_DARTRIX,
+        .natDexNum = NATIONAL_DEX_NONE,
+        .categoryName = _("Bean Pod"),
+        .height = 8,
+        .weight = 95,
+        .description = COMPOUND_STRING(
+            "The hollow pod on its bill is just\n"
+            "starting to sprout. It shakes the\n"
+            "first cherries loose to show off."),
+        .pokemonScale = 366,
+        .pokemonOffset = 12,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Sproutbill,
+        .frontPicSize = MON_COORDS_SIZE(56, 48),
+        .frontPicYOffset = 11,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Sproutbill,
+        .backPicSize = MON_COORDS_SIZE(56, 48),
+        .backPicYOffset = 9,
+        .backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Sproutbill,
+        .shinyPalette = gMonShinyPalette_Sproutbill,
+        .iconSprite = gMonIcon_Sproutbill,
+        .iconPalIndex = 1,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        FOOTPRINT(Dartrix)
+        .levelUpLearnset = sSproutbillLevelUpLearnset,
+        .teachableLearnset = sDartrixTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_HORNBREW}),
+    },
+
+    // Sproutbill -> Hornbrew (Lv. 36). Fast, slightly chaotic flier whose
+    // casque grows coffee-like cherries.
+    [SPECIES_HORNBREW] =
+    {
+        .baseHP        = 85,
+        .baseAttack    = 105,
+        .baseDefense   = 80,
+        .baseSpeed     = 110,
+        .baseSpAttack  = 70,
+        .baseSpDefense = 80,
+        .types = MON_TYPES(TYPE_GRASS, TYPE_FLYING),
+        .catchRate = 45,
+        .expYield = 265,
+        .evYield_Speed = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 15,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_FAST,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FLYING),
+        .abilities = { ABILITY_OVERGROW, ABILITY_NONE, ABILITY_HARVEST },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Hornbrew"),
+        .cryId = CRY_TOUCANNON,
+        .natDexNum = NATIONAL_DEX_NONE,
+        .categoryName = _("Hornbill"),
+        .height = 14,
+        .weight = 310,
+        .description = COMPOUND_STRING(
+            "The cherries in its casque wake\n"
+            "it like a strong brew. It darts\n"
+            "between treetops faster than wind."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Hornbrew,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Hornbrew,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 1,
+        .backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Hornbrew,
+        .shinyPalette = gMonShinyPalette_Hornbrew,
+        .iconSprite = gMonIcon_Hornbrew,
+        .iconPalIndex = 5,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        FOOTPRINT(Toucannon)
+        .levelUpLearnset = sHornbrewLevelUpLearnset,
+        .teachableLearnset = sDartrixTeachableLearnset,
+    },
+
+    // Gecqua -> Tokiqua (Lv. 16). Tokay gecko whose calls are read as omens.
+    [SPECIES_TOKIQUA] =
+    {
+        .baseHP        = 65,
+        .baseAttack    = 55,
+        .baseDefense   = 60,
+        .baseSpeed     = 70,
+        .baseSpAttack  = 85,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_WATER),
+        .catchRate = 45,
+        .expYield = 147,
+        .evYield_SpAttack = 2,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1),
+        .abilities = { ABILITY_TORRENT, ABILITY_NONE, ABILITY_FOREWARN },
+        .bodyColor = BODY_COLOR_BLUE,
+        .speciesName = _("Tokiqua"),
+        .cryId = CRY_FROGADIER,
+        .natDexNum = NATIONAL_DEX_NONE,
+        .categoryName = _("Omen Gecko"),
+        .height = 9,
+        .weight = 140,
+        .description = COMPOUND_STRING(
+            "Villagers count its calls at dusk.\n"
+            "An odd number is said to warn of\n"
+            "a storm rolling in from the sea."),
+        .pokemonScale = 366,
+        .pokemonOffset = 12,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Tokiqua,
+        .frontPicSize = MON_COORDS_SIZE(48, 56),
+        .frontPicYOffset = 7,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Tokiqua,
+        .backPicSize = MON_COORDS_SIZE(56, 48),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Tokiqua,
+        .shinyPalette = gMonShinyPalette_Tokiqua,
+        .iconSprite = gMonIcon_Tokiqua,
+        .iconPalIndex = 2,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        FOOTPRINT(Frogadier)
+        .levelUpLearnset = sTokiquaLevelUpLearnset,
+        .teachableLearnset = sFrogadierTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_GECQUADORF}),
+    },
+
+    // Tokiqua -> Gecquadorf (Lv. 36). Fortune-teller floating on its own
+    // tide pools.
+    [SPECIES_GECQUADORF] =
+    {
+        .baseHP        = 80,
+        .baseAttack    = 60,
+        .baseDefense   = 80,
+        .baseSpeed     = 90,
+        .baseSpAttack  = 125,
+        .baseSpDefense = 95,
+        .types = MON_TYPES(TYPE_WATER, TYPE_PSYCHIC),
+        .catchRate = 45,
+        .expYield = 265,
+        .evYield_SpAttack = 3,
+        .genderRatio = PERCENT_FEMALE(50),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_WATER_1),
+        .abilities = { ABILITY_TORRENT, ABILITY_NONE, ABILITY_FOREWARN },
+        .bodyColor = BODY_COLOR_BLUE,
+        .speciesName = _("Gecquadorf"),
+        .cryId = CRY_GRENINJA,
+        .natDexNum = NATIONAL_DEX_NONE,
+        .categoryName = _("Fortune"),
+        .height = 15,
+        .weight = 420,
+        .description = COMPOUND_STRING(
+            "It drifts on tide pools it calls\n"
+            "up itself. The ripples spreading\n"
+            "from its tail fin foretell fate."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Gecquadorf,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Gecquadorf,
+        .backPicSize = MON_COORDS_SIZE(64, 56),
+        .backPicYOffset = 6,
+        .backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Gecquadorf,
+        .shinyPalette = gMonShinyPalette_Gecquadorf,
+        .iconSprite = gMonIcon_Gecquadorf,
+        .iconPalIndex = 0,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        FOOTPRINT(Greninja)
+        .levelUpLearnset = sGecquadorfLevelUpLearnset,
+        .teachableLearnset = sPrimarinaTeachableLearnset,
+    },
+
+    // Pombon -> Pyrapom (Lv. 16). Its fluffy ruff is starting to harden.
+    [SPECIES_PYRAPOM] =
+    {
+        .baseHP        = 70,
+        .baseAttack    = 80,
+        .baseDefense   = 65,
+        .baseSpeed     = 75,
+        .baseSpAttack  = 60,
+        .baseSpDefense = 55,
+        .types = MON_TYPES(TYPE_FIRE),
+        .catchRate = 45,
+        .expYield = 147,
+        .evYield_Attack = 2,
+        .genderRatio = PERCENT_FEMALE(25),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_MAGMA_ARMOR },
+        .bodyColor = BODY_COLOR_YELLOW,
+        .speciesName = _("Pyrapom"),
+        .cryId = CRY_ARCANINE,
+        .natDexNum = NATIONAL_DEX_NONE,
+        .categoryName = _("Ember Ruff"),
+        .height = 7,
+        .weight = 210,
+        .description = COMPOUND_STRING(
+            "The tips of its ruff have cooled\n"
+            "into pumice. It shakes them out\n"
+            "and they smoulder in the grass."),
+        .pokemonScale = 366,
+        .pokemonOffset = 12,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Pyrapom,
+        .frontPicSize = MON_COORDS_SIZE(56, 56),
+        .frontPicYOffset = 8,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_V_SQUISH_AND_BOUNCE,
+        .backPic = gMonBackPic_Pyrapom,
+        .backPicSize = MON_COORDS_SIZE(56, 48),
+        .backPicYOffset = 8,
+        .backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Pyrapom,
+        .shinyPalette = gMonShinyPalette_Pyrapom,
+        .iconSprite = gMonIcon_Pyrapom,
+        .iconPalIndex = 5,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        FOOTPRINT(Arcanine)
+        .levelUpLearnset = sPyrapomLevelUpLearnset,
+        .teachableLearnset = sGrowlitheTeachableLearnset,
+        .evolutions = EVOLUTION({EVO_LEVEL, 36, SPECIES_CALDERUFF}),
+    },
+
+    // Pyrapom -> Calderuff (Lv. 36). Its ruff is volcanic rock with magma
+    // in a caldera-shaped crest.
+    [SPECIES_CALDERUFF] =
+    {
+        .baseHP        = 90,
+        .baseAttack    = 115,
+        .baseDefense   = 90,
+        .baseSpeed     = 90,
+        .baseSpAttack  = 75,
+        .baseSpDefense = 70,
+        .types = MON_TYPES(TYPE_FIRE, TYPE_GROUND),
+        .catchRate = 45,
+        .expYield = 265,
+        .evYield_Attack = 3,
+        .genderRatio = PERCENT_FEMALE(25),
+        .eggCycles = 20,
+        .friendship = STANDARD_FRIENDSHIP,
+        .growthRate = GROWTH_MEDIUM_SLOW,
+        .eggGroups = MON_EGG_GROUPS(EGG_GROUP_FIELD),
+        .abilities = { ABILITY_BLAZE, ABILITY_NONE, ABILITY_MAGMA_ARMOR },
+        .bodyColor = BODY_COLOR_RED,
+        .speciesName = _("Calderuff"),
+        .cryId = CRY_CAMERUPT,
+        .natDexNum = NATIONAL_DEX_NONE,
+        .categoryName = _("Caldera"),
+        .height = 16,
+        .weight = 1450,
+        .description = COMPOUND_STRING(
+            "Magma glows in the crater on its\n"
+            "crest. When it runs, ash billows\n"
+            "from its stony ruff like smoke."),
+        .pokemonScale = 256,
+        .pokemonOffset = 0,
+        .trainerScale = 256,
+        .trainerOffset = 0,
+        .frontPic = gMonFrontPic_Calderuff,
+        .frontPicSize = MON_COORDS_SIZE(64, 64),
+        .frontPicYOffset = 0,
+        .frontAnimFrames = sAnims_SingleFramePlaceHolder,
+        .frontAnimId = ANIM_V_SHAKE,
+        .backPic = gMonBackPic_Calderuff,
+        .backPicSize = MON_COORDS_SIZE(64, 64),
+        .backPicYOffset = 1,
+        .backAnimId = BACK_ANIM_NONE,
+        .palette = gMonPalette_Calderuff,
+        .shinyPalette = gMonShinyPalette_Calderuff,
+        .iconSprite = gMonIcon_Calderuff,
+        .iconPalIndex = 0,
+        .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        FOOTPRINT(Arcanine)
+        .levelUpLearnset = sCalderuffLevelUpLearnset,
+        .teachableLearnset = sCameruptTeachableLearnset,
     },
 
     // "Pokegod" Hellraiser: Ghost/Fire legendary-tier (custom art).
@@ -361,11 +723,14 @@
         .pokemonOffset = 25,
         .trainerScale = 256,
         .trainerOffset = 0,
+        // One-piece art (the v1.2.3 fix, also graphics/pokemon_shadow/jirachi.png):
+        // its feet sit on row 51, and it floats like vanilla Jirachi.
         .frontPic = gMonFrontPic_JirachiShadow,
         .frontPicSize = MON_COORDS_SIZE(64, 64),
-        .frontPicYOffset = 0,
+        .frontPicYOffset = 12,
         .frontAnimFrames = sAnims_SingleFramePlaceHolder,
         .frontAnimId = ANIM_GROW_VIBRATE,
+        .enemyMonElevation = 14,
         .backPic = gMonBackPic_JirachiShadow,
         .backPicSize = MON_COORDS_SIZE(64, 64),
         .backPicYOffset = 0,
@@ -375,6 +740,7 @@
         .iconSprite = gMonIcon_JirachiShadow,
         .iconPalIndex = 0,
         .pokemonJumpType = PKMN_JUMP_TYPE_NONE,
+        SHADOW(0, 12, SHADOW_SIZE_S)
         FOOTPRINT(Jirachi)
         OVERWORLD(
             sPicTable_JirachiShadow,
