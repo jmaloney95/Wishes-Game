@@ -2514,10 +2514,14 @@ static void FollowerSetGraphics(struct ObjectEvent *objEvent, u32 species, bool3
     if (graphicsInfo->paletteTag == OBJ_EVENT_PAL_TAG_DYNAMIC) // Use palette from species palette table
     {
         struct Sprite *sprite = &gSprites[objEvent->spriteId];
-        // Free palette if otherwise unused
-        sprite->inUse = FALSE;
-        FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
-        sprite->inUse = TRUE;
+        // Free palette if otherwise unused. WoT: only for a live sprite -- the
+        // inUse toggle must never bring a destroyed slot back (see UpdateSpritePalette).
+        if (sprite->inUse)
+        {
+            sprite->inUse = FALSE;
+            FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
+            sprite->inUse = TRUE;
+        }
         sprite->oam.paletteNum = LoadDynamicFollowerPalette(species, shiny, female, objEvent->shadow);
     }
 }
@@ -2555,9 +2559,12 @@ static void RefreshFollowerGraphics(struct ObjectEvent *objEvent)
 
     if (graphicsInfo->paletteTag == OBJ_EVENT_PAL_TAG_DYNAMIC)
     {
-        sprite->inUse = FALSE;
-        FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
-        sprite->inUse = TRUE;
+        if (sprite->inUse) // WoT: never revive a destroyed slot (see UpdateSpritePalette)
+        {
+            sprite->inUse = FALSE;
+            FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
+            sprite->inUse = TRUE;
+        }
         sprite->oam.paletteNum = LoadDynamicFollowerPalette(species, shiny, female, objEvent->shadow);
     }
     else if (i != 0xFF)
@@ -3455,6 +3462,15 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
         sprite->x += 8;
         sprite->y += 16 + sprite->centerToCornerVecY;
         sprite->images = graphicsInfo->images;
+        // WoT: link the object to its new sprite before anything acts on it.
+        // SetPlayerAvatarObjectEventIdAndObjectId runs the player's avatar
+        // transition (ObjectEventSetGraphicsId + ObjectEventTurn), which goes
+        // through objectEvent->spriteId. Still holding the slot from before the
+        // reload, that rebuilt a destroyed sprite as a second copy of the player
+        // on the player's new tiles (the facing "twitch" every 16 frames) and
+        // freed the palette slot it found there (shadows lost their palette).
+        sprite->sObjEventId = objectEventId;
+        objectEvent->spriteId = i;
         if (objectEvent->movementType == MOVEMENT_TYPE_PLAYER)
         {
             SetPlayerAvatarObjectEventIdAndObjectId(objectEventId, i);
@@ -3464,8 +3480,6 @@ static void SpawnObjectEventOnReturnToField(u8 objectEventId, s16 x, s16 y)
             SetSubspriteTables(sprite, subspriteTables);
 
         sprite->coordOffsetEnabled = TRUE;
-        sprite->sObjEventId = objectEventId;
-        objectEvent->spriteId = i;
         if (!objectEvent->inanimate && objectEvent->movementType != MOVEMENT_TYPE_PLAYER)
             StartSpriteAnim(sprite, GetFaceDirectionAnimNum(objectEvent->facingDirection));
 
@@ -3498,10 +3512,17 @@ static void SetPlayerAvatarObjectEventIdAndObjectId(u8 objectEventId, u8 spriteI
 // Update sprite's palette, freeing old palette if necessary
 static u8 UpdateSpritePalette(const struct SpritePalette *spritePalette, struct Sprite *sprite)
 {
-    // Free palette if otherwise unused
-    sprite->inUse = FALSE;
-    FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
-    sprite->inUse = TRUE;
+    // Free palette if otherwise unused. WoT: only for a live sprite. Called
+    // through an object whose spriteId is stale (between a field reload's
+    // ResetSpriteData and the object's respawn), the toggle used to set inUse on
+    // a destroyed slot and bring it back as a ghost sprite, and the free below
+    // would drop whatever palette now sits in that slot's palette number.
+    if (sprite->inUse)
+    {
+        sprite->inUse = FALSE;
+        FieldEffectFreePaletteIfUnused(sprite->oam.paletteNum);
+        sprite->inUse = TRUE;
+    }
     if (IndexOfSpritePaletteTag(spritePalette->tag) == 0xFF)
     {
         sprite->oam.paletteNum = LoadSpritePalette(spritePalette);
