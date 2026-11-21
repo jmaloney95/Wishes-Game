@@ -1,10 +1,13 @@
 HotSpring_MapScripts::
-	map_script MAP_SCRIPT_ON_TRANSITION, HotSpring_OnTransition
+	map_script MAP_SCRIPT_ON_RESUME, HotSpring_OnResume
 	map_script MAP_SCRIPT_ON_FRAME_TABLE, HotSpring_OnFrame
 	.byte 0
 
 @ Any tile flagged MB_CRACKED_FLOOR_HOLE drops the player to the pool center.
-HotSpring_OnTransition::
+@ ON_RESUME, like every vanilla hole map: Continue clears the hole warp and
+@ does not re-run ON_TRANSITION, and a fall with no hole warp lands on the
+@ zeroed last-used warp (Petalburg City). ON_RESUME runs on every load.
+HotSpring_OnResume::
 	setholewarp MAP_HOT_SPRING, 15, 13
 	end
 

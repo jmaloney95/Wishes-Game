@@ -499,6 +499,16 @@ void HandleAction_Switch(void)
 {
     gBattlerAttacker = gBattlerByTurnOrder[gCurrentTurnActionNumber];
 
+    // WoT: a ball throw runs before switches, so a trainer's Shadow mon can be
+    // snagged (and leave the field) before its own queued switch-out. Drop the
+    // switch like a move from a battler that is gone; the faint flow sends in
+    // the replacement at the end of the turn.
+    if (gAbsentBattlerFlags & (1u << gBattlerAttacker) || !IsBattlerAlive(gBattlerAttacker))
+    {
+        gCurrentActionFuncId = B_ACTION_FINISHED;
+        return;
+    }
+
     // if switching to a mon that is already on field, cancel switch
     if (!(gAbsentBattlerFlags & (1u << BATTLE_PARTNER(gBattlerAttacker)))
      && IsBattlerAlive(BATTLE_PARTNER(gBattlerAttacker))

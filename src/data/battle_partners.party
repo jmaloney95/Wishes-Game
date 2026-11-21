@@ -59,6 +59,9 @@ Wynaut
 /*
 Wishes of Tomorrow -- Mikmanc as the jailbreak escort partner (Act 3 Step 4
 doubles). Back pic borrows Wally's (only stock back sprites exist).
+IVs match the two all-Shadow squads he fights beside (20), and the partner AI
+won't take a knockout on a Shadow (WotPartnerWouldFaintShadow): the player
+gets to snag them.
 
 */
 === PARTNER_MIKMANC ===
@@ -73,7 +76,7 @@ AI: Basic Trainer
 Machamp
 Adamant Nature
 Level: 41
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Cross Chop
 - Rock Slide
 - Bulk Up
@@ -82,7 +85,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Manectric
 Timid Nature
 Level: 41
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Thunderbolt
 - Volt Switch
 - Flamethrower
@@ -91,7 +94,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 Snorlax
 Careful Nature
 Level: 42
-IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
+IVs: 20 HP / 20 Atk / 20 Def / 20 SpA / 20 SpD / 20 Spe
 - Body Slam
 - Crunch
 - Rest

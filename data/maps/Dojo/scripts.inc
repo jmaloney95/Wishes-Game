@@ -195,7 +195,15 @@ Dojo_EventScript_RebelMinister::
 	goto_if_eq VAR_RESULT, TRUE, Dojo_EventScript_RebelMinisterAfter
 	msgbox Dojo_Text_MinisterGift1, MSGBOX_DEFAULT
 	giveitem ITEM_SHINKANSEN_KEY
+	@ giveitem says nothing when the pocket is full; without this the
+	@ Minister just talked about his plan and the train stayed locked.
+	goto_if_eq VAR_RESULT, FALSE, Dojo_EventScript_RebelMinisterNoRoom
 	msgbox Dojo_Text_MinisterGift2, MSGBOX_DEFAULT
+	release
+	end
+
+Dojo_EventScript_RebelMinisterNoRoom::
+	msgbox Dojo_Text_MinisterNoRoom, MSGBOX_DEFAULT
 	release
 	end
 
@@ -362,6 +370,11 @@ Dojo_Text_MinisterGift2::
 
 Dojo_Text_MinisterAfter::
 	.string "Tomorrow everything goes dark.$"
+
+Dojo_Text_MinisterNoRoom::
+	.string "…Your KEY ITEMS pocket is full.\n"
+	.string "There's no room for the keycard.\p"
+	.string "Make room, then come back to me.$"
 
 Dojo_Text_MikmancGift1::
 	.string "{PLAYER}!! It's me,\n"

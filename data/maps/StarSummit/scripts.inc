@@ -167,7 +167,21 @@ StarSummit_EventScript_BossAftermath::
 	releaseall
 	end
 
+@ After Act 2 has begun, the top of the stairs offers the way back down to
+@ the hot spring. Until Tradewind, the summit's Act 2 drop is the only way
+@ into the Ashlands, so a player who ends up outside them (a whiteout sends
+@ them to Torii) climbs back up here. No leaves them be until they re-enter.
 StarSummit_EventScript_IntroDone::
+	msgbox StarSummit_Text_ClimbDown, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, StarSummit_EventScript_StayOnSummit
+	closemessage
+	warp MAP_HOT_SPRING, 15, 13
+	waitstate
+	releaseall
+	end
+
+StarSummit_EventScript_StayOnSummit::
+	setvar VAR_TEMP_0, 1
 	releaseall
 	end
 
@@ -316,3 +330,8 @@ StarSummit_Text_PreTitle:
 
 StarSummit_Text_ActII:
 	.string "Act II: Doomsday$"
+
+StarSummit_Text_ClimbDown:
+	.string "Steam rises from the hot spring\n"
+	.string "far below the summit.\p"
+	.string "Climb back down?$"

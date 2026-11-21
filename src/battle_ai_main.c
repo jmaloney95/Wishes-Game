@@ -56,6 +56,7 @@ EWRAM_DATA AiSwitchFunc gDynamicAiSwitchFunc = NULL;
 
 // const rom data
 static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score);
+static bool32 WotPartnerWouldFaintShadow(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, u32 index);
 static s32 AI_TryToFaint(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score);
 static s32 AI_CheckViability(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score);
 static s32 AI_ForceSetupFirstTurn(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score);
@@ -971,6 +972,14 @@ static u32 ChooseMoveOrAction_Doubles(enum BattlerId battler)
             if (gAiThinkingStruct->aiFlags[battler] & AI_FLAG_CHECK_VIABILITY)
                 AI_CompareDamagingMoves(battler, gBattlerTarget);
 
+            for (u32 moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+            {
+                enum Move move = gBattleMons[battler].moves[moveIndex];
+                if (move != MOVE_NONE && gAiThinkingStruct->score[moveIndex] > 0
+                 && WotPartnerWouldFaintShadow(battler, battlerIndex, move, moveIndex))
+                    gAiThinkingStruct->score[moveIndex] = max(1, gAiThinkingStruct->score[moveIndex] - 40);
+            }
+
             mostViableMovesScores[0] = gAiThinkingStruct->score[0];
             mostViableMovesIndices[0] = 0;
             mostViableMovesNo = 1;
@@ -1206,6 +1215,32 @@ void BattleAI_DoAIProcessing_PredictedSwitchin(struct AiThinkingStruct *aiThink,
 
 // AI Score Functions
 // AI_FLAG_CHECK_BAD_MOVE - decreases move scores
+// WoT Shadow system: an AI partner on the player's side (Mikmanc in the jail
+// escort multis) leaves Shadow Pokémon for the player to snag. A damaging move
+// whose highest roll would knock out a standing Shadow foe -- the target, or
+// the other foe a spread move also hits -- loses 40 points after every AI
+// flag has scored it (ChooseMoveOrAction_Doubles), so it sinks below a plain
+// status move whatever the partner's flags add, but stays a last resort.
+static bool32 WotPartnerWouldFaintShadow(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, u32 index)
+{
+    bool32 spread = IsSpreadMove(AI_GetBattlerMoveTargetType(battlerAtk, move));
+    enum BattlerId foe;
+
+    if (!IsOnPlayerSide(battlerAtk) || IsBattleMoveStatus(move))
+        return FALSE;
+
+    for (foe = 0; foe < gBattlersCount; foe++)
+    {
+        if (IsOnPlayerSide(foe) || !IsBattlerAlive(foe) || (foe != battlerDef && !spread))
+            continue;
+        if (!GetMonData(GetBattlerMon(foe), MON_DATA_IS_SHADOW))
+            continue;
+        if (gAiLogicData->simulatedDmg[battlerAtk][foe][index].maximum >= gBattleMons[foe].hp)
+            return TRUE;
+    }
+    return FALSE;
+}
+
 static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score)
 {
     if (IsTargetingPartner(battlerAtk, battlerDef))

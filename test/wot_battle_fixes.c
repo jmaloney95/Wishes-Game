@@ -3,6 +3,7 @@
 #include "malloc.h"
 #include "item.h"
 #include "wot_mega_dimension.h"
+#include "pokemon_animation.h"
 #include "test/battle.h"
 
 // WoT: the Mega Sol check asked a semi-invulnerable move (Phantom Force, Fly,
@@ -59,4 +60,81 @@ TEST("(WoT) The Rogue Core: the player's Mega gets a crystal-free Z-Move outside
     ClearBag();
     Free(gBattleStruct);
     gBattleStruct = saved;
+}
+
+// WoT: switches run after ball throws, so a trainer AI that chose to switch
+// its Shadow mon out on the turn the player snagged it used to print
+// "withdrew" for a mon that had already left the field, then run the
+// switch-in on the empty slot (player report: Shadow Moltres, v1.3.0). A
+// switch for a battler that is no longer there is now dropped, like a move.
+SINGLE_BATTLE_TEST("(WoT) A trainer cannot switch out a Shadow mon snagged that turn")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_MOLTRES) { Level(51); Shadow(TRUE); }
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { USE_ITEM(player, ITEM_MASTER_BALL); SWITCH(opponent, 1); SEND_OUT(opponent, 1); }
+        TURN { MOVE(player, MOVE_CELEBRATE); MOVE(opponent, MOVE_CELEBRATE); }
+    } SCENE {
+        NONE_OF { MESSAGE("2 withdrew Moltres!"); }
+        MESSAGE("2 sent out Wobbuffet!");
+    } THEN {
+        EXPECT_EQ(opponent->species, SPECIES_WOBBUFFET);
+    }
+}
+
+// WoT: an AI partner on the player's side leaves Shadow Pokémon for the
+// player to snag (player report: the jail escort partner one-shot the Shadows
+// before they could be snagged). A move that would knock a Shadow foe out is a
+// bad move for the partner; against an ordinary foe it still goes for the KO.
+AI_TWO_VS_ONE_BATTLE_TEST("(WoT) An AI partner won't knock out a Shadow foe")
+{
+    bool32 shadow;
+    enum Move expected;
+
+    PARAMETRIZE { shadow = FALSE; expected = MOVE_CROSS_CHOP; }
+    PARAMETRIZE { shadow = TRUE;  expected = MOVE_SCARY_FACE; }
+
+    GIVEN {
+        AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT);
+        MULTI_PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_CELEBRATE); }
+        MULTI_PARTNER(SPECIES_MACHAMP) { Level(41); Moves(MOVE_CROSS_CHOP, MOVE_SCARY_FACE); }
+        MULTI_OPPONENT_A(SPECIES_TEDDIURSA) { Level(20); Shadow(shadow); Moves(MOVE_CELEBRATE); }
+        MULTI_OPPONENT_A(SPECIES_TEDDIURSA) { Level(20); Shadow(shadow); Moves(MOVE_CELEBRATE); }
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_CELEBRATE); EXPECT_MOVE(playerRight, expected); }
+    }
+}
+
+AI_TWO_VS_ONE_BATTLE_TEST("(WoT) An AI partner won't use a spread move that knocks out the other Shadow foe")
+{
+    GIVEN {
+        AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT);
+        MULTI_PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_CELEBRATE); }
+        MULTI_PARTNER(SPECIES_MACHAMP) { Level(41); Moves(MOVE_ROCK_SLIDE, MOVE_BULK_UP); }
+        MULTI_OPPONENT_A(SPECIES_SNORLAX) { Level(41); Moves(MOVE_CELEBRATE); }
+        MULTI_OPPONENT_A(SPECIES_TEDDIURSA) { Level(20); Shadow(TRUE); HP(1); Moves(MOVE_CELEBRATE); }
+    } WHEN {
+        TURN { MOVE(playerLeft, MOVE_CELEBRATE); EXPECT_MOVE(playerRight, MOVE_BULK_UP); }
+    }
+}
+
+// WoT: a wild shiny Riolu froze the battle on its opening text (player
+// reports, v1.2.4-v1.2.6). Riolu's front animation (ANIM_RAPID_H_HOPS) ended
+// one pixel off centre, and the shiny stars only finish while the sprite sits
+// at x2 == 0, so the intro waited forever. Upstream expansion's fix (#10397)
+// resets the offset; this pins the reported case with the animations on.
+WILD_BATTLE_TEST("(WoT) A wild shiny Riolu's battle intro finishes")
+{
+    GIVEN {
+        ASSUME(gSpeciesInfo[SPECIES_RIOLU].frontAnimId == ANIM_RAPID_H_HOPS);
+        FORCE_MOVE_ANIM(TRUE);
+        PLAYER(SPECIES_GIBLE) { Level(10); }
+        OPPONENT(SPECIES_RIOLU) { Level(8); Shiny(TRUE); }
+    } WHEN {
+        TURN { }
+    } THEN {
+        FORCE_MOVE_ANIM(FALSE);
+    }
 }
