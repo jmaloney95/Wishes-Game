@@ -2,9 +2,11 @@
 #include "battle_gimmick.h"
 #include "malloc.h"
 #include "item.h"
+#include "item_use.h"
 #include "wot_mega_dimension.h"
 #include "pokemon_animation.h"
 #include "test/battle.h"
+#include "battle_controllers.h"
 
 // WoT: the Mega Sol check asked a semi-invulnerable move (Phantom Force, Fly,
 // Dig...) for its weather, which only two-turn moves like Solar Beam have, and
@@ -137,4 +139,34 @@ WILD_BATTLE_TEST("(WoT) A wild shiny Riolu's battle intro finishes")
     } THEN {
         FORCE_MOVE_ANIM(FALSE);
     }
+}
+
+// WoT: cancelling the ball-target picker in a double battle put a ball back in
+// the bag even when the bag never took it out (a ball thrown at a trainer's
+// Pokemon with no Shadow out is handed back), so every cancel made a free ball.
+TEST("(WoT) Cancelling a ball's target gives back only a ball the bag took")
+{
+    u32 savedFlags = gBattleTypeFlags;
+
+    ASSUME(B_TRY_CATCH_TRAINER_BALL >= GEN_4);
+    ClearBag();
+    AddBagItem(ITEM_SNAG_BALL, 5);
+
+    // Trainer battle, no Shadow out: the bag keeps the ball, so a cancel adds nothing.
+    gBattleTypeFlags = BATTLE_TYPE_TRAINER | BATTLE_TYPE_DOUBLE;
+    if (WotBagUseRemovesItem(ITEM_SNAG_BALL))
+        RemoveBagItem(ITEM_SNAG_BALL, 1);
+    WotRefundCancelledBall(ITEM_SNAG_BALL);
+    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_SNAG_BALL), 5);
+
+    // Wild battle: the bag takes the ball, and a cancel puts it back.
+    gBattleTypeFlags = BATTLE_TYPE_DOUBLE;
+    if (WotBagUseRemovesItem(ITEM_SNAG_BALL))
+        RemoveBagItem(ITEM_SNAG_BALL, 1);
+    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_SNAG_BALL), 4);
+    WotRefundCancelledBall(ITEM_SNAG_BALL);
+    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_SNAG_BALL), 5);
+
+    gBattleTypeFlags = savedFlags;
+    ClearBag();
 }

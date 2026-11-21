@@ -308,8 +308,8 @@ WALNUT_WOODS_Text_CutBush:
 
 WALNUT_WOODS_Text_BushCantCut:
 	.string "A thick, snow-laden bush.\p"
-	.string "It looks like it could be cut down\n"
-	.string "by the right move.$"
+	.string "With the EMBER BADGE, it could\n"
+	.string "be CUT down.$"
 
 WALNUT_WOODS_Text_SignWest:
 	.string "WALNUT WOODS\n"

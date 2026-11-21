@@ -3,6 +3,7 @@
 #include "battle_setup.h"
 #include "event_data.h"
 #include "item.h"
+#include "item_use.h"
 #include "text.h"
 #include "wot_battle_rules.h"
 #include "wot_permanent_mega.h"
@@ -187,4 +188,27 @@ TEST("(WoT) Synchronize in the lead gives wild Pokemon its nature about half the
 TEST("(WoT) A wild Scyther can hold a Metal Coat")
 {
     EXPECT_EQ(gSpeciesInfo[SPECIES_SCYTHER].itemRare, ITEM_METAL_COAT);
+}
+
+// WoT: five more Ability Machines on Tradewind's TM floor (the attack clerk),
+// each granting its ability through the usual Ability Machine use.
+TEST("(WoT) Tradewind's TM floor sells the No Guard, Contrary, Protean and Primal AMs")
+{
+    static const u16 sNewAMs[][2] =
+    {
+        {ITEM_AM_NO_GUARD,       ABILITY_NO_GUARD},
+        {ITEM_AM_CONTRARY,       ABILITY_CONTRARY},
+        {ITEM_AM_PROTEAN,        ABILITY_PROTEAN},
+        {ITEM_AM_DESOLATE_LAND,  ABILITY_DESOLATE_LAND},
+        {ITEM_AM_PRIMORDIAL_SEA, ABILITY_PRIMORDIAL_SEA},
+    };
+    u32 i;
+
+    for (i = 0; i < ARRAY_COUNT(sNewAMs); i++)
+    {
+        EXPECT(StockHas(WotTmShop_BuildStock(0), sNewAMs[i][0]));
+        EXPECT_EQ(GetItemSecondaryId(sNewAMs[i][0]), sNewAMs[i][1]);
+        EXPECT(gItemsInfo[sNewAMs[i][0]].fieldUseFunc == ItemUseOutOfBattle_AbilityMachine);
+        EXPECT_GT(GetItemPrice(sNewAMs[i][0]), 0);
+    }
 }

@@ -8833,7 +8833,10 @@ bool32 CanUltraBurst(enum BattlerId battler)
 void ActivateMegaEvolution(enum BattlerId battler)
 {
     enum Ability ability = GetBattlerAbility(battler);
-    gLastUsedItem = gBattleMons[battler].item;
+    // The stone named in "X's <stone> is reacting": held, or in the bag.
+    gLastUsedItem = WotGetBattlerMegaStone(battler);
+    if (gLastUsedItem == ITEM_NONE)
+        gLastUsedItem = gBattleMons[battler].item;
     SetActiveGimmick(battler, GIMMICK_MEGA);
     SetGimmickAsActivated(battler, GIMMICK_MEGA);
 
@@ -8890,6 +8893,49 @@ bool32 IsBattlerInTeraForm(enum BattlerId battler)
     return (gSpeciesInfo[gBattleMons[battler].species].isTeraForm);
 }
 
+// WoT: the first of this species' Mega Stones in the bag, or ITEM_NONE.
+u16 WotGetBagMegaStone(u16 species)
+{
+    const struct FormChange *formChanges = GetSpeciesFormChanges(species);
+    u32 i;
+
+    for (i = 0; formChanges != NULL && formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
+    {
+        if (formChanges[i].method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM && CheckBagHasItem(formChanges[i].param1, 1))
+            return formChanges[i].param1;
+    }
+    return ITEM_NONE;
+}
+
+// WoT: the player's own Pokemon can Mega Evolve with its Mega Stone in the bag
+// instead of held. The stone it Mega Evolves with: the held item when that is
+// one of its stones, else the first of its stones in the bag, else ITEM_NONE.
+// Partners, trainers and wild Pokemon still need the stone held, and so does
+// everyone in link, recorded and Frontier battles.
+u16 WotGetBattlerMegaStone(enum BattlerId battler)
+{
+    u16 held = gBattleMons[battler].item;
+    const struct FormChange *formChanges = GetSpeciesFormChanges(gBattleMons[battler].species);
+    enum BattlerPosition position = GetBattlerPosition(battler);
+    bool32 ownMon = position == B_POSITION_PLAYER_LEFT
+                 || (!(gBattleTypeFlags & BATTLE_TYPE_MULTI) && position == B_POSITION_PLAYER_RIGHT);
+    u32 i;
+
+    if (formChanges == NULL)
+        return ITEM_NONE;
+    for (i = 0; formChanges[i].method != FORM_CHANGE_TERMINATOR; i++)
+    {
+        if (formChanges[i].method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM && formChanges[i].param1 == held)
+            return held;
+    }
+    // A recorded battle replays the choices made with the bag it had then. The
+    // battle tests run as recorded battles, so they are exempt.
+    if (!ownMon || (gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_FRONTIER))
+     || ((gBattleTypeFlags & BATTLE_TYPE_RECORDED) && !TESTING))
+        return ITEM_NONE;
+    return WotGetBagMegaStone(gBattleMons[battler].species);
+}
+
 u32 GetBattleFormChangeTargetSpecies(enum BattlerId battler, enum FormChanges method, enum Ability ability)
 {
     u32 species = gBattleMons[battler].species;
@@ -8914,6 +8960,13 @@ u32 GetBattleFormChangeTargetSpecies(enum BattlerId battler, enum FormChanges me
 
     for (u32 i = 0; i < MAX_MON_MOVES; i++)
         ctx.moves[i] = gBattleMons[battler].moves[i];
+
+    if (method == FORM_CHANGE_BATTLE_MEGA_EVOLUTION_ITEM)
+    {
+        u16 stone = WotGetBattlerMegaStone(battler);
+        if (stone != ITEM_NONE)
+            ctx.heldItem = stone;
+    }
 
     return GetFormChangeTargetSpecies_Internal(ctx);
 }

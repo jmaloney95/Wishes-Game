@@ -159,12 +159,53 @@ MunenTunnel_EventScript_GruntFlee::
 	lockall
 	msgbox MunenTunnel_Text_GruntFlee, MSGBOX_DEFAULT
 	closemessage
+	call MunenTunnel_EventScript_GruntBackToPost
+	@ Player south of him in column 94 stands on the usual route: take column 96.
+	getplayerxy VAR_0x8004, VAR_0x8005
+	goto_if_ne VAR_0x8004, 94, MunenTunnel_EventScript_GruntFleeUsual
+	goto_if_le VAR_0x8005, 32, MunenTunnel_EventScript_GruntFleeUsual
+	applymovement 5, MunenTunnel_Movement_GruntFleeEast
+	goto MunenTunnel_EventScript_GruntGone
+
+MunenTunnel_EventScript_GruntFleeUsual::
 	applymovement 5, MunenTunnel_Movement_GruntFlee
+MunenTunnel_EventScript_GruntGone::
 	waitmovement 0
 	removeobject 5
 	setflag FLAG_HIDE_MUNEN_TUNNEL_GRUNT
 	releaseall
 	end
+
+@ A trainer walks up to the player before the battle, and applymovement never
+@ checks collision, so his escape must start from his post at (94,32). He came
+@ in a straight line, so stepping back along it is always clear.
+MunenTunnel_EventScript_GruntBackToPost::
+	getobjectxy 5, CURRENT_POSITION, VAR_0x8004, VAR_0x8005
+	goto_if_gt VAR_0x8004, 94, MunenTunnel_EventScript_GruntStepWest
+	goto_if_lt VAR_0x8004, 94, MunenTunnel_EventScript_GruntStepEast
+	goto_if_gt VAR_0x8005, 32, MunenTunnel_EventScript_GruntStepNorth
+	goto_if_lt VAR_0x8005, 32, MunenTunnel_EventScript_GruntStepSouth
+	return
+
+MunenTunnel_EventScript_GruntStepWest::
+	applymovement 5, MunenTunnel_Movement_StepWest
+	waitmovement 0
+	goto MunenTunnel_EventScript_GruntBackToPost
+
+MunenTunnel_EventScript_GruntStepEast::
+	applymovement 5, MunenTunnel_Movement_StepEast
+	waitmovement 0
+	goto MunenTunnel_EventScript_GruntBackToPost
+
+MunenTunnel_EventScript_GruntStepNorth::
+	applymovement 5, MunenTunnel_Movement_StepNorth
+	waitmovement 0
+	goto MunenTunnel_EventScript_GruntBackToPost
+
+MunenTunnel_EventScript_GruntStepSouth::
+	applymovement 5, MunenTunnel_Movement_StepSouth
+	waitmovement 0
+	goto MunenTunnel_EventScript_GruntBackToPost
 
 @ Down first, then east. From (94,32) the fourth step east lands on the wall
 @ at x=98. Column 94 is clear down to y=35, row 35 runs east to x=96, and
@@ -178,6 +219,35 @@ MunenTunnel_Movement_GruntFlee:
 	walk_fast_right
 	walk_fast_down
 	walk_fast_down
+	walk_fast_down
+	step_end
+
+@ From his post when the player stands south of him in column 94, on the usual
+@ route: east two along row 32, then down column 96 to y=38. All floor.
+MunenTunnel_Movement_GruntFleeEast:
+	walk_fast_right
+	walk_fast_right
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	walk_fast_down
+	step_end
+
+MunenTunnel_Movement_StepWest:
+	walk_fast_left
+	step_end
+
+MunenTunnel_Movement_StepEast:
+	walk_fast_right
+	step_end
+
+MunenTunnel_Movement_StepNorth:
+	walk_fast_up
+	step_end
+
+MunenTunnel_Movement_StepSouth:
 	walk_fast_down
 	step_end
 

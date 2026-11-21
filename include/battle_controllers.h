@@ -394,6 +394,7 @@ void BtlController_HandleBattleAnimation(enum BattlerId battler);
 
 // player controller
 void SetControllerToPlayer(enum BattlerId battler);
+void WotRefundCancelledBall(u16 itemId);
 void PlayerBufferExecCompleted(enum BattlerId battler);
 bool32 TryRunPlayerCommandForPartner(enum BattlerId battler);
 void SetBattleEndCallbacks(enum BattlerId battler);

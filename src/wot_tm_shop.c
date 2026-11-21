@@ -66,6 +66,11 @@ static const struct WotTmShopItem sAttackStock[] =
     {ITEM_AM_SKILL_LINK,    TM_SHOP_ALWAYS},
     {ITEM_AM_PRANKSTER,     TM_SHOP_ALWAYS},
     {ITEM_AM_SPEED_BOOST,   TM_SHOP_ALWAYS},
+    {ITEM_AM_NO_GUARD,      TM_SHOP_ALWAYS},
+    {ITEM_AM_CONTRARY,      TM_SHOP_ALWAYS},
+    {ITEM_AM_PROTEAN,       TM_SHOP_ALWAYS},
+    {ITEM_AM_DESOLATE_LAND, TM_SHOP_ALWAYS},
+    {ITEM_AM_PRIMORDIAL_SEA, TM_SHOP_ALWAYS},
 };
 
 static const struct WotTmShopItem sDefenseStock[] =

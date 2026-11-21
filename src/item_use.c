@@ -1580,6 +1580,17 @@ bool32 WotOpponentHasShadowOut(void)
     return FALSE;
 }
 
+// Whether using this item from the bag in battle takes it out of the bag. Key
+// items stay, and so does a ball thrown at a trainer's Pokemon (the Gen4+ rule:
+// the trainer blocks it) unless a Shadow is out to snag.
+bool32 WotBagUseRemovesItem(u16 itemId)
+{
+    if (GetItemImportance(itemId))
+        return FALSE;
+    return !(B_TRY_CATCH_TRAINER_BALL >= GEN_4 && GetItemBattleUsage(itemId) == EFFECT_ITEM_THROW_BALL
+          && (gBattleTypeFlags & BATTLE_TYPE_TRAINER) && !WotOpponentHasShadowOut());
+}
+
 void ItemUseInBattle_BagMenu(u8 taskId)
 {
     gPartyMenu.slotId = gBattleStruct->itemPartyIndex[gBattlerInMenuId] = gBattlerPartyIndexes[gBattlerInMenuId];
@@ -1593,7 +1604,7 @@ void ItemUseInBattle_BagMenu(u8 taskId)
     else
     {
         PlaySE(SE_SELECT);
-        if (!GetItemImportance(gSpecialVar_ItemId) && !(B_TRY_CATCH_TRAINER_BALL >= GEN_4 && (GetItemBattleUsage(gSpecialVar_ItemId) == EFFECT_ITEM_THROW_BALL) && (gBattleTypeFlags & BATTLE_TYPE_TRAINER) && !WotOpponentHasShadowOut()))
+        if (WotBagUseRemovesItem(gSpecialVar_ItemId))
             RemoveUsedItem();
         ScheduleBgCopyTilemapToVram(2);
         if (CurrentBattlePyramidLocation() == PYRAMID_LOCATION_NONE)

@@ -13,6 +13,7 @@
 #include "bg.h"
 #include "data.h"
 #include "item.h"
+#include "item_use.h"
 #include "item_menu.h"
 #include "link.h"
 #include "main.h"
@@ -1714,6 +1715,15 @@ static void OpenBagAndChooseItem(enum BattlerId battler)
     }
 }
 
+// Cancelling the ball's target: put the ball back, but only if the bag took it
+// out. A ball thrown at a trainer's Pokemon with no Shadow out never left the
+// bag (WotBagUseRemovesItem), and giving one back made a free ball.
+void WotRefundCancelledBall(u16 itemId)
+{
+    if (WotBagUseRemovesItem(itemId))
+        AddBagItem(itemId, 1);
+}
+
 // WoT Shadow system: manual ball-target selection. Vanilla forbids throwing a
 // ball while two foes are out because it cannot tell which one you meant; we
 // ask instead, which is also what makes snagging a Shadow in a double battle
@@ -1740,12 +1750,12 @@ static void WotHandleInputChooseBallTarget(enum BattlerId battler)
     }
     else if (JOY_NEW(B_BUTTON))
     {
-        // Cancel: the bag already took the ball out, so put it back and
-        // report "no item chosen" -- the engine reopens action selection.
+        // Cancel: give back a ball the bag took out, and report "no item
+        // chosen" -- the engine reopens action selection.
         PlaySE(SE_SELECT);
         gSprites[gBattlerSpriteIds[gMultiUsePlayerCursor]].callback = SpriteCB_HideAsMoveTarget;
         EndBounceEffect(gMultiUsePlayerCursor, BOUNCE_HEALTHBOX);
-        AddBagItem(gSpecialVar_ItemId, 1);
+        WotRefundCancelledBall(gSpecialVar_ItemId);
         gBattleStruct->wotBallTarget = 0;
         gSpecialVar_ItemId = ITEM_NONE;
         BtlController_EmitOneReturnValue(battler, B_COMM_TO_ENGINE, ITEM_NONE);

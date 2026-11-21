@@ -1,7 +1,8 @@
 @ ============================================================================
 @  SHIN TOKYO'S BLUE POKEMON CENTER -- and the Giratina dream.
 @  Players met a bug here: the nurse's words came out blank. It is the door
-@  into a dream now. Healing here leaves her box blank and ARMS the dream:
+@  into a dream now, after the credits. Healing here then gets only "…" from
+@  her and ARMS the dream:
 @  the exit opens onto ShinTokyo_PCDream (this building alone in the dark),
 @  where Shadow Giratina waits. Catching it wakes the player back in here
 @  with the counter empty; the exit after that is the real city again.
@@ -43,7 +44,15 @@ Tradewind_PC_EventScript_Woke::
 	goto Tradewind_PC_EventScript_AimExit
 
 Tradewind_PC_EventScript_AimExit::
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Tradewind_PC_EventScript_Disarm
 	goto_if_set FLAG_WOT_GIRATINA_DREAM_ARMED, Tradewind_PC_EventScript_AimDream
+	setdynamicwarp MAP_SHIN_TOKYO, SHINTOKYO_PC_DOOR_WARP
+	end
+
+@ No dream before the credits: a save that was armed then (the nurse used to
+@ arm it at any point in the story) is disarmed and walks out into the city.
+Tradewind_PC_EventScript_Disarm::
+	clearflag FLAG_WOT_GIRATINA_DREAM_ARMED
 	setdynamicwarp MAP_SHIN_TOKYO, SHINTOKYO_PC_DOOR_WARP
 	end
 
@@ -63,10 +72,13 @@ Tradewind_PC_EventScript_WakeUp::
 	releaseall
 	end
 
-@ Until Giratina is caught, every heal here is the blank one, and it arms
-@ the dream. Afterwards she is an ordinary nurse.
+@ After the credits and until Giratina is caught, every heal here is the
+@ silent one, and it arms the dream. Before the credits (players took the
+@ silent boxes for the old blank-text bug) and after the catch, she is an
+@ ordinary nurse.
 Tradewind_PC_EventScript_Nurse::
 	setvar VAR_0x800B, LOCALID_SHINTOKYO_PC_NURSE
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Tradewind_PC_EventScript_NurseNormal
 	goto_if_set FLAG_WOT_GIRATINA_DREAM_CAUGHT, Tradewind_PC_EventScript_NurseNormal
 	lock
 	faceplayer
@@ -108,9 +120,10 @@ Tradewind_PC_EventScript_DreamWhiteOutHeal::
 	releaseall
 	end
 
-@ Deliberately empty: the box opens, waits for A, and says nothing.
+@ Her dream lines: an ellipsis, never an empty box, so they can't be
+@ mistaken for text that failed to draw.
 Tradewind_PC_Text_Blank::
-	.string "$"
+	.string "…$"
 
 Tradewind_PC_Text_WakeUp::
 	.string "…The counter is empty.\p"

@@ -69,6 +69,7 @@ enum {
 
 bool32 CanThrowBall(void);
 bool32 WotOpponentHasShadowOut(void); // WoT Shadow system
+bool32 WotBagUseRemovesItem(u16 itemId);
 bool32 CannotUseItemsInBattle(enum Item itemId, struct Pokemon *mon);
 
 enum ItemTMHMOrEvolutionStone

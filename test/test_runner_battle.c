@@ -2767,7 +2767,9 @@ void MoveGetIdAndSlot(enum BattlerId battlerId, struct MoveContext *ctx, u32 *mo
         u32 species = GetMonData(mon, MON_DATA_SPECIES);
 
         // Check invalid item usage.
-        INVALID_IF(ctx->gimmick == GIMMICK_MEGA && holdEffect != HOLD_EFFECT_MEGA_STONE && species != SPECIES_RAYQUAZA, "Cannot Mega Evolve without a Mega Stone");
+        // WoT: the player's Mega Stone may be in the bag instead (WotGetBattlerMegaStone).
+        INVALID_IF(ctx->gimmick == GIMMICK_MEGA && holdEffect != HOLD_EFFECT_MEGA_STONE && species != SPECIES_RAYQUAZA
+                   && WotGetBagMegaStone(species) == ITEM_NONE, "Cannot Mega Evolve without a Mega Stone");
         // WoT: a rift boss throws its Z-Move with no crystal (test/wot_rift_legends.c).
         INVALID_IF(ctx->gimmick == GIMMICK_Z_MOVE && holdEffect != HOLD_EFFECT_Z_CRYSTAL && !WotMegaDim_IsRiftBossBattle(), "Cannot use a Z-Move without a Z-Crystal");
         INVALID_IF(ctx->gimmick == GIMMICK_Z_MOVE && !WotMegaDim_IsRiftBossBattle() && GetItemSecondaryId(item) != GetMoveType(*moveId)

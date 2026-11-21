@@ -748,21 +748,21 @@ Route_2_2_EventScript_CutTutorAfter::
 	end
 
 Route_2_2_Text_CutTutorIntro:
-	.string "Off to WALNUT WOODS? There's a\n"
-	.string "shortcut nearby, but a big tree\l"
-	.string "blocks the way.\p"
+	.string "Off to WALNUT WOODS? The path\n"
+	.string "west of here runs straight back\l"
+	.string "to it.\p"
 	.string "Here - take this!$"
 
 Route_2_2_Text_CutTutorShortcut:
-	.string "Teach CUT to one of your team,\n"
-	.string "then slice that tree down.\p"
-	.string "It's a quick shortcut straight\n"
-	.string "back to WALNUT WOODS. Give it a\l"
-	.string "try!$"
+	.string "With the EMBER BADGE, nobody on\n"
+	.string "your team has to learn CUT.\p"
+	.string "Walk up to a snowy bush in\n"
+	.string "WALNUT WOODS and press A.$"
 
 Route_2_2_Text_CutTutorAfter:
-	.string "Cut that tree down for a quick\n"
-	.string "shortcut to WALNUT WOODS.$"
+	.string "Snowy bushes in WALNUT WOODS?\n"
+	.string "With the EMBER BADGE, walk up\l"
+	.string "to one and press A to CUT it.$"
 
 @ ===========================================================================
 @ Trail signs - the north path out of the park climbs to Mount Munen

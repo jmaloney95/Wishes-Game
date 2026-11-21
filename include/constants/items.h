@@ -1157,6 +1157,12 @@ enum __attribute__((packed)) Item
     ITEM_ROGUE_CORE = 948,
     ITEM_ODD_PEBBLE = 949,  // the Zygarde arc
     ITEM_ZYGARDE_CELL = 950,
+    // Wishes of Tomorrow: more Ability Machines for Tradewind's TM floor
+    ITEM_AM_NO_GUARD = 951,
+    ITEM_AM_CONTRARY = 952,
+    ITEM_AM_PROTEAN = 953,
+    ITEM_AM_DESOLATE_LAND = 954,
+    ITEM_AM_PRIMORDIAL_SEA = 955,
     ITEMS_COUNT,
     ITEM_FIELD_ARROW = ITEMS_COUNT,
 };

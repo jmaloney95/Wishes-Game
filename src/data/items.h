@@ -607,6 +607,86 @@ const struct ItemInfo gItemsInfo[] =
         .iconPalette = gItemIconPalette_DragonTMHM,
     },
 
+    [ITEM_AM_NO_GUARD] =
+    {
+        .name = ITEM_NAME("AM No Guard"),
+        .price = 12000,
+        .description = COMPOUND_STRING(
+            "Every move used\n"
+            "by or against it\n"
+            "hits."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_NO_GUARD,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_PsychicTMHM,
+    },
+
+    [ITEM_AM_CONTRARY] =
+    {
+        .name = ITEM_NAME("AM Contrary"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Stat changes work\n"
+            "the opposite way\n"
+            "on this POKéMON."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_CONTRARY,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_PROTEAN] =
+    {
+        .name = ITEM_NAME("AM Protean"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Becomes the type\n"
+            "of the move it's\n"
+            "about to use."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_PROTEAN,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_DESOLATE_LAND] =
+    {
+        .name = ITEM_NAME("AM Desolate Land"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Brings extremely\n"
+            "harsh sunlight\n"
+            "while it's out."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_DESOLATE_LAND,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
+    [ITEM_AM_PRIMORDIAL_SEA] =
+    {
+        .name = ITEM_NAME("AM Primordial Sea"),
+        .price = 20000,
+        .description = COMPOUND_STRING(
+            "Brings heavy rain\n"
+            "while it's out.\n"
+            "Fire moves fail."),
+        .pocket = POCKET_ITEMS,
+        .type = ITEM_USE_PARTY_MENU,
+        .fieldUseFunc = ItemUseOutOfBattle_AbilityMachine,
+        .secondaryId = ABILITY_PRIMORDIAL_SEA,
+        .iconPic = gItemIcon_TM,
+        .iconPalette = gItemIconPalette_DragonTMHM,
+    },
+
     // ===== Wishes of Tomorrow: the Paws =====
     [ITEM_MANKEYS_PAW] =
     {

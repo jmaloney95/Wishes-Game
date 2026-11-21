@@ -279,6 +279,8 @@ bool32 IsBattlerMegaEvolved(enum BattlerId battler);
 bool32 IsBattlerPrimalReverted(enum BattlerId battler);
 bool32 IsBattlerUltraBursted(enum BattlerId battler);
 u32 GetBattleFormChangeTargetSpecies(enum BattlerId battler, enum FormChanges method, enum Ability ability);
+u16 WotGetBattlerMegaStone(enum BattlerId battler);
+u16 WotGetBagMegaStone(u16 species);
 bool32 TryRevertPartyMonFormChange(u32 partyIndex);
 bool32 TryBattleFormChange(enum BattlerId battler, enum FormChanges method, enum Ability ability);
 bool32 DoBattlersShareType(enum BattlerId battler1, enum BattlerId battler2);

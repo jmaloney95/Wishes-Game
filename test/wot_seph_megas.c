@@ -1,6 +1,7 @@
 #include "global.h"
 #include "test/battle.h"
 #include "event_data.h"
+#include "item.h"
 #include "wot_mega_shop.h"
 
 // WoT: Mega Lugia and Mega Ho-Oh (the artist's SEPH art, draft
@@ -64,4 +65,25 @@ TEST("(WoT) The Minister offers Lugianite and Ho-Ohnite for a Lugia or Ho-Oh lea
     gSpecialVar_0x8004 = 0;
     EXPECT_EQ(WotGetPartyLeaderMegaStone(), sMinisterStones[n][1]);
     EXPECT_EQ(gSpecialVar_0x8006, 1);
+}
+
+// WoT: a Mega Stone in the bag counts as held for the player's own Pokemon, so
+// it can Mega Evolve while holding something else, and the message names the
+// stone from the bag.
+SINGLE_BATTLE_TEST("(WoT) A Mega Stone in the bag lets the player's Pokemon Mega Evolve")
+{
+    ClearBag();
+    AddBagItem(ITEM_LUCARIONITE, 1);
+    GIVEN {
+        PLAYER(SPECIES_LUCARIO) { Item(ITEM_LEFTOVERS); }
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_CELEBRATE, gimmick: GIMMICK_MEGA); }
+    } SCENE {
+        MESSAGE("Lucario's Lucarionite is reacting to 1's Mega Ring!");
+        ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_MEGA_EVOLUTION, player);
+    } THEN {
+        EXPECT_EQ(player->species, SPECIES_LUCARIO_MEGA);
+        ClearBag();
+    }
 }
